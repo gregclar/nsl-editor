@@ -6,6 +6,7 @@
         
     <h2>Configuration</h2>
 
+    <p><%= Time.now %></p>
     <h4>Application environment</h4>
     <table class="table table-condensed search-results width-100-percent">
 
@@ -13,7 +14,7 @@
 
     <tr><td>Ruby platform</td><td> <%= RUBY_PLATFORM %> </td></tr>
     <% if RUBY_PLATFORM =~ /jruby/i %>
-    <tr><td>JRuby version</td><td> <%= JRUBY_VERSION %> </td></tr>
+      <tr><td>JRuby version</td><td> <%= JRUBY_VERSION %> </td></tr>
     <% end %>
     <tr><td>Ruby version</td><td> <%= RUBY_VERSION %> </td></tr>
 
