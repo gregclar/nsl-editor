@@ -56,9 +56,9 @@
 
 
     <table>
-    <tr><td>Database</td><td> <%#= Rails.configuration.database_configuration[Rails.env]["database"] %> </td></tr>
-    <tr><td>Database user</td><td> <%#= Rails.configuration.database_configuration[Rails.env]["username"] %> </td></tr>
-    <tr><td>Names</td><td> <%#= Name.all.count %> </td></tr>
+    <tr><td>Database</td><td> <%= Rails.configuration.database_configuration[Rails.env]["database"] %> </td></tr>
+    <tr><td>Database user</td><td> <%= Rails.configuration.database_configuration[Rails.env]["username"] %> </td></tr>
+    <tr><td>Names</td><td> <%= Name.all.count %> </td></tr>
     </table>
   </div>
 </div>
