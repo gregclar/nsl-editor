@@ -2,4 +2,10 @@
 
 require_relative 'config/environment'
 
-run Rails.application
+# Necessary to make sub url work.
+# https://github.com/rails/rails/issues/24393
+# See https://github.com/rails/rails/pull/24412
+map ActionController::Base.config.relative_url_root || "/" do
+  run Rails.application
+end
+
