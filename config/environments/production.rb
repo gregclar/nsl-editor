@@ -110,3 +110,10 @@ Rails.application.configure do
   # config.active_record.database_resolver = ActiveRecord::Middleware::DatabaseSelector::Resolver
   # config.active_record.database_resolver_context = ActiveRecord::Middleware::DatabaseSelector::Resolver::Session
 end
+
+if ENV['EDITOR_CONFIG_FILE']
+  load "#{ENV['EDITOR_CONFIG_FILE']}"
+else
+  load "#{ENV['HOME']}/.nsl/v6021-config.rb"
+end
+
