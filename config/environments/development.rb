@@ -60,3 +60,9 @@ Rails.application.configure do
   # routes, locales, etc. This feature depends on the listen gem.
   config.file_watcher = ActiveSupport::EventedFileUpdateChecker
 end
+
+if ENV['EDITOR_CONFIG_FILE']
+  load "#{ENV['EDITOR_CONFIG_FILE']}"
+else
+  load "#{ENV['HOME']}/.nsl/development/v6021-config.rb"
+end

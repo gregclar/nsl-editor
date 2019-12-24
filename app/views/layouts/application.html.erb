@@ -1,15 +1,112 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
   <head>
-    <title>V6021</title>
-    <%= csrf_meta_tags %>
-    <%= csp_meta_tag %>
+    <title> <%= page_title || 'V6021' %> </title>
+    <%#= csrf_meta_tags %>
+    <%#= csp_meta_tag %>
 
-    <%= stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track': 'reload' %>
+    <%#= stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track': 'reload' %>
+    <%#= javascript_pack_tag 'application', 'data-turbolinks-track': 'reload' %>
+
+    <script>
+      //window.relative_url_root = "<%= Rails.application.config.relative_url_root %>";
+      //window.NG_TEMPLATE_URL="<%= @ng_template_path %>";
+      //taxoTree = "<%= ShardConfig.classification_tree_key %>";
+    </script>
+
+    <% if Rails.env == "development" || params[:debug] == 'true' %>
+      <script> debugSwitch = true; </script>
+    <% else %>
+      <script> debugSwitch = false; </script>
+    <% end %>
+
+    <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => false %>
+    <%#= javascript_include_tag 'application', 'data-turbolinks-track' => false %>
     <%= javascript_pack_tag 'application', 'data-turbolinks-track': 'reload' %>
+
+    <%= csrf_meta_tags %>
+    <%= favicon_link_tag 'favicon.png?v=1', :rel => 'shortcut icon' %>
+    <!--    Select2 widget TODO download if it works out -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.7/css/select2.min.css" rel="stylesheet"/>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.7/js/select2.min.js"></script>
+
+    <% if development? %>
+<style>
+a:not([title]),
+select:not([title]),
+textarea:not([title]),
+input:not([title]) {
+  background: red;
+}
+
+input[type="checkbox"]:not([title]) {
+  background: red;
+  color: red;
+  border: 2px solid black;
+}
+
+</style>
+
+    <% end %>
+
+    <% if Rails.configuration.try('offer_feedback_link') %>
+      <%= Rails.configuration.try('feedback_script').try('html_safe') %>
+    <% end %>
+
   </head>
 
-  <body>
-    <%= yield %>
-  </body>
+  <body class="<%= Rails.configuration.try('environment') %>"
+        data-active-reference-tab="tab_show_1"
+        data-active-name-tab="tab_details"
+        data-active-author-tab="tab_show_1"
+        data-active-instance-tab="tab_show_1"
+        data-active-orchid-tab="tab_show_1">
+
+    <div id="screen-too-small-msg">Sorry.... your window is too small to show the editor.  It needs to be wider.</div>
+    <%= render partial: 'search/big_navbar' %>
+
+    <div id="main-content" class="container-fluid">
+
+      <% if @no_search_result_details %>
+        <div id="search-result-details" class="hidden <%= 'orchids' if params[:query_target].try('downcase') == 'orchids' %>"> </div>
+      <% else %>
+        <div id="search-result-details" class="<%= 'orchids' if params[:query_target] == 'Orchids' %>"> </div>
+      <% end %>
+
+
+      <div class="row">
+        <div id="search-result-container" 
+             class="main-body-container no-left-padding col-xs-12 col-sm-12 col-md-12 col-lg-12 sidebar" >
+          <%= yield %>
+        </div>
+        <div id="help-search-container"
+             class="main-body-container no-left-padding col-xs-12 col-sm-12 col-md-12 col-lg-12 hidden">
+            <%= render partial: 'search/help_search_inner' %>
+        </div>
+        <div id="example-search-container"
+             class="main-body-container no-left-padding col-xs-12 col-sm-12 col-md-12 col-lg-12 hidden">
+            <%= render partial: 'search/example_search_inner' %>
+        </div>
+        <div id="search-reports-container"
+             class="main-body-container no-left-padding col-xs-12 col-sm-12 col-md-12 col-lg-12 hidden">
+        </div>
+        <div id="tree-reports-container"
+             class="main-body-container no-left-padding col-xs-12 col-sm-12 col-md-12 col-lg-12 hidden">
+        </div>
+        <div id="stats-container"
+             class="main-body-container no-left-padding col-xs-12 col-sm-12 col-md-12 col-lg-12 hidden">
+        </div>
+        <div id="batch-container"
+             class="main-body-container no-left-padding col-xs-12 col-sm-12 col-md-12 col-lg-12 hidden">
+        </div>
+      </div>
+    </div>
+
+    <div id="footer" class="footer">
+      <div class="container-fluid">
+        <%= render partial: 'layouts/footer' %>
+      </div>
+    </div>
+ </body>
 </html>
+ 
