@@ -30,7 +30,7 @@ group :development do
   gem 'web-console', '>= 3.3.0'
   gem 'listen', '>= 3.0.5', '< 3.2'
   # Use SCSS for stylesheets - development only, because sassc barfs on app servers
-  # gem 'sass-rails', '>= 6'
+  gem 'sass-rails', '>= 6'
 end
 
 group :test do
@@ -49,3 +49,6 @@ gem 'warbler', '~> 2.0.5'
 gem "strip_attributes"
 gem "cancancan"
 gem "active_type"
+gem "bootstrap-sass"
+gem "font-awesome-rails"
+
