@@ -51,4 +51,4 @@ gem "cancancan"
 gem "active_type"
 gem "bootstrap-sass"
 gem "font-awesome-rails"
-
+gem "net-ldap"

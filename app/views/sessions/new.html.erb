@@ -1,0 +1,40 @@
+<style>div#broadcast {width: 97%; text-align: center;} </style>
+<div id="sign-in-form-container">
+
+  <h1><%= ShardConfig.shard_group_name %> Editor</h1>
+
+  <div class="firefox-notice purple hidden">App developed on Firefox.</div>
+  <div id="sign-in-form">
+
+    <%= form_for(@sign_in, url: sign_in_path, role: 'form') do | form | %>
+
+      <% if @sign_in.errors.any? %>
+        <div id="error_explanation">
+          <h6><%= pluralize(@sign_in.errors.count, "error") %> prevented you signing in:</h6>
+
+          <ul>
+          <% @sign_in.errors.full_messages.each do |message| %>
+            <li><%= message %></li>
+          <% end %>
+          </ul>
+        </div>
+      <% end %>
+
+      <div class="form-group">
+        <%= form.label :username, 'Username*' %>
+        <%= form.text_field :username, required: true, autofocus: true, title: "Enter your #{ShardConfig.shard_group_name} Editor username", class: 'form-control' %>
+      </div>
+
+      <div class="form-group">
+        <%= form.label :password, 'Password*' %>
+        <%= form.password_field :password, required: true, title: "Enter your #{ShardConfig.shard_group_name} Editor password", class: 'form-control' %>
+      </div>
+
+      <%= form.submit 'Sign in', title: 'Select this to sign in', class: 'btn btn-primary' %>
+ 
+    <% end %>
+
+  </div>
+
+</div>
+
