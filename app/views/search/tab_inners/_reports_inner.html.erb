@@ -1,0 +1,345 @@
+<div id="search-reports-inner" class="reports-inner">
+  <div class="search-reports">
+  <h4>Reports</h4>
+  <p>You can add other directives to these reports.
+  e.g. show-instances:, limit: 10, name: acacia </p>
+  <h5>Orth. Vars.</h5>
+<table class="example-searches table table-striped">
+  <% [
+      {search_target: 'Names',
+       search_string: "is-orth-var-with-no-orth-var-instances:",
+       explanation: %Q(Orth. var. with no orth. var. instance.)},
+      {search_target: 'Names',
+       search_string: "is-orth-var-with-no-orth-var-instances: limit: 10 offset: 10",
+       explanation: %Q(Orth. var. with no orth. var. instance retrieving records 11-20.)},
+      {search_target: 'Names',
+       search_string: "is-orth-var-with-no-orth-var-instances: limit: 10 offset: 100",
+       explanation: %Q(Orth. var. with no orth. var. instance retrieving records 101-110.)},
+      {search_target: 'Names',
+       search_string: "is-orth-var-with-no-orth-var-instances: limit: 20 offset: 100",
+       explanation: %Q(Orth. var. with no orth. var. instance retrieving records 101-120.)},
+      {search_target: "Names",
+       search_string: "is-orth-var-and-sec-ref-first:",
+       explanation:
+       %Q(Orth. var. names with first instance a secondary reference.)},
+      {search_target: "Names",
+       search_string: "is-orth-var-and-non-primary-ref-first:",
+       explanation:
+       %Q(Orth. var. names with first standalone instance not a primary
+       reference.)},
+      {search_target: "Names",
+       search_string:
+       "is-orth-var-and-non-primary-sec-ref-first:",
+       explanation:
+       %Q(Orth. var. names with at least one instance that meets these
+       conditions: <br> - it is based on the earliest reference for that name,
+       and <br> - it is neither a primary nor a secondary instance.)},
+      ].each do |val| %>
+  <tr>
+    <td class="width-30-percent">
+      <%= link_to(val[:search_string],
+                  search_path(query_string: val[:search_string],
+                              query_target: val[:search_target]),
+                  class:'blue',
+                  title: "Run the report.") %>
+    </td>
+    <td><%= val[:explanation].html_safe %></td>
+  </tr>
+  <% end %>
+</table>
+
+<h5>Reference type</h5>
+<table class="example-searches table table-striped">
+  <% [
+      {search_target: 'References',
+       search_string: "parent-ref-wrong-child-type:",
+       explanation: %Q(References that contain other reference of the
+       wrong type. e.g. Book containing paper)},
+      {search_target: 'References',
+       search_string: "rt: journal parent-ref-wrong-child-type:",
+       explanation: %Q(Journals that contain a reference that is not a paper.)},
+      {search_target: 'References',
+       search_string: "not-type: paper parent-type: journal",
+       explanation: %Q(Non-papers that are children of Journals.)},
+      {search_target: 'References',
+       search_string: "type: unknown parent-type: journal",
+       explanation: %Q(Unknowns that are children of Journals.)},
+      {search_target: 'References',
+       search_string: "not-type: paper not-type: unknown parent-type: journal",
+       explanation: %Q(Neither paper nor unknown but child of Journal.)},
+      ].each do |val| %>
+  <tr>
+    <td class="width-30-percent">
+      <%= link_to(val[:search_string],
+                  search_path(query_string: val[:search_string],
+                              query_target: val[:search_target]),
+                  class:'blue',
+                  title: "Run the report.") %>
+    </td>
+    <td><%= val[:explanation].html_safe %></td>
+  </tr>
+  <% end %>
+</table>
+
+<h5>Name reports</h5>
+<table class="example-searches table table-striped">
+  <% [
+      {search_target: 'Names',
+       search_string: "is-a-parent: has-no-instances:",
+       explanation: %Q(Names that have children but no instances.)},
+      {search_target: 'Names',
+       search_string: "with-exactly-one-instance:",
+       explanation: %Q(Names that have exactly one instance. Note: can be slow
+       if not combined with other directives.  See below.)},
+      {search_target: 'Names',
+       search_string: "nt: common with-exactly-one-instance:",
+       explanation: %Q(Common names that have exactly one instance.)},
+      {search_target: 'Names',
+       search_string: "ref-title: *new guinea* with-exactly-one-instance:",
+       explanation: %Q(Combine name report with ref-title: query across to 
+       associated references.)},
+      {search_target: 'Names',
+       search_string: "ref-title: *new guinea* with-exactly-one-instance: in-accepted-tree:",
+       explanation: %Q(Combine name report with ref-title: query on associated
+       reference title and return only names either accepted in or
+       excluded from the accepted tree.)},
+      {search_target: 'Names',
+       search_string: "ref-title: *new guinea* with-exactly-one-instance: not-in-accepted-tree:",
+       explanation: %Q(Combine name report with ref-title: query on
+       associated reference title and return only names not either accepted in or
+       excluded from the accepted tree.)},
+      {search_target: 'Names',
+       search_string: "earliest-instance-not-primary:",
+       explanation: %Q(Names whose first instance is not a primary reference)},
+      ].each do |val| %>
+  <tr>
+    <td class="width-30-percent">
+      <%= link_to(val[:search_string],
+                  search_path(query_string: val[:search_string],
+                              query_target: val[:search_target]),
+                  class:'blue',
+                  title: "Run the report.") %>
+    </td>
+    <td><%= val[:explanation].html_safe %></td>
+  </tr>
+  <% end %>
+</table>
+
+<h6>Autonym reports</h6>
+<table class="example-searches table table-striped">
+  <% [
+      {search_target: "Names",
+       search_string: "autonym-name-mismatch:",
+       explanation:
+       %Q(Autonyms for which the final epithet is not identical to the final \
+       epithet of the parent name.)},
+      {search_target: 'Names',
+       search_string: "autonym-does-not-exist:",
+       explanation: %Q(Names which are of type autonym, have instances AND have the status manuscript OR their parent taxon has the status manuscript OR nom. illeg. [any of the options thereof] OR nom. inval. [any of the options thereof] OR all of the children of their parent taxon have the status manuscript OR nom. illeg. [any of the options thereof] OR nom. inval. [any of the options thereof]?  )},
+      {search_target: 'Names',
+       search_string: "autonym-does-not-exist-sibling-rule:",
+       explanation: %Q(Names which are of the type autonym, have instances AND all of the children of their parent taxon have the status manuscript OR nom. illeg. [any of the options thereof] OR nom. inval. [any of the options thereof]?  )},
+      {search_target: 'Names',
+       search_string: "autonym-has-invalid-rank:",
+       explanation: %Q(Autonyms are only possible for taxa with a rank: (a) below genus but above species or (b) below species)},
+      ].each do |val| %>
+  <tr>
+    <td class="width-30-percent">
+      <%= link_to(val[:search_string],
+                  search_path(query_string: val[:search_string],
+                              query_target: val[:search_target]),
+                  class:'blue',
+                  title: "Run the report.") %>
+    </td>
+    <td><%= val[:explanation].html_safe %></td>
+  </tr>
+  <% end %>
+</table>
+
+<h5>Bad relationships NSL-974</h5>
+<table class="example-searches table table-striped">
+  <% [
+      {search_target: 'Instances',
+       search_string: "bad-relationships-974: limit: 10",
+       explanation: %Q(Basionym or replaced synonym synonymy instances cited by 
+       instances that are not comb. nov., comb. et stat. nov., nom. nov., 
+       or nom. et stat. nov. limited to the first 10 instances) },
+      {search_target: 'Names',
+       search_string: "bad-relationships-974: limit: 10",
+       explanation: %Q(Names containing the instances for NSL-974 limited to the first 10 names.) },
+      {search_target: 'Names',
+       search_string: "bad-relationships-974: show-instances: limit: 10",
+       explanation: %Q(Names as above for NSL-974 showing instances limited to the first 10 names.) },
+      {search_target: 'Names',
+       search_string: "bad-relationships-974: name: eucalyptus show-instances:",
+       explanation: %Q(Names as above for NSL-974 matching "%eucalyptus%" showing instances.) },
+      {search_target: 'Instances',
+       search_string: "count bad-relationships-974:",
+       explanation: %Q(Count of instances for NSL-974.) },
+      ].each do |val| %>
+  <tr>
+    <td class="width-30-percent">
+      <%= link_to(val[:search_string],
+                  search_path(query_string: val[:search_string],
+                              query_target: val[:search_target]),
+                  class:'blue',
+                  title: "Run the report.") %>
+    </td>
+    <td><%= val[:explanation].html_safe %></td>
+  </tr>
+  <% end %>
+</table>
+
+<h5>Name is listed as a synonym of itself (NSL-1974)</h5>
+<table class="example-searches table table-striped">
+  <% [
+      {search_target: 'Names',
+       search_string: "name-synonym-of-itself: limit: 10",
+       explanation: %Q(Name is a synonym of itself.  First 10 records.) },
+      {search_target: 'Names',
+       search_string: "name-synonym-of-itself: limit: 10 show-instances:",
+       explanation: %Q(Name is a synonym of itself.  First 10 records, showing instances.) },
+      ].each do |val| %>
+  <tr>
+    <td class="width-30-percent">
+      <%= link_to(val[:search_string],
+                  search_path(query_string: val[:search_string],
+                              query_target: val[:search_target]),
+                  class:'blue',
+                  title: "Run the report.") %>
+    </td>
+    <td><%= val[:explanation].html_safe %></td>
+  </tr>
+  <% end %>
+</table>
+
+<h5>Name is listed more than once as a synonym of another name, excluding
+misapplications (NSL-1974)</h5>
+<table class="example-searches table table-striped">
+  <% [
+      {search_target: 'Names',
+       search_string: "name-has-double-synonym: limit: 10",
+       explanation: %Q(Name has another name as synonym twice - any number of
+       misapplications count as 1 synonym.  First 10 records.) },
+      {search_target: 'Names',
+       search_string: "name-has-double-synonym: show-instances: limit: 10",
+       explanation: %Q(Name has another name as synonym twice - any number of
+       misapplications count as 1 synonym.  First 10 records, showing
+       instances.) },
+      {search_target: 'Names',
+       search_string: "name-is-double-synonym: limit: 10",
+       explanation: %Q(Name is a synonym of another name twice - any number of
+       misapplications count as 1 synonym.  First 10 records.) },
+      ].each do |val| %>
+  <tr>
+    <td class="width-30-percent">
+      <%= link_to(val[:search_string],
+                  search_path(query_string: val[:search_string],
+                              query_target: val[:search_target]),
+                  class:'blue',
+                  title: "Run the report.") %>
+    </td>
+    <td><%= val[:explanation].html_safe %></td>
+  </tr>
+  <% end %>
+</table>
+
+<h5>Names at the top of the accepted tree</h5>
+<table class="example-searches table table-striped">
+  <% [
+      {search_target: 'Names',
+       search_string: "at-top-of-accepted-tree:",
+       explanation: %Q(Names attached to the top of the accepted name tree.) },
+      {search_target: 'Names',
+       search_string: "name: br at-top-of-accepted-tree:",
+       explanation: %Q(Names starting with "br" attached to the top of the accepted name tree.) },
+      {search_target: 'Names',
+       search_string: "at-top-of-accepted-tree: show-instances: limit: 10",
+       explanation: %Q(Names attached to the top of the accepted name tree,
+       showing instances.  First 10.) },
+      {search_target: 'Names',
+       search_string: "name: ch at-top-of-accepted-tree: show-instances: limit: 10",
+       explanation: %Q(Names starting with "ch" attached to the top of the accepted name tree,
+       showing instances.  First 10.) },
+      ].each do |val| %>
+  <tr>
+    <td class="width-30-percent">
+      <%= link_to(val[:search_string],
+                  search_path(query_string: val[:search_string],
+                              query_target: val[:search_target]),
+                  class:'blue',
+                  title: "Run the report.") %>
+    </td>
+    <td><%= val[:explanation].html_safe %></td>
+  </tr>
+  <% end %>
+</table>
+
+    <h5>Excluded names on accepted tree with a distribution.</h5>
+    <table class="example-searches table table-striped">
+      <% [
+             {search_target: 'Names',
+              search_string: "excluded-name-with-distribution:",
+              explanation: %Q(excluded Names on the accepted tree with a distribution.)}
+         ].each do |val| %>
+        <tr>
+          <td class="width-30-percent">
+            <%= link_to(val[:search_string],
+                        search_path(query_string: val[:search_string],
+                                    query_target: val[:search_target]),
+                        class: 'blue',
+                        title: "Run the report.") %>
+          </td>
+          <td><%= val[:explanation].html_safe %></td>
+        </tr>
+      <% end %>
+    </table>
+
+    <h5>Reference with no year reports</h5>
+<table class="example-searches table table-striped">
+  <% [
+      {search_target: 'References',
+       search_string: "no-year:",
+       explanation: %Q(References with no year value.) },
+      {search_target: 'References',
+       search_string: "no-year: rt: book",
+       explanation: %Q(Books with no year value.) },
+      {search_target: 'References',
+       search_string: "no-year: rt: paper",
+       explanation: %Q(Papers with no year value.) },
+      {search_target: 'References',
+       search_string: "no-year: rt: book is-published:",
+       explanation: %Q(Published books with no year value.) },
+      {search_target: 'References',
+       search_string: "no-year: pub-date-is-year:",
+       explanation: %Q(References with no year that have a publication date
+       that is a year or a year in parentheses.) },
+      {search_target: 'References',
+       search_string: "no-year: pub-date-is-year: rt:book",
+       explanation: %Q(Books with no year that have a publication date that is
+       a year or a year in parentheses.) },
+      {search_target: 'References',
+       search_string: "no-year: rt: paper is-published:
+       pub-date-matches: Jan 2[0-9][0-9][0-9]$",
+       explanation: %Q([Advanced] Published papers with no year and a
+       publication date matching the regular expression (case-insensitive).) },
+      {search_target: 'References',
+       search_string: "no-year: rt: book is-published: pub-date-matches: 1795",
+       explanation: %Q([Advanced] Published papers with no year and a
+       publication date matching the regular expression 1795.) },
+      ].each do |val| %>
+  <tr>
+    <td class="width-30-percent">
+      <%= link_to(val[:search_string],
+                  search_path(query_string: val[:search_string],
+                              query_target: val[:search_target]),
+                  class:'blue',
+                  title: "Run the report.") %>
+    </td>
+    <td><%= val[:explanation].html_safe %></td>
+  </tr>
+  <% end %>
+</table>
+
+  </div>
+</div>

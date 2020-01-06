@@ -1,0 +1,24 @@
+
+<tr id="search-result-<%= search_result[:id] %>" 
+  class="search-result <%= 'fresh' if search_result.fresh? %>"
+  data-get-url="<%= name_path(search_result[:id]) %>"
+  data-edit-url="<%= name_path(search_result[:id]) %>"
+  data-base-url="<%= name_path(search_result[:id]) %>"
+  data-tab-url="<%= name_tab_path(id: search_result[:id],tab: 'active_tab_goes_here') %>"
+  data-record-id="<%= search_result[:id] %>"
+  data-record-type="name"
+  tabindex="<%= increment_tab_index(100) %>"
+    >
+  <td class="takes-focus nsl-tiny-icon-container width-1-percent"><%= record_icon('name') %></td>
+  <td colspan="2" class="text takes-focus abbrev main-content width-95-percent <%= ' give-me-focus' if give_me_focus %>">
+    <a href="#" 
+       class="show-details-link"
+       tabindex="<%= increment_tab_index %>" 
+       title="Name record.  Select to show details."
+       id="name-<%= search_result[:id] %>">
+       <%= render partial: 'name_link_text', locals: {search_result: search_result} %>
+    </a>
+
+  </td>
+  <td class="takes-focus width-5-percent filler">&nbsp;</td>
+</tr>

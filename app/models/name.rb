@@ -4,16 +4,16 @@ class Name < ApplicationRecord
   self.primary_key = "id"
   self.sequence_name = "nsl_global_seq"
 
-  #include NameScopable
-  #include AuditScopable
-  #include NameValidatable
-  #include NameParentable
-  #include NameFamilyable
-  #include NameTreeable
-  #include NameNamable
-  #include NameAuthorable
-  #include NameRankable
-  #include NameEnterable
+  include NameScopable
+  include AuditScopable
+  include NameValidatable
+  include NameParentable
+  include NameFamilyable
+  include NameTreeable
+  include NameNamable
+  include NameAuthorable
+  include NameRankable
+  include NameEnterable
 
   strip_attributes
 
