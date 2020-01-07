@@ -1,0 +1,18 @@
+<% name_tag_name = name.name_tag_names.new %>
+
+<%= form_for(name_tag_name, remote: true) do |f| %>
+  <%= f.hidden_field(:name_id, value: name_tag_name.name_id) %>
+  <div class="form-group">
+    <label for="name_tag_name_tag_id">Tag*</label>
+    <%= f.select :tag_id,
+                 (NameTag.all - name.name_tags).collect{|name_tag| [name_tag.name,name_tag.id]},
+                 {include_blank: ''},
+                 required: true,
+                 class: "form-control inline-block width-10em",
+                 title: "Choose a tag",
+                 tabindex: increment_tab_index %>
+    <%= f.submit 'Add',
+                 class: 'width-10em btn btn-primary pull-right',
+                 title: 'Tag the name with the selected tag' %>
+  </div>
+<% end %>

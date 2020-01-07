@@ -1,0 +1,162 @@
+<table class="table advanced-form-table" class="table table-bordered" >
+  <tr><td class="width-5-percent">List/count</td> 
+    <td class="align-right width-15-percent"><label class="plain" for="query-on">Options</label></td>
+    <td>
+      <select id="instance-advanced-search-list-or-count" class="form-control"
+        title="Choose to list or count the search results.">
+        <option value='count'>count records</option>
+        <option value='list' selected='selected'>list results</option>
+    </select>
+    </td>
+  </tr>
+  <tr>
+    <td></td>
+    <td class="align-right width-15-percent">
+      <label class="plain" for="query-on">Size</label>
+    </td>
+    <td>
+      <input id="instance-advanced-search-set-size" 
+             value="100" 
+             type="number" 
+             class="form-control min-width-10em" 
+             title="Number of records for a list search" 
+             min="1" 
+             max="1000"/>
+    </td>
+  </tr>
+  <tr> <td class="width-12-percent">Name</td>
+    <td class="align-right width-15-percent">
+    </td>
+    <td>
+      <input id="instance-advanced-search-name" 
+             type="text" 
+             class="form-control min-width-20em" 
+             title="Name string, with optional wildcard (*)"/>
+    </td>
+  </tr>
+    <tr> 
+      <td class="width-5-percent">Type</td>
+      <td class="align-right width-15-percent">
+        <label class="plain" for="query-on">Options</label>
+      </td>
+      <td><%= select_tag('instance-advanced-search-type', 
+                     options_for_select(InstanceType.query_form_options),
+                     title: 'Select one type', 
+                     include_blank: true,
+                     autocomplete: "off", 
+                     class: "form-control give-me-focus") 
+                   %>
+      </td>
+    </tr>
+  <tr> <td class="width-5-percent">Page</td>
+    <td class="align-right width-15-percent">
+      <label class="plain" for="query-on">Text</label>
+    </td>
+    <td>
+      <input id="instance-advanced-search-page" 
+             type="text" 
+             class="form-control min-width-20em" 
+             title="Restrict search by page or partial string"/>
+    </td>
+  </tr>
+  <tr>
+    <td></td>
+    <td class="align-right width-15-percent">
+      <label class="plain" for="query-on">Extra</label>
+    </td>
+    <td>
+      <input id="instance-advanced-search-page-qualifier" 
+             type="text" 
+             class="form-control min-width-20em" 
+             title="Restrict search by page qualifier or partial string"/>
+    </td>
+  </tr>
+  <tr>
+    <td class="width-5-percent">Adnot</td>
+    <td class="align-right width-15-percent">
+      <label class="plain" for="query-on">Text</label>
+    </td>
+    <td>
+      <input id="instance-advanced-search-comments" 
+             type="text" 
+             class="form-control min-width-20em" 
+             title="Restrict search by comments or partial string"/>
+    </td>
+  </tr>
+  <tr>
+    <td></td>
+    <td class="align-right width-15-percent">
+      <label class="plain" for="query-on">By</label>
+    </td>
+    <td>
+      <input id="instance-advanced-search-comments-by" 
+             type="text" 
+             class="form-control min-width-20em" 
+             title="Restrict search by ID of user who made comments or by partial ID string"/>
+    </td>
+  </tr>
+  <tr>
+    <td class="width-5-percent">Notes</td>
+    <td class="align-right width-15-percent">
+      <label class="plain" for="query-on">Text</label>
+    </td>
+    <td>
+      <input id="instance-advanced-search-notes" 
+             type="text" 
+             class="form-control min-width-20em" 
+             title="Restrict search by notes or partial string"/>
+    </td>
+  </tr>
+    <tr> 
+      <td class="width-12-percent"></td>
+      <td class="align-right width-15-percent">
+        <label class="plain" for="query-on">Key</label>
+      </td>
+      <td><%= select_tag('instance-advanced-search-note-key', 
+                     options_for_select(InstanceNoteKey.query_form_options),
+                     title: 'Select one key', 
+                     include_blank: true,
+                     autocomplete: "off", 
+                     class: "form-control give-me-focus") 
+                   %>
+      </td>
+    </tr>
+  <tr> <td class="width-5-percent">Assertions</td>
+    <td class="align-right width-15-percent">
+    </td>
+    <td> <label class="plain"><input 
+                type="checkbox" 
+                class="instance-search-assertion" 
+                title="Restrict search to instances that cite another instance."
+                id="instance-cites-an-instance"> cites an instance</label> </td>
+  </tr>
+  <tr>
+    <td></td>
+    <td class="align-right width-15-percent">
+    </td>
+    <td> <label class="plain"><input 
+                type="checkbox" 
+                class="instance-search-assertion" 
+                title="Restrict search to instances that are cited by another instance."
+                id="instance-is-cited-by-an-instance"> is cited by an instance</label> </td>
+  </tr>
+  <tr> <td class="width-5-percent"></td>
+    <td class="align-right width-15-percent">
+    </td>
+    <td> <label class="plain"><input 
+                type="checkbox" 
+                class="instance-search-assertion" 
+                title="Restrict search to instances that do not cite another instance."
+                id="instance-does-not-cite-an-instance"> does not cite an instance</label> </td>
+  </tr>
+  <tr>
+    <td></td>
+    <td class="align-right width-15-percent">
+    </td>
+    <td> <label class="plain"><input 
+                type="checkbox" 
+                class="instance-search-assertion" 
+                title="Restrict search to instances that are not cited by another instance."
+                id="instance-is-not-cited-by-an-instance"> is not cited by an instance</label> </td>
+  </tr>
+  </table>
