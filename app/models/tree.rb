@@ -23,11 +23,11 @@ class Tree < ActiveRecord::Base
   self.sequence_name = "nsl_global_seq"
 
   belongs_to :default_draft_version,
-             class_name: 'TreeVersion',
+             class_name: "TreeVersion",
              foreign_key: "default_draft_tree_version_id"
 
   belongs_to :current_tree_version,
-             class_name: 'TreeVersion',
+             class_name: "TreeVersion",
              foreign_key: "current_tree_version_id"
 
   has_many :tree_versions,

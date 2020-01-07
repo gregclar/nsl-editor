@@ -1,0 +1,7 @@
+    <% edit_title = "<strong class='pull-left'>" -%>
+    <% unless @name.category_for_edit.name == @name.name_category.name -%>
+      <% edit_title += 'Edit as ' -%>
+    <% end -%>
+    <% edit_title += "#{@name.category_for_edit.name.capitalize} name" -%>
+    <% edit_title += "</strong>" -%>
+  <%= edit_title.sub(/ name name/,' name').html_safe -%>&nbsp;

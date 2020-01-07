@@ -1,0 +1,13 @@
+<%= divider %>
+Name Parents
+<ul class="tree">
+  <% @name.names_in_path.reverse.each do |step| %>
+  <li>
+  <%= link_to(%Q(#{step.full_name}<span class="pull-right">#{step.name_rank.name}</span>).html_safe,
+                                        search_path(query_string: "id: #{step.id}",query_target: 'names'),
+                          tabindex: increment_tab_index,
+                          title: "Search for #{step.full_name}",
+                          class: '') %>
+<% end %>
+</ul>
+

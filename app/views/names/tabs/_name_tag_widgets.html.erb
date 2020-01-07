@@ -1,0 +1,15 @@
+
+<div id="name-tags-fields" >
+    <% @name.name_tag_names.sort{|x,y| x.name_tag.name <=> y.name_tag.name}.each do |name_tag_name| %>
+        <div id="container-for-tag-<%= name_tag_name.name_id %>-<%= name_tag_name.tag_id %>">
+          <%= name_tag_name.name_tag.name %> <%= render partial: 'name_tag_names/delete_widgets', locals: {name_tag_name: name_tag_name} %>
+        </div>
+        <br>
+    <% end %>
+</div>
+
+<br>
+<% if @name.name_tag_names.count < NameTag.count %>
+  <%= render partial: 'name_tag_names/form', locals: {name: @name} %>
+<% end %>
+

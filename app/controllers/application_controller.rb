@@ -58,4 +58,25 @@ class ApplicationController < ActionController::Base
     'no current user'
   end
 
+  # Could not get this to work with a guard clause.
+  def javascript_only
+    logger.debug("format: #{request.format}")
+    unless request.format == "text/javascript"
+      logger.error('Rejecting a non-JavaScript request and re-directing \
+                   to the search page. Is Firebug console on?')
+      render text: "JavaScript only", status: :service_unavailable
+    end
+  end
+
+  def pick_a_tab(default_tab = "tab_show_1")
+    @tab = if params[:tab].present? && params[:tab] != "undefined"
+             params[:tab]
+           else
+             default_tab
+           end
+  end
+
+  def pick_a_tab_index
+    @tab_index = (params[:tabIndex] || "1").to_i
+  end
 end

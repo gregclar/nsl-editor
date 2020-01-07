@@ -1,0 +1,63 @@
+
+<div id="change-category-widgets">
+<%= "Current category is: <em>#{@name.name_category.name.capitalize}</em>".html_safe unless @name.name_category.name == @name.category_for_edit.name %>
+
+
+<% if @name.id.present? && @name.name_category.name == @name.category_for_edit.name %>
+
+  <% if @name.name_category.other? %>
+
+    <%= link_to('Convert to scientific name', 
+                    '#', 
+                    class: "change-name-category-on-edit-tab btn btn-default", 
+                    title: "Convert to scientific",
+                    data: {edit_url: name_edit_as_category_path(id: @name.id,
+                                                                tab: 'edit_name',
+                                                                new_category: NameCategory::SCIENTIFIC_CATEGORY)}) %>
+
+  <% elsif @name.name_category.scientific_hybrid_formula_unknown_2nd_parent? %>
+
+    <%= link_to('Convert to scientific hybrid with 2 parents', 
+                    '#', 
+                    class: "change-name-category-on-edit-tab btn btn-default", 
+                    title: "Convert to scientific hybrid with two parents",
+                    data: {edit_url: name_edit_as_category_path(id: @name.id,
+                                                                tab: 'edit_name',
+                                                                new_category: NameCategory::SCIENTIFIC_HYBRID_FORMULA_CATEGORY)}) %>
+
+  <% elsif @name.name_category.cultivar_hybrid? && @name.second_parent_id.blank? %>
+
+    <%= link_to('Convert to cultivar', 
+                    '#', 
+                    class: "change-name-category-on-edit-tab btn btn-default", 
+                    title: "Convert to cultivar",
+                    data: {edit_url: name_edit_as_category_path(id: @name.id,
+                                                                tab: 'edit_name',
+                                                                new_category: NameCategory::CULTIVAR_CATEGORY)}) %>
+  <% elsif @name.name_category.cultivar? %>
+
+    <%= link_to('Convert to cultivar hybrid', 
+                    '#', 
+                    class: "change-name-category-on-edit-tab btn btn-default", 
+                    title: "Convert to cultivar hybrid",
+                    data: {edit_url: name_edit_as_category_path(id: @name.id,
+                                                                tab: 'edit_name',
+                                                                new_category: NameCategory::CULTIVAR_HYBRID_CATEGORY)}) %>
+  <% elsif @name.name_category.scientific? %>
+
+    <%= render partial: "names/widgets/conditional_convert_sci_to_phrase_widget" %>
+
+  <% elsif @name.name_category.phrase_name? %>
+
+    <%= link_to('Convert to scientific', 
+                    '#', 
+                    class: "change-name-category-on-edit-tab btn btn-default", 
+                    title: "Convert to scientific",
+                    data: {edit_url: name_edit_as_category_path(id: @name.id,
+                                                                tab: 'edit_name',
+                                                                new_category: NameCategory::SCIENTIFIC_CATEGORY)}) %>
+
+  <% end %>
+
+<% end %>
+</div>

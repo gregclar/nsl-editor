@@ -396,7 +396,7 @@ changeNameCategoryOnEditTab = (event,$this,tabWasClicked) ->
   $('#search-result-details').load($this.attr('data-edit-url'))
 
 window.loadDetails = (event,inFocus,tabWasClicked = false) ->
-  debug('window.loadDetails')
+  debug('window.loadDetails start')
   $('#search-result-details').show()
   $('#search-result-details').removeClass('hidden')
   record_type = $('tr.showing-details').attr('data-record-type')
@@ -404,7 +404,8 @@ window.loadDetails = (event,inFocus,tabWasClicked = false) ->
   row_type = $('tr.showing-details').attr('data-row-type')
   tabIndex = $('.search-result.showing-details a[tabindex]').attr('tabindex')
   url = inFocus.attr('data-tab-url').replace(/active_tab_goes_here/,currentActiveTab(record_type))
-  url = url+'?tabIndex='+tabIndex+'&row-type='+row_type+'&instance-type='+instance_type+'&rowType='+inFocus.attr('data-row-type')
+  url = url+'?tabIndex='+tabIndex+'&row-type='+row_type+'&instance-type='+instance_type+'&rowType='+inFocus.attr('data-row-type')+'&format=js'
+  debug('about to load url')
   $('#search-result-details').load  url, -> 
     recordCurrentActiveTab(record_type)
     if tabWasClicked
@@ -415,6 +416,9 @@ window.loadDetails = (event,inFocus,tabWasClicked = false) ->
       else
         debug('just focus the tab')
         $('li.active a.tab').focus()
+    else
+      debug('tab was not clicked')
+  debug('after load url')
   event.preventDefault()
  
 currentActiveTab = (record_type) ->

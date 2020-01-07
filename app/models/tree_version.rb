@@ -23,11 +23,11 @@ class TreeVersion < ActiveRecord::Base
   self.primary_key = "id"
   self.sequence_name = "nsl_global_seq"
 
-  belongs_to :tree, class_name: 'Tree'
+  belongs_to :tree, class_name: "Tree"
 
   has_many :tree_version_elements,
            foreign_key: "tree_version_id",
-           class_name: 'TreeVersionElement'
+           class_name: "TreeVersionElement"
 
   # Returns a TreeVersionElement for this TreeVersion which contains the name
   def name_in_version(name)

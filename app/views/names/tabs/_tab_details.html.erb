@@ -1,0 +1,18 @@
+<% increment_tab_index(0) %>
+
+<%= render partial: "names/details/full_name_and_link_to_search" %>
+<%= render partial: "names/details/status_type_and_rank" %>
+<%= render partial: "names/details/parents_and_duplicate_of" %>
+<%= render partial: "names/widgets/duplicates" %>
+<% if @name.changed_combination %> <br>Changed combination <% end %>
+<%= render partial: "names/details/authors" %>
+<%= render partial: "names/details/tags" %>
+<%= "Verbatim rank  #{@name.verbatim_rank}" unless @name.verbatim_rank.blank? %>
+<br>
+<%= render partial: "names/details/instances" %>
+<%= render 'names/details/children' %>
+<%= render partial: 'names/details/apni_tree' %>
+<%= render partial: 'names/details/apc_tree' %>
+<%= render partial: "names/details/comments" %>
+<%= divider %>
+<%= render partial: "names/details/meta" %>

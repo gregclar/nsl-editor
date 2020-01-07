@@ -30,4 +30,17 @@
 # available at https://guides.rubyonrails.org/i18n.html.
 
 en:
-  hello: "Hello world"
+  date:
+    formats:
+      default: "%d-%b-%Y"
+  time:
+    formats:
+      default: "%d-%b-%Y %I:%M %p"
+      custom: "%d-%b-%Y %I:%M%P"
+      as_date: "%d-%b-%Y"
+  activerecord:
+    attributes:
+      reference:
+        parent_id: "Parent reference"
+      names_delete:
+        extra_info: "Extra information"
