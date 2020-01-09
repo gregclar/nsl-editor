@@ -10,11 +10,11 @@ module NameAuthorable
     EX = 'ex'
     EX_BASE = 'ex_base'
     SANCTIONING = 'sanctioning'
-    belongs_to :author
-    belongs_to :ex_author, class_name: "Author"
-    belongs_to :base_author, class_name: "Author"
-    belongs_to :ex_base_author, class_name: "Author"
-    belongs_to :sanctioning_author, class_name: "Author"
+    belongs_to :author, optional: true
+    belongs_to :ex_author, class_name: "Author", optional: true
+    belongs_to :base_author, class_name: "Author", optional: true
+    belongs_to :ex_base_author, class_name: "Author", optional: true
+    belongs_to :sanctioning_author, class_name: "Author", optional: true
   end
 
   def takes_authors?

@@ -181,6 +181,8 @@ GEM
       sprockets (>= 3.0.0)
     strip_attributes (1.9.0)
       activemodel (>= 3.0, < 7.0)
+    sucker_punch (2.1.2)
+      concurrent-ruby (~> 1.0)
     thor (1.0.1)
     thread_safe (0.3.6-java)
     tilt (2.0.10)
@@ -235,6 +237,7 @@ DEPENDENCIES
   sass-rails (>= 6)
   selenium-webdriver
   strip_attributes
+  sucker_punch
   turbolinks (~> 5)
   tzinfo-data
   warbler (~> 2.0.5)

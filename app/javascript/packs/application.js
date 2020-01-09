@@ -10,6 +10,16 @@ require("channels")
 require("jquery")
 require("packs/hello_coffee")
 require("packs/fresh")
+require("packs/typeahead_bundle")
+require("packs/typeaheads/for_name/parent")
+require("packs/typeaheads/for_name/family")
+require("packs/typeaheads/for_name/authors_by_abbrev_bloodhound")
+require("packs/typeaheads/for_name/author")
+require("packs/typeaheads/for_name/base_author")
+require("packs/typeaheads/for_name/ex_author")
+require("packs/typeaheads/for_name/ex_base_author")
+require("packs/typeaheads/for_name/sanctioning_author")
+require("packs/typeaheads/for_name/duplicate_of")
 
 
 // Uncomment to copy all static images under ../images to the output folder and reference

@@ -13,7 +13,6 @@ window.debugObject = (obj) ->
   $.each obj, (key, element) ->
     debug("key: " + key + "\n" + "value: " + element) if element
   return
- 
 
 jQuery -> 
   debug('Start of fresh.js document ready')
@@ -400,19 +399,23 @@ window.loadDetails = (event,inFocus,tabWasClicked = false) ->
   $('#search-result-details').show()
   $('#search-result-details').removeClass('hidden')
   record_type = $('tr.showing-details').attr('data-record-type')
+  debug("record_type: #{record_type}") 
   instance_type = $('tr.showing-details').attr('data-instance-type')
+  debug("instance_type: #{instance_type}") 
   row_type = $('tr.showing-details').attr('data-row-type')
+  debug("row_type: #{row_type}") 
   tabIndex = $('.search-result.showing-details a[tabindex]').attr('tabindex')
+  debug("tabIndex: #{tabIndex}") 
   url = inFocus.attr('data-tab-url').replace(/active_tab_goes_here/,currentActiveTab(record_type))
-  url = url+'?tabIndex='+tabIndex+'&row-type='+row_type+'&instance-type='+instance_type+'&rowType='+inFocus.attr('data-row-type')+'&format=js'
-  debug('about to load url')
+  url = url+'?format=js&tabIndex='+tabIndex+'&row-type='+row_type+'&instance-type='+instance_type+'&rowType='+inFocus.attr('data-row-type')
+  debug("url: #{url}")
   $('#search-result-details').load  url, -> 
     recordCurrentActiveTab(record_type)
     if tabWasClicked
       debug('tab clicked')
       if $('.give-me-focus') 
         debug('give-me-focus ing')
-        $('.give-me-focus').focus()
+        #$('.give-me-focus').focus()
       else
         debug('just focus the tab')
         $('li.active a.tab').focus()
@@ -422,7 +425,7 @@ window.loadDetails = (event,inFocus,tabWasClicked = false) ->
   event.preventDefault()
  
 currentActiveTab = (record_type) ->
-  debug "  state of " + record_type + " tab: #{$('body').attr('data-active-'+record_type+'-tab')}"
+  debug "state of " + record_type + " tab: #{$('body').attr('data-active-'+record_type+'-tab')} via currentActiveTab"
   return $('body').attr('data-active-'+record_type+'-tab')
 
 recordCurrentActiveTab = (record_type) -> 
@@ -591,5 +594,3 @@ window.moveDownOneSearchResult = (startRow) ->
 
 window.moveToSearchResultDetails = (searchResultDetail,liElementHasClass) -> 
   $('#search-result-details ul li.'+liElementHasClass + ' a').focus()
-
-

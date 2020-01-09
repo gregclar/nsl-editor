@@ -173,7 +173,7 @@ class NamesController < ApplicationController
 
   def refresh_children
     if @name.combined_children.size > 50
-      NameChildrenRefresherJob.new.async.perform(@name.id, username)
+      NameChildrenRefresherJob.new.perform(@name.id, username)
       render "names/refresh_children/job_started.js"
     else
       @total = NameChildrenRefresherJob.new.perform(@name.id, username)
@@ -262,7 +262,7 @@ class NamesController < ApplicationController
   end
 
   def refresh_names
-    NameChildrenRefresherJob.new.async.perform(@name.id)
+    NameChildrenRefresherJob.new.perform(@name.id)
   end
 
   def name_params

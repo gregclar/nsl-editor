@@ -92,15 +92,15 @@ module ApplicationHelper
   def page_title
     case Rails.configuration.try("environment")
     when /\Adev/i
-      "Dev Editor"
+      "V6 Dev Ed"
     when /^test/i
-      "Test Editor"
+      "V6 Test Ed"
     when /^stag/i
-      "Staging Ed"
+      "V6 Stage Ed"
     when /^prod/i
-      "#{ShardConfig.shard_group_name} Editor"
+      "V6 #{ShardConfig.shard_group_name} Editor"
     else
-      "#{ShardConfig.shard_group_name} Editor"
+      "V6 #{ShardConfig.shard_group_name} Editor"
     end
   end
 
