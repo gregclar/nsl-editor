@@ -37,7 +37,7 @@
  
     as a* 
     <br>
-    <%= f.select(:instance_type_id, InstanceType.standalone_options,{include_blank: false},
+    <%= f.select(:instance_type_id, InstanceType.standalone_options,{include_blank: true},
                            {value: @instance.instance_type_id,data:{update_url: instance_path},
                             class: "form-control width-50-percent #{'give-me-focus' unless focus_taken}",
                             title: "Select instance type", required: true, tabindex: increment_tab_index}) %>

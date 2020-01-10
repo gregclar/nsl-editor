@@ -414,7 +414,7 @@ window.loadDetails = (event,inFocus,tabWasClicked = false) ->
     if tabWasClicked
       debug('tab clicked')
       if $('.give-me-focus') 
-        debug('give-me-focus ing')
+        debug('give-me-focus ing - changed so not .give-me-focus ing because clicked a tab resulted in focus switching to the first record')
         #$('.give-me-focus').focus()
       else
         debug('just focus the tab')

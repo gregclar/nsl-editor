@@ -21,6 +21,9 @@ require("packs/typeaheads/for_name/ex_base_author")
 require("packs/typeaheads/for_name/sanctioning_author")
 require("packs/typeaheads/for_name/duplicate_of")
 require("packs/typeaheads/for_instance/reference")
+require("packs/typeaheads/for_instance/synonymy")
+require("packs/typeaheads/for_instance/name_for_unpub_citation")
+require("packs/typeaheads/for_instance/reference_excluding_current")
 
 
 // Uncomment to copy all static images under ../images to the output folder and reference
