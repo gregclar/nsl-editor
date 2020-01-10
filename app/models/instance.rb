@@ -37,7 +37,7 @@ class Instance < ActiveRecord::Base
   SEARCH_LIMIT = 50
   MULTIPLE_PRIMARY_WARNING = "Saving this instance would result in multiple primary instances for the same name."
   DUPLICATE_INSTANCE_WARNING = "already has an instance with the same reference, type and page."
-  belongs_to :parent, class_name: "Instance", foreign_key: "parent_id"
+  belongs_to :parent, class_name: "Instance", foreign_key: "parent_id", optional: true
   has_many :children,
            class_name: "Instance",
            foreign_key: "parent_id",
@@ -131,11 +131,11 @@ class Instance < ActiveRecord::Base
 
   belongs_to :namespace, class_name: "Namespace", foreign_key: "namespace_id"
   belongs_to :reference
-  belongs_to :author
+  belongs_to :author, optional: true
   belongs_to :name
   belongs_to :instance_type
 
-  belongs_to :this_cites, class_name: "Instance", foreign_key: "cites_id"
+  belongs_to :this_cites, class_name: "Instance", foreign_key: "cites_id", optional: true
   has_many :reverse_of_this_cites,
            class_name: "Instance",
            inverse_of: :this_cites,
@@ -147,7 +147,7 @@ class Instance < ActiveRecord::Base
 
   belongs_to :this_is_cited_by,
              class_name: "Instance",
-             foreign_key: "cited_by_id"
+             foreign_key: "cited_by_id", optional: true
 
   has_many :reverse_of_this_is_cited_by,
            class_name: "Instance",

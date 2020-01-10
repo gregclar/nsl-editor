@@ -21,10 +21,10 @@ class Comment < ActiveRecord::Base
   self.primary_key = "id"
   self.sequence_name = "hibernate_sequence"
   strip_attributes
-  belongs_to :author
-  belongs_to :instance
-  belongs_to :name
-  belongs_to :reference
+  belongs_to :author, optional: true
+  belongs_to :instance, optional: true
+  belongs_to :name, optional: true
+  belongs_to :reference, optional: true
   validate :validate_only_one_parent
   validates :text, presence: true
 
