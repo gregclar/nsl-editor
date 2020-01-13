@@ -44,8 +44,7 @@ class RefType < ActiveRecord::Base
   end
 
   def self.unknown
-    RefType.where(name: "Unknown")
-           .push(RefType.order("name").limit(1).first).first
+    RefType.where(name: "Unknown").first
   end
 
   def self.options

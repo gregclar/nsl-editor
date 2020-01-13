@@ -60,10 +60,8 @@ class ApplicationController < ActionController::Base
 
   # Could not get this to work with a guard clause.
   def javascript_only
-    logger.debug("format: #{request.format}")
-    unless request.format == "text/javascript"
-      logger.error('Rejecting a non-JavaScript request and re-directing \
-                   to the search page. Is Firebug console on?')
+    unless request.format == "text/javascript" || request.format == "application/json"
+      logger.error("Rejecting a non-JavaScript request (format: #{request.format}) and re-directing to the search page. Is Firebug console on?")
       render text: "JavaScript only", status: :service_unavailable
     end
   end

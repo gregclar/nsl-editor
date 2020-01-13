@@ -55,9 +55,11 @@ jQuery ->
   $('body').on('submit','#name-delete-form', (event) ->                    nameDeleteFormSubmit(event,$(this)))
   $('body').on('click','#confirm-name-refresh-children-button', (event) -> confirmNameRefreshChildrenButtonClick(event,$(this)))
   $('body').on('keydown','#copy-name-form', (event) ->                     copyNameFormEnter(event,$(this)))
+  $('body').on('keydown','#copy-instance-for-name-form', (event) ->        copyInstanceForNameFormEnter(event,$(this)))
   $('body').on('click','#create-copy-of-name', (event) ->                  createCopyOfNameClick(event,$(this)))
   $('body').on('click','#create-instances-batch-submit', (event) ->        createInstancesBatchSubmit(event,$(this)))
   $('body').on('click','#create-matches-batch-submit', (event) ->          createMatchesBatchSubmit(event,$(this)))
+  $('body').on('click','#copy-instance-link', (event) ->                   copyInstanceLinkClicked(event,$(this)))
   debug("on load - search-target-button-text: " + $('#search-target-button-text').text().trim())
 
   # When tabbing to search-result record, need to click to trigger retrieval of details.
@@ -73,7 +75,6 @@ optionalFocusOnPageLoad = ->
     $(focusSelector).focus()
   else
     $('table.search-results tr td.takes-focus a.show-details-link[tabindex]').first().focus() 
-
 
 window.showInstanceWasCreated = (recordId,fromRecordType,fromRecordId) ->
   debug("showInstanceWasCreated: recordId: #{recordId}; fromRecordType: #{fromRecordType}; fromRecordId: #{fromRecordId}")
@@ -117,6 +118,25 @@ createCopyOfNameClick = (event,$the_element) ->
   $('#copy-name-info-message-container').html('')
   $('#copy-name-info-message-container').addClass('hidden')
   return true
+
+copyInstanceLinkClicked = (event,$the_element) ->
+  debug('copyInstanceLinkClicked')
+  $('#confirm-or-cancel-copy-instance-link-container').removeClass('hidden');
+  event.preventDefault()
+
+copyInstanceForNameFormEnter = (event,$the_button) ->
+  key = event.which
+  enter_key_code = 13
+  if (key == enter_key_code)
+    if ($('#confirm-or-cancel-copy-instance-link-container').hasClass('hidden'))
+      # Show the confirm/cancel buttons
+      $('#confirm-or-cancel-copy-instance-link-container').removeClass('hidden')
+      return false
+    else
+      $('#create-copy-of-instance').click()
+      return false
+  else
+    return true
 
 createMatchesBatchSubmit = (event,$the_element) ->
   $('#search-result-details-info-message-container').html('Working....')

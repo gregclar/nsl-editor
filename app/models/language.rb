@@ -16,33 +16,34 @@
 #   See the License for the specific language governing permissions and
 #   limitations under the License.
 #
-class RefAuthorRole < ActiveRecord::Base
-  self.table_name = "ref_author_role"
+class Language < ActiveRecord::Base
+  self.table_name = "language"
   self.primary_key = "id"
   has_many :references
-
-  def as_citation
-    name.downcase =~ /editor/ ? "(ed.)" : ""
-  end
-
-  def as_excitation
-    name.downcase =~ /editor/ ? "(ed.)" : ""
-  end
-
-  def self.author
-    #where(name: "Author").push(order("name").limit(1).first).first
-    where(name: "Author").first
-  end
+  ORDER_BY = "case name when 'Undetermined' then 'AAA' \
+  when 'English' then 'AAB' when 'French' then 'AAC' when 'German' then 'AAD'\
+  when 'Latin' then 'AAE' else name end"
 
   def self.unknown
-    where(name: "Unknown").push(order("name").limit(1).first).first
+    find_by(name: "Undetermined")
   end
 
+  def self.default
+    find_by(name: "Undetermined")
+  end
+
+  # For any language select list.
   def self.options
-    all.order(:name).collect { |r| [r.name, r.id] }
+    all.order(ORDER_BY).collect do |lang|
+      [lang.name, lang.id]
+    end.insert(5, ["──────────", "disabled"])
   end
 
-  def self.query_form_options
-    all.sort_by(&:name).collect { |n| [n.name, n.name.downcase, class: ""] }
+  def self.english
+    find_by(name: "English")
+  end
+
+  def determined?
+    name != "Undetermined"
   end
 end
