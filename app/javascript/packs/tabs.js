@@ -88,7 +88,7 @@ function getActiveExamplesIdentifier() {
     }).first().attr('data-examples');
 }
 
-$(document).ready(function () {
+$( document ).on('turbolinks:load', function() {
   console.log('document ready');
 
   $('ul#search-results-tabset li a.main-body-tab-link').on('click', function (e) {

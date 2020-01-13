@@ -14,7 +14,7 @@ window.debugObject = (obj) ->
     debug("key: " + key + "\n" + "value: " + element) if element
   return
 
-jQuery -> 
+$(document).on "turbolinks:load", ->
   debug('Start of fresh.js document ready')
   debug('jQuery version: ' + $().jquery)
   $('body').on('click','.edit-details-tab', (event) ->                 loadDetails(event,$(this),true))
