@@ -43,7 +43,7 @@ class Author < ActiveRecord::Base
            foreign_key: "sanctioning_author_id",
            class_name: "Name"
 
-  belongs_to :duplicate_of, class_name: "Author", foreign_key: "duplicate_of_id"
+  belongs_to :duplicate_of, class_name: "Author", foreign_key: "duplicate_of_id", optional: true
   has_many :duplicates,
            -> { order("name") },
            class_name: "Author",
