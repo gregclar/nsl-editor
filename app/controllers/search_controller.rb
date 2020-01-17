@@ -37,6 +37,7 @@ class SearchController < ApplicationController
 
   def extras
     mapper = Search::Mapper::Extras.new(params)
+    logger.debug(mapper.partial)
     render partial: mapper.partial
   end
 

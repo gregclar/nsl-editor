@@ -54,7 +54,7 @@ class Reference::DefinedQuery::ReferencesSharedNames
 
   def build_args
     @args = @parsed_request.where_arguments.split(",")
-    raise "Exactly 2 reference IDs are expected." unless @args.size == 2
+    raise "Exactly 2 reference IDs are expected in @args: #{@args}." unless @args.size == 2
     @ref_id_1 = @args.first.to_i
     @ref_id_2 = @args.last.to_i
   end

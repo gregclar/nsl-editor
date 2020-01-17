@@ -1,0 +1,79 @@
+  <h4>Searchable Author fields</h4>
+  <h5>Name and Abbreviation</h5>
+<table class="table table-striped">
+  <tr><th>Field</th><th>Description</th></tr>
+  <% [
+      {field_name: '', description: "default author search is on name and abbreviation - see next line below."},
+      {field_name: 'name-or-abbrev:', description: "match on either name or abbreviation, with tokenized terms, so order does not matter"},
+      {field_name: 'name:', description: "name, with leading and trailing wildcards added automatically *"},
+      {field_name: 'name-exact:', description: "name, supply your own wildcards *"},
+      {field_name: 'abbrev:', description: "abbreviation, with leading and trailing wildcards added automatically *"},
+      {field_name: 'abbrev-exact:', description: "abbreviation, supply your own wildcards *"},
+      {field_name: 'full-name:', description: "fully qualified author name or additional identifying information, leading and trailing wildcards added automatically *"},
+      {field_name: 'full-name-exact:', description: "fully qualified author name or additional identifying information, supply your own wildcards *"},
+      {field_name: 'notes:', description: "search on notes, add your own wildcards *"},
+      ].each do |val| %>
+  <tr>
+    <td class="width-20-percent">
+      <a href="javascript:void(0)" class="searchable-field width-100-percent" title='Add "<%= val[:field_name] %>" field to search.'>
+        <span class="blue"><%= val[:field_name] %></span>
+      </a>
+    </td>
+    <td><%= val[:description].html_safe %></td>
+    <% if val[:partial].present? %>
+      <td><%= render partial: val[:partial] %></td>
+    <% else %>
+      <td></td>
+    <% end %>
+  </tr>
+  <% end %>
+</table>
+<p>* Supports search for empty fields.</p>
+<br/>
+
+<h5>Assertions</h5>
+<table class="table table-striped">
+  <% [
+      {field_name: 'is-a-duplicate:', description: "marked as a duplicate"},
+      {field_name: 'is-not-a-duplicate:', description: "not marked as a duplicate"},
+      {field_name: 'has-abbrev:', description: "has an abbreviation"},
+      {field_name: 'has-no-abbrev:', description: "has no abbreviation"},
+      {field_name: 'has-name:', description: "has a name"},
+      {field_name: 'has-no-name:', description: "has no name"},
+      ].each do |val| %>
+  <tr>
+    <td class="width-20-percent">
+        <a href="javascript:void(0)" class="searchable-field width-100-percent" title='Add "<%= val[:field_name] %>" field to search.'>
+          <span class="blue"><%= val[:field_name] %></span>
+        </a>
+    </td>
+    <td><%= val[:description].html_safe %></td>
+  </tr>
+  <% end %>
+</table>
+
+<h5>Authoring Assertions</h5>
+<table class="table table-striped">
+  <% [
+      {field_name: 'has-authored-name:', description: "is linked to a name as the author"},
+      {field_name: 'has-base-authored-name:', description: "is linked to a name as the base author"},
+      {field_name: 'has-ex-authored-name:', description: "is linked to a name as the ex-author"},
+      {field_name: 'has-ex-base-authored-name:', description: "is linked to a name as the ex-base author"},
+      {field_name: 'has-sanctioned-name:', description: "is linked to a name as the sanctioning author"},
+      {field_name: 'has-any-authored-name:', description: "is linked to a name as any type of author"},
+      ].each do |val| %>
+  <tr>
+    <td class="width-20-percent">
+        <a href="javascript:void(0)" class="searchable-field width-100-percent" title='Add "<%= val[:field_name] %>" field to search.'>
+          <span class="blue"><%= val[:field_name] %></span>
+        </a>
+    </td>
+    <td><%= val[:description].html_safe %></td>
+  </tr>
+  <% end %>
+</table>
+
+<%= render partial: 'comments/advanced_search/help' %>
+<%= render partial: 'help/id_search_help' %>
+<%= render partial: 'help/case_and_wildcards_search' %>
+

@@ -32,6 +32,7 @@ require("packs/typeaheads/for_reference/parent")
 require("packs/typeaheads/for_reference/duplicate")
 require("packs/typeaheads/for_name/workspace_parent_name")
 require("packs/typeaheads/for_author/duplicate_of")
+require("packs/typeaheads/for_orchids/parent")
 
 
 // Uncomment to copy all static images under ../images to the output folder and reference

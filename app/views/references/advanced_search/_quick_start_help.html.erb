@@ -1,0 +1,12 @@
+<h5>Quick start</h5>
+<p/>Type one or two terms or leading fragments of words from the 
+<ul>
+  <li>title, or
+  <li>author surname
+</ul>
+<p/>into the search field and press Enter, or click Search.  
+<p/>The Editor will search for Reference citations containing those words or word prefixes.
+<p/> E.g.  <%= link_to('bent hook notes', search_path(query_string: 'bent hook notes', query_target: 'reference'),class:'blue',title: 'example search') %>
+or <%= link_to('bent hook notes 1841', search_path(query_string: 'bent hook notes 1841', query_target: 'reference'),class:'blue',title: 'example search') %>
+<br>
+<p/>Order of terms is not important for default reference searches.

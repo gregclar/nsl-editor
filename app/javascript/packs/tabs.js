@@ -89,7 +89,7 @@ function getActiveExamplesIdentifier() {
 }
 
 $( document ).on('turbolinks:load', function() {
-  console.log('document ready');
+  console.log('turbolinks:load event');
 
   $('ul#search-results-tabset li a.main-body-tab-link').on('click', function (e) {
     debug('.main-body-tab-link clicked; non-advanced containers will be HIDDEN.')
@@ -103,6 +103,7 @@ $( document ).on('turbolinks:load', function() {
         $(value).removeClass('hidden');
       });
     }
+    e.preventDefault()
   });
 
   // Show search result details when search results are displayed
@@ -149,7 +150,19 @@ $( document ).on('turbolinks:load', function() {
 
   $('a.search-non-default-tab-link').on('click', function (e) {
     debug('a.search-non-default-tab-link clicked, calling getContentOnDemand for ' + this);
+    debug('e:' + e.target);
+    debug('e:' + e.target.tagName);
+    debug('e id:' + e.target.id);
+    var targetElement = e.target.dataset.targetElement;
+    debug('e targetElement:' + targetElement);
+    debug('before call to getContentOnDemand');
     getContentOnDemand(this);
+    debug('after call to getContentOnDemand')
+    $('.main-body-container').addClass('hidden');
+    $('#search-result-details').addClass('hidden');
+    $(targetElement).removeClass('hidden');
+    //$('#help-search-container').removeClass('hidden');
+    e.preventDefault()
   });
 
   setActiveHelpOnLoad();
