@@ -55,3 +55,5 @@ gem "net-ldap"
 gem "composite_primary_keys"
 gem "sucker_punch"
 gem "pg_search"
+
+gem "nokogiri", ">= 1.10.8"
