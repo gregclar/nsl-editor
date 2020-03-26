@@ -77,4 +77,8 @@ class ApplicationController < ActionController::Base
   def pick_a_tab_index
     @tab_index = (params[:tabIndex] || "1").to_i
   end
+
+  def empty_search
+    @search = Search::Empty.new(params)
+  end
 end

@@ -1,0 +1,22 @@
+
+body.development div#big-navbar { background: slateblue; }
+body.development div#first-navbar { background: slateblue; }
+body.development ul.navbar-nav li.dropdown { background: slateblue; }
+body.development ul.navbar-nav li a.dropdown-toggle { background: slateblue; }
+body.development div#searchbar { background: slateblue; }
+body.development div#search-summary { background: slateblue; }
+
+body.test div#big-navbar { background: magenta; }
+body.test div#first-navbar { background: magenta; }
+body.test ul.navbar-nav li.dropdown { background: magenta; }
+body.test ul.navbar-nav li a.dropdown-toggle { background: magenta; }
+body.test div#searchbar { background: magenta; }
+body.test div#search-summary { background: magenta; }
+
+body.staging div#big-navbar { background: blue; }
+body.staging div#first-navbar { background: blue; }
+body.staging ul.navbar-nav li.dropdown { background: blue; }
+body.staging ul.navbar-nav li a.dropdown-toggle { background: blue; }
+body.staging div#searchbar { background: blue; }
+body.staging div#search-summary { background: blue; }
+

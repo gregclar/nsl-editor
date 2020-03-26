@@ -109,6 +109,10 @@ Rails.application.configure do
   # config.active_record.database_selector = { delay: 2.seconds }
   # config.active_record.database_resolver = ActiveRecord::Middleware::DatabaseSelector::Resolver
   # config.active_record.database_resolver_context = ActiveRecord::Middleware::DatabaseSelector::Resolver::Session
+  #
+  # This is currently a critical setting to avoid authenticity token checking 
+  # failing (csrf)
+  config.action_controller.forgery_protection_origin_check = false
 end
 
 if ENV['EDITOR_CONFIG_FILE']

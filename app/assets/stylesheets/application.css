@@ -10,6 +10,52 @@
  * files in this directory. Styles in this file should be added after the last require_* statement.
  * It is generally better to create a new file per style scope.
  *
- *= require_tree .
+ *x require_tree .
+
+ *= require dashboard
+ *= require layout-using-dashboard
+ *= require search-result-details
+ *= require stylish
+ *= require media
+ *= require width-primitives
+ *= require controls
+ *= require typeahead
+ *= require colors
+ *= require layout_2015
+ *= require search-form
+ *= require tree
+ *= require tree-placement
+ *= require environment
  *= require_self
  */
+
+/*
+@import "bootstrap-sprockets";
+//@import 'font-awesome';
+@import "bootstrap";
+@import "dashboard.css.scss";
+@import "layout-using-dashboard.css.scss";
+@import "search-result-details.css.scss";
+@import "stylish.css.scss";
+@import "media.css.scss";
+@import "width-primitives.css.scss";
+@import "controls.css.scss";
+@import "typeahead.css.scss";
+@import "colors.css.scss";
+@import "layout_2015.css.scss";
+@import "search-form.css.scss";
+@import "tree.css.scss";
+@import "tree-placement.css.scss";
+@import "environment.css.scss";
+@import "bootstrap-editable.css";
+*/
+/*
+// possibly this should not be here, instead the tree search results page should declare it as a dependency
+*/
+/*@import "tree-extras/tree";*/
+
+/*
+// @import "debug";
+*/
+
+
