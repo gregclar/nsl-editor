@@ -23,11 +23,11 @@ class Tree::DraftVersion < ActiveRecord::Base
   default_scope { where(published: false) }
 
   belongs_to :tree,
-             class_name: Tree
+             class_name: "Tree"
 
   has_many :tree_version_elements,
            foreign_key: "tree_version_id",
-           class_name: TreeVersionElement
+           class_name: "TreeVersionElement"
 
   def name
     name

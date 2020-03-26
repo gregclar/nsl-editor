@@ -21,7 +21,7 @@ class OrchidsName < ActiveRecord::Base
   strip_attributes
   belongs_to :name
   belongs_to :instance
-  belongs_to :standalone_instance, class_name: 'Instance', foreign_key: 'standalone_instance_id', optional: true
+  belongs_to :standalone_instance, class_name: "Instance", foreign_key: 'standalone_instance_id', optional: true
   belongs_to :instance_type, foreign_key: :relationship_instance_type_id, optional: true
   belongs_to :orchid
   belongs_to :tree_element, foreign_key: 'standalone_instance_id', optional: true

@@ -27,7 +27,7 @@ class Orchid < ActiveRecord::Base
              foreign_key: "parent_id",
              dependent: :restrict_with_exception
     has_many :orchids_name
-    has_many :preferred_match, class_name: :OrchidsName, foreign_key: :orchid_id
+    has_many :preferred_match, class_name: "OrchidsName", foreign_key: :orchid_id
     scope :avoids_id, ->(avoid_id) { where("orchids.id != ?", avoid_id) }
 
   def self.create(params, username)
