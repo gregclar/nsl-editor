@@ -1,19 +1,15 @@
-$nsl-navbar-background-color: gray;
-$nsl-main-background-color: white;
-$nsl-navbar-inverse-brand-background: white;
-$nsl-search-result-details-background: white;
-$nsl-navbar-active-background: white;
 
 div#big-navbar {
-  background: $nsl-navbar-background-color;
+  background: gray;
+  height: 143px;
 }
 
 div#first-navbar {
-  background: $nsl-navbar-background-color;
+  background: gray;
 }
 
 div#search-result-container.sidebar {
-  background: $nsl-main-background-color;
+  background: white;
 }
 
 div#main-content {
@@ -29,14 +25,14 @@ a.navbar-brand {
 }
 
 div.navbar-inverse a.navbar-brand {
-  color: $nsl-navbar-inverse-brand-background;
+  color: white;
   font-weight: normal;
   font-size: 16px;
 }
 
 div.navbar-inverse a.navbar-brand.active {
   text-decoration: none;
-  background: $nsl-navbar-active-background;
+  background: white;
   color: black;
 }
 
@@ -52,7 +48,7 @@ div.navbar li.dropdown {
 }
 
 div.navbar-inverse a.navbar-nav {
-  color: $nsl-navbar-inverse-brand-background;
+  color: white;
   font-weight: normal;
   font-size: 14px;
 }
@@ -64,13 +60,13 @@ li a#this-dropdown {
 
 ul.navbar-nav li.dropdown {
   padding: 0px 0px 0px 0px;
-  background: $nsl-navbar-background-color;
+  background: gray;
 }
 
 ul.navbar-nav li a.dropdown-toggle {
   padding: 6px 5px 6px 5px;
   color: white;
-  background: $nsl-navbar-background-color;
+  background: gray;
   font-weight: normal;
   font-size: 14px;
 }
@@ -85,12 +81,12 @@ ul.navbar-nav li.dropdown.open a.dropdown-toggle {
 
 div.navbar-inverse a.navbar-nav.active {
   text-decoration: none;
-  background: $nsl-navbar-active-background;
+  background: white;
   color: black;
 }
 
 div#searchbar {
-  background: $nsl-navbar-background-color;
+  background: gray;
   height: 77px;
   padding-top: 4px;
 }
@@ -120,7 +116,7 @@ table#search-results-table {
 
 div#search-result-details {
   position: relative;
-  top: 0;
+  margin-top: 25px;
   right: 1%;
   overflow: auto;
   z-index: 70;
@@ -128,7 +124,7 @@ div#search-result-details {
   border-radius: 3px;
   float: right;
   height: calc(98vh - 140px - 4em);
-  background-color: $nsl-search-result-details-background;
+  background-color: white;
 }
 
 .no-left-padding {
@@ -155,8 +151,14 @@ div#footer {
 }
 
 div#search-result-container {
+  position: absolute;
   margin-bottom: 2.2em;
 }
+/*
+div.main.row {
+  position: absolute;
+}
+*/
 
 // Allow for footer.
 div#search-results {
@@ -198,6 +200,7 @@ tr.search-result td.main-content {
 
 div#search-result-container {
   padding-top: 0;
+  margin-top: -5px;
 }
 
 a.example-search-link {

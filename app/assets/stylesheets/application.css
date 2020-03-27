@@ -26,6 +26,7 @@
  *= require tree
  *= require tree-placement
  *= require environment
+ *= require old-application
  *= require_self
  */
 
