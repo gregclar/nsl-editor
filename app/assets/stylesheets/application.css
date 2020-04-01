@@ -12,22 +12,22 @@
  *
  *x require_tree .
 
- *= require dashboard
- *= require layout-using-dashboard
- *= require search-result-details
- *= require stylish
- *= require media
- *= require width-primitives
- *= require controls
- *= require typeahead
- *= require colors
- *= require layout_2015
- *= require search-form
- *= require tree
- *= require tree-placement
- *= require environment
- *= require old-application
- *= require_self
+ *= xrequire dashboard
+ *= xrequire layout-using-dashboard
+ *= xrequire search-result-details
+ *= xrequire stylish
+ *= xrequire media
+ *= xrequire width-primitives
+ *= xrequire controls
+ *= xrequire typeahead
+ *= xrequire colors
+ *= xrequire layout_2015
+ *= xrequire search-form
+ *= xrequire tree
+ *= xrequire tree-placement
+ *= xrequire environment
+ *= xrequire old-application
+ *= xrequire_self
  */
 
 /*
@@ -54,9 +54,4 @@
 // possibly this should not be here, instead the tree search results page should declare it as a dependency
 */
 /*@import "tree-extras/tree";*/
-
-/*
-// @import "debug";
-*/
-
 

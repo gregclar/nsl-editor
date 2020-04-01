@@ -11,6 +11,7 @@ require("jquery")
 require("packs/hello_coffee")
 require("packs/fresh")
 require("packs/tabs")
+require("packs/dropdown")
 require("packs/typeahead_bundle")
 require("packs/typeaheads/for_name/parent")
 require("packs/typeaheads/for_name/family")
@@ -43,5 +44,4 @@ require("packs/typeaheads/for_orchids/parent")
 // const imagePath = (name) => images(name, true)
 //
 //
-import 'bootstrap'
 

@@ -130,14 +130,21 @@ $( document ).on('turbolinks:load', function() {
 
   $("#search-target-list").on("click", function (e) {
     if (e.target && e.target.nodeName == "A") {
-      debug('setting search-target');
+      debug('========================================= setting search-target ============================================');
       debug(e.target);
+      debug('========================================= a');
       debug(e.target.nodeName);
+      debug('========================================= b');
       document.getElementById('search-target-button-text').innerHTML = e.target.innerHTML;
+      debug('========================================= c');
       document.getElementById('query-target').value = e.target.innerHTML;
+      debug('========================================= d');
       debug(e.target.dataset.help);
+      debug('========================================= e');
       showHelpForSearchTarget(e.target.dataset.help);
+      debug('========================================= f');
       showExamplesForSearchTarget(e.target.dataset.examples);
+      debug('========================================= end setting search-target ============================================');
       e.preventDefault()
     }
   });

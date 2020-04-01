@@ -1,4 +1,5 @@
 class SearchController < ApplicationController
+  layout 'diag'
   before_action :hide_details
 
   def search
