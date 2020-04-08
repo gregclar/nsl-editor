@@ -6,12 +6,12 @@ body.development ul.navbar-nav li a.dropdown-toggle { background: slateblue; }
 body.development div#searchbar { background: slateblue; }
 body.development div#search-summary { background: slateblue; }
 
-body.test div#big-navbar { background: magenta; }
-body.test div#first-navbar { background: magenta; }
-body.test ul.navbar-nav li.dropdown { background: magenta; }
-body.test ul.navbar-nav li a.dropdown-toggle { background: magenta; }
-body.test div#searchbar { background: magenta; }
-body.test div#search-summary { background: magenta; }
+body.test div#big-navbar { background: darkmagenta; }
+body.test div#first-navbar { background: darkmagenta; }
+body.test ul.navbar-nav li.dropdown { background: darkmagenta; }
+body.test ul.navbar-nav li a.dropdown-toggle { background: darkmagenta; }
+body.test div#searchbar { background: darkmagenta; }
+body.test div#search-summary { background: darkmagenta; }
 
 body.staging div#big-navbar { background: blue; }
 body.staging div#first-navbar { background: blue; }

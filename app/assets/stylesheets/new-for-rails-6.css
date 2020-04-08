@@ -1,0 +1,53 @@
+
+a {
+  color: #606060;
+}
+
+a:hover {
+  color: black;
+}
+
+.main-body-container {
+  margin: 3em 0 0 0;
+}
+
+xinput#query-string-field {
+  flex-grow: 4;
+}
+
+xflex-container {
+  display: flex;
+  flex-direction: row;
+}
+
+/*
+div#searchbar {
+  display: flex;
+  flex-direction: row;
+}
+*/
+/*
+div#search-form {
+  display: flex;
+  flex-direction: row;
+}
+*/
+
+input#query-string-field {
+  padding: 0 0 0 0.8em;
+  border-style: none;
+  height: 25px;
+  margin-top: 2px;
+}
+
+input#query-submit {
+  border-top-left-radius: 0;
+  border-bottom-left-radius: 0;
+  margin-bottom: 2px;
+  margin-left: -4px;
+}
+
+
+
+
+

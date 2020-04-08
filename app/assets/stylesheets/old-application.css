@@ -263,7 +263,11 @@ div.focus-details.freshly-created div.hack-to-force-line-separation-for-long-ins
 }
 
 table tr.debug td, *.debug {
-  border: 1px solid purple;
+  border: 1px solid rebeccapurple;
+}
+
+table tr.debug-white td, *.debug-white {
+  border: 1px solid white;
 }
 
 div#query-form-container {

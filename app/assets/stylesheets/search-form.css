@@ -7,19 +7,3 @@ input#the-checkbox {
   border: 1px solid black;
 }
 
-input#query-string-field {
-  background-color: magenta;
-  max-width: 42em;
-  margin: 0 0 0 0.6em;
-}
-/*
-  flex-grow: 4;
-}
-
-.flex-container {
-  display: flex;
-  flex-direction: row;
-
-}
-*/
-

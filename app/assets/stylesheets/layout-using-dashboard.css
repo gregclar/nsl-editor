@@ -115,7 +115,7 @@ table#search-results-table {
 }
 
 div#search-result-details {
-  position: relative;
+  position: fixed;
   margin-top: 25px;
   right: 1%;
   overflow: auto;
@@ -126,6 +126,8 @@ div#search-result-details {
   height: calc(98vh - 140px - 4em);
   background-color: white;
 }
+/* this works, but is too rigid */
+  /*width: 800px !important; */
 
 .no-left-padding {
   padding-left: 0;
@@ -208,5 +210,4 @@ a.example-search-link {
   width: 100%;
   height: 100%;
 }
-
 
