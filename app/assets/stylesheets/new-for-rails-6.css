@@ -47,6 +47,10 @@ input#query-submit {
   margin-left: -4px;
 }
 
+.dropdown-menu > li {
+  padding: 3px 20px;
+  color: grey;
+}
 
 
 
