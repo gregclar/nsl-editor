@@ -1,7 +1,7 @@
 - :date: 09-Apr-2020
   :jira_id: '3539'
   :description: |-
-    Rails 6 upgrade: recent - fixed menu layout; reinstated history of changes
+    Rails 6 upgrade: recent - fixed menu layout; reinstated history of changes; count names works
 - :date: 13-Mar-2020
   :jira_id: '3481'
   :description: |-
