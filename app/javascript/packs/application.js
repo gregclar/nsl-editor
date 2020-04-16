@@ -8,7 +8,6 @@ require("turbolinks").start()
 require("@rails/activestorage").start()
 require("channels")
 require("jquery")
-require("packs/hello_coffee")
 require("packs/fresh")
 require("packs/tabs")
 require("packs/dropdown")
@@ -34,6 +33,7 @@ require("packs/typeaheads/for_reference/duplicate")
 require("packs/typeaheads/for_name/workspace_parent_name")
 require("packs/typeaheads/for_author/duplicate_of")
 require("packs/typeaheads/for_orchids/parent")
+require("packs/main")
 
 
 // Uncomment to copy all static images under ../images to the output folder and reference
