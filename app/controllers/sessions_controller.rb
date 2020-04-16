@@ -55,6 +55,7 @@ class SessionsController < ApplicationController
   private
 
   def build_sign_in
+    reset_session
     @sign_in = SignIn.new(sign_in_params)
     @no_searchbar = true
     @no_search_result_details = true

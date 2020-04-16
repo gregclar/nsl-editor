@@ -1,11 +1,23 @@
 class ApplicationController < ActionController::Base
   protect_from_forgery with: :exception  # from v4, needed in v6?
-  #before_action :set_debug,
-                #:start_timer,
-                #:check_system_broadcast,
-  before_action :authenticate
-                #:check_authorization
-  #around_action :user_tagged_logging
+  before_action :set_debug,
+                :start_timer,
+                :check_system_broadcast,
+                :authenticate,
+                :check_authorization
+  around_action :user_tagged_logging
+
+  protected
+
+  def check_authorization
+    pseudo_action = if params[:tab].present?
+                      params[:tab]
+                    else
+                      params[:action]
+                    end
+    logger.info("check_authorization: pseudo_action: #{pseudo_action}")
+    authorize!(params[:controller], pseudo_action)
+  end
 
   def authenticate
     if session[:username].blank?
@@ -81,4 +93,33 @@ class ApplicationController < ActionController::Base
   def empty_search
     @search = Search::Empty.new(params)
   end
+
+  def set_debug
+    @debug = false
+  end
+
+  def start_timer
+    @start_time = Time.now
+  end
+
+  def check_system_broadcast
+    @system_broadcast = ""
+    file_path = Rails.configuration.try('path_to_broadcast_file')||''
+    if File.exist?(file_path)
+      logger.debug("System broadcast file exists at #{file_path}")
+      file = File.open(file_path, "r")
+      @system_broadcast = file.readline unless file.eof?
+    end
+  rescue => e
+    logger.error("Problem with system broadcast.")
+    logger.error(e.to_s)
+  end
+
+  def user_tagged_logging
+    logger.tagged(username || 'Anonymous') do
+      yield
+    end
+  end
 end
+
+
