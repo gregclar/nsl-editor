@@ -1,0 +1,61 @@
+
+book: 
+  name: Book 
+  parent: series
+  parent_optional: true
+
+chapter: 
+  name: Chapter 
+  parent: book
+  parent_optional: false
+
+database: 
+  name: Database 
+  parent_optional: false
+
+database_record: 
+  name: Database Record 
+  parent: database
+  parent_optional: false
+
+herbarium_annotation: 
+  name: Herbarium annotation 
+  parent_optional: false
+
+index: 
+  name: Index 
+  parent_optional: false
+
+journal: 
+  name: Journal 
+  parent_optional: false
+
+personal_communication: 
+  name: Personal Communication 
+  parent_optional: false
+
+series: 
+  name: Series 
+  parent_optional: false
+
+paper: 
+  name: Paper 
+  parent_optional: false
+  parent: journal
+
+section: 
+  name: Section 
+  parent_optional: false 
+  parent: book
+
+unknown: 
+  name: Unknown 
+  parent_optional: true
+  parent: unknown
+
+part: 
+  name: Part 
+  parent_optional: false
+  parent: paper
+
+

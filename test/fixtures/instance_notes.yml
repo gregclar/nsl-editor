@@ -1,0 +1,50 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  instance: triodia_in_brassard
+  instance_note_key: neotype
+  value: MyString
+  namespace: apni
+  updated_by: x
+  created_by: x
+
+apc_comment_1:
+  instance: has_apc_comment_note
+  instance_note_key: apc_comment
+  value: apc comment one
+  namespace: apni
+  updated_by: greg
+  created_by: greg
+
+apc_dist_1:
+  instance: has_apc_dist_note
+  instance_note_key: apc_dist
+  value: apc dist one
+  namespace: apni
+  updated_by: greg
+  created_by: greg
+
+apc_dist_2:
+  instance: has_apc_2_dist_notes
+  instance_note_key: apc_dist
+  value: apc dist two
+  namespace: apni
+  updated_by: greg
+  created_by: greg
+
+syn_note:
+  instance: metrosideros_costata_is_basionym_of_angophora_costata
+  instance_note_key: text
+  value: a note
+  namespace: apni
+  updated_by: x
+  created_by: x
+
+type_note:
+  instance: triodia_in_brassard
+  instance_note_key: type
+  value: craven
+  namespace: apni
+  updated_by: x
+  created_by: x
+

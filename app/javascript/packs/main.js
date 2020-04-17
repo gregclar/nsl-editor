@@ -44,7 +44,6 @@ $(document).ready(function () {
   $.expr[':'].containsIgnoreCase = function (n, i, m) {
     return jQuery(n).text().toUpperCase().indexOf(m[3].toUpperCase()) >= 0;
   };
-
   debug('End of main.js document ready.');
 });  // end of document ready
 // ===================================  end of document ready ================================================
@@ -286,6 +285,7 @@ function initDistSelect() {
     $('.select2-search__field').focus();
   });
 }
+window.initDistSelect = initDistSelect;
 
 var toggleNext = function (el) {
   $(el).find('i').toggle();

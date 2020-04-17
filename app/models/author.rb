@@ -57,11 +57,12 @@ class Author < ActiveRecord::Base
   DEFAULT_DESCRIPTOR = "n" # for name
   DEFAULT_ORDER_BY = "name asc "
 
-  before_create :set_defaults
+  # before_create :set_defaults # rails 6 this was not being called before the validations
   before_save :compress_whitespace
 
   def save_with_username(username)
     self.created_by = self.updated_by = username
+    set_defaults
     save
   end
 

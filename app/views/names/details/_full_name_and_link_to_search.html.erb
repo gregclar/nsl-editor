@@ -1,6 +1,6 @@
 <span class="full-name" title="Full name"><%= "#{@name.full_name}" %></span>&nbsp;
 <%= link_to("#{ShardConfig.name_space} #{icon('external-link-square')}".html_safe,
-            "#{Rails.configuration.nsl_links}apniFormat/display/#{@name.id}",
+            "#{Rails.configuration.try('nsl_links')}apniFormat/display/#{@name.id}",
             title: "#{ShardConfig.name_space} search. Opens in another tab or window.",
             class: "rebeccapurple",
             target: "_editor_to_apni",

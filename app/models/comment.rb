@@ -35,7 +35,7 @@ class Comment < ActiveRecord::Base
 
   def update_attributes_with_username!(attributes, username)
     self.updated_by = username
-    update_attributes!(attributes)
+    update!(attributes)
   end
 
   def update_attributes_with_username(attributes, username)

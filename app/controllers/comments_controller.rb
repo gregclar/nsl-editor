@@ -52,7 +52,7 @@ class CommentsController < ApplicationController
   # DELETE /comments/1.json
   def destroy
     username = current_user.username
-    if @comment.update_attributes(updated_by: username) && @comment.destroy
+    if @comment.update(updated_by: username) && @comment.destroy
       respond_to do |format|
         format.html { redirect_to comments_url, notice: "Comment deleted." }
         format.json { head :no_content }

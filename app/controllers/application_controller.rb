@@ -7,6 +7,12 @@ class ApplicationController < ActionController::Base
                 :check_authorization
   around_action :user_tagged_logging
 
+  rescue_from ActionController::InvalidAuthenticityToken, with: :show_login_page
+  rescue_from CanCan::AccessDenied do |_exception|
+    logger.error("Access Denied")
+    head :forbidden
+  end
+
   protected
 
   def check_authorization

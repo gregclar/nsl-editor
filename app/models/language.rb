@@ -34,7 +34,7 @@ class Language < ActiveRecord::Base
 
   # For any language select list.
   def self.options
-    all.order(ORDER_BY).collect do |lang|
+    all.order(Arel.sql(ORDER_BY)).collect do |lang|
       [lang.name, lang.id]
     end.insert(5, ["──────────", "disabled"])
   end

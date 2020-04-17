@@ -41,6 +41,23 @@ group :test do
   gem 'webdrivers'
 end
 
+group :test do
+    gem "minitest"
+    gem "minitest-rails"
+    gem "minitest-reporters"
+    gem "launchy"
+    gem "mocha", "~> 1.1.0"
+    # NoMethodError: assert_template has been extracted to a gem. To continue using it, add:
+    gem 'rails-controller-testing'
+end
+
+group :development, :test do
+  gem "pry-rails"
+  gem "pry-rescue"
+  gem "webmock"
+  # gem "schema_plus"
+end
+
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
 gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
 
@@ -57,3 +74,4 @@ gem "sucker_punch"
 gem "pg_search"
 
 gem "nokogiri", ">= 1.10.8"
+gem "rest-client"

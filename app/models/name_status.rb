@@ -20,8 +20,8 @@ class NameStatus < ActiveRecord::Base
   self.table_name = "name_status"
   self.primary_key = "id"
   self.sequence_name = "nsl_global_seq"
-
-  scope :ordered_by_name, -> {order(%(replace(name, '[', 'z') collate "C"))}
+  belongs_to :name_group
+  scope :ordered_by_name, -> {order(Arel.sql(%(replace(name, '[', 'z') collate "C")))}
   scope :not_deprecated, -> { where("not deprecated") }
 
   NA = "[n/a]"

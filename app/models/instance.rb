@@ -69,11 +69,11 @@ class Instance < ActiveRecord::Base
     instance_notes.map {|note| "#{note.instance_note_key.name}: #{note.value}"}.join(",")
   end
 
-  scope :ordered_by_name, -> {joins(:name).order("simple_name asc")}
+  scope :ordered_by_name, -> {joins(:name).order(Arel.sql("simple_name asc"))}
   # The page ordering aims to emulate a numeric ordering process that
   # handles assorted text and page ranges in the character data.
   scope :ordered_by_page, lambda {
-    order("Lpad(
+    order(Arel.sql("Lpad(
             Regexp_replace(
               Regexp_replace(page, '[A-z. ]','','g'),
             '[^0-9]*([0-9][0-9]*).*', '\\1')
@@ -85,11 +85,11 @@ class Instance < ActiveRecord::Base
               '~','Z'),
           12,'0'),
           page,
-          name.full_name")
+          name.full_name"))
   }
 
   scope :in_nested_instance_type_order, lambda {
-    order(
+    order(Arel.sql(
         "          case instance_type.name " \
       "          when 'basionym' then 1 " \
       "          when 'replaced synonym' then 2 " \
@@ -102,6 +102,7 @@ class Instance < ActiveRecord::Base
       "          case taxonomic " \
       "          when true then 2 " \
       "          else 1 end "
+    )
     )
   }
 
@@ -127,7 +128,7 @@ class Instance < ActiveRecord::Base
            ref_id])
   }
   # scope :order_by_name_full_name, -> { joins(:name).order(name: [:full_name])}
-  scope :order_by_name_full_name, -> {joins(:name).order(" name.full_name ")}
+  scope :order_by_name_full_name, -> {joins(:name).order(Arel.sql(" name.full_name "))}
 
   belongs_to :namespace, class_name: "Namespace", foreign_key: "namespace_id"
   belongs_to :reference
