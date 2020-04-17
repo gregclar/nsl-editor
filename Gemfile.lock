@@ -105,6 +105,7 @@ GEM
     jdbc-postgres (42.2.6)
     jruby-jars (9.2.11.1)
     jruby-rack (1.1.21)
+    kramdown (2.1.0)
     launchy (2.4.3-java)
       addressable (~> 2.3)
       spoon (~> 0.0.1)
@@ -271,6 +272,7 @@ DEPENDENCIES
   composite_primary_keys
   font-awesome-rails
   jbuilder (~> 2.7)
+  kramdown
   launchy
   listen (>= 3.0.5, < 3.2)
   minitest

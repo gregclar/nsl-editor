@@ -16,25 +16,23 @@
 #   See the License for the specific language governing permissions and
 #   limitations under the License.
 #
-require "test_helper"
-
-# Single controller test.
-class NameShowDeleteTabForEditorTest < ActionController::TestCase
-  tests NamesController
-  setup do
-    @name = names(:a_species)
-  end
-
-  test "should show delete tab" do
-    @request.headers["Accept"] = "application/javascript"
-    get(:show,
-        params: { id: @name.id, tab: "tab_delete" },
-        session: { username: "fred",
-                   user_full_name: "Fred Jones",
-                   groups: ["edit"] })
-    assert_response :success
-    assert_select "li.active a#name-delete-tab",
-                  "Delete",
-                  "Should show 'Delete' tab."
-  end
+# Field abbreviations available for building predicates
+class Search::OnInstance::FieldAbbrev
+  ABBREVS = {
+    "n:" => "name:",
+    "a:" => "abbrev:",
+    "adnot:" => "comments:",
+    "adnot-exact:" => "comments-exact:",
+    "adnot-by:" => "comments-by:",
+    "it:" => "type:",
+    "note:" => "notes:",
+    "note-exact:" => "notes-exact:",
+    "p:" => "page:",
+    "pq:" => "page-qualifier:",
+    "instance-type:" => "type:",
+    "t:" => "type:",
+    "ty:" => "type:",
+    "ref-year:" => "year:",
+    "y:" => "year:",
+  }.freeze
 end

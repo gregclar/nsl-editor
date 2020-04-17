@@ -1,0 +1,53 @@
+<% cancel_delete_link = link_to("Cancel delete",
+                                '#',
+                                id: "cancel-delete-link",
+                                class: "btn btn-default cancel-link",
+                                title: 'Pressing this button will cancel the delete',
+                                tabindex: increment_tab_index,
+                                data: {enable_this_id: 'name-delete-link',
+                                       hide_this_id: 'confirm-or-cancel-link-container'})
+-%>
+
+    <% names_delete = NamesDelete.new(name_id: @name.id) %>
+    <%= form_for(names_delete,
+                 html: {id: 'name-delete-form',
+                        as: 'names_delete',
+                        role: 'form',
+                        method: :delete,
+                        remote: true}) do |f| %>
+    <br>
+    <%= f.hidden_field :name_id %>
+    <%= f.submit "Confirm delete", 
+      id: 'confirm-delete-name-button', 
+      title: 'Pressing this button will delete the name',
+      tabindex: increment_tab_index,
+      class: 'btn btn-danger width-8em', 
+      disabled: false %>
+    <%= cancel_delete_link %>
+    <br>
+    <br>
+    <br>
+    <div class="form-group">
+      <label for="names_delete_reason">Reason*</label>
+    <br>
+    <%= f.select('reason', 
+                 names_delete.possible_reasons,
+                 {prompt: 'Choose a reason'}, 
+                 title: "Select a reason for delete", 
+                 tabindex: increment_tab_index, 
+                 autocomplete: "off", 
+                 class: "form-control give-me-focus", 
+                 required: true) %>
+    </div>
+    <div class="form-group">
+      <label for="names_delete_extra_info">Extra information</label>
+      <%= f.text_field :extra_info, title: "Enter any extra information about the reason for delete. Up to 100 characters long. Field is required if you choose reason of 'Other'.", maxlength: 100, tabindex: increment_tab_index, class: 'form-control pull-left' %>
+    </div>
+    <br>
+    <br>
+    <br>
+    <p id="name-delete-spinner" class="hidden">
+    Deleting...    <i class="fa fa-spinner fa-spin"></i>
+    </p>
+    <% end %>
+
