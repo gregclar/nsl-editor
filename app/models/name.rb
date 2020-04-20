@@ -23,13 +23,13 @@ class Name < ApplicationRecord
                 :apc_declared_bt,
                 :change_category_name_to
 
-  belongs_to :name_type
+  belongs_to :name_type, optional: false
   has_one :name_category, through: :name_type
-  belongs_to :name_status
+  belongs_to :name_status, optional: false
   belongs_to :namespace, class_name: "Namespace", foreign_key: "namespace_id"
 
   belongs_to :duplicate_of, class_name: "Name", foreign_key: "duplicate_of_id", optional: true
-  belongs_to :family, class_name: "Name"
+  belongs_to :family, class_name: "Name", optional: true
   has_many   :members, class_name: "Name", foreign_key: "family_id"
 
   has_many :duplicates,

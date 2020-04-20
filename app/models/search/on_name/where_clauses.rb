@@ -121,7 +121,7 @@ class Search::OnName::WhereClauses
 
   def apply_order(rule)
     @sql = if rule.order
-             @sql.order(rule.order)
+             @sql.order(Arel.sql(rule.order))
            else
              @sql.order("full_name")
            end

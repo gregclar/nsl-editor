@@ -31,7 +31,7 @@ class Author < ActiveRecord::Base
 
   has_many :references
   has_many :instances, through: :references
-  belongs_to :namespace, class_name: "Namespace", foreign_key: "namespace_id"
+  belongs_to :namespace, class_name: "Namespace", foreign_key: "namespace_id", optional: true
 
   has_many :names
   has_many :ex_names, foreign_key: "ex_author_id", class_name: "Name"
