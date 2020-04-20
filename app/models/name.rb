@@ -63,6 +63,7 @@ class Name < ApplicationRecord
   end
 
   def save_with_username(username)
+    set_defaults  # under rails 6 the before_create was not getting called (in time)
     self.created_by = self.updated_by = username
     save
   end

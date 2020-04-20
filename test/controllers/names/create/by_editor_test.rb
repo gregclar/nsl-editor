@@ -28,6 +28,8 @@ class NamesCreateByEditorTest < ActionController::TestCase
     @name_type = name_types(:scientific)
     @parent = names(:a_genus)
     @parent_typeahead = names(:a_genus).full_name
+    @family = names(:a_family)
+    @family_typeahead = names(:a_family).full_name
     @name_element = "fred"
     stub_it
   end
@@ -66,6 +68,8 @@ class NamesCreateByEditorTest < ActionController::TestCase
                              "name_type_id" => @name_type.id,
                              "parent_id" => @parent.id,
                              "parent_typeahead" => @parent_typeahead,
+                             "family_id" => @parent.id,
+                             "family_typeahead" => @family_typeahead,
                              "name_element" => @name_element } },
            session: { username: "fred",
                       user_full_name: "Fred Jones",

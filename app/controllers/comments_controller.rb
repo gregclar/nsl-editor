@@ -50,8 +50,12 @@ class CommentsController < ApplicationController
 
   # DELETE /comments/1
   # DELETE /comments/1.json
+  # This was being called in the last controller test I got working for rails6.
+  # I had to hack it a bit and it certainly needs more looking at, but
+  # the check for a javascript request seemed not important enough to delay for.
   def destroy
-    username = current_user.username
+   throw 'must be js' unless request.format == "text/javascript" || request.format == "application/json"
+   username = current_user.username
     if @comment.update(updated_by: username) && @comment.destroy
       respond_to do |format|
         format.html { redirect_to comments_url, notice: "Comment deleted." }
@@ -61,6 +65,8 @@ class CommentsController < ApplicationController
     else
       render js: "alert('Could not delete that record.');"
     end
+  rescue
+    render "create_failed.js", status: 503
   end
 
   private

@@ -34,4 +34,24 @@ class NameReaderOnlyDetailsTab < ActionController::TestCase
                    groups: [] })
     assert_response :forbidden
   end
+
+  setup do
+    @name = names(:a_species)
+  end
+
+  test "reader should see only details tab link" do
+    @request.headers["Accept"] = "application/javascript"
+    get(:show,
+        params: { id: @name.id, tab: "tab_details" },
+        session: { username: "fred",
+                   user_full_name: "Fred Jones",
+                   groups: [] })
+    assert_response :success
+    assert_select "a#name-details-tab", true, "Should show 'Detail' tab."
+    assert_select "a#name-edit-tab", false, "Should not show 'Edit' tab."
+    assert_select "a#name-instances-tab",
+                  false,
+                  "Should not show 'Instance' tab."
+    assert_select "a#name-more-tab", false, "Should not show 'More' tab."
+  end
 end
