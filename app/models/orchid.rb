@@ -41,11 +41,13 @@ class Orchid < ActiveRecord::Base
     end
   end
 
+  # Passing string to be evaluated in :if and :unless conditional options is 
+  # not supported.
+  # Pass a symbol for an instance method, or a lambda, proc or block, instead. 
   validates :synonym_type,
-            presence: { if: "record_type == 'synonym'",
+            presence: { if: -> { record_type == 'synonym' },
                         message: "is required." }
  
-
   def display_as
     'Orchid'
   end
