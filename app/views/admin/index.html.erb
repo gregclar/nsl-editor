@@ -94,7 +94,7 @@
 
     <tr><td>Rails.configuration.action_controller.perform_caching</td><td> <%= Rails.configuration.action_controller.try(:perform_caching) %> </td></tr>
 
-    <tr><td>Key base stats</td><td> [Now in credentials] </td></tr>
+    <tr><td>Key base stats</td><td> <%= Rails.application.secrets[:secret_key_base][3..6] %>; <%= Rails.application.secrets[:secret_key_base].length %> </td></tr>
     <tr><td colspan="2">&nbsp;</td></tr>
     </table>
 
