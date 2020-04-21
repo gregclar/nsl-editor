@@ -17,7 +17,7 @@
 #   limitations under the License.
 #
 class OrchidsController < ApplicationController
-  before_filter :find_orchid, only: [:show, :update, :tab, :destroy]
+  before_action :find_orchid, only: [:show, :update, :tab, :destroy]
 
   def show
     set_tab
