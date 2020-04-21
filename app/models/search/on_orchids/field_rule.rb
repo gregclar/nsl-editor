@@ -48,6 +48,8 @@ class Search::OnOrchids::FieldRule
                                       order: "seq"},
     "is-hybrid-cross:"    => { where_clause: "record_type = 'hybrid_cross'",
                                       order: "seq"},
+    "is-syn-but-no-syn-type:" => { where_clause: "record_type = 'synonym' and synonym_type is null",
+                                      order: "seq"},
     "no-name-match:"      => { where_clause: "not exists (select null from name where (taxon = name.simple_name or alt_taxon_for_matching = name.simple_name) and exists (select null from name_type nt where name.name_type_id = nt.id and nt.scientific))" ,
                                       order: "seq"},
     "some-name-match:"    => { where_clause: "exists (select null from name where (taxon = name.simple_name or alt_taxon_for_matching = name.simple_name))" ,
@@ -56,7 +58,7 @@ class Search::OnOrchids::FieldRule
                                       order: "seq"},
     "one-name-match:"     => { where_clause: "1 =  (select count(*) from name where (taxon = name.simple_name or alt_taxon_for_matching = name.simple_name) and exists (select null from name_Type nt where name.name_type_id = nt.id and nt.scientific))" ,
                                       order: "seq"},
-    "name-match-no-primary:"     => { where_clause: "1 =  (select count(*) from name where (taxon = name.simple_name or alt_taxon_for_matching = name.simple_name) and exists (select null from name_Type nt where name.name_type_id = nt.id and nt.scientific and not exists (select null from instance join instance_type on instance.instance_type_id = instance_type.id where instance_type.primary_instance and name.id = instance.name_id)))",
+    "name-match-no-primary:"     =>   { where_clause: "0 <  (select count(*) from name where (taxon = name.simple_name or alt_taxon_for_matching = name.simple_name) and exists (select null from name_Type nt where name.name_type_id = nt.id and nt.scientific and not exists (select null from instance join instance_type on instance.instance_type_id = instance_type.id where instance_type.primary_instance and name.id = instance.name_id)))",
                                       order: "seq"},
     "name-match-eq:"      => { where_clause: "? =  (select count(*) from name where (taxon = name.simple_name or alt_taxon_for_matching = name.simple_name) and exists (select null from name_Type nt where name.name_type_id = nt.id and nt.scientific))",
                                       order: "seq"},
@@ -138,6 +140,10 @@ class Search::OnOrchids::FieldRule
     "excluded-with-syn:"   => { trailing_wildcard: true,
                            where_clause: " (lower(taxon) like ? and record_type = 'accepted' and doubtful) or (parent_id in (select id from orchids where lower(taxon) like ? and record_type = 'accepted' and doubtful))",
                                order: "seq"},
+    "comment:"=> { where_clause: "lower(comment) like ?",
+                       leading_wildcard: true,
+                       trailing_wildcard: true,
+                       order: "seq"},
 
   }.freeze
 end
