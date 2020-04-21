@@ -21,13 +21,13 @@ class Orchid < ActiveRecord::Base
   strip_attributes
   REF_ID = 51316736
   attr_accessor :name_id, :instance_id
-    belongs_to :parent, class_name: "Orchid", foreign_key: "parent_id"
+    belongs_to :parent, class_name: "Orchid", foreign_key: "parent_id", optional: true
     has_many :children,
              class_name: "Orchid",
              foreign_key: "parent_id",
              dependent: :restrict_with_exception
     has_many :orchids_name
-    has_many :preferred_match, class_name: :OrchidsName, foreign_key: :orchid_id
+    has_many :preferred_match, class_name: "OrchidsName", foreign_key: :orchid_id
     scope :avoids_id, ->(avoid_id) { where("orchids.id != ?", avoid_id) }
 
   def self.create(params, username)
