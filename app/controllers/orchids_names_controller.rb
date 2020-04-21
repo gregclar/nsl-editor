@@ -17,7 +17,7 @@
 #   limitations under the License.
 #
 class OrchidsNamesController < ApplicationController
-  before_filter :find_orchids_name, only: [:show, :update]
+  before_action :find_orchids_name, only: [:show, :update]
   def create
     if params[:commit] == 'Remove'
       delete
