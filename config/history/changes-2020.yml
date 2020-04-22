@@ -1,3 +1,7 @@
+- :date: 23-Apr-2020
+  :jira_id: '3546'
+  :description: |-
+    Rails 6 upgrade: separate session from the old editor so logins won't interfere with each other
 - :date: 21-Apr-2020
   :jira_id: '3539'
   :description: |-
