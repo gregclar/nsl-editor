@@ -12,12 +12,9 @@ module V6021
     # Initialize configuration defaults for originally generated Rails version.
     config.load_defaults 6.0
 
-    # Settings in config/environments/* take precedence over those specified here.
-    # Application configuration can go into files in config/initializers
-    # -- all .rb files in that directory are automatically loaded after loading
-    # the framework and any gems in your application.
-    #
     # See also confug.ru change to apply relative_url_root.
     config.action_controller.relative_url_root = "/nsl/hub"
+    config.time_zone = "Australia/Melbourne"
+    config.active_record.default_timezone = :local
   end
 end
