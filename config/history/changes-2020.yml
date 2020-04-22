@@ -1,7 +1,7 @@
 - :date: 23-Apr-2020
   :jira_id: '3546'
   :description: |-
-    Rails 6 upgrade: separate session from the old editor so logins won't interfere with each other
+    Rails 6 upgrade: timezone set; old editor logins now won't be shared; name delete now available
 - :date: 21-Apr-2020
   :jira_id: '3539'
   :description: |-
