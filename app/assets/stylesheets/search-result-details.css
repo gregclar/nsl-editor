@@ -157,15 +157,19 @@ tr.show-details:focus span.stylish-checkbox:hover {
 }
 
 input::-webkit-input-placeholder {
-   color: rgba(197,190,184,1.0);
+   color: rgba(156, 57, 255, 0.3);
 }
 
 input:-moz-placeholder {  
-   color: rgba(197,190,184,1.0);  
+   color: rgba(156, 57, 255, 0.3);
 }
 
 :-ms-input-placeholder {
-    color: rgba(197,190,184,1.0);
+    color: rgba(156, 57, 255, 0.3);
+}
+
+.form-control::placeholder {
+    color: rgba(156, 57, 255, 0.3);
 }
 
 table.entity-details {
