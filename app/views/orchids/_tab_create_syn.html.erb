@@ -9,3 +9,9 @@
   <%= render partial: 'form_for_synonym', locals: {orchid: orchid} %>
 <% end %>
 
+  <script>
+    $(document).ready(function () {
+      document.getElementById('orchid_taxon').focus();
+    })
+  </script>
+

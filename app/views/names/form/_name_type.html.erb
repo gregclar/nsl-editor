@@ -4,6 +4,7 @@
       <%= f.select('name_type_id',
                    NameType.options_for_category(@name.category_for_edit),
                    {prompt: 'Choose one'},
+                   id: "name-type-selector",
                    title: 'Select type',
                    tabindex: increment_tab_index,
                    autocomplete: "off",

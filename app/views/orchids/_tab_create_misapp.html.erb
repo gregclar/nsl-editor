@@ -8,4 +8,8 @@
   <% orchid.seq = @orchid.seq + 1 %>
   <%= render partial: 'form_for_misapp', locals: {orchid: orchid} %>
 <% end %>
-
+  <script>
+    $(document).ready(function () {
+      document.getElementById('orchid_taxon').focus();
+    })
+  </script>

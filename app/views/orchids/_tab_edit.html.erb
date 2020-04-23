@@ -11,4 +11,8 @@
 <% else %>
   Unknown record type: <%= @orchid.record_type %>
 <% end %>
-
+  <script>
+    $(document).ready(function () {
+      document.getElementById('orchid_taxon').focus();
+    })
+  </script>

@@ -15,7 +15,7 @@
 <h5>Create preferred matches for accepted names identified by this query string</h5>
 
 <%= form_tag({controller: "orchids_batch", action: "create_preferred_matches"}, method: "post", remote: true) do %>
-  <input name="taxon_string" type="text" value="<%= @orchid.taxon %>" class="form-control" required title="taxon string for batch" />
+  <input name="taxon_string" id="taxon-string" type="text" value="<%= @orchid.taxon %>" class="form-control" required title="taxon string for batch" />
   <input id="create-matches-batch-submit" name="submit" type="submit" value="Submit" class="btn btn-primary width-5em" title="Submit the form" />
 <% end %>
 
@@ -56,4 +56,10 @@
 <% end %>
 <div id="search-result-details-info-message-container" class="message-container"></div>
 <div id="search-result-details-error-message-container" class="message-container"></div>
- 
+
+
+<script>
+  $(document).ready(function () {
+    document.getElementById('taxon-string').focus();
+  })
+</script>

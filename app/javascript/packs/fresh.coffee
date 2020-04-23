@@ -401,7 +401,7 @@ window.loadTreeDetails = (event,inFocus,tabWasClicked = false) ->
     debug("after get")
     recordCurrentActiveTab(record_type)
     if tabWasClicked
-      debug('tab clicked')
+      debug('tab clicked loadTreeDetails')
       if $('.give-me-focus') 
         debug('give-me-focus ing')
         $('.give-me-focus').focus()
@@ -428,11 +428,13 @@ window.loadDetails = (event,inFocus,tabWasClicked = false) ->
   debug("tabIndex: #{tabIndex}") 
   url = inFocus.attr('data-tab-url').replace(/active_tab_goes_here/,currentActiveTab(record_type))
   url = url+'?format=js&tabIndex='+tabIndex+'&row-type='+row_type+'&instance-type='+instance_type+'&rowType='+inFocus.attr('data-row-type')
-  debug("url: #{url}")
+  debug("loadDetails url: #{url}")
   $('#search-result-details').load  url, -> 
+    debug("before recordCurrentActiveTab")
     recordCurrentActiveTab(record_type)
+    debug("after recordCurrentActiveTab")
     if tabWasClicked
-      debug('tab clicked')
+      debug('tab clicked loadDetails')
       if $('.give-me-focus') 
         debug('give-me-focus ing - changed so not .give-me-focus ing because clicked a tab resulted in focus switching to the first record')
         #$('.give-me-focus').focus()
@@ -441,7 +443,7 @@ window.loadDetails = (event,inFocus,tabWasClicked = false) ->
         $('li.active a.tab').focus()
     else
       debug('tab was not clicked')
-  debug('after load url')
+  debug('loadDetails after load url')
   event.preventDefault()
  
 currentActiveTab = (record_type) ->
