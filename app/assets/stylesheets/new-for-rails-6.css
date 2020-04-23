@@ -52,6 +52,12 @@ input#query-submit {
   color: grey;
 }
 
+#new-name-form-container {
+  line-height: 10px;
+}
 
+.form-control {
+  height: 26px;
+}
 
 
