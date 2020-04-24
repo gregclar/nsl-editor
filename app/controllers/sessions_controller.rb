@@ -56,9 +56,9 @@ class SessionsController < ApplicationController
 
   def build_sign_in
     # Do we need to reset the session? For security?
-    deep_link = session[:url_after_sign_in]
-    reset_session
-    session[:url_after_sign_in] = deep_link
+    # deep_link = session[:url_after_sign_in]
+    # reset_session
+    # session[:url_after_sign_in] = deep_link
     @sign_in = SignIn.new(sign_in_params)
     @no_searchbar = true
     @no_search_result_details = true
