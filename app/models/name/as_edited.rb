@@ -49,10 +49,29 @@ class Name::AsEdited < Name::AsTypeahead
     name.name_path = path
   end
 
+  def bulk_patch_name_path_and_child_name_paths(old_path, new_path)
+    op = old_path.to_s.gsub(/'[^']/, "''")
+    np = new_path.to_s.gsub(/'[^']/, "''")
+    query = "update Name
+set name_Path = regexp_replace(name_path, '#{op}', '#{np}')
+where name_path ~ '#{op}'"
+    Name.connection.exec_update(query, "SQL", [])
+  end
+
+  def make_name_path
+    path = ""
+    path = parent.name_path if parent
+    path += "/" + name_element if name_element
+    path
+  end
+
   def update_if_changed(params, typeahead_params, username)
+    old_path = name_path
     params["verbatim_rank"] = nil if params["verbatim_rank"] == ""
     assign_attributes(params)
     resolve_typeahead_params(typeahead_params)
+    new_path = make_name_path #only after params updated
+    bulk_patch_name_path_and_child_name_paths(old_path, new_path)
     save_updates_if_changed(username)
   end
 
