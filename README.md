@@ -1,5 +1,50 @@
 # README
 
+##Build 
+
+TIP: To setup your build environment in linux try the setup-dev-linux.sh bash script. This will make sure tou have the
+prerequisites installed and run the bootstrap below.
+
+If you're not using linux have a look at the script, it _may_ help.
+
+### Prerequisites
+#### java
+* version: 8 (Suggest 8u252 e.g. AdoptOpenJDK)
+* https://adoptopenjdk.net/
+
+To install I would recommend using sdkman https://sdkman.io/
+
+#### jruby 
+* version: 9.2.11.1 
+* from: https://www.jruby.org/download
+* download: https://repo1.maven.org/maven2/org/jruby/jruby-dist/9.2.11.1/jruby-dist-9.2.11.1-bin.zip
+* md5 hash: 52dece370067d74bdba38dbdab1a87ee
+
+To install you can download and unpack somewhere and set some environment variables.
+
+    JRUBY_HOME=$PWD/bin/jruby-9.2.11.1
+    PATH=$JRUBY_HOME/bin:$PATH
+    export JRUBY_HOME PATH
+
+#### yarn
+* version: 1.22.4
+* install: see https://classic.yarnpkg.com/en/docs/install#centos-stable
+
+#### node
+* version: >12
+* install: https://nodejs.org/en/download/package-manager/#enterprise-linux-and-fedora
+
+### bootstrapping
+
+To get this all started run:
+
+    yarn
+    gem install bundler
+    bundle install
+
+
+---
+
 This README would normally document whatever steps are necessary to get the
 application up and running.
 
@@ -22,60 +67,3 @@ Things you may want to cover:
 * Deployment instructions
 
 * ...
-
-
-bundle exec warble
-warning Integrity check: Flags don't match
-error Integrity check failed
-error Found 1 errors.
-
-
-========================================
-  Your Yarn packages are out of date!
-  Please run `yarn install --check-files` to update.
-========================================
-
-
-To disable this check, please change `check_yarn_integrity`
-to `false` in your webpacker config file (config/webpacker.yml).
-
-
-yarn check v1.21.1
-info Visit https://yarnpkg.com/en/docs/cli/check for documentation about this command.
-
-
-
-
-Request URL: 	http://test.biodiversity.org.au/nsl/hub/
-
-Could not find sassc-2.2.1 in any of the sources from /srv/tomcat7/apni/webapps/nsl#hub/WEB-INF/gems/gems/bundler-2.1.4/lib/bundler/spec_set.rb:86:in `block in materialize' from org/jruby/RubyArray.java:2612:in `map!' from /srv/tomcat7/apni/webapps/nsl#hub/WEB-INF/gems/gems/bundler-2.1.4/lib/bundler/spec_set.rb:80:in `materialize' from /srv/tomcat7/apni/webapps/nsl#hub/WEB-INF/gems/gems/bundler-2.1.4/lib/bundler/definition.rb:170:in `specs' from /srv/tomcat7/apni/webapps/nsl#hub/WEB-INF/gems/gems/bundler-2.1.4/lib/bundler/definition.rb:237:in `specs_for' from /srv/tomcat7/apni/webapps/nsl#hub/WEB-INF/gems/gems/bundler-2.1.4/lib/bundler/definition.rb:226:in `requested_specs' from /srv/tomcat7/apni/webapps/nsl#hub/WEB-INF/gems/gems/bundler-2.1.4/lib/bundler/runtime.rb:101:in `block in requested_specs' from /srv/tomcat7/apni/webapps/nsl#hub/WEB-INF/gems/gems/bundler-2.1.4/lib/bundler/runtime.rb:20:in `setup' from /srv/tomcat7/apni/webapps/nsl#hub/WEB-INF/gems/gems/bundler-2.1.4/lib/bundler.rb:149:in `setup' from /srv/tomcat7/apni/webapps/nsl#hub/WEB-INF/gems/gems/bundler-2.1.4/lib/bundler/setup.rb:20:in `block in <main>' from /srv/tomcat7/apni/webapps/nsl#hub/WEB-INF/gems/gems/bundler-2.1.4/lib/bundler/ui/shell.rb:136:in `with_level' from /srv/tomcat7/apni/webapps/nsl#hub/WEB-INF/gems/gems/bundler-2.1.4/lib/bundler/ui/shell.rb:88:in `silence' from /srv/tomcat7/apni/webapps/nsl#hub/WEB-INF/gems/gems/bundler-2.1.4/lib/bundler/setup.rb:20:in `<main>' from org/jruby/RubyKernel.java:978:in `require' from uri:classloader:/META-INF/jruby.home/lib/ruby/stdlib/rubygems/core_ext/kernel_require.rb:54:in `require' from /srv/tomcat7/apni/webapps/nsl#hub/WEB-INF/config/boot.rb:3:in `<main>' from org/jruby/RubyKernel.java:978:in `require' from uri:classloader:/META-INF/jruby.home/lib/ruby/stdlib/rubygems/core_ext/kernel_require.rb:54:in `require' from uri:classloader:/jruby/rack/rails/environment3.rb:23:in `load_environment' from uri:classloader:/jruby/rack/rails_booter.rb:83:in `load_environment' from <script>:1:in `<main>'
-
-Youre seeing this error because you use JRuby::Rack::ErrorApp::ShowStatus.
-
-
-
-Could not find sassc-2.2.1 in any of the sources 
-  from /srv/tomcat7/apni/webapps/nsl#hub/WEB-INF/gems/gems/bundler-2.1.4/lib/bundler/spec_set.rb:86:in `block in materialize' 
-  from org/jruby/RubyArray.java:2609:in `map!' 
-  from /srv/tomcat7/apni/webapps/nsl#hub/WEB-INF/gems/gems/bundler-2.1.4/lib/bundler/spec_set.rb:80:in `materialize' 
-  from /srv/tomcat7/apni/webapps/nsl#hub/WEB-INF/gems/gems/bundler-2.1.4/lib/bundler/definition.rb:170:in `specs' 
-  from /srv/tomcat7/apni/webapps/nsl#hub/WEB-INF/gems/gems/bundler-2.1.4/lib/bundler/definition.rb:237:in `specs_for' 
-  from /srv/tomcat7/apni/webapps/nsl#hub/WEB-INF/gems/gems/bundler-2.1.4/lib/bundler/definition.rb:226:in `requested_specs' 
-  from /srv/tomcat7/apni/webapps/nsl#hub/WEB-INF/gems/gems/bundler-2.1.4/lib/bundler/runtime.rb:101:in `block in requested_specs' 
-  from /srv/tomcat7/apni/webapps/nsl#hub/WEB-INF/gems/gems/bundler-2.1.4/lib/bundler/runtime.rb:20:in `setup' 
-  from /srv/tomcat7/apni/webapps/nsl#hub/WEB-INF/gems/gems/bundler-2.1.4/lib/bundler.rb:149:in `setup' 
-  from /srv/tomcat7/apni/webapps/nsl#hub/WEB-INF/gems/gems/bundler-2.1.4/lib/bundler/setup.rb:20:in `block in <main>' 
-  from /srv/tomcat7/apni/webapps/nsl#hub/WEB-INF/gems/gems/bundler-2.1.4/lib/bundler/ui/shell.rb:136:in `with_level' 
-  from /srv/tomcat7/apni/webapps/nsl#hub/WEB-INF/gems/gems/bundler-2.1.4/lib/bundler/ui/shell.rb:88:in `silence' 
-  from /srv/tomcat7/apni/webapps/nsl#hub/WEB-INF/gems/gems/bundler-2.1.4/lib/bundler/setup.rb:20:in `<main>' 
-  from org/jruby/RubyKernel.java:974:in `require' 
-  from uri:classloader:/META-INF/jruby.home/lib/ruby/stdlib/rubygems/core_ext/kernel_require.rb:54:in `require' 
-  from /srv/tomcat7/apni/webapps/nsl#hub/WEB-INF/config/boot.rb:3:in `<main>' 
-  from org/jruby/RubyKernel.java:974:in `require' 
-  from uri:classloader:/META-INF/jruby.home/lib/ruby/stdlib/rubygems/core_ext/kernel_require.rb:54:in `require' 
-  from uri:classloader:/jruby/rack/rails/environment3.rb:23:in `load_environment' 
-  from uri:classloader:/jruby/rack/rails_booter.rb:83:in `load_environment' 
-  from <script>:1:in `<main>'
-
-Youre seeing this error because you use JRuby::Rack::ErrorApp::ShowStatus.
-
