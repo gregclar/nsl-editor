@@ -52,12 +52,20 @@ input#query-submit {
   color: grey;
 }
 
-#new-name-form-container {
+#new-name-form-container .form-group {
   line-height: 10px;
+}
+
+#new-name-form-container .typeahead {
+  color: purple;
+  line-height: 20px;
+}
+
+.tt-dropdown-menu {
+  line-height: 20px;
 }
 
 .form-control {
   height: 26px;
 }
-
 

@@ -1,7 +1,11 @@
-- :date: 24-Apr-2020
+- :date: 01-May-2020
+  :jira_id: '3546'
+  :description: |-
+    Fixed line-spacing of typeaheads in new records. e.g. New -> Name, parent typeahead
+- :date: 01-May-2020
   :jira_id: '3542'
   :description: |-
-    Changed update name_path to do a bulk update of name paths to update all child names.
+    Changed update name_path to do a bulk update of name paths to update all child names. (Improved version.)
 - :date: 23-Apr-2020
   :jira_id: '3546'
   :description: |-
