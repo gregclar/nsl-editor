@@ -1,6 +1,6 @@
 # README
 
-##Build 
+## Build 
 
 TIP: To setup your build environment in linux try the setup-dev-linux.sh bash script. This will make sure tou have the
 prerequisites installed and run the bootstrap below.
