@@ -5,7 +5,7 @@
 
 window.captureSearch = () ->
   console.log('captureSearch')
-  str = $('#query-string-field').val();
+  str = $('#query-string-field').val()
   console.log(str)
   fields = parseSearchString(str)
   captureFields(fields)
@@ -109,12 +109,11 @@ captureTreeFields = (fields) ->
 searchableFieldClick = (event,$element) ->
   debug('searchableFieldClick')
   $('#query-string-field').val($('#query-string-field').val() + ' ' + $element.html().replace(/<[^>]*>/g,'').trim())
-  $('#query-string-field').focus();
+  $('#query-string-field').focus()
 
   ####
 
-jQuery -> 
-  window.debug('new search')
+$(document).on "turbolinks:load", ->
+  window.debug('new search loaded')
   $('body').on('click','a.searchable-field', (event) -> searchableFieldClick(event,$(this)))
-  #$('body').on('click','#name-advanced-search-capture', (event) ->         captureSearch(event,$(this)))
 
