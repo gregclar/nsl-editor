@@ -89,6 +89,11 @@ if [ -z "$(type -p node)" ]; then
   exit 1
 fi
 
+echo "*** setting config file location environment variables to ~/.nsl/..."
+EDITOR_CONFIG_FILE=$HOME/.nsl/editor-config.rb
+EDITOR_CONFIGDB_FILE=$HOME/.nsl/editor-database.yml
+export EDITOR_CONFIG_FILE EDITOR_CONFIGDB_FILE
+
 export JAVA_OPTS JRUBY_HOME PATH
 
 echo "** info"
@@ -96,7 +101,10 @@ echo "PATH: $PATH"
 echo " "
 echo ">>> bootstrapping"
 yarn
-gem install bundler || exit 1
+if [ -z "$(type -p bundler)" ]; then
+  echo "Installing bundler..."
+  gem install bundler || exit 1
+fi
 bundle install
 echo "<<< bootstrapped"
 echo " "
