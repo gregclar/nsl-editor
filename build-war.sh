@@ -1,4 +1,10 @@
-export JAVA_OPTS='-server -d64'  
+#!/bin/bash
+
+if [ $1 = "setup" ]; then
+  . ./setup-dev-linux.sh
+fi
+
+export JAVA_OPTS='-server -d64'
 
 rm *.war || echo "no war files"
 
