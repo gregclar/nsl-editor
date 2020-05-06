@@ -90,7 +90,7 @@ if [ -z "$(type -p node)" ]; then
 fi
 
 echo "*** setting config file location environment variables to ~/.nsl/..."
-EDITOR_CONFIG_FILE=$HOME/.nsl/editor-config.rb
+EDITOR_CONFIG_FILE=$HOME/.nsl/v6021-config.rb
 EDITOR_CONFIGDB_FILE=$HOME/.nsl/editor-database.yml
 export EDITOR_CONFIG_FILE EDITOR_CONFIGDB_FILE
 
