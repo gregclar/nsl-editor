@@ -1,7 +1,7 @@
 - :date: 01-May-2020
   :jira_id: '3546'
   :description: |-
-    Fixed line-spacing of typeaheads in new records. e.g. New -> Name, parent typeahead; blue buttons now grey
+    Fixed line-spacing of typeaheads in new records. e.g. New -> Name, parent typeahead; blue buttons now grey; convert common to scientific works
 - :date: 01-May-2020
   :jira_id: '3542'
   :description: |-

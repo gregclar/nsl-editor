@@ -413,6 +413,7 @@ window.loadTreeDetails = (event,inFocus,tabWasClicked = false) ->
 changeNameCategoryOnEditTab = (event,$this,tabWasClicked) ->
   debug('changeNameCategoryOnEditTab')
   $('#search-result-details').load($this.attr('data-edit-url'))
+  event.preventDefault()
 
 window.loadDetails = (event,inFocus,tabWasClicked = false) ->
   debug('window.loadDetails start')
