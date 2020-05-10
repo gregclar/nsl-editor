@@ -13,6 +13,16 @@ class ApplicationController < ActionController::Base
     head :forbidden
   end
 
+  def show_login_page
+    logger.info("Show login page - invalid authenticity token.")
+    if request.format == "text/javascript"
+      logger.info('JavaScript request with invalid authenticity token\
+                  - expired session?')
+    else
+      redirect_to start_sign_in_path, notice: "Please try again."
+    end
+  end
+
   protected
 
   def check_authorization
