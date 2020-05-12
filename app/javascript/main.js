@@ -118,6 +118,8 @@ function replaceDates() {
 }
 
 function loadHtml(element, url, success) {
+  debug("loadHtml into element");
+  console.log(JSON.stringify(element));
   if (success == null) {
     success = function (data) {
       element.html(data);
@@ -184,6 +186,8 @@ function loadReport(element, url) {
   });
 }
 
+window.loadReport = loadReport;
+
 function loadAleredSynonymyReport(element, url) {
   element.html('<h2>Loading <i class="fa fa-refresh fa-spin"</h2>');
   $('#update_selected_synonymy').addClass('hidden');
@@ -206,6 +210,7 @@ function loadCheckSynonymyReport(element, url) {
   element.html('<h2>Loading <i class="fa fa-refresh fa-spin"</h2>');
   $('#update_checked_synonymy').addClass('hidden');
   loadHtml(element, url, function (data) {
+    debug('start of anon function');
     element.html(data);
     if (element.find('input').length) {
       replaceDates();
@@ -219,6 +224,8 @@ function loadCheckSynonymyReport(element, url) {
     debug('loaded synonymy report.');
   });
 }
+
+window.loadCheckSynonymyReport = loadCheckSynonymyReport;
 
 function matchCustom(params, data) {
   // If there are no search terms, return all of the data

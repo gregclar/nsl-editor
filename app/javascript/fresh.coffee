@@ -60,6 +60,10 @@ $(document).on "turbolinks:load", ->
   $('body').on('click','#create-instances-batch-submit', (event) ->        createInstancesBatchSubmit(event,$(this)))
   $('body').on('click','#create-matches-batch-submit', (event) ->          createMatchesBatchSubmit(event,$(this)))
   $('body').on('click','#copy-instance-link', (event) ->                   copyInstanceLinkClicked(event,$(this)))
+  $('body').on('click','#link-to-run-cas', (event) ->                      linkToRunCasClicked(event,$(this)))
+  $('body').on('click','#link-to-run-diff', (event) ->                     linkToRunDiffClicked(event,$(this)))
+  $('body').on('click','#link-to-run-valrep', (event) ->                   linkToRunValRepClicked(event,$(this)))
+
   debug("on load - search-target-button-text: " + $('#search-target-button-text').text().trim())
 
   # When tabbing to search-result record, need to click to trigger retrieval of details.
@@ -123,6 +127,27 @@ copyInstanceLinkClicked = (event,$the_element) ->
   debug('copyInstanceLinkClicked')
   $('#confirm-or-cancel-copy-instance-link-container').removeClass('hidden');
   event.preventDefault()
+
+linkToRunCasClicked = (event,$the_element) ->
+  debug('linkToRunCasClicked')
+  $('#link-to-run-cas').hide()
+  $('#cas-report-is-running-indicator').removeClass('hidden')
+  event = new Date()
+  $('#cas-report-is-running-indicator').html('Running at ' + event.toTimeString().replace(/ GMT.*/,""))
+
+linkToRunDiffClicked = (event,$the_element) ->
+  debug('linkToRunDiffClicked')
+  $('#link-to-run-diff').hide()
+  $('#diff-is-running-indicator').removeClass('hidden')
+  event = new Date()
+  $('#diff-is-running-indicator').html('Running at ' + event.toTimeString().replace(/ GMT.*/,""))
+
+linkToRunValRepClicked = (event,$the_element) ->
+  debug('linkToRunValRepClicked')
+  $('#link-to-run-valrep').hide()
+  $('#val-report-is-running-indicator').removeClass('hidden')
+  event = new Date()
+  $('#val-report-is-running-indicator').html('Running at ' + event.toTimeString().replace(/ GMT.*/,""))
 
 copyInstanceForNameFormEnter = (event,$the_button) ->
   key = event.which

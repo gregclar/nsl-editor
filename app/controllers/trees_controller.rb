@@ -257,6 +257,40 @@ class TreesController < ApplicationController
     render "update_parent_error.js"
   end
 
+  def show_cas
+    @val_syn_link = Tree::AsServices.val_syn_link(@working_draft.id)
+  end
+
+  # runs slowly...10 seconds maybe
+  def run_cas
+    url = Tree::AsServices.val_syn_link(@working_draft.id)
+    @result = RestClient.get(url, {content_type: :html, accept: :html})
+    # @result = '<div class="tree-container">' + @result + '</div>'
+  end
+
+  def show_diff
+    @val_syn_link = Tree::AsServices.val_syn_link(@working_draft.id)
+  end
+
+  # may run slowly
+  def run_diff
+    url = Tree::AsServices.diff_link(@working_draft.tree.current_tree_version_id, @working_draft.id)
+    @result = RestClient.get(url, {content_type: :html, accept: :html})
+    if @result.length < 200
+      @result = @result.gsub(/\n/,'').sub(/<h3>Nothing to see here.<\/h3> *<p>We have no changes, nothing, zip.<\/p>/,'<h4>No changes.</h4>')
+    end
+  end
+
+  def show_valrep
+    @val_link = Tree::AsServices.val_link(@working_draft.id)
+  end
+
+  # runs slowly...10 seconds maybe
+  def run_valrep
+    url = Tree::AsServices.val_link(@working_draft.id)
+    @result = RestClient.get(url, {content_type: :html, accept: :html})
+  end
+
   private
 
   def json_error(err)

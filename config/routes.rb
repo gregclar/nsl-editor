@@ -376,6 +376,13 @@ Rails.application.routes.draw do
         to: "passwords#update",
         via: :post
 
+  match "/trees/show/cas", as: "show_cas", to: "trees#show_cas", via: :get
+  match "/trees/run/cas", as: "run_cas", to: "trees#run_cas", via: :get
+  match "/trees/show/diff", as: "show_diff", to: "trees#show_diff", via: :get
+  match "/trees/run/diff", as: "run_diff", to: "trees#run_diff", via: :get
+  match "/trees/show/valrep", as: "show_valrep", to: "trees#show_valrep", via: :get
+  match "/trees/run/valrep", as: "run_valrep", to: "trees#run_valrep", via: :get
+
   root to: "search#search"
   match "/*random", to: "search#search", via: [:get, :post, :delete, :patch]
 end

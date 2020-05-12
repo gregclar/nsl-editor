@@ -3,7 +3,8 @@ a {
   color: #606060;
 }
 
-a:hover {
+a:hover,
+a:focus {
   color: black;
 }
 
@@ -79,3 +80,15 @@ input#query-submit {
   border-color: #474747;
 }
 
+/* override the bootstrap default */
+ul#tree-report-tabs.nav-tabs li a {
+  line-height: 7px;
+}
+
+ul#tree-report-tabs {
+  margin-top: 1.2em;
+}
+
+ul#tree-report-tabs.nav-tabs li a:focus {
+  outline: 0;
+}
