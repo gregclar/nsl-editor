@@ -119,6 +119,17 @@ example local development editor-database.yml
       database: nsl-ed-test
       username: web
       password: dont_tell_anyone   
+
+Note with the new micronaut mapper the api has been revised and the mapper config looks like this:
+
+    #mapper                                                        
+    Rails.configuration.x.mapper_api.version = 2
+    Rails.configuration.x.mapper_api.url = "#{internal_mapper_host}/api/"
+    Rails.configuration.x.mapper_api.username = 'TEST-services'
+    Rails.configuration.x.mapper_api.password = 'buy-me-a-pony'
+    Rails.configuration.x.mapper_external.url = "#{external_mapper_host}/" 
+
+see: application_helper.rb and tree/as_services.rb
        
 ## Running
 
