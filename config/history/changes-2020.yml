@@ -1,6 +1,10 @@
 - :date: 12-May-2020
   :jira_id: '3546'
   :description: |-
+    Relative, humanized dates are now working on the tree reports. e.g. "2 days ago"
+- :date: 12-May-2020
+  :jira_id: '3546'
+  :description: |-
     Reworked the Tree tab (the one on the main screen) for Rails 6.
 - :date: 01-May-2020
   :jira_id: '3546'

@@ -112,10 +112,11 @@ function refreshPage() {
 function replaceDates() {
   $('date').each(function (element) {
     var d = $(this).html();
-    debug(d);
     $(this).html(jQuery.format.prettyDate(d));
   });
 }
+
+window.replaceDates = replaceDates;
 
 function loadHtml(element, url, success) {
   debug("loadHtml into element");

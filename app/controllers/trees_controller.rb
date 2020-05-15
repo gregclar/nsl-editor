@@ -265,7 +265,6 @@ class TreesController < ApplicationController
   def run_cas
     url = Tree::AsServices.val_syn_link(@working_draft.id)
     @result = RestClient.get(url, {content_type: :html, accept: :html})
-    # @result = '<div class="tree-container">' + @result + '</div>'
   end
 
   def show_diff
@@ -285,7 +284,7 @@ class TreesController < ApplicationController
     @val_link = Tree::AsServices.val_link(@working_draft.id)
   end
 
-  # runs slowly...10 seconds maybe
+  # runs slowly...30 seconds maybe
   def run_valrep
     url = Tree::AsServices.val_link(@working_draft.id)
     @result = RestClient.get(url, {content_type: :html, accept: :html})
