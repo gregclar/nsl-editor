@@ -133,21 +133,21 @@ linkToRunCasClicked = (event,$the_element) ->
   $('#link-to-run-cas').hide()
   $('#cas-report-is-running-indicator').removeClass('hidden')
   event = new Date()
-  $('#cas-report-is-running-indicator').html('Running at ' + event.toTimeString().replace(/ GMT.*/,""))
+  $('#cas-report-is-running-indicator').html('Report started running at ' + event.toTimeString().replace(/ GMT.*/,""))
 
 linkToRunDiffClicked = (event,$the_element) ->
   debug('linkToRunDiffClicked')
   $('#link-to-run-diff').hide()
   $('#diff-is-running-indicator').removeClass('hidden')
   event = new Date()
-  $('#diff-is-running-indicator').html('Running at ' + event.toTimeString().replace(/ GMT.*/,""))
+  $('#diff-is-running-indicator').html('Report started running at ' + event.toTimeString().replace(/ GMT.*/,""))
 
 linkToRunValRepClicked = (event,$the_element) ->
   debug('linkToRunValRepClicked')
   $('#link-to-run-valrep').hide()
   $('#val-report-is-running-indicator').removeClass('hidden')
   event = new Date()
-  $('#val-report-is-running-indicator').html('Running at ' + event.toTimeString().replace(/ GMT.*/,""))
+  $('#val-report-is-running-indicator').html('Report started running at ' + event.toTimeString().replace(/ GMT.*/,""))
 
 copyInstanceForNameFormEnter = (event,$the_button) ->
   key = event.which

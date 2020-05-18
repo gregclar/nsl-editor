@@ -2,6 +2,6 @@ debug('run_cas');
 $('#validate-synonymy-content').html('<%= escape_javascript(@result.gsub(/\n/,'').html_safe) %>');
 replaceDates();
 $('#update_checked_synonymy').removeClass('hidden');
-$('#link-to-run-cas').html('Refresh the Synonymy Report');
+$('#link-to-run-cas').html('Re-run the Synonymy Report');
 $('#link-to-run-cas').show();
 $('#cas-report-is-running-indicator').html("Ran at <%= Time.now.strftime('%H:%M:%S') %>");
