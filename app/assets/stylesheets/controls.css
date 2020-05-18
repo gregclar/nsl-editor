@@ -144,10 +144,10 @@ input[type='submit'].btn {
   cursor: default;
 }
 
-// Remove blue flare in chrome, safari.
-// http://stackoverflow.com/questions/1457849/how-do-i-disable-the-highlight-border-on-an-html-input-text-element
+/* Remove blue flare in chrome, safari. */
+/* http://stackoverflow.com/questions/1457849/how-do-i-disable-the-highlight-border-on-an-html-input-text-element */
 
-// Necessary to prevent the lagging outline as you arrow up and down the tr.search-results rows.
+/* Necessary to prevent the lagging outline as you arrow up and down the tr.search-results rows. */
 tr:focus {
   outline: 0;
 }
@@ -175,8 +175,8 @@ a.btn:focus {
   outline: none;
 }
 
-// Remove blue glow on input fields in Firefox.
-// http://mentalized.net/journal/2011/03/30/removing_focus_outlines/
+/* Remove blue glow on input fields in Firefox. */
+/* http://mentalized.net/journal/2011/03/30/removing_focus_outlines/ */
 
 tr:focus a,
 li a.tab:focus {
@@ -231,14 +231,6 @@ label.css-label {
 input[type=checkbox].exclude-checkbox {
   display: none;
 }
-
-//input[type=checkbox].exclude-checkbox:checked + label.css-label {
-//  color: red;
-//  font-weight: bold;
-//  padding-right: 0.5em;
-//  font-family: FontAwesome;
-//  content: "\f05e";
-//}
 
 input[type=checkbox].exclude-checkbox + label.exclude-label:before {
   font-family: FontAwesome;

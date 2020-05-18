@@ -59,7 +59,8 @@ input#query-submit {
   border-color: #606060;
 }
 
-.btn-primary:hover {
+.btn-primary:hover,
+.btn-primary:focus {
   background: #474747;
   border-color: #474747;
 }

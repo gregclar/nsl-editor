@@ -52,7 +52,7 @@
 }
 
 .tt-suggestion.tt-cursor {
-  background-color: #808080; //$nsl-showing-details-background;
+  background-color: #808080;
   color: white;
 }
 

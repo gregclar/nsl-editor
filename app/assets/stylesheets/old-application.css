@@ -15,7 +15,7 @@
   padding-left: 0px;
 }
 
-// Bootstrap table-hover was interfering with showing-details color. 
+/* Bootstrap table-hover was interfering with showing-details color. */
 table.search-results tr.showing-details,
 table.search-results tr.showing-details.fresh td.main-content,
 table.search-results tr.showing-details:hover,
@@ -130,7 +130,7 @@ div.dropdown {
   color: black;
 }
 
-//remove the padding on the anchor and put it on the list item and grey out non links by default
+/* remove the padding on the anchor and put it on the list item and grey out non links by default*/
 .dropdown-menu > li {
   padding: 3px 20px;
   color: grey;
@@ -140,9 +140,9 @@ div.dropdown {
   padding: 0;
 }
 
-// Sub-menu
-// http://www.bootply.com/86684# 
-// via: http://stackoverflow.com/questions/18023493/bootstrap-3-dropdown-sub-menu-missing
+/* Sub-menu */
+/* http://www.bootply.com/86684# */
+/* via: http://stackoverflow.com/questions/18023493/bootstrap-3-dropdown-sub-menu-missing */
 
 .dropdown-submenu {
   position: relative;
@@ -222,7 +222,7 @@ table.search-results td.checkbox-container {
   width: 26px;
 }
 
-//Make JIRA Feedback widget visible
+/* Make JIRA Feedback widget visible */
 .atlwdg-trigger.atlwdg-SUBTLE {
   z-index: 2000;
 }
@@ -475,7 +475,7 @@ ul.tree {
   padding-left: 1em;
 }
 
-// nsl-478 //
+/* nsl-478 */
 
 div#broadcast {
   position: fixed;
@@ -533,7 +533,7 @@ div#xflash {
   padding: 0 0 0 8px;
 }
 
-// end nsl-478
+/* end nsl-478 */
 
 a.dropdown-toggle:focus {
   border: 1px dotted white;
@@ -560,7 +560,7 @@ a.disabled {
   margin-left: 1em;
 }
 
-// replacement of detail_line with dl
+/* replacement of detail_line with dl */
 
 .dl-horizontal {
   margin-top: 0.7em;
@@ -592,7 +592,7 @@ a.disabled {
   margin-bottom: 1em;
 }
 
-// editable input overrides
+/* editable input overrides */
 
 .editable-container.editable-inline,
 .editableform .control-group,
@@ -645,3 +645,4 @@ a.disabled {
     opacity: 0.5;
   }
 }
+

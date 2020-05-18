@@ -162,7 +162,7 @@ div.main.row {
 }
 */
 
-// Allow for footer.
+/* Allow for footer. */
 div#search-results {
   padding-bottom: 3em;
 }
@@ -188,13 +188,6 @@ a.show-details-link {
   width: 100%;
   height: 100%;
 }
-
-//vertical-align: bottom;
-//margin: 0;
-//padding-top: 0px;
-//padding-bottom: 0px;
-
-//line-height: 3em;
 
 tr.search-result td.main-content {
   padding-top: 6px;
