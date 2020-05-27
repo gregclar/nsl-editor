@@ -9,6 +9,7 @@ class Name < ApplicationRecord
   include NameValidatable
   include NameParentable
   include NameFamilyable
+  include NameNamePathable
   include NameTreeable
   include NameNamable
   include NameAuthorable
