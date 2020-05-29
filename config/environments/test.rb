@@ -50,5 +50,5 @@ end
 if ENV['EDITOR_CONFIG_FILE']
   load "#{ENV['EDITOR_CONFIG_FILE']}"
 else
-  load "#{ENV['HOME']}/.nsl/test/editor-config.rb"
+  load "#{ENV['HOME']}/.nsl/test/editor-r6-config.rb"
 end

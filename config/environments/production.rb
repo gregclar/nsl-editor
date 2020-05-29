@@ -58,7 +58,7 @@ Rails.application.configure do
 
   # Use a real queuing backend for Active Job (and separate queues per environment).
   # config.active_job.queue_adapter     = :resque
-  # config.active_job.queue_name_prefix = "v6021_production"
+  # config.active_job.queue_name_prefix = "nedr6_production"
 
   config.action_mailer.perform_caching = false
 
@@ -118,6 +118,6 @@ end
 if ENV['EDITOR_CONFIG_FILE']
   load "#{ENV['EDITOR_CONFIG_FILE']}"
 else
-  load "#{ENV['HOME']}/.nsl/v6021-config.rb"
+  load "#{ENV['HOME']}/.nsl/editor-r6-config.rb"
 end
 
