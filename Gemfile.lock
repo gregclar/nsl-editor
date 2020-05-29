@@ -88,6 +88,9 @@ GEM
     domain_name (0.5.20190701)
       unf (>= 0.0.5, < 1.0.0)
     erubi (1.9.0)
+    exception_notification (4.4.0)
+      actionmailer (>= 4.0, < 7)
+      activesupport (>= 4.0, < 7)
     ffi (1.12.2-java)
     font-awesome-rails (4.7.0.5)
       railties (>= 3.2, < 6.1)
@@ -270,6 +273,7 @@ DEPENDENCIES
   cancancan
   capybara (>= 2.15)
   composite_primary_keys
+  exception_notification
   font-awesome-rails
   jbuilder (~> 2.7)
   kramdown
