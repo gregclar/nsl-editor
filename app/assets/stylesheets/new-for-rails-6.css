@@ -4,8 +4,12 @@ a {
 }
 
 a:hover,
-a:focus {
-  color: black;
+a:focus,
+a:active,
+input.btn.btn-primary:hover,
+input.btn.btn-primary:focus,
+input.btn.btn-primary:active {
+  background: #474747;
 }
 
 .main-body-container {
