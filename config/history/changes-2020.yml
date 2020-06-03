@@ -1,3 +1,7 @@
+- :date: 03-Jun-2020
+  :jira_id: '3546'
+  :description: |-
+    Fix weird hover-blackening of link backgrounds.
 - :date: 26-May-2020
   :jira_id: '3551'
   :description: |-

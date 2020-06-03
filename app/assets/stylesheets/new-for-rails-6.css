@@ -3,13 +3,15 @@ a {
   color: #606060;
 }
 
-a:hover,
-a:focus,
-a:active,
 input.btn.btn-primary:hover,
 input.btn.btn-primary:focus,
 input.btn.btn-primary:active {
   background: #474747;
+}
+
+a.show-details-link:hover,
+a.tab:hover {
+  color: black;
 }
 
 .main-body-container {
