@@ -94,17 +94,15 @@
     <tr><td>Rails.configuration.environment</td><td> <%= Rails.configuration.try(:environment) %> </td></tr>
 
     <tr><td>Rails.configuration.action_controller.perform_caching</td><td> <%= Rails.configuration.action_controller.try(:perform_caching) %> </td></tr>
-    </table>
-
-    <h4>Environment</h4>
-    <table class="table table-condensed search-results width-100-percent">
-
-    <% ENV.sort.each do |n,v| %>
-      <tr><td><%= n %></td> <td><%= v %></td></tr>
-    <% end %>
-
+    <tr><td>SECRET_KEY_BASE stats</td><td> <%= ENV['SECRET_KEY_BASE'][3..6] %> <%= ENV['SECRET_KEY_BASE'].length %> </td></tr>  
+    <tr><td>RAILS_MASTER_KEY stats</td><td> <%= ENV['RAILS_MASTER_KEY'][3..6] %> <%= ENV['RAILS_MASTER_KEY'].length %> </td></tr>  
     <tr><td colspan="2">&nbsp;</td></tr>
     </table>
+
+
+    <%# ENV.sort.each do |n,v| %>
+      <!-- <tr><td><%#= n %></td> <td><%#= v %></td></tr> -->
+    <%# end %>
 
     <h4>Editor Services</h4>
     <table class="table table-condensed search-results width-100-percent">
