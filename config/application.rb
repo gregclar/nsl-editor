@@ -12,8 +12,7 @@ module NEDR6
     # Initialize configuration defaults for originally generated Rails version.
     config.load_defaults 6.0
 
-    # See also confug.ru change to apply relative_url_root.
-    config.action_controller.relative_url_root = "/nsl/hub"
+    config.action_controller.relative_url_root = "/nsl/editor"
     config.time_zone = "Australia/Melbourne"
     config.active_record.default_timezone = :local
   end
