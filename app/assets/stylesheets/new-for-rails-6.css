@@ -83,3 +83,8 @@ ul#tree-report-tabs {
 ul#tree-report-tabs.nav-tabs li a:focus {
   outline: 0;
 }
+
+.rule-added-to-bust-cache {
+  color: purple;
+}
+
