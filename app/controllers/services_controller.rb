@@ -24,6 +24,6 @@ class ServicesController < ApplicationController
   end
 
   def ping
-    render json: "Editor here.".to_json, status: :ok
+    render plain: "✓", status: :ok, layout: false
   end
 end
