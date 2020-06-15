@@ -27,7 +27,7 @@ class Ldap  < ActiveType::Object
 
   # Groups user is assigned to.
   def users_groups
-    Rails.logger.info("Ldap#users_groups")
+    Rails.logger.info("Ldap#users_groups:" + Rails.configuration.ldap_groups)
     Ldap.new.admin_search(Rails.configuration.ldap_groups,
                           "uniqueMember",
                           "uid=#{username}", "cn")

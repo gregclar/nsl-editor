@@ -60,10 +60,11 @@ class Tree::DraftVersion < ActiveRecord::Base
     raise
   end
 
-  def publish(username)
+  def publish(username, next_draft_name)
     url = Tree::AsServices.publish_version_url(username)
     payload = { versionId: id,
-                logEntry: log_entry }
+                logEntry: log_entry,
+                nextDraftName: next_draft_name }
     logger.info "Calling #{url} with #{payload}"
     RestClient.put(url, payload.to_json,
                    { content_type: :json, accept: :json })

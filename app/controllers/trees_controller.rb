@@ -83,7 +83,7 @@ class TreesController < ApplicationController
     logger.info "Publish a draft tree"
     target = Tree::DraftVersion.find(params[:version_id])
     target.log_entry = params[:draft_log]
-    response = target.publish(current_user.username)
+    response = target.publish(current_user.username, params[:next_draft_name])
     json = json(response)
     if json&.ok
       @message = "#### #{target.draft_name} published as #{target.tree.name} version #{target.id} ####"
