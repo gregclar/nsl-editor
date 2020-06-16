@@ -1,3 +1,11 @@
+- :date: 16-Jun-2020
+  :jira_id: '3575'
+  :description: |-
+    Copy the work log entry from the previously-published tree to the new auto generated draft tree.
+- :date: 16-Jun-2020
+  :jira_id: '3574'
+  :description: |-
+    Allow new auto generated draft tree to be named at the point of publication.
 - :date: 03-Jun-2020
   :jira_id: '3546'
   :description: |-
