@@ -48,7 +48,6 @@ input#query-submit {
 }
 
 #new-name-form-container .typeahead {
-  color: purple;
   line-height: 20px;
 }
 
