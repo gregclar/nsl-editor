@@ -23,7 +23,7 @@ module NameRankable
   def parent_rank_high_enough?
     if requires_parent? && requires_higher_ranked_parent?
       unless parent.blank? || parent_rank_above? || both_unranked?
-        errors.add(:parent_id, "rank (#{parent.try('name_rank').try('name')})
+        errors.add(:parent_id, "rank (#{parent.try('name_rank').try('name')}) \
                    must be higher than name rank (#{name_rank.try('name')})")
       end
     end

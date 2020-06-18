@@ -902,7 +902,7 @@ without_names_from_service:
 cultivar_hybrid_with_one_parent: 
   family: a_family
   name_element: Rambocano
-  name_rank: species
+  name_rank: unranked
   name_status: na
   name_type: cultivar_hybrid
   namespace: apni
@@ -1973,18 +1973,18 @@ name_to_delete:
   uri: aep
   updated_by: greg
   created_by: greg
-    
+     
 a_cultivar: 
   name_element: acultivar
   full_name: acultivar
   simple_name: acultivar
-  name_rank: species
+  name_rank: unranked
   name_status: na
   name_type: cultivar
   namespace: apni
   parent: angophora
   family: a_family
-  name_path: 'Plantae/Magnoliophyta/a_family/a_genus/thing'
+  name_path: 'Plantae/Magnoliophyta/a_family/a_genus/acultivar'
   uri: aeq
   updated_by: greg
   created_by: greg
@@ -1995,7 +1995,7 @@ a_cultivar_hybrid:
   simple_name_html: a cultivar hybrid
   full_name: a cultivar hybrid
   full_name_html: a cultivar hybrid
-  name_rank: species
+  name_rank: unranked
   name_status: na
   name_type: cultivar_hybrid
   namespace: apni
@@ -2013,7 +2013,7 @@ a_cultivar_hybrid_formula:
   simple_name_html: a cultivar hybrid formula
   full_name: a cultivar hybrid formula
   full_name_html: a cultivar hybrid formula
-  name_rank: species
+  name_rank: unranked
   name_status: na
   name_type: cultivar_hybrid_formula
   namespace: apni

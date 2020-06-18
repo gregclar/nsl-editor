@@ -22,6 +22,7 @@ class Name::AsResolvedTypeahead::ForParent
   attr_reader :value
 
   def initialize(id_string, param_text, field_name)
+    Rails.logger.debug('init Name::AsResolvedTypeahead::ForParent')
     @text = param_text.sub(/ *\|.*\z/, "")
     @text.rstrip!
     @id_string = id_string
@@ -43,7 +44,7 @@ class Name::AsResolvedTypeahead::ForParent
   end
 
   def text_only
-    possibles = Name.lower_full_name_like(@text).not_common_or_cultivar
+    possibles = Name.lower_full_name_like(@text).not_common
                     .not_a_duplicate
     case possibles.size
     when 0
@@ -60,7 +61,7 @@ class Name::AsResolvedTypeahead::ForParent
   end
 
   def zero_possibles
-    possibles = Name.lower_full_name_like(@text + "%").not_common_or_cultivar
+    possibles = Name.lower_full_name_like(@text + "%").not_common
                     .not_a_duplicate
     case possibles.size
     when 1
@@ -71,7 +72,7 @@ class Name::AsResolvedTypeahead::ForParent
   end
 
   def id_and_text
-    possibles = Name.lower_full_name_like(@text).not_common_or_cultivar
+    possibles = Name.lower_full_name_like(@text).not_common
                     .not_a_duplicate
     case possibles.size
     when 0

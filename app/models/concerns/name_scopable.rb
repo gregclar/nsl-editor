@@ -11,6 +11,11 @@ module NameScopable
                     name_type where not (cultivar or
                     lower(name_type.name) = 'common'))"])
            end)
+    scope :not_common,
+          (lambda do
+             where([" name_type_id in (select id from
+                    name_type where lower(name_type.name) != 'common')"])
+           end)
     scope :not_a_duplicate, -> { where(duplicate_of_id: nil) }
     scope :full_name_like,
           (lambda do |string|
