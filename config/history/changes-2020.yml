@@ -1,3 +1,7 @@
+- :date: 23-Jun-2020
+  :jira_id: '3581'
+  :description: |-
+    Fixed arrowing up-and-down bug in R6
 - :date: 17-Jun-2020
   :jira_id: '3576'
   :description: |-

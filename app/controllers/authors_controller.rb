@@ -26,6 +26,7 @@ class AuthorsController < ApplicationController
   def show
     set_tab
     set_tab_index
+    @take_focus = params[:take_focus] == 'true'
     render "show", layout: false
   end
 

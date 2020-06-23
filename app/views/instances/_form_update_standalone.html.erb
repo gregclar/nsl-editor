@@ -74,8 +74,11 @@
     <br>
 <% end %>
 
+<% if @take_focus %>
   <script>
     $(document).ready(function () {
       document.getElementById('instance_instance_type_id').focus();
     })
   </script>
+<% end %>
+

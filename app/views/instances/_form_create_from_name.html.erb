@@ -69,9 +69,10 @@
    %>
 <% end %>
 
-
+<% if @take_focus %>
   <script>
     $(document).ready(function () {
       document.getElementById('instance-reference-typeahead').focus();
     })
   </script>
+<% end %>

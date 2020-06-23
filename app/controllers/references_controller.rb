@@ -26,6 +26,7 @@ class ReferencesController < ApplicationController
     pick_a_tab
     pick_a_tab_index
     copy_reference if @tab == "tab_copy"
+    @take_focus = params[:take_focus] == 'true'
     render "show", layout: false
   end
 

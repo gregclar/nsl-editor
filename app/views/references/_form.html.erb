@@ -177,8 +177,10 @@
   <script>setUpReferenceAuthor();</script>
   <script>setUpReferenceParent();</script>
 
+<% if @take_focus %>
   <script>
     $(document).ready(function () {
       document.getElementById('reference_ref_type_id').focus();
     })
   </script>
+<% end %>

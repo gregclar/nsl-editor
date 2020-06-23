@@ -454,6 +454,10 @@ window.loadDetails = (event,inFocus,tabWasClicked = false) ->
   debug("tabIndex: #{tabIndex}") 
   url = inFocus.attr('data-tab-url').replace(/active_tab_goes_here/,currentActiveTab(record_type))
   url = url+'?format=js&tabIndex='+tabIndex+'&row-type='+row_type+'&instance-type='+instance_type+'&rowType='+inFocus.attr('data-row-type')
+  if tabWasClicked
+    url = url+'&take_focus=true'
+  else
+    url = url+'&take_focus=false'
   debug("loadDetails url: #{url}")
   $('#search-result-details').load  url, -> 
     debug("before recordCurrentActiveTab")
@@ -469,8 +473,32 @@ window.loadDetails = (event,inFocus,tabWasClicked = false) ->
         $('li.active a.tab').focus()
     else
       debug('tab was not clicked')
+      # $('li.active a.tab').focus()   ## new
   debug('loadDetails after load url')
   event.preventDefault()
+
+window.nedloadDetails = (event,inFocus,tabWasClicked = false) ->
+  debug('window.loadDetails')
+  $('#search-result-details').show()
+  $('#search-result-details').removeClass('hidden')
+  record_type = $('tr.showing-details').attr('data-record-type')
+  instance_type = $('tr.showing-details').attr('data-instance-type')
+  row_type = $('tr.showing-details').attr('data-row-type')
+  tabIndex = $('.search-result.showing-details a[tabindex]').attr('tabindex')
+  url = inFocus.attr('data-tab-url').replace(/active_tab_goes_here/,currentActiveTab(record_type))
+  url = url+'?tabIndex='+tabIndex+'&row-type='+row_type+'&instance-type='+instance_type+'&rowType='+inFocus.attr('data-row-type')
+  $('#search-result-details').load  url, -> 
+    recordCurrentActiveTab(record_type)
+    if tabWasClicked
+      debug('tab clicked')
+      if $('.give-me-focus') 
+        debug('give-me-focus ing')
+        $('.give-me-focus').focus()
+      else
+        debug('just focus the tab')
+        $('li.active a.tab').focus()
+  event.preventDefault()
+
  
 currentActiveTab = (record_type) ->
   debug "state of " + record_type + " tab: #{$('body').attr('data-active-'+record_type+'-tab')} via currentActiveTab"
@@ -508,7 +536,9 @@ changeFocus = (event,inFocus) ->
   $('.showing-details').removeClass('showing-details')
   inFocus.addClass('showing-details')
   loadDetails(event,inFocus)
-  #inFocus.focus()
+  debug("Back in changeFocus: focus on the record")
+  debug("inFocus.attr('id)")
+  #inFocus.click()
   event.preventDefault()
 
 searchResultKeyNavigation = (event,$this) ->

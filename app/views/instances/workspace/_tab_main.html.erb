@@ -10,9 +10,11 @@
   <%= render partial: "instances/workspace/new_placement" %>
 <% end %>
 
+<% if @take_focus %>
   <script>
     $(document).ready(function () {
       document.getElementById('place_name_comment').focus();
     })
   </script>
+<% end %>
 

@@ -43,6 +43,7 @@ class NamesController < ApplicationController
       @instance = Instance.new if params[:tab] =~ /\Atab_instances\z/
       @instance.name = @name
     end
+    @take_focus = params[:take_focus] == 'true'
     render "show", layout: false
   end
 

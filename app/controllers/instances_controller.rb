@@ -39,6 +39,7 @@ class InstancesController < ApplicationController
       @parent_tve = find_a_parent(@instance.name)
     end
     @accepted_tve = @instance.name.accepted_tree_version_element
+    @take_focus = params[:take_focus] == 'true'
     render "show", layout: false
   end
 

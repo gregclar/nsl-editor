@@ -79,8 +79,11 @@ with BHL URL
 <%= f.submit class: 'btn-primary', tabindex: increment_tab_index, title: "Create the synonym" %>
 <% end %>
 
+<% if @take_focus %>
   <script>
     $(document).ready(function () {
       document.getElementById('instance-instance-for-name-showing-reference-typeahead').focus();
     })
   </script>
+<% end %>
+

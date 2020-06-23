@@ -48,10 +48,12 @@
 
 <% end %>
 
+<% if @take_focus %>
   <script>
     $(document).ready(function () {
       document.getElementById('reference_doi').focus();
     })
   </script>
+<% end %>
 
 
