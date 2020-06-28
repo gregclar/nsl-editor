@@ -98,12 +98,15 @@ function markdown(text) {
   var converter = new showdown.Converter();
   return converter.makeHtml(text);
 }
+window.markdown = markdown;
 
 function refreshTreeTab(event) {
   $('#instance-classification-tab').click();
   event.preventDefault();
   return false;
 }
+
+window.refreshTreeTab = refreshTreeTab;
 
 function refreshPage() {
   location.reload();
@@ -149,6 +152,8 @@ function linkNames(selector) {
     linkName(this)
   });
 }
+
+window.linkNames = linkNames;
 
 function linkSynonyms(selector) {
   var container = $(selector);
@@ -299,3 +304,5 @@ var toggleNext = function (el) {
   $(el).find('i').toggle();
   $(el).next('div').toggle(200);
 };
+
+window.toggleNext = toggleNext;
