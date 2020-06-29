@@ -3,7 +3,7 @@ class SearchController < ApplicationController
 
   def search
     handle_old
-    run_tree_search || run_local_search || run_empty_search
+    run_local_search || run_empty_search
     respond_to do |format|
       format.html
       format.csv do
@@ -71,15 +71,6 @@ class SearchController < ApplicationController
     params[:query_target] = "name"
     return if params[:query_string] =~ /show-instances:/
     params[:query_string] = params[:query_string].sub(/\z/, " show-instances:")
-  end
-
-  def run_tree_search
-    logger.debug("run_tree_search")
-    return false unless params[:query_target].present?
-    return false unless params[:query_target] =~ /\Atrees*/i
-    params[:query] = params[:query_string]
-    tree_search
-    true
   end
 
   def run_local_search
