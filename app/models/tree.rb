@@ -21,6 +21,22 @@ class Tree < ActiveRecord::Base
   self.table_name = "tree"
   self.primary_key = "id"
   self.sequence_name = "nsl_global_seq"
+ 
+  def display_as
+    'Tree'
+  end
+
+  def fresh?
+    false
+  end
+
+  def has_parent?
+    false
+  end
+
+  def record_type
+    'Tree'
+  end
 
   belongs_to :default_draft_version,
              class_name: "TreeVersion",

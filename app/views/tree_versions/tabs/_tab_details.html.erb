@@ -1,0 +1,29 @@
+<% increment_tab_index(0) %>
+
+<%= @tree_version.draft_name %> <span class="pull-right">Draft Name</span> <br>
+<%= divider %>
+Log Entry
+<%= @tree_version.log_entry %>
+<%= divider %>
+<%= link_to("#{@tree_version.previous_version.draft_name}&nbsp;#{search_icon_on_tab}".html_safe,
+            search_path(query_string: "id:#{@tree_version.previous_version_id}",
+                        query_target: 'tree_version'),
+                        title: 'Retrieve the tree',class: 'tree')
+%> 
+<span class="pull-right">previous version</span> <br>
+<%= link_to("#{@tree_version.tree.name} tree #{search_icon_on_tab}".html_safe, search_path(query_string: "id:#{@tree_version.tree_id}",query_target: 'tree'),
+            title: 'Retrieve the tree',class: 'tree') %> 
+<span class="pull-right">tree</span> <br>
+<%= divider %>
+<%= link_to("Changes from the previous version", search_path(query_string: "changes-for-version:#{@tree_version.id}",query_target: 'tree_elements'),
+            title: 'Retrieve the tree',class: 'tree') %> 
+<span class="pull-right">Changes</span> <br>
+<%= divider %>
+<%= @tree_version.id %> <span class="pull-right">ID</span> <br>
+<%= created_by_whom_and_when(@tree_version).html_safe %>
+<% if @tree_version.published %>
+  <br>
+  <%= published_by_whom_and_when(@tree_version).html_safe %>
+<% else %>
+    Unpublished
+<% end %>

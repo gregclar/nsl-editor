@@ -40,4 +40,10 @@ module AuditHelper
       record.updated_at
     )})
   end
+
+  def published_by_whom_and_when(record)
+    %(Published <span class="purple"
+    >#{time_ago_in_words(record.published_at)}&nbsp;ago</span>
+    by #{record.published_by.downcase} #{formatted_timestamp(record.published_at)})
+  end
 end

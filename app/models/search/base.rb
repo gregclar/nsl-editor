@@ -31,8 +31,8 @@ class Search::Base
   MAX_PAGE_SIZE = 10_000
 
   def initialize(params)
-    # debug("Search::Base start for user #{params[:current_user].username}")
     @params = params
+    @params[:query_target] = @params[:query_target].downcase.gsub(' ','_')
     set_defaults
     run_query
   end
@@ -77,6 +77,10 @@ class Search::Base
       when /instance/ then Search::OnInstance::Base.new(@parsed_request)
       when /reference/ then Search::OnReference::Base.new(@parsed_request)
       when /orchids/ then Search::OnOrchids::Base.new(@parsed_request)
+      when /tree\z/ then Search::OnTree::Base.new(@parsed_request)
+      when /tree_version\z/ then Search::OnTreeVersion::Base.new(@parsed_request)
+      when /tree_version_element\z/ then Search::OnTreeVersionElement::Base.new(@parsed_request)
+      when /tree_element\z/ then Search::OnTreeElement::Base.new(@parsed_request)
       else Search::OnName::Base.new(@parsed_request)
       end
   end

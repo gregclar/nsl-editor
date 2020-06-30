@@ -20,8 +20,22 @@
 #   Trees are classification graphs for taxa.
 #   There are several types of trees - see the model.
 class TreesController < ApplicationController
+  before_action :find_tree, only: [:show, :tab]
   def index;
   end
+
+  # GET /trees/1
+  # GET /trees/1.json
+  # Sets up RHS details panel on the search results page.
+  # Displays a specified or default tab.
+  def show
+    logger.debug("TreesController#show for tree: #{@tree}")
+    pick_a_tab("tab_details")
+    #pick_a_tab_index
+    @take_focus = params[:take_focus] == 'true'
+    render "show", layout: false
+  end
+  alias tab show
 
   # New draft tree
   # This just collects the details and posts to the services
@@ -396,4 +410,9 @@ class TreesController < ApplicationController
     params.require(:remove_placement).permit(:taxon_uri, :delete)
   end
 
+  def find_tree
+    @tree = Tree.find(params[:id])
+  rescue ActiveRecord::RecordNotFound
+    raise "Could not find tree for id: #{params.id}"
+  end
 end

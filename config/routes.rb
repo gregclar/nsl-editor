@@ -213,6 +213,14 @@ Rails.application.routes.draw do
         as: "add_instances_to_draft_tree",
         to: "orchids_batch#add_instances_to_draft_tree", via: :post
 
+  match "trees/:id/tab/:tab", as: "tree_tab", to: "trees#tab", via: :get
+
+  match "tree_versions/:id/tab/:tab", as: "tree_version_tab", to: "tree_versions#tab", via: :get
+
+  match "tree_version_elements/:element_link/tab/:tab", as: "tree_version_element_tab", to: "tree_version_elements#tab", via: :get
+
+  match "tree_elements/:id/tab/:tab", as: "tree_element_tab", to: "tree_elements#tab", via: :get
+
   match "references/typeahead/on_citation/duplicate_of/:id",
         as: "references_typeahead_on_citation_duplicate_of_current",
         to: "references#typeahead_on_citation_duplicate_of_current", via: :get

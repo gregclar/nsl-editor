@@ -35,6 +35,22 @@ class TreeElement < ActiveRecord::Base
                           join_table: "tree_element_distribution_entries",
                           foreign_key: "tree_element_id"
 
+  def display_as
+    'TreeElement'
+  end
+
+  def fresh?
+    false
+  end
+
+  def has_parent?
+    false
+  end
+
+  def record_type
+    'TreeElement'
+  end
+
   def self.dist_options
     DistEntry.all.sort do |a, b|
       a.sort_order <=> b.sort_order
