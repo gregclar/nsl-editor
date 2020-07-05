@@ -35,19 +35,13 @@ class Tree::DefinedQuery::ChangedTreeElements
               :count,
               :show_csv,
               :total
-  SQL_SIMPLE = <<HERE
-select * FROM tree_element WHERE (id in  (51209365,51209366))
-HERE
-
-  SQL2 = <<HERE
-select * FROM tree_element WHERE (id in  (?,?))
-HERE
-
 
   SQL = <<HERE
   select fred.te_id as id,
        fred.simple_name,
        fred.operation,
+       fred.synonyms,
+       fred.synonyms_html,
        tve.name_path,
        tv.id tv_id,
        tve.element_link tve_element_link
@@ -62,6 +56,8 @@ union
 select fred.te_id,
        fred.simple_name,
        fred.operation,
+       fred.synonyms,
+       fred.synonyms_html,
        'A: no name path',
        tv.id tv_id,
        'no element link'
@@ -87,7 +83,7 @@ HERE
   def run_query
     debug("run_query")
     build_args
-    # validate_args
+    validate_args
     @show_csv = false
     #if @parsed_request.count
     #  count_query
@@ -124,42 +120,13 @@ HERE
 
   def list_query
     debug('list_query')
-    #@results = TreeElement.find_by_sql([SQL,51358658,51357890,51358658,51357890])
     @results = TreeElement.find_by_sql([SQL,@tree_version_1,@tree_version_2,@tree_version_1,@tree_version_2])
-    debug(@results.class)
-    @results.each {|result| debug(result)}
-    @limited = true
-    @common_and_cultivar_included = true
-    @count = @results.size
-    @has_relation = false
-    @relation = nil
-  end
-
- # sql = "Select * from ... your sql query here"
- # records_array = ActiveRecord::Base.connection.execute(sql)
-
-  def list_query_v1
-    debug('list_query')
-    # @results = TreeElement.where('id in  (51209365,51209366)')
-    records_array = ActiveRecord::Base.connection.execute(SQL).values
-    @results = Array.new
-    records_array.each_with_index do |rec, ndx|
-      debug(ndx)
-      h = {tree_element_id: rec[0], simple_name: rec[1], operation: rec[2], name_path: rec[3], tree_version_id: rec[4], tve_element_link: rec[5]}
-      @results.push(h)
-    end
-    debug(records_array.first)
-
-
-  # select fred.te_id,
-   #     fred.simple_name,
-    #    fred.operation,
-     #   tve.name_path,
-      #  tv.id tv_id,
-       # tve.element_link tve_element_link
-      #
-    debug(@results.class)
-    @results.each {|result| debug(result)}
+    tree_results= Tree.all
+    tv_results = TreeVersion.where(id: @tree_version_1)
+    @results.unshift(*tv_results)
+    @results.unshift(*tree_results)
+    # debug(@results.class)
+    # @results.each {|result| debug(result)}
     @limited = true
     @common_and_cultivar_included = true
     @count = @results.size
@@ -171,7 +138,3 @@ HERE
     @show_csv
   end
 end
-
-
- # sql = "Select * from ... your sql query here"
- # records_array = ActiveRecord::Base.connection.execute(sql)

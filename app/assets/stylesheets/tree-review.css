@@ -1,5 +1,5 @@
 .search-result-operation {
-  padding: 0.5em 1em 0.5em 1em;
+  padding: 0.3em 1em 0.3em 1em;
 }
 
 .operation-type-added {
@@ -23,4 +23,8 @@ tr.showing-details span.operation-type-added {
 tr.showing-details span.operation-type-changed {
   background-color: lightgray;
   color: black;
+}
+
+synonym {
+  color: red;
 }

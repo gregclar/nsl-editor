@@ -6,6 +6,10 @@
 <% data['tab-url'] = tree_element_tab_path(@tree_element,tab:"#{this_tab}") %>
 <%# data['prev-tab'] = prev_tab unless prev_tab.blank? %>
 <% data['tab-name'] = this_tab %>
+<% data['tree-element-operation'] = params["tree-element-operation"] %>
+<% data['tree-version-id'] = params["tree-version-id"] %>
+<% data['tree-element-element-link'] = params["tree-element-element-link"] %>
+
 
 <li class='first <%= active_tab ? "active" : "non-active" %>'>
  <%= link_to link_text,

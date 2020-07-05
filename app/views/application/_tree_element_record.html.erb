@@ -35,6 +35,14 @@
       <% end %>
 
     </a>
+    <div class="synonyms xhidden">
+    <% search_result[:synonyms]['list'].each do |synonym|  %>
+      &mdash; <%= synonym["full_name_html"].html_safe %>
+      <%= "(#{synonym["year"].to_int})" %>
+      <%= synonym["type"] %>
+      <br>
+    <% end %>
+    </div>
   </td>
   <td class="takes-focus width-5-percent filler">&nbsp;</td>
 </tr>

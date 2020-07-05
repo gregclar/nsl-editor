@@ -2,12 +2,12 @@
 
 <%= @tree_element.simple_name %> <span class="pull-right">simple_name</span> <br>
 <%#= @tree_element.display_html %>
-<%= @tree_element.instance_id %> <span class="pull-right">instance_id</span> <br>
-<%= @tree_element.instance_link %> <span class="pull-right">instance_link</span> <br>
-<%= @tree_element.name_element %> <span class="pull-right">name_element</span> <br>
-<%= @tree_element.name_id %> <span class="pull-right">name_id</span> <br>
+<%#= @tree_element.instance_id %> <!-- <span class="pull-right">instance_id</span> <br> -->
+<%#= @tree_element.instance_link %> <!-- <span class="pull-right">instance_link</span> <br> -->
+<%#= @tree_element.name_element %> <!-- <span class="pull-right">name_element</span> <br> -->
+<%#= @tree_element.name_id %> <!-- <span class="pull-right">name_id</span> <br> -->
 
-<%= divider %>
+<%#= divider %>
 
 <% if params['tree-version-id'].blank? %>
   No tree version id in the params. (todo)
@@ -18,13 +18,13 @@
 <% end %>
 
 
-<%= divider %>
-<%= @tree_element.name_link %> <span class="pull-right">name_link</span> <br>
-<%= @tree_element.previous_element_id %> <span class="pull-right">previous_element_id</span> <br>
-<%= @tree_element.profile %> <span class="pull-right">profile</span> <br>
-<%= @tree_element.rank %> <span class="pull-right">rank</span> <br>
-<%= @tree_element.source_element_link %> <span class="pull-right">source_element_link</span> <br>
-<%= @tree_element.source_shard %> <span class="pull-right">source_shard</span> <br>
+<%#= divider %>
+<%#= @tree_element.name_link %> <!-- <span class="pull-right">name_link</span> <br> -->
+<%#= @tree_element.previous_element_id %> <!-- <span class="pull-right">previous_element_id</span> <br> -->
+<%#= @tree_element.profile %> <!-- <span class="pull-right">profile</span> <br> -->
+<%#= @tree_element.rank %> <!-- <span class="pull-right">rank</span> <br> -->
+<%#= @tree_element.source_element_link %> <!-- <span class="pull-right">source_element_link</span> <br> -->
+<%#= @tree_element.source_shard %> <!-- <span class="pull-right">source_shard</span> <br> -->
 <%#= @tree_element.synonyms %>
 <%#= @tree_element.synonyms_html %>
 <%= divider %>

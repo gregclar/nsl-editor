@@ -593,7 +593,7 @@ and (max-device-width : 1024px) {
     max-width: 900px;
   }
   div#search-result-details.changed_tree_elements {
-    width: 55%;
+    width: 45%;
     max-width: 900px;
   }
   /* font-size is different on iPad Safari, compared to equivalent size browser window. */
@@ -666,7 +666,7 @@ and (max-device-width : 1024px) {
     max-width: 900px;
   }
   div#search-result-details.changed_tree_elements {
-    width: 55%;
+    width: 45%;
     max-width: 900px;
   }
   div#search-field-and-buttons-container {
@@ -690,7 +690,7 @@ and (max-device-width : 1024px) {
     max-width: 900px;
   }
   div#search-result-details.changed_tree_elements {
-    width: 55%;
+    width: 45%;
     max-width: 900px;
   }
   div#search-field-and-buttons-container {
