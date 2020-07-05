@@ -6,6 +6,18 @@
 <%= @tree_element.instance_link %> <span class="pull-right">instance_link</span> <br>
 <%= @tree_element.name_element %> <span class="pull-right">name_element</span> <br>
 <%= @tree_element.name_id %> <span class="pull-right">name_id</span> <br>
+
+<%= divider %>
+
+<% if params['tree-version-id'].blank? %>
+  No tree version id in the params. (todo)
+<% else %>
+<%= link_to("#{TreeVersion.find(params['tree-version-id']).draft_name}", search_path(query_string: "id:#{params['tree-version-id']}",query_target: 'tree_version'),
+            title: 'Retrieve the tree version',class: 'tree') %> 
+<span class="pull-right">tree version</span> <br>
+<% end %>
+
+
 <%= divider %>
 <%= @tree_element.name_link %> <span class="pull-right">name_link</span> <br>
 <%= @tree_element.previous_element_id %> <span class="pull-right">previous_element_id</span> <br>

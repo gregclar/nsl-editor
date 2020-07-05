@@ -84,6 +84,7 @@ class Search::OnTreeElement::WhereClauses
     when 1 then @sql = @sql.where(rule.predicate, rule.processed_value)
     when 2 then supply_token_twice(rule, rule.processed_value)
     when 3 then supply_token_thrice(rule, rule.processed_value)
+    when 6 then supply_token_6_times(rule, rule.processed_value)
     else
       raise "Where clause value frequency: #{frequency}, is too high."
     end
@@ -97,6 +98,16 @@ class Search::OnTreeElement::WhereClauses
 
   def supply_token_thrice(rule, token)
     @sql = @sql.where(rule.predicate,
+                      token,
+                      token)
+  end
+
+  def supply_token_6_times(rule, token)
+    @sql = @sql.where(rule.predicate,
+                      token,
+                      token,
+                      token,
+                      token,
                       token,
                       token)
   end

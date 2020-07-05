@@ -27,6 +27,7 @@ class TreeElementsController < ApplicationController
     set_tab
     set_tab_index
     @take_focus = params[:take_focus] == 'true'
+    logger.debug("params: #{params.inspect}")
     render "show", layout: false
   end
 

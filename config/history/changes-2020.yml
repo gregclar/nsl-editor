@@ -1,4 +1,8 @@
 - :date: 28-Jun-2020
+  :jira_id: '3580'
+  :description: |-
+    Partial work on APC review prototype, as at Sunday, 5 July, 1pm
+- :date: 28-Jun-2020
   :jira_id: '3583'
   :description: |-
     Tree-related spinners now switch off as expected. (Note: Rails 6 version is now live.)

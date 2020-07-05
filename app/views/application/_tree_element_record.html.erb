@@ -8,6 +8,15 @@
   data-base-url="<%#= tree_element_path(search_result.id) %>"
   data-tab-url="<%= tree_element_tab_path(id: search_result[:id],tab: 'active_tab_goes_here') %>"
   data-record-id="<%#= search_result.id %>"
+  <% unless search_result[:operation].blank? %>
+    data-tree-element-operation="<%= search_result[:operation] %>"
+  <% end %>
+  <% unless search_result[:tv_id].blank? %>
+    data-tree-version-id="<%= search_result[:tv_id] %>"
+  <% end %>
+  <% unless search_result[:tve_element_link].blank? %>
+    data-tree-version-element-element-link="<%= CGI.escape(search_result[:tve_element_link]) %>"
+  <% end %>
 
   data-record-type="tree"
   tabindex="<%= increment_tab_index(100) %>"
@@ -19,7 +28,12 @@
       tabindex="<%= increment_tab_index %>" 
       title="Tree Element record. Select to show details."
       id="<%= %Q(#{search_result.class}-#{search_result.id}) %>">
+
       <%= render partial: 'tree_element_link_text', locals: {search_result: search_result} %>
+      <% unless search_result[:operation].blank? %>
+        <span class="search-result-operation operation-type-<%= search_result[:operation] %>"><%= search_result[:operation] %></span>
+      <% end %>
+
     </a>
   </td>
   <td class="takes-focus width-5-percent filler">&nbsp;</td>

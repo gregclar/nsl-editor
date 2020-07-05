@@ -2,8 +2,10 @@
   <% if notice %> <p id="notice"><%= notice %></p> <% end %>
 
   <br>
-
-  <%#= link_to(@tree.name, search_path(query_target: 'names', query_string: "id:#{@name.id}"),id: 'tab-heading',title: 'Query this name') %>
+  <%= @tree_element.simple_name %>
+    <span class="search-result-operation operation-type-<%= params["tree-element-operation"] %>" >
+    <%= params["tree-element-operation"] %>
+    </span>
   <span class="pull-right"><%#= mapper_name_link(@name) %></span>
 
   <div>&nbsp;</div>

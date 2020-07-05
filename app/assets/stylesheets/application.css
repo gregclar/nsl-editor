@@ -27,6 +27,7 @@
  *= require environment
  *= require old-application
  *= require new-for-rails-6
+ *= require tree-review
  *= require_self
  */
 

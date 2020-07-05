@@ -32,7 +32,8 @@ class Search::Base
 
   def initialize(params)
     @params = params
-    @params[:query_target] = @params[:query_target].downcase.gsub(' ','_')
+    @params[:canonical_query_target] = @params[:query_target]
+    @params[:canonical_query_target] = @params[:canonical_query_target].downcase.gsub(', ','_').gsub(' ','_')
     set_defaults
     run_query
   end
@@ -45,7 +46,7 @@ class Search::Base
       run_plain_query
     end
   end
-
+ 
   def debug(s)
     Rails.logger.debug("Search::Base #{s}")
   end
@@ -59,6 +60,7 @@ class Search::Base
   def to_history
     { "query_string" => @params[:query_string],
       "query_target" => @parsed_request.query_target,
+      "canonical_query_target" => @parsed_request.canonical_query_target,
       "result_size" => @executed_query.count,
       "time_stamp" => Time.now,
       "error" => false }
@@ -98,22 +100,24 @@ class Search::Base
   def run_specific_defined_query
     @executed_query =
       case @parsed_request.defined_query
-      when /references-name-full-synonymy/
+      when /references.name.full.synonymy/
         Reference::DefinedQuery::ReferencesNamesFullSynonymy
       .new(@parsed_request)
-      when /\Ainstance-is-cited\z/
+      when /\Ainstance.is.cited\z/
         Instance::DefinedQuery::IsCited.new(@parsed_request)
-      when /\Ainstance-is-cited-by\z/
+      when /\Ainstance.is.cited.by\z/
         Instance::DefinedQuery::IsCitedBy.new(@parsed_request)
       when /\Aaudit\z/
         Audit::DefinedQuery::Base.new(@parsed_request)
-      when /\Areferences-with-novelties\z/
+      when /\Areferences.with.novelties\z/
         Reference::DefinedQuery::ReferencesWithNovelties.new(@parsed_request)
-      when /\Areferences-accepted-names-for-id\z/i
+      when /\Areferences.accepted.names.for.id\z/i
         Reference::DefinedQuery::ReferencesAcceptedNamesForId
       .new(@parsed_request)
-      when /\Areferences-shared-names\z/i
+      when /\Areferences.shared.names\z/i
         Reference::DefinedQuery::ReferencesSharedNames.new(@parsed_request)
+      when /\Achanged.tree.elements\z/i
+        Tree::DefinedQuery::ChangedTreeElements.new(@parsed_request)
       else
         Rails.logger.error("Search::Base failed to run defined query: "\
                            "#{@parsed_request.defined_query}")

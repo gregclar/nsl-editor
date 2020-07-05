@@ -76,7 +76,7 @@ class Search::ParsedRequest
     debug("initialize: params: #{params}")
     @params = params
     @query_string = @params["query_string"].gsub(/  */, " ")
-    @query_target = (@params["query_target"] || "").strip.downcase
+    @query_target = (@params["canonical_query_target"] || "").strip.downcase
     @user = @params[:current_user]
     parse_request
     @count_allowed = true

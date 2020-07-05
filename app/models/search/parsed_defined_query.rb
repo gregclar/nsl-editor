@@ -23,16 +23,17 @@ class Search::ParsedDefinedQuery
               :target_button_text
 
   DEFINED_QUERIES = {
-    "references with instances" => "references-name-full-synonymy",
-    "references, names, full synonymy" => "references-name-full-synonymy",
-    "references + instances" => "references-name-full-synonymy",
-    "references with novelties" => "references-with-novelties",
-    "references, accepted names for id" => "references-accepted-names-for-id",
-    "references shared names" => "references-shared-names",
-    "instance is cited" => "instance-is-cited",
-    "instance is cited by" => "instance-is-cited-by",
+    "references_with_instances" => "references-name-full-synonymy",
+    "references_names_full_synonymy" => "references-name-full-synonymy",
+    "references_+_instances" => "references-name-full-synonymy",
+    "references_with_novelties" => "references-with-novelties",
+    "references_accepted_names_for_id" => "references-accepted-names-for-id",
+    "references_shared_names" => "references-shared-names",
+    "instance_is_cited" => "instance-is-cited",
+    "instance_is_cited by" => "instance-is-cited-by",
     "audit" => "audit",
     "review" => "audit",
+    "changed_tree_elements" => "changed-tree-elements",
   }.freeze
 
   def initialize(query_target)
@@ -46,6 +47,7 @@ class Search::ParsedDefinedQuery
 
   def parse_query_target
     query_target_downcase = @query_target.downcase
+    Rails.logger.debug("@query_target.downcase: #{@query_target.downcase}")
     if DEFINED_QUERIES.key?(query_target_downcase)
       debug("'#{query_target_downcase}' recognized as a defined query.")
       @defined_query = DEFINED_QUERIES[query_target_downcase]

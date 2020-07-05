@@ -25,7 +25,61 @@ class Search::OnTreeElement::FieldRule
                                       order: "1"},
     "changes-for-version:"      => { where_clause: " id in ( SELECT tree_element_id FROM tree_version_element WHERE tree_version_id = ? EXCEPT SELECT tree_element_id FROM tree_version_element WHERE tree_version_id = (select previous_version_id from tree_version where id = ?)) ",
                              order: "id"},
+    "changes:"      => { where_clause: 
+ "id in (
+    SELECT tree_element_id
+      FROM tree_version_element
+    WHERE tree_version_id = ((regexp_split_to_array(?, '[^0-9][^0-9]*'))[1])::integer
+    EXCEPT
+    SELECT tree_element_id
+      FROM tree_version_element
+    WHERE tree_version_id = ((regexp_split_to_array(?, '[^0-9][^0-9]*'))[2])::integer
+       ) ",
+                             order: "simple_name"},
+    "changes-between-2-versions:"   => {
+                               where_clause: " id in (
+select id from tree_element
+where previous_element_id is null
+  and id in
+(
+SELECT tree_element_id
+   FROM tree_version_element
+   WHERE tree_version_id = ((regexp_split_to_array(?, '[^0-9][^0-9]*'))[1])::integer
+  EXCEPT
+  SELECT tree_element_id
+   FROM tree_version_element
+   WHERE tree_version_id = ((regexp_split_to_array(?, '[^0-9][^0-9]*'))[2])::integer
+)
+union
+select id from tree_element
+where previous_element_id is null
+  and id in
+(
+SELECT tree_element_id
+   FROM tree_version_element
+   WHERE tree_version_id = ((regexp_split_to_array(?, '[^0-9][^0-9]*'))[2])::integer
+  EXCEPT
+  SELECT tree_element_id
+   FROM tree_version_element
+   WHERE tree_version_id = ((regexp_split_to_array(?, '[^0-9][^0-9]*'))[1])::integer 
+)
+union
+select id from tree_element
+where previous_element_id is not null
+  and id in
+(
+SELECT tree_element_id
+   FROM tree_version_element
+   WHERE tree_version_id = ((regexp_split_to_array(?, '[^0-9][^0-9]*'))[1])::integer 
+  EXCEPT
+  SELECT tree_element_id
+   FROM tree_version_element
+   WHERE tree_version_id = ((regexp_split_to_array(?, '[^0-9][^0-9]*'))[2])::integer
+)
+)", order: "simple_name"},
     "for-tree-id:"      => { where_clause: " tree_id = ?",
                              order: "created_at desc"},
   }.freeze
 end
+
+

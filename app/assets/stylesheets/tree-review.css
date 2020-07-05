@@ -1,0 +1,26 @@
+.search-result-operation {
+  padding: 0.5em 1em 0.5em 1em;
+}
+
+.operation-type-added {
+  background-color: green;
+  color: white;
+}
+
+tr.showing-details span.operation-type-added {
+  background-color: green;
+  color: white;
+}
+
+.operation-type-removed {
+  background-color: orange;
+}
+
+.operation-type-changed {
+  background-color: lightgray;
+}
+
+tr.showing-details span.operation-type-changed {
+  background-color: lightgray;
+  color: black;
+}
