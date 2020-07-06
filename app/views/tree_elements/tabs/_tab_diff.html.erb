@@ -5,15 +5,7 @@
 <% when 'removed' %>
   No Diff for a removed taxon.
 <% else %>
-  Diff
-  <!-- e1 is the older one -->
-  <% e1 = "/tree/#{params['tree-version-id']}/#{@tree_element.id}" %>
-  <% e2 = "/tree/#{TreeVersion.find(params["tree-version-id"]).previous_version_id}/#{@tree_element.previous_element_id}" %>
-<% require 'open-uri' %>
-<% url = "#{Rails.configuration.services_g3_clientside_root_url}tree-version/diff-element?e1=#{CGI.escape(e1)}&e2=#{CGI.escape(e2)}&embed=true" %>
-<% fred = open(url, "Accept" => "text/html") {|f| f.read } %>
-<div id="diff_element" class="tree-container wrap">
-<%= fred.html_safe %>
-</div>
-
+  <div id="diff_element" class="tree-container wrap">
+    <%= TreeElement.before_html(OpenStruct.new({ operation: params["tree-element-operation"], id: @tree_element.id, tv_id: params["tree-version-id"] })).html_safe %>
+  </div>
 <% end %>

@@ -1,5 +1,6 @@
 # frozen_string_literal: true
 
+require 'open-uri'
 
 #   Copyright 2015 Australian National Botanic Gardens
 #
@@ -49,6 +50,28 @@ class TreeElement < ActiveRecord::Base
 
   def record_type
     'TreeElement'
+  end
+
+  def self.before_html(sr)
+    fred = self.diff_html(sr)
+    fred = fred.sub(/<div class="diffAfter">.*/m,'')
+  end
+
+  def self.after_html(sr)
+    fred = self.diff_html(sr)
+    fred = fred.sub(/.*<div class="diffAfter">/m,'<div class="diffAfter">')
+  end
+
+  def self.diff_html(sr)
+    if sr.operation == 'removed'
+      'nothing because removed'
+    else
+      e1 = "/tree/#{sr.tv_id}/#{sr.id}"
+      e2 = "/tree/#{TreeVersion.find(sr.tv_id).previous_version_id}/#{TreeElement.find(sr.id).previous_element_id}"
+      url = "#{Rails.configuration.services_g3_clientside_root_url}tree-version/diff-element?e1=#{CGI.escape(e1)}&e2=#{CGI.escape(e2)}&embed=true"
+      fred = open(url, "Accept" => "text/html") {|f| f.read }
+      fred
+    end
   end
 
   def self.dist_options
