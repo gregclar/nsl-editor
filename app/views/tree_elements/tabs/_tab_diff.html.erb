@@ -1,25 +1,19 @@
 <% increment_tab_index(0) %>
-Diff
-work-in-progress
-<% unless params["tree-element-operation"].blank? %>
-  operation: <%= params["tree-element-operation"] %>
-  <br>
-  tree version: <%= params["tree-version-id"] %>
-  <br>
-  tree element: <%= @tree_element.id %>
-  <br>
-  previous tree version: <%= TreeVersion.find(params["tree-version-id"]).previous_version_id %>
-  <br>
-  <%= params.inspect %>
-  <br>
-  <%# e1 is the older one %>
+<% case params["tree-element-operation"] %>
+<% when blank? %>
+  No operation.
+<% when 'removed' %>
+  No Diff for a removed taxon.
+<% else %>
+  Diff
+  <!-- e1 is the older one -->
   <% e1 = "/tree/#{TreeVersion.find(params["tree-version-id"]).previous_version_id}/#{@tree_element.previous_element_id}" %>
-  <%= e1 %>
-  <br>
   <% e2 = "/tree/#{params['tree-version-id']}/#{@tree_element.id}" %>
-  <%= e2 %>
-  <br>
-  <%= link_to 'Link link to local services', "#{Rails.configuration.services_clientside_root_url}tree-version/diff-element?e1=#{CGI.escape(e1)}&e2=#{CGI.escape(e2)}" %>
-  <br>
-  <%= link_to 'Link to test', "https://test.biodiversity.org.au/nsl/services/tree-version/diff-element?e1=#{CGI.escape(e1)}&e2=#{CGI.escape(e2)}" %>
+<% require 'open-uri' %>
+<% url = "#{Rails.configuration.services_g3_clientside_root_url}tree-version/diff-element?e1=#{CGI.escape(e1)}&e2=#{CGI.escape(e2)}&embed=true" %>
+<% fred = open(url, "Accept" => "text/html") {|f| f.read } %>
+<div id="diff_element" class="tree-container wrap">
+<%= fred.html_safe %>
+</div>
+
 <% end %>
