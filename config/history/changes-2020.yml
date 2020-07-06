@@ -1,3 +1,13 @@
+- :date: 05-Jul-2020
+  :jira_id: '3583'
+  :description: |-
+    Two for the price of one: the Tree > Replace Instance form is now stable.
+- :date: 28-Jun-2020
+  :jira_id: '3583'
+  :description: |-
+    Tree-related spinners now switch off as expected. (Note: Rails 6 version is now live.)
+- :date: 26-Jun-2020
+  :release: true
 - :date: 23-Jun-2020
   :jira_id: '3581'
   :description: |-
