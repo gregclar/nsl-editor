@@ -7,8 +7,8 @@
 <% else %>
   Diff
   <!-- e1 is the older one -->
-  <% e1 = "/tree/#{TreeVersion.find(params["tree-version-id"]).previous_version_id}/#{@tree_element.previous_element_id}" %>
-  <% e2 = "/tree/#{params['tree-version-id']}/#{@tree_element.id}" %>
+  <% e1 = "/tree/#{params['tree-version-id']}/#{@tree_element.id}" %>
+  <% e2 = "/tree/#{TreeVersion.find(params["tree-version-id"]).previous_version_id}/#{@tree_element.previous_element_id}" %>
 <% require 'open-uri' %>
 <% url = "#{Rails.configuration.services_g3_clientside_root_url}tree-version/diff-element?e1=#{CGI.escape(e1)}&e2=#{CGI.escape(e2)}&embed=true" %>
 <% fred = open(url, "Accept" => "text/html") {|f| f.read } %>
