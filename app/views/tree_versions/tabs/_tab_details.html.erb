@@ -26,7 +26,7 @@ Log Entry
 <span class="pull-right">Changes</span> <br>
 
 <%= link_to("Services view of changes from the previous version",
-            "#{Rails.configuration.nsl_links}treeVersion/diff?v1=#{@tree_version.id}&v2=#{@tree_version.previous_version_id}&list=true",
+            "#{Rails.configuration.nsl_links}treeVersion/diff?v1=#{@tree_version.previous_version_id}&v2=#{@tree_version.id}&list=true",
             title: 'Retrieve the tree',class: 'tree') %> 
 <span class="pull-right">Changes</span> <br>
           </b>

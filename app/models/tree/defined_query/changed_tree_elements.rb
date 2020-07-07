@@ -36,7 +36,7 @@ class Tree::DefinedQuery::ChangedTreeElements
               :show_csv,
               :total
 
-  SQL = <<HERE
+  SQL1 = <<HERE
   select fred.te_id as id,
        fred.simple_name,
        fred.operation,
@@ -67,6 +67,42 @@ select fred.te_id,
       on fred.tree_version_id = tv.id
  where fred.operation = 'removed'
 order by name_path
+HERE
+
+# fred.te_id as id,                    get out of current tve - the final integer
+# fred.simple_name,                    yes
+# fred.operation,                      yes
+# fred.synonyms,
+# fred.synonyms_html,                  yes
+# tve.name_path,                       yes
+# tv.id tv_id,                         get out of current tve - the first integer
+# tve.element_link tve_element_link    no
+
+
+  SQLP1 = "select * from diff_list(?,?)"
+  # Cols:
+  # operation     | modified
+  # previous_tve  | /tree/51357890/51357029
+  # current_tve   | /tree/51344953/51210425
+  # simple_name   | Cycas lane-poolei
+  # synonyms_html | ...
+  # name_path     | ...
+   
+  # ActionController::UrlGenerationError in Search#search 
+  # SQL = "select id, simple_name, operation, synonyms, synonyms_html, name_path, tv_id, tve_element_link from diff_list(?,?)"
+  # SQL = "select id, simple_name, operation, synonyms, synonyms_html, name_path, tv_id, tve_element_link from diff_list(?,?)"
+
+  SQL = <<HERE
+select regexp_replace(current_tve,'.*\/','') id,
+       regexp_replace(regexp_replace(current_tve,'\/tree\/',''),'\/.*','') tv_id,
+       simple_name,
+       case operation
+         when 'modified' then 'changed'
+         else operation
+       end,
+       synonyms_html,
+       name_path
+       from diff_list(?,?)
 HERE
 
   def initialize(parsed_request)
@@ -120,7 +156,8 @@ HERE
 
   def list_query
     debug('list_query')
-    @results = TreeElement.find_by_sql([SQL,@tree_version_1,@tree_version_2,@tree_version_1,@tree_version_2])
+    # @results = TreeElement.find_by_sql([SQL,@tree_version_1,@tree_version_2,@tree_version_1,@tree_version_2])
+    @results = TreeElement.find_by_sql([SQL,@tree_version_1,@tree_version_2])
     tree_results= Tree.all
     tv_results = TreeVersion.where(id: @tree_version_1)
     @results.unshift(*tv_results)

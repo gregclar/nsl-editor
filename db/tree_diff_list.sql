@@ -1,4 +1,4 @@
-drop function if exists not_in(v1 bigint, v2 bigint)
+drop function if exists not_in(v1 bigint, v2 bigint);
 create function not_in(v1 bigint, v2 bigint)
     returns table
             (

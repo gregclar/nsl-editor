@@ -10,7 +10,9 @@
 
   <%= render partial: 'trees/tabs/tabs' %>
 
-  <%= render partial: "trees/tabs/#{@tab}" %>
+  <%#= render partial: "trees/tabs/#{@tab}" %>
+  <%# Temp. work-around to avoid getting stuck on non-existent tabs %>
+  <%= render partial: "trees/tabs/tab_details" %>
 
   <span class='server-response-time'><%= "(#{(Time.now - @start_time).round(2)}s)" if @start_time %></span>
 
