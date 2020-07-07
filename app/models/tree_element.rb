@@ -52,11 +52,13 @@ class TreeElement < ActiveRecord::Base
     'TreeElement'
   end
 
+  # split the diff to get just the before part
   def self.before_html(sr)
     fred = self.diff_html(sr)
     fred = fred.sub(/<div class="diffAfter">.*/m,'')
   end
 
+  # split the diff to get just the after part
   def self.after_html(sr)
     fred = self.diff_html(sr)
     fred = fred.sub(/.*<div class="diffAfter">/m,'<div class="diffAfter">')
@@ -64,14 +66,25 @@ class TreeElement < ActiveRecord::Base
 
   def self.diff_html(sr)
     if sr.operation == 'removed'
-      'nothing because removed'
+      sr.synonyms_html
+    elsif sr.operation == 'added'
+      sr.synonyms_html
     else
       e1 = "/tree/#{sr.tv_id}/#{sr.id}"
-      e2 = "/tree/#{TreeVersion.find(sr.tv_id).previous_version_id}/#{TreeElement.find(sr.id).previous_element_id}"
+      derived_prev_element_id = TreeElement.find(sr.id).previous_element_id
+      e2 = "/tree/#{TreeVersion.find(sr.tv_id).previous_version_id}/#{derived_prev_element_id}"
       url = "#{Rails.configuration.services_g3_clientside_root_url}tree-version/diff-element?e1=#{CGI.escape(e1)}&e2=#{CGI.escape(e2)}&embed=true"
-      fred = open(url, "Accept" => "text/html") {|f| f.read }
-      fred
+      Rails.logger.debug("url: #{url}")
+      if derived_prev_element_id.blank?
+        "Could not identify previous element"
+      else
+        open(url, "Accept" => "text/html") {|f| f.read }
+      end
     end
+  rescue => e
+    logger.error('TreeElement#diff_html')
+    logger.error(e)
+    'Failed to retrieve details'
   end
 
   def self.dist_options

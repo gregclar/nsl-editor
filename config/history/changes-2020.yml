@@ -1,7 +1,7 @@
 - :date: 07-Jul-2020
   :jira_id: '3580'
   :description: |-
-    Using new tree diff query.
+    Using new tree diff query; not trying to get the diff from services for removed or added tree elements; diff is now on details tab.
 - :date: 06-Jul-2020
   :jira_id: '3580'
   :description: |-
