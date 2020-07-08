@@ -1,4 +1,8 @@
-- :date: 07-Jul-2020
+- :date: 08-Jul-2020
+  :jira_id: '3580'
+  :description: |-
+    Layout tweaks and stop the auto focus on removed tree elements. Wednesday 10:45pm.
+- :date: 08-Jul-2020
   :jira_id: '3580'
   :description: |-
     Plenty of adjustments and fixes, hopefully linking to the correct diffs and showing removals as removals and not as additions. Tuesday 2:30pm
