@@ -457,6 +457,8 @@ window.loadDetails = (event,inFocus,tabWasClicked = false) ->
   url = url+'&tree-element-operation='+inFocus.attr('data-tree-element-operation') unless !inFocus.attr('data-tree-element-operation') 
   url = url+'&tree-version-id='+inFocus.attr('data-tree-version-id') unless !inFocus.attr('data-tree-version-id') 
   url = url+'&tree-version-element-element-link='+inFocus.attr('data-tree-version-element-element-link') unless !inFocus.attr('data-tree-version-element-element-link') 
+  url = url+'&tree-element-current-tve='+inFocus.attr('data-tree-element-current-tve') unless !inFocus.attr('data-tree-element-current-tve') 
+  url = url+'&tree-element-previous-tve='+inFocus.attr('data-tree-element-previous-tve') unless !inFocus.attr('data-tree-element-previous-tve') 
   debug("url: #{url}")
   if tabWasClicked
     url = url+'&take_focus=true'

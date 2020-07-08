@@ -55,16 +55,40 @@ class TreeElement < ActiveRecord::Base
   # split the diff to get just the before part
   def self.before_html(sr)
     fred = self.diff_html(sr)
-    fred = fred.sub(/<div class="diffAfter">.*/m,'')
+    fred = fred.sub(/<div class="diffAfter">.*/m,'') unless fred.blank?
+    fred = 'nothing found' if fred.blank?
+    fred
   end
 
   # split the diff to get just the after part
   def self.after_html(sr)
     fred = self.diff_html(sr)
-    fred = fred.sub(/.*<div class="diffAfter">/m,'<div class="diffAfter">')
+    fred = fred.sub(/.*<div class="diffAfter">/m,'<div class="diffAfter">') unless fred.blank?
+    fred = 'nothing found' if fred.blank?
+    fred
   end
 
   def self.diff_html(sr)
+    if sr.operation == 'removed'
+      sr.synonyms_html
+    elsif sr.operation == 'added'
+      sr.synonyms_html
+    else
+      #e1 = "/tree/#{sr.tv_id}/#{sr.id}"
+      #e2 = "/tree/#{TreeVersion.find(sr.tv_id).previous_version_id}/#{derived_prev_element_id}"
+      e1= sr.previous_tve
+      e2= sr.current_tve
+      url = "#{Rails.configuration.services_g3_clientside_root_url}tree-version/diff-element?e1=#{CGI.escape(e1)}&e2=#{CGI.escape(e2)}&embed=true"
+      Rails.logger.debug("url: #{url}")
+      open(url, "Accept" => "text/html") {|f| f.read }
+    end
+  #rescue => e
+  #  logger.error('TreeElement#diff_html')
+  #  logger.error(e)
+  #  'Failed to retrieve details'
+  end
+
+  def self.diff_html_old(sr)
     if sr.operation == 'removed'
       sr.synonyms_html
     elsif sr.operation == 'added'

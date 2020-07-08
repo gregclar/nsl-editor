@@ -83,14 +83,27 @@
         <%= render partial: 'user_query_record', 
           locals: {search_result: record, give_me_focus: give_me_focus} %>
       <% else %>
-        <tr><td colspan="4"></td>
-            <td colspan="2">
-              Search result: <%= (record[:'display_as'] || record.class.to_s) %>
+        <tr>
+          <td class="width-1-percent"></td>
+          <td class="min-with-40-percent width-50-percent max-width-60-percent">
+            <%= display_as %>
           </td>
+          <td class="width-5-perent filler"></td>
         </tr>
       <% end %>
     <% end %>
 
+    <tr>
+      <td class="width-1-percent"></td>
+      <td class="min-with-40-percent width-50-percent max-width-60-percent">
+        <br> <br> <br> <br> <br> <br> <br> <br>
+        <br> <br> <br> <br> <br> <br> <br> <br>
+        <br> <br> <br> <br> <br> <br> <br> <br>
+        <br> <br> <br> <br> <br> <br> <br> <br>
+        <br> <br> <br> <br> <br> <br> <br> <br>
+      </td>
+      <td class="width-5-perent filler"></td>
+    </tr>
 
 
 

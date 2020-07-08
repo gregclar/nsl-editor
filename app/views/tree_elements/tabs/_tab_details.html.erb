@@ -17,8 +17,7 @@
 <span class="pull-right">tree version</span> <br>
 <% end %>
 
-
-<%#= divider %>
+<%= divider %>
 <%#= @tree_element.name_link %> <!-- <span class="pull-right">name_link</span> <br> -->
 <%#= @tree_element.previous_element_id %> <!-- <span class="pull-right">previous_element_id</span> <br> -->
 <%#= @tree_element.profile %> <!-- <span class="pull-right">profile</span> <br> -->
@@ -26,18 +25,33 @@
 <%#= @tree_element.source_element_link %> <!-- <span class="pull-right">source_element_link</span> <br> -->
 <%#= @tree_element.source_shard %> <!-- <span class="pull-right">source_shard</span> <br> -->
 <%#= @tree_element.synonyms %>
-<%#= @tree_element.synonyms_html %>
-<%= divider %>
-<%= meaningful_update(@tree_element).html_safe %>
-<%= divider %>
-
 <% case params["tree-element-operation"] %>
 <% when blank? %>
   No operation.
 <% when 'removed' %>
-  No Diff for a removed taxon.
+    <span class="pull-right">Synonymy</span> <br>
+    <div class="tree-container wrap">
+      <%= @tree_element.synonyms_html.html_safe %>
+    </div>
+    <% unless @tree_element.profile.blank? %>
+      <br>
+      <% @tree_element.profile.each do | key, value | %> 
+        <%= value["value"] %> <span class="pull-right"><%= key %></span> <br>
+      <% end %>
+    <% end %>
+
+
 <% else %>
   <div id="diff_element" class="tree-container wrap">
-    <%= TreeElement.before_html(OpenStruct.new({ operation: params["tree-element-operation"], id: @tree_element.id, tv_id: params["tree-version-id"] })).html_safe %>
+    <% search_result_reconstructed = OpenStruct.new({ operation: params["tree-element-operation"],
+                                                      id: @tree_element.id,
+                                                      tv_id: params["tree-version-id"],
+                                                      current_tve: params["tree-element-current-tve"],
+                                                      previous_tve: params["tree-element-previous-tve"]
+    }) %>
+    <%= TreeElement.before_html(search_result_reconstructed).html_safe %>
   </div>
 <% end %>
+<%= divider %>
+<%= meaningful_update(@tree_element).html_safe %>
+<%= divider %>

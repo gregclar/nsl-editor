@@ -21,15 +21,22 @@ Log Entry
 <%#= link_to("Changes from the previous version (2)", search_path(query_string: "changes:#{@tree_version.id},#{@tree_version.previous_version_id}",query_target: 'tree_elements'),
             title: 'Retrieve the tree',class: 'tree') %> 
           <b>
+<%#= link_to("Changes from the previous version", search_path(query_string: "#{@tree_version.previous_version_id},#{@tree_version.id}",query_target: 'changed_tree_elements'),
+            title: 'Retrieve the tree',class: 'tree') %> 
 <%= link_to("Changes from the previous version", search_path(query_string: "#{@tree_version.id},#{@tree_version.previous_version_id}",query_target: 'changed_tree_elements'),
             title: 'Retrieve the tree',class: 'tree') %> 
 <span class="pull-right">Changes</span> <br>
+
 
 <%= link_to("Services view of changes from the previous version",
             "#{Rails.configuration.nsl_links}treeVersion/diff?v1=#{@tree_version.previous_version_id}&v2=#{@tree_version.id}&list=true",
             title: 'Retrieve the tree',class: 'tree') %> 
 <span class="pull-right">Changes</span> <br>
           </b>
+          <br>
+<%#= link_to("Services view of changes from the previous versionx",
+            "#{Rails.configuration.nsl_links}treeVersion/diff?v1=#{@tree_version.id}&v2=#{@tree_version.previous_version_id}&list=true",
+            title: 'Retrieve the tree',class: 'tree') %> 
 <%= divider %>
 <%= @tree_version.id %> <span class="pull-right">ID</span> <br>
 <%= created_by_whom_and_when(@tree_version).html_safe %>

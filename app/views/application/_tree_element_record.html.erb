@@ -6,19 +6,29 @@
   data-get-url="<%#= tree_element_path(search_result.id) %>"
   data-edit-url="<%#= tree_element_path(search_result.id) %>"
   data-base-url="<%#= tree_element_path(search_result.id) %>"
-  data-tab-url="<%= tree_element_tab_path(id: search_result[:id],tab: 'active_tab_goes_here') %>"
   data-record-id="<%#= search_result.id %>"
   <% unless search_result[:operation].blank? %>
     data-tree-element-operation="<%= search_result[:operation] %>"
+    <% if search_result[:operation] == 'removed' %>
+      <% previous_id = search_result[:previous_tve].sub(/.*\//,'') %>
+       data-tab-url="<%= tree_element_tab_path(id: previous_id,tab: 'active_tab_goes_here') %>"
+    <% else %>
+       data-tab-url="<%= tree_element_tab_path(id: search_result[:id]||-1,tab: 'active_tab_goes_here') %>"
+    <% end %>
   <% end %>
-  <% unless search_result[:tv_id].blank? %>
-    data-tree-version-id="<%= search_result[:tv_id] %>"
-  <% end %>
+  <%# note: tv_id was the _previous_ version %>
+  data-tree-version-id="<%= search_result[:tv_id_param] %>"
   <% unless search_result[:tve_element_link].blank? %>
     data-tree-version-element-element-link="<%= CGI.escape(search_result[:tve_element_link]) %>"
   <% end %>
+  <% unless search_result[:current_tve].blank? %>
+    data-tree-element-current-tve="<%= CGI.escape(search_result[:current_tve]) %>"
+  <% end %>
+  <% unless search_result[:previous_tve].blank? %>
+    data-tree-element-previous-tve="<%= CGI.escape(search_result[:previous_tve]) %>"
+  <% end %>
 
-  data-record-type="tree"
+  data-record-type="tree-element"
   tabindex="<%= increment_tab_index(100) %>"
     >
   <td class="nsl-tiny-icon-container takes-focus width-1-percent"><%= record_icon('orchid') %></td>
@@ -35,12 +45,11 @@
       <% end %>
 
     </a>
-    <div class="synonyms xhidden">
+    <div class="synonyms nothidden">
     <div id="diff_element" class="tree-container wrap">
     <div class="diffAfter">
-        <div class="tr  level8">
+    <div class="tr  level8">
     <div class="wrap">
-
       <%= TreeElement.after_html(search_result).html_safe %>
     </div>
     </div>

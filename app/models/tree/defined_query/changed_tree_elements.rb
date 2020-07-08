@@ -101,7 +101,10 @@ select regexp_replace(current_tve,'.*\/','') id,
          else operation
        end,
        synonyms_html,
-       name_path
+       name_path,
+       current_tve,
+       previous_tve,
+       ? tv_id_param
        from diff_list(?,?)
 HERE
 
@@ -157,7 +160,8 @@ HERE
   def list_query
     debug('list_query')
     # @results = TreeElement.find_by_sql([SQL,@tree_version_1,@tree_version_2,@tree_version_1,@tree_version_2])
-    @results = TreeElement.find_by_sql([SQL,@tree_version_1,@tree_version_2])
+    # @results = TreeElement.find_by_sql([SQL,@tree_version_1,@tree_version_2])
+    @results = TreeElement.find_by_sql([SQL,@tree_version_1,@tree_version_2,@tree_version_1])
     tree_results= Tree.all
     tv_results = TreeVersion.where(id: @tree_version_1)
     @results.unshift(*tv_results)
