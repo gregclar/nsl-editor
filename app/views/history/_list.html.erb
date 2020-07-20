@@ -32,10 +32,11 @@
            <span class="badge">
              <%= link_to "(NSL-#{val[:jira_id]}) 
                #{icon('external-link fa-lg')}".html_safe, 
-               "https://www.anbg.gov.au/25jira/browse/NSL-#{val[:jira_id]}",
+               "https://ibis-cloud.atlassian.net/browse/NSL-#{val[:jira_id]}",
                class:"white hover-white",
                title: "#{title_text}",
                target: "other" %>
+             
            </span>
          <% end %>
        <% end %>
