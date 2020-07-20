@@ -1,4 +1,8 @@
-- :date: 08-Jul-2020
+- :date: 20-Jul-2020
+  :jira_id: '3594'
+  :description: |-
+    When you copy a name via the Name>Copy tab, its name_path is adjusted to match the new name
+- :date: 20-Jul-2020
   :jira_id: '3611'
   :description: |-
     Successfully refreshing a name on the Name>More>Refresh tab results in a message 'Name refreshed' instead of no message
