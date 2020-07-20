@@ -1,3 +1,7 @@
+- :date: 21-Jul-2020
+  :jira_id: '3592'
+  :description: |-
+    Reduce the over-scroll amount in the main results area to avoid a wall of white.
 - :date: 20-Jul-2020
   :jira_id: '3594'
   :description: |-
