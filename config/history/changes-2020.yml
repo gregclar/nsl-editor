@@ -1,4 +1,8 @@
 - :date: 08-Jul-2020
+  :jira_id: '3611'
+  :description: |-
+    Successfully refreshing a name on the Name>More>Refresh tab results in a message 'Name refreshed' instead of no message
+- :date: 08-Jul-2020
   :jira_id: '3592'
   :description: |-
     Allow the bottom record to scroll up fully into view.
