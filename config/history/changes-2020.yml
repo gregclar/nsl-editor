@@ -1,7 +1,7 @@
 - :date: 21-Jul-2020
   :jira_id: '3534'
   :description: |-
-    Orchid taxon searches also silently match on leading 'x ' or leading '('.
+    Orchid taxon searches also silently match on leading 'x ' or leading '('.  Adjusted help text.
 - :date: 21-Jul-2020
   :jira_id: '3592'
   :description: |-
