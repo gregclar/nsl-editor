@@ -1,7 +1,11 @@
 - :date: 21-Jul-2020
+  :jira_id: '3534'
+  :description: |-
+    Orchid taxon searches also silently match on leading 'x ' or leading '('.
+- :date: 21-Jul-2020
   :jira_id: '3592'
   :description: |-
-    Reduce the over-scroll amount in the main results area to avoid a wall of white.
+    Reduce the over-scroll amount in the main results area to avoid a wall of white. Fine-tune it down further.  Also add trailing white space to various help pages.
 - :date: 20-Jul-2020
   :jira_id: '3594'
   :description: |-
