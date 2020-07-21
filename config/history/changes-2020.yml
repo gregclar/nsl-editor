@@ -1,3 +1,7 @@
+- :date: 21-Jul-2020
+  :jira_id: '3610'
+  :description: |-
+    Fix delete distribution.
 - :date: 08-Jul-2020
   :jira_id: '3580'
   :description: |-
