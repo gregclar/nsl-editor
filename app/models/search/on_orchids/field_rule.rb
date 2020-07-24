@@ -19,12 +19,12 @@
 class Search::OnOrchids::FieldRule
   RULES = {
     "taxon:"              => { trailing_wildcard: true,
-                               where_clause: " lower(taxon) like ?",
+                               where_clause: " lower(taxon) like ? or lower(taxon) like 'x '||? or lower(taxon) like '('||? ",
                                       order: "seq"},
-    "taxon-no-wildcard:"  => { where_clause: " lower(taxon) like ?",
+    "taxon-no-wildcard:"  => { where_clause: " lower(taxon) like ? or lower(taxon) like 'x '||? or lower(taxon) like '('||?",
                                       order: "seq"},
     "taxon-with-syn:"      => { trailing_wildcard: true,
-                               where_clause: " (lower(taxon) like ? and record_type = 'accepted' and not doubtful) or (parent_id in (select id from orchids where lower(taxon) like ? and record_type = 'accepted' and not doubtful))",
+                               where_clause: " ((lower(taxon) like ? or lower(taxon) like 'x '||? or lower(taxon) like '('||?) and record_type = 'accepted' and not doubtful) or (parent_id in (select id from orchids where (lower(taxon) like ? or lower(taxon) like 'x '||? or lower(taxon) like '('||?) and record_type = 'accepted' and not doubtful))",
                                order: "seq"},
     "id:"                 => { multiple_values: true,
                                where_clause: "id = ? ",

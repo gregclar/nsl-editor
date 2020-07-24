@@ -62,7 +62,9 @@ Rails.application.configure do
 end
 
 if ENV['EDITOR_CONFIG_FILE']
+  puts "loading config from #{ENV['EDITOR_CONFIG_FILE']}"
   load "#{ENV['EDITOR_CONFIG_FILE']}"
 else
+  puts "loading config from #{ENV['HOME']}/.nsl/development/editor-r6-config.rb"
   load "#{ENV['HOME']}/.nsl/development/editor-r6-config.rb"
 end

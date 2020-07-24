@@ -31,6 +31,7 @@ class Name::AsCopier < Name
     new.uri = nil
     new.save!
     new.set_names!
+    new.refresh_name_paths
     new
   end
 
