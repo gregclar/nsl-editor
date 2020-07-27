@@ -1,4 +1,8 @@
 - :date: 27-Jul-2020
+  :jira_id: '3547'
+  :description: |-
+    Orchids: name-match-no-primary: directive no longer returns taxa which have an allocated match
+- :date: 27-Jul-2020
   :jira_id: '3621'
   :description: |-
     Orchids: add distribution to the Raw Edit fields, also improve tabbing from field to field.
