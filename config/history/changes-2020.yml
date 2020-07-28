@@ -1,3 +1,7 @@
+- :date: 28-Jul-2020
+  :jira_id: '3378'
+  :description: |-
+    Add two Name entries on the Reports tab for names with missing simple name and missing full name
 - :date: 27-Jul-2020
   :jira_id: '3547'
   :description: |-
