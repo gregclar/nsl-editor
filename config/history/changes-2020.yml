@@ -1,4 +1,8 @@
 - :date: 28-Jul-2020
+  :jira_id: '2532'
+  :description: |-
+    Add a new name query parent-child-tree-inconsistent: which is documented on the Reports tab.
+- :date: 28-Jul-2020
   :jira_id: '3378'
   :description: |-
     Add two Name entries on the Reports tab for names with missing simple name and missing full name
