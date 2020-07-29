@@ -111,6 +111,15 @@
       {search_target: 'Names',
        search_string: "earliest-instance-not-primary:",
        explanation: %Q(Names whose first instance is not a primary reference)},
+      {search_target: 'Names',
+       search_string: "simple-name:",
+       explanation: %Q(Names with no simple name - these are typically mistakes in the name creation process)},
+      {search_target: 'Names',
+       search_string: "exact-name:",
+       explanation: %Q(Names with no full name - these are typically mistakes in the name creation process)},
+      {search_target: 'Names',
+       search_string: "parent-child-tree-inconsistent:",
+       explanation: %Q(Names and their parent names that are in the current accepted tree with inconsistent paths up the classification)},
       ].each do |val| %>
   <tr>
     <td class="width-30-percent">

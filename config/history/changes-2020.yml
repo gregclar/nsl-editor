@@ -1,3 +1,45 @@
+- :date: 28-Jul-2020
+  :jira_id: '2532'
+  :description: |-
+    Add a new name query parent-child-tree-inconsistent: which is documented on the Reports tab.
+- :date: 28-Jul-2020
+  :jira_id: '3378'
+  :description: |-
+    Add two Name entries on the Reports tab for names with missing simple name and missing full name
+- :date: 27-Jul-2020
+  :jira_id: '3547'
+  :description: |-
+    Orchids: name-match-no-primary: directive no longer returns taxa which have an allocated match
+- :date: 27-Jul-2020
+  :jira_id: '3621'
+  :description: |-
+    Orchids: add distribution to the Raw Edit fields, also improve tabbing from field to field.
+- :date: 21-Jul-2020
+  :jira_id: '3610'
+  :description: |-
+    Fix delete distribution.
+- :date: 21-Jul-2020
+  :jira_id: '3534'
+  :description: |-
+    Orchid taxon searches also silently match on leading 'x ' or leading '('.  Adjusted help text.
+- :date: 21-Jul-2020
+  :jira_id: '3592'
+  :description: |-
+    Reduce the over-scroll amount in the main results area to avoid a wall of white. Fine-tune it down further.  Also add trailing white space to various help pages.
+- :date: 20-Jul-2020
+  :jira_id: '3594'
+  :description: |-
+    When you copy a name via the Name>Copy tab, its name_path is adjusted to match the new name
+- :date: 20-Jul-2020
+  :jira_id: '3611'
+  :description: |-
+    Successfully refreshing a name on the Name>More>Refresh tab results in a message 'Name refreshed' instead of no message
+- :date: 08-Jul-2020
+  :jira_id: '3592'
+  :description: |-
+    Allow the bottom record to scroll up fully into view.
+- :date: 06-Jul-2020
+  :release: true
 - :date: 05-Jul-2020
   :jira_id: '3583'
   :description: |-

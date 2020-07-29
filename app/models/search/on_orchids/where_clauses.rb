@@ -84,6 +84,9 @@ class Search::OnOrchids::WhereClauses
     when 1 then @sql = @sql.where(rule.predicate, rule.processed_value)
     when 2 then supply_token_twice(rule, rule.processed_value)
     when 3 then supply_token_thrice(rule, rule.processed_value)
+    when 4 then supply_token_4_times(rule, rule.processed_value)
+    when 5 then supply_token_5_times(rule, rule.processed_value)
+    when 6 then supply_token_6_times(rule, rule.processed_value)
     else
       raise "Where clause value frequency: #{frequency}, is too high."
     end
@@ -98,6 +101,34 @@ class Search::OnOrchids::WhereClauses
   def supply_token_thrice(rule, token)
     @sql = @sql.where(rule.predicate,
                       token,
+                      token,
+                      token)
+  end
+
+  def supply_token_4_times(rule, token)
+    @sql = @sql.where(rule.predicate,
+                      token,
+                      token,
+                      token,
+                      token)
+  end
+
+  def supply_token_5_times(rule, token)
+    @sql = @sql.where(rule.predicate,
+                      token,
+                      token,
+                      token,
+                      token,
+                      token)
+  end
+
+  def supply_token_6_times(rule, token)
+    @sql = @sql.where(rule.predicate,
+                      token,
+                      token,
+                      token,
+                      token,
+                      token,
                       token)
   end
 
@@ -108,6 +139,9 @@ class Search::OnOrchids::WhereClauses
     when 1 then @sql = @sql.where(rule.predicate, token)
     when 2 then supply_token_twice(rule, token)
     when 3 then supply_token_thrice(rule, token)
+    when 4 then supply_token_4_times(rule, token)
+    when 5 then supply_token_5_times(rule, token)
+    when 6 then supply_token_6_times(rule, token)
     else
       raise "Where-clause value frequency (#{rule.value_frequency}) too high."
     end

@@ -616,3 +616,34 @@ from comment where comment.name_id = name.id)"
   :order: name.sort_name
 'name-path:':
   :where_clause: " lower(name_path) like ? "
+'parent-child-tree-inconsistent:':
+  :where_clause: " (name.id in (select n.id
+  from tree_vw t
+       join name n
+       on t.name_id = n.id
+       join name np
+       on n.parent_id = np.id
+       join tree_vw npt
+       on np.id = npt.name_id
+   and t.current_tree_version_id = t.tree_version_id
+   and t.accepted_tree
+   and npt.current_tree_version_id = npt.tree_version_id
+   and npt.accepted_tree
+   and t.tree_path != npt.tree_path || '/'||t.tree_element_id
+   and npt.name_path != regexp_replace(t.name_path,'/[^/]*$','')  ) )
+   or (name.id in (select np.id
+  from tree_vw t
+       join name n
+       on t.name_id = n.id
+       join name np
+       on n.parent_id = np.id
+       join tree_vw npt
+       on np.id = npt.name_id
+   and t.current_tree_version_id = t.tree_version_id
+   and t.accepted_tree
+   and npt.current_tree_version_id = npt.tree_version_id
+   and npt.accepted_tree
+   and t.tree_path != npt.tree_path || '/'||t.tree_element_id
+   and npt.name_path != regexp_replace(t.name_path,'/[^/]*$','')  ) ) "
+
+
