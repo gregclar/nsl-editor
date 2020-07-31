@@ -1,5 +1,7 @@
 class ApplicationController < ActionController::Base
   protect_from_forgery with: :exception  # from v4, needed in v6?
+  STANDARD_GUI_MODE = :standard_gui_mode
+  TREE_REVIEW_GUI_MODE = :tree_review_gui_mode
   before_action :set_debug,
                 :start_timer,
                 :check_system_broadcast,
@@ -43,6 +45,9 @@ class ApplicationController < ActionController::Base
     end
   end
 
+  def gui_mode
+
+  end
   private
 
   def ask_user_to_sign_in
