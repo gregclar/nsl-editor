@@ -45,7 +45,3 @@ synonym {
     font-size: 0.9em;
     margin-left: 1em;
 }
-
-table#search-results-table tr.showing-details td, table#search-results-table tr.showing-details td a {
-  color: black;
-}
