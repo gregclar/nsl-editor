@@ -1,3 +1,7 @@
+- :date: 03-Aug-2020
+  :jira_id: '3635'
+  :description: |-
+    Orchids: provide editable distribution field for hybrid crosses that are not synonyms
 - :date: 29-Jul-2020
   :release: true
 - :date: 28-Jul-2020
@@ -40,6 +44,23 @@
   :jira_id: '3592'
   :description: |-
     Allow the bottom record to scroll up fully into view.
+- :date: 08-Jul-2020
+  :jira_id: '3580'
+  :description: |-
+    Layout tweaks and stop the auto focus on removed tree elements. Wednesday 10:45pm.  <b>Branch 3580 only. Not in production.</b>
+- :date: 08-Jul-2020
+  :jira_id: '3580'
+  :description: |-
+    Plenty of adjustments and fixes, hopefully linking to the correct diffs and showing removals as removals and not as additions. Tuesday 2:30pm  <b>Branch 3580 only. Not in production.</b>
+- :date: 07-Jul-2020
+  :jira_id: '3580'
+  :description: |-
+    Using new tree diff query; not trying to get the diff from services for removed or added tree elements; diff is now on details tab.  <b>Branch 3580 only. Not in production.</b>
+- :date: 06-Jul-2020
+  :jira_id: '3580'
+  :description: |-
+    Added basic (mock) commenting to review tab.  <b>Branch 3580 only. Not in production.</b>
+    Partial work on APC review prototype, as at Sunday, 5 July, 9:35pm  <b>Branch 3580 only. Not in production.</b>
 - :date: 06-Jul-2020
   :release: true
 - :date: 05-Jul-2020
