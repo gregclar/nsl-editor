@@ -30,14 +30,14 @@ class Search::ParsedDefinedQuery
     "references_accepted_names_for_id" => "references-accepted-names-for-id",
     "references_shared_names" => "references-shared-names",
     "instance_is_cited" => "instance-is-cited",
-    "instance_is_cited by" => "instance-is-cited-by",
+    "instance_is_cited_by" => "instance-is-cited-by",
     "audit" => "audit",
     "review" => "audit",
     "changed_tree_elements" => "changed-tree-elements",
   }.freeze
 
   def initialize(query_target)
-    @query_target = query_target
+    @query_target = query_target.downcase.gsub(', ','_').gsub(' ','_')
     parse_query_target
   end
 
