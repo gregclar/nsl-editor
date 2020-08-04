@@ -40,6 +40,22 @@ class TreeVersionElement < ActiveRecord::Base
              foreign_key: "parent_id",
              class_name: "TreeVersionElement"
 
+  def display_as
+    'TreeVersionElement'
+  end
+
+  def fresh?
+    false
+  end
+
+  def has_parent?
+    false
+  end
+
+  def record_type
+    'TreeVersionElement'
+  end
+
   def count_children
     pattern = "^#{tree_path}/.*"
 

@@ -3,7 +3,7 @@
    <%= render partial: 'set_include_common_and_cultivar' %>
  </span>
 
-<% unless @search.empty == true %>
+<% unless true || @search.empty == true %>
  &nbsp;|&nbsp;
 <% end %>
 <% if @search.error %>

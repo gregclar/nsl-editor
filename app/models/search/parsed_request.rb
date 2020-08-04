@@ -60,16 +60,23 @@ class Search::ParsedRequest
     "reference" => "reference",
     "references" => "reference",
     "ref" => "reference",
-    "tree" => "tree",
     "orchid" => "orchids",
     "orchids" => "orchids",
+    "tree" => "tree",
+    "trees" => "tree",
+    "tree_versions" => "tree_version",
+    "tree_version" => "tree_version",
+    "tree_version_element" => "tree_version_element",
+    "tree_version_elements" => "tree_version_element",
+    "tree_element" => "tree_element",
+    "tree_elements" => "tree_element",
   }.freeze
 
   def initialize(params)
     debug("initialize: params: #{params}")
     @params = params
     @query_string = @params["query_string"].gsub(/  */, " ")
-    @query_target = (@params["query_target"] || "").strip.downcase
+    @query_target = (@params["canonical_query_target"] || "").strip.downcase
     @user = @params[:current_user]
     parse_request
     @count_allowed = true
@@ -95,6 +102,7 @@ class Search::ParsedRequest
 
   def parse_request
     unused_qs_tokens = normalise_query_string.split(/ /)
+    Rails.logger.debug("unused_qs_tokens: #{unused_qs_tokens}")
     parsed_defined_query = Search::ParsedDefinedQuery.new(@query_target)
     @defined_query = parsed_defined_query.defined_query
     @target_button_text = parsed_defined_query.target_button_text
@@ -237,6 +245,7 @@ class Search::ParsedRequest
   end
 
   def parse_target(tokens)
+    Rails.logger.debug("tokens: #{tokens}")
     if @defined_query == false
       if SIMPLE_QUERY_TARGETS.key?(@query_target)
         @target_table = SIMPLE_QUERY_TARGETS[@query_target]

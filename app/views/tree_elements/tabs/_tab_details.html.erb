@@ -1,0 +1,57 @@
+<% increment_tab_index(0) %>
+
+<%= @tree_element.simple_name %> <span class="pull-right">simple_name</span> <br>
+<%#= @tree_element.display_html %>
+<%#= @tree_element.instance_id %> <!-- <span class="pull-right">instance_id</span> <br> -->
+<%#= @tree_element.instance_link %> <!-- <span class="pull-right">instance_link</span> <br> -->
+<%#= @tree_element.name_element %> <!-- <span class="pull-right">name_element</span> <br> -->
+<%#= @tree_element.name_id %> <!-- <span class="pull-right">name_id</span> <br> -->
+
+<%#= divider %>
+
+<% if params['tree-version-id'].blank? %>
+  No tree version id in the params. (todo)
+<% else %>
+<%= link_to("#{TreeVersion.find(params['tree-version-id']).draft_name}", search_path(query_string: "id:#{params['tree-version-id']}",query_target: 'tree_version'),
+            title: 'Retrieve the tree version',class: 'tree') %> 
+<span class="pull-right">tree version</span> <br>
+<% end %>
+
+<%= divider %>
+<%#= @tree_element.name_link %> <!-- <span class="pull-right">name_link</span> <br> -->
+<%#= @tree_element.previous_element_id %> <!-- <span class="pull-right">previous_element_id</span> <br> -->
+<%#= @tree_element.profile %> <!-- <span class="pull-right">profile</span> <br> -->
+<%#= @tree_element.rank %> <!-- <span class="pull-right">rank</span> <br> -->
+<%#= @tree_element.source_element_link %> <!-- <span class="pull-right">source_element_link</span> <br> -->
+<%#= @tree_element.source_shard %> <!-- <span class="pull-right">source_shard</span> <br> -->
+<%#= @tree_element.synonyms %>
+<% case params["tree-element-operation"] %>
+<% when blank? %>
+  No operation.
+<% when 'removed' %>
+    <span class="pull-right">Synonymy</span> <br>
+    <div class="tree-container wrap">
+      <%= @tree_element.synonyms_html.html_safe %>
+    </div>
+    <% unless @tree_element.profile.blank? %>
+      <br>
+      <% @tree_element.profile.each do | key, value | %> 
+        <%= value["value"] %> <span class="pull-right"><%= key %></span> <br>
+      <% end %>
+    <% end %>
+
+
+<% else %>
+  <div id="diff_element" class="tree-container wrap">
+    <% search_result_reconstructed = OpenStruct.new({ operation: params["tree-element-operation"],
+                                                      id: @tree_element.id,
+                                                      tv_id: params["tree-version-id"],
+                                                      current_tve: params["tree-element-current-tve"],
+                                                      previous_tve: params["tree-element-previous-tve"]
+    }) %>
+    <%= TreeElement.before_html(search_result_reconstructed).html_safe %>
+  </div>
+<% end %>
+<%= divider %>
+<%= meaningful_update(@tree_element).html_safe %>
+<%= divider %>

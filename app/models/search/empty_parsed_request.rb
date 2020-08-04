@@ -40,7 +40,7 @@ class Search::EmptyParsedRequest
     @params = params
     @empty = true
     @defined_query = false
-    @target_button_text = "Names"
+    @target_button_text = params["target"] || 'Names'
     @count = false
     @list = false
     @limited = false

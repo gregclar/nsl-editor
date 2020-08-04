@@ -42,6 +42,9 @@
            href="#">
           Results</a>
       </li>
+
+      <% if @standard_mode %>
+
       <li role="presentation" class="">
         <a id="help-search-tab-container-link"
            class="main-body-tab-link search-non-default-tab-link"
@@ -81,6 +84,9 @@
                     remote: true,
                     title: "Show batch jobs information.  Click this tab to reload/refresh the information." %>
       </li>
+
+      <% end %>
+
     </ul>
   <% end %>
 </div>
