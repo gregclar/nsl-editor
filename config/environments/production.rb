@@ -118,6 +118,6 @@ end
 if ENV['EDITOR_CONFIG_FILE']
   load "#{ENV['EDITOR_CONFIG_FILE']}"
 else
-  load "#{ENV['HOME']}/.nsl/editor-r6-3580-branch-config.rb"
+  load "#{ENV['HOME']}/.nsl/editor-r6-config.rb"
 end
 
