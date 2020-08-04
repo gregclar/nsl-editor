@@ -94,6 +94,7 @@ class Ability
     can "names_deletes",      :all
     can "references",         :all
     can "names/typeaheads/for_unpub_cit", :all
+    can "standard_mode",      'use'
   end
 
   def qa_auth
@@ -124,6 +125,7 @@ class Ability
   def admin_auth
     can "admin",              :all
     can "menu",               "admin"
+    can "standard_mode",      'use'
   end
 
   def taxonomic_review_auth

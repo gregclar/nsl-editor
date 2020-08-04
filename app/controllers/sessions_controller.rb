@@ -72,7 +72,7 @@ class SessionsController < ApplicationController
     session[:user_full_name] = @sign_in.user_full_name
     session[:include_common_and_cultivar] = false
     session[:workspace] = {}
-    session[:mode] = ApplicationController::TAXONOMIC_REVIEW_MODE
+    session[:mode] = ApplicationController::STANDARD_MODE
   end
 
   def deep_link
