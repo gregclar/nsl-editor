@@ -78,8 +78,7 @@ class TreeElement < ActiveRecord::Base
       #e2 = "/tree/#{TreeVersion.find(sr.tv_id).previous_version_id}/#{derived_prev_element_id}"
       e1= sr.previous_tve
       e2= sr.current_tve
-      url = "#{Rails.configuration.services_g3_clientside_root_url}tree-version/diff-element?e1=#{CGI.escape(e1)}&e2=#{CGI.escape(e2)}&embed=true"
-      Rails.logger.debug("url: #{url}")
+      url = "#{Rails.configuration.services_clientside_root_url}tree-version/diff-element?e1=#{CGI.escape(e1)}&e2=#{CGI.escape(e2)}&embed=true"
       open(url, "Accept" => "text/html") {|f| f.read }
     end
   #rescue => e
@@ -97,8 +96,7 @@ class TreeElement < ActiveRecord::Base
       e1 = "/tree/#{sr.tv_id}/#{sr.id}"
       derived_prev_element_id = TreeElement.find(sr.id).previous_element_id
       e2 = "/tree/#{TreeVersion.find(sr.tv_id).previous_version_id}/#{derived_prev_element_id}"
-      url = "#{Rails.configuration.services_g3_clientside_root_url}tree-version/diff-element?e1=#{CGI.escape(e1)}&e2=#{CGI.escape(e2)}&embed=true"
-      Rails.logger.debug("url: #{url}")
+      url = "#{Rails.configuration.services_clientside_root_url}tree-version/diff-element?e1=#{CGI.escape(e1)}&e2=#{CGI.escape(e2)}&embed=true"
       if derived_prev_element_id.blank?
         "Could not identify previous element"
       else

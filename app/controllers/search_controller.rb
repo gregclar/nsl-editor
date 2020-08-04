@@ -86,6 +86,12 @@ class SearchController < ApplicationController
   end
 
   def run_empty_search
+    if @taxonomic_review_mode 
+      params["target"] = 'Trees'
+    else
+      params["target"] = 'Names'
+    end
+    @empty_search = true
     @search = Search::Empty.new(params)
   end
 

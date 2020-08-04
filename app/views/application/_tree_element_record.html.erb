@@ -11,9 +11,9 @@
     data-tree-element-operation="<%= search_result[:operation] %>"
     <% if search_result[:operation] == 'removed' %>
       <% previous_id = search_result[:previous_tve].sub(/.*\//,'') %>
-       data-tab-url="<%= tree_element_tab_path(id: previous_id,tab: 'active_tab_goes_here') %>"
+       data-tab-url="<%= tree_element_tab_path(id: previous_id,tab: 'tab_details') %>"
     <% else %>
-       data-tab-url="<%= tree_element_tab_path(id: search_result[:id]||-1,tab: 'active_tab_goes_here') %>"
+       data-tab-url="<%= tree_element_tab_path(id: search_result[:id]||-1,tab: 'tab_details') %>"
     <% end %>
   <% end %>
   <%# note: tv_id was the _previous_ version %>

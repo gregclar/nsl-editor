@@ -48,10 +48,12 @@ class Ability
     basic_auth_2
     edit_auth if user.edit?
     qa_auth if user.qa?
+    taxonomic_review_auth if user.qa?
     # TODO: remove this - NSL-2007
     apc_auth if user.apc?
     admin_auth if user.admin?
     treebuilder_auth if user.treebuilder?
+    taxonomic_review_auth if user.taxonomic_review?
   end
 
   def basic_auth_1
@@ -102,6 +104,7 @@ class Ability
     can "tree_versions",         :all
     can "tree_version_elements", :all
     can "tree_elements",         :all
+    can "mode",                  :all
   end
 
   # TODO: remove this - NSL-2007
@@ -121,5 +124,13 @@ class Ability
   def admin_auth
     can "admin",              :all
     can "menu",               "admin"
+  end
+
+  def taxonomic_review_auth
+    can "menu",                       "taxonomic_review"
+    can "trees",                      "tab_details"
+    can "tree_versions",              "tab_details"
+    can "tree_elements",              "tab_details"
+    can "tree_elements",              "tab_review"
   end
 end
