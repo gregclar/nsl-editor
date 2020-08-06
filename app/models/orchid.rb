@@ -221,11 +221,6 @@ class Orchid < ActiveRecord::Base
     doubtful == true
   end
 
-  # Finesse rex's categories for practicality
-  def accepted_hybrid_cross?
-    record_type == 'hybrid_cross' && parent_id.blank?
-  end
-
   def create_preferred_match
     AsNameMatcher.new(self).find_or_create_preferred_match
   end
