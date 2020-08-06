@@ -47,6 +47,6 @@ class User < ActiveType::Object
   end
 
   def taxonomic_review?
-    groups.include?("tree-review")
+    groups.include?("taxonomic-review")
   end
 end
