@@ -106,6 +106,9 @@ class Ability
     can "tree_version_elements", :all
     can "tree_elements",         :all
     can "mode",                  :all
+    can "taxonomy_review",       :all
+    can "taxonomy_reviews",       :all
+    can "tree_versions",         :all
   end
 
   # TODO: remove this - NSL-2007

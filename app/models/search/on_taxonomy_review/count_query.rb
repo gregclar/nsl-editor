@@ -16,14 +16,20 @@
 #   See the License for the specific language governing permissions and
 #   limitations under the License.
 #
-class Search::OnTree::FieldRule
-  RULES = {
-    "id:"                 => { multiple_values: true,
-                               where_clause: "id = ? ",
-                               multiple_values_where_clause: " id in (?)" },
-    "name:"              => { trailing_wildcard: true,
-                              where_clause: " lower(name) like ?",
-                                      order: "name"},
-    "accepted:"              => { where_clause: " accepted_tree " },
-  }.freeze
+class Search::OnTaxonomyReview::CountQuery
+  attr_reader :sql, :info_for_display, :common_and_cultivar_included
+
+  def initialize(parsed_request)
+    @parsed_request = parsed_request
+    prepare_query
+    @info_for_display = "nothing yet from count query"
+  end
+
+  def prepare_query
+    Rails.logger.debug("Search::OnTaxonomyReview::CountQuery#prepare_query")
+    prepared_query = Orchid.where("1=1")
+    where_clauses = Search::OnTaxonomyReview::WhereClauses.new(@parsed_request, prepared_query)
+    prepared_query = where_clauses.sql
+    @sql = prepared_query
+  end
 end

@@ -8,11 +8,21 @@
 <%= @tree.link_to_home_page %> <span class="pull-right">Link to Home Page</span> <br>
 <%= @tree.reference_id %> <span class="pull-right">Reference ID</span> <br>
 
-<%= link_to("Tree versions &nbsp;#{search_icon_on_tab}".html_safe,
+<br>
+<%= link_to("Versions of this taxonomy&nbsp;#{search_icon_on_tab}".html_safe,
             search_path(query_string: "for-tree-id:#{@tree.id}",
                         query_target: 'tree_version'),
-                        title: 'Retrieve the tree versions',class: 'tree-version')
+                        title: 'Retrieve the versions of this taxonomy',
+                        class: 'tree-version')
 %> 
+<br>
+<%= link_to("Versions of this taxonomy with one or more reviews&nbsp;#{search_icon_on_tab}".html_safe,
+            search_path(query_string: "for-tree-id:#{@tree.id} has-review:",
+                        query_target: 'tree_version'),
+                        title: 'Retrieve the versions of this taxonomy',
+                        class: 'tree-version')
+%> 
+
 <%= divider %>
 
 Config

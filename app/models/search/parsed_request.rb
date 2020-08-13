@@ -70,6 +70,8 @@ class Search::ParsedRequest
     "tree_version_elements" => "tree_version_element",
     "tree_element" => "tree_element",
     "tree_elements" => "tree_element",
+    "taxonomy_review" => "taxonomy_review",
+    "taxonomy_reviews" => "taxonomy_review",
   }.freeze
 
   def initialize(params)

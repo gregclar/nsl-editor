@@ -451,8 +451,15 @@ window.loadDetails = (event,inFocus,tabWasClicked = false) ->
   row_type = $('tr.showing-details').attr('data-row-type')
   debug("row_type: #{row_type}") 
   tabIndex = $('.search-result.showing-details a[tabindex]').attr('tabindex')
-  debug("tabIndex: #{tabIndex}") 
-  url = inFocus.attr('data-tab-url').replace(/active_tab_goes_here/,currentActiveTab(record_type))
+  try
+    url = inFocus.attr('data-tab-url').replace(/active_tab_goes_here/,currentActiveTab(record_type))
+  catch err
+    debug(err)
+  debug("=====")
+  debug("record_type: #{record_type}") 
+  debug("inFocus.attr('id'): #{inFocus.attr('id')}")
+  debug("inFocus.attr('data-tab-url'): #{inFocus.attr('data-tab-url')}")
+  debug("=====")
   url = url+'?format=js&tabIndex='+tabIndex+'&row-type='+row_type+'&instance-type='+instance_type+'&rowType='+inFocus.attr('data-row-type')
   url = url+'&tree-element-operation='+inFocus.attr('data-tree-element-operation') unless !inFocus.attr('data-tree-element-operation') 
   url = url+'&tree-version-id='+inFocus.attr('data-tree-version-id') unless !inFocus.attr('data-tree-version-id') 

@@ -16,17 +16,13 @@
 #   See the License for the specific language governing permissions and
 #   limitations under the License.
 #
-class Search::OnTreeVersion::FieldRule
+class Search::OnTaxonomyReview::FieldRule
   RULES = {
     "id:"                 => { multiple_values: true,
                                where_clause: "id = ? ",
-                               multiple_values_where_clause: " id in (?)",
-                               order: "id"},
-    "draft_name:"         => { trailing_wildcard: true,
-                              where_clause: " lower(draft_name) like ?",
-                                      order: "created_at desc"},
-    "for-tree-id:"      => { where_clause: " tree_id = ?",
-                             order: "created_at desc"},
-    "has-review:"         => { where_clause: " exists (select null from taxonomy_review where tree_version_id = tree_version.id) " },
+                               multiple_values_where_clause: " id in (?)" },
+    "name:"               => { trailing_wildcard: true,
+                               where_clause: " lower(name) like ?",
+                                      order: "name"},
   }.freeze
 end

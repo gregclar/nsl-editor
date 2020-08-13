@@ -29,6 +29,7 @@ class TreeVersion < ActiveRecord::Base
   has_many :tree_version_elements,
            foreign_key: "tree_version_id",
            class_name: "TreeVersionElement"
+  has_many :taxonomy_reviews
 
   def display_as
     'TreeVersion'

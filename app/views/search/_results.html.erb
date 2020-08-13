@@ -8,7 +8,7 @@
        <% give_me_focus = false %>
       <% end %>
 
-      <% display_as = record.class.name == 'Hash' ? record[:display_as] || record.class.to_s  : record.display_as || record.class.to_s %>
+      <% display_as = record.class.name == 'Hash' ? record[:display_as] || record.class.to_s  : record.try('display_as') || record.class.to_s %>
       <%# TODO: standardize on strings or symbols, at least for the instance record variants. %>
       <% case display_as %>
       <% when 'Reference' %>  
@@ -78,6 +78,9 @@
           locals: {search_result: record, give_me_focus: give_me_focus} %>
       <% when 'HelpTopic' %>  
         <%= render partial: 'help_topic_record', 
+          locals: {search_result: record, give_me_focus: give_me_focus} %>
+      <% when 'TaxonomyReview' %>  
+        <%= render partial: 'application/search_results/taxonomy_review_record', 
           locals: {search_result: record, give_me_focus: give_me_focus} %>
       <% when 'UserQuery' %>  
         <%= render partial: 'user_query_record', 

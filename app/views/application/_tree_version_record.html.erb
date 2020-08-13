@@ -2,14 +2,13 @@
   class="search-result  <%= 'fresh' if search_result.fresh? %>"  
   data-record-id="<%#= search_result.id %>"
 
+  data-get-url="<%= tree_version_path(search_result.id) %>"
+  data-edit-url="<%= tree_version_path(search_result.id) %>"
+  data-base-url="<%= tree_version_path(search_result.id) %>"
+  data-tab-url="<%= tree_version_tab_path(id: search_result[:id],tab: 'active_tab_goes_here') %>"
+  data-record-id="<%= search_result.id %>"
 
-  data-get-url="<%#= orchid_path(search_result.id) %>"
-  data-edit-url="<%#= orchid_path(search_result.id) %>"
-  data-base-url="<%#= orchid_path(search_result.id) %>"
-  data-tab-url="<%= tree_version_tab_path(id: search_result[:id],tab: 'tab_details') %>"
-  data-record-id="<%#= search_result.id %>"
-
-  data-record-type="tree"
+  data-record-type="tree-version"
   tabindex="<%= increment_tab_index(100) %>"
     >
   <td class="nsl-tiny-icon-container takes-focus width-1-percent"><%= record_icon('orchid') %></td>

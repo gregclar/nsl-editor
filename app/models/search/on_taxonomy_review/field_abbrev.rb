@@ -16,14 +16,14 @@
 #   See the License for the specific language governing permissions and
 #   limitations under the License.
 #
-class Search::OnTree::FieldRule
-  RULES = {
-    "id:"                 => { multiple_values: true,
-                               where_clause: "id = ? ",
-                               multiple_values_where_clause: " id in (?)" },
-    "name:"              => { trailing_wildcard: true,
-                              where_clause: " lower(name) like ?",
-                                      order: "name"},
-    "accepted:"              => { where_clause: " accepted_tree " },
+class Search::OnTaxonomyReview::FieldAbbrev
+  ABBREVS = {
+    "accepted-with-syn:" => "taxon-with-syn:",
+    "acc:" => "taxon-with-syn:",
+    "exc:" => "excluded-with-syn:",
+    "is-synonym:" => "is-syn:",
+    "no-rank:" => "rank-is-null:",
+    "no-nsl-rank:" => "nsl-rank-is-null:",
+    "comments:" => "comment:",
   }.freeze
 end

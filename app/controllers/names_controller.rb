@@ -40,7 +40,7 @@ class NamesController < ApplicationController
       @name.change_category_name_to = "scientific"
     end
     if params[:tab] =~ /\Atab_instances\z/
-      @instance = Instance.new if params[:tab] =~ /\Atab_instances\z/
+      @instance = Instance.new
       @instance.name = @name
     end
     @take_focus = params[:take_focus] == 'true'

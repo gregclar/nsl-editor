@@ -1,0 +1,26 @@
+<ul class="nav nav-tabs">
+  <%= render partial: 'taxonomy_reviews/tabs/tab', locals: {first: true,
+                                      last: false,
+                                      this_tab: 'tab_details', 
+                                      link_text: 'Details', 
+                                      link_id: 'author-show-tab', 
+                                      link_title: 'View a summary',
+                                      tab_index: @tab_index,
+                                      prev_tab: '.search-result.show-details', 
+                                      next_tab: '' } %> 
+  <% if can? 'taxonomy_reviews', 'update' %>
+
+  <%= render partial: 'taxonomy_reviews/tabs/tab', locals: {first: false,
+                                      last: false,
+                                      this_tab: 'tab_edit', 
+                                      link_text: 'Edit', 
+                                      link_id: 'author-edit-tab', 
+                                      link_title: 'Edit author.',
+                                      tab_index: increment_tab_index,
+                                      prev_tab: '', 
+                                      next_tab: '.search-result.showing-details'} %> 
+
+  <% end %>
+
+</ul>
+

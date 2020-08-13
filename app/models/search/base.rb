@@ -83,6 +83,7 @@ class Search::Base
       when /tree_version\z/ then Search::OnTreeVersion::Base.new(@parsed_request)
       when /tree_version_element\z/ then Search::OnTreeVersionElement::Base.new(@parsed_request)
       when /tree_element\z/ then Search::OnTreeElement::Base.new(@parsed_request)
+      when /taxonomy_review\z/ then Search::OnTaxonomyReview::Base.new(@parsed_request)
       else Search::OnName::Base.new(@parsed_request)
       end
   end

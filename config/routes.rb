@@ -215,6 +215,7 @@ Rails.application.routes.draw do
 
   match "trees/:id/tab/:tab", as: "tree_tab", to: "trees#tab", via: :get
 
+  resources :tree_versions, only: [:new, :create, :update, :destroy]
   match "tree_versions/:id/tab/:tab", as: "tree_version_tab", to: "tree_versions#tab", via: :get
 
   match "tree_version_elements/:element_link/tab/:tab", as: "tree_version_element_tab", to: "tree_version_elements#tab", via: :get
@@ -393,6 +394,14 @@ Rails.application.routes.draw do
   match "/trees/run/valrep", as: "run_valrep", to: "trees#run_valrep", via: :get
 
   match "/user/toggle_mode", as: "toggle_mode", to: "mode#toggle_mode", via: :post
+
+  resources :taxonomy_reviews, only: [:show, :post, :create, :new, :update]
+  match "taxonomy_reviews/:id/tab/:tab", as: "taxonomy_review_tab", to: "taxonomy_reviews#tab", via: :get
+  match "taxonomy_review_index",
+        as: "taxonomy_review_index",
+        to: "taxonomy_reviews#index",
+        via: :get
+
 
   root to: "search#search"
   match "/*random", to: "search#search", via: [:get, :post, :delete, :patch]

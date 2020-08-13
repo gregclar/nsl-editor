@@ -1,0 +1,17 @@
+<% increment_tab_index(0) %>
+
+<%= @taxonomy_review.name %> <span class="pull-right">name</span> <br>
+
+<%= link_to(@taxonomy_review.tree_version.draft_name,
+                search_path(query_target: 'tree_version',
+                            query_string: "id: #{@taxonomy_review.tree_version.id}"),
+                class: 'tree version',
+                tabindex: increment_tab_index,
+                title: "Query the tree version") %>
+
+<%= divider %>
+<%= @taxonomy_review.id %> <span class="pull-right">ID</span> <br>
+<%= created_by_whom_and_when(@taxonomy_review).html_safe %> <br>
+<%= updated_by_whom_and_when(@taxonomy_review).html_safe %>
+
+
