@@ -395,13 +395,15 @@ Rails.application.routes.draw do
 
   match "/user/toggle_mode", as: "toggle_mode", to: "mode#toggle_mode", via: :post
 
-  resources :taxonomy_reviews, only: [:show, :post, :create, :new, :update]
+  resources :taxonomy_reviews, only: [:show, :post, :create, :new, :update, :destroy]
   match "taxonomy_reviews/:id/tab/:tab", as: "taxonomy_review_tab", to: "taxonomy_reviews#tab", via: :get
   match "taxonomy_review_index",
         as: "taxonomy_review_index",
         to: "taxonomy_reviews#index",
         via: :get
 
+  resources :taxonomy_review_periods, only: [:show, :create, :new, :update, :destroy]
+  match "taxonomy_review_periods/:id/tab/:tab", as: "taxonomy_review_period_tab", to: "taxonomy_review_periods#tab", via: :get
 
   root to: "search#search"
   match "/*random", to: "search#search", via: [:get, :post, :delete, :patch]

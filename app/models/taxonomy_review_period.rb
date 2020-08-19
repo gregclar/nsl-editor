@@ -16,34 +16,29 @@
 #   See the License for the specific language governing permissions and
 #   limitations under the License.
 
-#  A taxonomy-review
-class TaxonomyReview < ActiveRecord::Base
+#  A taxonomy-review-period - periods of time within a taxonomy review
+class TaxonomyReviewPeriod < ActiveRecord::Base
   strip_attributes
-  self.table_name = "taxonomy_review"
+  self.table_name = "taxonomy_review_period"
   self.primary_key = "id"
   #self.sequence_name = "nsl_global_seq"
-  belongs_to :tree_version
-  validates :name, presence: true
-  has_many :taxonomy_review_periods
+  belongs_to :taxonomy_review
+  validates :start_date, presence: true
  
   def fresh?
     false
   end
 
-  def has_parent?
-    false
-  end
-
   def record_type
-    'TaxonomyReview'
+    'TaxonomyReviewPeriod'
   end
 
   def self.create(params, username)
-    taxonomy_review = TaxonomyReview.new(params)
-    if taxonomy_review.save_with_username(username)
-      taxonomy_review
+    taxonomy_review_period = TaxonomyReviewPeriod.new(params)
+    if taxonomy_review_period.save_with_username(username)
+      taxonomy_review_period
     else
-      raise taxonomy_review.errors.full_messages.first.to_s
+      raise taxonomy_review_period.errors.full_messages.first.to_s
     end
   end
 
@@ -65,6 +60,6 @@ class TaxonomyReview < ActiveRecord::Base
   end
 
   def can_be_deleted?
-    taxonomy_review_periods.size.zero?
+    true # for now
   end
 end

@@ -82,6 +82,9 @@
       <% when 'TaxonomyReview' %>  
         <%= render partial: 'application/search_results/taxonomy_review_record', 
           locals: {search_result: record, give_me_focus: give_me_focus} %>
+      <% when 'TaxonomyReviewPeriod' %>  
+        <%= render partial: 'application/search_results/taxonomy_review_period_record', 
+          locals: {search_result: record, give_me_focus: give_me_focus} %>
       <% when 'UserQuery' %>  
         <%= render partial: 'user_query_record', 
           locals: {search_result: record, give_me_focus: give_me_focus} %>

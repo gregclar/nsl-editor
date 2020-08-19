@@ -18,8 +18,8 @@
 #   limitations under the License.
 
 #   Taxonomy reviews are reviews of tree (taxonomy) versions
-class TaxonomyReviewsController < ApplicationController
-  before_action :find_taxonomy_review, only: [:show, :tab, :update, :destroy]
+class TaxonomyReviewPeriodsController < ApplicationController
+  before_action :find_taxonomy_review_period, only: [:show, :tab, :update, :destroy]
 
   def index
   end
@@ -27,11 +27,6 @@ class TaxonomyReviewsController < ApplicationController
   def show
     set_tab
     set_tab_index
-    if params[:tab] =~ /\Atab_periods_of_review\z/
-      @taxonomy_review_period = TaxonomyReviewPeriod.new
-      @taxonomy_review_period.taxonomy_review = @taxonomy_review
-    end
-
     @take_focus = params[:take_focus] == 'true'
     render "show", layout: false
   end
@@ -40,21 +35,22 @@ class TaxonomyReviewsController < ApplicationController
 
   # POST /taxonomy_reviews
   def create
-    @taxonomy_review = TaxonomyReview.create(taxonomy_review_params,
-                                               current_user.username)
+    @taxonomy_review_period = TaxonomyReviewPeriod.create(
+                                taxonomy_review_period_params,
+                                current_user.username)
     render "create.js"
   rescue => e
-    logger.error("Controller:TaxonomyReview:create:rescuing exception #{e}")
+    logger.error("Controller:TaxonomyReviewPeriod:create:rescuing exception #{e}")
     @error = e.to_s
     render "create_error.js", status: :unprocessable_entity
   end
 
   def update
-    @message = @taxonomy_review.update_if_changed(taxonomy_review_params,
+    @message = @taxonomy_review_period.update_if_changed(taxonomy_review_period_params,
                                                   current_user.username)
     render "update.js"
   #rescue => e
-    #logger.error("TaxonomyReview#update rescuing #{e}")
+    #logger.error("TaxonomyReviewPeriod#update rescuing #{e}")
     #@message = e.to_s
     #render "update_error.js", status: :unprocessable_entity
   end
@@ -62,7 +58,7 @@ class TaxonomyReviewsController < ApplicationController
   # DELETE 
   def destroy
     username = current_user.username
-    if @taxonomy_review.update_attribute(:updated_by, username) && @taxonomy_review.destroy
+    if @taxonomy_review_period.update_attribute(:updated_by, username) && @taxonomy_review_period.destroy
       render
     else
       render js: "alert('Could not delete that record.');"
@@ -72,15 +68,16 @@ class TaxonomyReviewsController < ApplicationController
 
   private
 
-  def find_taxonomy_review
-    @taxonomy_review = TaxonomyReview.find(params[:id])
+  def find_taxonomy_review_period
+    @taxonomy_review_period = TaxonomyReviewPeriod.find(params[:id])
+    logger.debug("params[:id]: #{params[:id]}")
   rescue ActiveRecord::RecordNotFound
     flash[:alert] = "We could not find the record."
-    redirect_to taxonomy_review_path
+    redirect_to taxonomy_review_period_path
   end
 
-  def taxonomy_review_params
-    params.require(:taxonomy_review).permit(:name, :tree_version_id)
+  def taxonomy_review_period_params
+    params.require(:taxonomy_review_period).permit(:start_date, :end_date, :taxonomy_review_id)
   end
 
   def set_tab

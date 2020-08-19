@@ -98,17 +98,18 @@ class Ability
   end
 
   def qa_auth
-    can "orchids",               :all
-    can "orchids_batch",         :all
-    can "orchids_names",         :all
-    can "batches",               :all
-    can "tree_versions",         :all
-    can "tree_version_elements", :all
-    can "tree_elements",         :all
-    can "mode",                  :all
-    can "taxonomy_review",       :all
-    can "taxonomy_reviews",       :all
-    can "tree_versions",         :all
+    can "orchids",                   :all
+    can "orchids_batch",             :all
+    can "orchids_names",             :all
+    can "batches",                   :all
+    can "tree_versions",             :all
+    can "tree_version_elements",     :all
+    can "tree_elements",             :all
+    can "mode",                      :all
+    can "taxonomy_review",           :all
+    can "taxonomy_reviews",          :all
+    can "taxonomy_review_periods",   :all
+    can "tree_versions",             :all
   end
 
   # TODO: remove this - NSL-2007

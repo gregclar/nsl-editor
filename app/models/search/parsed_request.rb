@@ -72,6 +72,8 @@ class Search::ParsedRequest
     "tree_elements" => "tree_element",
     "taxonomy_review" => "taxonomy_review",
     "taxonomy_reviews" => "taxonomy_review",
+    "taxonomy_review_period" => "taxonomy_review_period",
+    "taxonomy_review_periods" => "taxonomy_review_period",
   }.freeze
 
   def initialize(params)
@@ -247,7 +249,6 @@ class Search::ParsedRequest
   end
 
   def parse_target(tokens)
-    Rails.logger.debug("tokens: #{tokens}")
     if @defined_query == false
       if SIMPLE_QUERY_TARGETS.key?(@query_target)
         @target_table = SIMPLE_QUERY_TARGETS[@query_target]

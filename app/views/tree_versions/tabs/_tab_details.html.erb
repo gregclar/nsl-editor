@@ -23,7 +23,7 @@
 <span class="pull-right">changes</span> <br>
 <% unless @tree_version.taxonomy_reviews.empty? %>
   <%= divider %>
-  <h6>Reviews</h6>
+  <h5>Reviews</h5>
   <% @tree_version.taxonomy_reviews.each do |review| %>
     <%= link_to(review.name,
                 search_path(query_target: 'taxonomy review',

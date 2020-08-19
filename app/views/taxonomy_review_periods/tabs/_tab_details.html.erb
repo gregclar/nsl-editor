@@ -1,0 +1,19 @@
+<% increment_tab_index(0) %>
+
+<%= link_to(@taxonomy_review_period.start_date,
+                search_path(query_target: 'taxonomy_review_period',
+                            query_string: "id: #{@taxonomy_review_period.id}"),
+                class: 'taxonomy review period',
+                tabindex: increment_tab_index,
+                title: "Query the taxonomy review period") %>
+
+<%= @taxonomy_review_period.start_date %>
+<span class="pull-right">start</span> <br>
+<%= @taxonomy_review_period.end_date %>
+<span class="pull-right">end date</span> <br>
+<%= divider %>
+<%= @taxonomy_review_period.id %> <span class="pull-right">ID</span> <br>
+<%= created_by_whom_and_when(@taxonomy_review_period).html_safe %> <br>
+<%= updated_by_whom_and_when(@taxonomy_review_period).html_safe %>
+
+
