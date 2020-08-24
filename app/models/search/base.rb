@@ -75,6 +75,7 @@ class Search::Base
     @executed_query =
       case @parsed_request.target_table
       when /any/ then raise "cannot run an 'any' search yet"
+      when /name/ then Search::OnName::Base.new(@parsed_request)
       when /author/ then Search::OnAuthor::Base.new(@parsed_request)
       when /instance/ then Search::OnInstance::Base.new(@parsed_request)
       when /reference/ then Search::OnReference::Base.new(@parsed_request)
@@ -85,7 +86,7 @@ class Search::Base
       when /tree_element\z/ then Search::OnTreeElement::Base.new(@parsed_request)
       when /taxonomy_review\z/ then Search::OnTaxonomyReview::Base.new(@parsed_request)
       when /taxonomy_review_period\z/ then Search::OnTaxonomyReviewPeriod::Base.new(@parsed_request)
-      else throw 'Unknown target table' #Search::OnName::Base.new(@parsed_request)
+      else Search::OnName::Base.new(@parsed_request)
       end
   end
 
