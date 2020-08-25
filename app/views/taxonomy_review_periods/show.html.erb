@@ -4,7 +4,7 @@
 
   <br>
 
-  <%= link_to(@taxonomy_review_period.start_date, search_path(query_target: 'taxonomy_review_period',
+  Taxonomy Review Period starting <%= link_to(@taxonomy_review_period.start_date.strftime("%d-%b-%Y"), search_path(query_target: 'taxonomy_review_period',
                                                  query_string: "id:#{@taxonomy_review_period.id}"),
                                                  id: 'tab-heading',
                                                  title: 'Query this taxonomy_review_period') %>

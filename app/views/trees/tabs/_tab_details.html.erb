@@ -23,6 +23,22 @@
                         class: 'tree-version')
 %> 
 
+<br>
+<%= link_to("Published Versions of this taxonomy&nbsp;#{search_icon_on_tab}".html_safe,
+            search_path(query_string: "for-tree-id:#{@tree.id} published:",
+                        query_target: 'tree version'),
+                        title: 'Retrieve published versions of this taxonomy',
+                        class: 'tree-version')
+%> 
+
+<br>
+<%= link_to("Unpublished Versions of this taxonomy&nbsp;#{search_icon_on_tab}".html_safe,
+            search_path(query_string: "for-tree-id:#{@tree.id} unpublished:",
+                        query_target: 'tree version'),
+                        title: 'Retrieve unpublished versions of this taxonomy',
+                        class: 'tree-version')
+%> 
+
 <%= divider %>
 
 Config

@@ -8,6 +8,15 @@
                        tabindex: increment_tab_index}  %>
     <br>
     <br>
+    End date
+    <br>
+    <%= f.date_select :end_date,
+      {order: [:day, :month, :year],
+       include_blank: true},
+                      {title: 'End date for the period of review',
+                       tabindex: increment_tab_index}  %>
+    <br>
+    <br>
     <%= f.hidden_field :taxonomy_review_id %>
     <%= f.submit id: "save-new-instance-btn", class: 'btn-primary', title: "Save changes", tabindex: increment_tab_index %>
     <br>

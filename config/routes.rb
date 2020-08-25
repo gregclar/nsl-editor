@@ -402,8 +402,9 @@ Rails.application.routes.draw do
         to: "taxonomy_reviews#index",
         via: :get
 
-  resources :taxonomy_review_periods, only: [:show, :create, :new, :update, :destroy]
   match "taxonomy_review_periods/:id/tab/:tab", as: "taxonomy_review_period_tab", to: "taxonomy_review_periods#tab", via: :get
+  match "taxonomy_review_periods/calendar", as: "taxonomy_review_period_calendar", to: "taxonomy_review_periods#calendar", via: :get
+  resources :taxonomy_review_periods, only: [:show, :create, :new, :update, :destroy]
 
   root to: "search#search"
   match "/*random", to: "search#search", via: [:get, :post, :delete, :patch]

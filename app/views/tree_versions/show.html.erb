@@ -2,7 +2,7 @@
   <% if notice %> <p id="notice"><%= notice %></p> <% end %>
 
   <br>
-
+  <%= "#{@tree_version.draft_name} version of the #{@tree_version.tree.name} taxonomy" %>
   <%#= link_to(@tree.name, search_path(query_target: 'names', query_string: "id:#{@name.id}"),id: 'tab-heading',title: 'Query this name') %>
   <span class="pull-right"><%#= mapper_name_link(@name) %></span>
 

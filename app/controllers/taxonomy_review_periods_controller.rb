@@ -19,7 +19,7 @@
 
 #   Taxonomy reviews are reviews of tree (taxonomy) versions
 class TaxonomyReviewPeriodsController < ApplicationController
-  before_action :find_taxonomy_review_period, only: [:show, :tab, :update, :destroy]
+  before_action :find_taxonomy_review_period, only: [:show, :tab, :update, :destroy, :calendar]
 
   def index
   end
@@ -28,10 +28,36 @@ class TaxonomyReviewPeriodsController < ApplicationController
     set_tab
     set_tab_index
     @take_focus = params[:take_focus] == 'true'
+    calendar_events
     render "show", layout: false
   end
 
   alias tab show
+
+  def calendar
+    calendar_events
+  end
+
+  def calendar_events
+    @review_days = []
+    start_date = @taxonomy_review_period.start_date
+    end_date = @taxonomy_review_period.end_date || start_date + 30
+    (start_date..end_date).each do |day|
+      case 
+      when day === Date.today
+      css_class = 'today'
+      when day < Date.today
+      css_class = 'past-day'
+      else
+      css_class = 'review-day'
+      end
+      @review_days.push(
+        OpenStruct.new(name: "#{css_class}",start_time: Date.parse(day.to_s))
+      )
+    end
+    #@review_days.push(OpenStruct.new(name: 'today',start_time: Date.today))
+  end
+  private :calendar_events
 
   # POST /taxonomy_reviews
   def create
@@ -46,13 +72,14 @@ class TaxonomyReviewPeriodsController < ApplicationController
   end
 
   def update
-    @message = @taxonomy_review_period.update_if_changed(taxonomy_review_period_params,
-                                                  current_user.username)
+    @message = @taxonomy_review_period.update_if_changed(
+                 taxonomy_review_period_params,
+                 current_user.username)
     render "update.js"
-  #rescue => e
-    #logger.error("TaxonomyReviewPeriod#update rescuing #{e}")
-    #@message = e.to_s
-    #render "update_error.js", status: :unprocessable_entity
+  rescue => e
+    logger.error("TaxonomyReviewPeriod#update rescuing #{e}")
+    @message = e.to_s
+    render "update_error.js", status: :unprocessable_entity
   end
 
   # DELETE 
@@ -64,7 +91,6 @@ class TaxonomyReviewPeriodsController < ApplicationController
       render js: "alert('Could not delete that record.');"
     end
   end
-
 
   private
 

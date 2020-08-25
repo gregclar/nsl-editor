@@ -28,5 +28,7 @@ class Search::OnTreeVersion::FieldRule
     "for-tree-id:"      => { where_clause: " tree_id = ?",
                              order: "created_at desc"},
     "has-review:"         => { where_clause: " exists (select null from taxonomy_review where tree_version_id = tree_version.id) " },
+    "published:"      => { where_clause: " published "},
+    "unpublished:"      => { where_clause: " not published "},
   }.freeze
 end

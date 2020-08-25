@@ -11,7 +11,7 @@
 <h5>Review Periods</h5>
 <% @taxonomy_review.taxonomy_review_periods.each do |review_period| %>
   <%= review_period.id %> | 
-  <%= link_to(review_period.start_date,
+  <%= link_to(review_period.start_date.strftime("%d-%b-%Y"),
               search_path(query_target: 'taxonomy_review_period',
                           query_string: "taxonomy_review_id: #{@taxonomy_review.id}"),
               class: 'taxonomy review',

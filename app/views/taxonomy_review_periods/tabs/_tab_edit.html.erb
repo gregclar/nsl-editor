@@ -4,12 +4,3 @@
 
 <%= divider %>
 
-<h5>Delete</h5>
-
-
-<% if @taxonomy_review_period.can_be_deleted? %>
-  You can delete <%= @taxonomy_review_period.start_date %>
-  <%= render 'delete_widgets' %>
-<% else %>
-  You cannot delete <b><%= @taxonomy_review_period.start_date %></b> because information is attached to it.
-<% end %>
