@@ -21,7 +21,7 @@
 
 <%= divider %>
 
-<h5>Create instances for preferred matches for names identified by this query string</h5>
+<h5>Create draft instances for preferred matches for names identified by this query string</h5>
 
 <%= form_tag({controller: "orchids_batch", action: "create_instances_for_preferred_matches"}, method: "post", remote: true) do %>
   <input name="taxon_string" type="text" value="<%= @orchid.taxon %>" class="form-control" required title="taxon string for batch" />
