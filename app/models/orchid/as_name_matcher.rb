@@ -18,10 +18,12 @@
 
 #  Name services
 class Orchid::AsNameMatcher
-  def initialize(orchid)
+  def initialize(orchid, authorising_user)
     puts '='*70
     announce "Name matcher for orchid: #{orchid.taxon} (#{orchid.record_type})"
+    announce "Authorising user: #{authorising_user}"
     @orchid = orchid
+    @authorising_user = authorising_user
   end
 
   def find_or_create_preferred_match
@@ -54,7 +56,7 @@ class Orchid::AsNameMatcher
       pref.name_id = @orchid.matches.first.id
       pref.instance_id = @orchid.matches.first.primary_instances.first.id
       pref.relationship_instance_type_id = @orchid.riti
-      pref.created_by = pref.updated_by = 'batch'
+      pref.created_by = pref.updated_by = "#{@authorising_user}"
       pref.save!
       true
     else

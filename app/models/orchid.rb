@@ -221,8 +221,8 @@ class Orchid < ActiveRecord::Base
     doubtful == true
   end
 
-  def create_preferred_match
-    AsNameMatcher.new(self).find_or_create_preferred_match
+  def create_preferred_match(authorising_user)
+    AsNameMatcher.new(self, authorising_user).find_or_create_preferred_match
   end
 
   def self.create_preferred_matches_for(taxon_s)
@@ -239,47 +239,48 @@ class Orchid < ActiveRecord::Base
     records
   end
 
-  def self.create_preferred_matches_for_accepted_taxa(taxon_s)
+  def self.create_preferred_matches_for_accepted_taxa(taxon_s, authorising_user)
     debug("create_preferred_matches_for_accepted_taxa matching #{taxon_s}")
     records = 0
     self.where(record_type: 'accepted')
         .where(["taxon like ?", taxon_s.gsub(/\*/,'%')])
         .order(:seq).each do |match|
-      records += match.create_preferred_match
+      records += match.create_preferred_match(authorising_user)
       match.children.each do |child|
-        records += child.create_preferred_match
+        records += child.create_preferred_match(authorising_user)
       end
     end
     records
   end
 
-  def self.create_instance_for_preferred_matches_for(taxon_s)
+  def self.create_instance_for_preferred_matches_for(taxon_s, authorising_user)
     debug('create_instance_for_preferred_matches_for')
     records = 0
     @ref = Reference.find(REF_ID)
     self.where(["taxon like ?", taxon_s.gsub(/\*/,'%')])
         .where(record_type: 'accepted').order(:id).each do |match|
-      records += match.create_instance_for_preferred_matches
+      records += match.create_instance_for_preferred_matches(authorising_user)
       match.children.each do |child|
-        records += child.create_instance_for_preferred_matches
+        records += child.create_instance_for_preferred_matches(authorising_user)
       end
     end
     records
   end
 
-  def create_instance_for_preferred_matches
-    debug("create_instance_for_preferred_matches")
+  def create_instance_for_preferred_matches(authorising_user)
+    debug("create_instance_for_preferred_matches for: #{authorising_user}")
     @ref = Reference.find(REF_ID) if @ref.blank?
-    throw 'No ref!' if @ref.blank?
-    AsInstanceCreator.new(self,@ref).create_instance_for_preferred_matches
+    throw "No ref with id: #{REF_ID}!" if @ref.blank?
+    AsInstanceCreator.new(self, @ref, authorising_user)
+      .create_instance_for_preferred_matches
   end
 
   # check for preferred name
-  def self.add_to_tree_for(draft_tree, taxon_s)
+  def self.add_to_tree_for(draft_tree, taxon_s, authorising_user)
     count = 0
     errors = ''
     self.where(["taxon like ?", taxon_s]).where(record_type: 'accepted').order(:id).each do |match|
-      placer = AsTreePlacer.new(draft_tree, match)
+      placer = AsTreePlacer.new(draft_tree, match, authorising_user)
       count += placer.placed_count
       errors += placer.error + ';' unless placer.error.blank?
     end

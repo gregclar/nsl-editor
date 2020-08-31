@@ -1,4 +1,8 @@
 - :date: 31-Aug-2020
+  :jira_id: '3656'
+  :description: |-
+    Orchid batch processing now attributes all operations to the authenticated user.
+- :date: 31-Aug-2020
   :jira_id: '3653'
   :description: |-
     Move batch success/error messages closer to the relevant button

@@ -47,38 +47,38 @@ class OrchidsName < ActiveRecord::Base
   #  end
   #
   ###########################################################
-  def create_instance(ref)
+  def create_instance(ref, authorising_user)
     debug("create_instance")
     @ref = ref
     if orchid.accepted?
       debug("OrchidsName#create_instance orchid is accepted")
-      return create_or_find_standalone_instance
+      return create_or_find_standalone_instance(authorising_user)
     elsif orchid.synonym?
       debug("OrchidsName#create_instance orchid is synonym")
-      return create_or_find_relationship_instance
+      return create_or_find_relationship_instance(authorising_user)
     elsif orchid.hybrid?
       debug("OrchidsName#create_instance orchid is hybrid")
       throw 'dont know how to handle hybrid'
     elsif orchid.misapplied?
-      return create_or_find_misapplied_instance
+      return create_or_find_misapplied_instance(authorising_user)
     end
   end
 
-  def create_or_find_standalone_instance
+  def create_or_find_standalone_instance(authorising_user)
     debug 'create_or_find_standalone_instance'
     return 0 if standalone_instance?
     debug 'no standalone instance, so we will create one'
-    create_standalone_instance
+    create_standalone_instance(authorising_user)
   end
 
-  def create_standalone_instance
+  def create_standalone_instance(authorising_user)
     debug('create_standalone_instance')
     instance = Instance.new
     instance.draft = true
     instance.name_id = name_id
     instance.reference_id = @ref.id 
     instance.instance_type_id = InstanceType.secondary_reference.id
-    instance.created_by = instance.updated_by = 'nsl-3422'
+    instance.created_by = instance.updated_by = "#{authorising_user}"
     instance.save!
     self.standalone_instance_created = true
     self.standalone_instance_id = instance.id
@@ -110,7 +110,7 @@ class OrchidsName < ActiveRecord::Base
     end
   end
 
-  def create_or_find_relationship_instance
+  def create_or_find_relationship_instance(authorising_user)
     if relationship_instance_id.present?
       debug '        Relationship instance already there returning 0'
       return 0
@@ -120,7 +120,7 @@ class OrchidsName < ActiveRecord::Base
       return 0
     end
     debug('need to create a relationship instance')
-    return create_relationship_instance
+    return create_relationship_instance(authorising_user)
   end
 
   def relationship_instance?
@@ -139,7 +139,7 @@ class OrchidsName < ActiveRecord::Base
   end
 
   # 
-  def create_relationship_instance
+  def create_relationship_instance(authorising_user)
     debug('create_relationship_instance start')
     if orchid.parent.orchids_name.first.try('standalone_instance_id').blank?
       debug('parent has no standalone instance so cannot create relationship instance')
@@ -154,7 +154,7 @@ class OrchidsName < ActiveRecord::Base
     new_instance.name_id = instance.name_id
     throw "No relationship instance type id for #{orchid_id} #{orchid.taxon}" if relationship_instance_type_id.blank?
     new_instance.instance_type_id = relationship_instance_type_id
-    new_instance.created_by = new_instance.updated_by = 'nsl-3422'
+    new_instance.created_by = new_instance.updated_by = "#{authorising_user}"
     new_instance.save!
     self.relationship_instance_created = true
     self.relationship_instance_id = new_instance.id
@@ -163,7 +163,7 @@ class OrchidsName < ActiveRecord::Base
   end
 
   # create_or_find_relationship_instance
-  def create_or_find_misapplied_instance
+  def create_or_find_misapplied_instance(authorising_user)
     if relationship_instance_id.present?
       debug '        misapplied instance already there'
       return 0
@@ -172,10 +172,10 @@ class OrchidsName < ActiveRecord::Base
       debug '        misapplied instance found'
       return 0
     end
-    create_misapplied_instance
+    create_misapplied_instance(authorising_user)
   end
 
-  def create_misapplied_instance
+  def create_misapplied_instance(authorising_user)
     debug('        Create misapplied instance')
     new_instance = Instance.new
     new_instance.draft = false
@@ -184,7 +184,7 @@ class OrchidsName < ActiveRecord::Base
     new_instance.cites_id = instance_id
     new_instance.name_id = instance.name_id
     new_instance.instance_type_id = relationship_instance_type_id
-    new_instance.created_by = new_instance.updated_by = 'nsl-3422'
+    new_instance.created_by = new_instance.updated_by = "#{authorising_user}"
     new_instance.save!
     self.relationship_instance_created = true
     self.relationship_instance_id = new_instance.id
