@@ -1,4 +1,8 @@
-- :date: 25-Aug-2020
+- :date: 31-Aug-2020
+  :jira_id: '3653'
+  :description: |-
+    Move batch success/error messages closer to the relevant button
+- :date: 31-Aug-2020
   :jira_id: '3652'
   :description: |-
     Change wording on batch tab for draft instances

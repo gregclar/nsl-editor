@@ -1,5 +1,5 @@
 <ul class="nav nav-tabs">
-  <%= render partial: 'tab', locals: {first: true,
+  <%= render partial: 'orchids/tabs/tab', locals: {first: true,
                                       last: false,
                                       this_tab: 'tab_show_1', 
                                       link_text: 'Details', 
@@ -10,7 +10,7 @@
                                       next_tab: '.search-result.orchids-edit-tab' } %> 
   <% if can? 'orchids', 'update' %>
 
-  <%= render partial: 'tab', locals: {first: false,
+  <%= render partial: 'orchids/tabs/tab', locals: {first: false,
                                       last: false,
                                       this_tab: 'tab_edit', 
                                       link_text: 'Edit Raw', 
@@ -21,7 +21,7 @@
                                       next_tab: '.search-result.orchids-edit-match-tab'} %> 
 
 
-  <%= render partial: 'tab', locals: {first: false,
+  <%= render partial: 'orchids/tabs/tab', locals: {first: false,
                                       last: false,
                                       this_tab: 'tab_chosen', 
                                       link_text: 'Edit Match', 
@@ -31,7 +31,7 @@
                                       prev_tab: '.search-result.orchids-edit-tab', 
                                       next_tab: '.search-result.orchids-delete-tab'} %> 
 
-  <%= render partial: 'tab', locals: {first: false,
+  <%= render partial: 'orchids/tabs/tab', locals: {first: false,
                                       last: false,
                                       this_tab: 'tab_delete', 
                                       link_text: 'Delete Raw', 
@@ -41,7 +41,7 @@
                                       prev_tab: 'orchids-edit-tab', 
                                       next_tab: '.search-result.orchids-create-syn-tab'} %> 
 
-  <%= render partial: 'tab', locals: {first: false,
+  <%= render partial: 'orchids/tabs/tab', locals: {first: false,
                                       last: false,
                                       this_tab: 'tab_create_syn', 
                                       link_text: 'Create synonym', 
@@ -51,7 +51,7 @@
                                       prev_tab: 'orchids-delete-tab', 
                                       next_tab: '.search-result.orchids-batch-tab'} %> 
 
-  <%= render partial: 'tab', locals: {first: false,
+  <%= render partial: 'orchids/tabs/tab', locals: {first: false,
                                       last: false,
                                       this_tab: 'tab_create_misapp', 
                                       link_text: 'Create misapp', 
@@ -61,7 +61,7 @@
                                       prev_tab: 'orchids-delete-tab', 
                                       next_tab: '.search-result.orchids-batch-tab'} %> 
 
-  <%= render partial: 'tab', locals: {first: false,
+  <%= render partial: 'orchids/tabs/tab', locals: {first: false,
                                       last: true,
                                       this_tab: 'tab_batch', 
                                       link_text: 'Batch', 

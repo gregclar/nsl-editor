@@ -19,9 +19,9 @@
 <% end %>
 
 <% if @orchid.misapplied? %>
-  <%= render partial: 'tab_show_1_name_matches_misapplied', locals: {name_match_count: name_match_count} %>
+  <%= render partial: 'orchids/tabs/tab_show_1_name_matches_misapplied', locals: {name_match_count: name_match_count} %>
 <% else %>
-  <%= render partial: 'tab_show_1_name_matches_standard', locals: {name_match_count: name_match_count} %>
+  <%= render partial: 'orchids/tabs/tab_show_1_name_matches_standard', locals: {name_match_count: name_match_count} %>
 <% end %>
 
 
