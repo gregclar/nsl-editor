@@ -48,10 +48,12 @@ class Ability
     basic_auth_2
     edit_auth if user.edit?
     qa_auth if user.qa?
+    taxonomic_review_auth if user.qa?
     # TODO: remove this - NSL-2007
     apc_auth if user.apc?
     admin_auth if user.admin?
     treebuilder_auth if user.treebuilder?
+    taxonomic_review_auth if user.taxonomic_review?
   end
 
   def basic_auth_1
@@ -92,13 +94,22 @@ class Ability
     can "names_deletes",      :all
     can "references",         :all
     can "names/typeaheads/for_unpub_cit", :all
+    can "standard_mode",      'use'
   end
 
   def qa_auth
-    can "orchids",            :all
-    can "orchids_batch",      :all
-    can "orchids_names",      :all
-    can "batches",            :all
+    can "orchids",                   :all
+    can "orchids_batch",             :all
+    can "orchids_names",             :all
+    can "batches",                   :all
+    can "tree_versions",             :all
+    can "tree_version_elements",     :all
+    can "tree_elements",             :all
+    can "mode",                      :all
+    can "taxonomy_review",           :all
+    can "taxonomy_reviews",          :all
+    can "taxonomy_review_periods",   :all
+    can "tree_versions",             :all
   end
 
   # TODO: remove this - NSL-2007
@@ -118,5 +129,14 @@ class Ability
   def admin_auth
     can "admin",              :all
     can "menu",               "admin"
+    can "standard_mode",      'use'
+  end
+
+  def taxonomic_review_auth
+    can "menu",                       "taxonomic_review"
+    can "trees",                      "tab_details"
+    can "tree_versions",              "tab_details"
+    can "tree_elements",              "tab_details"
+    can "tree_elements",              "tab_review"
   end
 end

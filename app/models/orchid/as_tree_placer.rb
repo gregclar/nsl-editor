@@ -16,15 +16,18 @@
 #   See the License for the specific language governing permissions and
 #   limitations under the License.
 
+
 #  We need to place Orchids on a draft tree.
 class Orchid::AsTreePlacer
   attr_reader :status, :error, :placed_count
   ERROR = 'error'
-  def initialize(draft_tree, orchid)
+  def initialize(draft_tree, orchid, authorising_user)
+    debug("Authorising user: #{authorising_user}")
     @draft_tree = draft_tree
     @draft_name = draft_tree.draft_name
     @status = 'started'
     @orchid = orchid
+    @authorising_user = authorising_user
     @placed_count = 0
     @error = ''
     preflight_checks
@@ -113,7 +116,7 @@ class Orchid::AsTreePlacer
   def place_name(orchids_name)
     tree_version = @draft_tree
     debug("parent_element_link: #{parent_tve(orchids_name).element_link}")
-    placement = Tree::Workspace::Placement.new(username: 'gclarke',
+    placement = Tree::Workspace::Placement.new(username: @authorising_user,
                                                parent_element_link: parent_tve(orchids_name).element_link,
                                                instance_id: orchids_name.standalone_instance_id,
                                                excluded: false,
@@ -136,7 +139,7 @@ class Orchid::AsTreePlacer
     debug("@tree_version_element: #{@tree_version_element}")
     debug("@draft_tree.name_in_version(orchids_name.name): #{@draft_tree.name_in_version(orchids_name.name)}")
 
-    replacement = Tree::Workspace::Replacement.new(username: 'gclarke',
+    replacement = Tree::Workspace::Replacement.new(username: @authorising_user,
                                                  target: @tree_version_element,
                                                  parent: parent_tve(orchids_name),
                                                  instance_id: orchids_name.standalone_instance_id,
@@ -169,13 +172,13 @@ class Orchid::AsTreePlacer
     hash = {}
     unless @orchid.comment.blank?
       hash['APC Comment'] = { value: @orchid.comment,
-                              updated_by: 'gclarke',
+                              updated_by: @authorising_user,
                               updated_at: Time.now.utc.iso8601}
     end
     unless @orchid.distribution.blank?
       hash['APC Dist.'] = {
                              value: @orchid.distribution.split(' | ').join(', '),
-                             updated_by: 'gclarke',
+                             updated_by: @authorising_user,
                              updated_at: Time.now.utc.iso8601
                              }
     end

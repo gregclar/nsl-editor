@@ -19,14 +19,19 @@
   <input id="create-matches-batch-submit" name="submit" type="submit" value="Submit" class="btn btn-primary width-5em" title="Submit the form" />
 <% end %>
 
+<div id="create-preferred-matches-info-message-container" class="message-container"></div>
+<div id="create-preferred-matches-error-message-container" class="error-container message-container"></div>
 <%= divider %>
 
-<h5>Create instances for preferred matches for names identified by this query string</h5>
+<h5>Create draft instances for preferred matches for names identified by this query string</h5>
 
 <%= form_tag({controller: "orchids_batch", action: "create_instances_for_preferred_matches"}, method: "post", remote: true) do %>
   <input name="taxon_string" type="text" value="<%= @orchid.taxon %>" class="form-control" required title="taxon string for batch" />
   <input id="create-instances-batch-submit" name="submit" type="submit" value="Submit" class="btn btn-primary width-5em" title="Submit the form" />
 <% end %>
+
+  <div id="create-draft-instances-info-message-container" class="message-container"></div>
+  <div id="create-draft-instances-error-message-container" class="error-container message-container"></div>
 
 <%= divider %>
 
@@ -45,6 +50,8 @@
     <input id="add-instances-to-draft-treebatch-submit" name="submit" type="submit" value="Submit" class="btn btn-primary width-5em" title="Submit the form" />
   <% end %>
 
+  <div id="add-instances-to-tree-info-message-container" class="message-container"></div>
+  <div id="add-instances-to-tree-error-message-container" class="error-container message-container"></div>
 <% end %>
 
 <%= divider %>
@@ -54,8 +61,8 @@
 <% end %>
 
 <% end %>
-<div id="search-result-details-info-message-container" class="message-container"></div>
-<div id="search-result-details-error-message-container" class="message-container"></div>
+<div id="info-message-container" class="message-container"></div>
+<div id="error-message-container" class="error-container message-container"></div>
 
 <% if @take_focus %>
 <script>

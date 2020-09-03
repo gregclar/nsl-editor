@@ -305,3 +305,10 @@ a.no-highlight button:focus {
   border-bottom: 1px solid #333333;
   border-left: 1px solid #CCCCCC;
 }
+
+ul.no-indent {
+  padding: 0;
+  list-style-position: inside;
+}
+
+

@@ -1,3 +1,37 @@
+- :date: 31-Aug-2020
+  :jira_id: '3656'
+  :description: |-
+    Orchid batch processing now attributes all operations to the authenticated user.
+- :date: 31-Aug-2020
+  :jira_id: '3653'
+  :description: |-
+    Move batch success/error messages closer to the relevant button
+- :date: 31-Aug-2020
+  :jira_id: '3652'
+  :description: |-
+    Change wording on batch tab for draft instances
+- :date: 25-Aug-2020
+  :jira_id: '3612'
+  :description: |-
+    Early version of taxonomy review periods, with simple calendar
+- :date: 19-Aug-2020
+  :jira_id: '3612'
+  :description: |-
+    More work on taxonomy reviews for tree versions, building start-a-review
+- :date: 13-Aug-2020
+  :jira_id: '3612'
+  :description: |-
+    Early work on taxonomy reviews for tree versions, building a platform for starting a review.
+- :date: 05-Aug-2020
+  :jira_id: '3612'
+  :description: |-
+    Branch 3580, including NSL-3612 taxonomic-review-mode, now merged into the mainstream of changes. Features invisible unless switched on.
+- :date: 05-Aug-2020
+  :jira_id: '3580'
+  :description: |-
+    Branch 3580, including all taxonomic-review features now merged into the mainstream of changes. Features invisible unless switched on.
+- :date: 29-Jul-2020
+  :release: true
 - :date: 28-Jul-2020
   :jira_id: '2532'
   :description: |-
@@ -38,6 +72,23 @@
   :jira_id: '3592'
   :description: |-
     Allow the bottom record to scroll up fully into view.
+- :date: 08-Jul-2020
+  :jira_id: '3580'
+  :description: |-
+    Layout tweaks and stop the auto focus on removed tree elements. Wednesday 10:45pm.  <b>Branch 3580 only. Not in production yet.</b>
+- :date: 08-Jul-2020
+  :jira_id: '3580'
+  :description: |-
+    Plenty of adjustments and fixes, hopefully linking to the correct diffs and showing removals as removals and not as additions. Tuesday 2:30pm  <b>Branch 3580 only. Not in production yet.</b>
+- :date: 07-Jul-2020
+  :jira_id: '3580'
+  :description: |-
+    Using new tree diff query; not trying to get the diff from services for removed or added tree elements; diff is now on details tab.  <b>Branch 3580 only. Not in production yet.</b>
+- :date: 06-Jul-2020
+  :jira_id: '3580'
+  :description: |-
+    Added basic (mock) commenting to review tab.  <b>Branch 3580 only. Not in production yet.</b>
+    Partial work on APC review prototype, as at Sunday, 5 July, 9:35pm  <b>Branch 3580 only. Not in production yet.</b>
 - :date: 06-Jul-2020
   :release: true
 - :date: 05-Jul-2020

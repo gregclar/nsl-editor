@@ -1,0 +1,19 @@
+<h5>Add a review</h5>
+
+<% if @tree_version.published %>
+  <p>This version of taxonomy has been published so you cannot create a review.</p>
+<% else %>
+<%= render partial: 'taxonomy_reviews/form_create_from_tree_version' %>
+
+<br>
+<br>
+<h5>Notes</h5>
+<ul class="no-indent">
+  <li/>Adding a review entry lets you eventually invite comments from taxonomy reviewers on this version
+  <li/>This is the first step in setting up such a review process
+  <li/>More steps in that process will appear with the review entry if you add it
+  <li/>One of those steps is actually opening the version for comments - but adding the review entry doesn't do that straight away
+<ul>
+
+
+<% end %>

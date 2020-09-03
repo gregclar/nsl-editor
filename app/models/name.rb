@@ -138,8 +138,7 @@ class Name < ApplicationRecord
   end
 
   def orchids
-    if Rails.configuration.try(:look_for_orchids_table)
-     #Orchid.where(name_id: id)
+    if Rails.configuration.try(:orchids_aware)
       OrchidsName.where(name_id: id).collect {|orcn| orcn.orchid}
     else
       []

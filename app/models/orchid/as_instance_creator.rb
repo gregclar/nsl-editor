@@ -18,10 +18,13 @@
 
 #  Name services
 class Orchid::AsInstanceCreator
-  def initialize(orchid, reference)
+  def initialize(orchid, reference, authorising_user)
+    puts '='*70
     announce "Instance Creator for orchid: #{orchid.taxon} (#{orchid.record_type})"
+    announce "Authorising user: #{authorising_user}"
     @orchid = orchid
     @ref = reference
+    @authorising_user = authorising_user
   end
 
   def create_instance_for_preferred_matches
@@ -33,7 +36,7 @@ class Orchid::AsInstanceCreator
       if preferred_match.standalone_instance_created
       elsif preferred_match.standalone_instance_found
       else
-        records += preferred_match.create_instance(@ref)
+        records += preferred_match.create_instance(@ref, @authorising_user)
       end
     end
     records

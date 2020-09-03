@@ -1,10 +1,13 @@
 class ApplicationController < ActionController::Base
   protect_from_forgery with: :exception  # from v4, needed in v6?
+  STANDARD_MODE = "standard_mode"
+  TRM = TAXONOMIC_REVIEW_MODE = "taxonomic_review_mode"
   before_action :set_debug,
                 :start_timer,
                 :check_system_broadcast,
                 :authenticate,
-                :check_authorization
+                :check_authorization,
+                :set_mode
   around_action :user_tagged_logging
 
   rescue_from ActionController::InvalidAuthenticityToken, with: :show_login_page
@@ -41,6 +44,17 @@ class ApplicationController < ActionController::Base
     else
       continue_user_session
     end
+  end
+
+  # Continue in current mode from session
+  # Default to standard mode if session not set
+  # Force reviewers into review mode regardless of session
+  # Set booleans
+  def set_mode
+    @mode = session[:mode] ||= STANDARD_MODE
+    @mode = session[:mode] = TRM unless can? 'standard_mode', 'use'
+    @standard_mode = @mode == STANDARD_MODE
+    @taxonomic_review_mode = !@standard_mode
   end
 
   private
@@ -137,5 +151,3 @@ class ApplicationController < ActionController::Base
     end
   end
 end
-
-

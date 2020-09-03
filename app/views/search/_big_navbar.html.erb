@@ -32,7 +32,9 @@
     </div>
   </div>
   <% unless @no_advanced_search %>
+
     <ul id="search-results-tabset" class="nav nav-tabs low">
+
       <li role="presentation"
           class="<%= 'active' unless @search.blank? || @search.parsed_request.count || @search.empty || @search.error %>">
         <a id="search-results-tab-container-link"
@@ -42,6 +44,23 @@
            href="#">
           Results</a>
       </li>
+
+      <% if @taxonomic_review_mode %>
+
+      <li role="presentation"
+          class="">
+      <li role="presentation" class="">
+        <%= link_to "Taxonomy Review",
+                    taxonomy_review_index_path,
+                    class: "main-body-tab-link",
+                    remote: true,
+                    title: "Show taxonomy review information.  Click this tab to reload/refresh the information." %>
+      </li>
+
+      <% end %>
+
+      <% if @standard_mode %>
+
       <li role="presentation" class="">
         <a id="help-search-tab-container-link"
            class="main-body-tab-link search-non-default-tab-link"
@@ -81,6 +100,9 @@
                     remote: true,
                     title: "Show batch jobs information.  Click this tab to reload/refresh the information." %>
       </li>
+
+      <% end %>
+
     </ul>
   <% end %>
 </div>

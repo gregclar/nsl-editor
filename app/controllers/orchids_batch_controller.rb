@@ -19,31 +19,33 @@
 class OrchidsBatchController < ApplicationController
 
   def create_preferred_matches
-    records = Orchid.create_preferred_matches_for_accepted_taxa(params[:taxon_string])
+    prefix = 'create-preferred-matches-'
+    records = Orchid.create_preferred_matches_for_accepted_taxa(params[:taxon_string], @current_user.username)
     @message = "Created #{records} matches for #{params[:taxon_string]}"
-    render 'create'
+    render 'create', locals: {message_container_id_prefix: prefix }
   rescue => e
     logger.error("OrchidsBatchController#create_preferred_matches: #{e.to_s}")
     logger.error e.backtrace.join("\n")
     @message = e.to_s.sub(/uncaught throw/,'').gsub(/"/,'')
-    render 'error'
+    render 'error', locals: {message_container_id_prefix: prefix }
   end
 
   def create_instances_for_preferred_matches
-    logger.debug("#create_instances_for_preferred_matches start")
-    records = Orchid.create_instance_for_preferred_matches_for(params[:taxon_string])
-    @message = "Created #{records} instances for #{params[:taxon_string]}"
-    render 'create'
+    prefix = 'create-draft-instances-'
+    records = Orchid.create_instance_for_preferred_matches_for(params[:taxon_string], @current_user.username)
+    @message = "Created #{records} draft instances for #{params[:taxon_string]}"
+    render 'create', locals: {message_container_id_prefix: prefix }
   rescue => e
     logger.error("OrchidsBatchController#create_instances_for_preferred_matches: #{e.to_s}")
     logger.error e.backtrace.join("\n")
     @message = e.to_s.sub(/uncaught throw/,'').gsub(/"/,'')
-    render 'error'
+    render 'error', locals: {message_container_id_prefix: prefix }
   end
 
   def add_instances_to_draft_tree
+    prefix = 'add-instances-to-tree-'
     logger.debug("#add_instances_to_draft_tree start")
-    records, errors = Orchid.add_to_tree_for(@working_draft, params[:taxon_string])
+    records, errors = Orchid.add_to_tree_for(@working_draft, params[:taxon_string], @current_user.username)
     logger.debug("records added to tree: #{records}")
     @message = %Q(Added #{records} #{'instance'.pluralize(records)})
     @message += %Q( to tree "#{@working_draft.draft_name}" tree for orchids )
@@ -53,12 +55,12 @@ class OrchidsBatchController < ApplicationController
     else
       @errors = %Q(Errors not blank: #{errors.length})
     end
-    render 'create'
+    render 'create', locals: {message_container_id_prefix: prefix }
   rescue => e
     logger.error("OrchidsBatchController#add_instances_to_draft_tree: #{e.to_s}")
     logger.error e.backtrace.join("\n")
     @message = e.to_s.sub(/uncaught throw/,'').gsub(/"/,'')
-    render 'error'
+    render 'error', locals: {message_container_id_prefix: prefix }
   end
 
   private

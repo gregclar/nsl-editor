@@ -441,7 +441,7 @@ changeNameCategoryOnEditTab = (event,$this,tabWasClicked) ->
   event.preventDefault()
 
 window.loadDetails = (event,inFocus,tabWasClicked = false) ->
-  debug('window.loadDetails start')
+  debug('window.loadDetails starting')
   $('#search-result-details').show()
   $('#search-result-details').removeClass('hidden')
   record_type = $('tr.showing-details').attr('data-record-type')
@@ -451,9 +451,22 @@ window.loadDetails = (event,inFocus,tabWasClicked = false) ->
   row_type = $('tr.showing-details').attr('data-row-type')
   debug("row_type: #{row_type}") 
   tabIndex = $('.search-result.showing-details a[tabindex]').attr('tabindex')
-  debug("tabIndex: #{tabIndex}") 
-  url = inFocus.attr('data-tab-url').replace(/active_tab_goes_here/,currentActiveTab(record_type))
+  try
+    url = inFocus.attr('data-tab-url').replace(/active_tab_goes_here/,currentActiveTab(record_type))
+  catch err
+    debug(err)
+  debug("=====")
+  debug("record_type: #{record_type}") 
+  debug("inFocus.attr('id'): #{inFocus.attr('id')}")
+  debug("inFocus.attr('data-tab-url'): #{inFocus.attr('data-tab-url')}")
+  debug("=====")
   url = url+'?format=js&tabIndex='+tabIndex+'&row-type='+row_type+'&instance-type='+instance_type+'&rowType='+inFocus.attr('data-row-type')
+  url = url+'&tree-element-operation='+inFocus.attr('data-tree-element-operation') unless !inFocus.attr('data-tree-element-operation') 
+  url = url+'&tree-version-id='+inFocus.attr('data-tree-version-id') unless !inFocus.attr('data-tree-version-id') 
+  url = url+'&tree-version-element-element-link='+inFocus.attr('data-tree-version-element-element-link') unless !inFocus.attr('data-tree-version-element-element-link') 
+  url = url+'&tree-element-current-tve='+inFocus.attr('data-tree-element-current-tve') unless !inFocus.attr('data-tree-element-current-tve') 
+  url = url+'&tree-element-previous-tve='+inFocus.attr('data-tree-element-previous-tve') unless !inFocus.attr('data-tree-element-previous-tve') 
+  debug("url: #{url}")
   if tabWasClicked
     url = url+'&take_focus=true'
   else
@@ -518,7 +531,7 @@ treeRowClicked = (event,$this) ->
   event.preventDefault()
 
 searchResultFocus = (event,$this) ->
-  debug('searchResultFocus')
+  debug('searchResultFocus starting')
   unless $this.hasClass('showing-details')
     changeFocus(event,$this)
     $('#search-results.nothing-selected').removeClass('nothing-selected').addClass('something-selected')
@@ -532,7 +545,7 @@ changeTreeFocus = (event,inFocus) ->
   event.preventDefault()
 
 changeFocus = (event,inFocus) ->
-  debug("changeFocus: id: #{inFocus.attr('id')}; event target: #{event.target}")
+  debug("changeFocus starting: id: #{inFocus.attr('id')}; event target: #{event.target}")
   $('.showing-details').removeClass('showing-details')
   inFocus.addClass('showing-details')
   loadDetails(event,inFocus)

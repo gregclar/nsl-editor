@@ -1,5 +1,2 @@
 $('.message-container').html('');
-$('#search-result-details-error-message-container').html("<%= escape_javascript(@message) %>");
-
-
-
+$('#<%= message_container_id_prefix %>error-message-container').html("<%= escape_javascript(@message) %>");

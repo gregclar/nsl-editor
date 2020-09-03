@@ -1,5 +1,6 @@
 # frozen_string_literal: true
 
+require 'open-uri'
 
 #   Copyright 2015 Australian National Botanic Gardens
 #
@@ -34,6 +35,79 @@ class TreeElement < ActiveRecord::Base
                           class_name: "DistEntry",
                           join_table: "tree_element_distribution_entries",
                           foreign_key: "tree_element_id"
+
+  def display_as
+    'TreeElement'
+  end
+
+  def fresh?
+    false
+  end
+
+  def has_parent?
+    false
+  end
+
+  def record_type
+    'TreeElement'
+  end
+
+  # split the diff to get just the before part
+  def self.before_html(sr)
+    fred = self.diff_html(sr)
+    fred = fred.sub(/<div class="diffAfter">.*/m,'') unless fred.blank?
+    fred = 'nothing found' if fred.blank?
+    fred
+  end
+
+  # split the diff to get just the after part
+  def self.after_html(sr)
+    fred = self.diff_html(sr)
+    fred = fred.sub(/.*<div class="diffAfter">/m,'<div class="diffAfter">') unless fred.blank?
+    fred = 'nothing found' if fred.blank?
+    fred
+  end
+
+  def self.diff_html(sr)
+    if sr.operation == 'removed'
+      sr.synonyms_html
+    elsif sr.operation == 'added'
+      sr.synonyms_html
+    else
+      #e1 = "/tree/#{sr.tv_id}/#{sr.id}"
+      #e2 = "/tree/#{TreeVersion.find(sr.tv_id).previous_version_id}/#{derived_prev_element_id}"
+      e1= sr.previous_tve
+      e2= sr.current_tve
+      url = "#{Rails.configuration.services_clientside_root_url}tree-version/diff-element?e1=#{CGI.escape(e1)}&e2=#{CGI.escape(e2)}&embed=true"
+      open(url, "Accept" => "text/html") {|f| f.read }
+    end
+  #rescue => e
+  #  logger.error('TreeElement#diff_html')
+  #  logger.error(e)
+  #  'Failed to retrieve details'
+  end
+
+  def self.diff_html_old(sr)
+    if sr.operation == 'removed'
+      sr.synonyms_html
+    elsif sr.operation == 'added'
+      sr.synonyms_html
+    else
+      e1 = "/tree/#{sr.tv_id}/#{sr.id}"
+      derived_prev_element_id = TreeElement.find(sr.id).previous_element_id
+      e2 = "/tree/#{TreeVersion.find(sr.tv_id).previous_version_id}/#{derived_prev_element_id}"
+      url = "#{Rails.configuration.services_clientside_root_url}tree-version/diff-element?e1=#{CGI.escape(e1)}&e2=#{CGI.escape(e2)}&embed=true"
+      if derived_prev_element_id.blank?
+        "Could not identify previous element"
+      else
+        open(url, "Accept" => "text/html") {|f| f.read }
+      end
+    end
+  rescue => e
+    logger.error('TreeElement#diff_html')
+    logger.error(e)
+    'Failed to retrieve details'
+  end
 
   def self.dist_options
     DistEntry.all.sort do |a, b|

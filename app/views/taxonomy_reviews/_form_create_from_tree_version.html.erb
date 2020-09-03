@@ -1,0 +1,25 @@
+<%= form_for(@taxonomy_review, remote: true) do |f| %>
+
+
+    Name
+    <br>
+    <%= f.text_field :name,
+      class: "form-control",
+      required: true,
+      value: "Review of #{@taxonomy_review.tree_version.tree.name} #{@taxonomy_review.tree_version.draft_name}" ,
+      title: "Enter a short, descriptive name for the review",
+      tabindex: increment_tab_index %>
+
+    Use the default provided, alter the default, or make up your own.
+    <br>You can also edit the name after adding the review.
+    <br>
+    <br>
+    <%= f.hidden_field :tree_version_id %>
+    <%= f.submit id: "save-new-instance-btn", class: 'btn-primary', title: "Save changes", tabindex: increment_tab_index %>
+    <br>
+
+<% end %>
+<div id="search-result-details-info-message-container" class="message-container"></div>
+<div id="search-result-details-error-message-container" class="message-container"></div>
+ 
+
