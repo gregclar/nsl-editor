@@ -24,7 +24,8 @@ class Orchid::AsProgressReporter
   end
 
   def progress_report
-    { search: {search_string: @taxon_string},
+    { search: {search_string: @taxon_string,
+               reported_at: Time.now.strftime("%d-%b-%Y %H:%M:%S")},
       core: { accepted: accepteds,
               synonym: synonyms,
               misapplied: misapplieds,
