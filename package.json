@@ -13,7 +13,8 @@
     "jquery": "^3.4.1",
     "popper.js": "^1.16.0",
     "turbolinks": "^5.2.0",
-    "websocket-extensions": "^0.1.4"
+    "websocket-extensions": "^0.1.4",
+    "serialize-javascript": "^3.1.0"
   },
   "version": "0.1.0",
   "devDependencies": {
