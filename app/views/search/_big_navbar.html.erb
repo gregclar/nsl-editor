@@ -100,6 +100,17 @@
                     remote: true,
                     title: "Show batch jobs information.  Click this tab to reload/refresh the information." %>
       </li>
+      <% if Rails.configuration.orchids_aware && can?('orchids', 'update') %>
+
+        <li role="presentation" class="">
+          <%= link_to "Orchids",
+                      orchids_batch_index_path,
+                      class: "main-body-tab-link",
+                      remote: true,
+                      title: "Show orchids batch jobs.  Click this tab to reload/refresh the information." %>
+        </li>
+      <% end %>
+
 
       <% end %>
 

@@ -19,7 +19,6 @@
 #  Name services
 class Orchid::AsInstanceCreator
   def initialize(orchid, reference, authorising_user)
-    puts '='*70
     announce "Instance Creator for orchid: #{orchid.taxon} (#{orchid.record_type})"
     announce "Authorising user: #{authorising_user}"
     @orchid = orchid
@@ -48,7 +47,7 @@ class Orchid::AsInstanceCreator
     elsif @orchid.parent.try('exclude_from_further_processing?')
       return true
     elsif @orchid.hybrid_cross?
-      debug("stop_everything?  Orchid is a hybrid cross - not ready to process these.")
+      debug("stop_everything?  Orchid is a hybrid cross - not going to process these.")
       return true
     end
     false

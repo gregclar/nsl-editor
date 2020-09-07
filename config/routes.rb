@@ -213,6 +213,12 @@ Rails.application.routes.draw do
         as: "add_instances_to_draft_tree",
         to: "orchids_batch#add_instances_to_draft_tree", via: :post
 
+  match "orchids_batch_index", as: "orchids_batch_index",
+        to: "orchids_batch#index", via: :get
+
+  match "orchids/batch/progress", as: "orchids_batch_progress",
+        to: "orchids_batch#progress", via: [:get, :post]
+
   match "trees/:id/tab/:tab", as: "tree_tab", to: "trees#tab", via: :get
 
   resources :tree_versions, only: [:new, :create, :update, :destroy]

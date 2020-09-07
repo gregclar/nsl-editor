@@ -1,0 +1,8 @@
+
+table.orchids.progress td.numeric {
+  text-align: right;
+}
+
+table.orchids.progress td {
+  padding: 0 0.5em 0 0.5em;
+}

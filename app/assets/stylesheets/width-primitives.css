@@ -171,6 +171,10 @@
 .width-30em { width: 30em; }
 .width-40em { width: 40em; }
 .width-50em { width: 50em; }
+.width-52em { width: 52em; }
+.width-54em { width: 54em; }
+.width-56em { width: 56em; }
+.width-56-4em { width: 56.4em; }
 
 .max-width-1em { max-width: 1em; }
 .max-width-2em { max-width: 2em; }
@@ -205,4 +209,5 @@
 .max-width-40em { max-width: 40em; }
 .max-width-50em { max-width: 50em; }
 
+.min-width-10em { min-width: 10em; }
 .min-width-20em { min-width: 20em; }

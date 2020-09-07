@@ -1,13 +1,15 @@
 <% increment_tab_index(0) %>
-<h4>Batch</h4>
-<h5>Notes for these batch jobs</h5>
+<h4>Process</h4>
+<h5>Notes</h5>
 <ul>
-  <li>They apply only to accepted names. (Reason: synonyms can be spread far and wide in the raw orchid data, resulting in strange and unexpected matches and even odder errors.)
-  <li>You might need to add wildcards to the string to match a wider group e.g. to match all the species in a genus use a trailing wildcard.
-  <li>In fact, you can enter your own text string to apply the batch job from this tab.
-  <li>Associated synonyms are included in the processing.
-  <li>Re-applying processing has no effect. e.g. trying to create a preferred match where one already exists makes no change
-  <li>Record information displayed on the LHS is not auto updated after a batch job - you need to requery to see any changes.
+  <li/>Same processing as the Orchids tab, but,
+  <li/>the Orchid taxon name is entered automatically, and, 
+  <li/>the processing summary isn't here.
+  <li/>Available on <q>Accepted</q> orchid taxa only
+  <li/>Attached synonyms <b>are</b> included in the processing with the accepted taxon
+  <li/><b>Not</b> wildcarded, but you can add wildcards
+  <li/>Hitting buttons again and again does no harm
+  <li/>Re-query LHS to refresh the display
 </ul>
 
 <% if @orchid.accepted? %>
@@ -62,7 +64,7 @@
 
 <% end %>
 <div id="info-message-container" class="message-container"></div>
-<div id="error-message-container" class="error-container message-container"></div>
+<div id="error-message-container" class="message-container"></div>
 
 <% if @take_focus %>
 <script>
