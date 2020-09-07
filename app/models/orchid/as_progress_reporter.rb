@@ -170,26 +170,6 @@ class Orchid::AsProgressReporter
 
   # Note: the name_id column is merely an ugly hack to get the count(*) value.
   # It is _not_ the name_id
-  def xin_taxonomy
-    sql = "select t.draft_name, count(*) name_id "
-    sql += " from orchids_names orn "
-    sql += " join orchids o "
-    sql += " on o.id = orn.orchid_id "
-    sql += " join tree_vw t "
-    sql += " on orn.standalone_instance_id = t.instance_id "
-    sql += " where lower(o.taxon) like ? "
-    sql += " group by t.draft_name, published, case o.record_type when 'misapplied' then 3 when 'synonym' then 2 when 'accepted' then 1 else 99 end "
-    sql += " order by case o.record_type when 'misapplied' then 3 when 'synonym' then 2 when 'accepted' then 1 else 99 end, 2 "
-    records_array = TreeVw.find_by_sql([sql, @taxon_string])
-    h = {}
-    records_array.each do |rec|
-      h[rec[:draft_name]] = rec[:name_id]
-    end
-    h
-  end
-
-  # Note: the name_id column is merely an ugly hack to get the count(*) value.
-  # It is _not_ the name_id
   def in_taxonomy
     sql = "select t.draft_name, count(*) name_id "
     sql += " from orchids_names orn "
@@ -200,9 +180,9 @@ class Orchid::AsProgressReporter
     sql += " where lower(o.taxon) like ? "
     sql += " group by t.draft_name, published"
     records_array = TreeVw.find_by_sql([sql, @taxon_string])
-    h = {}
+    h = {taxonomy_records: records_array.size }
     records_array.each do |rec|
-      h[rec[:draft_name]] = rec[:name_id]
+      h["#{rec[:draft_name]}"] = rec[:name_id]  # name_id is a column I'm using for the count
     end
     h
   end
