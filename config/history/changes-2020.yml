@@ -1,4 +1,8 @@
 - :date: 08-Sep-2020
+  :jira_id: '3660'
+  :description: |-
+    Orchids: first cut of the orchid processing log table, with queries.
+- :date: 08-Sep-2020
   :jira_id: '3662'
   :description: |-
     Allow search result instance records to be seen in full.

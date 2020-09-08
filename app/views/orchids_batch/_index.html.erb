@@ -15,10 +15,12 @@
 but in many cases it makes sense to push batches of records through the process.</p>
 
 <h5>Enter a taxon string:</h5>
+<%= session[:taxon_string] %>
+<br>
 
 <%= form_tag({controller: "orchids_batch", action: "progress"}, method: "post", remote: true) do %>
   <div class="width-56-4em">
-  <input name="taxon_string" id="taxon-string" type="text" class="form-control" required title="taxon string for batch" />
+    <input name="taxon_string" id="taxon-string" type="text" value="<%= session[:taxon_string] %>" class="form-control" required title="taxon string for batch" />
   </div>
   <input name="gui_submit_place" id="gui-submit-place" type="hidden" title="Where this form is, so we can display result messages in the right place" value="global-tab" />
   <input id="progress-submit" name="submit" type="submit" value="Show Status" class="btn btn-primary width-9em" title="Show information about processing so far" />

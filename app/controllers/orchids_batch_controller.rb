@@ -22,6 +22,7 @@ class OrchidsBatchController < ApplicationController
   end
 
   def progress
+    remember_taxon_string
     case params[:submit]
     when 'Create Preferred Matches'
       create_preferred_matches
@@ -33,6 +34,10 @@ class OrchidsBatchController < ApplicationController
       show_progress
       render 'progress'
     end
+  end
+
+  def remember_taxon_string
+    session[:taxon_string] = params[:taxon_string] unless params[:taxon_string].blank?
   end
 
   def show_progress

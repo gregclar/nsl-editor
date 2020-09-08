@@ -111,6 +111,12 @@ class Orchid::AsTreePlacer
         end
       end
     end
+  rescue => e
+    #Rails.logger.error("Error placing or replacing orchid on tree: #{e.class}")
+    Rails.logger.error("Error placing or replacing orchid on tree #{e.message}")
+    Rails.logger.error("Error placing or replacing orchid on tree #{e.methods.join(',')}")
+    log_to_table("Error placing or replacing on tree: #{@orchid.taxon}, id: #{@orchid.id}: #{e.message}", @authorising_user)
+    raise
   end
 
   def place_name(orchids_name)
@@ -124,6 +130,7 @@ class Orchid::AsTreePlacer
                                                version_id: @draft_tree.id)
     response = placement.place
     debug(json_result(response))
+    log_to_table("Place #{@orchid.taxon}, id: #{@orchid.id}", @authorising_user)
     orchids_name.drafted = true
     orchids_name.save!
     1
@@ -147,6 +154,7 @@ class Orchid::AsTreePlacer
                                                  profile: profile)
     debug('after call to Tree::Workspace::Replacement')
     response = replacement.replace
+    log_to_table("Replace #{@orchid.taxon}, id: #{@orchid.id}", @authorising_user)
     debug('after call to replacement.replace')
     debug(json_result(response))
     orchids_name.drafted = true
@@ -190,5 +198,11 @@ class Orchid::AsTreePlacer
 
   def debug(msg)
     Rails.logger.debug("Orchid::AsTreePlacer #{msg}")
+  end
+
+  def log_to_table(entry, user)
+    OrchidProcessingLog.log(entry, 'user')
+  rescue => e
+    Rails.logger.error("Couldn't log to table: #{e.to_s}")
   end
 end
