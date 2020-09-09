@@ -19,7 +19,6 @@
 #  Name services
 class Orchid::AsInstanceCreator
   def initialize(orchid, reference, authorising_user)
-    puts '='*70
     announce "Instance Creator for orchid: #{orchid.taxon} (#{orchid.record_type})"
     announce "Authorising user: #{authorising_user}"
     @orchid = orchid
@@ -36,10 +35,17 @@ class Orchid::AsInstanceCreator
       if preferred_match.standalone_instance_created
       elsif preferred_match.standalone_instance_found
       else
+        log_to_table("Create instance for orchid #{@orchid.taxon}", @authorising_user)
         records += preferred_match.create_instance(@ref, @authorising_user)
       end
     end
     records
+  end
+
+  def log_to_table(entry, user)
+    OrchidProcessingLog.log(entry, user)
+  rescue => e
+    Rails.logger.error("Couldn't log to table: #{e.to_s}")
   end
 
   def stop_everything?
@@ -48,7 +54,7 @@ class Orchid::AsInstanceCreator
     elsif @orchid.parent.try('exclude_from_further_processing?')
       return true
     elsif @orchid.hybrid_cross?
-      debug("stop_everything?  Orchid is a hybrid cross - not ready to process these.")
+      debug("stop_everything?  Orchid is a hybrid cross - not going to process these.")
       return true
     end
     false

@@ -1,0 +1,7 @@
+
+
+<% @progress.each do | key, value | %> 
+  <%= "<h5>#{key.to_s.gsub(/_/,' ').capitalize}</h5>".html_safe %>
+  <%= render partial: 'progress_table', locals: { a_hash: value } %>
+<% end %>
+

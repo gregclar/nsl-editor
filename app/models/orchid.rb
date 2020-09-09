@@ -221,6 +221,15 @@ class Orchid < ActiveRecord::Base
     doubtful == true
   end
 
+  # This search emulates the default search for Orchids, the 
+  # taxon-string: search.
+  def self.taxon_string_search(taxon_string)
+    ts = taxon_string.downcase.gsub(/\*/,'%')
+    Orchid.where([ "((lower(taxon) like ? or lower(taxon) like 'x '||? or lower(taxon) like '('||?) and record_type = 'accepted' and not doubtful) or (parent_id in (select id from orchids where (lower(taxon) like ? or lower(taxon) like 'x '||? or lower(taxon) like '('||?) and record_type = 'accepted' and not doubtful))",
+                   ts, ts, ts, ts, ts, ts])
+  end
+
+
   def create_preferred_match(authorising_user)
     AsNameMatcher.new(self, authorising_user).find_or_create_preferred_match
   end
@@ -242,13 +251,8 @@ class Orchid < ActiveRecord::Base
   def self.create_preferred_matches_for_accepted_taxa(taxon_s, authorising_user)
     debug("create_preferred_matches_for_accepted_taxa matching #{taxon_s}")
     records = 0
-    self.where(record_type: 'accepted')
-        .where(["taxon like ?", taxon_s.gsub(/\*/,'%')])
-        .order(:seq).each do |match|
+    Orchid.taxon_string_search(taxon_s).each do |match|
       records += match.create_preferred_match(authorising_user)
-      match.children.each do |child|
-        records += child.create_preferred_match(authorising_user)
-      end
     end
     records
   end
@@ -257,12 +261,8 @@ class Orchid < ActiveRecord::Base
     debug('create_instance_for_preferred_matches_for')
     records = 0
     @ref = Reference.find(REF_ID)
-    self.where(["taxon like ?", taxon_s.gsub(/\*/,'%')])
-        .where(record_type: 'accepted').order(:id).each do |match|
+    Orchid.taxon_string_search(taxon_s).order(:id).each do |match|
       records += match.create_instance_for_preferred_matches(authorising_user)
-      match.children.each do |child|
-        records += child.create_instance_for_preferred_matches(authorising_user)
-      end
     end
     records
   end
@@ -279,13 +279,14 @@ class Orchid < ActiveRecord::Base
   def self.add_to_tree_for(draft_tree, taxon_s, authorising_user)
     count = 0
     errors = ''
-    self.where(["taxon like ?", taxon_s]).where(record_type: 'accepted').order(:id).each do |match|
+    Orchid.taxon_string_search(taxon_s).where(record_type: 'accepted').order(:id).each do |match|
       placer = AsTreePlacer.new(draft_tree, match, authorising_user)
       count += placer.placed_count
       errors += placer.error + ';' unless placer.error.blank?
     end
     return count, errors
   end
+
 
   def isonym?
     return false if isonym.blank?

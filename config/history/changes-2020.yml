@@ -1,3 +1,25 @@
+- :date: 08-Sep-2020
+  :jira_id: '3663'
+  :description: |-
+    Parent name typeahead on the Tree tab works again.
+- :date: 08-Sep-2020
+  :jira_id: '3660'
+  :description: |-
+    Orchids: first cut of the orchid processing log table, with queries.
+- :date: 08-Sep-2020
+  :jira_id: '3662'
+  :description: |-
+    Allow search result instance records to be seen in full.
+- :date: 07-Sep-2020
+  :jira_id: '3660'
+  :description: |-
+    Orchids: the Orchids tab is now available and is the focus for bulk processing work.
+- :date: 07-Sep-2020
+  :jira_id: '3650'
+  :description: |-
+    Orchids: the prevent-further-bulk-processing flag now prevents bulk processing for name matching, creating instances, and putting on a draft tree.
+- :date: 04-Sep-2020
+  :release: true
 - :date: 31-Aug-2020
   :jira_id: '3656'
   :description: |-

@@ -532,7 +532,7 @@ treeRowClicked = (event,$this) ->
 
 searchResultFocus = (event,$this) ->
   debug('searchResultFocus starting')
-  unless $this.hasClass('showing-details')
+  unless $this.hasClass('showing-details') || $this.hasClass('show-no-details')
     changeFocus(event,$this)
     $('#search-results.nothing-selected').removeClass('nothing-selected').addClass('something-selected')
   event.preventDefault()

@@ -27,7 +27,8 @@ class Orchid::AsNameMatcher
   end
 
   def find_or_create_preferred_match
-    if @orchid.exclude_from_further_processing?
+    if @orchid.exclude_from_further_processing? || 
+       @orchid.parent.try('exclude_from_further_processing?')
       return 0
     elsif preferred_match?
       return 0
@@ -49,6 +50,7 @@ class Orchid::AsNameMatcher
 
   def make_preferred_match?
     debug "      Make preferred match for #{@orchid.id} #{@orchid.taxon} #{@orchid.record_type}"
+    log_to_table("Make preferred match for #{@orchid.id} #{@orchid.taxon} #{@orchid.record_type}", @authorising_user)
     if exactly_one_matching_name? &&
          matching_name_has_primary? &&
          matching_name_has_exactly_one_primary?
@@ -62,6 +64,12 @@ class Orchid::AsNameMatcher
     else
       false
     end
+  end
+
+  def log_to_table(entry, user)
+    OrchidProcessingLog.log(entry, user)
+  rescue => e
+    Rails.logger.error("Couldn't log to table: #{e.to_s}")
   end
 
   def exactly_one_matching_name?

@@ -1,0 +1,72 @@
+<div id="orchids-reports-inner" class="reports-inner">
+
+<% increment_tab_index(0) %>
+<h4>Loading Orchids Data into APNI and APC</h4>
+<h5>Steps</h5>
+<ol>
+  <li>Match a raw orchid with the correct APNI name.</li>
+  <li>Lock these matches in as <b>preferred matches</b>.</li>
+  <li>Identify an instance that documents the usage of the orchid for APC.</li>
+  <li>If no such instance exists, <b>create one</b>.</li>
+  <li><b>Add</b> instance to the draft taxonomy.</li>
+</ol>
+
+<p>You can work through these steps for each <q>accepted</q> raw orchid record,
+but in many cases it makes sense to push batches of records through the process.</p>
+
+<h5>Enter a taxon string:</h5>
+<%= session[:taxon_string] %>
+<br>
+
+<%= form_tag({controller: "orchids_batch", action: "progress"}, method: "post", remote: true) do %>
+  <div class="width-56-4em">
+    <input name="taxon_string" id="taxon-string" type="text" value="<%= session[:taxon_string] %>" class="form-control" required title="taxon string for batch" />
+  </div>
+  <input name="gui_submit_place" id="gui-submit-place" type="hidden" title="Where this form is, so we can display result messages in the right place" value="global-tab" />
+  <input id="progress-submit" name="submit" type="submit" value="Show Status" class="btn btn-primary width-9em" title="Show information about processing so far" />
+  <input id="create-matches-batch-submit" name="submit" type="submit" value="Create Preferred Matches" class="btn btn-primary width-15em" title="Create preferred matches" />
+  <input id="create-instances-batch-submit" name="submit" type="submit" value="Create Draft Instances" class="btn btn-primary width-15em" title="Create draft instances" />
+  <% if Rails.configuration.try('allow_orchid_tree_operations') %>
+    <% if @working_draft.nil? %>
+      <span>(Please choose a draft for taxonomy work)<span>
+    <% else %>
+      <input id="add-instances-to-draft-tree-batch-submit"
+             name="submit"
+             type="submit"
+             value="Add to draft tree"
+             class="btn btn-primary width-15em"
+             title="Add instance to the draft taxonomy" />
+    <% end %>
+  <% else %>
+    Tree operations not allowed by configuration
+  <% end %>
+
+<% end %>
+
+<div id="global-tab-orchid-batch-progress-info-message-container" class="message-container"></div>
+<div id="global-tab-orchid-batch-progress-error-message-container" class="error-container message-container"></div>
+<div id="global-tab-create-preferred-matches-info-message-container" class="message-container"></div>
+<div id="global-tab-create-preferred-matches-error-message-container" class="error-container message-container"></div>
+<div id="global-tab-create-draft-instances-info-message-container" class="message-container"></div>
+<div id="global-tab-create-draft-instances-error-message-container" class="error-container message-container"></div>
+<div id="global-tab-add-instances-to-tree-info-message-container" class="message-container"></div>
+<div id="global-tab-add-instances-to-tree-error-message-container" class="error-container message-container"></div>
+
+
+<div id="orchids-progress-container">
+</div>
+<%= divider %>
+
+<h5>Important</h5>
+
+<ul class="no-indent">
+  <li/>The buttons run the task on the taxon string you enter.
+  <li/>If the button's action can be done, the Editor/Services will do it and report the number of records changed.
+  <li/>If the action can be done only for some of the target records, the Editor/Services will do what's possible and report the number of records changed.
+  <li/>You may have to look at specific records to see why they aren't being changed or processed - the jobs here will not report individual problems.
+  <li/>Hitting buttons again and again or out of order does no harm
+  <li/>Attached synonyms <b>are</b> included in the processing with the accepted taxon
+  <li/><b>Not</b> wildcarded, but you can add wildcards
+
+</ul>
+

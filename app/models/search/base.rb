@@ -80,6 +80,7 @@ class Search::Base
       when /instance/ then Search::OnInstance::Base.new(@parsed_request)
       when /reference/ then Search::OnReference::Base.new(@parsed_request)
       when /orchids/ then Search::OnOrchids::Base.new(@parsed_request)
+      when /orchid.processing.log/ then Search::OnOrchidProcessingLogs::Base.new(@parsed_request)
       when /tree\z/ then Search::OnTree::Base.new(@parsed_request)
       when /tree_version\z/ then Search::OnTreeVersion::Base.new(@parsed_request)
       when /tree_version_element\z/ then Search::OnTreeVersionElement::Base.new(@parsed_request)

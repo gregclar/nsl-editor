@@ -75,7 +75,7 @@ gem "pg_search"
 
 gem "nokogiri", ">= 1.10.8"
 gem "rest-client"
-gem "kramdown"
+gem "kramdown", ">= 2.3.0"
 gem "exception_notification"
 gem "websocket-extensions", ">= 0.1.5"
 gem "rack", ">= 2.2.3"

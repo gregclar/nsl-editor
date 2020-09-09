@@ -18,8 +18,35 @@
 #
 class OrchidsBatchController < ApplicationController
 
+  def index
+  end
+
+  def progress
+    remember_taxon_string
+    case params[:submit]
+    when 'Create Preferred Matches'
+      create_preferred_matches
+    when 'Create Draft Instances'
+      create_instances_for_preferred_matches
+    when 'Add to draft tree'
+      add_instances_to_draft_tree
+    else 
+      show_progress
+      render 'progress'
+    end
+  end
+
+  def remember_taxon_string
+    session[:taxon_string] = params[:taxon_string] unless params[:taxon_string].blank?
+  end
+
+  def show_progress
+    @progress = Orchid::AsProgressReporter.new(params[:taxon_string]).progress_report
+  end
+  private :show_progress
+
   def create_preferred_matches
-    prefix = 'create-preferred-matches-'
+    prefix = the_prefix('create-preferred-matches-')
     records = Orchid.create_preferred_matches_for_accepted_taxa(params[:taxon_string], @current_user.username)
     @message = "Created #{records} matches for #{params[:taxon_string]}"
     render 'create', locals: {message_container_id_prefix: prefix }
@@ -31,7 +58,7 @@ class OrchidsBatchController < ApplicationController
   end
 
   def create_instances_for_preferred_matches
-    prefix = 'create-draft-instances-'
+    prefix = the_prefix('create-draft-instances-')
     records = Orchid.create_instance_for_preferred_matches_for(params[:taxon_string], @current_user.username)
     @message = "Created #{records} draft instances for #{params[:taxon_string]}"
     render 'create', locals: {message_container_id_prefix: prefix }
@@ -43,7 +70,7 @@ class OrchidsBatchController < ApplicationController
   end
 
   def add_instances_to_draft_tree
-    prefix = 'add-instances-to-tree-'
+    prefix = the_prefix('add-instances-to-tree-')
     logger.debug("#add_instances_to_draft_tree start")
     records, errors = Orchid.add_to_tree_for(@working_draft, params[:taxon_string], @current_user.username)
     logger.debug("records added to tree: #{records}")
@@ -67,10 +94,18 @@ class OrchidsBatchController < ApplicationController
 
   def orchid_batch_params
     return nil if params[:orchid_batch].blank?
-    params.require(:orchid_batch).permit(:taxon_string)
+    params.require(:orchid_batch).permit(:taxon_string, :gui_submit_place)
   end
 
   def debug(msg)
     logger.debug('OrchidsBatchController')
+  end
+
+  def the_prefix(str)
+    if params[:gui_submit_place].nil?
+      str
+    else
+      "#{params[:gui_submit_place]}-#{str}"
+    end
   end
 end

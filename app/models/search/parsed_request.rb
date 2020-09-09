@@ -62,6 +62,8 @@ class Search::ParsedRequest
     "ref" => "reference",
     "orchid" => "orchids",
     "orchids" => "orchids",
+    "orchid_processing_logs" => "orchid_processing_logs",
+    "orchid_processing_log" => "orchid_processing_logs",
     "tree" => "tree",
     "trees" => "tree",
     "tree_versions" => "tree_version",
