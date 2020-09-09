@@ -224,7 +224,7 @@ class Orchid < ActiveRecord::Base
   # This search emulates the default search for Orchids, the 
   # taxon-string: search.
   def self.taxon_string_search(taxon_string)
-    ts = taxon_string.gsub(/\*/,'%')
+    ts = taxon_string.downcase.gsub(/\*/,'%')
     Orchid.where([ "((lower(taxon) like ? or lower(taxon) like 'x '||? or lower(taxon) like '('||?) and record_type = 'accepted' and not doubtful) or (parent_id in (select id from orchids where (lower(taxon) like ? or lower(taxon) like 'x '||? or lower(taxon) like '('||?) and record_type = 'accepted' and not doubtful))",
                    ts, ts, ts, ts, ts, ts])
   end
