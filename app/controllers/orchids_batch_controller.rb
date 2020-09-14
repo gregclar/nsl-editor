@@ -72,22 +72,21 @@ class OrchidsBatchController < ApplicationController
   def add_instances_to_draft_tree
     prefix = the_prefix('add-instances-to-tree-')
     logger.debug("#add_instances_to_draft_tree start")
-    records, errors = Orchid.add_to_tree_for(@working_draft, params[:taxon_string], @current_user.username)
-    logger.debug("records added to tree: #{records}")
-    @message = %Q(Added #{records} #{'instance'.pluralize(records)})
-    @message += %Q( to tree "#{@working_draft.draft_name}" tree for orchids )
-    @message += %Q( matching "#{params[:taxon_string]}")
-    if errors.strip.blank?
-      @errors = nil
-    else
-      @errors = %Q(Errors not blank: #{errors.length})
-    end
+    placed_tally, error_tally, preflight_stop_tally = Orchid.add_to_tree_for(@working_draft, params[:taxon_string], @current_user.username)
+    logger.debug("records added to tree: #{placed_tally}")
+    message(placed_tally, error_tally, preflight_stop_tally)
     render 'create', locals: {message_container_id_prefix: prefix }
   rescue => e
     logger.error("OrchidsBatchController#add_instances_to_draft_tree: #{e.to_s}")
     logger.error e.backtrace.join("\n")
     @message = e.to_s.sub(/uncaught throw/,'').gsub(/"/,'')
     render 'error', locals: {message_container_id_prefix: prefix }
+  end
+
+  def message(placed_tally, error_tally, preflight_stop_tally)
+    @message = %Q(Added to tree: #{placed_tally}; )
+    @message += %Q(Errors: #{error_tally}; )
+    @message += %Q( Stopped pre-flight: #{preflight_stop_tally})
   end
 
   private

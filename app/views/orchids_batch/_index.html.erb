@@ -14,10 +14,9 @@
 <p>You can work through these steps for each <q>accepted</q> raw orchid record,
 but in many cases it makes sense to push batches of records through the process.</p>
 
-<h5>Enter a taxon string:</h5>
-<%= session[:taxon_string] %>
-<br>
+<%= link_to "See recent logs", search_path(query_string: "latest:",query_target: 'orchid_processing_logs'), title: "See logs", class: "with-underline" %> 
 
+<h5>Enter a taxon string:</h5>
 <%= form_tag({controller: "orchids_batch", action: "progress"}, method: "post", remote: true) do %>
   <div class="width-56-4em">
     <input name="taxon_string" id="taxon-string" type="text" value="<%= session[:taxon_string] %>" class="form-control" required title="taxon string for batch" />
@@ -52,7 +51,8 @@ but in many cases it makes sense to push batches of records through the process.
 <div id="global-tab-add-instances-to-tree-info-message-container" class="message-container"></div>
 <div id="global-tab-add-instances-to-tree-error-message-container" class="error-container message-container"></div>
 
-
+<%= link_to "[clear]", orchids_batch_clear_path, class:"hidden message-clearer with-underline", remote: true, title: "Clear the messages" %> 
+<br>
 <div id="orchids-progress-container">
 </div>
 <%= divider %>

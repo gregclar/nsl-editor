@@ -1,3 +1,7 @@
+- :date: 14-Sep-2020
+  :jira_id: '3660'
+  :description: |-
+    Orchids: improved process reporting on the orchids tab and better error messages in the logs.
 - :date: 10-Sep-2020
   :release: true
 - :date: 08-Sep-2020

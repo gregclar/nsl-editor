@@ -15,6 +15,7 @@
       tabindex="<%= increment_tab_index %>" 
       title="Taxonomy review record. Select to show details."
       id="<%= %Q(#{search_result.class}-#{search_result.id}) %>">
+      <%= search_result.log_entry.html_safe %>
       <%= render partial: 'application/search_results/link_texts/orchid_processing_log', locals: {search_result: search_result} %>
     </a>
   </td>

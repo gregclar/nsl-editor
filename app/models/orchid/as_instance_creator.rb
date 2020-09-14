@@ -16,18 +16,18 @@
 #   See the License for the specific language governing permissions and
 #   limitations under the License.
 
-#  Name services
+#   Create a draft instance for a raw orchid matched with a name record
 class Orchid::AsInstanceCreator
   def initialize(orchid, reference, authorising_user)
-    announce "Instance Creator for orchid: #{orchid.taxon} (#{orchid.record_type})"
-    announce "Authorising user: #{authorising_user}"
+    @tag = " for orchid: #{orchid.taxon} (#{orchid.record_type})"
+    debug("Instance Creator")
     @orchid = orchid
     @ref = reference
     @authorising_user = authorising_user
   end
 
   def create_instance_for_preferred_matches
-    debug("Orchid::AsInstanceCreator#create_instance_for_preferred_matches")
+    debug("#create_instance_for_preferred_matches")
     records = 0
     return 0 if stop_everything?
     @orchid.preferred_match.each do |preferred_match|
@@ -35,15 +35,15 @@ class Orchid::AsInstanceCreator
       if preferred_match.standalone_instance_created
       elsif preferred_match.standalone_instance_found
       else
-        log_to_table("Create instance for orchid #{@orchid.taxon}", @authorising_user)
+        log_to_table("Create instance for orchid")
         records += preferred_match.create_instance(@ref, @authorising_user)
       end
     end
     records
   end
 
-  def log_to_table(entry, user)
-    OrchidProcessingLog.log(entry, user)
+  def log_to_table(entry)
+    OrchidProcessingLog.log("#{entry} #{@tag}", @authorising_user)
   rescue => e
     Rails.logger.error("Couldn't log to table: #{e.to_s}")
   end
@@ -68,16 +68,11 @@ class Orchid::AsInstanceCreator
     msg.sub!(/uncaught throw /,'')
     msg.gsub!(/"/,'')
     msg.sub!(/^Failing/,'')
-    debug "record_failure Failure: #{msg}"
-  end
-
-  def announce(msg)
-    debug "="*(msg.length)
-    debug msg
-    debug "="*(msg.length)
+    Rails.logger.error("Orchid::AsInstanceCreator failure: #{msg}")
+    log_to_table("Orchid::AsInstanceCreator failure: #{msg}")
   end
 
   def debug(msg)
-    Rails.logger.debug("Orchid##{msg}")
+    Rails.logger.debug("Orchid::AsInstanceCreator #{msg} #{@tag}")
   end
 end

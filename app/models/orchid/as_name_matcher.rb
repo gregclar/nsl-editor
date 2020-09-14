@@ -16,14 +16,13 @@
 #   See the License for the specific language governing permissions and
 #   limitations under the License.
 
-#  Name services
+# Save a preferred matching name for a raw orchid record.
 class Orchid::AsNameMatcher
   def initialize(orchid, authorising_user)
-    puts '='*70
-    announce "Name matcher for orchid: #{orchid.taxon} (#{orchid.record_type})"
-    announce "Authorising user: #{authorising_user}"
+    debug("Name matcher for orchid: #{orchid.taxon} (#{orchid.record_type})")
     @orchid = orchid
     @authorising_user = authorising_user
+    @log_tag = " for #{@orchid.id} #{@orchid.taxon} #{@orchid.record_type}"
   end
 
   def find_or_create_preferred_match
@@ -44,45 +43,38 @@ class Orchid::AsNameMatcher
   end
 
   def preferred_match?
-    debug '      Look for an existing preferred match'
     return !@orchid.preferred_match.empty?
   end
 
   def make_preferred_match?
-    debug "      Make preferred match for #{@orchid.id} #{@orchid.taxon} #{@orchid.record_type}"
-    log_to_table("Make preferred match for #{@orchid.id} #{@orchid.taxon} #{@orchid.record_type}", @authorising_user)
     if exactly_one_matching_name? &&
          matching_name_has_primary? &&
          matching_name_has_exactly_one_primary?
-      pref = @orchid.orchids_name.new
-      pref.name_id = @orchid.matches.first.id
-      pref.instance_id = @orchid.matches.first.primary_instances.first.id
-      pref.relationship_instance_type_id = @orchid.riti
-      pref.created_by = pref.updated_by = "#{@authorising_user}"
-      pref.save!
+      create_match
       true
     else
       false
     end
   end
 
-  def log_to_table(entry, user)
-    OrchidProcessingLog.log(entry, user)
+  def create_match
+    log_to_table("Make preferred match")
+    pref = @orchid.orchids_name.new
+    pref.name_id = @orchid.matches.first.id
+    pref.instance_id = @orchid.matches.first.primary_instances.first.id
+    pref.relationship_instance_type_id = @orchid.riti
+    pref.created_by = pref.updated_by = "#{@authorising_user}"
+    pref.save!
+  end
+
+  def log_to_table(entry)
+    OrchidProcessingLog.log("#{entry} #{@log_tag}", @authorising_user)
   rescue => e
     Rails.logger.error("Couldn't log to table: #{e.to_s}")
   end
 
   def exactly_one_matching_name?
-    case @orchid.matches.size
-    when 0
-      puts '        No matches!'
-      return false
-    when 1
-      return true
-    else
-      puts '        too many matches'
-      return false
-    end
+    @orchid.matches.size == 1
   end
 
   def matching_name_has_primary?
@@ -106,13 +98,7 @@ class Orchid::AsNameMatcher
     msg.sub!(/uncaught throw /,'')
     msg.gsub!(/"/,'')
     msg.sub!(/^Failing/,'')
-    debug "Failure: #{msg}"
-  end
-
-  def announce(msg)
-    debug "="*(msg.length)
-    debug msg
-    debug "="*(msg.length)
+    Rails.logger.error("Failure: #{msg}")
   end
 
   def debug(msg)

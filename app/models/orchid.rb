@@ -277,14 +277,16 @@ class Orchid < ActiveRecord::Base
 
   # check for preferred name
   def self.add_to_tree_for(draft_tree, taxon_s, authorising_user)
-    count = 0
-    errors = ''
+    placed_tally = 0
+    error_tally = 0
+    preflight_stop_tally = 0
     Orchid.taxon_string_search(taxon_s).where(record_type: 'accepted').order(:id).each do |match|
       placer = AsTreePlacer.new(draft_tree, match, authorising_user)
-      count += placer.placed_count
-      errors += placer.error + ';' unless placer.error.blank?
+      placed_tally += placer.placed_count
+      error_tally += placer.error_count
+      preflight_stop_tally += placer.preflight_stop_count
     end
-    return count, errors
+    return placed_tally, error_tally, preflight_stop_tally
   end
 
 

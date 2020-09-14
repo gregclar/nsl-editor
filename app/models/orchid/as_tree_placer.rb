@@ -19,47 +19,61 @@
 
 #  We need to place Orchids on a draft tree.
 class Orchid::AsTreePlacer
-  attr_reader :status, :error, :placed_count
+  attr_reader :placed_count, :error_count, :preflight_stop_count
   ERROR = 'error'
   def initialize(draft_tree, orchid, authorising_user)
     debug("Authorising user: #{authorising_user}")
     @draft_tree = draft_tree
     @draft_name = draft_tree.draft_name
-    @status = 'started'
     @orchid = orchid
     @authorising_user = authorising_user
     @placed_count = 0
-    @error = ''
+    @error_count = 0
+    @preflight_stop_count = 0
+    @preflight_failed = false
+    @stopped_at_preflight = 0
     preflight_checks
-    unless @status == ERROR
-      peek
-      @placed_count = place_or_replace
+    @placed_count = place_or_replace unless @preflight_failed
+  end
+
+  def json_error(err)
+    json = JSON.parse(err.http_body, object_class: OpenStruct)
+    if json&.error
+      json.error
+    else
+      json&.to_s || err.to_s
     end
+  rescue
+    err.to_s
   end
 
   def preflight_checks
     case 
     when @draft_tree.blank?
-      @status = ERROR
-      @error = "No such draft #{@draft_tree.draft_name}"
+      @preflight_failed = true
+      @preflight_error = "No such draft #{@draft_tree.draft_name}"
     when @orchid.preferred_match.blank?
-      @status = ERROR
-      @error = "No preferred matching name for #{@orchid.taxon}"
+      @preflight_failed = true
+      @preflight_error = "No preferred matching name for #{@orchid.taxon}"
     when @orchid.orchids_name.blank? || @orchid.orchids_name.first.standalone_instance_id.blank?
-      @status = ERROR
-      @error = "No instance identified for #{@orchid.taxon}"
+      @preflight_failed = true
+      @preflight_error = "No instance identified for #{@orchid.taxon}"
     when @orchid.orchids_name.first.drafted?
-      @status = ERROR
-      @error = "Stopping because #{@orchid.taxon} is already on the draft tree"
+      @preflight_failed = true
+      @preflight_error = "Stopping because #{@orchid.taxon} is already on the draft tree"
     when @orchid.exclude_from_further_processing?
-      @status = ERROR
-      @error = "#{@orchid.taxon} is excluded from further processing"
+      @preflight_failed = true
+      @preflight_error = "#{@orchid.taxon} is excluded from further processing"
     when @orchid.parent.try('exclude_from_further_processing?')
-      @status = ERROR
-      @error = "Parent of #{@orchid.taxon} is excluded from further processing"
+      @preflight_failed = true
+      @preflight_error = "Parent of #{@orchid.taxon} is excluded from further processing"
     when @orchid.hybrid_cross?
-      @status = ERROR
-      @error = "#{@orchid.taxon} is a hybrid cross - not ready to process these"
+      @preflight_failed = true
+      @preflight_error = "#{@orchid.taxon} is a hybrid cross - not ready to process these"
+    end
+    if @preflight_failed
+      @preflight_stop_count = 1
+      log_to_table("Pre-flight check prevented placing/replacing on tree: #{@orchid.taxon}, id: #{@orchid.id}: #{@preflight_error}", @authorising_user)
     end
   end
 
@@ -85,15 +99,8 @@ class Orchid::AsTreePlacer
   def place_or_replace
     debug('place_or_replace')
     @orchid.orchids_name.each do |one_orchid_name|
-      debug("one_orchid_name: id #{one_orchid_name.id}")
-      debug("one_orchid_name.standalone_instance: #{one_orchid_name.standalone_instance}")
-      debug("one_orchid_name.standalone_instance.name: #{one_orchid_name.standalone_instance.name}")
-      debug("one_orchid_name.standalone_instance.name.simple_name: #{one_orchid_name.standalone_instance.name.simple_name}")
-      debug("@draft_tree.id: #{@draft_tree.inspect}")
-      debug("one_orchid_name.standalone_instance.name.draft_instance_id(@draft_tree): #{one_orchid_name.standalone_instance.name.draft_instance_id(@draft_tree)}")
-      debug "name: #{one_orchid_name.name_id}; instance: #{one_orchid_name.standalone_instance_id}"
       if one_orchid_name.standalone_instance_id.blank?
-        debug "No instance identified, therefore cannot place this on the APC Tree."
+        debug "No instance, therefore cannot place this on the APC Tree."
       elsif one_orchid_name.drafted?
         debug "Stopping because already drafted."
       else
@@ -111,25 +118,29 @@ class Orchid::AsTreePlacer
         end
       end
     end
+  rescue RestClient::ExceptionWithResponse => e
+    @placed_count = 0
+    @error_count = 1
+    @error = json_error(e)
+    log_to_table("Error placing or replacing on tree: #{@orchid.taxon}, id: #{@orchid.id}: #{@error}", @authorising_user)
+    0
   rescue => e
-    #Rails.logger.error("Error placing or replacing orchid on tree: #{e.class}")
-    Rails.logger.error("Error placing or replacing orchid on tree #{e.message}")
-    Rails.logger.error("Error placing or replacing orchid on tree #{e.methods.join(',')}")
-    log_to_table("Error placing or replacing on tree: #{@orchid.taxon}, id: #{@orchid.id}: #{e.message}", @authorising_user)
+    Rails.logger.error("place_or_replace: Error placing or replacing orchid on tree #{e.message}")
+    Rails.logger.error("place_or_replace: Error placing or replacing orchid on tree #{e.methods.join(',')}")
+    log_to_table("Error placing/replacing on tree: #{@orchid.taxon}, id: #{@orchid.id}: #{e.message}", @authorising_user)
     raise
   end
 
   def place_name(orchids_name)
     tree_version = @draft_tree
-    debug("parent_element_link: #{parent_tve(orchids_name).element_link}")
+    debug("parent_element_link: #{parent_tve(orchids_name).element_link}") unless parent_tve(orchids_name).nil?
     placement = Tree::Workspace::Placement.new(username: @authorising_user,
-                                               parent_element_link: parent_tve(orchids_name).element_link,
+                                               parent_element_link: parent_tve(orchids_name).try('element_link'),
                                                instance_id: orchids_name.standalone_instance_id,
                                                excluded: false,
                                                profile: profile,
                                                version_id: @draft_tree.id)
-    response = placement.place
-    debug(json_result(response))
+    @response = placement.place
     log_to_table("Place #{@orchid.taxon}, id: #{@orchid.id}", @authorising_user)
     orchids_name.drafted = true
     orchids_name.save!
@@ -137,26 +148,15 @@ class Orchid::AsTreePlacer
   end
 
   def replace_name(orchids_name)
-    debug("replace_name #{orchids_name.name.full_name}")
-    debug("parent_element_link: #{parent_tve(orchids_name).element_link}")
     parent_tve = parent_tve(orchids_name)
-    debug("parent_tve.element_link: #{parent_tve.element_link}")
-    debug("parent_tve.name_path: #{parent_tve.name_path}")
-    debug("parent_tve.tree_version.draft_name: #{parent_tve.tree_version.draft_name}")
-    debug("@tree_version_element: #{@tree_version_element}")
-    debug("@draft_tree.name_in_version(orchids_name.name): #{@draft_tree.name_in_version(orchids_name.name)}")
-
     replacement = Tree::Workspace::Replacement.new(username: @authorising_user,
                                                  target: @tree_version_element,
                                                  parent: parent_tve(orchids_name),
                                                  instance_id: orchids_name.standalone_instance_id,
                                                  excluded: false,
                                                  profile: profile)
-    debug('after call to Tree::Workspace::Replacement')
-    response = replacement.replace
+    @response = replacement.replace
     log_to_table("Replace #{@orchid.taxon}, id: #{@orchid.id}", @authorising_user)
-    debug('after call to replacement.replace')
-    debug(json_result(response))
     orchids_name.drafted = true
     orchids_name.save!
     1
@@ -190,7 +190,6 @@ class Orchid::AsTreePlacer
                              updated_at: Time.now.utc.iso8601
                              }
     end
-    debug(hash.inspect)
     hash
   end
 
@@ -201,7 +200,7 @@ class Orchid::AsTreePlacer
   end
 
   def log_to_table(entry, user)
-    OrchidProcessingLog.log(entry, 'user')
+    OrchidProcessingLog.log(entry, user)
   rescue => e
     Rails.logger.error("Couldn't log to table: #{e.to_s}")
   end
