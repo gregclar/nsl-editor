@@ -35,7 +35,7 @@ class Orchid::AsInstanceCreator
       if preferred_match.standalone_instance_created
       elsif preferred_match.standalone_instance_found
       else
-        log_to_table("Create instance for orchid")
+        log_to_table("Create instance")
         records += preferred_match.create_instance(@ref, @authorising_user)
       end
     end

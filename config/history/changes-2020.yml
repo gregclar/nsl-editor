@@ -1,7 +1,7 @@
 - :date: 17-Sep-2020
   :jira_id: '3660'
   :description: |-
-    Orchids fixes after review: bulk matches are not made for misapplied records
+    Orchids fixes after review: bulk matches are not made for misapplied records; log text "for orchids" corrected; query example text corrected
 - :date: 16-Sep-2020
   :jira_id: '3660'
   :description: |-
