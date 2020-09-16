@@ -29,6 +29,8 @@ class Orchid::AsNameMatcher
     if @orchid.exclude_from_further_processing? || 
        @orchid.parent.try('exclude_from_further_processing?')
       return 0
+    elsif @orchid.misapplied?
+      return 0
     elsif preferred_match?
       return 0
     elsif make_preferred_match?
