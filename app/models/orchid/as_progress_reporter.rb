@@ -60,19 +60,19 @@ class Orchid::AsProgressReporter
   end
 
   def accepteds
-    core_search.where("record_type = 'accepted'") .count
+    core_search.where("record_type = 'accepted'").count
   end
 
   def synonyms
-    core_search.where("record_type = 'synonym'") .count
+    core_search.where("record_type = 'synonym'").count
   end
 
   def misapplieds
-    core_search.where("record_type = 'misapplied'") .count
+    core_search.where("record_type = 'misapplied'").count
   end
 
   def hybrid_crosses
-    core_search.where("record_type = 'hybrid_cross'") .count
+    core_search.where("record_type = 'hybrid_cross'").count
   end
 
   def further_processing_prevented
@@ -81,15 +81,15 @@ class Orchid::AsProgressReporter
   end
 
   def accepted_with_preferred_match
-    Orchid.where("lower(taxon) like '#{@taxon_string}' and record_type = 'accepted'")
-          .joins(:orchids_name)
-          .count
+    core_search.where("record_type = 'accepted'")
+               .joins(:orchids_name)
+               .count
   end
 
   def accepted_without_preferred_match
     core_search.where("record_type = 'accepted'")
-          .where.not("exists (select null from orchids_names orn where orchids.id = orn.orchid_id)")
-          .count
+               .where.not("exists (select null from orchids_names orn where orchids.id = orn.orchid_id)")
+               .count
   end
 
   def synonym_with_preferred_match
@@ -180,7 +180,8 @@ class Orchid::AsProgressReporter
     sql += " where lower(o.taxon) like ? "
     sql += " group by t.draft_name, published"
     records_array = TreeVw.find_by_sql([sql, @taxon_string])
-    h = {taxonomy_records: records_array.size }
+    h = Hash.new
+    h[:taxonomy_records] = 0 if records_array.empty?
     records_array.each do |rec|
       h["#{rec[:draft_name]}"] = rec[:name_id]  # name_id is a column I'm using for the count
     end
