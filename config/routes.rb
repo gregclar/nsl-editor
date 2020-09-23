@@ -219,6 +219,8 @@ Rails.application.routes.draw do
   match "orchids/batch/progress", as: "orchids_batch_progress",
         to: "orchids_batch#progress", via: [:get, :post]
 
+  match "orchids/batch/clear", as: "orchids_batch_clear", to: "orchids_batch#clear", via: :get
+
   match "trees/:id/tab/:tab", as: "tree_tab", to: "trees#tab", via: :get
 
   resources :tree_versions, only: [:new, :create, :update, :destroy]

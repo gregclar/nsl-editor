@@ -311,4 +311,7 @@ ul.no-indent {
   list-style-position: inside;
 }
 
+a.with-underline {
+  text-decoration: underline;
+}
 

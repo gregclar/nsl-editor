@@ -1,3 +1,17 @@
+- :date: 17-Sep-2020
+  :jira_id: '3660'
+  :description: |-
+    Orchids fixes after review: bulk matches are not made for misapplied records; log text "for orchids" corrected; query example text corrected
+- :date: 16-Sep-2020
+  :jira_id: '3660'
+  :description: |-
+    Orchids fixes after review: dummy taxonomy count removed, link to orchid search added, accepted records with match count corrected
+- :date: 14-Sep-2020
+  :jira_id: '3660'
+  :description: |-
+    Orchids: improved process reporting on the orchids tab and better error messages in the logs.
+- :date: 10-Sep-2020
+  :release: true
 - :date: 08-Sep-2020
   :jira_id: '3663'
   :description: |-
