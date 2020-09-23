@@ -1,4 +1,8 @@
 - :date: 23-Sep-2020
+  :jira_id: '3612'
+  :description: |-
+    Taxonomy Review: more work including the Taxonomy tab for taxonomy builders, a workflow for creating reviews and review periods
+- :date: 23-Sep-2020
   :release: true
 - :date: 17-Sep-2020
   :jira_id: '3660'

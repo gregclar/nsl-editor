@@ -1,6 +1,6 @@
 <% increment_tab_index(0) %>
 
-<%= @tree_element.simple_name %> <span class="pull-right">simple_name</span> <br>
+<%= @tree_element.simple_name %> <span class="pull-right">taxon name</span> <br>
 <%#= @tree_element.display_html %>
 <%#= @tree_element.instance_id %> <!-- <span class="pull-right">instance_id</span> <br> -->
 <%#= @tree_element.instance_link %> <!-- <span class="pull-right">instance_link</span> <br> -->
@@ -12,9 +12,15 @@
 <% if params['tree-version-id'].blank? %>
   No tree version id in the params. (todo)
 <% else %>
-<%= link_to("#{TreeVersion.find(params['tree-version-id']).draft_name}", search_path(query_string: "id:#{params['tree-version-id']}",query_target: 'tree_version'),
-            title: 'Retrieve the tree version',class: 'tree') %> 
-<span class="pull-right">tree version</span> <br>
+  <%= link_to("#{TreeVersion.find(params['tree-version-id']).tree.name} #{TreeVersion.find(params['tree-version-id']).draft_name}",
+               search_path(query_string: "id:#{params['tree-version-id']}",
+                           query_target: 'tree_version'),
+               title: 'Retrieve the taxonomy',
+               class: 'tree') %> 
+          
+<span class="pull-right">taxonomy</span> <br>
+<%= params["tree-element-operation"].capitalize %> <span class="pull-right">operation</span> <br>
+          
 <% end %>
 
 <%= divider %>
@@ -25,6 +31,7 @@
 <%#= @tree_element.source_element_link %> <!-- <span class="pull-right">source_element_link</span> <br> -->
 <%#= @tree_element.source_shard %> <!-- <span class="pull-right">source_shard</span> <br> -->
 <%#= @tree_element.synonyms %>
+<br>
 <% case params["tree-element-operation"] %>
 <% when blank? %>
   No operation.
@@ -39,8 +46,7 @@
         <%= value["value"] %> <span class="pull-right"><%= key %></span> <br>
       <% end %>
     <% end %>
-
-
+<% when 'added' %>
 <% else %>
   <div id="diff_element" class="tree-container wrap">
     <% search_result_reconstructed = OpenStruct.new({ operation: params["tree-element-operation"],
@@ -50,8 +56,8 @@
                                                       previous_tve: params["tree-element-previous-tve"]
     }) %>
     <%= TreeElement.before_html(search_result_reconstructed).html_safe %>
+    <%= divider %>
   </div>
 <% end %>
-<%= divider %>
 <%= meaningful_update(@tree_element).html_safe %>
 <%= divider %>

@@ -589,8 +589,8 @@ and (max-device-width : 1024px) {
     width: 36%;
   }
   div#search-result-details.orchids {
-    width: 55%;
-    max-width: 900px;
+    width: 50%;
+    max-width: 800px;
   }
   div#search-result-details.changed_tree_elements {
     width: 45%;
@@ -637,8 +637,8 @@ and (max-device-width : 1024px) {
     width: 40%;
   }
   div#search-result-details.orchids {
-    width: 55%;
-    max-width: 900px;
+    width: 50%;
+    max-width: 800px;
   }
   div#search-result-details.changed_tree_elements {
     width: 55%;
@@ -662,8 +662,8 @@ and (max-device-width : 1024px) {
     width: 36%;
   }
   div#search-result-details.orchids {
-    width: 55%;
-    max-width: 900px;
+    width: 50%;
+    max-width: 800px;
   }
   div#search-result-details.changed_tree_elements {
     width: 45%;
@@ -686,8 +686,8 @@ and (max-device-width : 1024px) {
     max-width: 800px;
   }
   div#search-result-details.orchids {
-    width: 55%;
-    max-width: 900px;
+    width: 50%;
+    max-width: 800px;
   }
   div#search-result-details.changed_tree_elements {
     width: 45%;

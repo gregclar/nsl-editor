@@ -1,0 +1,20 @@
+<h3>Taxonomy Review</h3>
+
+<h4>Review Workflow</h4>
+<ol>
+  <li/>Find reviews on your list
+  <li/>Find past reviews
+</ol>
+
+<h4>Links</h4>
+<ul>
+  <li/> <%= link_to("Retrieve the accepted taxonomy",
+            search_path(query_string: 'accepted:', query_target: 'tree'),
+            title: "A link to a search that retrieves the accepted taxonomy") %>
+
+  <li/> <%= link_to("Retrieve all taxonomies",
+            search_path(query_string: '*', query_target: 'tree'),
+            title: "A link to a search that retrieves all taxonomies") %>
+
+  <li/> Reviews in progress
+</ul>
