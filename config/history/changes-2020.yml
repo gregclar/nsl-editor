@@ -1,3 +1,7 @@
+- :date: 21-Oct-2020
+  :jira_id: '3689'
+  :description: |-
+    Refreshing the constructed names of descendent names via the Name -> More -> Refresh tab now works again; also added name descendants-of-id query
 - :date: 23-Sep-2020
   :jira_id: '3612'
   :description: |-

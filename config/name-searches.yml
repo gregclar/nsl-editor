@@ -645,5 +645,24 @@ from comment where comment.name_id = name.id)"
    and npt.accepted_tree
    and t.tree_path != npt.tree_path || '/'||t.tree_element_id
    and npt.name_path != regexp_replace(t.name_path,'/[^/]*$','')  ) ) "
+'first-parent-descendants-of-id:':
+  :where_clause: " id in 
+(WITH RECURSIVE subordinates AS (
+	SELECT
+		id
+	FROM
+		name
+	WHERE
+		id = ?
+	UNION
+		SELECT
+			e.id
+		FROM
+			name e
+		INNER JOIN subordinates s ON s.id = e.parent_id
+) SELECT
+	*
+FROM
+	subordinates)"
 
 

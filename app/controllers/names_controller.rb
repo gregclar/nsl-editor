@@ -188,10 +188,10 @@ class NamesController < ApplicationController
 
   def refresh_children
     if @name.combined_children.size > 50
-      NameChildrenRefresherJob.new.perform(@name.id, username)
+      NameChildrenRefresherJob.new.perform(@name.id)
       render "names/refresh_children/job_started.js"
     else
-      @total = NameChildrenRefresherJob.new.perform(@name.id, username)
+      @total = NameChildrenRefresherJob.new.perform(@name.id)
       render "names/refresh_children/ok.js"
     end
   rescue => e
