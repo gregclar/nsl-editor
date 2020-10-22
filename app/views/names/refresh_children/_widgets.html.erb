@@ -1,4 +1,3 @@
-<%= render 'names/details/children' %>
 
   <%= link_to("Refresh descendent names...",
               '#',
@@ -31,7 +30,7 @@
                hide_this_id: 'confirm-or-cancel-refresh-children-link-container'}) %>
 
     <div id="refresh-children-spinner" class="hidden" </div>
-    Refreshing <%= pluralize(@name.combined_children.size,'child') %>...    <i class="fa fa-spinner fa-spin"></i>
+    Refreshing...    <i class="fa fa-spinner fa-spin"></i>
     </div>
 
 
