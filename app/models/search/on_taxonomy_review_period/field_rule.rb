@@ -18,6 +18,7 @@
 #
 class Search::OnTaxonomyReviewPeriod::FieldRule
   RULES = {
+    "any:"                => { where_clause: ''},
     "id:"                 => { multiple_values: true,
                                where_clause: "id = ? ",
                                multiple_values_where_clause: " id in (?)" },

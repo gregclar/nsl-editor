@@ -20,7 +20,7 @@
 class Search::OnTaxonomyReviewPeriod::WhereClauses
   attr_reader :sql
 
-  DEFAULT_FIELD = "name:"
+  DEFAULT_FIELD = "any:"
 
   def initialize(parsed_request, incoming_sql)
     @parsed_request = parsed_request

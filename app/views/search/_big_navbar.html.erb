@@ -45,19 +45,6 @@
           Results</a>
       </li>
 
-      <% if @taxonomic_review_mode %>
-
-      <li role="presentation"
-          class="">
-      <li role="presentation" class="">
-        <%= link_to "Taxonomy Review",
-                    taxonomy_review_index_path,
-                    class: "main-body-tab-link",
-                    remote: true,
-                    title: "Show taxonomy review information.  Click this tab to reload/refresh the information." %>
-      </li>
-
-      <% end %>
 
       <% if @standard_mode %>
 
@@ -76,7 +63,7 @@
            href="#"
            data-target-element="#example-search-container"
            data-load-context=""
-        >Query Examples</a></li>
+        >Queries</a></li>
       <li role="presentation" class="">
         <%= link_to "Reports",
                     search_reports_path,
@@ -94,11 +81,11 @@
         </li>
       <% end %>
       <li role="presentation" class="">
-        <%= link_to "Batch",
+        <%= link_to "De-duplicate",
                     batch_index_path,
                     class: "main-body-tab-link",
                     remote: true,
-                    title: "Show batch jobs information.  Click this tab to reload/refresh the information." %>
+                    title: "De-duplicate names in bulk" %>
       </li>
       <% if Rails.configuration.try('orchids_aware') && can?('orchids', 'update') %>
 
@@ -107,10 +94,23 @@
                       orchids_batch_index_path,
                       class: "main-body-tab-link",
                       remote: true,
-                      title: "Show orchids batch jobs.  Click this tab to reload/refresh the information." %>
+                      title: "Show orchids bulk processing" %>
         </li>
       <% end %>
 
+
+      <% end %>
+     <% if @taxonomic_review_mode || ( can?("taxonomy_review", :edit) && Rails.configuration.try('taxonomic_review_aware') ) %>
+
+      <li role="presentation"
+          class="">
+      <li role="presentation" class="">
+        <%= link_to "Taxonomy",
+                    taxonomy_review_index_path,
+                    class: "main-body-tab-link",
+                    remote: true,
+                    title: "Show taxonomy and taxonomy review information" %>
+      </li>
 
       <% end %>
 

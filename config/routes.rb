@@ -92,7 +92,7 @@ Rails.application.routes.draw do
   match "name/refresh/children/:id",
         as: "refresh_children_name",
         to: "names#refresh_children",
-        via: :get
+        via: :post
   match "names/typeaheads/for_unpub_cit/index",
         as: "names_typeahead_for_unpub_cit",
         to: "names/typeaheads/for_unpub_cit#index",

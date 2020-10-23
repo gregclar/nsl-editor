@@ -51,6 +51,7 @@ class ApplicationController < ActionController::Base
   # Force reviewers into review mode regardless of session
   # Set booleans
   def set_mode
+    logger.debug("set_mode: session[:mode]: #{session[:mode]}")
     @mode = session[:mode] ||= STANDARD_MODE
     @mode = session[:mode] = TRM unless can? 'standard_mode', 'use'
     @standard_mode = @mode == STANDARD_MODE

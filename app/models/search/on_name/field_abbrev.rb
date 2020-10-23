@@ -30,6 +30,8 @@ class Search::OnName::FieldAbbrev
     "exact-comments:" => "comments-exact:",
     "exact-comment:" => "comments-exact:",
     "comment:" => "comments:",
+    "descendants-of-id:" => "first-parent-descendants-of-id:",
+    "descendents-of-id:" => "first-parent-descendants-of-id:",
     "exact-name-element:" => "name-element-exact:",
   }.freeze
 end

@@ -35,6 +35,8 @@ class Orchid::AsInstanceCreator
       if preferred_match.standalone_instance_created
       elsif preferred_match.standalone_instance_found
       else
+        # Todo: bug here: the action is logged even though the record create 
+        # might not happen - need to check create_instance returns 1, not 0
         log_to_table("Create instance")
         records += preferred_match.create_instance(@ref, @authorising_user)
       end
