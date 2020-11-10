@@ -1,3 +1,7 @@
+- :date: 10-Nov-2020
+  :jira_id: '2275'
+  :description: |-
+    Changed the Query Help for Name status by removing "Any status" from the drop-down list-of-values; also minor boilerplate comment changes.
 - :date: 23-Oct-2020
   :release: true
 - :date: 21-Oct-2020

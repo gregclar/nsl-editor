@@ -92,7 +92,7 @@ class NameStatus < ActiveRecord::Base
   def self.query_form_options
     all.ordered_by_name.collect do |n|
       [n.name, "status: #{n.name.downcase}"]
-    end.unshift(["any status", ""])
+    end
   end
 
   def self.scientific_options

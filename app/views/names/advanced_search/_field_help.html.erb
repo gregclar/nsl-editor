@@ -54,10 +54,11 @@
   <h5>Coded fields</h5>
 <table class="table table-striped">
   <tr><th>Field</th><th>Description</th><th>Values</th></tr>
+  <tr><td></td><td></td><td>(The lists below are for convenient viewing of values - selecting them doesn't add them to the search)</td></tr>
   <% [
-      {field_name: 'rank:', description: "name rank, allows comma-separated multiple values",partial: "name_ranks/list_for_search_help"},
-      {field_name: 'status:', description: "name status, allows comma-separated multiple values",partial: "name_statuses/list_for_search_help"},
-      {field_name: 'type:', description: "name type, allows comma-separated multiple values",partial: "name_types/list_for_search_help"}
+      {field_name: 'rank:', description: "name rank, allows comma-separated multiple values, single values, and single values with wildcards",partial: "name_ranks/list_for_search_help"},
+      {field_name: 'status:', description: "name status, allows comma-separated multiple values, single values, and single values with wildcards",partial: "name_statuses/list_for_search_help"},
+      {field_name: 'type:', description: "name type, allows comma-separated multiple values, single values, and single values with wildcards",partial: "name_types/list_for_search_help"}
       ].each do |val| %>
   <tr>
     <td class="width-20-percent">
