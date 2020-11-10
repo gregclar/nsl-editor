@@ -57,6 +57,8 @@
   <tr><td></td><td></td><td>(The lists below are for convenient viewing of values - selecting them doesn't add them to the search)</td></tr>
   <% [
       {field_name: 'rank:', description: "name rank, allows comma-separated multiple values, single values, and single values with wildcards",partial: "name_ranks/list_for_search_help"},
+      {field_name: 'above-rank:', description: "takes a single rank and finds names ranked above that rank in the rank hierarchy"},
+      {field_name: 'below-rank:', description: "takes a single rank and finds names ranked below that rank in the rank hierarchy"},
       {field_name: 'status:', description: "name status, allows comma-separated multiple values, single values, and single values with wildcards",partial: "name_statuses/list_for_search_help"},
       {field_name: 'type:', description: "name type, allows comma-separated multiple values, single values, and single values with wildcards",partial: "name_types/list_for_search_help"}
       ].each do |val| %>
