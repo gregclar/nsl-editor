@@ -1,3 +1,13 @@
+- :date: 11-Nov-2020
+  :jira_id: '2274'
+  :description: |-
+    Added Query Help and Query Examples for name search directives "above-rank" and "below-rank".  Also changed tab heading for query examples from "Queries" to "Query Examples" for clarity. Adjusted help text.
+- :date: 10-Nov-2020
+  :jira_id: '2275'
+  :description: |-
+    Changed the Query Help for Name status by removing "Any status" from the drop-down list-of-values; also minor boilerplate comment changes.
+- :date: 23-Oct-2020
+  :release: true
 - :date: 21-Oct-2020
   :jira_id: '3689'
   :description: |-
