@@ -31,7 +31,7 @@
 <h5 class="">More complex name searches</h5>
 <table class="example-searches table table-striped">
   <% [
-      {search_target: 'Names', search_string: "p above-rank: familia show-instances: limit:10", explanation: %Q(Find the first 10 names above rank genus, with a name that starts with "p", and show their instances. #{excc})},
+      {search_target: 'Names', search_string: "p above-rank: familia show-instances: limit:10", explanation: %Q(Find the first 10 names above rank familia, with a name that starts with "p", and show their instances. #{excc})},
       {search_target: 'Names', search_string: "name: b above-rank: genus below-rank: ordo limit:20", explanation: %Q(Find the first 20 names above rank genus, below rank ordo, with a name that starts with "b". #{excc})},
       ].each do |val| %>
   <tr>
