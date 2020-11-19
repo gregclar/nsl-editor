@@ -289,8 +289,8 @@ class TreesController < ApplicationController
   def run_diff
     url = Tree::AsServices.diff_link(@working_draft.tree.current_tree_version_id, @working_draft.id)
     @result = RestClient.get(url, {content_type: :html, accept: :html})
-    if @result.length < 200
-      @result = @result.gsub(/\n/,'').sub(/<h3>Nothing to see here.<\/h3> *<p>We have no changes, nothing, zip.<\/p>/,'<h4>No changes.</h4>')
+    if @result.match(/Nothing to see here.*no changes, nothing, zip/)
+      @result = @result.sub(/<h3>Nothing to see here.<\/h3> *<p>We have no changes, nothing, zip.<\/p>/,'<h4>No changes.</h4>')
     end
   end
 

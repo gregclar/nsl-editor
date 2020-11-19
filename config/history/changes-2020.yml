@@ -1,3 +1,7 @@
+- :date: 19-Nov-2020
+  :jira_id: '3720'
+  :description: |-
+    Removed the gsub statements for the html returned from tree reports because they're associated with encoding errors and sporadic report no-shows.
 - :date: 17-Nov-2020
   :jira_id: '2571'
   :description: |-

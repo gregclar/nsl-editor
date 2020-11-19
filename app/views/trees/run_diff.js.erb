@@ -1,5 +1,5 @@
 debug('run diff');
-$('#diff-content').html('<%= escape_javascript(@result.gsub(/\n/u,'').html_safe) %>');
+$('#diff-content').html('<%= escape_javascript(@result.html_safe) %>');
 $('#diff-content').removeClass('hidden');
 $('#diff-content').removeClass('fade');
 $('#diff-content').show();
