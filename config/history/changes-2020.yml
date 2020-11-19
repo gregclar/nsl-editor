@@ -1,4 +1,8 @@
 - :date: 19-Nov-2020
+  :jira_id: '3716'
+  :description: |-
+    Improved the Reference Query Help explanation of the default search, the text search, and the citation tokenised search.
+- :date: 19-Nov-2020
   :jira_id: '3720'
   :description: |-
     Removed the gsub statements for the html returned from tree reports because they're associated with encoding errors and sporadic report no-shows.
