@@ -1,3 +1,7 @@
+- :date: 22-Nov-2020
+  :jira_id: '3612'
+  :description: |-
+    Early version of taxonomy review feature for reviewer to add comments - APNI-only for now, and only in test
 - :date: 19-Nov-2020
   :jira_id: '3716'
   :description: |-
