@@ -5,9 +5,9 @@
 <%= render partial: "names/details/parents_and_duplicate_of" %>
 <%= render partial: "names/widgets/duplicates" %>
 <% if @name.changed_combination %> <br>Changed combination <% end %>
+<%= render partial: "names/details/verbatim_rank" %>
 <%= render partial: "names/details/authors" %>
 <%= render partial: "names/details/tags" %>
-<%= "Verbatim rank  #{@name.verbatim_rank}" unless @name.verbatim_rank.blank? %>
 <br>
 <%= render partial: "names/details/instances" %>
 <%= render 'names/details/children' %>

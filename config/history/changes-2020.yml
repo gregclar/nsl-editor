@@ -1,4 +1,8 @@
 - :date: 22-Nov-2020
+  :jira_id: '3724'
+  :description: |-
+    Moved Name details entry for verbatim rank onto its own line
+- :date: 22-Nov-2020
   :jira_id: '3612'
   :description: |-
     Early version of taxonomy review feature for reviewer to add comments - APNI-only for now, and only in test
