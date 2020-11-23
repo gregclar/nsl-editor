@@ -138,5 +138,7 @@ class Ability
     can "tree_versions",              "tab_details"
     can "tree_elements",              "tab_details"
     can "tree_elements",              "tab_review"
+    can "taxonomy_reviews",           "index"
+    can "taxonomy_element_comments",  "create"
   end
 end

@@ -16,72 +16,40 @@
 #   See the License for the specific language governing permissions and
 #   limitations under the License.
 
-#  A taxonomy-review
-class TaxonomyReview < ActiveRecord::Base
+#  A taxonomy-element-comment
+class TaxonomyElementComment < ActiveRecord::Base
   strip_attributes
-  self.table_name = "taxonomy_review"
+  self.table_name = "taxonomy_element_comment"
   self.primary_key = "id"
-  #self.sequence_name = "nsl_global_seq"
-  belongs_to :tree_version
-  validates :name, presence: true
-  has_many :taxonomy_review_periods
- 
+  belongs_to :tree_element
+  belongs_to :taxonomy_review_period
+  validates :comment, presence: true
+
   # The table isn't in all schemas, so check it's there
   def self.exists?
     begin 
-      TaxonomyReview.all.count
+      TaxonomyElementComment.all.count
     end
     true
   rescue => e
     false
   end
 
-  def fresh?
-    false
-  end
-
-  def has_parent?
-    false
-  end
-
-  def record_type
-    'TaxonomyReview'
-  end
-
   def self.create(params, username)
-    taxonomy_review = TaxonomyReview.new(params)
-    if taxonomy_review.save_with_username(username)
-      taxonomy_review
+    telc = TaxonomyElementComment.new(params)
+    if telc.save_with_username(username)
+      telc
     else
-      raise taxonomy_review.errors.full_messages.first.to_s
+      raise telc.errors.full_messages.first.to_s
     end
   end
 
   def save_with_username(username)
     self.created_by = self.updated_by = username
-    #set_defaults
     save
   end
 
-  def update_if_changed(params, username)
-    assign_attributes(params)
-    if changed?
-      self.updated_by = username
-      save!
-      "Updated"
-    else
-      "No change"
-    end
-  end
-
-  def can_be_deleted?
-    taxonomy_review_periods.size.zero?
-  end
-
-  def active?
-    taxonomy_review_periods.each do |review_period|
-      return true if review_period.active?
-    end
-    return false
+  def self.comments_per_tree_element(tree_element_id)
+    TaxonomyElementComment.where(tree_element_id: tree_element_id).order(:created_at)
   end
 end

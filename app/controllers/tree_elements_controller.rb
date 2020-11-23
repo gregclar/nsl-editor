@@ -24,9 +24,11 @@ class TreeElementsController < ApplicationController
   # Sets up RHS details panel on the search results page.
   # Displays a specified or default tab.
   def show
-    set_tab
-    set_tab_index
+    @tab = choose_tab
+    @tab_index = choose_index
     @take_focus = params[:take_focus] == 'true'
+    @tree_version = TreeVersion.find(params['tree-version-id'])
+    set_up_blank_comment
     logger.debug("params: #{params.inspect}")
     render "show", layout: false
   end
@@ -46,15 +48,27 @@ class TreeElementsController < ApplicationController
     params.require(:tree_element).permit(:draft_name)
   end
 
-  def set_tab
-    @tab = if params[:tab].present? && params[:tab] != "undefined"
-             params[:tab]
-           else
-             "tab_details"
-           end
+  def choose_tab
+    if params[:tab].present? && params[:tab] != "undefined"
+      params[:tab]
+    else
+      "tab_details"
+    end
   end
 
-  def set_tab_index
-    @tab_index = (params[:tabIndex] || "1").to_i
+  def choose_index
+    (params[:tabIndex] || "1").to_i
+  end
+
+  def set_up_blank_comment
+    if @tree_version.active_review?
+      if params[:tab] == 'tab_review'
+        @te_comment = TaxonomyElementComment.new
+        @te_comment.tree_element_id = @tree_element.id
+        @te_comment.taxonomy_review_period_id = @tree_version.active_review.id
+      else
+        @te_comment = nil
+      end
+    end
   end
 end
