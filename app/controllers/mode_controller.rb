@@ -1,6 +1,6 @@
 class ModeController < ApplicationController
   def toggle_mode
-    logger.debug('toggle_mode')
+    logger.debug('ModeController#toggle_mode start')
     logger.debug("toggle_mode @mode: #{@mode}")
     logger.debug("toggle_mode ApplicationController::STANDARD_MODE: #{ApplicationController::STANDARD_MODE}")
     if @mode == ApplicationController::STANDARD_MODE.to_s

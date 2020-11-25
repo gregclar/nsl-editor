@@ -1,21 +1,21 @@
-<% increment_tab_index(0) %>
-<script>
-  function addComment() {
-    let now = new Date();
-    $("#comments").append("<div class=\"comment\"><div class=\"commenter\">" +
-      $('#commenter').val() +
-      "<span class='time'>" + now.getHours() + ":" + now.getMinutes() + "</span>" +
-      "</div>" +
-      $('#comment').val() + "</div>");
-    $("#comment").val('');
-    return false;
-  }
-</script>
-<div id="comments"></div>
 
-<div style="margin-top: 1em;">
-  <input type="hidden" id="commenter" name="username" value="<%= @current_user.username %>"/>
-  <label for="comment">Add a comment</label>
-  <textarea class="form-control" name="comment" id="comment" title="comment"></textarea>
-  <button class="right btn btn-default" style="margin-top: 1em;" type="submit" onclick="addComment()">add</button>
-</div>
+<% if @tree_version.active_review? %>
+   <h5>Comment on active review</h5>
+   <%= render partial: "taxonomy_element_comments/form_create" %>
+<% else %>
+    There is no active review
+<% end %>
+
+<% unless TaxonomyElementComment.comments_per_tree_element(@tree_element.id).empty? %>
+  <h5>Comments</h5>
+  <br>
+  <% TaxonomyElementComment.comments_per_tree_element(@tree_element.id).each do |tec| %>
+    <%= tec.comment %>
+    <br>
+    <%= tec.created_by %>
+    <%= tec.created_at.strftime("%d-%b-%Y") %>
+    <%= divider %>
+  <% end %>
+<% end %>
+
+

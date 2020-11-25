@@ -4,17 +4,13 @@
 <ol>
   <li/>Find reviews on your list
   <li/>Find past reviews
+  <li/>Choose an (unpublished) taxonomy <b>version</b> for review
+    <ul>
+      <li/><%= link_to("Unpublished taxonomy versions",
+                       search_path(query_string: 'unpublished:',
+                                   query_target: 'tree_versions'),
+                       class: "with-underline",
+                       title: "Retrieve all unpublished taxonomy versions") %>
+    </ul>
+
 </ol>
-
-<h4>Links</h4>
-<ul>
-  <li/> <%= link_to("Retrieve the accepted taxonomy",
-            search_path(query_string: 'accepted:', query_target: 'tree'),
-            title: "A link to a search that retrieves the accepted taxonomy") %>
-
-  <li/> <%= link_to("Retrieve all taxonomies",
-            search_path(query_string: '*', query_target: 'tree'),
-            title: "A link to a search that retrieves all taxonomies") %>
-
-  <li/> Reviews in progress
-</ul>

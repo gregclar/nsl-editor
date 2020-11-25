@@ -112,6 +112,8 @@ function refreshPage() {
   location.reload();
 }
 
+window.refreshPage = refreshPage;
+
 function replaceDates() {
   $('date').each(function (element) {
     var d = $(this).html();

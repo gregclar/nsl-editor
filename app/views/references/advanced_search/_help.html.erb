@@ -5,26 +5,22 @@
 <%= render partial: 'references/advanced_search/quick_start_help' %>
 <br>
 <br>
+<h5>Search directives</h5>
+<p/>Example:  citation-text: 
+<p/>which could be used like this:
+<pre>
+citation-text: angophora
+</pre>
+<p/>Search directives are words you add to the search field to direct the search to particular fields or attributes.
+<p/>Search directives always end in a colon (<q>:</q>) and never include any embedded spaces.  
+<p/>Reference search directives are listed and explained below.
+<p/>Most search directives expect one or more search terms to follow, but a few need no search terms.  The help below will make clear what is required for each search directive.
+<br>
+<br>
 <h5>Default Reference search</h5>
-<p/>The default search occurs when you do <strong>not</strong> enter a field name into the search.
-<p/>This is an example of a default Reference search:
-<p/> <%= image_tag('reference-default-search-example.png') %> 
-<p/>This is an example of a non-default Reference search:
-<p/> <%= image_tag('reference-non-default-search-example.png') %> 
-<p/>The difference is the <strong>field name</strong> <q>citation:</q>, which tells the Editor which field you want searched.
-<br>
-<br>
-<h5>Field names</h5>
-<p/>Field names always end in a colon (<q>:</q>).  
-<p/>Enter them in the search field ahead of the search terms they apply to.
-<p/>Some search terms also determine a search method.
-<p/>A full list of Reference search terms is below.
-<br>
-<br>
-<h5>Default Reference searching is a text search</h5>
-<p/>The default Reference search is a <q>text search</q> on citation that <q>understands</q> the English language and, in particular, words and word prefixes.
-<p/>The result is the same as if you had entered the field name <q>citation:</q> in front of the search terms. 
-<p/>It is also the same as if you had entered the field abbreviation <q>c:</q> in front of the search terms.
+<p/>The default search occurs when you do <strong>not</strong> enter a search directive into the search field when supplying a search term.
+<p/>In other words, entering bare search terms into the search fields invokes the default search on those terms.  That is, the Editor will assume you mean the default search directive.
+<p/>The current default search directive is <q>citation-text:</q>
 <br>
 <br>
 <h5>Text search on Reference citations</h5>
@@ -43,13 +39,18 @@ Short, P.S. (1986), Notes on Trachymene humilis (J.D.Hook.) Benth. (Umbelliferae
   <li><%= link_to('muell 1986 humil',search_path(query_string: 'muell 1986 humil', query_target: 'reference'),title:"Sample query",class:'blue') %>: 
 </ul>
 
+<p/>These all default to the 
+<pre>
+citation-text: 
+</pre>
+search directive.
+<br>
 <br>
 <p/>Another example is this search for <%= link_to('"hookers icon pl"',search_path(query_string: 'hookers icon pl', query_target: 'reference'),title:"Run the query.",class:'blue') %> which works because the search engine understands that "hookers" should match "Hooker's" and so will match citations such as:
 <pre>
  Bentham, G. (1876), Plagiocarpus axillaris Benth. Hooker's Icones Plantarum 12 
 </pre>
 <br>
-
 <br>
 <p/>A search for <%= link_to('"münchh"',search_path(query_string: 'münchh', query_target: 'reference'),title:"Run the query.",class:'blue') %> retrieves the same records as a search 
 for <%= link_to('"munchh"',search_path(query_string: 'munchh', query_target: 'reference'),title:"Run the query.",class:'blue') %> showing that the default reference search ignores accents.
@@ -63,11 +64,12 @@ Münchhausen, Otto, Freiherr von (1765-1773), Der Hausvater
 <p/>For example, it is word-oriented and prefix-oriented, so a search for <%= link_to('"hookers icon ant"',search_path(query_string: 'hookers icon ant', query_target: 'reference'),title:"Run the query.",class:'blue') %> returns no records because "ant", although part of the word "Plantarum", is not a prefix.  That is, it is not preceded by a space nor is it at the start of the citation.
 
 <p/>For pure wildcarded fragments use the "citation:" field name, or "c:" for short.  
+<p/>This applies a "tokenizing" process to the search term: each term you provide is used to search for citations - the citations returned for the search must contain all the terms supplied, but in any order and with any intervening characters.  We do this to let you start with a wide range of possible results you can then narrow down.
 <p/>For example, a search for <%= link_to('"citation:hook icon ant"',search_path(query_string: 'citation:hook icon ant', query_target: 'reference'),title:"Run the query.",class:'blue') %> does return records.  But note "hook" instead of "hookers" in the search.
 <br>
 <br>
 <h5>Other Reference searches</h5>
-<p/>While most searches will be default searches, you can specify other fields for the search.  These are listed below.
+<p/>While most searches will be default searches, you can specify other fields for the search using search directives.  These are listed below.
 <br>
 <br>
 <h5>Show instances</h5>

@@ -1,3 +1,25 @@
+- :date: 22-Nov-2020
+  :jira_id: '3724'
+  :description: |-
+    Moved Name details entry for verbatim rank onto its own line
+- :date: 22-Nov-2020
+  :jira_id: '3612'
+  :description: |-
+    Early version of taxonomy review feature for reviewer to add comments - APNI-only for now, and only in test
+- :date: 19-Nov-2020
+  :jira_id: '3716'
+  :description: |-
+    Improved the Reference Query Help explanation of the default search, the text search, and the citation tokenised search.
+- :date: 19-Nov-2020
+  :jira_id: '3720'
+  :description: |-
+    Removed the gsub statements for the html returned from tree reports because they're associated with encoding errors and sporadic report no-shows.
+- :date: 17-Nov-2020
+  :jira_id: '3588'
+  :description: |-
+    Fixed the Javascript error preventing the page to reload after publishing the draft tree
+- :date: 13-Nov-2020
+  :release: true
 - :date: 12-Nov-2020
   :jira_id: '2274'
   :description: |-

@@ -1,12 +1,13 @@
 <tr id="search-result-<%= search_result.id %>" 
   class="search-result  <%= 'fresh' if search_result.fresh? %>"  
-  data-record-id="<%#= search_result.id %>"
+  data-record-id="<%= search_result.id %>"
 
 
   data-get-url="<%#= tree_element_path(search_result.id) %>"
   data-edit-url="<%#= tree_element_path(search_result.id) %>"
   data-base-url="<%#= tree_element_path(search_result.id) %>"
-  data-record-id="<%#= search_result.id %>"
+  data-tab-url="<%= tree_element_tab_path(id: search_result[:id],tab: 'active_tab_goes_here') %>"
+  data-record-id="<%= search_result.id %>"
   <% unless search_result[:operation].blank? %>
     data-tree-element-operation="<%= search_result[:operation] %>"
     <% if search_result[:operation] == 'removed' %>

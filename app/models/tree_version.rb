@@ -106,4 +106,19 @@ class TreeVersion < ActiveRecord::Base
     self != tree.default_draft_version
   end
 
+  def active_review?
+    return false unless taxonomy_reviews.size > 0
+    taxonomy_reviews.each do |review|
+      return true if review.active?
+    end
+    false
+  end
+
+  def active_review
+    return nil unless taxonomy_reviews.size > 0
+    taxonomy_reviews.each do |review|
+      return review if review.active?
+    end
+    nil
+  end
 end

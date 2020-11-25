@@ -28,7 +28,17 @@ class TaxonomyReviewPeriod < ActiveRecord::Base
   validate :start_date_cannot_be_changed_once_past, on: :update
   validate :end_date_cannot_be_in_the_past
   validate :end_date_must_be_after_start_date
- 
+
+  # The table isn't in all schemas, so check it's there
+  def self.exists?
+    begin 
+      TaxonomyReviewPeriod.all.count
+    end
+    true
+  rescue => e
+    false
+  end
+
   def start_date_cannot_be_in_the_past
     if will_save_change_to_start_date? 
       if start_date.present? && start_date < Date.today
@@ -152,5 +162,24 @@ class TaxonomyReviewPeriod < ActiveRecord::Base
 
   def end_time
     end_date
+  end
+
+  def status
+    return 'future' if future?
+    return 'past' if past?
+    return 'active' if active?
+  end
+
+  def future?
+    start_date > Time.now
+  end
+
+  def past?
+    end_date.present? && end_date < Time.now
+  end
+
+  def active?
+    start_date < Time.now &&
+    (end_date.blank? || end_date > Time.now)
   end
 end
