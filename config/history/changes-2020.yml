@@ -1,4 +1,8 @@
 - :date: 26-Nov-2020
+  :jira_id: '3731'
+  :description: |-
+    Changed 'excluded-in-accepted-tree:' to 'excluded-from-accepted-tree:' in the Name query help; also removed some unnecessary colons from Reference query help
+- :date: 26-Nov-2020
   :release: true
 - :date: 22-Nov-2020
   :jira_id: '3724'
