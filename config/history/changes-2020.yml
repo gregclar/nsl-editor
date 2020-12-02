@@ -1,3 +1,13 @@
+- :date: 01-Dec-2020
+  :jira_id: '3720'
+  :description: |-
+    Provide alternative links to the three tree reports on the main tree tab as work-arounds for when the intermittent encoding error occurs.
+- :date: 26-Nov-2020
+  :jira_id: '3731'
+  :description: |-
+    Changed 'excluded-in-accepted-tree:' to 'excluded-from-accepted-tree:' in the Name query help; also removed some unnecessary colons from Reference query help
+- :date: 26-Nov-2020
+  :release: true
 - :date: 22-Nov-2020
   :jira_id: '3724'
   :description: |-

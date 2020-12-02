@@ -46,6 +46,13 @@
                       class: 'btn btn-primary',
                       title: 'Run the Changes Report' %>
       <h5 id="diff-is-running-indicator" class="hidden"></h5>
+      <br>
+      <br>
+      <%= link_to 'Alternative link to the Report',
+                  @diff_link_raw,
+                  class: 'btn btn-primary',
+                  title: 'An alternative way of running the same report directly (as a work-around for intermittent problems with the standard link)'
+      %>
       <div id="diff-content" class="tree-container"> </div>
     </div>
     <div class="tab-pane fade" id="treeAltSyn" role="tabpanel" aria-labelledby="alt-syn-tab">
@@ -71,6 +78,13 @@
                       class: 'btn btn-primary',
                       title: 'Run the Validation Report' %>
       <h5 id="val-report-is-running-indicator" class="hidden"></h5>
+      <br>
+      <br>
+      <%= link_to 'Alternative link to the Report',
+                  @val_link_raw,
+                  class: 'btn btn-primary',
+                  title: 'An alternative way of running the same report directly (as a work-around for intermittent problems with the standard link)'
+      %>
       <div id="validation-content" class="tree-container">
       </div>
     </div>
@@ -84,6 +98,14 @@
                       class: 'btn btn-primary',
                       title: 'Run or re-run the Synonymy Report.  It validates all synonyms.' %>
       <h5 id="cas-report-is-running-indicator" class="hidden"></h5>
+      <br>
+      <br>
+      <%= link_to 'Alternative link to the Report',
+                  @val_syn_link_raw,
+                  class: 'btn btn-primary',
+                  title: 'An alternative way of running the same report directly (as a work-around for intermittent problems with the standard link)'
+      %>
+
       <form action="<%= trees_update_synonymy_by_instance_path %>" data-remote="true" method="post">
         <div id="validate-synonymy-content" class="tree-container"> </div>
         <button type="submit"
