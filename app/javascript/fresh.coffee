@@ -69,7 +69,6 @@ $(document).on "turbolinks:load", ->
   # When tabbing to search-result record, need to click to trigger retrieval of details.
   $('a.show-details-link[tabindex]').focus (event) ->                      clickOnFocus(event,$(this))
   optionalFocusOnPageLoad()
-  $('.firefox-notice').removeClass('hidden') if window.navigator.userAgent.indexOf("Firefox") < 0
   debug('End of fresh.js document ready.')
 
 optionalFocusOnPageLoad = ->
