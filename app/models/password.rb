@@ -29,7 +29,6 @@ class Password < ActiveType::Object
     validate_arguments
     Rails.logger.debug('save!')
     Rails.logger.debug("username: #{username}")
-    Rails.logger.debug("new_password: #{new_password}")
     change_password
     true
   rescue => e
