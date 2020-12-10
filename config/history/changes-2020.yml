@@ -1,3 +1,9 @@
+- :date: 07-Dec-2020
+  :jira_id: ''
+  :description: |-
+    Remove the note on the login page about the app being developed (i.e. tested) on Firefox.
+- :date: 04-Dec-2020
+  :release: true
 - :date: 01-Dec-2020
   :jira_id: '3720'
   :description: |-
