@@ -26,12 +26,12 @@ class Orchid::AsNameMatcher
   end
 
   def find_or_create_preferred_match
-    if @orchid.exclude_from_further_processing? || 
+    if preferred_match?
+      return 0
+    elsif @orchid.exclude_from_further_processing? || 
        @orchid.parent.try('exclude_from_further_processing?')
       return 0
     elsif @orchid.misapplied?
-      return 0
-    elsif preferred_match?
       return 0
     elsif make_preferred_match?
       return 1
@@ -55,8 +55,22 @@ class Orchid::AsNameMatcher
       create_match
       true
     else
+      log_to_table("Make preferred match problem: #{non_creation_reason}")
       false
     end
+  end
+
+  def non_creation_reason
+    if exactly_one_matching_name?
+      reason += "matching names's instance is not primary; " unless matching_name_has_primary?
+      reason += "matching names has more than one primary instance; " unless matching_name_has_exactly_one_primary?
+      reason = 'Unknown reason' if reason.blank?
+    else
+      reason = "#{@orchid.matches.size} matching names"
+    end
+  rescue => e
+    Rails.logger.error(e.to_s)
+    reason = "couldn't determine reason"
   end
 
   def create_match
@@ -94,13 +108,6 @@ class Orchid::AsNameMatcher
 
   def taxon
     @orchid.taxon
-  end
-
-  def record_failure(msg)
-    msg.sub!(/uncaught throw /,'')
-    msg.gsub!(/"/,'')
-    msg.sub!(/^Failing/,'')
-    Rails.logger.error("Failure: #{msg}")
   end
 
   def debug(msg)

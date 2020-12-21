@@ -47,8 +47,8 @@ class OrchidsBatchController < ApplicationController
 
   def create_preferred_matches
     prefix = the_prefix('create-preferred-matches-')
-    records = Orchid.create_preferred_matches_for_accepted_taxa(params[:taxon_string], @current_user.username)
-    @message = "Created #{records} matches for #{params[:taxon_string]}"
+    attempted, records = Orchid.create_preferred_matches_for_accepted_taxa(params[:taxon_string], @current_user.username)
+    @message = "Created #{records} matches out of #{attempted} records matching the string '#{params[:taxon_string]}'"
     render 'create', locals: {message_container_id_prefix: prefix }
   rescue => e
     logger.error("OrchidsBatchController#create_preferred_matches: #{e.to_s}")
