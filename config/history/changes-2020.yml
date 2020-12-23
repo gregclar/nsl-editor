@@ -1,3 +1,7 @@
+- :date: 23-Dec-2020
+  :jira_id: '3646'
+  :description: |-
+    Instance Note Types: handle deprecated types more gracefully when records still exist
 - :date: 21-Dec-2020
   :jira_id: '3750'
   :description: |-

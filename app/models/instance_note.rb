@@ -27,6 +27,7 @@ class InstanceNote < ActiveRecord::Base
   validates :instance_note_key_id, presence: true
   validate :create_one_apc_dist_per_instance, on: [:create]
   validate :update_one_apc_dist_per_instance, on: [:update]
+  validate :deprecated_instance_note_key_cannot_be_used
   scope :apc, (lambda do
                  joins(:instance_note_key)
                    .where("instance_note_key.name" =>
@@ -68,6 +69,12 @@ class InstanceNote < ActiveRecord::Base
     errors.add(:instance_note_key_id,
                "for APC Dist. Instance already has an APC Dist. note. \
                 Only one APC Dist. Note allowed per instance.")
+  end
+
+  def deprecated_instance_note_key_cannot_be_used
+    return unless instance_note_key_id_changed?
+    return unless instance_note_key.deprecated
+    errors.add(:instance_note_key_id, "is deprecated, cannot be used")
   end
 
   def apc_dist?
