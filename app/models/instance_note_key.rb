@@ -27,10 +27,19 @@ class InstanceNoteKey < ActiveRecord::Base
   scope :apc_dist, -> { where(name: [APC_DIST]) }
   scope :non_apc, -> { where.not(name: ["APC Comment", "APC Dist."]) }
 
-  def self.options
-    all.where(deprecated: false)
-       .order(:sort_order)
-       .collect { |n| [n.name, n.id] }
+  def self.edit_options
+    all.order(:sort_order)
+       .collect { |key| [decorated_dep(key),
+                      key.id,
+                      {disabled: key.deprecated?}] }
+  end
+
+  def self.decorated_dep(key)
+    if key.deprecated
+      "#{key.name} (deprecated)"
+    else
+      key.name
+    end
   end
 
   def self.apc_options

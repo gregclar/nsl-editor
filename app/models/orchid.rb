@@ -250,11 +250,13 @@ class Orchid < ActiveRecord::Base
 
   def self.create_preferred_matches_for_accepted_taxa(taxon_s, authorising_user)
     debug("create_preferred_matches_for_accepted_taxa matching #{taxon_s}")
+    attempted = 0
     records = 0
     Orchid.taxon_string_search(taxon_s).each do |match|
+      attempted += 1
       records += match.create_preferred_match(authorising_user)
     end
-    records
+    return attempted, records
   end
 
   def self.create_instance_for_preferred_matches_for(taxon_s, authorising_user)

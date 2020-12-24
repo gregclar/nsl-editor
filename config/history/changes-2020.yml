@@ -1,3 +1,17 @@
+- :date: 23-Dec-2020
+  :jira_id: '3646'
+  :description: |-
+    Instance Note Types: handle deprecated types more gracefully when records still exist
+- :date: 21-Dec-2020
+  :jira_id: '3750'
+  :description: |-
+    Orchids: log problems creating a name match and give more informative results of it as a batch job
+- :date: 10-Dec-2020
+  :jira_id: '3744'
+  :description: |-
+    Non-QA users now no longer see the (top-level) <q>De-duplicate</q> tab
+- :date: 10-Dec-2020
+  :release: true
 - :date: 07-Dec-2020
   :jira_id: ''
   :description: |-

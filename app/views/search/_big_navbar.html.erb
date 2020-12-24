@@ -80,6 +80,8 @@
                       title: "Tree info" %>
         </li>
       <% end %>
+
+      <% if can?("batches", :index) %>
       <li role="presentation" class="">
         <%= link_to "De-duplicate",
                     batch_index_path,
@@ -87,6 +89,8 @@
                     remote: true,
                     title: "De-duplicate names in bulk" %>
       </li>
+      <% end %>
+
       <% if Rails.configuration.try('orchids_aware') && can?('orchids', 'update') %>
 
         <li role="presentation" class="">
