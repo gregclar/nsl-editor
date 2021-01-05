@@ -1,0 +1,4 @@
+- :date: 05-Jan-2021
+  :jira_id: '3762'
+  :description: |-
+    Taxonomy: allow authorised users to view structured profile data (e.g. distribution) in the editor
