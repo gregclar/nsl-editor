@@ -11,6 +11,10 @@
     <% if defined? the_note %>
       <p><%= the_note %></p>
     <% end %>
+
+
+    <% unless the_list.blank? %>
+
     <ul class="list-group">  
      <% the_list.each do |val| %>
        <% if val.has_key?(:release) %>
@@ -43,6 +47,11 @@
        </li>
      <% end %>
      </ul>
+
+
+     <% end %>
+
+
     <br> <br> <br> <br>
     <br> <br> <br> <br>
   </div>
