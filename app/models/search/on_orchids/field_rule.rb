@@ -46,6 +46,8 @@ class Search::OnOrchids::FieldRule
                                       order: "seq"},
     "is-misapplied:"      => { where_clause: "record_type = 'misapplied'",
                                       order: "seq"},
+    "is-not-misapplied:"  => { where_clause: "record_type != 'misapplied'",
+                                      order: "seq"},
     "is-hybrid-cross:"    => { where_clause: "record_type = 'hybrid_cross'",
                                       order: "seq"},
     "is-syn-but-no-syn-type:" => { where_clause: "record_type = 'synonym' and synonym_type is null",

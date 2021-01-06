@@ -1,3 +1,7 @@
+- :date: 06-Jan-2021
+  :jira_id: '3763'
+  :description: |-
+    Orchids: add query directive is-not-misapplied for use in combination with directives like taxon-sharing-name-id 
 - :date: 05-Jan-2021
   :jira_id: '3762'
   :description: |-
