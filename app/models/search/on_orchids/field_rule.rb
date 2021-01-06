@@ -74,6 +74,8 @@ class Search::OnOrchids::FieldRule
                                       order: "seq"},
     "taxon-sharing-name-id:" => { where_clause: " id in (select orchid_id from orchids_names where name_id in (select name_id from orchids_names group by name_id having count(*) > 1))",
                                       order: "seq"},
+    "non-misapp-taxon-sharing-name-id:" => { where_clause: " id in (select orchid_id from orchids_names where name_id in (select name_id from orchids_names where orchid_id in (select id from orchids where record_type != 'misapplied') group by name_id having count(*) > 1))",
+                                      order: "seq"},
     "has-preferred-name:"   => { where_clause: " exists (select null from orchids_names where orchids.id = orchids_names.orchid_id)",
                                       order: "seq"},
     "has-no-preferred-name:"   => { where_clause: " not exists (select null from orchids_names where orchids.id = orchids_names.orchid_id)"},

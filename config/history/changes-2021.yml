@@ -1,6 +1,10 @@
 - :date: 06-Jan-2021
   :jira_id: '3763'
   :description: |-
+    Orchids: add help and examples for is-not-misapplied; also add query directive non-misapp-taxon-sharing-name-id that thoroughly excludes misapps from the shared-name check
+- :date: 06-Jan-2021
+  :jira_id: '3763'
+  :description: |-
     Orchids: add query directive is-not-misapplied for use in combination with directives like taxon-sharing-name-id 
 - :date: 05-Jan-2021
   :jira_id: '3762'
