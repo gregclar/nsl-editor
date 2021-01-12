@@ -105,6 +105,7 @@
     {search_target: 'Instances', search_string: "verbatim-name-exact: * x *",explanation: %Q(Find instances with a verbatim name that contains an embedded " x ".)},
     {search_target: 'Instances', search_string: "verbatim-name-exact: * x * verbatim-name-matches-full-name:",explanation: %Q(Find instances with verbatim name containing an embedded " x " matches the full name.)},
     {search_target: 'Instances', search_string: "verbatim-name-exact: * x * verbatim-name-does-not-match-full-name:",explanation: %Q(Find instances with verbatim name containing an embedded " x " not matching the full name.)},
+    {search_target: 'Instances', search_string: "eucalyptus verbatim-name-matches-full-name-when-no-xes:",explanation: %Q(Find Eucalyptus instances with verbatim name matching the full name, disregarding case and any ' x ' hybrid indicators.)},
       ].each do |val| %>
   <tr>
     <td class="width-30-percent">

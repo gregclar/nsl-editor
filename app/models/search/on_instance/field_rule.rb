@@ -273,6 +273,11 @@ where rb.sort_order >= (select sort_order from name_rank where name = 'Species')
                            order: "instance.id" },
 "note-updated-by:"   => { where_clause: " exists (select null from instance_note n where n.instance_id = instance.id and lower(n.updated_by) like ?) "},
 "note-has-carriage-return:"   => { where_clause: " exists (select null from instance_note n where n.instance_id = instance.id and n.value like '%' || chr(13) || '%') "},
+"verbatim-name-matches-full-name-when-no-xes:" => { where_clause:" id in (select i.id
+from instance i 
+       join name n
+       on i.name_id = n.id 
+  where regexp_replace(lower(n.full_name),' x ',' ','g') = regexp_replace(lower(i.verbatim_name_string),' x ',' ','g'))"},
   }.freeze
 
   def self.resolve(field)
