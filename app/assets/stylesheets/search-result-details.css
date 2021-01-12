@@ -213,3 +213,6 @@ div#change-category-widgets {
   margin-bottom: 2em;
 }
 
+.select2-container {
+    width: 100% !important;
+}
