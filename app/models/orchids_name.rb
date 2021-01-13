@@ -25,11 +25,17 @@ class OrchidsName < ActiveRecord::Base
   belongs_to :instance_type, foreign_key: :relationship_instance_type_id, optional: true
   belongs_to :orchid
   belongs_to :tree_element, foreign_key: 'standalone_instance_id', optional: true
-  # message: 'Cannot reuse same name for the same orchid taxon'},
+
+  # There's no corresponding database uniqueness constraint for this one 
+  # because we have to allow misapps to be matched with a name for different
+  # instances - hence the uniqueness key in the orchids_names table is the three
+  # fields:  (orchid_id, name_id, instance_id)
+  # But for non-misapps, the constraint really should be for name_id/instance_id
+  # to be unique and this validation attempts to do that.
   validates :name_id,
     uniqueness: { scope: :orchid_id,
     message: ->(object, data) do
-        "The problem is that #{object.name}, #{data[:id]} is already taken."
+        "The problem is that #{object.inspect} is a name/orchid-non-misapplied duplicate."
       end},
     unless: Proc.new {|a| a.orchid.record_type == 'misapplied'}
 
