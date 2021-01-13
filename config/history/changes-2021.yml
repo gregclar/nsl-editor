@@ -1,3 +1,7 @@
+- :date: 13-Jan-2021
+  :jira_id: '3750'
+  :description: |-
+    Orchids: Improve orchid-name match uniqueness violation error message
 - :date: 12-Jan-2021
   :jira_id: '3730'
   :description: |-
@@ -5,7 +9,7 @@
 - :date: 12-Jan-2021
   :jira_id: '3769'
   :description: |-
-    New instance query directive: verbatim-name-matches-full-name-when-no-xes
+    New instance query directive: verbatim-name-matches-full-name-ignoring-hybrid-x
 - :date: 06-Jan-2021
   :jira_id: '3763'
   :description: |-

@@ -25,8 +25,13 @@ class OrchidsName < ActiveRecord::Base
   belongs_to :instance_type, foreign_key: :relationship_instance_type_id, optional: true
   belongs_to :orchid
   belongs_to :tree_element, foreign_key: 'standalone_instance_id', optional: true
-  validates :name_id, uniqueness: { scope: :orchid_id, message: 'Cannot reuse same name for the same orchid taxon'},
-            unless: Proc.new {|a| a.orchid.record_type == 'misapplied'}
+  # message: 'Cannot reuse same name for the same orchid taxon'},
+  validates :name_id,
+    uniqueness: { scope: :orchid_id,
+    message: ->(object, data) do
+        "The problem is that #{object.name}, #{data[:id]} is already taken."
+      end},
+    unless: Proc.new {|a| a.orchid.record_type == 'misapplied'}
 
   validates :orchid_id, uniqueness: true,
             unless: Proc.new {|a| a.orchid.record_type == 'misapplied'}
