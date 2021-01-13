@@ -40,6 +40,8 @@
   <% [
          {field_name: 'verbatim-name:', description: "Verbatim name string, leading and trailing wildcards added automatically *"},
          {field_name: 'verbatim-name-exact:', description: "Verbatim name string *"},
+         {field_name: 'verbatim-name-matches-full-name:', description: "Verbatim name string is the same as the instance name full name."},
+         {field_name: 'verbatim-name-does-not-match-full-name:', description: "Verbatim name string is <b><u>not</u></b> the same as the instance name full name."},
          {field_name: 'verbatim-name-matches-full-name-ignoring-hybrid-x:', description: "Instances in which the verbatim name is the same as the referenced Name's full name, regardless of case, and with hybrid 'x' characters removed.  Takes no argument, but you can prefix it with a string that will be matched against the name."},
          {field_name: 'verbatim-name-matches-full-name-ignoring-orth-var:', description: "Instances in which the verbatim name is the same as the referenced Name's full name, regardless of case, and with the string 'orth. var.' removed.  Takes no argument, but you can prefix it with a string that will be matched against the name."},
      ].each do |val| %>
@@ -67,7 +69,7 @@
   </tr>
   <% [
          {field_name: 'name-status:', description: "Instances representing the usage of a name that has the name status you supply as an argument"},
-         {field_name: 'name-status-not:', description: "Instances representing the usage of a name that does <b>not</b> have the name status you supply as an argument"},
+         {field_name: 'name-status-not:', description: "Instances representing the usage of a name that does <b><u>not</u></b> have the name status you supply as an argument"},
      ].each do |val| %>
     <tr>
       <td class="width-20-percent">
@@ -206,8 +208,6 @@ word "darwin" followed by a space, one or more other characters followed by "bar
          {field_name: 'is-cited-by-an-instance:', description: ""},
          {field_name: 'does-not-cite-an-instance:', description: ""},
          {field_name: 'is-not-cited-by-an-instance:', description: ""},
-         {field_name: 'verbatim-name-matches-full-name:', description: "Verbatim name string is the same as the instance name full name."},
-         {field_name: 'verbatim-name-does-not-match-full-name:', description: "Verbatim name string is the same as the instance name full name."},
          {field_name: 'is-novelty:', description: "Primary instance type e.g. tax. nov.."},
          {field_name: 'is-tax-nov-for-orth-var-name:', description: "Instance is a tax. nov. type but the name is an orth. var."},
          {field_name: 'species-or-below-syn-with-genus-or-above:',

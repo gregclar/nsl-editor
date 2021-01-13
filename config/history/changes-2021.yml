@@ -17,7 +17,7 @@
 - :date: 12-Jan-2021
   :jira_id: '3769'
   :description: |-
-    New instance query directive: verbatim-name-matches-full-name-ignoring-hybrid-x
+    New instance query directive: verbatim-name-matches-full-name-ignoring-hybrid-x; field help text tidied up as requested
 - :date: 06-Jan-2021
   :jira_id: '3763'
   :description: |-
