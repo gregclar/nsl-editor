@@ -496,9 +496,29 @@ class Instance < ActiveRecord::Base
         reverse_of_this_is_cited_by.blank? &&
         comments.blank? &&
         !in_apc? &&
-        children.empty?
+        children.empty? &&
+        (!Rails.configuration.orchids_aware ||
+         (Rails.configuration.orchids_aware && not_linked_to_orchids_names?))
   end
 
+  # This is not handled via an instance association because orchids are only 
+  # in the apni database
+  # Don't look for orchids data unless the database is aware of orchids
+  def linked_to_orchids_names?
+    if Rails.configuration.orchids_aware
+      return OrchidsName.where(instance_id: id).size > 0
+    else
+      return false
+    end
+  end
+
+  # This is not handled via an instance association because orchids are only 
+  # in the apni database
+  # Don't look for orchids data unless the database is aware of orchids
+  def not_linked_to_orchids_names?
+    !(linked_to_orchids_names?)
+  end
+ 
   def anchor_id
     "Instance-#{id}"
   end

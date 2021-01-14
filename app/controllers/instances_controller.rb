@@ -43,7 +43,6 @@ class InstancesController < ApplicationController
     render "show", layout: false
   end
 
-
   alias tab show
 
   # Create the lesser version of relationship instance.

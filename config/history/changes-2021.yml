@@ -1,4 +1,8 @@
 - :date: 14-Jan-2021
+  :jira_id: '3749'
+  :description: |-
+    Orchids: prevent Instance delete failing silently when the Instance is linked to an Orchid (APNI-only).
+- :date: 14-Jan-2021
   :release: true
 - :date: 13-Jan-2021
   :jira_id: '3764'
