@@ -61,6 +61,8 @@ module InstancesHelper
   def tab_for_instance_type(tab, row_type)
     if %w[tab_show_1 tab_edit tab_edit_notes tab_comments].include?(tab)
       tab
+    elsif %w[tab_profile_details].include?(tab) && @tabs_to_offer.include?('tab_profile_details')
+      tab
     else
       tab_for_instance_using_row_type(tab, row_type)
     end

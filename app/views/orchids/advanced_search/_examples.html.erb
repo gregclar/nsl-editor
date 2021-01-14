@@ -63,6 +63,23 @@
   <% end %>
 </table>
 
+<h5 class="">Finding processing anomalies</h5>
+<table class="example-searches table table-striped">
+  <% [
+      {search_target: 'Orchids', search_string: "taxon-sharing-name-id:",explanation: %Q(Two or more orchids with a preferred match to the same name record.)},
+      {search_target: 'Orchids', search_string: "taxon-sharing-name-id: is-misapplied:",explanation: %Q(Any orchid that is misapplied sharing a preferred name match with another orchid (misapplied or not))},
+      {search_target: 'Orchids', search_string: "taxon-sharing-name-id: is-not-misapplied:",explanation: %Q(Any orchid that is not misapplied sharing a preferred name match with another orchid (misapplied or not).)},
+      {search_target: 'Orchids', search_string: "non-misapp-taxon-sharing-name-id:",explanation: %Q(Any non-misapplied orchid that shares a preferred name ID match with at least one other non-misapplied orchid.)},
+      ].each do |val| %>
+  <tr>
+    <td class="width-30-percent">
+      <%= link_to(val[:search_string], search_path(query_string: val[:search_string], query_target: val[:search_target]),class:'blue', title: "Run the described search.") %>
+    </td>
+    <td><%= val[:explanation].html_safe %></td>
+  </tr>
+  <% end %>
+</table>
+
 <h5 class="">Doubtful and excluded taxa examples</h5>
 <table class="example-searches table table-striped">
   <% [

@@ -105,13 +105,27 @@
   <% if @tabs_to_offer.include?('tab_copy_to_new_reference') %>
     <% if can? 'instances', 'copy_standalone' %>
       <%= render partial: 'instances/tabs/tab', locals: {first: false,
-                                        last: true,
+                                        last: false,
                                         this_tab: 'tab_copy_to_new_reference', 
                                         link_text: "Copy".html_safe,
                                         link_id: 'instance-copy-to-new-reference-tab', 
                                         link_title: 'Copy the instance',
                                         tab_index: increment_tab_index,
                                         prev_tab: '',
+                                        next_tab: '.search-result.show-details' } %>
+    <% end %>
+  <% end %>
+
+  <% if @tabs_to_offer.include?('tab_profile_details') %>
+    <% if can? 'classification', 'place' %>
+      <%= render partial: 'instances/tabs/tab', locals: {first: false,
+                                        last: true,
+                                        this_tab: 'tab_profile_details', 
+                                        link_text: "Profile".html_safe,
+                                        link_id: 'instance-profile-tab', 
+                                        link_title: 'Profile details',
+                                        tab_index: increment_tab_index,
+                                        prev_tab: 'instance-copy-to-new-reference-tab', 
                                         next_tab: '.search-result.show-details' } %>
     <% end %>
   <% end %>

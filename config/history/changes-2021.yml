@@ -1,0 +1,32 @@
+- :date: 13-Jan-2021
+  :jira_id: '3764'
+  :description: |-
+    Orchids: Improve orchid-name match uniqueness violation error message, again.
+- :date: 13-Jan-2021
+  :jira_id: '2404'
+  :description: |-
+    New instance query directives: verbatim-name-matches-full-name-ignoring-orth-var, name-status, and name-status-not
+- :date: 13-Jan-2021
+  :jira_id: '3764'
+  :description: |-
+    Orchids: Improve orchid-name match uniqueness violation error message
+- :date: 12-Jan-2021
+  :jira_id: '3730'
+  :description: |-
+    Fix the distribution field to be fixed full width; not grow as typed into it
+- :date: 12-Jan-2021
+  :jira_id: '3769'
+  :description: |-
+    New instance query directive: verbatim-name-matches-full-name-ignoring-hybrid-x; field help text tidied up as requested
+- :date: 06-Jan-2021
+  :jira_id: '3763'
+  :description: |-
+    Orchids: add help and examples for is-not-misapplied; also add query directive non-misapp-taxon-sharing-name-id that thoroughly excludes misapps from the shared-name check
+- :date: 06-Jan-2021
+  :jira_id: '3763'
+  :description: |-
+    Orchids: add query directive is-not-misapplied for use in combination with directives like taxon-sharing-name-id 
+- :date: 05-Jan-2021
+  :jira_id: '3762'
+  :description: |-
+    Taxonomy: allow authorised users to view structured profile data (e.g. distribution) in the editor
