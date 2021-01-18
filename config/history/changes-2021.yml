@@ -1,3 +1,7 @@
+- :date: 18-Jan-2021
+  :jira_id: '3586'
+  :description: |-
+    Namepaths: a new report "bad-namepath" which retrieves names with incorrectly formed name paths; listed on the Reports tab
 - :date: 14-Jan-2021
   :jira_id: '3749'
   :description: |-

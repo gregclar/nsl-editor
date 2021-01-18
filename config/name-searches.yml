@@ -664,5 +664,13 @@ from comment where comment.name_id = name.id)"
 	*
 FROM
 	subordinates)"
+'bad-namepath:':
+  :where_clause: "id in
+  (select name.id
+  from name
+  join name parent
+    on name.parent_id = parent.id
+ where name.name_path != parent.name_path || '/' || name.name_element
+ order by name.id)"
 
 
