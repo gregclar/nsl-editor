@@ -1,6 +1,9 @@
 <h6>
   Taxonomy Profile Details
 </h6>
+<p>This is the "cached" data that is associated and displayed with the current instance, as incorporated in various taxonomies and taxonomy versions.
+The data is displayed here regardless of the context in which you have queried the instance record.</p>
+<br>
 
 <% @instance.tree_elements.sort {|x,y| y.updated_at <=> x.updated_at}.each do |te| %>
   #<%= te.id %>;
