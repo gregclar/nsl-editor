@@ -3,7 +3,7 @@
   :description: |-
     Namepaths: a new report "bad-namepath" which retrieves names with incorrectly formed name paths; listed on the Reports tab
 - :date: 14-Jan-2021
-  :jira_id: '3749'
+  :jira_id: '3649'
   :description: |-
     Orchids: prevent Instance delete failing silently when the Instance is linked to an Orchid (APNI-only).
 - :date: 14-Jan-2021
