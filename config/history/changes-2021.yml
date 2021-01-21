@@ -1,3 +1,17 @@
+- :date: 20-Jan-2021
+  :jira_id: '3762'
+  :description: |-
+    Taxonomy: provide a brief explanatory paragraph on the tab with the profile data
+- :date: 18-Jan-2021
+  :jira_id: '3586'
+  :description: |-
+    Namepaths: a new report "bad-namepath" which retrieves names with incorrectly formed name paths; listed on the Reports tab
+- :date: 14-Jan-2021
+  :jira_id: '3649'
+  :description: |-
+    Orchids: prevent Instance delete failing silently when the Instance is linked to an Orchid (APNI-only).
+- :date: 14-Jan-2021
+  :release: true
 - :date: 13-Jan-2021
   :jira_id: '3764'
   :description: |-

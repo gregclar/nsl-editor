@@ -16,6 +16,7 @@
 
   <% confirm_delete_link = link_to("Confirm delete",
                                    instance_path(@instance.id),
+                                   id: "confirm-delete-link",
                                    class: "btn btn-danger",
                                    tabindex: increment_tab_index,
                                    title: "Confirm the delete.",
@@ -76,8 +77,12 @@
                 title: "Query the instances.") %>
     <br> 
   <% end %>
+  <% if (Rails.configuration.orchids_aware && @instance.linked_to_orchids_names?) %>
+    Instance is linked to an orchid record in the data loader. 
+  <% end %>
   <br>
 <% end %>
 <br>
-
-<div class="error-message-container"></div>
+ 
+<div id="instance-delete-info-message-container" class="message-container"></div>
+<div id="instance-delete-error-message-container" class="error-container message-container"></div>
