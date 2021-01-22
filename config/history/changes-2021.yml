@@ -1,3 +1,7 @@
+- :date: 22-Jan-2021
+  :jira_id: '3632'
+  :description: |-
+    Name report: earliest-instance-not-primary-year-strict 
 - :date: 21-Jan-2021
   :release: true
 - :date: 20-Jan-2021
