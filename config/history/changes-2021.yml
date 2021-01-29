@@ -1,7 +1,7 @@
 - :date: 29-Jan-2021
   :jira_id: '3784'
   :description: |-
-    Instance edit bug fix: checking orchids-aware is not breaking the instance edit tab now
+    Instance edit bug fix: calling orchids-aware should not break the instance edit tab now
 - :date: 22-Jan-2021
   :jira_id: '3632'
   :description: |-

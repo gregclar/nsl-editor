@@ -504,7 +504,7 @@ class Instance < ActiveRecord::Base
   # in the apni database
   # Don't look for orchids data unless the database is aware of orchids
   def linked_to_orchids_names?
-    if Rails.configuration&.orchids_aware
+    if Rails.configuration.try(:orchids_aware)
       OrchidsName.where(instance_id: id).size > 0
     else
       false
