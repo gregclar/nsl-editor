@@ -77,7 +77,7 @@
                 title: "Query the instances.") %>
     <br> 
   <% end %>
-  <% if (Rails.configuration.orchids_aware && @instance.linked_to_orchids_names?) %>
+  <% if (Rails.configuration&.orchids_aware && @instance.linked_to_orchids_names?) %>
     Instance is linked to an orchid record in the data loader. 
   <% end %>
   <br>
