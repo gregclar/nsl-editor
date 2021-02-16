@@ -1,7 +1,7 @@
 - :date: 16-Feb-2021
   :jira_id: '3764'
   :description: |-
-    Orchids: Remove uniqueness validation on orchids_id, name_id for testing.  
+    Orchids: change uniqueness validation from name_id plus orchid_id to name_id plus instance_id for preferred matches
 - :date: 01-Feb-2021
   :release: true
 - :date: 29-Jan-2021
