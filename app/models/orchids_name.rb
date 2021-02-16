@@ -32,6 +32,9 @@ class OrchidsName < ActiveRecord::Base
   # fields:  (orchid_id, name_id, instance_id)
   # But for non-misapps, the constraint really should be for name_id/instance_id
   # to be unique and this validation attempts to do that.
+  #
+  # But this is name_id scoped on orchid_id - instance_id isn't mentioned.
+  # I will remove it temporarily for testing.
   validates :name_id,
     uniqueness: { scope: :orchid_id,
     message: ->(object, data) do
