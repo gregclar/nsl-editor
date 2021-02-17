@@ -256,6 +256,8 @@ class Orchid < ActiveRecord::Base
       attempted += 1
       records += match.create_preferred_match(authorising_user)
     end
+    entry = "create_preferred_matches_for_accepted_taxa matching #{taxon_s} finished successfully; attempted: #{attempted}, records created: #{records}"
+    OrchidProcessingLog.log(entry, 'job controller')
     return attempted, records
   end
 

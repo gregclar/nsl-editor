@@ -1,3 +1,7 @@
+- :date: 17-Feb-2021
+  :jira_id: '3764'
+  :description: |-
+    Orchids: batch job now logs successful finish
 - :date: 16-Feb-2021
   :jira_id: '3764'
   :description: |-
