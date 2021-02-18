@@ -38,6 +38,10 @@ class Orchid::AsNameMatcher
     else
       return 0
     end
+  rescue => e
+    Rails.logger.error(e.to_s)
+    log_to_table("Error: preferred match problem for #{@orchid.id} #{@orchid.taxon} - #{e.to_s}")
+    return 0
   end
 
   def stop(msg)

@@ -31,6 +31,7 @@ class Orchid::AsProgressReporter
               misapplied: misapplieds,
               hybrid_cross: hybrid_crosses,
               total: orchids_and_their_synonyms },
+      other: { further_processing_prevented: further_processing_prevented },
       matched: { accepted_with_preferred_match: accepted_with_preferred_match,
                   synonym_with_preferred_match: synonym_with_preferred_match,
                   misapplied_with_a_preferred_match: misapplied_with_a_preferred_match,
@@ -47,7 +48,6 @@ class Orchid::AsProgressReporter
           synonym_matched_without_cross_ref: synonym_matched_without_cross_ref,
           misapplied_matched_without_cross_ref: misapplied_matched_without_cross_ref },
       taxonomy: in_taxonomy,
-      other: { further_processing_prevented: further_processing_prevented },
     }
   end
 
@@ -88,6 +88,7 @@ class Orchid::AsProgressReporter
 
   def accepted_without_preferred_match
     core_search.where("record_type = 'accepted'")
+               .where(" not exclude_from_further_processing ")
                .where.not("exists (select null from orchids_names orn where orchids.id = orn.orchid_id)")
                .count
   end
@@ -100,12 +101,15 @@ class Orchid::AsProgressReporter
 
   def synonym_without_preferred_match
     core_search.where("record_type = 'synonym'")
+               .where(" not exclude_from_further_processing ")
+               .where(" not exists (select null from orchids parent where orchids.parent_id = parent.id and parent.exclude_from_further_processing)")
                .where.not("exists (select null from orchids_names orn where orchids.id = orn.orchid_id)")
                .count
   end
 
   def misapplied_preferred_matches
     core_search.where("record_type = 'misapplied'")
+               .where(" not exclude_from_further_processing ")
                .joins(:orchids_name)
                .count
   end
@@ -120,6 +124,7 @@ class Orchid::AsProgressReporter
 
   def misapplied_without_a_preferred_match
     core_search.where("record_type = 'misapplied'")
+               .where(" not exists (select null from orchids parent where orchids.parent_id = parent.id and parent.exclude_from_further_processing)")
                .where.not("exists (select null from orchids_names orn where orchids.id = orn.orchid_id)")
                .count
   rescue => e

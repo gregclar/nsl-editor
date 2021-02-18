@@ -1,3 +1,7 @@
+- :date: 18-Feb-2021
+  :jira_id: '3764'
+  :description: |-
+    Orchids: batch processing refinements - improved unmatched status counts and some extra logging of errors mainly
 - :date: 17-Feb-2021
   :jira_id: '3764'
   :description: |-

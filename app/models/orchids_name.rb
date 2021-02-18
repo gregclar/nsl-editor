@@ -33,12 +33,12 @@ class OrchidsName < ActiveRecord::Base
   # But for non-misapps, the constraint really should be for name_id/instance_id
   # to be unique and this validation attempts to do that.
   #
-  validates :name_id,
-    uniqueness: { scope: :instance_id,
-    message: ->(object, data) do
-        "The problem is that #{object.inspect} is a name plus instance duplicate (for non-misapplied orchids)."
-      end},
-    unless: Proc.new {|a| a.orchid.record_type == 'misapplied'}
+  # validates :name_id,
+    # uniqueness: { scope: :instance_id,
+    # message: ->(object, data) do
+        # "The problem is that #{object.inspect} is a name plus instance duplicate (for non-misapplied orchids)."
+      # end},
+    # unless: Proc.new {|a| a.orchid.record_type == 'misapplied'}
 
   validates :orchid_id, uniqueness: true,
             unless: Proc.new {|a| a.orchid.record_type == 'misapplied'}

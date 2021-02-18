@@ -28,12 +28,17 @@ class Orchid::AsInstanceCreator
 
   def create_instance_for_preferred_matches
     debug("#create_instance_for_preferred_matches")
+
     records = 0
     return 0 if stop_everything?
     @orchid.preferred_match.each do |preferred_match|
       debug(preferred_match.class)
       if preferred_match.standalone_instance_created
+        # do nothing 
       elsif preferred_match.standalone_instance_found
+        # do nothing 
+      elsif preferred_match.standalone_instance?
+        # do nothing 
       else
         # Todo: bug here: the action is logged even though the record create 
         # might not happen - need to check create_instance returns 1, not 0
