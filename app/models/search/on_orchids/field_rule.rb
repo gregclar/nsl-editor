@@ -76,6 +76,27 @@ class Search::OnOrchids::FieldRule
                                       order: "seq"},
     "non-misapp-taxon-sharing-name-id:" => { where_clause: " id in (select orchid_id from orchids_names where name_id in (select name_id from orchids_names where orchid_id in (select id from orchids where record_type != 'misapplied') group by name_id having count(*) > 1))",
                                       order: "seq"},
+    "non-misapp-taxon-sharing-name-id-not-pp:" => { where_clause: " id in (select orchid_id
+ from orchids_names orn1
+where (orn1.name_id, orn1.instance_id) in 
+(select name_id, instance_id 
+  from (select name_id, record_type, instance_id, count(*) 
+          from orchids_names orn 
+               join orchids o on o.id = orn.orchid_id 
+              group by name_id, record_type, instance_id having count(*) > 1 and record_type != 'misapplied'
+        except
+        select name_id, record_type, instance_id, count(*)
+          from orchids_names orn
+          join orchids o
+            on o.id = orn.orchid_id
+           and record_type != 'misapplied'
+           and relationship_instance_type_id is not null
+           and relationship_instance_type_id in (select id from instance_type where pro_parte)
+         group by name_id, record_type, instance_id
+        having count(*) > 1
+) fred )
+)",
+                                      order: "seq"},
     "has-preferred-name:"   => { where_clause: " exists (select null from orchids_names where orchids.id = orchids_names.orchid_id)",
                                       order: "seq"},
     "has-no-preferred-name:"   => { where_clause: " not exists (select null from orchids_names where orchids.id = orchids_names.orchid_id)"},

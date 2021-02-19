@@ -169,6 +169,8 @@ Because <i>taxon-with-syn:</i> is so frequently used, we've made it the default.
      description: "match only on CSV data orchid that shares a preferred name ID with at least one other CSV data orchid"},
     {field_name: 'non-misapp-taxon-sharing-name-id:',
      description: "any non-misapplied orchid that shares a preferred name ID match with at least one other non-misapplied orchid"},
+    {field_name: 'non-misapp-taxon-sharing-name-id-not-pp:',
+     description: "any non-misapplied orchid that shares a preferred name ID match with at least one other non-misapplied orchid, but excluding cases where all the relationships are partial"},
       ].each do |val| %>
   <tr>
     <td class="width-20-percent">

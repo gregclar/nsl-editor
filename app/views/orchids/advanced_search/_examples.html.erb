@@ -70,6 +70,7 @@
       {search_target: 'Orchids', search_string: "taxon-sharing-name-id: is-misapplied:",explanation: %Q(Any orchid that is misapplied sharing a preferred name match with another orchid (misapplied or not))},
       {search_target: 'Orchids', search_string: "taxon-sharing-name-id: is-not-misapplied:",explanation: %Q(Any orchid that is not misapplied sharing a preferred name match with another orchid (misapplied or not).)},
       {search_target: 'Orchids', search_string: "non-misapp-taxon-sharing-name-id:",explanation: %Q(Any non-misapplied orchid that shares a preferred name ID match with at least one other non-misapplied orchid.)},
+      {search_target: 'Orchids', search_string: "non-misapp-taxon-sharing-name-id-not-pp:",explanation: %Q(Any non-misapplied orchid that shares a preferred name ID match with at least one other non-misapplied orchid but excluding cases where all the relationships are partial. Use this in tandem with non-misapp-taxon-sharing-name-id)},
       ].each do |val| %>
   <tr>
     <td class="width-30-percent">
