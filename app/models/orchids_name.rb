@@ -106,9 +106,29 @@ class OrchidsName < ActiveRecord::Base
   # Is there already instance linking the name to the chah 2018 ref?
   #
   # What about a protologue instance for the name with another reference?
-  def standalone_instance?
+  def xstandalone_instance?
+    debug('standalone_instance?')
     return true unless standalone_instance_id.blank?
     instances =  Instance.where(name_id: name_id).where(reference_id: @ref_id)
+    debug("instances.size: #{instances.size}")
+    case instances.size
+    when 0
+      return false 
+    when 1
+      self.standalone_instance_id = instances.first.id
+      self.standalone_instance_found = true
+      self.save
+      return true
+    else
+      throw 'Too many standalone instances'
+    end
+  end
+
+  def standalone_instance_for_target_ref?(target_ref)
+    debug("standalone_instance_for_target_ref? with target_ref: #{target_ref}")
+    return true unless standalone_instance_id.blank?
+    instances =  Instance.where(name_id: name_id).where(reference_id: target_ref)
+    debug("instances.size: #{instances.size}")
     case instances.size
     when 0
       return false 

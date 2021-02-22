@@ -1,3 +1,7 @@
+- :date: 22-Feb-2021
+  :jira_id: '3789'
+  :description: |-
+    Orchids: bug fix to ensure the create-instance process detects an existing instance for the 2018 CHAH reference
 - :date: 19-Feb-2021
   :jira_id: '3794'
   :description: |-
