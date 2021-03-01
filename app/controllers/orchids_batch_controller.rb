@@ -60,7 +60,7 @@ class OrchidsBatchController < ApplicationController
   def create_instances_for_preferred_matches
     prefix = the_prefix('create-draft-instances-')
     records = Orchid.create_instance_for_preferred_matches_for(params[:taxon_string], @current_user.username)
-    @message = "Created #{records} draft instances for #{params[:taxon_string]}"
+    @message = "Created #{records} draft #{'instance'.pluralize(records)} for #{params[:taxon_string]}"
     render 'create', locals: {message_container_id_prefix: prefix }
   rescue => e
     logger.error("OrchidsBatchController#create_instances_for_preferred_matches: #{e.to_s}")
