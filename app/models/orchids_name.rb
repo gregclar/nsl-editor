@@ -106,7 +106,10 @@ class OrchidsName < ActiveRecord::Base
   def standalone_instance_for_target_ref?(target_ref)
     debug("standalone_instance_for_target_ref? with target_ref: #{target_ref}")
     return true unless standalone_instance_id.blank?
-    instances =  Instance.where(name_id: name_id).where(reference_id: target_ref)
+    instances =  Instance.where(name_id: name_id)
+                         .where(reference_id: target_ref)
+                         .joins(:instance_type)
+                         .where(instance_type: { standalone: true})
     debug("instances.size: #{instances.size}")
     case instances.size
     when 0
