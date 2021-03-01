@@ -64,7 +64,7 @@ class OrchidsName < ActiveRecord::Base
     @ref = ref
     if orchid.accepted?
       debug("OrchidsName#create_instance orchid is accepted")
-      return create_or_find_standalone_instance(authorising_user)
+      return create_or_find_standalone_instance(@ref, authorising_user)
     elsif orchid.synonym?
       debug("OrchidsName#create_instance orchid is synonym")
       return create_or_find_relationship_instance(authorising_user)
@@ -76,19 +76,19 @@ class OrchidsName < ActiveRecord::Base
     end
   end
 
-  def create_or_find_standalone_instance(authorising_user)
+  def create_or_find_standalone_instance(ref, authorising_user)
     debug 'create_or_find_standalone_instance'
-    return 0 if standalone_instance?
-    debug 'no standalone instance, so we will create one'
-    create_standalone_instance(authorising_user)
+    return 0 if standalone_instance_for_target_ref?(ref)
+    debug 'no standalone instance for target ref, so create one'
+    create_standalone_instance(ref, authorising_user)
   end
 
-  def create_standalone_instance(authorising_user)
+  def create_standalone_instance(ref, authorising_user)
     debug('create_standalone_instance')
     instance = Instance.new
     instance.draft = true
     instance.name_id = name_id
-    instance.reference_id = @ref.id 
+    instance.reference_id = ref.id 
     instance.instance_type_id = InstanceType.secondary_reference.id
     instance.created_by = instance.updated_by = "#{authorising_user}"
     instance.save!
@@ -101,27 +101,6 @@ class OrchidsName < ActiveRecord::Base
     logger.error e.backtrace.join("\n")
     @message = e.to_s.sub(/uncaught throw/,'').gsub(/"/,'')
     render 'error'
-  end
-
-  # Is there already instance linking the name to the chah 2018 ref?
-  #
-  # What about a protologue instance for the name with another reference?
-  def xstandalone_instance?
-    debug('standalone_instance?')
-    return true unless standalone_instance_id.blank?
-    instances =  Instance.where(name_id: name_id).where(reference_id: @ref_id)
-    debug("instances.size: #{instances.size}")
-    case instances.size
-    when 0
-      return false 
-    when 1
-      self.standalone_instance_id = instances.first.id
-      self.standalone_instance_found = true
-      self.save
-      return true
-    else
-      throw 'Too many standalone instances'
-    end
   end
 
   def standalone_instance_for_target_ref?(target_ref)
