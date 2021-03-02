@@ -43,7 +43,7 @@
   <% if standalones.size > 0 %>
     <span class="flag standalone-count"><%= "#{standalones.size}i" %></span>
     <% if standalones.size > 1 %>
-      <span class="flag standalone-count"><%= "#{standalones.size}i too many!" %></span>
+      <span class="flag standalone-count"><%= "#{standalones.size}i too many!" %></span><%= search_result.id %>, <%= search_result.orchids_name.size %>
     <% else %>
       <% if standalones.first.drafted? %>
         <span class='flag on-tree-indicator'>drafted</span>

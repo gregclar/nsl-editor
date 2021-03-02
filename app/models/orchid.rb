@@ -256,7 +256,7 @@ class Orchid < ActiveRecord::Base
       attempted += 1
       records += match.create_preferred_match(authorising_user)
     end
-    entry = "create_preferred_matches_for_accepted_taxa matching #{taxon_s} finished successfully; attempted: #{attempted}, records created: #{records}"
+    entry = "Task finished: create preferred matches for accepted taxa matching #{taxon_s}, #{authorising_user}; attempted: #{attempted}, created: #{records}"
     OrchidProcessingLog.log(entry, 'job controller')
     return attempted, records
   end
@@ -268,6 +268,8 @@ class Orchid < ActiveRecord::Base
     Orchid.taxon_string_search(taxon_s).order(:id).each do |match|
       records += match.create_instance_for_preferred_matches(authorising_user)
     end
+    entry = "Task finished: create instance for preferred matches for '#{taxon_s}', #{authorising_user}; records created: #{records}"
+    OrchidProcessingLog.log(entry, 'job controller')
     records
   end
 

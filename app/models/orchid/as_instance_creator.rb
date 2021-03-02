@@ -19,8 +19,8 @@
 #   Create a draft instance for a raw orchid matched with a name record
 class Orchid::AsInstanceCreator
   def initialize(orchid, reference, authorising_user)
-    @tag = " for orchid: #{orchid.taxon} (#{orchid.record_type})"
-    debug("Instance Creator")
+    @tag = " for orchid: #{orchid.id} #{orchid.taxon} (#{orchid.record_type})"
+    debug("AsInstanceCreator")
     @orchid = orchid
     @ref = reference
     @authorising_user = authorising_user
@@ -31,18 +31,8 @@ class Orchid::AsInstanceCreator
     records = 0
     return 0 if stop_everything?
     @orchid.preferred_match.each do |preferred_match|
-      if preferred_match.standalone_instance_created
-        # do nothing 
-      elsif preferred_match.standalone_instance_found
-        # do nothing 
-      elsif preferred_match.standalone_instance_for_target_ref?(@ref)
-        # do nothing 
-      else
-        # Todo: bug here: the action is logged even though the record create 
-        # might not happen - need to check create_instance returns 1, not 0
-        log_to_table("Create instance")
         records += preferred_match.create_instance(@ref, @authorising_user)
-      end
+        log_to_table("Create instance counted #{records} #{'record'.pluralize(records)}")
     end
     records
   end

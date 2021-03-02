@@ -43,6 +43,11 @@ class Orchid::AsProgressReporter
         { accepted_matched_with_standalone: accepted_matched_with_standalone,
           synonym_matched_with_cross_ref: synonym_matched_with_cross_ref,
           misapplied_with_cross_ref: misapplied_with_cross_ref },
+      with_match_and_instances_breakdown:
+        { accepted_matched_with_standalone_instance_created: accepted_matched_with_standalone_instance_created,
+          accepted_matched_with_standalone_instance_found: accepted_matched_with_standalone_instance_found,
+          synonym_matched_with_cross_ref_created: synonym_matched_with_cross_ref_created,
+          synonym_matched_with_cross_ref_found: synonym_matched_with_cross_ref_found},
       with_match_but_without_instances:
         { accepted_matched_without_standalone: accepted_matched_without_standalone,
           synonym_matched_without_cross_ref: synonym_matched_without_cross_ref,
@@ -138,6 +143,20 @@ class Orchid::AsProgressReporter
                .count
   end
 
+  def accepted_matched_with_standalone_instance_created
+    core_search.where("record_type = 'accepted'")
+               .joins(:orchids_name)
+               .where( {orchids_names: { standalone_instance_created: true}})
+               .count
+  end
+
+  def accepted_matched_with_standalone_instance_found
+    core_search.where("record_type = 'accepted'")
+               .joins(:orchids_name)
+               .where( {orchids_names: { standalone_instance_found: true}})
+               .count
+  end
+
   def accepted_matched_without_standalone
     core_search.where("record_type = 'accepted'")
                .joins(:orchids_name)
@@ -149,6 +168,20 @@ class Orchid::AsProgressReporter
     core_search.where("record_type = 'synonym'")
                .joins(:orchids_name)
                .where.not( {orchids_names: { relationship_instance_id: nil}})
+               .count
+  end
+
+  def synonym_matched_with_cross_ref_created
+    core_search.where("record_type = 'synonym'")
+               .joins(:orchids_name)
+               .where( {orchids_names: { relationship_instance_created: true}})
+               .count
+  end
+
+  def synonym_matched_with_cross_ref_found
+    core_search.where("record_type = 'synonym'")
+               .joins(:orchids_name)
+               .where( {orchids_names: { relationship_instance_found: true}})
                .count
   end
 

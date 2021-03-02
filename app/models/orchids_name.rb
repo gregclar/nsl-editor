@@ -94,6 +94,7 @@ class OrchidsName < ActiveRecord::Base
     instance.save!
     self.standalone_instance_created = true
     self.standalone_instance_id = instance.id
+    self.updated_by = 'job'
     self.save!
     return 1
   rescue => e
@@ -117,6 +118,7 @@ class OrchidsName < ActiveRecord::Base
     when 1
       self.standalone_instance_id = instances.first.id
       self.standalone_instance_found = true
+      self.updated_by = 'job'
       self.save
       return true
     else
@@ -172,11 +174,12 @@ class OrchidsName < ActiveRecord::Base
     new_instance.save!
     self.relationship_instance_created = true
     self.relationship_instance_id = new_instance.id
+    self.updated_by = 'job'
     self.save!
     return 1
   end
 
-  # create_or_find_relationship_instance
+  # create_or_find_misapplied_instance
   def create_or_find_misapplied_instance(authorising_user)
     if relationship_instance_id.present?
       debug '        misapplied instance already there'
@@ -202,6 +205,7 @@ class OrchidsName < ActiveRecord::Base
     new_instance.save!
     self.relationship_instance_created = true
     self.relationship_instance_id = new_instance.id
+    self.updated_by = 'job'
     self.save!
     return 1
   rescue => e
