@@ -32,9 +32,14 @@ class Orchid::AsInstanceCreator
     return 0 if stop_everything?
     @orchid.preferred_match.each do |preferred_match|
         records += preferred_match.create_instance(@ref, @authorising_user)
-        log_to_table("Create instance counted #{records} #{'record'.pluralize(records)}")
+        log_create_action(records) unless records == 0
     end
     records
+  end
+
+  def log_create_action(count)
+    entry = "Create instance counted #{count} #{'record'.pluralize(count)}"
+    log_to_table(entry)
   end
 
   def log_to_table(entry)
