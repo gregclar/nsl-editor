@@ -1,4 +1,8 @@
 - :date: 04-Mar-2021
+  :jira_id: '3823'
+  :description: |-
+    Orchids: fix the query directive non-misapp-taxon-sharing-name-id-not-pp
+- :date: 04-Mar-2021
   :jira_id: '3817'
   :description: |-
     Orchids: create draft instance no longer logs zero counts - if the job doesn't create a record then it says nothing in the log
