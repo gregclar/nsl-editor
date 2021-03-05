@@ -2,7 +2,7 @@
 <%= form_for(@te_comment, remote: true, class: 'instance-note-edit-form') do |f| %>
    <input type="hidden" name="random_id" value="<%= params[:random_id] %>"/>
    <%= f.hidden_field(:tree_element_id, value: @te_comment.tree_element_id) %>
-   <%= f.hidden_field(:taxonomy_review_period_id, value: @te_comment.taxonomy_review_period_id) %>
+   <%= f.hidden_field(:taxonomy_version_review_period_id, value: @te_comment.taxonomy_version_review_period_id) %>
 
    <table class="width-100-percent">
     <tr>

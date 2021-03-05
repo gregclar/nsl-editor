@@ -65,7 +65,7 @@ class TreeElementsController < ApplicationController
       if params[:tab] == 'tab_review'
         @te_comment = TaxonomyElementComment.new
         @te_comment.tree_element_id = @tree_element.id
-        @te_comment.taxonomy_review_period_id = @tree_version.active_review.id
+        @te_comment.taxonomy_version_review_period_id = @tree_version.active_review.id
       else
         @te_comment = nil
       end

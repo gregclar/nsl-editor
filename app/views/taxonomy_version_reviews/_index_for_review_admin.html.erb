@@ -1,0 +1,64 @@
+<h3>Taxonomy Version Review Administration</h3>
+<%= render partial: 'taxonomy_version_reviews/main_tab/system_status' %>
+<h4>Workflow</h4>
+<ol>
+  <li/>Choose a taxonomy
+    <ul>
+      <li/><%= link_to("All taxonomies",
+                       search_path(query_string: '*',
+                                   query_target: 'tree'),
+                       class: "with-underline",
+                       title: "Retrieve a list of all taxonomies") %>
+      <li/><%= link_to("Accepted taxonomy",
+                       search_path(query_string: 'accepted:', query_target: 'tree'),
+                       class: "with-underline",
+                       title: "Retrieve the accepted taxonomy") %>
+    </ul>
+
+    <li/>Choose an (unpublished) taxonomy <b>version</b> for review
+    <ul>
+      <li/><%= link_to("Unpublished taxonomy versions",
+                       search_path(query_string: 'unpublished:',
+                                   query_target: 'tree_versions'),
+                       class: "with-underline",
+                       title: "Retrieve all unpublished taxonomy versions") %>
+    </ul>
+  <li/>Create a review record for the version
+    <ul>
+      <li/>Use the "Review" tab for a taxonomy version
+    </ul>
+  <li/>Retrieve the review record
+    <ul>
+      <li><%= link_to("Taxonomy version reviews",
+                      search_path(query_string: '*',
+                                  query_target: 'taxonomy_version_reviews'),
+                      class: "with-underline",
+                      title: "Retrieve all unpublished taxonomy version review records") %>
+      <li/>Taxonomy version "Details" tab lists and links reviews
+    </ul>
+  <li/>Set up a review period 
+    <ul>
+      <li/>Use the "Periods of Review" tab for a taxonomy version review
+      <li><%= link_to("Taxonomy version review periods",
+                      search_path(query_string: 'any:',
+                                  query_target: 'taxonomy_version_review_periods'),
+                      class: "with-underline",
+                      title: "Retrieve all taxonomy version review period records") %>
+    </ul>
+  <li/>Allocate reviewers to the review period 
+  <li/>Read review comments 
+  <li/>End a review period
+  <li/>End a review
+</ol>
+<h5>Workflow Suggestion</h5>
+Open the Editor in at least 2 tabs of your browser
+<ul>
+  <li>keep this administration tab open in one of the browser tabs,
+  <li>use the other browser tab for the work
+</ul>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>

@@ -22,7 +22,7 @@ class TaxonomyElementComment < ActiveRecord::Base
   self.table_name = "taxonomy_element_comment"
   self.primary_key = "id"
   belongs_to :tree_element
-  belongs_to :taxonomy_review_period
+  belongs_to :taxonomy_version_review_period
   validates :comment, presence: true
 
   # The table isn't in all schemas, so check it's there

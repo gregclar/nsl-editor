@@ -10,7 +10,7 @@
                                           prev_tab: '',
                                           next_tab: '' } %>
 
-      <% if can? 'taxonomy_reviews', 'create' %>
+      <% if can? 'taxonomy_version_reviews', 'create' %>
 
       <%= render partial: 'tree_versions/tabs/tab', locals: {first: false,
                                           last: true,

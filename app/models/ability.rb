@@ -106,9 +106,9 @@ class Ability
     can "tree_version_elements",     :all
     can "tree_elements",             :all
     can "mode",                      :all
-    can "taxonomy_review",           :all
-    can "taxonomy_reviews",          :all
-    can "taxonomy_review_periods",   :all
+    can "taxonomy_version_review",   :all
+    can "taxonomy_version_reviews",  :all
+    can "taxonomy_version_review_periods",   :all
     can "tree_versions",             :all
   end
 
@@ -138,7 +138,7 @@ class Ability
     can "tree_versions",              "tab_details"
     can "tree_elements",              "tab_details"
     can "tree_elements",              "tab_review"
-    can "taxonomy_reviews",           "index"
+    can "taxonomy_version_reviews",   "index"
     can "taxonomy_element_comments",  "create"
   end
 end
