@@ -289,7 +289,9 @@ Because <i>taxon-with-syn:</i> is so frequently used, we've made it the default.
   <tr><th>Field</th><th>Description</th></tr>
   <% [
     {field_name: 'no-further-processing:',
-     description: "flag to prevent any further bulk processing has been set"},
+     description: "search for records flagged to stop further bulk processing"},
+    {field_name: 'in-current-taxonomy:',
+     description: "search for orchids matched to a name which is listed in the current accepted taxonomy"},
       ].each do |val| %>
   <tr>
     <td class="width-20-percent">
