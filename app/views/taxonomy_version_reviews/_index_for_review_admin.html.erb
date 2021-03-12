@@ -1,7 +1,6 @@
 <h3>APC Review</h3>
-This tab is for taxonomy drafters.
+This tab is for taxonomy builders, it's a set of instructions and links for taxonomy reviews.
 <h4>Overview</h4>
-
 
 
 <svg viewBox="0 0 185 110" width="10%" height="10%" xmlns="http://www.w3.org/2000/svg" xmlns:svg="http://www.w3.org/2000/svg">
@@ -10,7 +9,23 @@ This tab is for taxonomy drafters.
 <br>
 
 <h4>Starting a Review</h4>
-<h4>Continuing a Review</h4>
+    <ul>
+      <li/>You start a review by creating a review record for an unpublished taxonomy <b>version</b>. 
+    <li/>Choose an (unpublished) taxonomy version for review
+    <ul>
+      <li/><%= link_to("Unpublished taxonomy versions",
+                       search_path(query_string: 'unpublished:',
+                                   query_target: 'tree_versions'),
+                       class: "with-underline",
+                       title: "Retrieve all unpublished taxonomy versions") %>
+    </ul>
+    </ul>
+
+<h4>Starting a Review Period</h4>
+<h4>Reading Review Comments</h4>
+<h4>Ending a Review Period</h4>
+<h4>Closing a Review</h4>
+<h4>Extending a Review</h4>
 <ol>
   <li/>Choose a taxonomy
     <ul>
@@ -23,15 +38,6 @@ This tab is for taxonomy drafters.
                        search_path(query_string: 'accepted:', query_target: 'tree'),
                        class: "with-underline",
                        title: "Retrieve the accepted taxonomy") %>
-    </ul>
-
-    <li/>Choose an (unpublished) taxonomy <b>version</b> for review
-    <ul>
-      <li/><%= link_to("Unpublished taxonomy versions",
-                       search_path(query_string: 'unpublished:',
-                                   query_target: 'tree_versions'),
-                       class: "with-underline",
-                       title: "Retrieve all unpublished taxonomy versions") %>
     </ul>
   <li/>Create a review record for the version
     <ul>

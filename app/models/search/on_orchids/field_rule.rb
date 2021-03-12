@@ -168,6 +168,18 @@ having count(*)                     >  1
                        leading_wildcard: true,
                        trailing_wildcard: true,
                        order: "seq"},
-
+    "in-current-taxonomy:"=> { where_clause: "orchids.id in (select distinct o.id
+  from orchids_names orn
+  join orchids o
+    on orn.orchid_id = o.id
+ where orn.name_id in (
+    select name_id
+  from current_accepted_tree_version_vw
+       )
+ order by o.id)",
+                       trailing_wildcard: true,
+                       order: "seq"},
+    "syn-type:" => { where_clause: "lower(synonym_type) like ?",
+                                      order: "seq"},
   }.freeze
 end

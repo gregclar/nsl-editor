@@ -96,4 +96,19 @@
   <% end %>
 </table>
 
+<h5 class="">Already in taxonomy examples</h5>
+<table class="example-searches table table-striped">
+  <% [
+      {search_target: 'Orchids', search_string: "Acianthus in-current-taxonomy:",explanation: %Q(Find orchids within Acianthus that are already in the current taxonomy)},
+      {search_target: 'Orchids', search_string: "Liparis in-current-taxonomy:",explanation: %Q(Find orchids within Liparis that are already in the current taxonomy)},
+      ].each do |val| %>
+  <tr>
+    <td class="width-30-percent">
+      <%= link_to(val[:search_string], search_path(query_string: val[:search_string], query_target: val[:search_target]),class:'blue', title: "Run the described search.") %>
+    </td>
+    <td><%= val[:explanation].html_safe %></td>
+  </tr>
+  <% end %>
+</table>
+
 <%= render partial: 'orchids/stats/high_level_stats' %>
