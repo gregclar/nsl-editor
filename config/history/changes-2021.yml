@@ -1,4 +1,8 @@
 - :date: 12-Mar-2021
+  :jira_id: ''
+  :description: |-
+    Software upgrades to JRuby and Rails - please sample test some workflows.
+- :date: 12-Mar-2021
   :jira_id: '3838'
   :description: |-
     Orchids: remove misleading designation of raw synonym types as '(unknown)'; add syn-type: search directive (more to do for this jira)
