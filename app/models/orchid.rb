@@ -88,17 +88,17 @@ class Orchid < ActiveRecord::Base
   end
   
   def synonym_type_with_interpretation
-    "#{synonym_type} (#{interpreted_synonym_type})"
+    "#{synonym_type} #{interpreted_synonym_type_in_brackets}"
   end
 
-  def interpreted_synonym_type
+  def interpreted_synonym_type_in_brackets
     case synonym_type
     when 'homotypic'
-      'nomenclatural'
+      '(nomenclatural)'
     when 'heterotypic'
-      'taxonomic'
+      '(taxonomic)'
     else
-      'unknown'
+      ''
     end
   end
 

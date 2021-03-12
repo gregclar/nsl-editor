@@ -179,5 +179,7 @@ having count(*)                     >  1
  order by o.id)",
                        trailing_wildcard: true,
                        order: "seq"},
+    "syn-type:" => { where_clause: "lower(synonym_type) like ?",
+                                      order: "seq"},
   }.freeze
 end
