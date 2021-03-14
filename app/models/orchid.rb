@@ -292,6 +292,8 @@ class Orchid < ActiveRecord::Base
       error_tally += placer.error_count
       preflight_stop_tally += placer.preflight_stop_count
     end
+    entry = "Task finished: add to tree for accepted taxa matching #{taxon_s}, #{authorising_user}; placed: #{placed_tally}, errors: #{error_tally}, preflight stops: #{preflight_stop_tally}"
+    OrchidProcessingLog.log(entry, 'job controller')
     return placed_tally, error_tally, preflight_stop_tally
   end
 

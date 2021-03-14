@@ -1,3 +1,7 @@
+- :date: 15-Mar-2021
+  :jira_id: 'NSL-3837'
+  :description: |-
+    Orchids: Log end of job after bulk addition of draft orchid instances to tree
 - :date: 12-Mar-2021
   :jira_id: ''
   :description: |-
