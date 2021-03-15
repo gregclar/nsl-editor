@@ -1,4 +1,8 @@
 - :date: 15-Mar-2021
+  :jira_id: '3743'
+  :description: |-
+    Orchids: Order records in the batch jobs by sequence, not id
+- :date: 15-Mar-2021
   :jira_id: '3837'
   :description: |-
     Orchids: Log end of job after bulk addition of draft orchid instances to tree

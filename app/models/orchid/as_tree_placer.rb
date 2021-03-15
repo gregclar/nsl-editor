@@ -73,7 +73,7 @@ class Orchid::AsTreePlacer
     end
     if @preflight_failed
       @preflight_stop_count = 1
-      log_to_table("Pre-flight check prevented placing/replacing on tree: #{@orchid.taxon}, id: #{@orchid.id}: #{@preflight_error}", @authorising_user)
+      log_to_table("Pre-flight check prevented placing/replacing on tree: #{@orchid.taxon}, id: #{@orchid.id}, seq: #{@orchid.seq}: #{@preflight_error}", @authorising_user)
     end
   end
 
@@ -141,7 +141,7 @@ class Orchid::AsTreePlacer
                                                profile: profile,
                                                version_id: @draft_tree.id)
     @response = placement.place
-    log_to_table("Place #{@orchid.taxon}, id: #{@orchid.id}", @authorising_user)
+    log_to_table("Place #{@orchid.taxon}, id: #{@orchid.id}, seq: #{@orchid.seq}", @authorising_user)
     orchids_name.drafted = true
     orchids_name.save!
     1
@@ -156,7 +156,7 @@ class Orchid::AsTreePlacer
                                                  excluded: false,
                                                  profile: profile)
     @response = replacement.replace
-    log_to_table("Replace #{@orchid.taxon}, id: #{@orchid.id}", @authorising_user)
+    log_to_table("Replace #{@orchid.taxon}, id: #{@orchid.id}, seq: #{@orchid.seq}", @authorising_user)
     orchids_name.drafted = true
     orchids_name.save!
     1

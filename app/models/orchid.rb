@@ -252,7 +252,7 @@ class Orchid < ActiveRecord::Base
     debug("create_preferred_matches_for_accepted_taxa matching #{taxon_s}")
     attempted = 0
     records = 0
-    Orchid.taxon_string_search(taxon_s).each do |match|
+    Orchid.taxon_string_search(taxon_s).order(:seq).each do |match|
       attempted += 1
       records += match.create_preferred_match(authorising_user)
     end
@@ -265,7 +265,7 @@ class Orchid < ActiveRecord::Base
     debug('create_instance_for_preferred_matches_for')
     records = 0
     @ref = Reference.find(REF_ID)
-    Orchid.taxon_string_search(taxon_s).order(:id).each do |match|
+    Orchid.taxon_string_search(taxon_s).order(:seq).each do |match|
       records += match.create_instance_for_preferred_matches(authorising_user)
     end
     entry = "Task finished: create instance for preferred matches for '#{taxon_s}', #{authorising_user}; records created: #{records}"
@@ -286,7 +286,7 @@ class Orchid < ActiveRecord::Base
     placed_tally = 0
     error_tally = 0
     preflight_stop_tally = 0
-    Orchid.taxon_string_search(taxon_s).where(record_type: 'accepted').order(:id).each do |match|
+    Orchid.taxon_string_search(taxon_s).where(record_type: 'accepted').order(:seq).each do |match|
       placer = AsTreePlacer.new(draft_tree, match, authorising_user)
       placed_tally += placer.placed_count
       error_tally += placer.error_count

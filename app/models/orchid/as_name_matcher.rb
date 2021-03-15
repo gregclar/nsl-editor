@@ -22,7 +22,7 @@ class Orchid::AsNameMatcher
     debug("Name matcher for orchid: #{orchid.taxon} (#{orchid.record_type})")
     @orchid = orchid
     @authorising_user = authorising_user
-    @log_tag = " for #{@orchid.id} #{@orchid.taxon} #{@orchid.record_type}"
+    @log_tag = " for #{@orchid.id}, seq: #{@orchid.seq} #{@orchid.taxon} #{@orchid.record_type}"
   end
 
   def find_or_create_preferred_match
@@ -40,7 +40,7 @@ class Orchid::AsNameMatcher
     end
   rescue => e
     Rails.logger.error(e.to_s)
-    log_to_table("Error: preferred match problem for #{@orchid.id} #{@orchid.taxon} - #{e.to_s}")
+    log_to_table("Error: preferred match problem for #{@orchid.id}, seq: #{@orchid.seq} #{@orchid.taxon} - #{e.to_s}")
     return 0
   end
 

@@ -19,7 +19,7 @@
 #   Create a draft instance for a raw orchid matched with a name record
 class Orchid::AsInstanceCreator
   def initialize(orchid, reference, authorising_user)
-    @tag = " for orchid: #{orchid.id} #{orchid.taxon} (#{orchid.record_type})"
+    @tag = " for orchid: #{orchid.id}, seq: #{orchid.seq} #{orchid.taxon} (#{orchid.record_type})"
     debug("AsInstanceCreator")
     @orchid = orchid
     @ref = reference
