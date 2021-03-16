@@ -1,3 +1,7 @@
+- :date: 16-Mar-2021
+  :jira_id: '3743'
+  :description: |-
+    Orchids: halt batch job adding records to draft taxonomy if a genus fails
 - :date: 15-Mar-2021
   :jira_id: '3743'
   :description: |-

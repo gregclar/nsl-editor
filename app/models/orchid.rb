@@ -294,9 +294,11 @@ class Orchid < ActiveRecord::Base
     end
     entry = "Task finished: add to tree for accepted taxa matching #{taxon_s}, #{authorising_user}; placed: #{placed_tally}, errors: #{error_tally}, preflight stops: #{preflight_stop_tally}"
     OrchidProcessingLog.log(entry, 'job controller')
-    return placed_tally, error_tally, preflight_stop_tally
+    return placed_tally, error_tally, preflight_stop_tally,''
+  rescue GenusTaxonomyPlacementError => e
+    logger.error(e.message)
+    return placed_tally, error_tally + 1, preflight_stop_tally, e.message
   end
-
 
   def isonym?
     return false if isonym.blank?
