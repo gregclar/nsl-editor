@@ -1,3 +1,7 @@
+- :date: 17-Mar-2021
+  :jira_id: '3819'
+  :description: |-
+    Orchids: add "found” and “created” entries for misapplied records in the “With match and instances breakdown” section of stats
 - :date: 16-Mar-2021
   :jira_id: '3839'
   :description: |-
