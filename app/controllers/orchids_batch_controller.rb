@@ -60,7 +60,7 @@ class OrchidsBatchController < ApplicationController
   def create_instances_for_preferred_matches
     prefix = the_prefix('create-draft-instances-')
     records = Orchid.create_instance_for_preferred_matches_for(params[:taxon_string], @current_user.username)
-    @message = "Created #{records} draft instances for #{params[:taxon_string]}"
+    @message = "Created #{records} draft #{'instance'.pluralize(records)} for #{params[:taxon_string]}"
     render 'create', locals: {message_container_id_prefix: prefix }
   rescue => e
     logger.error("OrchidsBatchController#create_instances_for_preferred_matches: #{e.to_s}")
@@ -70,11 +70,12 @@ class OrchidsBatchController < ApplicationController
   end
 
   def add_instances_to_draft_tree
+    raise 'Locked'
     prefix = the_prefix('add-instances-to-tree-')
     logger.debug("#add_instances_to_draft_tree start")
-    placed_tally, error_tally, preflight_stop_tally = Orchid.add_to_tree_for(@working_draft, params[:taxon_string], @current_user.username)
+    placed_tally, error_tally, preflight_stop_tally,text_message = Orchid.add_to_tree_for(@working_draft, params[:taxon_string], @current_user.username)
     logger.debug("records added to tree: #{placed_tally}")
-    message(placed_tally, error_tally, preflight_stop_tally)
+    message(placed_tally, error_tally, preflight_stop_tally, text_message)
     render 'create', locals: {message_container_id_prefix: prefix }
   rescue => e
     logger.error("OrchidsBatchController#add_instances_to_draft_tree: #{e.to_s}")
@@ -83,10 +84,11 @@ class OrchidsBatchController < ApplicationController
     render 'error', locals: {message_container_id_prefix: prefix }
   end
 
-  def message(placed_tally, error_tally, preflight_stop_tally)
+  def message(placed_tally, error_tally, preflight_stop_tally, text_msg)
     @message = %Q(Added to tree: #{placed_tally}; )
     @message += %Q(Errors: #{error_tally}; )
     @message += %Q( Stopped pre-flight: #{preflight_stop_tally})
+    @message += %Q(; #{text_msg})
   end
 
   private

@@ -27,8 +27,8 @@ class TreeVersionsController < ApplicationController
     set_tab
     set_tab_index
     if params[:tab] =~ /\Atab_review\z/
-      @taxonomy_review = TaxonomyReview.new
-      @taxonomy_review.tree_version = @tree_version
+      @taxonomy_version_review = TaxonomyVersionReview.new
+      @taxonomy_version_review.tree_version = @tree_version
     end
     @take_focus = params[:take_focus] == 'true'
     render "show", layout: false

@@ -29,7 +29,7 @@ class TreeVersion < ActiveRecord::Base
   has_many :tree_version_elements,
            foreign_key: "tree_version_id",
            class_name: "TreeVersionElement"
-  has_many :taxonomy_reviews
+  has_many :taxonomy_version_reviews
 
   def display_as
     'TreeVersion'
@@ -107,16 +107,16 @@ class TreeVersion < ActiveRecord::Base
   end
 
   def active_review?
-    return false unless taxonomy_reviews.size > 0
-    taxonomy_reviews.each do |review|
+    return false unless taxonomy_version_reviews.size > 0
+    taxonomy_version_reviews.each do |review|
       return true if review.active?
     end
     false
   end
 
   def active_review
-    return nil unless taxonomy_reviews.size > 0
-    taxonomy_reviews.each do |review|
+    return nil unless taxonomy_version_reviews.size > 0
+    taxonomy_version_reviews.each do |review|
       return review if review.active?
     end
     nil

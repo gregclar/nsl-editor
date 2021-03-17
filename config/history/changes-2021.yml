@@ -1,3 +1,89 @@
+- :date: 17-Mar-2021
+  :jira_id: '3839'
+  :description: |-
+    Orchids: show the synonym type for non-misapplied synonyms as soon as a preferred match is made
+- :date: 17-Mar-2021
+  :jira_id: '3843'
+  :description: |-
+    Orchids: create "orchids-matcher" group and use it to authorise orchids work
+- :date: 17-Mar-2021
+  :jira_id: '3819'
+  :description: |-
+    Orchids: add "found” and “created” entries for misapplied records in the “With match and instances breakdown” section of stats
+- :date: 16-Mar-2021
+  :jira_id: '3839'
+  :description: |-
+    Orchids: for matched names, show the synonym type on the Details tab
+- :date: 16-Mar-2021
+  :jira_id: '3743'
+  :description: |-
+    Orchids: halt batch job adding records to draft taxonomy if a genus fails
+- :date: 15-Mar-2021
+  :jira_id: '3743'
+  :description: |-
+    Orchids: Order records in the batch jobs by sequence, not id
+- :date: 15-Mar-2021
+  :jira_id: '3837'
+  :description: |-
+    Orchids: Log end of job after bulk addition of draft orchid instances to tree
+- :date: 12-Mar-2021
+  :jira_id: ''
+  :description: |-
+    Software upgrades to JRuby and Rails - please sample test some workflows.
+- :date: 12-Mar-2021
+  :jira_id: '3838'
+  :description: |-
+    Orchids: remove misleading designation of raw synonym types as '(unknown)'; add syn-type: search directive (more to do for this jira)
+- :date: 11-Mar-2021
+  :jira_id: '3651'
+  :description: |-
+    Orchids: add in-current-taxonomy: directive
+- :date: 04-Mar-2021
+  :jira_id: '3823'
+  :description: |-
+    Orchids: fix the query directive non-misapp-taxon-sharing-name-id-not-pp
+- :date: 04-Mar-2021
+  :jira_id: '3817'
+  :description: |-
+    Orchids: create draft instance no longer logs zero counts - if the job doesn't create a record then it says nothing in the log
+- :date: 02-Mar-2021
+  :jira_id: '3817'
+  :description: |-
+    Orchids: breakdown stats of instances created/found; log end of create instances task; add orchid id and more to logs; fix the logic for creating/finding cross-ref instances.
+- :date: 01-Mar-2021
+  :jira_id: '3817'
+  :description: |-
+    Orchids: check for standalone instance now insists on it being standalone
+- :date: 01-Mar-2021
+  :jira_id: '3815'
+  :description: |-
+    Orchids: remove the undefined method error mentioned in the first comment
+- :date: 22-Feb-2021
+  :jira_id: '3789'
+  :description: |-
+    Orchids: bug fix to ensure the create-instance process detects an existing instance for the 2018 CHAH reference
+- :date: 19-Feb-2021
+  :jira_id: '3794'
+  :description: |-
+    Orchids: new query non-misapp-taxon-sharing-name-id-not-pp.
+- :date: 18-Feb-2021
+  :jira_id: '3764'
+  :description: |-
+    Orchids: batch processing refinements - improved unmatched status counts and some extra logging of errors mainly
+- :date: 17-Feb-2021
+  :jira_id: '3764'
+  :description: |-
+    Orchids: orchid processing log help and examples now appear correctly on page load 
+- :date: 17-Feb-2021
+  :jira_id: '3764'
+  :description: |-
+    Orchids: batch job now logs successful finish
+- :date: 16-Feb-2021
+  :jira_id: '3764'
+  :description: |-
+    Orchids: change uniqueness validation from name_id plus orchid_id to name_id plus instance_id for preferred matches
+- :date: 01-Feb-2021
+  :release: true
 - :date: 29-Jan-2021
   :jira_id: '3784'
   :description: |-

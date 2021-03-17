@@ -404,16 +404,16 @@ Rails.application.routes.draw do
 
   match "/user/toggle_mode", as: "toggle_mode", to: "mode#toggle_mode", via: :post
 
-  resources :taxonomy_reviews, only: [:show, :post, :create, :new, :update, :destroy]
-  match "taxonomy_reviews/:id/tab/:tab", as: "taxonomy_review_tab", to: "taxonomy_reviews#tab", via: :get
-  match "taxonomy_review_index",
-        as: "taxonomy_review_index",
-        to: "taxonomy_reviews#index",
+  resources :taxonomy_version_reviews, only: [:show, :post, :create, :new, :update, :destroy]
+  match "taxonomy_version_reviews/:id/tab/:tab", as: "taxonomy_version_review_tab", to: "taxonomy_version_reviews#tab", via: :get
+  match "taxonomy_version_review_index",
+        as: "taxonomy_version_review_index",
+        to: "taxonomy_version_reviews#index",
         via: :get
 
-  match "taxonomy_review_periods/:id/tab/:tab", as: "taxonomy_review_period_tab", to: "taxonomy_review_periods#tab", via: :get
-  match "taxonomy_review_periods/calendar", as: "taxonomy_review_period_calendar", to: "taxonomy_review_periods#calendar", via: :get
-  resources :taxonomy_review_periods, only: [:show, :create, :new, :update, :destroy]
+  match "taxonomy_version_review_periods/:id/tab/:tab", as: "taxonomy_version_review_period_tab", to: "taxonomy_version_review_periods#tab", via: :get
+  match "taxonomy_version_review_periods/calendar", as: "taxonomy_version_review_period_calendar", to: "taxonomy_version_review_periods#calendar", via: :get
+  resources :taxonomy_version_review_periods, only: [:show, :create, :new, :update, :destroy]
 
   resources :taxonomy_element_comments, only: [:show, :post, :create, :new, :update, :destroy]
 

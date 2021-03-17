@@ -31,6 +31,7 @@ class Orchid::AsProgressReporter
               misapplied: misapplieds,
               hybrid_cross: hybrid_crosses,
               total: orchids_and_their_synonyms },
+      other: { further_processing_prevented: further_processing_prevented },
       matched: { accepted_with_preferred_match: accepted_with_preferred_match,
                   synonym_with_preferred_match: synonym_with_preferred_match,
                   misapplied_with_a_preferred_match: misapplied_with_a_preferred_match,
@@ -42,12 +43,18 @@ class Orchid::AsProgressReporter
         { accepted_matched_with_standalone: accepted_matched_with_standalone,
           synonym_matched_with_cross_ref: synonym_matched_with_cross_ref,
           misapplied_with_cross_ref: misapplied_with_cross_ref },
+      with_match_and_instances_breakdown:
+        { accepted_matched_with_standalone_instance_created: accepted_matched_with_standalone_instance_created,
+          accepted_matched_with_standalone_instance_found: accepted_matched_with_standalone_instance_found,
+          synonym_matched_with_cross_ref_created: synonym_matched_with_cross_ref_created,
+          synonym_matched_with_cross_ref_found: synonym_matched_with_cross_ref_found,
+          misapp_matched_with_cross_ref_created: misapp_matched_with_cross_ref_created,
+          misapp_matched_with_cross_ref_found: misapp_matched_with_cross_ref_found },
       with_match_but_without_instances:
         { accepted_matched_without_standalone: accepted_matched_without_standalone,
           synonym_matched_without_cross_ref: synonym_matched_without_cross_ref,
           misapplied_matched_without_cross_ref: misapplied_matched_without_cross_ref },
       taxonomy: in_taxonomy,
-      other: { further_processing_prevented: further_processing_prevented },
     }
   end
 
@@ -88,6 +95,7 @@ class Orchid::AsProgressReporter
 
   def accepted_without_preferred_match
     core_search.where("record_type = 'accepted'")
+               .where(" not exclude_from_further_processing ")
                .where.not("exists (select null from orchids_names orn where orchids.id = orn.orchid_id)")
                .count
   end
@@ -100,12 +108,15 @@ class Orchid::AsProgressReporter
 
   def synonym_without_preferred_match
     core_search.where("record_type = 'synonym'")
+               .where(" not exclude_from_further_processing ")
+               .where(" not exists (select null from orchids parent where orchids.parent_id = parent.id and parent.exclude_from_further_processing)")
                .where.not("exists (select null from orchids_names orn where orchids.id = orn.orchid_id)")
                .count
   end
 
   def misapplied_preferred_matches
     core_search.where("record_type = 'misapplied'")
+               .where(" not exclude_from_further_processing ")
                .joins(:orchids_name)
                .count
   end
@@ -120,6 +131,7 @@ class Orchid::AsProgressReporter
 
   def misapplied_without_a_preferred_match
     core_search.where("record_type = 'misapplied'")
+               .where(" not exists (select null from orchids parent where orchids.parent_id = parent.id and parent.exclude_from_further_processing)")
                .where.not("exists (select null from orchids_names orn where orchids.id = orn.orchid_id)")
                .count
   rescue => e
@@ -130,6 +142,20 @@ class Orchid::AsProgressReporter
     core_search.where("record_type = 'accepted'")
                .joins(:orchids_name)
                .where.not( {orchids_names: { standalone_instance_id: nil}})
+               .count
+  end
+
+  def accepted_matched_with_standalone_instance_created
+    core_search.where("record_type = 'accepted'")
+               .joins(:orchids_name)
+               .where( {orchids_names: { standalone_instance_created: true}})
+               .count
+  end
+
+  def accepted_matched_with_standalone_instance_found
+    core_search.where("record_type = 'accepted'")
+               .joins(:orchids_name)
+               .where( {orchids_names: { standalone_instance_found: true}})
                .count
   end
 
@@ -144,6 +170,34 @@ class Orchid::AsProgressReporter
     core_search.where("record_type = 'synonym'")
                .joins(:orchids_name)
                .where.not( {orchids_names: { relationship_instance_id: nil}})
+               .count
+  end
+
+  def synonym_matched_with_cross_ref_created
+    core_search.where("record_type = 'synonym'")
+               .joins(:orchids_name)
+               .where( {orchids_names: { relationship_instance_created: true}})
+               .count
+  end
+
+  def synonym_matched_with_cross_ref_found
+    core_search.where("record_type = 'synonym'")
+               .joins(:orchids_name)
+               .where( {orchids_names: { relationship_instance_found: true}})
+               .count
+  end
+
+  def misapp_matched_with_cross_ref_created
+    core_search.where("record_type = 'misapplied'")
+               .joins(:orchids_name)
+               .where( {orchids_names: { relationship_instance_created: true}})
+               .count
+  end
+
+  def misapp_matched_with_cross_ref_found
+    core_search.where("record_type = 'misapplied'")
+               .joins(:orchids_name)
+               .where( {orchids_names: { relationship_instance_found: true}})
                .count
   end
 

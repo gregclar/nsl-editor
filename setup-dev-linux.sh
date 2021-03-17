@@ -44,7 +44,7 @@ JAVA_OPTS='-server -d64'
 
 # JRUBY
 echo "** setting up JRuby"
-JRUBY_VERSION=9.2.11.1
+JRUBY_VERSION=9.2.16.0
 TOOLS=build-tools
 JRUBY_ZIP=${TOOLS}/jruby-dist-${JRUBY_VERSION}-bin.zip
 JRUBY_HOME=$PWD/${TOOLS}/jruby-${JRUBY_VERSION}

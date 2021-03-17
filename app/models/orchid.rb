@@ -88,17 +88,17 @@ class Orchid < ActiveRecord::Base
   end
   
   def synonym_type_with_interpretation
-    "#{synonym_type} (#{interpreted_synonym_type})"
+    "#{synonym_type} #{interpreted_synonym_type_in_brackets}"
   end
 
-  def interpreted_synonym_type
+  def interpreted_synonym_type_in_brackets
     case synonym_type
     when 'homotypic'
-      'nomenclatural'
+      '(nomenclatural)'
     when 'heterotypic'
-      'taxonomic'
+      '(taxonomic)'
     else
-      'unknown'
+      ''
     end
   end
 
@@ -252,10 +252,12 @@ class Orchid < ActiveRecord::Base
     debug("create_preferred_matches_for_accepted_taxa matching #{taxon_s}")
     attempted = 0
     records = 0
-    Orchid.taxon_string_search(taxon_s).each do |match|
+    Orchid.taxon_string_search(taxon_s).order(:seq).each do |match|
       attempted += 1
       records += match.create_preferred_match(authorising_user)
     end
+    entry = "Task finished: create preferred matches for accepted taxa matching #{taxon_s}, #{authorising_user}; attempted: #{attempted}, created: #{records}"
+    OrchidProcessingLog.log(entry, 'job controller')
     return attempted, records
   end
 
@@ -263,9 +265,11 @@ class Orchid < ActiveRecord::Base
     debug('create_instance_for_preferred_matches_for')
     records = 0
     @ref = Reference.find(REF_ID)
-    Orchid.taxon_string_search(taxon_s).order(:id).each do |match|
+    Orchid.taxon_string_search(taxon_s).order(:seq).each do |match|
       records += match.create_instance_for_preferred_matches(authorising_user)
     end
+    entry = "Task finished: create instance for preferred matches for '#{taxon_s}', #{authorising_user}; records created: #{records}"
+    OrchidProcessingLog.log(entry, 'job controller')
     records
   end
 
@@ -282,15 +286,19 @@ class Orchid < ActiveRecord::Base
     placed_tally = 0
     error_tally = 0
     preflight_stop_tally = 0
-    Orchid.taxon_string_search(taxon_s).where(record_type: 'accepted').order(:id).each do |match|
+    Orchid.taxon_string_search(taxon_s).where(record_type: 'accepted').order(:seq).each do |match|
       placer = AsTreePlacer.new(draft_tree, match, authorising_user)
       placed_tally += placer.placed_count
       error_tally += placer.error_count
       preflight_stop_tally += placer.preflight_stop_count
     end
-    return placed_tally, error_tally, preflight_stop_tally
+    entry = "Task finished: add to tree for accepted taxa matching #{taxon_s}, #{authorising_user}; placed: #{placed_tally}, errors: #{error_tally}, preflight stops: #{preflight_stop_tally}"
+    OrchidProcessingLog.log(entry, 'job controller')
+    return placed_tally, error_tally, preflight_stop_tally,''
+  rescue GenusTaxonomyPlacementError => e
+    logger.error(e.message)
+    return placed_tally, error_tally + 1, preflight_stop_tally, e.message
   end
-
 
   def isonym?
     return false if isonym.blank?

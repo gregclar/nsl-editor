@@ -1,0 +1,28 @@
+
+<%= form_for(@taxonomy_version_review_period, remote: true) do |f| %>
+    Start date
+    <br>
+    <%= f.date_select :start_date,
+                      {order: [:day, :month, :year]},
+                      {title: 'Start date for the period of review',
+                       tabindex: increment_tab_index}  %>
+    <br>
+    <br>
+    <%= f.hidden_field :taxonomy_version_review_id %>
+    <%= f.submit id: "save-new-instance-btn", class: 'btn-primary', title: "Save changes", tabindex: increment_tab_index %>
+<% end %>
+
+<%= divider %>
+<br>
+<h5>Notes</h5>
+<ul class="no-indent">
+  <li/>You can edit the start date after creating the review, and you can add an end date.
+  <li/>Start date cannot be a past date.
+  <li/>End date must be after the start date.
+  <li/>Creating a period of review does not automatically start the review. 
+</ul>
+
+<div id="search-result-details-info-message-container" class="message-container"></div>
+<div id="search-result-details-error-message-container" class="message-container"></div>
+ 
+

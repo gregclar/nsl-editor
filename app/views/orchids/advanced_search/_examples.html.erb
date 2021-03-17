@@ -70,6 +70,7 @@
       {search_target: 'Orchids', search_string: "taxon-sharing-name-id: is-misapplied:",explanation: %Q(Any orchid that is misapplied sharing a preferred name match with another orchid (misapplied or not))},
       {search_target: 'Orchids', search_string: "taxon-sharing-name-id: is-not-misapplied:",explanation: %Q(Any orchid that is not misapplied sharing a preferred name match with another orchid (misapplied or not).)},
       {search_target: 'Orchids', search_string: "non-misapp-taxon-sharing-name-id:",explanation: %Q(Any non-misapplied orchid that shares a preferred name ID match with at least one other non-misapplied orchid.)},
+      {search_target: 'Orchids', search_string: "non-misapp-taxon-sharing-name-id-not-pp:",explanation: %Q(Any non-misapplied orchid that shares a preferred name ID match with at least one other non-misapplied orchid but excluding cases where all the relationships are partial. Use this in tandem with non-misapp-taxon-sharing-name-id)},
       ].each do |val| %>
   <tr>
     <td class="width-30-percent">
@@ -85,6 +86,21 @@
   <% [
       {search_target: 'Orchids', search_string: "exc: *",explanation: %Q(List all doubtful or excluded taxa)},
       {search_target: 'Orchids', search_string: "exc: a*",explanation: %Q(List all doubtful or excluded taxa starting with "a")},
+      ].each do |val| %>
+  <tr>
+    <td class="width-30-percent">
+      <%= link_to(val[:search_string], search_path(query_string: val[:search_string], query_target: val[:search_target]),class:'blue', title: "Run the described search.") %>
+    </td>
+    <td><%= val[:explanation].html_safe %></td>
+  </tr>
+  <% end %>
+</table>
+
+<h5 class="">Already in taxonomy examples</h5>
+<table class="example-searches table table-striped">
+  <% [
+      {search_target: 'Orchids', search_string: "Acianthus in-current-taxonomy:",explanation: %Q(Find orchids within Acianthus that are already in the current taxonomy)},
+      {search_target: 'Orchids', search_string: "Liparis in-current-taxonomy:",explanation: %Q(Find orchids within Liparis that are already in the current taxonomy)},
       ].each do |val| %>
   <tr>
     <td class="width-30-percent">

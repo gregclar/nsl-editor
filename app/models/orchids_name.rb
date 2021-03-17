@@ -32,12 +32,13 @@ class OrchidsName < ActiveRecord::Base
   # fields:  (orchid_id, name_id, instance_id)
   # But for non-misapps, the constraint really should be for name_id/instance_id
   # to be unique and this validation attempts to do that.
-  validates :name_id,
-    uniqueness: { scope: :orchid_id,
-    message: ->(object, data) do
-        "The problem is that #{object.inspect} is a name/orchid-non-misapplied duplicate."
-      end},
-    unless: Proc.new {|a| a.orchid.record_type == 'misapplied'}
+  #
+  # validates :name_id,
+    # uniqueness: { scope: :instance_id,
+    # message: ->(object, data) do
+        # "The problem is that #{object.inspect} is a name plus instance duplicate (for non-misapplied orchids)."
+      # end},
+    # unless: Proc.new {|a| a.orchid.record_type == 'misapplied'}
 
   validates :orchid_id, uniqueness: true,
             unless: Proc.new {|a| a.orchid.record_type == 'misapplied'}
@@ -63,7 +64,7 @@ class OrchidsName < ActiveRecord::Base
     @ref = ref
     if orchid.accepted?
       debug("OrchidsName#create_instance orchid is accepted")
-      return create_or_find_standalone_instance(authorising_user)
+      return create_or_find_standalone_instance(@ref, authorising_user)
     elsif orchid.synonym?
       debug("OrchidsName#create_instance orchid is synonym")
       return create_or_find_relationship_instance(authorising_user)
@@ -75,24 +76,25 @@ class OrchidsName < ActiveRecord::Base
     end
   end
 
-  def create_or_find_standalone_instance(authorising_user)
+  def create_or_find_standalone_instance(ref, authorising_user)
     debug 'create_or_find_standalone_instance'
-    return 0 if standalone_instance?
-    debug 'no standalone instance, so we will create one'
-    create_standalone_instance(authorising_user)
+    return 0 if standalone_instance_for_target_ref?(ref)
+    debug 'no standalone instance for target ref, so create one'
+    create_standalone_instance(ref, authorising_user)
   end
 
-  def create_standalone_instance(authorising_user)
+  def create_standalone_instance(ref, authorising_user)
     debug('create_standalone_instance')
     instance = Instance.new
     instance.draft = true
     instance.name_id = name_id
-    instance.reference_id = @ref.id 
+    instance.reference_id = ref.id 
     instance.instance_type_id = InstanceType.secondary_reference.id
     instance.created_by = instance.updated_by = "#{authorising_user}"
     instance.save!
     self.standalone_instance_created = true
     self.standalone_instance_id = instance.id
+    self.updated_by = 'job'
     self.save!
     return 1
   rescue => e
@@ -102,18 +104,21 @@ class OrchidsName < ActiveRecord::Base
     render 'error'
   end
 
-  # Is there already instance linking the name to the chah 2018 ref?
-  #
-  # What about a protologue instance for the name with another reference?
-  def standalone_instance?
+  def standalone_instance_for_target_ref?(target_ref)
+    debug("standalone_instance_for_target_ref? with target_ref: #{target_ref}")
     return true unless standalone_instance_id.blank?
-    instances =  Instance.where(name_id: name_id).where(reference_id: @ref_id)
+    instances =  Instance.where(name_id: name_id)
+                         .where(reference_id: target_ref)
+                         .joins(:instance_type)
+                         .where(instance_type: { standalone: true})
+    debug("instances.size: #{instances.size}")
     case instances.size
     when 0
       return false 
     when 1
       self.standalone_instance_id = instances.first.id
       self.standalone_instance_found = true
+      self.updated_by = 'job'
       self.save
       return true
     else
@@ -169,11 +174,12 @@ class OrchidsName < ActiveRecord::Base
     new_instance.save!
     self.relationship_instance_created = true
     self.relationship_instance_id = new_instance.id
+    self.updated_by = 'job'
     self.save!
     return 1
   end
 
-  # create_or_find_relationship_instance
+  # create_or_find_misapplied_instance
   def create_or_find_misapplied_instance(authorising_user)
     if relationship_instance_id.present?
       debug '        misapplied instance already there'
@@ -199,6 +205,7 @@ class OrchidsName < ActiveRecord::Base
     new_instance.save!
     self.relationship_instance_created = true
     self.relationship_instance_id = new_instance.id
+    self.updated_by = 'job'
     self.save!
     return 1
   rescue => e

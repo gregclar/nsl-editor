@@ -3,7 +3,9 @@
 <% unless @orchid.orchids_name.empty? %>
   <% @orchid.orchids_name.each do |orchids_name| %>
     <%= divider %>
-
+      <% if orchids_name.instance_type %>
+        Preferred match is designated as a <span class="relationship-statement"><%= orchids_name.try('instance_type').try('name') %></span><br>
+      <% end %>
     <% if orchids_name.standalone_instance_created? || orchids_name.standalone_instance_found? %>
     <span class="bgdarkslateblue white">Instance has been created or found.</span>
     <br>
@@ -32,7 +34,7 @@
         <br><span class='on-tree-indicator'>In working draft <%= @working_draft.draft_name %></span>
       <% end %>
     <% elsif orchids_name.relationship_instance_created? || orchids_name.relationship_instance_found? %>
-      <span class="relationship-statement">Cross reference instance has been created or found.</span>
+      <span class="relationship-statement">Cross reference instance has been created or found: <%= orchids_name.instance_type.name %></span>
     <% else %>
       <br>
     This button lets you remove the existing preferred match without setting a new one.

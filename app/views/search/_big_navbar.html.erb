@@ -104,13 +104,13 @@
 
 
       <% end %>
-     <% if @taxonomic_review_mode || ( can?("taxonomy_review", :edit) && Rails.configuration.try('taxonomic_review_aware') ) %>
+     <% if @taxonomic_review_mode || ( can?("taxonomy_version_review", :edit) && Rails.configuration.try('taxonomic_review_aware') ) %>
 
       <li role="presentation"
           class="">
       <li role="presentation" class="">
         <%= link_to "Taxonomy",
-                    taxonomy_review_index_path,
+                    taxonomy_version_review_index_path,
                     class: "main-body-tab-link",
                     remote: true,
                     title: "Show taxonomy and taxonomy review information" %>

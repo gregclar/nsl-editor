@@ -54,6 +54,7 @@ class Ability
     admin_auth if user.admin?
     treebuilder_auth if user.treebuilder?
     taxonomic_review_auth if user.taxonomic_review?
+    orchids_matcher_auth if user.orchids_matcher?
   end
 
   def basic_auth_1
@@ -98,17 +99,14 @@ class Ability
   end
 
   def qa_auth
-    can "orchids",                   :all
-    can "orchids_batch",             :all
-    can "orchids_names",             :all
     can "batches",                   :all
     can "tree_versions",             :all
     can "tree_version_elements",     :all
     can "tree_elements",             :all
     can "mode",                      :all
-    can "taxonomy_review",           :all
-    can "taxonomy_reviews",          :all
-    can "taxonomy_review_periods",   :all
+    can "taxonomy_version_review",   :all
+    can "taxonomy_version_reviews",  :all
+    can "taxonomy_version_review_periods",   :all
     can "tree_versions",             :all
   end
 
@@ -138,7 +136,13 @@ class Ability
     can "tree_versions",              "tab_details"
     can "tree_elements",              "tab_details"
     can "tree_elements",              "tab_review"
-    can "taxonomy_reviews",           "index"
+    can "taxonomy_version_reviews",   "index"
     can "taxonomy_element_comments",  "create"
+  end
+
+  def orchids_matcher_auth
+    can "orchids",                   :all
+    can "orchids_batch",             :all
+    can "orchids_names",             :all
   end
 end

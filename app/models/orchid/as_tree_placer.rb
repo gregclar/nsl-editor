@@ -73,7 +73,7 @@ class Orchid::AsTreePlacer
     end
     if @preflight_failed
       @preflight_stop_count = 1
-      log_to_table("Pre-flight check prevented placing/replacing on tree: #{@orchid.taxon}, id: #{@orchid.id}: #{@preflight_error}", @authorising_user)
+      log_to_table("Pre-flight check prevented placing/replacing on tree: #{@orchid.taxon}, id: #{@orchid.id}, seq: #{@orchid.seq}: #{@preflight_error}", @authorising_user)
     end
   end
 
@@ -123,7 +123,11 @@ class Orchid::AsTreePlacer
     @error_count = 1
     @error = json_error(e)
     log_to_table("Error placing or replacing on tree: #{@orchid.taxon}, id: #{@orchid.id}: #{@error}", @authorising_user)
-    0
+    if @orchid.nsl_rank.downcase == 'genus'
+      raise GenusTaxonomyPlacementError.new("Stopping because failed to add genus #{@orchid.taxon}")
+    else
+      0
+    end
   rescue => e
     Rails.logger.error("place_or_replace: Error placing or replacing orchid on tree #{e.message}")
     Rails.logger.error("place_or_replace: Error placing or replacing orchid on tree #{e.methods.join(',')}")
@@ -141,7 +145,7 @@ class Orchid::AsTreePlacer
                                                profile: profile,
                                                version_id: @draft_tree.id)
     @response = placement.place
-    log_to_table("Place #{@orchid.taxon}, id: #{@orchid.id}", @authorising_user)
+    log_to_table("Place #{@orchid.taxon}, id: #{@orchid.id}, seq: #{@orchid.seq}", @authorising_user)
     orchids_name.drafted = true
     orchids_name.save!
     1
@@ -156,7 +160,7 @@ class Orchid::AsTreePlacer
                                                  excluded: false,
                                                  profile: profile)
     @response = replacement.replace
-    log_to_table("Replace #{@orchid.taxon}, id: #{@orchid.id}", @authorising_user)
+    log_to_table("Replace #{@orchid.taxon}, id: #{@orchid.id}, seq: #{@orchid.seq}", @authorising_user)
     orchids_name.drafted = true
     orchids_name.save!
     1
@@ -203,5 +207,13 @@ class Orchid::AsTreePlacer
     OrchidProcessingLog.log(entry, user)
   rescue => e
     Rails.logger.error("Couldn't log to table: #{e.to_s}")
+  end
+end
+
+
+class GenusTaxonomyPlacementError < StandardError
+  def initialize(msg="Failed to place a genus in taxonomy.", exception_type="custom")
+    @exception_type = exception_type
+    super(msg)
   end
 end

@@ -36,6 +36,6 @@ class TaxonomyElementCommentsController < ApplicationController
   def taxonomy_element_comment_params
     params.require(:taxonomy_element_comment).permit(:comment,
                                                      :tree_element_id,
-                                                     :taxonomy_review_period_id)
+                                                     :taxonomy_version_review_period_id)
   end
 end

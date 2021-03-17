@@ -76,6 +76,26 @@ class Search::OnOrchids::FieldRule
                                       order: "seq"},
     "non-misapp-taxon-sharing-name-id:" => { where_clause: " id in (select orchid_id from orchids_names where name_id in (select name_id from orchids_names where orchid_id in (select id from orchids where record_type != 'misapplied') group by name_id having count(*) > 1))",
                                       order: "seq"},
+    "non-misapp-taxon-sharing-name-id-not-pp:" => { where_clause: "id in (select orchid_id
+  from orchids_names
+ where name_id in (
+    select name_id
+      from (
+        select orn.name_id, orn.orchid_id, o.partly, orn.relationship_instance_id ,
+              coalesce(reltype.pro_parte,false) type_is_partly, reltype.name
+          from orchids o
+          join orchids_names orn
+            on o.id                         =  orn.orchid_id
+          left outer join instance_type reltype
+            on orn.relationship_instance_type_id     =  reltype.id
+        where o.partly is null
+      and o.record_type                != 'misapplied'
+          ) fred
+    where type_is_partly               =  'f'
+    group by name_id
+having count(*)                     >  1
+       ))",
+                                      order: "seq"},
     "has-preferred-name:"   => { where_clause: " exists (select null from orchids_names where orchids.id = orchids_names.orchid_id)",
                                       order: "seq"},
     "has-no-preferred-name:"   => { where_clause: " not exists (select null from orchids_names where orchids.id = orchids_names.orchid_id)"},
@@ -148,6 +168,18 @@ class Search::OnOrchids::FieldRule
                        leading_wildcard: true,
                        trailing_wildcard: true,
                        order: "seq"},
-
+    "in-current-taxonomy:"=> { where_clause: "orchids.id in (select distinct o.id
+  from orchids_names orn
+  join orchids o
+    on orn.orchid_id = o.id
+ where orn.name_id in (
+    select name_id
+  from current_accepted_tree_version_vw
+       )
+ order by o.id)",
+                       trailing_wildcard: true,
+                       order: "seq"},
+    "syn-type:" => { where_clause: "lower(synonym_type) like ?",
+                                      order: "seq"},
   }.freeze
 end
