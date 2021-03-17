@@ -4,6 +4,7 @@
   <% @orchid.orchids_name.each do |orchids_name| %>
     <%= divider %>
 
+      Preferred match is designated as a <span class="relationship-statement"><%= orchids_name.instance_type.name %></span>
     <% if orchids_name.standalone_instance_created? || orchids_name.standalone_instance_found? %>
     <span class="bgdarkslateblue white">Instance has been created or found.</span>
     <br>

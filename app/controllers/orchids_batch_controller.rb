@@ -70,6 +70,7 @@ class OrchidsBatchController < ApplicationController
   end
 
   def add_instances_to_draft_tree
+    raise 'Locked'
     prefix = the_prefix('add-instances-to-tree-')
     logger.debug("#add_instances_to_draft_tree start")
     placed_tally, error_tally, preflight_stop_tally,text_message = Orchid.add_to_tree_for(@working_draft, params[:taxon_string], @current_user.username)

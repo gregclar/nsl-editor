@@ -1,4 +1,12 @@
 - :date: 17-Mar-2021
+  :jira_id: '3839'
+  :description: |-
+    Orchids: show the synonym type for non-misapplied synonyms as soon as a preferred match is made
+- :date: 17-Mar-2021
+  :jira_id: '3843'
+  :description: |-
+    Orchids: create "orchids-matcher" group and use it to authorise orchids work
+- :date: 17-Mar-2021
   :jira_id: '3819'
   :description: |-
     Orchids: add "found” and “created” entries for misapplied records in the “With match and instances breakdown” section of stats
