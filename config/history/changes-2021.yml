@@ -1,4 +1,8 @@
 - :date: 18-Mar-2021
+  :jira_id: '3843'
+  :description: |-
+    Orchids: remove locking code mistakenly added with this jira's changes.
+- :date: 18-Mar-2021
   :release: true
 - :date: 17-Mar-2021
   :jira_id: '3839'
