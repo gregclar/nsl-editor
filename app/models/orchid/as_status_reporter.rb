@@ -18,14 +18,15 @@
 
 
 #  We need to place Orchids on a draft tree.
-class Orchid::AsProgressReporter
+class Orchid::AsStatusReporter
   def initialize(taxon_string)
     @taxon_string = taxon_string.downcase.gsub(/\*/,'%')
   end
 
-  def progress_report
+  def report
     { search: {search_string: @taxon_string,
                reported_at: Time.now.strftime("%d-%b-%Y %H:%M:%S")},
+      Lock: { locked: lock_status }, 
       core: { accepted: accepteds,
               synonym: synonyms,
               misapplied: misapplieds,
@@ -64,6 +65,10 @@ class Orchid::AsProgressReporter
 
   def orchids_and_their_synonyms
     core_search.count
+  end
+
+  def lock_status
+    OrchidBatchJobLock.locked? ? 'Locked' : 'Unlocked'
   end
 
   def accepteds

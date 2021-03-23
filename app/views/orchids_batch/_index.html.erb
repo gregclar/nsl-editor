@@ -16,13 +16,22 @@ but in many cases it makes sense to push batches of records through the process.
 
 <%= link_to "See recent logs", search_path(query_string: "latest:",query_target: 'orchid_processing_logs'), title: "See logs", class: "with-underline" %> 
 
+<br>
+<% if OrchidBatchJobLock.locked? %>
+  Orchids Batch Processing is <b>locked</b>.
+<%#= link_to "Unlock", orchids_batch_job_unlock_path, class:"hidden message-clearer with-underline", remote: true, title: "Unlock" %> 
+<% else %>
+  Orchids Batch Processing is <b>unlocked</b>.
+  <%= link_to "Lock", orchids_batch_jobs_lock_path, class:"message-clearer with-underline", method: "POST", remote: true, title: "Lock" %> 
+<% end %>
+
 <h5>Enter a taxon string:</h5>
-<%= form_tag({controller: "orchids_batch", action: "progress"}, method: "post", remote: true) do %>
+<%= form_tag({controller: "orchids_batch", action: "submit"}, method: "post", remote: true) do %>
   <div class="width-56-4em">
     <input name="taxon_string" id="taxon-string" type="text" value="<%= session[:taxon_string] %>" class="form-control" required title="taxon string for batch" />
   </div>
   <input name="gui_submit_place" id="gui-submit-place" type="hidden" title="Where this form is, so we can display result messages in the right place" value="global-tab" />
-  <input id="progress-submit" name="submit" type="submit" value="Show Status" class="btn btn-primary width-9em" title="Show information about processing so far" />
+  <input id="status-submit" name="submit" type="submit" value="Show Status" class="btn btn-primary width-9em" title="Show information about processing so far" />
   <input id="create-matches-batch-submit" name="submit" type="submit" value="Create Preferred Matches" class="btn btn-primary width-15em" title="Create preferred matches" />
   <input id="create-instances-batch-submit" name="submit" type="submit" value="Create Draft Instances" class="btn btn-primary width-15em" title="Create draft instances" />
   <% if Rails.configuration.try('allow_orchid_tree_operations') %>
@@ -34,7 +43,14 @@ but in many cases it makes sense to push batches of records through the process.
              type="submit"
              value="Add to draft tree"
              class="btn btn-primary width-15em"
-             title="Add instance to the draft taxonomy" />
+             title="Add instance to the draft taxonomy"
+             disabled="true"/>
+      <br>
+      <br>
+      <br>
+      <br>
+      <%= link_to "Enable Add to draft tree", {controller: 'orchids_batch', action: 'enable_add'}, {id: 'enable-add', class: 'btn btn-primary', remote: true, title: "Enable the Add to tree button", method: :post} %>
+      <%= link_to "Disable Add to draft tree", {controller: 'orchids_batch', action: 'disable_add'}, {id: 'disable-add', class: 'btn btn-primary', style: 'display: none;', remote: true, title: "Enable the Add to tree button", method: :post} %>
     <% end %>
   <% else %>
     Tree operations not allowed by configuration
@@ -42,17 +58,19 @@ but in many cases it makes sense to push batches of records through the process.
 
 <% end %>
 
-<div id="global-tab-orchid-batch-progress-info-message-container" class="message-container"></div>
-<div id="global-tab-orchid-batch-progress-error-message-container" class="error-container message-container"></div>
-<div id="global-tab-create-preferred-matches-info-message-container" class="message-container"></div>
-<div id="global-tab-create-preferred-matches-error-message-container" class="error-container message-container"></div>
-<div id="global-tab-create-draft-instances-info-message-container" class="message-container"></div>
-<div id="global-tab-create-draft-instances-error-message-container" class="error-container message-container"></div>
-<div id="global-tab-add-instances-to-tree-info-message-container" class="message-container"></div>
-<div id="global-tab-add-instances-to-tree-error-message-container" class="error-container message-container"></div>
+<div id="orchid-batch-status-info-message-container" class="message-container"></div>
+<div id="orchid-batch-status-error-message-container" class="error-container message-container"></div>
+<div id="global-tab-orchid-batch-status-info-message-container" class="message-container"></div>
+<div id="global-tab-orchid-batch-status-error-message-container" class="error-container message-container"></div>
+<div id="create-preferred-matches-info-message-container" class="message-container"></div>
+<div id="create-preferred-matches-error-message-container" class="error-container message-container"></div>
+<div id="create-draft-instances-info-message-container" class="message-container"></div>
+<div id="create-draft-instances-error-message-container" class="error-container message-container"></div>
+<div id="add-instances-to-tree-info-message-container" class="message-container"></div>
+<div id="add-instances-to-tree-error-message-container" class="error-container message-container"></div>
 <%= link_to "[clear]", orchids_batch_clear_path, class:"hidden message-clearer with-underline", remote: true, title: "Clear the messages" %> 
 <br>
-<div id="orchids-progress-container">
+<div id="orchids-status-container">
 </div>
 <%= divider %>
 

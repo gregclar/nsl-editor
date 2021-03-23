@@ -1,4 +1,12 @@
 - :date: 23-Mar-2021
+  :jira_id: '3815'
+  :description: |-
+    Orchids: add a lock to prevent one batch job starting while another is running
+- :date: 23-Mar-2021
+  :jira_id: '3851'
+  :description: |-
+    Orchids: button to enable/disable "Add to draft tree" button on orchid panel
+- :date: 23-Mar-2021
   :release: true
 - :date: 18-Mar-2021
   :jira_id: '3843'

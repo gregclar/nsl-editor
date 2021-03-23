@@ -127,8 +127,9 @@ class OrchidsName < ActiveRecord::Base
   end
 
   def create_or_find_relationship_instance(authorising_user)
+    debug("create_or_find_relationship_instance for id: #{orchid.id}")
     if relationship_instance_id.present?
-      debug '        Relationship instance already there returning 0'
+      debug "        Relationship instance already there (#{relationship_instance_id}) returning 0 xxx"
       return 0
     end
     if relationship_instance?
@@ -150,6 +151,9 @@ class OrchidsName < ActiveRecord::Base
     else
       debug '        relationship instance!'
       debug "        relationship instances: #{instances.size}"
+      self.relationship_instance_found = true
+      self.relationship_instance_id = instances.first.id
+      self.save!
       return true
     end
   end
