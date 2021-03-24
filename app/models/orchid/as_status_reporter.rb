@@ -26,7 +26,7 @@ class Orchid::AsStatusReporter
   def report
     { search: {search_string: @taxon_string,
                reported_at: Time.now.strftime("%d-%b-%Y %H:%M:%S")},
-      Lock: { locked: lock_status }, 
+      lock: { status: lock_status }, 
       core: { accepted: accepteds,
               synonym: synonyms,
               misapplied: misapplieds,

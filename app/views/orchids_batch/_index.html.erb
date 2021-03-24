@@ -16,14 +16,6 @@ but in many cases it makes sense to push batches of records through the process.
 
 <%= link_to "See recent logs", search_path(query_string: "latest:",query_target: 'orchid_processing_logs'), title: "See logs", class: "with-underline" %> 
 
-<br>
-<% if OrchidBatchJobLock.locked? %>
-  Orchids Batch Processing is <b>locked</b>.
-<%#= link_to "Unlock", orchids_batch_job_unlock_path, class:"hidden message-clearer with-underline", remote: true, title: "Unlock" %> 
-<% else %>
-  Orchids Batch Processing is <b>unlocked</b>.
-  <%= link_to "Lock", orchids_batch_jobs_lock_path, class:"message-clearer with-underline", method: "POST", remote: true, title: "Lock" %> 
-<% end %>
 
 <h5>Enter a taxon string:</h5>
 <%= form_tag({controller: "orchids_batch", action: "submit"}, method: "post", remote: true) do %>
