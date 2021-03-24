@@ -217,9 +217,12 @@ Rails.application.routes.draw do
         to: "orchids_batch#index", via: :get
 
   match "orchids/batch/progress", as: "orchids_batch_progress",
-        to: "orchids_batch#progress", via: [:get, :post]
+        to: "orchids_batch#submit", via: [:post]
 
   match "orchids/batch/clear", as: "orchids_batch_clear", to: "orchids_batch#clear", via: :get
+  match "orchids/batch/jobs/lock", as: "orchids_batch_jobs_lock", to: "orchids_batch#lock", via: :post
+  match "orchids/batch/enable/add", as: "orchids_batch_enable_add", to: "orchids_batch#enable_add", via: :post
+  match "orchids/batch/disable/add", as: "orchids_batch_disable_add", to: "orchids_batch#disable_add", via: :post
 
   match "trees/:id/tab/:tab", as: "tree_tab", to: "trees#tab", via: :get
 

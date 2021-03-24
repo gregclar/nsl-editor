@@ -262,7 +262,7 @@ class Orchid < ActiveRecord::Base
   end
 
   def self.create_instance_for_preferred_matches_for(taxon_s, authorising_user)
-    debug('create_instance_for_preferred_matches_for')
+    debug("create_instance_for_preferred_matches_for taxon_s: #{taxon_s}")
     records = 0
     @ref = Reference.find(REF_ID)
     Orchid.taxon_string_search(taxon_s).order(:seq).each do |match|

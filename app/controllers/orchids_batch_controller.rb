@@ -21,8 +21,27 @@ class OrchidsBatchController < ApplicationController
   def index
   end
 
-  def progress
+  # Form has multiple submit buttons.
+  def submit
     remember_taxon_string
+    case params[:submit].downcase
+    when 'show status'
+      show_status
+    else
+      change_data
+    end
+  end
+
+  def enable_add
+  end
+
+  def disable_add
+  end
+
+  private 
+
+  def change_data
+    raise OrchidBatchJobLockedError.new(params[:submit]) unless OrchidBatchJobLock.lock!(params[:submit])
     case params[:submit]
     when 'Create Preferred Matches'
       create_preferred_matches
@@ -31,24 +50,29 @@ class OrchidsBatchController < ApplicationController
     when 'Add to draft tree'
       add_instances_to_draft_tree
     else 
-      show_progress
-      render 'progress'
+      OrchidBatchJobLock.unlock!
+      throw "Editor doesn't understand what you're asking for: #{params[:submit]}"
     end
+  rescue => e
+    logger.error("change_data error: #{e.to_s}")
+    @message = e.to_s.sub(/uncaught throw/,'').gsub(/"/,'')
+    render 'error', locals: {message_container_id_prefix: 'orchid-batch-status-' }
   end
 
   def remember_taxon_string
     session[:taxon_string] = params[:taxon_string] unless params[:taxon_string].blank?
   end
 
-  def show_progress
-    @progress = Orchid::AsProgressReporter.new(params[:taxon_string]).progress_report
+  def show_status
+    @status = Orchid::AsStatusReporter.new(params[:taxon_string]).report
+    render 'status'
   end
-  private :show_progress
 
   def create_preferred_matches
     prefix = the_prefix('create-preferred-matches-')
     attempted, records = Orchid.create_preferred_matches_for_accepted_taxa(params[:taxon_string], @current_user.username)
     @message = "Created #{records} matches out of #{attempted} records matching the string '#{params[:taxon_string]}'"
+    OrchidBatchJobLock.unlock!
     render 'create', locals: {message_container_id_prefix: prefix }
   rescue => e
     logger.error("OrchidsBatchController#create_preferred_matches: #{e.to_s}")
@@ -61,6 +85,7 @@ class OrchidsBatchController < ApplicationController
     prefix = the_prefix('create-draft-instances-')
     records = Orchid.create_instance_for_preferred_matches_for(params[:taxon_string], @current_user.username)
     @message = "Created #{records} draft #{'instance'.pluralize(records)} for #{params[:taxon_string]}"
+    OrchidBatchJobLock.unlock!
     render 'create', locals: {message_container_id_prefix: prefix }
   rescue => e
     logger.error("OrchidsBatchController#create_instances_for_preferred_matches: #{e.to_s}")
@@ -75,6 +100,7 @@ class OrchidsBatchController < ApplicationController
     placed_tally, error_tally, preflight_stop_tally,text_message = Orchid.add_to_tree_for(@working_draft, params[:taxon_string], @current_user.username)
     logger.debug("records added to tree: #{placed_tally}")
     message(placed_tally, error_tally, preflight_stop_tally, text_message)
+    OrchidBatchJobLock.unlock!
     render 'create', locals: {message_container_id_prefix: prefix }
   rescue => e
     logger.error("OrchidsBatchController#add_instances_to_draft_tree: #{e.to_s}")
@@ -89,8 +115,6 @@ class OrchidsBatchController < ApplicationController
     @message += %Q( Stopped pre-flight: #{preflight_stop_tally})
     @message += %Q(; #{text_msg})
   end
-
-  private
 
   def orchid_batch_params
     return nil if params[:orchid_batch].blank?
@@ -107,5 +131,13 @@ class OrchidsBatchController < ApplicationController
     else
       "#{params[:gui_submit_place]}-#{str}"
     end
+    str
+  end
+end
+
+class OrchidBatchJobLockedError < StandardError
+  def initialize(tag="unknown", exception_type="custom")
+    @exception_type = exception_type
+    super("Cannot run #{tag} because orchid batch jobs are locked.")
   end
 end

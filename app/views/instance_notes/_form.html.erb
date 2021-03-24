@@ -19,7 +19,7 @@
       <%= lov_select_field("instance_note", 
                        "instance_note_key_id",  
                        edit_options, 
-                       {include_blank: true },
+                       {include_blank: false },
                        {data: {update_url: instance_note_path,
                                            instance_note_id: @instance_note.id}, 
                         id: "instance-note-key-id-select-#{@instance_note.id}",

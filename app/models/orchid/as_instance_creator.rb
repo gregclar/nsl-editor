@@ -27,13 +27,15 @@ class Orchid::AsInstanceCreator
   end
 
   def create_instance_for_preferred_matches
-    debug("#create_instance_for_preferred_matches")
+    debug("Orchid::AsInstanceCreator##create_instance_for_preferred_matches")
     records = 0
     return 0 if stop_everything?
     @orchid.preferred_match.each do |preferred_match|
-        records += preferred_match.create_instance(@ref, @authorising_user)
-        log_create_action(records) unless records == 0
+      debug("Creating an instance")
+      records += preferred_match.create_instance(@ref, @authorising_user)
+      log_create_action(records) unless records == 0
     end
+    debug("records: #{records}")
     records
   end
 
