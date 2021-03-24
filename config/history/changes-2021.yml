@@ -1,4 +1,8 @@
 - :date: 24-Mar-2021
+  :jira_id: '3761'
+  :description: |-
+    Instance Notes: when editing a note, a blank note type isn't offered
+- :date: 24-Mar-2021
   :jira_id: '3815'
   :description: |-
     Orchids: clean up screen text for the lock
