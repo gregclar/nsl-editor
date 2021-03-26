@@ -1,3 +1,7 @@
+- :date: 26-Mar-2021
+  :jira_id: '3856'
+  :description: |-
+    Working with the Mapper: when the Editor gets a 401 from the Mapper it re-authenticates and keeps working.
 - :date: 25-Mar-2021
   :release: true
 - :date: 24-Mar-2021

@@ -53,10 +53,10 @@ class Tree::DraftVersion < ActiveRecord::Base
                                 headers: { content_type: :json, accept: :json },
                                 timeout: 360)
   rescue RestClient::ExceptionWithResponse => e
-    Rails.logger.error("Tree::Workspace::Placement error: #{e}")
+    Rails.logger.error("Tree::DraftVersion RestClient::ExceptionWithResponse error: #{e}")
     raise
   rescue => e
-    Rails.logger.error("Tree::Workspace::Placement other error: #{e}")
+    Rails.logger.error("Tree::DraftVersion other error: #{e}")
     raise
   end
 
@@ -69,10 +69,10 @@ class Tree::DraftVersion < ActiveRecord::Base
     RestClient.put(url, payload.to_json,
                    { content_type: :json, accept: :json })
   rescue RestClient::ExceptionWithResponse => e
-    Rails.logger.error("Tree::Workspace::Placement error: #{e}")
+    Rails.logger.error("Tree::DraftVerson RestClient::ExceptionWithResponse error: #{e}")
     raise
   rescue => e
-    Rails.logger.error("Tree::Workspace::Placement other error: #{e}")
+    Rails.logger.error("Tree::DraftVerson other error: #{e}")
     raise
   end
 
