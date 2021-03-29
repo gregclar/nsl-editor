@@ -1,3 +1,7 @@
+- :date: 29-Mar-2021
+  :jira_id: '3325'
+  :description: |-
+    Expired sessions: alert the user if they request a JavaScript action after their session expires
 - :date: 26-Mar-2021
   :jira_id: '3856'
   :description: |-

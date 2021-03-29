@@ -38,6 +38,11 @@ class OrchidsBatchController < ApplicationController
   def disable_add
   end
 
+  def unlock
+    OrchidBatchJobLock.unlock!
+    render js:  "$('#emergency-unlock-link').hide();" 
+  end
+
   private 
 
   def change_data
