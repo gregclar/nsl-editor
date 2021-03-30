@@ -1,4 +1,8 @@
 - :date: 30-Mar-2021
+  :jira_id: '3325'
+  :description: |-
+    Expired sessions: alert the user if they request a JavaScript action after their session expires
+- :date: 30-Mar-2021
   :jira_id: '3815'
   :description: |-
     Orchids: make the Process tab buttons for batch processing work again (they don't participate in the lock)

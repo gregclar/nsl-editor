@@ -92,7 +92,7 @@ $( document ).on('turbolinks:load', function() {
   console.log('turbolinks:load event');
 
   $('ul#search-results-tabset li a.main-body-tab-link').on('click', function (e) {
-    debug('.main-body-tab-link clicked; non-advanced containers will be HIDDEN.')
+    debug('.main-body-tab-link clicked; non-advanced containers will be HIDDEN.');
     $('ul#search-results-tabset li').removeClass('active');
     $(this).parent('li').addClass('active');
     $('.main-body-container').addClass('hidden');
@@ -103,7 +103,7 @@ $( document ).on('turbolinks:load', function() {
         $(value).removeClass('hidden');
       });
     }
-    e.preventDefault()
+    e.preventDefault();
   });
 
   // Show search result details when search results are displayed
@@ -125,8 +125,7 @@ $( document ).on('turbolinks:load', function() {
         }
       });
       $("input#name-advanced-search-name-type-list").val(str);
-    })
-    .change();
+    });
 
   $("#search-target-list").on("click", function (e) {
     if (e.target && e.target.nodeName == "A") {

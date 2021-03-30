@@ -30,6 +30,6 @@ class ReferenceUnauthcatedDoNotShowCommentsTabTest < ActionController::TestCase
     get(:show,
         params: { id: @reference.id, tab: "tab_comments" },
         session: {})
-    assert response.body.match(/window.location.assign.".sign_in"./)
+    assert response.body.match(/Your session may have expired.  Please reload the whole page before continuing/)
   end
 end
