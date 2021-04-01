@@ -38,35 +38,10 @@ class OrchidsBatchController < ApplicationController
   def disable_add
   end
 
-  private 
-
-  def change_data
-    raise OrchidBatchJobLockedError.new(params[:submit]) unless OrchidBatchJobLock.lock!(params[:submit])
-    case params[:submit]
-    when 'Create Preferred Matches'
-      create_preferred_matches
-    when 'Create Draft Instances'
-      create_instances_for_preferred_matches
-    when 'Add to draft tree'
-      add_instances_to_draft_tree
-    else 
-      OrchidBatchJobLock.unlock!
-      throw "Editor doesn't understand what you're asking for: #{params[:submit]}"
-    end
-  rescue => e
-    logger.error("change_data error: #{e.to_s}")
-    @message = e.to_s.sub(/uncaught throw/,'').gsub(/"/,'')
-    render 'error', locals: {message_container_id_prefix: 'orchid-batch-status-' }
-  end
-
-  def remember_taxon_string
-    session[:taxon_string] = params[:taxon_string] unless params[:taxon_string].blank?
-  end
-
-  def show_status
-    @status = Orchid::AsStatusReporter.new(params[:taxon_string]).report
-    render 'status'
-  end
+  def unlock
+    OrchidBatchJobLock.unlock!
+    render js:  "$('#emergency-unlock-link').hide();" 
+  end  
 
   def create_preferred_matches
     prefix = the_prefix('create-preferred-matches-')
@@ -107,6 +82,36 @@ class OrchidsBatchController < ApplicationController
     logger.error e.backtrace.join("\n")
     @message = e.to_s.sub(/uncaught throw/,'').gsub(/"/,'')
     render 'error', locals: {message_container_id_prefix: prefix }
+  end
+
+  private 
+
+  def change_data
+    raise OrchidBatchJobLockedError.new(params[:submit]) unless OrchidBatchJobLock.lock!(params[:submit])
+    case params[:submit]
+    when 'Create Preferred Matches'
+      create_preferred_matches
+    when 'Create Draft Instances'
+      create_instances_for_preferred_matches
+    when 'Add to draft tree'
+      add_instances_to_draft_tree
+    else 
+      OrchidBatchJobLock.unlock!
+      throw "Editor doesn't understand what you're asking for: #{params[:submit]}"
+    end
+  rescue => e
+    logger.error("change_data error: #{e.to_s}")
+    @message = e.to_s.sub(/uncaught throw/,'').gsub(/"/,'')
+    render 'error', locals: {message_container_id_prefix: 'orchid-batch-status-' }
+  end
+
+  def remember_taxon_string
+    session[:taxon_string] = params[:taxon_string] unless params[:taxon_string].blank?
+  end
+
+  def show_status
+    @status = Orchid::AsStatusReporter.new(params[:taxon_string]).report
+    render 'status'
   end
 
   def message(placed_tally, error_tally, preflight_stop_tally, text_msg)

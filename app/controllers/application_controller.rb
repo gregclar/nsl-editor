@@ -16,17 +16,18 @@ class ApplicationController < ActionController::Base
     head :forbidden
   end
 
+  protected
+
   def show_login_page
-    logger.info("Show login page - invalid authenticity token.")
+    logger.error("Invalid Authenticity Token.")
     if request.format == "text/javascript"
-      logger.info('JavaScript request with invalid authenticity token\
+      logger.error('JavaScript request with invalid authenticity token\
                   - expired session?')
+      render :js => "alert('Your session may have expired. Please reload the whole page before continuing.');"
     else
       redirect_to start_sign_in_path, notice: "Please try again."
     end
   end
-
-  protected
 
   def check_authorization
     controller = params[:controller]
@@ -37,7 +38,7 @@ class ApplicationController < ActionController::Base
     logger.error("User #{@current_user.username} #{details}")
     raise
   end
-
+ 
   def authenticate
     if session[:username].blank?
       ask_user_to_sign_in
@@ -92,7 +93,20 @@ class ApplicationController < ActionController::Base
     respond_to do |format|
       format.html {redirect_to start_sign_in_url, notice: "Please sign in."}
       format.json {render partial: "layouts/no_session.js"}
-      format.js {render partial: "layouts/no_session.js"}
+      format.js { js_render }
+    end
+  end
+
+  def js_render
+    if params[:extras_id] =~ /search-examples/ || params[:extras_id] =~ /search-help/
+      logger.error("Handling unauth request for search-helpd or search-examples")
+      render html: "<div class='embedded-notice'><b>Your session may have expired.  Please reload the whole page before continuing.</b></div><script>alert('login...';) </script>".html_safe
+    elsif params[:tab].blank? 
+      logger.error("Handling unauth request for a non-tab")
+      render :js => "alert('Your session may have expired. Please reload the whole page before continuing.');", layout: true
+    else
+      logger.error("Handling unauth request for the rest, including tabs")
+      render html: "<div class='embedded-notice'><b>Your session may have expired.  Please reload the whole page before continuing.</b></div><script>alert('login...';) </script>".html_safe
     end
   end
 

@@ -43,7 +43,7 @@ class Tree::Workspace::Placement < ActiveType::Object
     RestClient.put(url, payload.to_json,
                    {content_type: :json, accept: :json})
   rescue RestClient::ExceptionWithResponse => e
-    Rails.logger.error("Tree::Workspace::Placement error: #{e.message}")
+    Rails.logger.error("Tree::Workspace::Placement RestClient::ExceptionWithResponse error: #{e.message}")
     raise
   rescue => e
     Rails.logger.error("Tree::Workspace::Placement other error: #{e}")
