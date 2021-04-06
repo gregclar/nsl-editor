@@ -22,9 +22,8 @@
   <% if @name.instances.size > 0 %>
     <br>
     <%= link_to("#{pluralize(@name.instances.size,'instance')} #{icon('search')}".html_safe, 
-                        search_path(query: "id: #{@name.id}", 
-                        query_on: 'instance',
-                        query_field: 'name-instances'),
+                        search_path(query_string: "id: #{@name.id} show-instances:", 
+                        query_target: 'name'),
                         tabindex: increment_tab_index,
                         title: "Search for the #{pluralize(@name.instances.size,'instance')}",
                         class: '') %>
@@ -32,11 +31,11 @@
   <% if @name.children.size > 0 %>
     <br>
   <%= link_to("#{pluralize(@name.children.size,'child')} #{icon('search')}".html_safe,
-    search_path(query: "parent-id: #{@name.id}",
-                        query_field: 'name'),
-                        tabindex: increment_tab_index,
-                        title: "Retrieve #{pluralize(@name.children.size,'child')}.",
-                        class: '') %>
+    search_path(query_string: "parent-id: #{@name.id}",
+                query_target: 'name'),
+                tabindex: increment_tab_index,
+                title: "Retrieve #{pluralize(@name.children.size,'child')}.",
+                class: '') %>
   <% end %>
   <% if @name.comments.size > 0  %>
     <br>
