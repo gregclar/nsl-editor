@@ -81,7 +81,8 @@ class Search::ParsedRequest
   def initialize(params)
     debug("initialize: params: #{params}")
     @params = params
-    @query_string = @params["query_string"].gsub(/  */, " ")
+    @query_string = canonical_query_string
+    @query_string = @query_string.gsub(/  */, " ") unless @query_string.blank?
     @query_target = (@params["canonical_query_target"] || "").strip.downcase
     @user = @params[:current_user]
     parse_request
@@ -296,6 +297,6 @@ class Search::ParsedRequest
   end
 
   def canonical_query_string
-    @params[:query_string]
+    @params[:query_string] || @params[:query]
   end
 end
