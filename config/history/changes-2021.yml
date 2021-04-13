@@ -1,3 +1,7 @@
+- :date: 08-Apr-2021
+  :jira_id: '3867'
+  :description: |-
+    Restore handling of old parameter convention still used in services.
 - :date: 06-Apr-2021
   :jira_id: '3867'
   :description: |-

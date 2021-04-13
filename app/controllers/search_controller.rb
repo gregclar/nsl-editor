@@ -2,7 +2,7 @@ class SearchController < ApplicationController
   before_action :hide_details
 
   def search
-    handle_names_plus_instances
+    handle_old
     run_local_search || run_empty_search
     respond_to do |format|
       format.html
@@ -81,7 +81,24 @@ class SearchController < ApplicationController
     Name.find_by(full_name: "Plantae Haeckel").id
   end
 
-  def handle_names_plus_instances
+  # note: services needs to be changed to use the "new" params
+  # before you can remove this code
+  def handle_old
+    handle_old_style_params
+    handle_names_plus_instances_target
+  end
+
+  # translate services/search/link
+  def handle_old_style_params
+    return unless params[:query].present?
+    unless params[:query_field] == "name-instances"
+      raise "Cannot handle this query-field: #{params[:query_field]}"
+    end
+    params[:query_target] = "name"
+    params[:query_string] = params[:query].sub(/\z/, " show-instances:")
+  end
+
+  def handle_names_plus_instances_target
     return unless params[:query_target].present?
     return unless params[:query_target] =~ /Names plus instances/i
     params[:query_target] = "name"
