@@ -1,4 +1,8 @@
 - :date: 14-Apr-2021
+  :jira_id: '3877'
+  :description: |-
+    Orchids: the Add to Tree process for an orchid checks the No Further Processing flag before any other record-level checks
+- :date: 14-Apr-2021
   :jira_id: '3875'
   :description: |-
     Orchids: restrict search directive in-current-taxonomy: to accepted orchids; add not-in-current-taxonomy directive with help and example
