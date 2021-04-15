@@ -52,6 +52,9 @@ class Orchid::AsTreePlacer
     when @draft_tree.blank?
       @preflight_failed = true
       @preflight_error = "No such draft #{@draft_tree.draft_name}"
+    when @orchid.exclude_from_further_processing?
+      @preflight_failed = true
+      @preflight_error = "#{@orchid.taxon} is excluded from further processing"
     when @orchid.preferred_match.blank?
       @preflight_failed = true
       @preflight_error = "No preferred matching name for #{@orchid.taxon}"
@@ -61,9 +64,6 @@ class Orchid::AsTreePlacer
     when @orchid.orchids_name.first.drafted?
       @preflight_failed = true
       @preflight_error = "Stopping because #{@orchid.taxon} is already on the draft tree"
-    when @orchid.exclude_from_further_processing?
-      @preflight_failed = true
-      @preflight_error = "#{@orchid.taxon} is excluded from further processing"
     when @orchid.parent.try('exclude_from_further_processing?')
       @preflight_failed = true
       @preflight_error = "Parent of #{@orchid.taxon} is excluded from further processing"
