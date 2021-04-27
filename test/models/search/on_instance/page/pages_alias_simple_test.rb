@@ -16,25 +16,20 @@
 #   See the License for the specific language governing permissions and
 #   limitations under the License.
 #
-# Field abbreviations available for building predicates
-class Search::OnReference::FieldAbbrev
-  ABBREVS = {
-    "c:" => "citation:",
-    "ct:" => "citation-text:",
-    "t:" => "title:",
-    "ti:" => "title:",
-    "ty:" => "type:",
-    "ref-type:" => "type:",
-    "rt:" => "type:",
-    "a:" => "author:",
-    "y:" => "year:",
-    "iso-publication-date:" => "published-in-or-on:",
-    "date:" => "published-in-or-on:",
-    "iso:" => "published-in-or-on:",
-    "date-matches:" => "iso-pub-date-matches:",
-    "pd:" => "publication-date:",
-    "is-duplicate:" => "is-a-duplicate:",
-    "duplicate:" => "is-a-duplicate:",
-    "page:" => "pages:",
-  }.freeze
+require "test_helper"
+load "test/models/search/users.rb"
+
+# Single Search model test on Instance search.
+class SearchOnInstancePagesAliasSimpleTest < ActiveSupport::TestCase
+  test "search on instance pages alias simple" do
+    params = ActiveSupport::HashWithIndifferentAccess.new(
+      query_target: "instance",
+      query_string: "pages: zzzz99901",
+      include_common_and_cultivar_session: true,
+      current_user: build_edit_user
+    )
+    search = Search::Base.new(params)
+    assert !search.executed_query.results.empty?,
+           "Instances with matching pages expected."
+  end
 end
