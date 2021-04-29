@@ -2580,3 +2580,19 @@ dummy_name_for_unsourced_misapps:
   uri: agc
   updated_by: greg
   created_by: greg
+
+dendrobium_hybrid_formula:
+  simple_name: Dendrobium aemulum x Dendrobium kingianum
+  full_name: Dendrobium aemulum R.Br. x Dendrobium kingianum Bidwill ex Lindl.
+  name_element: aemulum x kingianum
+  name_rank: species
+  name_status: legitimate
+  name_type: hybrid_formula_parents_known
+  namespace: apni
+  parent: a_family
+  family: a_family
+  name_path: 'Eukaryota/Plantae/Magnoliophyta/Magnoliopsida/Magnoliidae/Asparagales/Orchidaceae/Dendrobium/aemulum/aemulum x kingianum'
+  uri: agd
+  updated_by: greg
+  created_by: greg
+
