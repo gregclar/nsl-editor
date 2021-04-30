@@ -1,81 +1,52 @@
-<h3>APC Review</h3>
-This tab is for taxonomy builders, it's a set of instructions and links for taxonomy reviews.
-<h4>Overview</h4>
+<h3>Taxonomy Review</h3>
+<p>
+This is the hub for work on taxonomy reviews. 
+</p>
 
+<h4>Operations and Status</h4>
+<p>
+<b><%= ShardConfig.name_space %></b> has
+  <%= link_to(pluralize(Tree.accepted.all.size, 'accepted taxonomy'),
+            search_path(query_string: "accepted:",
+                        query_target: 'tree'),
+                        title: 'Retrieve the accepted taxonomy',
+                        class: 'with-underline') %>
+</p>
+<p>
+<% Tree.accepted.each do | tree | %> 
+  The <b><%= tree.name %> taxonomy</b> has 
+  <%= link_to(pluralize(tree.versions.where(published: false).size, 'draft version'),
+                                    search_path(query_string: "for-tree-id: #{tree.id} unpublished:",
+                        query_target: 'tree_versions'),
+                        title: 'Retrieve unpublished versions of this taxonomy',
+                        class: 'with-underline') %>
+</p>
+<p>
+  <% tree.versions.where(published: false).each do |tree_version| %>
+    <b><%= tree_version.draft_name %></b> is a draft version
+</p>
+    It has
+    <%= link_to(pluralize(tree_version.taxonomy_version_reviews.size, 'review'),
+                          search_path(query_string: "*",
+                                      query_target: 'taxonomy_version_reviews'),
+                                      title: 'Retrieve the reviews',
+                                      class: 'with-underline') %>
 
-<svg viewBox="0 0 185 110" width="10%" height="10%" xmlns="http://www.w3.org/2000/svg" xmlns:svg="http://www.w3.org/2000/svg">
-<%= render partial: 'taxonomy_version_reviews/workflow_svg' %>
-</svg>
-<br>
+    <p>
+    <% if tree_version.taxonomy_version_reviews.size == 0 %>
+      <br>
+      <div class="width-20em border-simple padding-simple">
+      <%= render partial: 'taxonomy_version_reviews/form/form_create_from_tree_version', locals: {tree_version: tree.default_draft_version} %>
+      </div>
+    <% end %>
+    </p>
 
-<h4>Starting a Review</h4>
-    <ul>
-      <li/>You start a review by creating a review record for an unpublished taxonomy <b>version</b>. 
-    <li/>Choose an (unpublished) taxonomy version for review
-    <ul>
-      <li/><%= link_to("Unpublished taxonomy versions",
-                       search_path(query_string: 'unpublished:',
-                                   query_target: 'tree_versions'),
-                       class: "with-underline",
-                       title: "Retrieve all unpublished taxonomy versions") %>
-    </ul>
-    </ul>
+    <% tree_version.taxonomy_version_reviews.each do |review| %>
+      <b><%= review.name %></b>
+    <% end %>
+  <% end %>
+<% end %>
 
-<h4>Starting a Review Period</h4>
-<h4>Reading Review Comments</h4>
-<h4>Ending a Review Period</h4>
-<h4>Closing a Review</h4>
-<h4>Extending a Review</h4>
-<ol>
-  <li/>Choose a taxonomy
-    <ul>
-      <li/><%= link_to("All taxonomies",
-                       search_path(query_string: '*',
-                                   query_target: 'tree'),
-                       class: "with-underline",
-                       title: "Retrieve a list of all taxonomies") %>
-      <li/><%= link_to("Accepted taxonomy",
-                       search_path(query_string: 'accepted:', query_target: 'tree'),
-                       class: "with-underline",
-                       title: "Retrieve the accepted taxonomy") %>
-    </ul>
-  <li/>Create a review record for the version
-    <ul>
-      <li/>Use the "Review" tab for a taxonomy version
-    </ul>
-  <li/>Retrieve the review record
-    <ul>
-      <li><%= link_to("Taxonomy version reviews",
-                      search_path(query_string: '*',
-                                  query_target: 'taxonomy_version_reviews'),
-                      class: "with-underline",
-                      title: "Retrieve all unpublished taxonomy version review records") %>
-      <li/>Taxonomy version "Details" tab lists and links reviews
-    </ul>
-  <li/>Set up a review period 
-    <ul>
-      <li/>Use the "Periods of Review" tab for a taxonomy version review
-      <li><%= link_to("Taxonomy version review periods",
-                      search_path(query_string: 'any:',
-                                  query_target: 'taxonomy_version_review_periods'),
-                      class: "with-underline",
-                      title: "Retrieve all taxonomy version review period records") %>
-    </ul>
-  <li/>Allocate reviewers to the review period 
-  <li/>Read review comments 
-  <li/>End a review period
-  <li/>End a review
-</ol>
-<h5>Workflow Suggestion</h5>
-Open the Editor in at least 2 tabs of your browser
-<ul>
-  <li>keep this administration tab open in one of the browser tabs,
-  <li>use the other browser tab for the work
-</ul>
-<br>
-<br>
-<%= render partial: 'taxonomy_version_reviews/main_tab/system_status' %>
-<br>
-<br>
-<br>
-<br>
+<hr class="dark">
+<%= render partial: 'taxonomy_version_reviews/doco_for_review_admin' %>
+

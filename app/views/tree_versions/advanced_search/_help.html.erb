@@ -1,14 +1,15 @@
-<h4>Tree search</h4>
-<p/>Trees listed in name alphabetical order.
+<h4>Tree Version search</h4>
 <br>
 <br>
-<h4>Searchable Tree</h4>
 <table class="table table-striped">
-  <tr><th>Field</th><th>Description</th></tr>
+  <tr><th>Search Directive</th><th>Description</th></tr>
   <% [
       {field_name: 'id:', description: "match on id"},
-      {field_name: 'name:', description: "match on name - this is the default search if you don't give a field name"},
-      {field_name: 'accepted:', description: "match only if the taxonomy is the accepted taxonomy"},
+      {field_name: 'draft-name:', description: "match on draft-name &mdash; this is the default search if you don't provide a search directive"},
+      {field_name: 'for-tree-id:', description: "match on ID of the tree this version belongs to"},
+      {field_name: 'has-review:', description: "match if it has an attached review"},
+      {field_name: 'published:', description: "is published"},
+      {field_name: 'unpublished:', description: "isn't published"},
       ].each do |val| %>
   <tr>
     <td class="width-20-percent">

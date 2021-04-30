@@ -167,7 +167,6 @@ $( document ).on('turbolinks:load', function() {
     $('.main-body-container').addClass('hidden');
     $('#search-result-details').addClass('hidden');
     $(targetElement).removeClass('hidden');
-    //$('#help-search-container').removeClass('hidden');
     e.preventDefault()
   });
 

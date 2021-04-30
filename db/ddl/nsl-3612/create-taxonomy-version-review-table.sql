@@ -1,4 +1,4 @@
-create table taxonomy_review (
+create table taxonomy_version_review (
   id serial primary key,
   tree_version_id bigint not null,
   name varchar(50) not null,
