@@ -24,7 +24,7 @@ class TaxonomyVersionReview < ActiveRecord::Base
   #self.sequence_name = "nsl_global_seq"
   belongs_to :tree_version
   validates :name, presence: true
-  has_many :taxonomy_version_review_periods
+  has_many :periods, class_name: 'TaxonomyVersionReviewPeriod'
  
   # The table isn't in all schemas, so check it's there
   def self.exists?

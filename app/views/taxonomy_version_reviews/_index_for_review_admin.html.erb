@@ -1,16 +1,14 @@
-<h3>Taxonomy Review</h3>
-<p>
-This is the hub for work on taxonomy reviews. 
-</p>
+<h2>Taxonomy Version Review Hub</h2>
 
-<h4>Operations and Status</h4>
-<p>
-<b><%= ShardConfig.name_space %></b> has
-  <%= link_to(pluralize(Tree.accepted.all.size, 'accepted taxonomy'),
+<br>
+<hr class="dark">
+<h3>Status</h3>
+
+  This database has <%= link_to(pluralize(Tree.accepted.all.size, 'accepted taxonomy'),
             search_path(query_string: "accepted:",
                         query_target: 'tree'),
                         title: 'Retrieve the accepted taxonomy',
-                        class: 'with-underline') %>
+                        class: 'with-underline') %>: <%= Tree.accepted.all.collect(&:name).join(',') %>
 </p>
 <p>
 <% Tree.accepted.each do | tree | %> 
@@ -19,18 +17,21 @@ This is the hub for work on taxonomy reviews.
                                     search_path(query_string: "for-tree-id: #{tree.id} unpublished:",
                         query_target: 'tree_versions'),
                         title: 'Retrieve unpublished versions of this taxonomy',
-                        class: 'with-underline') %>
+                        class: 'with-underline') %>: <%= tree.versions.where(published: false).collect(&:draft_name).join(', ') %>
 </p>
 <p>
-  <% tree.versions.where(published: false).each do |tree_version| %>
-    <b><%= tree_version.draft_name %></b> is a draft version
-</p>
-    It has
+  <% tree.versions.where(published: false).each_with_index do |tree_version, ndx| %>
+    <p>
+    <% if ndx > 0 %>
+      <br>
+      <br>
+    <% end %>
+    <b><%= tree_version.draft_name %></b> has
     <%= link_to(pluralize(tree_version.taxonomy_version_reviews.size, 'review'),
                           search_path(query_string: "*",
                                       query_target: 'taxonomy_version_reviews'),
                                       title: 'Retrieve the reviews',
-                                      class: 'with-underline') %>
+                                      class: 'with-underline') %>: <%= tree_version.taxonomy_version_reviews.collect(&:name).join(', ') %>
 
     <p>
     <% if tree_version.taxonomy_version_reviews.size == 0 %>
@@ -43,10 +44,19 @@ This is the hub for work on taxonomy reviews.
 
     <% tree_version.taxonomy_version_reviews.each do |review| %>
       <b><%= review.name %></b>
+      <br>created:<b> <%= review.created_by %></b>
+      <br>created at:<b> <%= review.created_at %></b>
+      <br>in progress:<b> <%= review.in_progress %></b>
+      <br>review periods:<b> <%= review.periods.count %></b>
+    
+      <% review.periods.each do |period| %>
+        <%= period.inspect %><br>
+        <br>start:<b> <%= period.start_date %></b>
+        <br>end:<b> <%= period.end_date %></b>
+      <% end %>
     <% end %>
   <% end %>
 <% end %>
 
-<hr class="dark">
 <%= render partial: 'taxonomy_version_reviews/doco_for_review_admin' %>
 
