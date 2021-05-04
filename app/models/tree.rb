@@ -69,4 +69,8 @@ class Tree < ActiveRecord::Base
     self.config.present?
   end
 
+  def self.exactly_one_accepted?
+    Tree.accepted.all.size == 1
+  end
+
 end

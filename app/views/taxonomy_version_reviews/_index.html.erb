@@ -1,6 +1,7 @@
 <div id="taxonomy-review-inner" class="reports-inner workflow-guide">
   <% if can?("taxonomy_version_review","administer") %>
     <%= render partial: "index_for_review_admin" %>
-  <% end %>
+  <% else %>
   <%= render partial: "index_for_reviewer" %>
+  <% end %>
 </div>

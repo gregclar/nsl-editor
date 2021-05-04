@@ -75,11 +75,11 @@ class TaxonomyVersionReview < ActiveRecord::Base
   end
 
   def can_be_deleted?
-    taxonomy_version_review_periods.size.zero?
+    periods.size.zero?
   end
 
   def active?
-    taxonomy_version_review_periods.each do |review_period|
+    periods.each do |review_period|
       return true if review_period.active?
     end
     return false
