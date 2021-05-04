@@ -123,7 +123,7 @@ class Orchid::AsTreePlacer
     @error_count = 1
     @error = json_error(e)
     log_to_table("Error placing or replacing on tree: #{@orchid.taxon}, id: #{@orchid.id}: #{@error}", @authorising_user)
-    if @orchid.nsl_rank.downcase == 'genus'
+    if (@orchid.nsl_rank || 'species').downcase == 'genus'
       raise GenusTaxonomyPlacementError.new("Stopping because failed to add genus #{@orchid.taxon}")
     else
       0
