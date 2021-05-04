@@ -1,7 +1,7 @@
-- :date: 04-May-2021
+- :date: 05-May-2021
   :jira_id: '3906'
   :description: |-
-    Orchids: handle empty nsl_rank values when Services report placement errors
+    Orchids: batch tree placement - halting for failed genus placement now looks to a matching name's rank if nsl_rank and rank is empty
 - :date: 30-Apr-2021
   :jira_id: '3612'
   :description: |-
