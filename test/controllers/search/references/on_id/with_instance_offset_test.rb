@@ -32,7 +32,7 @@ class SearchRefsOnIdWithInstanceOffsetTest < ActionController::TestCase
                    groups: [] })
     assert_response :success
     assert_select "#search-results-summary",
-                  /27 records\b/,
-                  "Should find 36 records"
+                  /28 records\b/,
+                  "Should find 28 records"
   end
 end

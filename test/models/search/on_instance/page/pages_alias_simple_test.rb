@@ -17,22 +17,19 @@
 #   limitations under the License.
 #
 require "test_helper"
+load "test/models/search/users.rb"
 
-# Single search controller test.
-class SearchRefsOnIdWithInstancesTest < ActionController::TestCase
-  tests SearchController
-
-  test "search on reference id with instances" do
-    ref = references(:bucket_reference_for_default_instances)
-    get(:search,
-        params: { query_target: "reference",
-                  query_string: "id: #{ref.id} show-instances:" },
-        session: { username: "fred",
-                   user_full_name: "Fred Jones",
-                   groups: [] })
-    assert_response :success
-    assert_select "#search-results-summary",
-                  /37 records\b/,
-                  "Should find 37 records"
+# Single Search model test on Instance search.
+class SearchOnInstancePagesAliasSimpleTest < ActiveSupport::TestCase
+  test "search on instance pages alias simple" do
+    params = ActiveSupport::HashWithIndifferentAccess.new(
+      query_target: "instance",
+      query_string: "pages: zzzz99901",
+      include_common_and_cultivar_session: true,
+      current_user: build_edit_user
+    )
+    search = Search::Base.new(params)
+    assert !search.executed_query.results.empty?,
+           "Instances with matching pages expected."
   end
 end

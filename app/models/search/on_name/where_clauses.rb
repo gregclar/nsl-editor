@@ -81,9 +81,18 @@ class Search::OnName::WhereClauses
     when 1 then @sql = @sql.where(rule.predicate, rule.processed_value)
     when 2 then supply_value_twice(rule)
     when 3 then supply_value_thrice(rule)
+    when 4 then supply_value_four_times(rule)
     else
       raise "Where clause value frequency (#{rule.value_frequency}), too high."
     end
+  end
+
+  def supply_value_four_times(rule)
+    @sql = @sql.where(rule.predicate,
+                      rule.processed_value,
+                      rule.processed_value,
+                      rule.processed_value,
+                      rule.processed_value)
   end
 
   def supply_value_thrice(rule)

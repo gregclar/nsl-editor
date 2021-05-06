@@ -35,5 +35,6 @@ class Search::OnReference::FieldAbbrev
     "pd:" => "publication-date:",
     "is-duplicate:" => "is-a-duplicate:",
     "duplicate:" => "is-a-duplicate:",
+    "page:" => "pages:",
   }.freeze
 end

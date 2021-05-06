@@ -143,3 +143,10 @@ body .stylish-scrollbar::-webkit-scrollbar-track-piece {
   background-color:rgba(255,255,255,0.8)
 }
 
+hr.dark {
+    border: none;
+    height: 1px;
+    /* Set the hr color */
+    color: #333; /* old IE */
+    background-color: #333; /* Modern Browsers */
+}

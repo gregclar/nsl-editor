@@ -22,7 +22,7 @@ class Search::OnTreeVersion::FieldRule
                                where_clause: "id = ? ",
                                multiple_values_where_clause: " id in (?)",
                                order: "id"},
-    "draft_name:"         => { trailing_wildcard: true,
+    "draft-name:"         => { trailing_wildcard: true,
                               where_clause: " lower(draft_name) like ?",
                                       order: "created_at desc"},
     "for-tree-id:"      => { where_clause: " tree_id = ?",

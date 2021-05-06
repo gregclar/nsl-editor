@@ -123,7 +123,7 @@ class Orchid::AsTreePlacer
     @error_count = 1
     @error = json_error(e)
     log_to_table("Error placing or replacing on tree: #{@orchid.taxon}, id: #{@orchid.id}: #{@error}", @authorising_user)
-    if @orchid.nsl_rank.downcase == 'genus'
+    if inferred_rank.downcase == 'genus'
       raise GenusTaxonomyPlacementError.new("Stopping because failed to add genus #{@orchid.taxon}")
     else
       0
@@ -133,6 +133,13 @@ class Orchid::AsTreePlacer
     Rails.logger.error("place_or_replace: Error placing or replacing orchid on tree #{e.methods.join(',')}")
     log_to_table("Error placing/replacing on tree: #{@orchid.taxon}, id: #{@orchid.id}: #{e.message}", @authorising_user)
     raise
+  end
+
+  def inferred_rank
+    (@orchid.nsl_rank ||
+     @orchid.rank ||
+     @orchid&.orchids_name&.first&.name&.name_rank&.name ||
+     'cannot infer rank')
   end
 
   def place_name(orchids_name)

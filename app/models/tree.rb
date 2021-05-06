@@ -49,6 +49,10 @@ class Tree < ActiveRecord::Base
   has_many :tree_versions,
            foreign_key: "tree_id"
 
+  has_many :versions,
+           class_name: "TreeVersion",
+           foreign_key: "tree_id"
+
   scope :accepted,
         (lambda do
           where(name: ShardConfig.classification_tree_key)
@@ -63,6 +67,10 @@ class Tree < ActiveRecord::Base
 
   def config?
     self.config.present?
+  end
+
+  def self.exactly_one_accepted?
+    Tree.accepted.all.size == 1
   end
 
 end

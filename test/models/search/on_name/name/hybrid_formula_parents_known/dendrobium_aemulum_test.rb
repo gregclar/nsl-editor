@@ -16,23 +16,24 @@
 #   See the License for the specific language governing permissions and
 #   limitations under the License.
 #
+
 require "test_helper"
+load "test/models/search/users.rb"
+load "test/models/search/on_name/test_helper.rb"
 
-# Single search controller test.
-class SearchRefsOnIdWithInstancesTest < ActionController::TestCase
-  tests SearchController
-
-  test "search on reference id with instances" do
-    ref = references(:bucket_reference_for_default_instances)
-    get(:search,
-        params: { query_target: "reference",
-                  query_string: "id: #{ref.id} show-instances:" },
-        session: { username: "fred",
-                   user_full_name: "Fred Jones",
-                   groups: [] })
-    assert_response :success
-    assert_select "#search-results-summary",
-                  /37 records\b/,
-                  "Should find 37 records"
+# Single Search model test.
+class SearchOnNameNameNamedHybridDendrobiumaemulumTest < ActiveSupport::TestCase
+  test "name search for hybrid formula parents known dend aemulum" do
+    params = ActiveSupport::HashWithIndifferentAccess.new(
+      query_target: "name",
+      query_string: "name: Dendrobium aemulum x Dendrobium kingianum",
+      current_user: build_edit_user
+    )
+    search = Search::Base.new(params)
+    confirm_results_class(search.executed_query.results)
+    assert_equal 1,
+                 search.executed_query.results.size,
+                 "Expected 1 result"
   end
+
 end

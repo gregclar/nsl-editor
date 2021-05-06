@@ -974,3 +974,16 @@ unsourced_doubtful_pro_parte_misapplied_example:
   created_by: tester
   updated_by: tester
 
+
+
+# Default instance for hybrid formula
+default_instance_for_dendrobium_hybrid_formula:
+  reference: bucket_reference_for_default_instances
+  name: dendrobium_hybrid_formula
+  instance_type: tax_nov
+  verbatim_name_string: verbatim
+  namespace: apni
+  created_by: tester
+  updated_by: tester
+  page: exclude-from-ordering-test
+

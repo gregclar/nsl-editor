@@ -1,3 +1,21 @@
+- :date: 05-May-2021
+  :jira_id: '3906'
+  :description: |-
+    Orchids: batch tree placement - halting for failed genus placement now looks to a matching name's rank if nsl_rank and rank are both empty
+- :date: 30-Apr-2021
+  :jira_id: '3612'
+  :description: |-
+    Taxonomy review: work-in-progress
+- :date: 29-Apr-2021
+  :jira_id: '3895'
+  :description: |-
+    Name search: improve search for hybrid formulae
+- :date: 27-Apr-2021
+  :jira_id: '3893'
+  :description: |-
+    Reference and Instance search on page or pages: add help for Reference search on page; page and pages now work for both search targets.
+- :date: 15-Apr-2021
+  :release: true
 - :date: 14-Apr-2021
   :jira_id: '3877'
   :description: |-

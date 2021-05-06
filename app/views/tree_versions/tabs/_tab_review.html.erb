@@ -1,9 +1,13 @@
-<h5>Add a taxonomy review record</h5>
+<h5>Set up a taxonomy review</h5>
 
 <% if @tree_version.published %>
-  <p>This version of taxonomy has been published so you cannot create a review.</p>
+  <p>This taxonomy has been published so you cannot create a review.</p>
+<% elsif @tree_version.has_active_review? %>
+  <p>This draft already has an active review.</p>
+<% elsif @tree_version.has_inactive_empty_review? %>
+  <p>This draft already has an inactive review with no review periods defined. You can define a review period for it, or delete it.</p>
 <% else %>
-<%= render partial: 'taxonomy_version_reviews/form_create_from_tree_version' %>
+  <%= render partial: 'taxonomy_version_reviews/form/form_create_from_tree_version', locals: {tree_version: @tree_version} %>
 
 <br>
 <br>

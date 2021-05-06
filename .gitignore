@@ -34,3 +34,4 @@ yarn-debug.log*
 *.war
 .yarn
 .yarnrc
+.DS_Store

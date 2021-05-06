@@ -1,4 +1,6 @@
-<%= form_for(@taxonomy_version_review, remote: true) do |f| %>
+<% taxonomy_version_review = TaxonomyVersionReview.new %>
+<% taxonomy_version_review.tree_version = tree_version %>
+<%= form_for(taxonomy_version_review, remote: true) do |f| %>
 
 
     Name
@@ -6,13 +8,13 @@
     <%= f.text_field :name,
       class: "form-control",
       required: true,
-      value: "Review of #{@taxonomy_version_review.tree_version.tree.name} #{@taxonomy_version_review.tree_version.draft_name}" ,
+      value: "Review of #{tree_version.tree.name} #{tree_version.draft_name}" ,
       title: "Enter a short, descriptive name for the review",
       tabindex: increment_tab_index %>
 
     <br>
     <%= f.hidden_field :tree_version_id %>
-    <%= f.submit id: "save-new-instance-btn", class: 'btn-primary', title: "Save changes", tabindex: increment_tab_index %>
+    <%= f.submit id: "save-new-review-btn", class: 'btn-primary', value: 'Create Review', title: "Saves a new taxonomy version review", tabindex: increment_tab_index %>
     <br>
 
 <% end %>
