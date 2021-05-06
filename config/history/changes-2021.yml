@@ -1,4 +1,8 @@
 - :date: 06-May-2021
+  :jira_id: '3908'
+  :description: |-
+    Orchids: allow orchids to be flagged as manually drafted, and exclude such orchids from batch drafting
+- :date: 06-May-2021
   :release: true
 - :date: 05-May-2021
   :jira_id: '3906'

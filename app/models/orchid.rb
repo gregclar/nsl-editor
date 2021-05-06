@@ -221,6 +221,14 @@ class Orchid < ActiveRecord::Base
     doubtful == true
   end
 
+  def excluded?
+    record_type == 'accepted' && doubtful == true
+  end
+
+  def accepted_and_not_doubtful?
+    record_type == 'accepted' && doubtful != true
+  end
+
   # This search emulates the default search for Orchids, the 
   # taxon-string: search.
   def self.taxon_string_search(taxon_string)

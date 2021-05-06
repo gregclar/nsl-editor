@@ -193,5 +193,9 @@ having count(*)                     >  1
                        order: "seq"},
     "syn-type:" => { where_clause: "lower(synonym_type) like ?",
                                       order: "seq"},
+    "manually-drafted:" => { where_clause: " id in (select orchid_id from orchids_names where manually_drafted)",
+                                      order: "seq"},
+    "drafted:" => { where_clause: " id in (select orchid_id from orchids_names where drafted)",
+                                      order: "seq"},
   }.freeze
 end

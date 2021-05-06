@@ -34,14 +34,16 @@ class OrchidsNamesController < ApplicationController
   end
 
   def update
-    raise "No change!" if @orchids_name.relationship_instance_type_id == orchids_name_params[:relationship_instance_type_id].to_i
-    @orchids_name.relationship_instance_type_id = orchids_name_params[:relationship_instance_type_id]
-    @orchids_name.updated_by = username
-    @orchids_name.save!
-  rescue => e
-    logger.error(e.to_s)
-    @message = e.to_s
-    render 'update_error', format: :js
+    case params[:commit] 
+    when nil
+      raise 'no commit param'
+    when /flag.* manually drafted/i
+      flag_as_manually_drafted
+    when /remove.*manually.drafted.flag/i
+      unflag_as_manually_drafted
+    else
+      update_relationship_instance_type
+    end
   end
 
   def delete
@@ -55,6 +57,35 @@ class OrchidsNamesController < ApplicationController
   end
 
   private
+
+  def update_relationship_instance_type
+    raise "No change!" if @orchids_name.relationship_instance_type_id == orchids_name_params[:relationship_instance_type_id].to_i
+    @orchids_name.relationship_instance_type_id = orchids_name_params[:relationship_instance_type_id]
+    @orchids_name.updated_by = username
+    @orchids_name.save!
+  rescue => e
+    logger.error(e.to_s)
+    @message = e.to_s
+    render 'update_error', format: :js
+  end
+
+  def flag_as_manually_drafted
+    if @orchids_name.manually_drafted?
+      raise 'no change required'
+    else
+      @orchids_name.manually_drafted = true
+      @orchids_name.save!
+    end
+  end
+
+  def unflag_as_manually_drafted
+    if @orchids_name.manually_drafted?
+      @orchids_name.manually_drafted = false
+      @orchids_name.save!
+    else
+      raise 'no change required'
+    end
+  end
 
   def orchids_name_params
     params.require(:orchid_name).permit(:orchid_id, :name_id, :instance_id, :relationship_instance_type_id)
