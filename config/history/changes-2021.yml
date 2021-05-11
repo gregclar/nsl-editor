@@ -1,3 +1,7 @@
+- :date: 11-May-2021
+  :jira_id: ''
+  :description: |-
+    Rails: upgrade to version 6.0.3.7; upgrade various JS libraries due to security alerts
 - :date: 06-May-2021
   :jira_id: '3908'
   :description: |-
