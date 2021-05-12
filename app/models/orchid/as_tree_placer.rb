@@ -51,7 +51,7 @@ class Orchid::AsTreePlacer
     case 
     when @draft_tree.blank?
       @preflight_failed = true
-      @preflight_error = "No such draft #{@draft_tree.draft_name}"
+      @preflight_error = "Please choose a draft version"
     when @orchid.exclude_from_further_processing?
       @preflight_failed = true
       @preflight_error = "#{@orchid.taxon} is excluded from further processing"
@@ -64,6 +64,9 @@ class Orchid::AsTreePlacer
     when @orchid.orchids_name.first.drafted?
       @preflight_failed = true
       @preflight_error = "Stopping because #{@orchid.taxon} is already on the draft tree"
+    when @orchid.orchids_name.first.manually_drafted?
+      @preflight_failed = true
+      @preflight_error = "Stopping because #{@orchid.taxon} is flagged as manually drafted"
     when @orchid.parent.try('exclude_from_further_processing?')
       @preflight_failed = true
       @preflight_error = "Parent of #{@orchid.taxon} is excluded from further processing"

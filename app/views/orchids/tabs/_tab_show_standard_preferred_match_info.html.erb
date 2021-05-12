@@ -3,9 +3,12 @@
 <% unless @orchid.orchids_name.empty? %>
   <% @orchid.orchids_name.each do |orchids_name| %>
     <%= divider %>
-      <% if orchids_name.instance_type %>
-        Preferred match is designated as a <span class="relationship-statement"><%= orchids_name.try('instance_type').try('name') %></span><br>
-      <% end %>
+    <% if orchids_name.instance_type %>
+      Preferred match is designated as a <span class="relationship-statement"><%= orchids_name.try('instance_type').try('name') %></span><br>
+    <% end %>
+    <% if orchids_name.manually_drafted? %>
+      <br><span class='on-tree-indicator'>Manually drafted</span>
+    <% end %>
     <% if orchids_name.standalone_instance_created? || orchids_name.standalone_instance_found? %>
     <span class="bgdarkslateblue white">Instance has been created or found.</span>
     <br>

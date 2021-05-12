@@ -296,6 +296,10 @@ Because <i>taxon-with-syn:</i> is so frequently used, we've made it the default.
      description: "search for 'accepted' orchids matched to a name which is listed in the current accepted taxonomy"},
     {field_name: 'not-in-current-taxonomy:',
      description: "search for 'accepted' orchids NOT matched to a name which is listed in the current accepted taxonomy"},
+    {field_name: 'drafted:',
+     description: "search for orchids matched to a name and flagged as drafted"},
+    {field_name: 'manually-drafted:',
+     description: "search for orchids matched to a name and flagged as manually drafted"},
       ].each do |val| %>
   <tr>
     <td class="width-20-percent">
