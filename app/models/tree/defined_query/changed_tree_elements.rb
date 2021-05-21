@@ -15,9 +15,10 @@
 #   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 #   See the License for the specific language governing permissions and
 #   limitations under the License.
-#
-#   A defined query is one that the Search class knows about and may
-#   instantiate.
+ 
+
+
+#   A defined query is one that the Search class knows about and can run.
 #   
 #   Run SQL to retrieve changed tree elements - that is, changed from one
 #   tree version to another later tree version.
@@ -26,6 +27,7 @@
 #   e.g. 51358658,51357890
 #
 #   It counts as 1 param, but here we split it on the comma.
+#   
 class Tree::DefinedQuery::ChangedTreeElements
   attr_reader :results,
               :limited,
@@ -35,62 +37,6 @@ class Tree::DefinedQuery::ChangedTreeElements
               :count,
               :show_csv,
               :total
-
-  SQL1 = <<HERE
-  select fred.te_id as id,
-       fred.simple_name,
-       fred.operation,
-       fred.synonyms,
-       fred.synonyms_html,
-       tve.name_path,
-       tv.id tv_id,
-       tve.element_link tve_element_link
-  from tree_version_element tve
-      join (
-    select * from find_all_changes(?,?)) fred
-    on fred.te_id = tve.tree_element_id
-    and fred.tree_version_id = tve.tree_version_id
-      join tree_version tv 
-      on fred.tree_version_id = tv.id
-union
-select fred.te_id,
-       fred.simple_name,
-       fred.operation,
-       fred.synonyms,
-       fred.synonyms_html,
-       'A: no name path',
-       tv.id tv_id,
-       'no element link'
-  from tree_version tv
-      join (
-    select * from find_all_changes(?,?) where operation = 'removed') fred
-      on fred.tree_version_id = tv.id
- where fred.operation = 'removed'
-order by name_path
-HERE
-
-# fred.te_id as id,                    get out of current tve - the final integer
-# fred.simple_name,                    yes
-# fred.operation,                      yes
-# fred.synonyms,
-# fred.synonyms_html,                  yes
-# tve.name_path,                       yes
-# tv.id tv_id,                         get out of current tve - the first integer
-# tve.element_link tve_element_link    no
-
-
-  SQLP1 = "select * from diff_list(?,?)"
-  # Cols:
-  # operation     | modified
-  # previous_tve  | /tree/51357890/51357029
-  # current_tve   | /tree/51344953/51210425
-  # simple_name   | Cycas lane-poolei
-  # synonyms_html | ...
-  # name_path     | ...
-   
-  # ActionController::UrlGenerationError in Search#search 
-  # SQL = "select id, simple_name, operation, synonyms, synonyms_html, name_path, tv_id, tve_element_link from diff_list(?,?)"
-  # SQL = "select id, simple_name, operation, synonyms, synonyms_html, name_path, tv_id, tve_element_link from diff_list(?,?)"
 
   SQL = <<HERE
 select regexp_replace(current_tve,'.*\/','') id,
@@ -157,22 +103,85 @@ HERE
     @relation = nil
   end
 
+  
+  def prepare_sql_old
+    # SQL.sub('?', @tree_version_1).sub('?', @tree_version_2).sub('?', @tree_version_1)
+    sql = <<-HERE
+select regexp_replace(current_tve,'.*\/','') id,
+       regexp_replace(regexp_replace(current_tve,'\/tree\/',''),'\/.*','') tv_id,
+       simple_name,
+       case operation
+         when 'modified' then 'changed'
+         else operation
+       end,
+       synonyms_html,
+       name_path,
+       current_tve,
+       previous_tve,
+       '#{@tree_version_1}' tv_id_param
+       from diff_list(@tree_version_1,@tree_version_2)
+HERE
+  end
+
+  def query_on_table_function
+    arel_table = DiffList.arel_table
+    sql = arel_table.project(arel_table[Arel.star]).to_sql
+    sql = sql + "(#{@tree_version_2},#{@tree_version_1})"
+    Rails.logger.debug(sql)
+    ActiveRecord::Base.connection.exec_query(sql)
+  end
+
   def list_query
-    debug('list_query')
-    # @results = TreeElement.find_by_sql([SQL,@tree_version_1,@tree_version_2,@tree_version_1,@tree_version_2])
-    # @results = TreeElement.find_by_sql([SQL,@tree_version_1,@tree_version_2])
+    #list_query_via_tree_element
+    list_query_via_diff_list
+  end
+
+  def list_query_via_tree_element
+    Rails.logger.debug(" list_query_via_tree_element ==============================================")
     @results = TreeElement.find_by_sql([SQL,@tree_version_1,@tree_version_2,@tree_version_1])
-    tree_results= Tree.all
-    tv_results = TreeVersion.where(id: @tree_version_1)
-    @results.unshift(*tv_results)
-    @results.unshift(*tree_results)
-    # debug(@results.class)
-    # @results.each {|result| debug(result)}
-    @limited = true
-    @common_and_cultivar_included = true
+    Rails.logger.debug(@results.class)
+
+    add_context_to_results
+    @limited = @common_and_cultivar_included = true
     @count = @results.size
     @has_relation = false
     @relation = nil
+  end
+
+  def list_query_via_diff_list
+    Rails.logger.debug("==============================================")
+    @results = query_on_table_function
+    Rails.logger.debug(@results.class)
+    Rails.logger.debug(@results.try('columns'))
+    # ["operation", "previous_tve", "current_tve", "simple_name", "synonyms_html", "name_path"]
+    @results = @results.to_a
+    @results = @results.each do |r|
+      r[:display_as] = 'DiffListRecord'
+      r[:id] = r[:current_tve]
+      r[:fresh] = false
+    end
+    Rails.logger.debug(@results.class)
+
+    add_context_to_results
+    @limited = @common_and_cultivar_included = true
+    @count = @results.size
+    @has_relation = false
+    @relation = nil
+  end
+
+  def add_context_to_results
+    push_tree_version_onto_results
+    push_tree_onto_results
+  end
+
+  def push_tree_version_onto_results
+    tv_results = TreeVersion.where(id: @tree_version_1)
+    @results.unshift(*tv_results)
+  end
+
+  def push_tree_onto_results
+    tree_results= Tree.all
+    @results.unshift(*tree_results)
   end
 
   def csv?

@@ -91,11 +91,17 @@
       <% when 'UserQuery' %>  
         <%= render partial: 'user_query_record', 
           locals: {search_result: record, give_me_focus: give_me_focus} %>
+      <% when 'TaxonomyReviewer' %>  
+        <%= render partial: 'taxonomy_reviewer_record', 
+          locals: {search_result: record, give_me_focus: give_me_focus} %>
+      <% when 'DiffListRecord' %>  
+        <%= render partial: 'diff_list_record', 
+          locals: {search_result: record, give_me_focus: give_me_focus} %>
       <% else %>
         <tr>
           <td class="width-1-percent"></td>
           <td class="min-with-40-percent width-50-percent max-width-60-percent">
-            <%= display_as %>
+            <%= display_as %> is an unknown type of search result
           </td>
           <td class="width-5-perent filler"></td>
         </tr>

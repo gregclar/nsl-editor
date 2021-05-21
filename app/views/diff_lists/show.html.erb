@@ -1,0 +1,21 @@
+<div class="focus-details">
+  <% if notice %> <p id="notice"><%= notice %></p> <% end %>
+
+  <br>
+  Taxon: <%= @diff_list.inspect %>
+<br>
+  <%= params.inspect %>
+    <span class="search-result-operation operation-type-<%= params["tree-element-operation"] %>" >
+    <%= params["tree-element-operation"] %>
+    </span>
+  <span class="pull-right"><%#= mapper_name_link(@name) %></span>
+
+  <div>&nbsp;</div>
+
+  <%= render partial: 'diff_lists/tabs/tabs' %>
+
+  <%= render partial: "diff_lists/tabs/#{@tab}" %>
+
+  <span class='server-response-time'><%= "(#{(Time.now - @start_time).round(2)}s)" if @start_time %></span>
+
+</div><!-- /end .focus-details -->

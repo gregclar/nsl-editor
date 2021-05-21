@@ -60,23 +60,38 @@ This database has <%= link_to(pluralize(Tree.accepted.all.size, 'accepted taxono
       </h5>
       <% if review.periods.size == 0 %>
         No review periods
-      <% elsif review.periods.size == 1 %>
-        <h5>
-        Period
-        </h5>
       <% else %>
-        <%= pluralize(review.periods.size, 'period') %> allocated.
-        <h6>
-        Periods
-        </h6>
+        <h5>
+        Review Periods:
+        </h5>
       <% end %>
-    
       <% review.periods.sort {|a,b| a.start_date <=> b.start_date }.each do |period| %>
-        <%= period.start_date %>&mdash;<%= period.end_date %> <br>
+        <%= link_to("#{period.start_date}&ndash; #{period.end_date}".html_safe, search_path(query_target: 'taxonomy_version_review_period',
+                                                  query_string: "id: #{period.id}"),
+                                                  title: 'Go to the review period',
+                                                  class: 'with-underline') %> 
+          <ul>
+            <%= pluralize(period.reviewers.size, "Reviewer") %>
+          </ul>
       <% end %>
     <% end %>
   <% end %>
 <% end %>
+
+<h3>Reviewers</h3>
+
+<h5>
+<%= link_to(pluralize(TaxonomyReviewer.all.count,"Reviewer"), search_path(query_string: "*",
+                                           query_target: 'taxonomy reviewer'),
+                                           title: 'Retrieve the reviewers',
+                                           class: 'with-underline').html_safe %> 
+</h5>
+
+<%= link_to('Add a Reviewer',
+            taxonomy_reviewer_new_row_path,
+            class: 'with-underline',
+            remote: true,
+            title: 'Open a form to create a new taxonomy reviewer') %>
 
 <%#= render partial: 'taxonomy_version_reviews/doco_for_review_admin' %>
 

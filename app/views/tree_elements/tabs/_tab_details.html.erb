@@ -1,12 +1,25 @@
 <% increment_tab_index(0) %>
 
+<%= @tree_element.id %> <span class="pull-right">id</span> <br>
+<%#= @tree_element.current_tve %> <span class="pull-right">current_tve</span> <br>
 <%= @tree_element.simple_name %> <span class="pull-right">taxon name</span> <br>
-<%#= @tree_element.display_html %>
-<%#= @tree_element.instance_id %> <!-- <span class="pull-right">instance_id</span> <br> -->
-<%#= @tree_element.instance_link %> <!-- <span class="pull-right">instance_link</span> <br> -->
-<%#= @tree_element.name_element %> <!-- <span class="pull-right">name_element</span> <br> -->
-<%#= @tree_element.name_id %> <!-- <span class="pull-right">name_id</span> <br> -->
-
+<%= @tree_element.name_element %> <span class="pull-right">name element</span> <br>
+<%= @tree_element.name_id %> <span class="pull-right">name id</span> <br>
+<%= @tree_element.previous_element_id %> <span class="pull-right">previous_element_id name</span> <br>
+<%= @tree_element.profile %> <span class="pull-right">profile</span> <br>
+<%= @tree_element.rank %> <span class="pull-right">rank</span> <br>
+<%= @tree_element.source_shard %> <span class="pull-right">source shard</span> <br>
+<%#= @tree_element.synonyms %> <span class="pull-right">synonyms</span> <br>
+<%#= @tree_element.inspect %><br>
+<br>
+tree element id: <%= @tree_element.id %>
+<br>
+tree version id: <%= @tree_version.id %>
+<br>
+tve: <%= TreeVersionElement.where(tree_element_id: @tree_element.id).where(tree_version_id: params['tree-version-id']).size %>
+<br>
+tve: <%= params['tree-element-current-tve'] %>
+<br>
 <%#= divider %>
 
 <% if params['tree-version-id'].blank? %>

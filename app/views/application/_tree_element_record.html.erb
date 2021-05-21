@@ -1,13 +1,15 @@
-<tr id="search-result-<%= search_result.id %>" 
-  class="search-result  <%= 'fresh' if search_result.fresh? %>"  
-  data-record-id="<%= search_result.id %>"
+<tr id="search-result-<%= search_result[:id] %>" 
+  class="search-result"  
+  data-record-id="<%= search_result[:id] %>"
 
 
-  data-get-url="<%#= tree_element_path(search_result.id) %>"
-  data-edit-url="<%#= tree_element_path(search_result.id) %>"
-  data-base-url="<%#= tree_element_path(search_result.id) %>"
-  data-tab-url="<%= tree_element_tab_path(id: search_result[:id],tab: 'active_tab_goes_here') %>"
-  data-record-id="<%= search_result.id %>"
+  data-get-url="<%#= tree_element_path(search_result[:id]) %>"
+  data-edit-url="<%#= tree_element_path(search_result[:id]) %>"
+  data-base-url="<%#= tree_element_path(search_result[:id]) %>"
+  <% unless search_result[:id].blank? %>
+    data-tab-url="<%= tree_element_tab_path(id: search_result[:id],tab: 'active_tab_goes_here') %>"
+  <% end %>
+  data-record-id="<%= search_result[:id] %>"
   <% unless search_result[:operation].blank? %>
     data-tree-element-operation="<%= search_result[:operation] %>"
     <% if search_result[:operation] == 'removed' %>
@@ -43,7 +45,7 @@
       <% end %>
       tabindex="<%= increment_tab_index %>" 
       title="Tree Element record. Select to show details."
-      id="<%= %Q(#{search_result.class}-#{search_result.id}) %>">
+      id="<%= %Q(#{search_result.class}-#{search_result[:id]}) %>">
       <%= render partial: 'tree_element_link_text', locals: {search_result: search_result} %>
       <% unless search_result[:operation].blank? %>
         <span class="search-result-operation operation-type-<%= search_result[:operation] %>"><%= search_result[:operation] %></span>

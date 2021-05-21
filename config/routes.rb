@@ -421,6 +421,18 @@ Rails.application.routes.draw do
 
   resources :taxonomy_element_comments, only: [:show, :post, :create, :new, :update, :destroy]
 
+  match "taxonomy_reviewers/new_row",
+        as: "taxonomy_reviewer_new_row", to: "taxonomy_reviewers#new_row", via: :get
+  match "taxonomy_reviewers/new/:random_id",
+        as: "new_taxonomy_reviewer_with_random_id", to: "taxonomy_reviewers#new", via: :get
+  match "taxonomy_review/:id/tab/:tab", as: "taxonomy_reviewer_tab", to: "taxonomy_reviewers#tab", via: :get
+  resources :taxonomy_reviewers, only: [:show, :create, :update, :destroy]
+
+  resources :tvr_periods_reviewers
+
+  # ["operation", "previous_tve", "current_tve", "simple_name", "synonyms_html", "name_path"]
+  match "diff_list/:id/tab/:tab/:operation/:previous_tve/:current_tve/:simple_name", as: "diff_list_tab", to: "diff_lists#tab", via: :get
+
   root to: "search#search"
   match "/*random", to: "search#search", via: [:get, :post, :delete, :patch]
 end

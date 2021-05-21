@@ -1,5 +1,5 @@
 create table taxonomy_version_review_period (
-  id serial primary key,
+  id bigint primary key default nextval('nsl_global_seq'::regclass),
   taxonomy_version_review_id bigint not null,
   start_date date not null,
   end_date date,
