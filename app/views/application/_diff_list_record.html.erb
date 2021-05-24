@@ -12,15 +12,16 @@
   data-tab-url="<%= diff_list_tab_path(id: search_result["current_tve"],
                                        tab: 'active_tab_goes_here',
                                        operation: search_result["operation"],
-                                       previous_tve: CGI.escape(search_result["previous_tve"])||'',
-                                       current_tve: CGI.escape(search_result["current_tve"])||'',
-                                       simple_name: search_result["simple_name"]||'') %>"
+                                       previous_tve: (search_result["previous_tve"])||'',
+                                       current_tve: (search_result["current_tve"])||'',
+                                       simple_name: search_result["simple_name"]||''
+                                      ) %>"
 
 
 
   data-record-id="<%= search_result[:id] %>"
   <% unless search_result[:operation].blank? %>
-    data-tree-element-operation="<%= search_result[:operation] %>"
+    data-operation="<%= search_result[:operation] %>"
     <% if search_result[:operation] == 'removed' %>
       <% previous_id = search_result[:previous_tve].sub(/.*\//,'') %>
        data-tab-url="<%= tree_element_tab_path(id: previous_id,tab: 'tab_details') %>"

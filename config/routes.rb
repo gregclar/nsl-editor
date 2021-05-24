@@ -431,7 +431,8 @@ Rails.application.routes.draw do
   resources :tvr_periods_reviewers
 
   # ["operation", "previous_tve", "current_tve", "simple_name", "synonyms_html", "name_path"]
-  match "diff_list/:id/tab/:tab/:operation/:previous_tve/:current_tve/:simple_name", as: "diff_list_tab", to: "diff_lists#tab", via: :get
+  # match "diff_list/:id/tab/:tab/:operation/:previous_tve/:current_tve/:simple_name", as: "diff_list_tab", to: "diff_lists#tab", via: :get
+  match "diff_list/:id/tab/:tab/", as: "diff_list_tab", to: "diff_lists#tab", via: :get
 
   root to: "search#search"
   match "/*random", to: "search#search", via: [:get, :post, :delete, :patch]

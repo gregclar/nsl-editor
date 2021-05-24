@@ -1,49 +1,34 @@
 <% increment_tab_index(0) %>
 
-<%= @diff_list["id"] %> <span class="pull-right">id</span> <br>
-<%#= @diff_list.current_tve %> <span class="pull-right">current_tve</span> <br>
-<%#= @diff_list.simple_name %> <span class="pull-right">taxon name</span> <br>
-<%#= @diff_list.name_element %> <span class="pull-right">name element</span> <br>
-<%#= @diff_list.name_id %> <span class="pull-right">name id</span> <br>
-<%#= @diff_list.previous_element_id %> <span class="pull-right">previous_element_id name</span> <br>
-<%#= @diff_list.profile %> <span class="pull-right">profile</span> <br>
-<%#= @diff_list.rank %> <span class="pull-right">rank</span> <br>
-<%#= @diff_list.source_shard %> <span class="pull-right">source shard</span> <br>
-<%#= @diff_list.synonyms %> <span class="pull-right">synonyms</span> <br>
-<%#= @diff_list.inspect %><br>
-<br>
-tree element id: <%= @diff_list[:id] %>
-<br>
-tree version id: <%#= @tree_version.id %>
-<br>
-tve: <%#= TreeVersionElement.where(tree_element_id: @diff_list.id).where(tree_version_id: params['tree-version-id']).size %>
-<br>
-tve: <%= params['tree-element-current-tve'] %>
-<br>
-<%#= divider %>
 
-<% if params['tree-version-id'].blank? %>
-  No tree version id in the params. (todo)
+<% if @diff_list['operation'] == 'changed' %>
+  <h4>Taxon changed</h4>
+<h5>Current</h5>
+<%= @current_tve.inspect %>
+<h5>Previous</h5>
+<%= @previous_tve.inspect %>
+<% elsif @diff_list['operation'] == 'added' %>
+  <h4>Taxon added</h4>
+<h5>Current</h5>
+<%= @current_tve.inspect %>
+<% elsif @diff_list['operation'] == 'deleted' %>
+  <h4>Deleted taxon</h4>
+<h5>Previous</h5>
+<%= @previous_tve.inspect %>
 <% else %>
-  <%#= link_to("#{TreeVersion.find(params['tree-version-id']).tree.name} #{TreeVersion.find(params['tree-version-id']).draft_name}",
-               search_path(query_string: "id:#{params['tree-version-id']}",
-                           query_target: 'tree_version'),
-               title: 'Retrieve the taxonomy',
-               class: 'tree') %> 
-          
-<span class="pull-right">taxonomy version</span> <br>
-<%= params["tree-element-operation"].capitalize %> <span class="pull-right">operation</span> <br>
-          
+  <h5>Unknown</h5>
 <% end %>
 
 <%= divider %>
-<%#= @diff_list.name_link %> <!-- <span class="pull-right">name_link</span> <br> -->
-<%#= @diff_list.previous_element_id %> <!-- <span class="pull-right">previous_element_id</span> <br> -->
-<%#= @diff_list.profile %> <!-- <span class="pull-right">profile</span> <br> -->
-<%#= @diff_list.rank %> <!-- <span class="pull-right">rank</span> <br> -->
-<%#= @diff_list.source_element_link %> <!-- <span class="pull-right">source_element_link</span> <br> -->
-<%#= @diff_list.source_shard %> <!-- <span class="pull-right">source_shard</span> <br> -->
-<%#= @diff_list.synonyms %>
+
+<%= @diff_list["operation"] %> <span class="pull-right">operation</span> <br>
+<%= @diff_list["id"] %> <span class="pull-right">id</span> <br>
+<%= @diff_list["simple_name"] %> <span class="pull-right">simple name</span> <br>
+<%= @diff_list["current_tve"] %> <span class="pull-right">current_tve</span> <br>
+<%= @diff_list["previous_tve"] %> <span class="pull-right">previous_tve</span> <br>
+
+<%= divider %>
+
 <br>
 <% case params["tree-element-operation"] %>
 <% when blank? %>

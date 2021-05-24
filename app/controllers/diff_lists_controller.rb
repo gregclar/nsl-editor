@@ -44,6 +44,9 @@ class DiffListsController < ApplicationController
 
   def find_diff_list
     @diff_list = diff_list_params
+    @current_tve = TreeVersionElement.find_by(element_link: @diff_list['current_tve']) unless @diff_list['current_tve'].blank?
+    @previous_tve = TreeVersionElement.find_by(element_link: @diff_list['previous_tve']) unless @diff_list['previous_tve'].blank?
+    @diff_list['operation'] = 'changed' if @diff_list['operation'] == 'modified'
     #TreeVersionElement.find_by(element_link: params["id"])
   rescue ActiveRecord::RecordNotFound
     flash[:alert] = "We could not find the diff list item."
