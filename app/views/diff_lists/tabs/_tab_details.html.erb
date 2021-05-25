@@ -2,21 +2,29 @@
 
 
 <% if @diff_list['operation'] == 'changed' %>
-  <h4>Taxon changed</h4>
-<h5>Current</h5>
-<%= @current_tve.inspect %>
-<h5>Previous</h5>
-<%= @previous_tve.inspect %>
+
+  <h5>Current</h5>
+  <%= render partial: 'diff_lists/partials/tve', locals: {tve: @current_tve} %>
+
+  <h5>Previous</h5>
+  <%= render partial: 'diff_lists/partials/tve', locals: {tve: @previous_tve} %>
+
+  <h5>Before</h5>
+  <div class="synonyms nothidden">
+    <div class="tree-container wrap">
+      <%= TreeVersionElements::DiffHtml.new('/tree/51402267/51402361', '/tree/51402090/51211467').try('before_html').try('html_safe') %>
+    </div>
+  </div>
 <% elsif @diff_list['operation'] == 'added' %>
-  <h4>Taxon added</h4>
-<h5>Current</h5>
-<%= @current_tve.inspect %>
+
+  <h5>Current</h5>
+  <%= render partial: 'diff_lists/partials/tve', locals: {tve: @current_tve} %>
+
 <% elsif @diff_list['operation'] == 'deleted' %>
-  <h4>Deleted taxon</h4>
-<h5>Previous</h5>
-<%= @previous_tve.inspect %>
-<% else %>
-  <h5>Unknown</h5>
+
+  <h5>Previous</h5>
+  <%= render partial: 'diff_lists/partials/tve', locals: {tve: @previous_tve} %>
+
 <% end %>
 
 <%= divider %>

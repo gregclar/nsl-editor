@@ -1,9 +1,16 @@
 <div class="focus-details">
   <% if notice %> <p id="notice"><%= notice %></p> <% end %>
 
-  <br>
-  Taxon: <%= @diff_list.inspect %>
-<br>
+<% if @diff_list['operation'] == 'changed' %>
+  <h5><%= @diff_list['simple_name'] %> &mdash; changed</h5>
+<% elsif @diff_list['operation'] == 'added' %>
+  <h5><%= @diff_list['simple_name'] %> &mdash; added</h5>
+<% elsif @diff_list['operation'] == 'deleted' %>
+  <h5><%= @diff_list['simple_name'] %> &mdash; deleted</h5>
+<% else %>
+  <h5>Unrecognised operation on <%= @diff_list['simple_name'] %>: <%= @diff_list['operation'] %></h5>
+<% end %>
+
 
   <div>&nbsp;</div>
 
