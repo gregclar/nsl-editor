@@ -1,5 +1,5 @@
 <% increment_tab_index(0) %>
-<h5>Raw Orchid <%= @orchid.record_type.capitalize %></h5>
+<h5>Raw Orchid <%= @orchid.true_record_type.capitalize %></h5>
 <% if @orchid.accepted? %>
   <%= render partial: 'form_for_accepted', locals: { orchid: @orchid } %>
 <% elsif @orchid.synonym? %>
