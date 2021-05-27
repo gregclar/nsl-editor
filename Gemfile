@@ -52,8 +52,8 @@ group :test do
 end
 
 group :development, :test do
-  gem "pry-rails"
-  gem "pry-rescue"
+  # gem "pry-rails"
+  # gem "pry-rescue"
   gem "webmock"
   # gem "schema_plus"
 end
