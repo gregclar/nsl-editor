@@ -19,6 +19,9 @@ java -version
 echo "jruby -v"
 jruby -v
 
+echo "remove pry from Gemfile"
+sed -i 's/gem.*pry/\# &/' Gemfile
+
 echo "bundle exec rake assets:clobber"
 bundle exec rake assets:clobber
 
