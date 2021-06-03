@@ -103,7 +103,7 @@ echo ">>> bootstrapping"
 yarn
 if [ -z "$(type -p bundler)" ]; then
   echo "Installing bundler..."
-  gem install bundler || exit 1
+  gem install bundler -N || exit 1
 fi
 bundle install
 echo "<<< bootstrapped"
