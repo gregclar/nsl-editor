@@ -1,3 +1,7 @@
+- :date: 09-Jun-2021
+  :jira_id: '3930'
+  :description: |-
+    Orchids: query for misapplications with a preferred match but no relationship instance identified or created (no cross-reference)
 - :date: 03-Jun-2021
   :jira_id: ''
   :description: |-

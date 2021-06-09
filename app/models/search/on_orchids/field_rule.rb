@@ -197,5 +197,7 @@ having count(*)                     >  1
                                       order: "seq"},
     "drafted:" => { where_clause: " id in (select orchid_id from orchids_names where drafted)",
                                       order: "seq"},
+    "misapp-matched-without-cross-ref:" => { where_clause: " id in (select o.id from orchids o join orchids_names orn on o.id = orn.orchid_id where o.record_type = 'misapplied' and orn.relationship_instance_id is null)",
+                                             order: "seq"},
   }.freeze
 end
