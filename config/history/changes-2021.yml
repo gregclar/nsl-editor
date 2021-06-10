@@ -1,3 +1,7 @@
+- :date: 10-Jun-2021
+  :jira_id: '3929'
+  :description: |-
+    Orchids: capture and log errors that occur when creating instances for matched orchids
 - :date: 09-Jun-2021
   :jira_id: '3930'
   :description: |-

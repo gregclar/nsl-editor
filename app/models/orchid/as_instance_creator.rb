@@ -32,8 +32,13 @@ class Orchid::AsInstanceCreator
     return 0 if stop_everything?
     @orchid.preferred_match.each do |preferred_match|
       debug("Creating an instance")
-      records += preferred_match.create_instance(@ref, @authorising_user)
-      log_create_action(records) unless records == 0
+      begin
+        records += preferred_match.create_instance(@ref, @authorising_user)
+        log_create_action(records) unless records == 0
+      rescue => e
+        Rails.logger.error("create_instance_for_preferred_matches: Error for preferred match #{preferred_match.id} - #{e.message}")
+        log_to_table("Error creating instance for preferred match #{preferred_match.id} - #{e.message}")
+      end 
     end
     debug("records: #{records}")
     records
