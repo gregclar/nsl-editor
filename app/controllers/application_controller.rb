@@ -52,22 +52,22 @@ class ApplicationController < ActionController::Base
   # Force reviewers into review mode regardless of session
   # Set booleans
   def set_mode
-    logger.debug("1. set_mode: session[:mode]: #{session[:mode]}; start")
+    logger.info("1. set_mode: session[:mode]: #{session[:mode]}; start")
     @mode = session[:mode] ||= STANDARD_MODE
-    logger.debug("2. set_mode: session[:mode]: #{session[:mode]}; default to standard mode")
+    logger.info("2. set_mode: session[:mode]: #{session[:mode]}; default to standard mode")
     @mode = session[:mode] = TRM unless can? 'standard_mode', 'use'
-    logger.debug("3. set_mode: session[:mode]: #{session[:mode]}; fall back to TRM mode if cannot use standard mode")
+    logger.info("3. set_mode: session[:mode]: #{session[:mode]}; fall back to TRM mode if cannot use standard mode")
     session[:mode] = @mode
     @standard_mode = @mode == STANDARD_MODE
     @taxonomic_review_mode = !@standard_mode
   end
 
   def set_mode_new_cannot_change_mode
-    logger.debug("set_mode - controller: #{params[:controller]}, action: #{params[:action]}")
+    logger.info("set_mode - controller: #{params[:controller]}, action: #{params[:action]}")
     return if params[:controller] = 'mode' && params[:action] = 'toggle_mode'
 
     logger.debug("best mode: #{best_mode}")
-    logger.debug("1. set_mode: session[:mode]: #{session[:mode]}; start")
+    logger.info("1. set_mode: session[:mode]: #{session[:mode]}; start")
     @mode = session[:mode] ||= best_mode
     logger.debug("2. @mode: #{@mode}")
     @mode = best_mode unless can? session[:mode], 'use'

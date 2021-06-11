@@ -122,6 +122,8 @@ class Ability
     can "trees/workspaces/current", "toggle"
     can "names/typeaheads/for_workspace_parent_name", :all
     can "menu", "tree"
+    can "taxonomy_reviewers",  :all
+    can "tvr_periods_reviewers",  :all
   end
 
   def admin_auth
@@ -136,8 +138,9 @@ class Ability
     can "tree_versions",              "tab_details"
     can "tree_elements",              "tab_details"
     can "tree_elements",              "tab_review"
-    can "taxonomy_version_reviews",   "index"
+    can "taxonomy_version_reviews",   ["index", "tab_details"]
     can "taxonomy_element_comments",  "create"
+    can "diff_lists",                 ["tab_details", "tab_review"]
   end
 
   def orchids_matcher_auth

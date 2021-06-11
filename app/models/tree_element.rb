@@ -69,15 +69,20 @@ class TreeElement < ActiveRecord::Base
   end
 
   def self.diff_html(sr)
-    if sr.operation == 'removed'
-      sr.synonyms_html
-    elsif sr.operation == 'added'
-      sr.synonyms_html
+    Rails.logger.debug("sr.class: #{sr.class}")
+    Rails.logger.debug("sr: #{sr.inspect}")
+    operation = sr['operation']
+    if operation == 'removed'
+      sr['synonyms_html']
+    elsif operation == 'added'
+      sr['synonyms_html']
     else
       #e1 = "/tree/#{sr.tv_id}/#{sr.id}"
       #e2 = "/tree/#{TreeVersion.find(sr.tv_id).previous_version_id}/#{derived_prev_element_id}"
-      e1= sr.previous_tve
-      e2= sr.current_tve
+      e1= sr['previous_tve']
+      Rails.logger.debug("e1: #{e1}")
+      e2= sr['current_tve']
+      Rails.logger.debug("e2: #{e2}")
       url = "#{Rails.configuration.services_clientside_root_url}tree-version/diff-element?e1=#{CGI.escape(e1)}&e2=#{CGI.escape(e2)}&embed=true"
       open(url, "Accept" => "text/html") {|f| f.read }
     end

@@ -17,3 +17,4 @@ module NEDR6
 end
 
 Rails.configuration.path_to_broadcast_file = "#{ENV['HOME']}/.nsl/broadcast.txt"
+

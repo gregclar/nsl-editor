@@ -19,6 +19,21 @@
                                       link_title: 'Edit the taxonomy review period',
                                       tab_index: increment_tab_index,
                                       prev_tab: 'tab_details', 
+                                      next_tab: 'tab_reviewers'} %> 
+
+
+  <% end %>
+
+  <% if can? 'taxonomy_version_review_periods', 'update' %>
+
+  <%= render partial: 'taxonomy_version_review_periods/tabs/tab', locals: {first: false,
+                                      last: false,
+                                      this_tab: 'tab_reviewers', 
+                                      link_text: 'Reviewers', 
+                                      link_id: 'taxonomy-review-period-reviewers-tab', 
+                                      link_title: 'Add or remove reviewers for the taxonomy review period',
+                                      tab_index: increment_tab_index,
+                                      prev_tab: 'tab_edit', 
                                       next_tab: 'tab_delete'} %> 
 
 

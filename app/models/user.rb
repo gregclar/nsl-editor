@@ -53,4 +53,18 @@ class User < ActiveType::Object
   def orchids_matcher?
     groups.include?("orchids-matcher")
   end
+
+  def taxonomy_reviewer?
+    TaxonomyReviewer.where(username: username).count > 0
+  end
+
+  def as_taxonomy_reviewer
+    TaxonomyReviewer.where(username: username).first
+  end
+
+  def tvr_periods
+    return unless taxonomy_reviewer?
+    as_taxonomy_reviewer.periods
+  end
+
 end

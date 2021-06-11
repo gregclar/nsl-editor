@@ -22,7 +22,9 @@ class TaxonomyVersionReviewPeriod < ActiveRecord::Base
   self.table_name = "taxonomy_version_review_period"
   self.primary_key = "id"
   #self.sequence_name = "nsl_global_seq"
-  belongs_to :taxonomy_version_review
+  belongs_to :review, class_name: "TaxonomyVersionReview", foreign_key: "taxonomy_version_review_id"
+  has_many :periods_reviewers, class_name: "TvrPeriodsReviewers", foreign_key: "tvr_period_id"
+  has_many :reviewers, through: :periods_reviewers
   validates :start_date, presence: true
   validate :start_date_cannot_be_in_the_past
   validate :start_date_cannot_be_changed_once_past, on: :update
@@ -181,5 +183,19 @@ class TaxonomyVersionReviewPeriod < ActiveRecord::Base
   def active?
     start_date < Time.now &&
     (end_date.blank? || end_date > Time.now)
+  end
+
+  def sorted_reviewers
+    reviewers.sort {|x,y| x.username <=> y.username }
+  end
+
+  def available_reviewers
+    TaxonomyReviewer
+      .where(["not exists (select null from tvr_periods_reviewers pr  where pr.tvr_period_id = ? and taxonomy_reviewer.id = pr.taxonomy_reviewer_id)", id])
+      .sort {|x,y| x.username <=> y.username}
+  end
+
+  def finite?
+    end_date.present?
   end
 end

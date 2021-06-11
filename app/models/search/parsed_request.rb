@@ -76,6 +76,8 @@ class Search::ParsedRequest
     "taxonomy_version_reviews" => "taxonomy_version_review",
     "taxonomy_version_review_period" => "taxonomy_version_review_period",
     "taxonomy_version_review_periods" => "taxonomy_version_review_period",
+    "taxonomy_reviewer" => "taxonomy_reviewer",
+    "taxonomy_reviewers" => "taxonomy_reviewer",
   }.freeze
 
   def initialize(params)

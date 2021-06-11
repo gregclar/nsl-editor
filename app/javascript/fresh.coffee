@@ -441,6 +441,58 @@ changeNameCategoryOnEditTab = (event,$this,tabWasClicked) ->
 
 window.loadDetails = (event,inFocus,tabWasClicked = false) ->
   debug('window.loadDetails starting')
+  debug('inFocus.attr(_data-record-type_): ' + inFocus.attr('data-record-type'))
+  debug($('tr.showing-details').length)
+  debug($('tr.showing-details').attr('data-record-type'))
+  if inFocus.attr('data-record-type') == 'diff-list' 
+    loadDiffListDetails(event, inFocus, tabWasClicked)
+  else
+    if $('tr.showing-details').attr('data-record-type') == 'diff-list'
+      loadDiffListDetails(event, $('tr.showing-details'), tabWasClicked)
+    else
+      loadStandardDetails(event, inFocus, tabWasClicked)
+
+window.loadDiffListDetails = (event,inFocus,tabWasClicked = false) ->
+  debug('window.loadDiffListDetails starting')
+  $('#search-result-details').show()
+  $('#search-result-details').removeClass('hidden')
+  record_type = $('tr.showing-details').attr('data-record-type')
+  debug("record_type: #{record_type}") 
+  tabIndex = $('.search-result.showing-details a[tabindex]').attr('tabindex')
+  try
+    url = inFocus.attr('data-tab-url').replace(/active_tab_goes_here/,currentActiveTab(record_type))
+  catch err
+    debug(err)
+  url = url+'&format=js&tabIndex='+tabIndex
+  url = url+'&operation='+inFocus.attr('data-operation') unless !inFocus.attr('data-operation') 
+  url = url+'&tree-element-current-tve='+inFocus.attr('data-tree-element-current-tve') unless !inFocus.attr('data-tree-element-current-tve') 
+  url = url+'&tree-element-previous-tve='+inFocus.attr('data-tree-element-previous-tve') unless !inFocus.attr('data-tree-element-previous-tve') 
+  debug("url: #{url}")
+  if tabWasClicked
+    url = url+'&take_focus=true'
+  else
+    url = url+'&take_focus=false'
+  debug("loadDetails url: #{url}")
+  $('#search-result-details').load  url, -> 
+    debug("before recordCurrentActiveTab")
+    recordCurrentActiveTab(record_type)
+    debug("after recordCurrentActiveTab")
+    if tabWasClicked
+      debug('tab clicked loadDetails')
+      if $('.give-me-focus') 
+        debug('give-me-focus ing - changed so not .give-me-focus ing because clicked a tab resulted in focus switching to the first record')
+        #$('.give-me-focus').focus()
+      else
+        debug('just focus the tab')
+        $('li.active a.tab').focus()
+    else
+      debug('tab was not clicked')
+      # $('li.active a.tab').focus()   ## new
+  debug('loadDetails after load url')
+  event.preventDefault()
+
+window.loadStandardDetails = (event,inFocus,tabWasClicked = false) ->
+  debug('window.loadStandardDetails starting')
   $('#search-result-details').show()
   $('#search-result-details').removeClass('hidden')
   record_type = $('tr.showing-details').attr('data-record-type')
@@ -454,12 +506,10 @@ window.loadDetails = (event,inFocus,tabWasClicked = false) ->
     url = inFocus.attr('data-tab-url').replace(/active_tab_goes_here/,currentActiveTab(record_type))
   catch err
     debug(err)
-  debug("=====")
-  debug("record_type: #{record_type}") 
-  debug("inFocus.attr('id'): #{inFocus.attr('id')}")
-  debug("inFocus.attr('data-tab-url'): #{inFocus.attr('data-tab-url')}")
-  debug("=====")
-  url = url+'?format=js&tabIndex='+tabIndex+'&row-type='+row_type+'&instance-type='+instance_type+'&rowType='+inFocus.attr('data-row-type')
+  url = url+'?format=js&tabIndex='+tabIndex
+  url = url+'&row-type='+row_type if row_type?
+  url = url+'&instance-type='+instance_type if instance_type?
+  url = url+'&rowType='+inFocus.attr('data-row-type') if inFocus.attr('data-row-type')?
   url = url+'&tree-element-operation='+inFocus.attr('data-tree-element-operation') unless !inFocus.attr('data-tree-element-operation') 
   url = url+'&tree-version-id='+inFocus.attr('data-tree-version-id') unless !inFocus.attr('data-tree-version-id') 
   url = url+'&tree-version-element-element-link='+inFocus.attr('data-tree-version-element-element-link') unless !inFocus.attr('data-tree-version-element-element-link') 

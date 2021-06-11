@@ -133,7 +133,6 @@ class Orchid::AsTreePlacer
     end
   rescue => e
     Rails.logger.error("place_or_replace: Error placing or replacing orchid on tree #{e.message}")
-    Rails.logger.error("place_or_replace: Error placing or replacing orchid on tree #{e.methods.join(',')}")
     log_to_table("Error placing/replacing on tree: #{@orchid.taxon}, id: #{@orchid.id}: #{e.message}", @authorising_user)
     raise
   end

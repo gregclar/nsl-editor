@@ -2,7 +2,7 @@
 <%= render partial: 'detail_line', locals: {info: @orchid.id, label: 'ID'} %>
 <%= render partial: 'detail_line', locals: {info: @orchid.seq, label: 'Position in sequence', title: 'Ror displaying in alphabetical then hierarchical order.'} %>
 <%= render partial: 'detail_line', locals: {info: @orchid.taxon, label: 'taxon'} %>
-<%= render partial: 'detail_line', locals: {info: @orchid.record_type, label: 'record type'} %>
+<%= render partial: 'detail_line', locals: {info: @orchid.true_record_type, label: 'true record type'} %>
 <% unless @orchid.ex_base_author.blank? %>
   <%= render partial: 'detail_line', locals: {info: @orchid.ex_base_author, label: 'ex base author'} %>
   <br>

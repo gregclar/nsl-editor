@@ -233,8 +233,13 @@ class Orchid < ActiveRecord::Base
   # taxon-string: search.
   def self.taxon_string_search(taxon_string)
     ts = taxon_string.downcase.gsub(/\*/,'%')
-    Orchid.where([ "((lower(taxon) like ? or lower(taxon) like 'x '||? or lower(taxon) like '('||?) and record_type = 'accepted' and not doubtful) or (parent_id in (select id from orchids where (lower(taxon) like ? or lower(taxon) like 'x '||? or lower(taxon) like '('||?) and record_type = 'accepted' and not doubtful))",
+    if Rails.configuration.try('excluded_orchids_willing')
+      Orchid.where([ "((lower(taxon) like ? or lower(taxon) like 'x '||? or lower(taxon) like '('||?) and record_type = 'accepted') or (parent_id in (select id from orchids where (lower(taxon) like ? or lower(taxon) like 'x '||? or lower(taxon) like '('||?) and record_type = 'accepted' and not doubtful))",
                    ts, ts, ts, ts, ts, ts])
+    else
+      Orchid.where([ "((lower(taxon) like ? or lower(taxon) like 'x '||? or lower(taxon) like '('||?) and record_type = 'accepted' and not doubtful) or (parent_id in (select id from orchids where (lower(taxon) like ? or lower(taxon) like 'x '||? or lower(taxon) like '('||?) and record_type = 'accepted' and not doubtful))",
+                   ts, ts, ts, ts, ts, ts])
+    end
   end
 
 
@@ -325,6 +330,14 @@ class Orchid < ActiveRecord::Base
 
   def synonym_without_synonym_type?
     synonym? & synonym_type.blank?
+  end
+
+  def true_record_type
+    if record_type == 'accepted' && doubtful?
+      'excluded'
+    else
+      record_type
+    end
   end
 
   private

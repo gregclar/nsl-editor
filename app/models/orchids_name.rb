@@ -101,7 +101,7 @@ class OrchidsName < ActiveRecord::Base
     logger.error("OrchidsName#create_standalone_instance: #{e.to_s}")
     logger.error e.backtrace.join("\n")
     @message = e.to_s.sub(/uncaught throw/,'').gsub(/"/,'')
-    render 'error'
+    raise
   end
 
   def standalone_instance_for_target_ref?(target_ref)
@@ -181,6 +181,9 @@ class OrchidsName < ActiveRecord::Base
     self.updated_by = 'job'
     self.save!
     return 1
+  rescue => e
+    logger.error("OrchidsName#create_relationship_instance: #{e.to_s}")
+    raise
   end
 
   # create_or_find_misapplied_instance
@@ -214,8 +217,7 @@ class OrchidsName < ActiveRecord::Base
     return 1
   rescue => e
     logger.error("OrchidsName#create_misapplied_instance: #{e.to_s}")
-    logger.error e.backtrace.join("\n")
-    return 0
+    raise
   end
 
   def debug(msg)

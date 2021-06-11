@@ -1,3 +1,25 @@
+- :date: 10-Jun-2021
+  :jira_id: '3929'
+  :description: |-
+    Orchids: capture and log errors that occur when creating instances for matched orchids
+- :date: 09-Jun-2021
+  :jira_id: '3930'
+  :description: |-
+    Orchids: query for misapplications with a preferred match but no relationship instance identified or created (no cross-reference)
+- :date: 03-Jun-2021
+  :jira_id: ''
+  :description: |-
+    Reverse Firefox cookie security change
+- :date: 26-May-2021
+  :jira_id: '3909'
+  :description: |-
+    Orchids: you can now create instances for excluded orchids (if flag is set); 'excluded' now displayed as (true) record type when appropriate
+- :date: 26-May-2021
+  :jira_id: ''
+  :description: |-
+    Rails: various upgrades to underlying software for security
+- :date: 13-May-2021
+  :release: true
 - :date: 11-May-2021
   :jira_id: ''
   :description: |-

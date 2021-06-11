@@ -1,15 +1,15 @@
 <% increment_tab_index(0) %>
 
-<%= link_to(@taxonomy_version_review_period.taxonomy_version_review.tree_version.draft_name,
+<%= link_to(@taxonomy_version_review_period.review.tree_version.draft_name,
                 search_path(query_target: 'tree_version',
-                            query_string: "id: #{@taxonomy_version_review_period.taxonomy_version_review.tree_version.id}"),
+                            query_string: "id: #{@taxonomy_version_review_period.review.tree_version.id}"),
                 class: 'taxonomy review',
                 tabindex: increment_tab_index,
                 title: "Query the tree version") %>
 <span class="pull-right">tree&nbsp;version</span> <br>
-<%= link_to(@taxonomy_version_review_period.taxonomy_version_review.name,
+<%= link_to(@taxonomy_version_review_period.review.name,
                 search_path(query_target: 'taxonomy_version_review',
-                            query_string: "id: #{@taxonomy_version_review_period.taxonomy_version_review.id}"),
+                            query_string: "id: #{@taxonomy_version_review_period.review.id}"),
                 class: 'taxonomy review',
                 tabindex: increment_tab_index,
                 title: "Query the taxonomy review") %>
@@ -33,6 +33,11 @@ Review Period
 
 </div>
 
+<%= divider %>
+<%= pluralize(@taxonomy_version_review_period.reviewers.size, "Reviewer") %>
+<% @taxonomy_version_review_period.sorted_reviewers.each do |r| %>
+  <br><%= r.username %>
+<% end %>
 <%= divider %>
 
 <%= @taxonomy_version_review_period.id %> <span class="pull-right">ID</span> <br>

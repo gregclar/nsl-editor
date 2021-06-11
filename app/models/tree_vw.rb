@@ -23,4 +23,7 @@ class TreeVw < ActiveRecord::Base
   belongs_to :instance
   belongs_to :name
 
+  def readonly?
+    true
+  end
 end
