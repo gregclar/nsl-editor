@@ -281,8 +281,8 @@ class Orchid < ActiveRecord::Base
     Orchid.taxon_string_search(taxon_s).order(:seq).each do |match|
       creator = match.instance_creator_for_preferred_matches(authorising_user)
       creator.create
-      records += creator.created
-      errors += creator.errors
+      records += creator.created || 0
+      errors += creator.errors || 0
     end
     entry = "Task finished: create instance for preferred matches for '#{taxon_s}', #{authorising_user}; records created: #{records}; errors: #{errors}"
     OrchidProcessingLog.log(entry, 'job controller')
