@@ -117,7 +117,7 @@ class OrchidsBatchController < ApplicationController
   def message(placed_tally, error_tally, preflight_stop_tally, text_msg)
     @message = %Q(Added to tree: #{placed_tally}; )
     @message += %Q(Errors: #{error_tally}; )
-    @message += %Q( Stopped pre-flight: #{preflight_stop_tally})
+    @message += %Q( Stopped preflight: #{preflight_stop_tally})
     @message += %Q(; #{text_msg})
   end
 
