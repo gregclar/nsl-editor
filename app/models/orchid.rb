@@ -276,24 +276,26 @@ class Orchid < ActiveRecord::Base
 
   def self.create_instance_for_preferred_matches_for(taxon_s, authorising_user)
     debug("create_instance_for_preferred_matches_for taxon_s: #{taxon_s}")
-    records = 0
+    records = errors = 0
     @ref = Reference.find(REF_ID)
     Orchid.taxon_string_search(taxon_s).order(:seq).each do |match|
-      records += match.create_instance_for_preferred_matches(authorising_user)
+      creator = match.instance_creator_for_preferred_matches(authorising_user)
+      creator.create
+      records += creator.created || 0
+      errors += creator.errors || 0
     end
-    entry = "Task finished: create instance for preferred matches for '#{taxon_s}', #{authorising_user}; records created: #{records}"
+    entry = "Task finished: create instance for preferred matches for '#{taxon_s}', #{authorising_user}; records created: #{records}; errors: #{errors}"
     OrchidProcessingLog.log(entry, 'job controller')
-    records
+    return records, errors
   end
 
-  def create_instance_for_preferred_matches(authorising_user)
-    debug("create_instance_for_preferred_matches for: #{authorising_user}")
+  def instance_creator_for_preferred_matches(authorising_user)
+    debug("instance_creator_for_preferred_matches for: #{authorising_user}")
     @ref = Reference.find(REF_ID) if @ref.blank?
     throw "No ref with id: #{REF_ID}!" if @ref.blank?
     AsInstanceCreator.new(self, @ref, authorising_user)
-      .create_instance_for_preferred_matches
   end
-
+ 
   # check for preferred name
   def self.add_to_tree_for(draft_tree, taxon_s, authorising_user)
     placed_tally = 0

@@ -76,7 +76,7 @@ class Orchid::AsTreePlacer
     end
     if @preflight_failed
       @preflight_stop_count = 1
-      log_to_table("Pre-flight check prevented placing/replacing on tree: #{@orchid.taxon}, id: #{@orchid.id}, seq: #{@orchid.seq}: #{@preflight_error}", @authorising_user)
+      log_to_table("Preflight check prevented placing/replacing on tree: #{@orchid.taxon}, id: #{@orchid.id}, seq: #{@orchid.seq}: #{@preflight_error}", @authorising_user)
     end
   end
 

@@ -41,7 +41,7 @@ class OrchidsBatchController < ApplicationController
   def unlock
     OrchidBatchJobLock.unlock!
     render js:  "$('#emergency-unlock-link').hide();" 
-  end  
+  end
 
   def create_preferred_matches
     prefix = the_prefix('create-preferred-matches-')
@@ -58,7 +58,7 @@ class OrchidsBatchController < ApplicationController
 
   def create_instances_for_preferred_matches
     prefix = the_prefix('create-draft-instances-')
-    records = Orchid.create_instance_for_preferred_matches_for(params[:taxon_string], @current_user.username)
+    records, errors = Orchid.create_instance_for_preferred_matches_for(params[:taxon_string], @current_user.username)
     @message = "Created #{records} draft #{'instance'.pluralize(records)} for #{params[:taxon_string]}"
     OrchidBatchJobLock.unlock!
     render 'create', locals: {message_container_id_prefix: prefix }
@@ -117,7 +117,7 @@ class OrchidsBatchController < ApplicationController
   def message(placed_tally, error_tally, preflight_stop_tally, text_msg)
     @message = %Q(Added to tree: #{placed_tally}; )
     @message += %Q(Errors: #{error_tally}; )
-    @message += %Q( Stopped pre-flight: #{preflight_stop_tally})
+    @message += %Q( Stopped preflight: #{preflight_stop_tally})
     @message += %Q(; #{text_msg})
   end
 
