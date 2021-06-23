@@ -10,7 +10,9 @@ module TreeVersionElements
 
     def get
       url = "#{Rails.configuration.services_clientside_root_url}tree-version/diff-element?e1=#{CGI.escape(@previous_tve)}&e2=#{CGI.escape(@current_tve)}&embed=true"
-      puts url
+      Rails.logger.debug("@previous_tve: #{@previous_tve}")
+      Rails.logger.debug("@current_tve: #{@current_tve}")
+      Rails.logger.debug("TreeVersionElements#DiffHtml get url: #{url}")
       open(url, "Accept" => "text/html") {|f| f.read }
     end
 

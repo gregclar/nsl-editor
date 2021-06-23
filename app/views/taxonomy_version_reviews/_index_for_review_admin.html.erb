@@ -30,13 +30,14 @@ This database has <%= link_to(pluralize(Tree.accepted.all.size, 'accepted taxono
                         title: 'Retrieve draft versions of this taxonomy',
                         class: 'with-underline') %>
 </p>
+<ul>
 <p>
 <% tree.versions.where(published: false).sort {|a,b| a.created_at <=> b.created_at}.each_with_index do |tree_version, ndx| %>
     <p>
     <% if ndx > 0 %>
       <br>
     <% end %>
-    <h4>Draft version <%= tree_version.draft_name %></h4>
+    <li><h4>Draft version <%= tree_version.draft_name %></h4>
     <% if tree_version.reviews.empty? %>
       No reviews &mdash; <%= link_to('create a review on the review tab',
                                       search_path(query_string: "id: #{tree_version.id}",
@@ -78,6 +79,7 @@ This database has <%= link_to(pluralize(Tree.accepted.all.size, 'accepted taxono
   <% end %>
 <% end %>
 
+</ul>
 <h3>Reviewers</h3>
 
 <h5>

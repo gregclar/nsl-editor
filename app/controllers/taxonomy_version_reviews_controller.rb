@@ -29,7 +29,7 @@ class TaxonomyVersionReviewsController < ApplicationController
     set_tab_index
     if params[:tab] =~ /\Atab_periods_of_review\z/
       @taxonomy_version_review_period = TaxonomyVersionReviewPeriod.new
-      @taxonomy_version_review_period.taxonomy_version_review = @taxonomy_version_review
+      @taxonomy_version_review_period.review = @taxonomy_version_review
     end
 
     @take_focus = params[:take_focus] == 'true'
