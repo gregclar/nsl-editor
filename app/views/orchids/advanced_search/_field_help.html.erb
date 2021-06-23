@@ -221,8 +221,8 @@ Because <i>taxon-with-syn:</i> is so frequently used, we've made it the default.
   <% end %>
 </table>
 
-  <h4>Two little beauties for checking your progress</h4>
-  Use these alone for an overview, or in combination with other search directives to drill into progress - see query examples.
+  <h4>Helpful queries for checking processing progress</h4>
+  Use these alone for an overview, or in combination with other search directives.
 <table class="table table-striped">
   <tr><th>Field</th><th>Description</th></tr>
   <% [
@@ -230,6 +230,8 @@ Because <i>taxon-with-syn:</i> is so frequently used, we've made it the default.
      description: "match only on CSV taxon data where the preferred name ID has been set"},
     {field_name: 'has-no-preferred-name:',
      description: "match only on CSV taxon data where the preferred name ID has NOT been set"},
+    {field_name: 'has-preferred-name-without-instance:',
+     description: "match only on CSV taxon data where the preferred name ID has been set but no instance has been created or found"},
       ].each do |val| %>
   <tr>
     <td class="width-20-percent">
