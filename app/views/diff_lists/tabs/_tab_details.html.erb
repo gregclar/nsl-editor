@@ -12,7 +12,8 @@
   <h5>Before</h5>
   <div class="synonyms nothidden">
     <div class="tree-container wrap">
-      <%= TreeVersionElements::DiffHtml.new('/tree/51402267/51402361', '/tree/51402090/51211467').try('before_html').try('html_safe') %>
+      <%#= TreeVersionElements::DiffHtml.new('/tree/51402267/51402361', '/tree/51402090/51211467').try('before_html').try('html_safe') %>
+      <%= TreeVersionElements::DiffHtml.new(@previous_tve.element_link, @current_tve.element_link).try('before_html').try('html_safe') %>
     </div>
   </div>
 <% elsif @diff_list['operation'] == 'added' %>

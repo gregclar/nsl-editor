@@ -98,6 +98,8 @@ having count(*)                     >  1
                                       order: "seq"},
     "has-preferred-name:"   => { where_clause: " exists (select null from orchids_names where orchids.id = orchids_names.orchid_id)",
                                       order: "seq"},
+    "has-preferred-name-without-instance:"   => { where_clause: " exists (select null from orchids_names orn where orchids.id = orn.orchid_id and orn.standalone_instance_id is null and orn.relationship_instance_id is null)",
+                                      order: "seq"},
     "has-no-preferred-name:"   => { where_clause: " not exists (select null from orchids_names where orchids.id = orchids_names.orchid_id)"},
     "created-by:"=> { where_clause: "created_by = ?",
                                       order: "seq"},

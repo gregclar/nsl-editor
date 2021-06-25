@@ -1,3 +1,13 @@
+- :date: 23-Jun-2021
+  :jira_id: '3938'
+  :description: |-
+    Orchids:  new search directive has-preferred-name-without-instance
+- :date: 16-Jun-2021
+  :jira_id: ''
+  :description: |-
+    Security: yarn upgrade
+- :date: 23-Jun-2021
+  :release: true
 - :date: 16-Jun-2021
   :jira_id: ''
   :description: |-
@@ -10,8 +20,6 @@
   :jira_id: '3929'
   :description: |-
     Orchids: include an error count in the create-instances summary log entry
-- :date: 15-May-2021
-  :release: true
 - :date: 10-Jun-2021
   :jira_id: '3929'
   :description: |-

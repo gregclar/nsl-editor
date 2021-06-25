@@ -3,14 +3,14 @@ Reviewing taxonomy draft versions.
 
 <br>
 <hr class="dark">
-<h3>Status for user <%= @current_user.username %></h3>
+<h3>User <%= @current_user.username %></h3>
 
 <% if @current_user.taxonomy_reviewer? %>
   <p>You are registered as a taxonomy reviewer </p>
   <% if @current_user.tvr_periods.size == 0 %>
     <p>You aren't associated with any reviews</p>
   <% else %>
-    <p>You're registered to participate in <%= pluralize(@current_user.tvr_periods.size,'review') %></p>
+    <p>You are registered to participate in <%= pluralize(@current_user.tvr_periods.size,'review') %></p>
     <% @current_user.tvr_periods.each do |period| %>
       <hr class="dark">
       <h4>
@@ -42,19 +42,15 @@ Reviewing taxonomy draft versions.
     <% end %>
   <% end %>
 <% else %>
-  <p>You aren't registered as a taxonomy reviewer </p>
-  <p>You are a reviewer for a review due to start....</p>
-  <p>You are a reviewer in a current review ....</p>
-  <p>You were a reviewer in  ....</p>
+  <p>Not registered as a taxonomy reviewer.</p>
+  <p>If you think you should be registered as a taxonomy reviewer, please contact your leadership team.</p>
 <% end %>
 
 
-
-
-
-
-
-
+<!--
+  <p>You are a reviewer for a review due to start....</p>
+  <p>You are a reviewer in a current review ....</p>
+  <p>You were a reviewer in  ....</p>
 <br>
 <br>
 <br>
@@ -73,7 +69,7 @@ Reviewing taxonomy draft versions.
   <li/>Find past reviews
   <li/>Choose an (unpublished) taxonomy <b>version</b> for review
     <ul>
-      <li/><%= link_to("Unpublished taxonomy versions",
+      <li/><%#= link_to("Unpublished taxonomy versions",
                        search_path(query_string: 'unpublished:',
                                    query_target: 'tree_versions'),
                        class: "with-underline",
@@ -81,3 +77,4 @@ Reviewing taxonomy draft versions.
     </ul>
 
 </ol>
+-->
