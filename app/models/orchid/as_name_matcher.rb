@@ -19,10 +19,10 @@
 # Save a preferred matching name for a raw orchid record.
 class Orchid::AsNameMatcher
   def initialize(orchid, authorising_user)
-    debug("Name matcher for orchid: #{orchid.taxon} (#{orchid.record_type})")
+    debug("Name matcher for orchid: #{orchid.taxon} (#{orchid.true_record_type})")
     @orchid = orchid
     @authorising_user = authorising_user
-    @log_tag = " for #{@orchid.id}, seq: #{@orchid.seq} #{@orchid.taxon} #{@orchid.record_type}"
+    @log_tag = " for #{@orchid.id}, seq: #{@orchid.seq} #{@orchid.taxon} (#{@orchid.true_record_type})"
   end
 
   def find_or_create_preferred_match

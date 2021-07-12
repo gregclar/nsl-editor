@@ -1,3 +1,7 @@
+- :date: 12-Jul-2021
+  :jira_id: '3909'
+  :description: |-
+    Orchids: mark records as 'excluded' where appropriate in logs
 - :date: 02-Jul-2021
   :jira_id: '3909'
   :description: |-
