@@ -1,3 +1,7 @@
+- :date: 19-Jul-2021
+  :jira_id: ''
+  :description: |-
+    Security: upgrade rails and some other libraries
 - :date: 12-Jul-2021
   :jira_id: '3909'
   :description: |-
