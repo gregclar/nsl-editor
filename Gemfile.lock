@@ -300,7 +300,7 @@ DEPENDENCIES
   websocket-extensions (>= 0.1.5)
 
 RUBY VERSION
-   ruby 2.5.7p0 (jruby 9.2.9.0)
+   ruby 2.5.8p0 (jruby 9.2.19.0)
 
 BUNDLED WITH
    2.1.4
