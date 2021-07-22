@@ -224,6 +224,8 @@ Rails.application.routes.draw do
   match "orchids/batch/enable/add", as: "orchids_batch_enable_add", to: "orchids_batch#enable_add", via: :post
   match "orchids/batch/disable/add", as: "orchids_batch_disable_add", to: "orchids_batch#disable_add", via: :post
   match "orchids/batch/unlock", as: "orchids_batch_unlock", to: "orchids_batch#unlock", via: :post
+  match "orchids/batch/work/on/excluded", as: "orchids_batch_work_on_excluded", to: "orchids_batch#work_on_excluded", via: :post
+  match "orchids/batch/work/on/accepted", as: "orchids_batch_work_on_accepted", to: "orchids_batch#work_on_accepted", via: :post
 
   match "trees/:id/tab/:tab", as: "tree_tab", to: "trees#tab", via: :get
 

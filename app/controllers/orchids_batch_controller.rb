@@ -17,6 +17,7 @@
 #   limitations under the License.
 #
 class OrchidsBatchController < ApplicationController
+  before_action :set_accepted_excluded_mode, only: [:index, :submit, :create_preferred_matches, :create_instances_for_preferred_matches, :add_instances_to_draft_tree]
 
   def index
   end
@@ -45,7 +46,7 @@ class OrchidsBatchController < ApplicationController
 
   def create_preferred_matches
     prefix = the_prefix('create-preferred-matches-')
-    attempted, records = Orchid.create_preferred_matches_for_accepted_taxa(params[:taxon_string], @current_user.username)
+    attempted, records = Orchid.create_preferred_matches(params[:taxon_string], @current_user.username, @work_on_accepted)
     @message = "Created #{records} matches out of #{attempted} records matching the string '#{params[:taxon_string]}'"
     OrchidBatchJobLock.unlock!
     render 'create', locals: {message_container_id_prefix: prefix }
@@ -58,7 +59,7 @@ class OrchidsBatchController < ApplicationController
 
   def create_instances_for_preferred_matches
     prefix = the_prefix('create-draft-instances-')
-    records, errors = Orchid.create_instance_for_preferred_matches_for(params[:taxon_string], @current_user.username)
+    records, errors = Orchid.create_instance_for_accepted_or_excluded(params[:taxon_string], @current_user.username, @work_on_accepted)
     @message = "Created #{records} draft #{'instance'.pluralize(records)} for #{params[:taxon_string]}"
     OrchidBatchJobLock.unlock!
     render 'create', locals: {message_container_id_prefix: prefix }
@@ -72,7 +73,7 @@ class OrchidsBatchController < ApplicationController
   def add_instances_to_draft_tree
     prefix = the_prefix('add-instances-to-tree-')
     logger.debug("#add_instances_to_draft_tree start")
-    placed_tally, error_tally, preflight_stop_tally,text_message = Orchid.add_to_tree_for(@working_draft, params[:taxon_string], @current_user.username)
+    placed_tally, error_tally, preflight_stop_tally,text_message = Orchid.add_to_tree_for(@working_draft, params[:taxon_string], @current_user.username, @work_on_accepted)
     logger.debug("records added to tree: #{placed_tally}")
     message(placed_tally, error_tally, preflight_stop_tally, text_message)
     OrchidBatchJobLock.unlock!
@@ -82,6 +83,16 @@ class OrchidsBatchController < ApplicationController
     logger.error e.backtrace.join("\n")
     @message = e.to_s.sub(/uncaught throw/,'').gsub(/"/,'')
     render 'error', locals: {message_container_id_prefix: prefix }
+  end
+
+  def work_on_excluded
+    session[:orchids_work_on_excluded] = true
+    session[:orchids_work_on_accepted] = false
+  end
+
+  def work_on_accepted
+    session[:orchids_work_on_accepted] = true
+    session[:orchids_work_on_excluded] = false
   end
 
   private 
@@ -110,7 +121,7 @@ class OrchidsBatchController < ApplicationController
   end
 
   def show_status
-    @status = Orchid::AsStatusReporter.new(params[:taxon_string]).report
+    @status = Orchid::AsStatusReporter.new(params[:taxon_string], @work_on_accepted).report
     render 'status'
   end
 
@@ -137,6 +148,23 @@ class OrchidsBatchController < ApplicationController
       "#{params[:gui_submit_place]}-#{str}"
     end
     str
+  end
+
+  def set_accepted_excluded_mode
+    if session[:orchids_work_on_accepted] == true
+      @work_on_accepted = true
+      @work_on_excluded = false
+      session[:orchids_work_on_excluded] = false
+    elsif session[:orchids_work_on_excluded] == true
+      @work_on_accepted = false
+      @work_on_excluded = true
+      session[:orchids_work_on_accepted] = false
+    else
+      @work_on_accepted = true
+      @work_on_excluded = false
+      session[:orchids_work_on_accepted] = true
+      session[:orchids_work_on_excluded] = false
+    end
   end
 end
 

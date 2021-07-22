@@ -150,7 +150,7 @@ class Orchid::AsTreePlacer
     placement = Tree::Workspace::Placement.new(username: @authorising_user,
                                                parent_element_link: parent_tve(orchids_name).try('element_link'),
                                                instance_id: orchids_name.standalone_instance_id,
-                                               excluded: false,
+                                               excluded: orchids_name.excluded?,
                                                profile: profile,
                                                version_id: @draft_tree.id)
     @response = placement.place
@@ -166,7 +166,7 @@ class Orchid::AsTreePlacer
                                                  target: @tree_version_element,
                                                  parent: parent_tve(orchids_name),
                                                  instance_id: orchids_name.standalone_instance_id,
-                                                 excluded: false,
+                                                 excluded: orchids_name.excluded?,
                                                  profile: profile)
     @response = replacement.replace
     log_to_table("Replace #{@orchid.taxon}, id: #{@orchid.id}, seq: #{@orchid.seq}", @authorising_user)

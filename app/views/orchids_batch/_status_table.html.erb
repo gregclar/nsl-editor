@@ -6,7 +6,7 @@
     <td>
         <%= key.to_s.gsub(/_/,' ').capitalize %>
     </td>
-    <% if key =~ /search_string/ %>
+    <% if key =~ /search_string/ || key =~ /status/ || key =~ /name_category/ %>
       <td  class="min-width-10em">
 
     <% else %>

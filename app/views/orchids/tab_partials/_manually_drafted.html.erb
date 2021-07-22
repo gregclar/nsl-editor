@@ -1,6 +1,6 @@
 <%= divider %>
 <h4>The Drafted Flags</h4>
-<% if @orchid.accepted_and_not_doubtful? %>
+<% if @orchid.accepted? %>
   The drafted flags can apply to this record type.
   <br>
   <% if @orchid.orchids_name.size == 0 %>

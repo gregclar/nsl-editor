@@ -220,6 +220,10 @@ class OrchidsName < ActiveRecord::Base
     raise
   end
 
+  def excluded?
+    orchid.excluded? || orchid.parent.excluded?
+  end
+
   def debug(msg)
     Rails.logger.debug("OrchidsName: #{msg}")
   end

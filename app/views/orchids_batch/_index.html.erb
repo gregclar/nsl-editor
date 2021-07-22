@@ -15,9 +15,19 @@
 but in many cases it makes sense to push batches of records through the process.</p>
 
 <%= link_to "See recent logs", search_path(query_string: "latest:",query_target: 'orchid_processing_logs'), title: "See logs", class: "with-underline" %> 
+<hr class="dark">
+<% if session[:orchids_work_on_accepted] == true %>
+  <h4>Targetting Accepted Names</h4>
+<%= link_to "Switch to Excluded Names", {controller: 'orchids_batch', action: 'work_on_excluded'}, {id: 'work-on-excluded', class: 'btn btn-primary', remote: true, title: "Work on excluded orchids", method: :post} %>
+<% end %>
+<% if session[:orchids_work_on_excluded] == true %>
+  <h4>Targetting Excluded Names</h4>
+<%= link_to "Switch to Accepted Names", {controller: 'orchids_batch', action: 'work_on_accepted'}, {id: 'work-on-accepted', class: 'btn btn-primary', remote: true, title: "Work on accepted orchids", method: :post} %>
+<% end %>
+<hr/ class="dark">
 
 
-<h5>Enter a taxon string:</h5>
+<h5>Enter a taxon string</h5>
 <%= form_tag({controller: "orchids_batch", action: "submit"}, method: "post", remote: true) do %>
   <div class="width-56-4em">
     <input name="taxon_string" id="taxon-string" type="text" value="<%= session[:taxon_string] %>" class="form-control" required title="taxon string for batch" />
@@ -79,6 +89,6 @@ but in many cases it makes sense to push batches of records through the process.
 </ul>
 
 <h5>Note</h5>
-<ul>
+<ul class="no-indent">
   <li/>The "Unmatched" counts don't include orchids that are excluded from further processing.
 </ul>

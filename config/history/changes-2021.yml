@@ -1,3 +1,17 @@
+- :date: 19-Jul-2021
+  :jira_id: ''
+  :description: |-
+    Security: upgrade rails and some other libraries
+- :date: 12-Jul-2021
+  :jira_id: '3909'
+  :description: |-
+    Orchids: mark records as 'excluded' where appropriate in logs
+- :date: 02-Jul-2021
+  :jira_id: '3909'
+  :description: |-
+    Orchids:  also process excluded names from the console (early version)
+- :date: 25-Jun-2021
+  :release: true
 - :date: 23-Jun-2021
   :jira_id: '3938'
   :description: |-

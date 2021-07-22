@@ -232,40 +232,36 @@ class Orchid < ActiveRecord::Base
   # This search emulates the default search for Orchids, the 
   # taxon-string: search.
   def self.taxon_string_search(taxon_string)
-    ts = taxon_string.downcase.gsub(/\*/,'%')
-    if Rails.configuration.try('excluded_orchids_willing')
-      Orchid.where([ "((lower(taxon) like ? or lower(taxon) like 'x '||? or lower(taxon) like '('||?) and record_type = 'accepted') or (parent_id in (select id from orchids where (lower(taxon) like ? or lower(taxon) like 'x '||? or lower(taxon) like '('||?) and record_type = 'accepted' and not doubtful))",
-                   ts, ts, ts, ts, ts, ts])
-    else
-      Orchid.where([ "((lower(taxon) like ? or lower(taxon) like 'x '||? or lower(taxon) like '('||?) and record_type = 'accepted' and not doubtful) or (parent_id in (select id from orchids where (lower(taxon) like ? or lower(taxon) like 'x '||? or lower(taxon) like '('||?) and record_type = 'accepted' and not doubtful))",
-                   ts, ts, ts, ts, ts, ts])
-    end
+    self.taxon_string_search_no_excluded(taxon_string)
   end
 
+  def self.taxon_string_search_no_excluded(taxon_string)
+    ts = taxon_string.downcase.gsub(/\*/,'%')
+    Orchid.where([ "((lower(taxon) like ? or lower(taxon) like 'x '||? or lower(taxon) like '('||?) and record_type = 'accepted' and not doubtful) or (parent_id in (select id from orchids where (lower(taxon) like ? or lower(taxon) like 'x '||? or lower(taxon) like '('||?) and record_type = 'accepted' and not doubtful))",
+                   ts, ts, ts, ts, ts, ts])
+  end
+
+  def self.taxon_string_search_for_excluded(taxon_string)
+    ts = taxon_string.downcase.gsub(/\*/,'%')
+    Orchid.where([ "((lower(taxon) like ? or lower(taxon) like 'x '||? or lower(taxon) like '('||?) and record_type = 'accepted' and doubtful) or (parent_id in (select id from orchids where (lower(taxon) like ? or lower(taxon) like 'x '||? or lower(taxon) like '('||?) and record_type = 'accepted' and doubtful))",
+                   ts, ts, ts, ts, ts, ts])
+  end
 
   def create_preferred_match(authorising_user)
     AsNameMatcher.new(self, authorising_user).find_or_create_preferred_match
   end
 
-  def self.create_preferred_matches_for(taxon_s)
-    throw 'deprecated'
-    debug("create_preferred_matches_for #{taxon_s}")
-    records = 0
-    self.where(["taxon like ?", taxon_s.gsub(/\*/,'%')])
-        .order(:seq).each do |match|
-      records += match.create_preferred_match
-      match.children.each do |child|
-        records += child.create_preferred_match
-      end
+  def self.create_preferred_matches(taxon_s, authorising_user, work_on_accepted)
+    if work_on_accepted
+      self.create_preferred_matches_for_accepted_taxa(taxon_s, authorising_user)
+    else
+      self.create_preferred_matches_for_excluded_taxa(taxon_s, authorising_user)
     end
-    records
   end
 
   def self.create_preferred_matches_for_accepted_taxa(taxon_s, authorising_user)
-    debug("create_preferred_matches_for_accepted_taxa matching #{taxon_s}")
-    attempted = 0
-    records = 0
-    Orchid.taxon_string_search(taxon_s).order(:seq).each do |match|
+    attempted = records = 0
+    Orchid.taxon_string_search_no_excluded(taxon_s).order(:seq).each do |match|
       attempted += 1
       records += match.create_preferred_match(authorising_user)
     end
@@ -274,11 +270,30 @@ class Orchid < ActiveRecord::Base
     return attempted, records
   end
 
-  def self.create_instance_for_preferred_matches_for(taxon_s, authorising_user)
-    debug("create_instance_for_preferred_matches_for taxon_s: #{taxon_s}")
+  def self.create_preferred_matches_for_excluded_taxa(taxon_s, authorising_user)
+    attempted = records = 0
+    Orchid.taxon_string_search_for_excluded(taxon_s).order(:seq).each do |match|
+      attempted += 1
+      records += match.create_preferred_match(authorising_user)
+    end
+    entry = "Task finished: create preferred matches for excluded taxa matching #{taxon_s}, #{authorising_user}; attempted: #{attempted}, created: #{records}"
+    OrchidProcessingLog.log(entry, 'job controller')
+    return attempted, records
+  end
+
+  def self.create_instance_for_accepted_or_excluded(taxon_s, authorising_user, work_on_accepted)
+    if work_on_accepted
+      search = Orchid.taxon_string_search_no_excluded(taxon_s)
+    else
+      search = Orchid.taxon_string_search_for_excluded(taxon_s)
+    end
+    self.create_instance_for(taxon_s, authorising_user, search)
+  end
+
+  def self.create_instance_for(taxon_s, authorising_user, search)
     records = errors = 0
     @ref = Reference.find(REF_ID)
-    Orchid.taxon_string_search(taxon_s).order(:seq).each do |match|
+    search.order(:seq).each do |match|
       creator = match.instance_creator_for_preferred_matches(authorising_user)
       creator.create
       records += creator.created || 0
@@ -297,17 +312,26 @@ class Orchid < ActiveRecord::Base
   end
  
   # check for preferred name
-  def self.add_to_tree_for(draft_tree, taxon_s, authorising_user)
-    placed_tally = 0
-    error_tally = 0
-    preflight_stop_tally = 0
-    Orchid.taxon_string_search(taxon_s).where(record_type: 'accepted').order(:seq).each do |match|
+  def self.add_to_tree_for(draft_tree, taxon_s, authorising_user, work_on_accepted)
+    if work_on_accepted
+      search = Orchid.taxon_string_search_no_excluded(taxon_s).where(record_type: 'accepted').where(doubtful: false).order(:seq)
+      tag = 'accepted'
+    else
+      search = Orchid.taxon_string_search_for_excluded(taxon_s).where(record_type: 'accepted').where(doubtful: true).order(:seq)
+      tag = 'excluded'
+    end
+    self.add_to_tree(draft_tree, taxon_s, authorising_user, search, tag)
+  end
+    
+  def self.add_to_tree(draft_tree, taxon_s, authorising_user, search, tag)
+    placed_tally = error_tally = preflight_stop_tally = 0
+    search.each do |match|
       placer = AsTreePlacer.new(draft_tree, match, authorising_user)
       placed_tally += placer.placed_count
       error_tally += placer.error_count
       preflight_stop_tally += placer.preflight_stop_count
     end
-    entry = "Task finished: add to tree for accepted taxa matching #{taxon_s}, #{authorising_user}; placed: #{placed_tally}, errors: #{error_tally}, preflight stops: #{preflight_stop_tally}"
+    entry = "Task finished: add to tree for #{tag} taxa matching #{taxon_s}, #{authorising_user}; placed: #{placed_tally}, errors: #{error_tally}, preflight stops: #{preflight_stop_tally}"
     OrchidProcessingLog.log(entry, 'job controller')
     return placed_tally, error_tally, preflight_stop_tally,''
   rescue GenusTaxonomyPlacementError => e
