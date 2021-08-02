@@ -1,4 +1,8 @@
 - :date: 02-Aug-2021
+  :jira_id: ''
+  :description: |-
+    Security upgrades
+- :date: 02-Aug-2021
   :jira_id: '3613'
   :description: |-
     Fix reference duplicate-of typeahead - it works again on successive records without the user manually refreshing the tab
