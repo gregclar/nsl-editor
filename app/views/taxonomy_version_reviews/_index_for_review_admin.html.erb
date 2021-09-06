@@ -80,7 +80,12 @@ This database has <%= link_to(pluralize(Tree.accepted.all.size, 'accepted taxono
 <% end %>
 
 </ul>
-<h3>Reviewers</h3>
+<hr class="dark">
+<h3>Review Resources</h3>
+<h4>Reviewers</h4>
+<p>Users registered to review taxonomy versions</p>
+
+<% reviewers_count = TaxonomyReviewer.all.count %>
 
 <h5>
 <%= link_to(pluralize(TaxonomyReviewer.all.count,"Reviewer"), search_path(query_string: "*",
@@ -88,6 +93,20 @@ This database has <%= link_to(pluralize(Tree.accepted.all.size, 'accepted taxono
                                            title: 'Retrieve the reviewers',
                                            class: 'with-underline').html_safe %> 
 </h5>
+<% if reviewers_count > 0 %>
+  <table class="width-30em table table-striped">
+    <tr><th>Username</th><th>Organisation</th></tr>
+    <% TaxonomyReviewer.all.each do |reviewer| %>
+      <tr><td>
+          <%= link_to(reviewer.username, search_path(query_string: reviewer.username,
+                                           query_target: 'taxonomy reviewer'),
+                                           title: 'Retrieve the reviewer',
+                                           class: 'with-underline').html_safe %>
+      </td>
+      <td><%= reviewer.organisation_name %></td></tr>
+    <% end %>
+  </table>
+<% end %>
 
 <%= link_to('Add a Reviewer',
             taxonomy_reviewer_new_row_path,
@@ -95,5 +114,6 @@ This database has <%= link_to(pluralize(Tree.accepted.all.size, 'accepted taxono
             remote: true,
             title: 'Open a form to create a new taxonomy reviewer') %>
 
-<%#= render partial: 'taxonomy_version_reviews/doco_for_review_admin' %>
+<hr class="dark">
+<%= render partial: 'taxonomy_version_reviews/doco_for_review_admin' %>
 
