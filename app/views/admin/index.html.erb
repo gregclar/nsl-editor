@@ -88,6 +88,8 @@
 
     <tr><td class="width-40-percent min-width-10em">Rails.configuration.action_controller.relative_url_root</td>
         <td> <%= Rails.configuration.action_controller.try(:relative_url_root) %> </td></tr>
+    <tr><td class="width-40-percent min-width-10em">Rails.application.config.action_controller.relative_url_root</td>
+        <td> <%= Rails.application.config.action_controller.try(:relative_url_root) %> </td></tr>
     <tr><td class="width-40-percent min-width-10em">ActionController::Base.config.relative_url_root </td>
         <td> <%= ActionController::Base.config.relative_url_root  %> </td></tr>
 
