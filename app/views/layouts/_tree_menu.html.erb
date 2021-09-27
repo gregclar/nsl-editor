@@ -7,11 +7,11 @@
        class="dropdown-toggle <%= 'active' if params[:controller].match(/session/) %>"
        title="Select this to see tree options."
        data-toggle="dropdown">
-      <i class="fa fa-tree"></i>
+      <i class="fa fa-sitemap"></i>
       <% if @working_draft %>
         <%= @working_draft&.tree&.name %> <%= @working_draft&.draft_name %>
       <% else %>
-        No draft selected
+        Draft Taxonomies
       <% end %>
       <span class="caret"></span>
     </a>
@@ -38,7 +38,7 @@
       <% end %>
       <hr>
       <li>
-        <%= link_to "<i class='fa fa-plus'></i> Create draft tree".html_safe,
+        <%= link_to "<i class='fa fa-plus'></i> Create draft taxonomy".html_safe,
                     trees_new_draft_path,
                     title: 'Add a new draft tree',
                     remote: true,

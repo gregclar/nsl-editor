@@ -1,6 +1,10 @@
 - :date: 27-Sep-2021
   :jira_id: ''
   :description: |-
+    Replace the tree icon with the sitemap icon to indicate a hierarchy, rename tree menu to indicate it is for draft taxonomy.
+- :date: 27-Sep-2021
+  :jira_id: ''
+  :description: |-
     Restore trash icons that were not appearing - they are now "open" icons, not filled in
 - :date: 15-Sep-2021
   :release: true
