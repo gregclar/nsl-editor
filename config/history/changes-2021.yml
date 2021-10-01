@@ -1,3 +1,7 @@
+- :date: 01-Oct-2021
+  :jira_id: '3364'
+  :description: |-
+    Add processing to avoid stale object errors when creating names and references (which can happen because they require a 2-step dance with services during creation).
 - :date: 28-Sep-2021
   :jira_id: ''
   :description: |-
