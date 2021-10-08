@@ -1,3 +1,7 @@
+- :date: 08-Oct-2021
+  :jira_id: '4006'
+  :description: |-
+    For instance search directives <code>tree-dist-matches</code> and <code>tree-comment-matches</code>: search only the current active tree, do not replace '*' with '%', add documentation and examples 
 - :date: 01-Oct-2021
   :jira_id: '3364'
   :description: |-
