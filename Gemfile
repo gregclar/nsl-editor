@@ -73,7 +73,7 @@ gem "composite_primary_keys"
 gem "sucker_punch"
 gem "pg_search"
 
-gem "nokogiri", ">= 1.11.4"
+gem "nokogiri", ">= 1.12.5"
 gem "rest-client"
 gem "kramdown", ">= 2.3.0"
 gem "exception_notification"
