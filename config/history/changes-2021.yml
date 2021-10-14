@@ -1,4 +1,6 @@
 - :date: 14-Oct-2021
+  :release: true
+- :date: 14-Oct-2021
   :jira_id: '3999'
   :description: |-
     Amend instructions for selecting draft taxonomy on Tree Tab - in line with minor tweaks from NSL-4012.
