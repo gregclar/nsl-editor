@@ -66,7 +66,7 @@ class CommentsController < ApplicationController
       render js: "alert('Could not delete that record.');"
     end
   rescue
-    render "create_failed.js", status: 503
+    render js: "create_failed", status: 503
   end
 
   private

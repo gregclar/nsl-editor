@@ -20,7 +20,7 @@ class ServicesController < ApplicationController
   skip_before_action :authenticate
 
   def index
-    render layout: "services.html.erb"
+    render layout: "services"
   end
 
   def ping
