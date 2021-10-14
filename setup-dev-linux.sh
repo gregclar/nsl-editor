@@ -101,10 +101,11 @@ echo "PATH: $PATH"
 echo " "
 echo ">>> bootstrapping"
 yarn
-if [ -z "$(type -p bundler)" ]; then
-  echo "Installing bundler..."
-  gem install bundler -N || exit 1
-fi
+#if [ -z "$(type -p bundler)" ]; then
+  #echo "Installing bundler..."
+  #gem install bundler -N || exit 1
+#fi
+gem install bundler -N 
 bundle install
 echo "<<< bootstrapped"
 echo " "
