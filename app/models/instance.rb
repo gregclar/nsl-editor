@@ -335,7 +335,7 @@ class Instance < ActiveRecord::Base
     return if cited_by_id.blank?
     return if cites_id.blank?
     return unless this_is_cited_by.name_id == this_cites.name_id
-    errors(:base, "A name cannot be a synonym of itself")
+    errors.add(:base, "A name cannot be a synonym of itself")
   end
 
   def apc_instance_notes
@@ -353,7 +353,7 @@ class Instance < ActiveRecord::Base
   end
 
   def name_id_must_not_change
-    errors(:base, "You cannot use a different name.") if name_id_changed?
+    errors.add(:base, "You cannot use a different name.") if name_id_changed?
   end
 
   # A standalone instance with no dependents can change reference.
@@ -407,7 +407,7 @@ class Instance < ActiveRecord::Base
 
   def cannot_cite_itself
     return if !synonymy? || id != cites_id
-    errors(:base, "cannot cite itself")
+    errors.add(:base, "cannot cite itself")
   end
 
   def cannot_be_cited_by_itself
