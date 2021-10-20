@@ -16,14 +16,6 @@
                         class: 'tree-version')
 %> 
 <br>
-<%= link_to("Versions of this taxonomy with one or more reviews&nbsp;#{search_icon_on_tab}".html_safe,
-            search_path(query_string: "for-tree-id:#{@tree.id} has-review:",
-                        query_target: 'tree_version'),
-                        title: 'Retrieve the versions of this taxonomy',
-                        class: 'tree-version')
-%> 
-
-<br>
 <%= link_to("Published Versions of this taxonomy&nbsp;#{search_icon_on_tab}".html_safe,
             search_path(query_string: "for-tree-id:#{@tree.id} published:",
                         query_target: 'tree version'),

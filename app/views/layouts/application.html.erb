@@ -60,11 +60,8 @@ input[type="checkbox"]:not([title]) {
         data-active-instance-tab="tab_show_1"
         data-active-tree-tab="tab_details"
         data-active-instance-tab="tab_show_1"
-        data-active-taxonomy-version-review-tab="tab_details"
-        data-active-taxonomy-review-period-tab="tab_details"
         data-active-tree-element-tab="tab_details"
         data-active-tree-version-tab="tab_details"
-        data-active-taxonomy-reviewer-tab="tab_details"
         data-active-diff-list-tab="tab_details"
         >
 
@@ -85,7 +82,6 @@ input[type="checkbox"]:not([title]) {
              class="main-body-container no-left-padding col-xs-12 col-sm-12 col-md-12 col-lg-12 sidebar" >
           <%= yield %>
         </div>
-        <% if @standard_mode %>
         <div id="help-search-container"
              class="main-body-container no-left-padding col-xs-12 col-sm-12 col-md-12 col-lg-12 hidden">
             <%= render partial: 'search/help_search_inner' %>
@@ -107,10 +103,6 @@ input[type="checkbox"]:not([title]) {
              class="main-body-container no-left-padding col-xs-12 col-sm-12 col-md-12 col-lg-12 hidden">
         </div>
         <div id="orchids-batch-panel-container"
-             class="main-body-container no-left-padding col-xs-12 col-sm-12 col-md-12 col-lg-12 hidden">
-        </div>
-        <% end %>
-        <div id="taxonomy-review-info-container"
              class="main-body-container no-left-padding col-xs-12 col-sm-12 col-md-12 col-lg-12 hidden">
         </div>
       </div>

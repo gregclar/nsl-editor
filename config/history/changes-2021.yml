@@ -1,3 +1,11 @@
+- :date: 21-Oct-2021
+  :jira_id: '4027'
+  :description: |-
+    Remove code for taxonomic (tree version) review from Editor
+- :date: 20-Oct-2021
+  :jira_id: '4014'
+  :description: |-
+    Fix failing tests and change error processing to avoid deprecation warnings following the Rails upgrade.
 - :date: 15-Oct-2021
   :jira_id: '4014'
   :description: |-

@@ -29,9 +29,6 @@ class TreeVersion < ActiveRecord::Base
   has_many :tree_version_elements,
            foreign_key: "tree_version_id",
            class_name: "TreeVersionElement"
-  has_many :taxonomy_version_reviews
-  has_many :reviews,
-           class_name: "TaxonomyVersionReview"
 
   def display_as
     'TreeVersion'
@@ -106,33 +103,5 @@ class TreeVersion < ActiveRecord::Base
 
   def draft_instance_default?
     self != tree.default_draft_version
-  end
-
-  def active_review?
-    return false unless taxonomy_version_reviews.size > 0
-    taxonomy_version_reviews.each do |review|
-      return true if review.active?
-    end
-    false
-  end
-
-  def has_active_review?
-    active_review?
-  end
-
-  def active_review
-    return nil unless taxonomy_version_reviews.size > 0
-    taxonomy_version_reviews.each do |review|
-      return review if review.active?
-    end
-    nil
-  end
-
-  def has_inactive_empty_review?
-    return false unless taxonomy_version_reviews.size > 0
-    taxonomy_version_reviews.each do |review|
-      return true unless review.active? || review.taxonomy_version_review_periods.size > 0
-    end
-    false
   end
 end

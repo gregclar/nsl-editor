@@ -85,9 +85,6 @@ class Search::Base
       when /tree_version\z/ then Search::OnTreeVersion::Base.new(@parsed_request)
       when /tree_version_element\z/ then Search::OnTreeVersionElement::Base.new(@parsed_request)
       when /tree_element\z/ then Search::OnTreeElement::Base.new(@parsed_request)
-      when /taxonomy_version_review\z/ then Search::OnTaxonomyVersionReview::Base.new(@parsed_request)
-      when /taxonomy_version_review_period\z/ then Search::OnTaxonomyVersionReviewPeriod::Base.new(@parsed_request)
-      when /taxonomy_reviewer\z/ then Search::OnTaxonomyReviewer::Base.new(@parsed_request)
       else raise 'unknown target table'
       end
   end

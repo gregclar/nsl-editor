@@ -10,18 +10,5 @@
                                           prev_tab: '',
                                           next_tab: '' } %>
 
-      <% if can? 'taxonomy_version_reviews', 'create' %>
-
-      <%= render partial: 'tree_versions/tabs/tab', locals: {first: false,
-                                          last: true,
-                                          this_tab: 'tab_review', 
-                                          link_text: 'Review',
-                                          link_id: 'tree-version-review-tab', 
-                                          link_title: 'Reviews of this taxonomy version',
-                                          tab_index: increment_tab_index,
-                                          prev_tab: '',
-                                          next_tab: '' } %>
-      <% end %>
-
     </ul>
 

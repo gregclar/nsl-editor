@@ -21,19 +21,6 @@
             "#{Rails.configuration.nsl_links}treeVersion/diff?v1=#{@tree_version.previous_version_id}&v2=#{@tree_version.id}&list=true",
             title: 'Retrieve the tree',class: 'tree') %> 
 <span class="pull-right">changes</span> <br>
-<% unless @tree_version.taxonomy_version_reviews.empty? %>
-  <%= divider %>
-  <h5>Reviews</h5>
-  <% @tree_version.taxonomy_version_reviews.each do |review| %>
-    <%= link_to(review.name,
-                search_path(query_target: 'taxonomy version review',
-                            query_string: "id: #{review.id}"),
-                class: 'taxonomy-version-review',
-                tabindex: increment_tab_index,
-                title: "Show the review") %>
-    <br/>
-  <% end %>
-<% end %>
 <%= divider %>
 <%= @tree_version.id %> <span class="pull-right">ID</span> <br>
 <%= created_by_whom_and_when(@tree_version).html_safe %>

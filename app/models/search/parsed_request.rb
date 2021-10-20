@@ -72,12 +72,6 @@ class Search::ParsedRequest
     "tree_version_elements" => "tree_version_element",
     "tree_element" => "tree_element",
     "tree_elements" => "tree_element",
-    "taxonomy_version_review" => "taxonomy_version_review",
-    "taxonomy_version_reviews" => "taxonomy_version_review",
-    "taxonomy_version_review_period" => "taxonomy_version_review_period",
-    "taxonomy_version_review_periods" => "taxonomy_version_review_period",
-    "taxonomy_reviewer" => "taxonomy_reviewer",
-    "taxonomy_reviewers" => "taxonomy_reviewer",
   }.freeze
 
   def initialize(params)

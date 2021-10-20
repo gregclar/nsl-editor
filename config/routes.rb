@@ -410,30 +410,6 @@ Rails.application.routes.draw do
 
   match "/user/toggle_mode", as: "toggle_mode", to: "mode#toggle_mode", via: :post
 
-  resources :taxonomy_version_reviews, only: [:show, :post, :create, :new, :update, :destroy]
-  match "taxonomy_version_reviews/:id/tab/:tab", as: "taxonomy_version_review_tab", to: "taxonomy_version_reviews#tab", via: :get
-  match "taxonomy_version_review_index",
-        as: "taxonomy_version_review_index",
-        to: "taxonomy_version_reviews#index",
-        via: :get
-
-  match "taxonomy_version_review_periods/:id/tab/:tab", as: "taxonomy_version_review_period_tab", to: "taxonomy_version_review_periods#tab", via: :get
-  match "taxonomy_version_review_periods/calendar", as: "taxonomy_version_review_period_calendar", to: "taxonomy_version_review_periods#calendar", via: :get
-  resources :taxonomy_version_review_periods, only: [:show, :create, :new, :update, :destroy]
-
-  resources :taxonomy_element_comments, only: [:show, :post, :create, :new, :update, :destroy]
-
-  match "taxonomy_reviewers/new_row",
-        as: "taxonomy_reviewer_new_row", to: "taxonomy_reviewers#new_row", via: :get
-  match "taxonomy_reviewers/new/:random_id",
-        as: "new_taxonomy_reviewer_with_random_id", to: "taxonomy_reviewers#new", via: :get
-  match "taxonomy_review/:id/tab/:tab", as: "taxonomy_reviewer_tab", to: "taxonomy_reviewers#tab", via: :get
-  match "taxonomy_reviewer/activate/:id", as: "activate_taxonomy_reviewer", to: "taxonomy_reviewers#activate", via: :post
-  match "taxonomy_reviewer/de_activate/:id", as: "de_activate_taxonomy_reviewer", to: "taxonomy_reviewers#de_activate", via: :post
-  resources :taxonomy_reviewers, only: [:show, :create, :update, :destroy]
-
-  resources :tvr_periods_reviewers
-
   # ["operation", "previous_tve", "current_tve", "simple_name", "synonyms_html", "name_path"]
   # match "diff_list/:id/tab/:tab/:operation/:previous_tve/:current_tve/:simple_name", as: "diff_list_tab", to: "diff_lists#tab", via: :get
   match "diff_list/:id/tab/:tab/", as: "diff_list_tab", to: "diff_lists#tab", via: :get
