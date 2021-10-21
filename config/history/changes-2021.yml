@@ -1,3 +1,7 @@
+- :date: 22-Oct-2021
+  :jira_id: '4033'
+  :description: |-
+    Fix Orchid loader query error complaining about non-attribute arguments.
 - :date: 21-Oct-2021
   :jira_id: '4027'
   :description: |-
