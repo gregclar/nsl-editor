@@ -81,10 +81,6 @@ class Search::Base
       when /reference/ then Search::OnReference::Base.new(@parsed_request)
       when /orchids/ then Search::OnOrchids::Base.new(@parsed_request)
       when /orchid.processing.log/ then Search::OnOrchidProcessingLogs::Base.new(@parsed_request)
-      when /tree\z/ then Search::OnTree::Base.new(@parsed_request)
-      when /tree_version\z/ then Search::OnTreeVersion::Base.new(@parsed_request)
-      when /tree_version_element\z/ then Search::OnTreeVersionElement::Base.new(@parsed_request)
-      when /tree_element\z/ then Search::OnTreeElement::Base.new(@parsed_request)
       else raise 'unknown target table'
       end
   end
@@ -118,8 +114,6 @@ class Search::Base
       .new(@parsed_request)
       when /\Areferences.shared.names\z/i
         Reference::DefinedQuery::ReferencesSharedNames.new(@parsed_request)
-      when /\Achanged.tree.elements\z/i
-        Tree::DefinedQuery::ChangedTreeElements.new(@parsed_request)
       else
         Rails.logger.error("Search::Base failed to run defined query: "\
                            "#{@parsed_request.defined_query}")
