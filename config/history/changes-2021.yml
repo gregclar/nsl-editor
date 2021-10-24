@@ -1,4 +1,8 @@
 - :date: 25-Oct-2021
+  :jira_id: '4041'
+  :description: |-
+    Fix name report for <code>top-of-tree</code> - look for depth 1 rather than depth null
+- :date: 25-Oct-2021
   :jira_id: ''
   :description: |-
     Fix typo "excludeded" in orchids stats.
