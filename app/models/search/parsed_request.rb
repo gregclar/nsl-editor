@@ -64,14 +64,6 @@ class Search::ParsedRequest
     "orchids" => "orchids",
     "orchid_processing_logs" => "orchid processing logs",
     "orchid_processing_log" => "orchid processing logs",
-    "tree" => "tree",
-    "trees" => "tree",
-    "tree_versions" => "tree_version",
-    "tree_version" => "tree_version",
-    "tree_version_element" => "tree_version_element",
-    "tree_version_elements" => "tree_version_element",
-    "tree_element" => "tree_element",
-    "tree_elements" => "tree_element",
   }.freeze
 
   def initialize(params)
