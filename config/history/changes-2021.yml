@@ -1,3 +1,11 @@
+- :date: 26-Oct-2021
+  :jira_id: ''
+  :description: |-
+    Add clear-connections service.
+- :date: 25-Oct-2021
+  :jira_id: '4028'
+  :description: |-
+    Add basic infrastructure for batch loader.
 - :date: 25-Oct-2021
   :jira_id: '4041'
   :description: |-

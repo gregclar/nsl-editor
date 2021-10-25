@@ -413,6 +413,7 @@ Rails.application.routes.draw do
   resources :loader_names
   match "loader_names/:id/tab/:tab", as: "loader_name_tab", to: "loader_names#tab", via: :get
 
+  match "/clear-connections", as: "clear_connections", to: "services#clear_connections", via: :get
   root to: "search#search"
   match "/*random", to: "search#search", via: [:get, :post, :delete, :patch]
 end
