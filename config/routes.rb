@@ -408,12 +408,6 @@ Rails.application.routes.draw do
   match "/trees/show/valrep", as: "show_valrep", to: "trees#show_valrep", via: :get
   match "/trees/run/valrep", as: "run_valrep", to: "trees#run_valrep", via: :get
 
-  match "/user/toggle_mode", as: "toggle_mode", to: "mode#toggle_mode", via: :post
-
-  # ["operation", "previous_tve", "current_tve", "simple_name", "synonyms_html", "name_path"]
-  # match "diff_list/:id/tab/:tab/:operation/:previous_tve/:current_tve/:simple_name", as: "diff_list_tab", to: "diff_lists#tab", via: :get
-  match "diff_list/:id/tab/:tab/", as: "diff_list_tab", to: "diff_lists#tab", via: :get
-
   root to: "search#search"
   match "/*random", to: "search#search", via: [:get, :post, :delete, :patch]
 end

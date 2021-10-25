@@ -67,18 +67,6 @@
       <% when 'OrchidProcessingLog' %>  
         <%= render partial: 'application/search_results/orchid_processing_log_record', 
           locals: {search_result: record, give_me_focus: give_me_focus} %>
-      <% when 'Tree' %>  
-        <%= render partial: 'tree_record', 
-          locals: {search_result: record, give_me_focus: give_me_focus} %>
-      <% when 'TreeVersion' %>  
-        <%= render partial: 'tree_version_record', 
-          locals: {search_result: record, give_me_focus: give_me_focus} %>
-      <% when 'TreeVersionElement' %>  
-        <%= render partial: 'tree_version_element_record', 
-          locals: {search_result: record, give_me_focus: give_me_focus} %>
-      <% when 'TreeElement' %>  
-        <%= render partial: 'tree_element_record', 
-          locals: {search_result: record, give_me_focus: give_me_focus} %>
       <% when 'HelpTopic' %>  
         <%= render partial: 'help_topic_record', 
           locals: {search_result: record, give_me_focus: give_me_focus} %>
