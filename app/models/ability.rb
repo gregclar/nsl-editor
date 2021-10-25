@@ -127,5 +127,7 @@ class Ability
     can "orchids",                   :all
     can "orchids_batch",             :all
     can "orchids_names",             :all
+    can "loader_batches",            :all
+    can "loader_names",              :all
   end
 end

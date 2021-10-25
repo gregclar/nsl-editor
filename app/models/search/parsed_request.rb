@@ -64,6 +64,10 @@ class Search::ParsedRequest
     "orchids" => "orchids",
     "orchid_processing_logs" => "orchid processing logs",
     "orchid_processing_log" => "orchid processing logs",
+    "loader_batch" => "loader batch",
+    "loader_batches" => "loader batch",
+    "loader_name" => "loader name",
+    "loader_names" => "loader name",
   }.freeze
 
   def initialize(params)

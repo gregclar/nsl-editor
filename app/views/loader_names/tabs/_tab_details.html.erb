@@ -1,0 +1,7 @@
+<% increment_tab_index(0) %>
+<%= render partial: 'detail_line', locals: {info: @loader_name.scientific_name, label: 'Scientific Name'} %>
+<%= divider %>
+<h5>Metadata</h5>
+<%= created_by_whom_and_when(@loader_name).html_safe %>
+<br>
+<%= updated_by_whom_and_when(@loader_name).html_safe %>

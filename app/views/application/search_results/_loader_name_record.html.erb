@@ -1,12 +1,11 @@
 <tr id="search-result-<%= search_result.id %>" 
-  class="search-result  <%= 'fresh' if search_result.fresh? %>"  
+  class="search-result show-details <%= 'fresh' if search_result.fresh? %>"  
+  data-get-url=""
+  data-edit-url="<%= loader_name_path(id: search_result[:id],tab: 'active_tab_goes_here') %>"
+  data-base-url=""
+  data-tab-url="<%= loader_name_tab_path(id: search_result[:id],tab: 'active_tab_goes_here') %>"
   data-record-id="<%= search_result.id %>"
-  data-get-url="<%= orchid_path(search_result.id) %>"
-  data-edit-url="<%= orchid_path(search_result.id) %>"
-  data-base-url="<%= orchid_path(search_result.id) %>"
-  data-tab-url="<%= orchid_tab_path(id: search_result[:id],tab: 'active_tab_goes_here') %>"
-  data-record-id="<%= search_result.id %>"
-  data-record-type="orchid"
+  data-record-type="loader-name"
   tabindex="<%= increment_tab_index(100) %>"
     >
   <td class="nsl-tiny-icon-container takes-focus width-1-percent"><%= record_icon('orchid') %></td>
@@ -14,10 +13,11 @@
     <a
       class="show-details-link"
       tabindex="<%= increment_tab_index %>" 
-      title="Orchid record. Select to show details."
+      title="Loader Name record. Select to show details."
       id="<%= %Q(#{search_result.class}-#{search_result.id}) %>">
-      <%= render partial: 'orchid_name_link_text', locals: {search_result: search_result} %>
+      <%= render partial: 'application/search_results/link_texts/loader_name', locals: {search_result: search_result} %>
     </a>
   </td>
   <td class="takes-focus width-5-percent filler">&nbsp;</td>
 </tr>
+

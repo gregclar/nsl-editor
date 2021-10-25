@@ -408,6 +408,11 @@ Rails.application.routes.draw do
   match "/trees/show/valrep", as: "show_valrep", to: "trees#show_valrep", via: :get
   match "/trees/run/valrep", as: "run_valrep", to: "trees#run_valrep", via: :get
 
+  resources :loader_batches
+  match "loader_batches/:id/tab/:tab", as: "loader_batch_tab", to: "loader_batches#tab", via: :get
+  resources :loader_names
+  match "loader_names/:id/tab/:tab", as: "loader_name_tab", to: "loader_names#tab", via: :get
+
   root to: "search#search"
   match "/*random", to: "search#search", via: [:get, :post, :delete, :patch]
 end

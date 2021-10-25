@@ -90,3 +90,24 @@
                      data-examples="review-search-examples"
                      data-advanced="review-search-advanced"
                      >Review</a></li> 
+          <li role="separator" class="divider"></li>
+
+          <% if Rails.configuration.try(:batch_loader_aware) %>
+            <li><a id="search-target-item-loader-batch" 
+                   href="#" 
+                   title="Set the search to target loader batch" 
+                   data-help="batch-loader-help" 
+                   data-examples="batch-loader-examples"
+                   data-advanced="batch-loader-advanced" 
+                >Loader batches</a>
+            </li>
+            <li><a id="search-target-item-loader-name" 
+                   href="#" 
+                   title="Set the search to target loader name" 
+                   data-help="loader-name-search-help" 
+                   data-examples="loader-name-search-examples"
+                   data-advanced="loader-name-search-advanced" 
+                >Loader names</a>
+            </li>
+          <% end %>
+
