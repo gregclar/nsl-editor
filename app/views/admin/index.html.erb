@@ -64,13 +64,23 @@
 
     <tr><td>Rails</td><td> <%= Rails::VERSION::STRING %> </td></tr>
 
-    <tr><td>Database</td><td> <%= Rails.configuration.database_configuration[Rails.env]["database"] %> </td></tr>
-
     <tr><td>Schema version</td><td> <%= DbVersion.current %> </td></tr>
     <tr><td>Application version</td><td> <%= Rails.configuration.try('version') %> </td></tr>
     <tr><td>Path to broadcast file</td><td> <%= Rails.configuration.try(:path_to_broadcast_file) %> </td></tr>
     <tr><td>Namespace</td><td> <%= Namespace.try(:default).try(:name) %> </td></tr>
     <tr><td colspan="2">&nbsp;</td></tr>
+    </table>
+
+    <h4>Database environment</h4>
+    <table class="table table-condensed search-results width-100-percent">
+      <tr><td class="width-40-percent min-width-10em" >Database</td><td> <%= Rails.configuration.database_configuration[Rails.env]["database"] %> </td></tr>
+      <tr><td>Adapter</td><td> <%= Rails.configuration.database_configuration[Rails.env]["adapter"] %> </td></tr>
+      <tr><td>Encoding</td><td> <%= Rails.configuration.database_configuration[Rails.env]["encoding"] %> </td></tr>
+      <tr><td>Host</td><td> <%= Rails.configuration.database_configuration[Rails.env]["host"] %> </td></tr>
+      <tr><td>Username</td><td> <%= Rails.configuration.database_configuration[Rails.env]["username"] %> </td></tr>
+      <tr><td>Pool</td><td> <%= Rails.configuration.database_configuration[Rails.env]["pool"] %> </td></tr>
+      <tr><td>Connections</td><td> <%= ActiveRecord::Base.connection_pool.connections.size %> </td></tr>
+      <tr><td colspan="2">&nbsp;</td></tr>
     </table>
 
     <h4>Rails timezone</h4>

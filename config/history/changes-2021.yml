@@ -1,6 +1,10 @@
 - :date: 26-Oct-2021
   :jira_id: ''
   :description: |-
+    Add database connection info to admin -> config page; remove separate page showing database connection info.
+- :date: 26-Oct-2021
+  :jira_id: ''
+  :description: |-
     Add clear-connections service.
 - :date: 25-Oct-2021
   :jira_id: '4028'

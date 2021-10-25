@@ -19,15 +19,15 @@
 require "test_helper"
 
 # Single test per file
-class AdminControllerReadUserCannotSeeDBConnsTest < ActionController::TestCase
+class AdminControllerAdminUserCanSeeDBConnsTest < ActionController::TestCase
   tests AdminController
 
-  test "read user should not get db connections" do
-    get(:db_connections,
+  test "admin user should get configuration page" do
+    get(:index,
         params: {},
         session: { username: "fred",
                    user_full_name: "Fred Jones",
-                   groups: [] })
-    assert_response :forbidden, "Read user should not get db_connections"
+                   groups: ["admin"] })
+    assert_response :success
   end
 end
