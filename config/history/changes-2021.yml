@@ -1,4 +1,8 @@
-- :date: 01-Nov--2021
+- :date: 01-Nov-2021
+  :jira_id: '4057'
+  :description: |-
+    Orchids: Log draft instance create action even if no instance created.
+- :date: 01-Nov-2021
   :jira_id: ''
   :description: |-
     Upgrade JavaScript libraries to fix webpacker and JQuery problems.
