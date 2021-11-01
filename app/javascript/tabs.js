@@ -1,6 +1,3 @@
-function debug(m) {
-};
-
 function getContentOnDemand(theThis) {
   debug("getContentOnDemand for id: " + $(theThis).attr('id') + " and context: " + $(theThis).attr('data-load-context'));
   var extrasId = $(theThis).attr('data-load-context');

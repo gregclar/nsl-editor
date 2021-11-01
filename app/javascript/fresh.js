@@ -13,6 +13,8 @@
     }
   };
 
+  window.debug = debug;
+
   window.notice = function(s) {
     var error;
     try {

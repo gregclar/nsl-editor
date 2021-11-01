@@ -1,9 +1,13 @@
+- :date: 02-Nov-2021
+  :jira_id: '4058'
+  :description: |-
+    Add a global debug function to allow things like the Synonymy Report to run.
 - :date: 01-Nov-2021
   :jira_id: '4057'
   :description: |-
     Orchids: Log draft instance create action even if no instance created.
 - :date: 01-Nov-2021
-  :jira_id: ''
+  :jira_id: '4058'
   :description: |-
     Upgrade JavaScript libraries to fix webpacker and JQuery problems.
 - :date: 27-Oct-2021
