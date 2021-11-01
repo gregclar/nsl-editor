@@ -308,3 +308,6 @@ var toggleNext = function (el) {
 };
 
 window.toggleNext = toggleNext;
+
+function debug(m) {
+};

@@ -1,3 +1,7 @@
+- :date: 01-Nov--2021
+  :jira_id: ''
+  :description: |-
+    Upgrade JavaScript libraries to fix webpacker and JQuery problems.
 - :date: 27-Oct-2021
   :jira_id: '4044'
   :description: |-
