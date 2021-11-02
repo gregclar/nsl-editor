@@ -407,9 +407,19 @@ Rails.application.routes.draw do
   match "/trees/run/valrep", as: "run_valrep", to: "trees#run_valrep", via: :get
 
   resources :loader_batches
-  match "loader_batches/:id/tab/:tab", as: "loader_batch_tab", to: "loader_batches#tab", via: :get
+  match "loader_batches/:id/tab/:tab", as: "loader_batch_tab", to: "loader/batches#tab", via: :get
   resources :loader_names
-  match "loader_names/:id/tab/:tab", as: "loader_name_tab", to: "loader_names#tab", via: :get
+  match "loader_names/:id/tab/:tab", as: "loader_name_tab", to: "loader/names#tab", via: :get
+  match "batch_reviews/:id/tab/:tab", as: "batch_review_tab", to: "loader/batch/reviews#tab", via: :get
+  match "batch_reviews", as: "create_batch_review", to: "loader/batch/reviews#create", via: :post
+  match "batch_reviews", as: "update_batch_review", to: "loader/batch/reviews#update", via: :put
+  match "batch_reviews", as: "batch_review", to: "loader/batch/reviews#show", via: :get
+  match "/batch_reviews/:id", as: "delete_batch_review", to: "loader/batch/reviews#destroy", via: :delete
+  #resources :batch_reviews
+  match "batch_review_periods", as: "create_batch_review_period", to: "loader/batch/review_periods#create", via: :post
+  match "batch_review_periods", as: "review_period", to: "loader/batch/review_periods#show", via: :get
+  match "batch_review_periods/:id/tab/:tab", as: "review_period_tab", to: "loader/batch/review_periods#tab", via: :get
+  match "batch_review_periods/:id", as: "update_review_period", to: "loader/batch/review_periods#update", via: :patch
 
   match "/clear-connections", as: "clear_connections", to: "services#clear_connections", via: :get
   root to: "search#search"

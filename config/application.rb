@@ -23,8 +23,3 @@ module NEDR6
   end
 end
 
-puts "="*60
-puts "From application.rb"
-puts "whoami: #{`whoami`}"
-puts "environment: #{`env | sort | grep -iv 'password'`}"
-puts "="*60

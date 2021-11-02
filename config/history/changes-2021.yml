@@ -1,4 +1,8 @@
 - :date: 02-Nov-2021
+  :jira_id: '4043'
+  :description: |-
+    Batch Loader: components and link for batch_review and batch_review_period.
+- :date: 02-Nov-2021
   :jira_id: '4059'
   :description: |-
     Show 'updated' message after Name edit is saved. Make the same fix for some delete and update errors for comments and instances.

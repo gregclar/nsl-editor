@@ -18,5 +18,8 @@
 #
 class Search::OnLoaderName::FieldAbbrev
   ABBREVS = {
+    "loader-batch:" => "batch:",
+    "loader-batch-id:" => "batch:",
+    "batch-id:" => "batch:",
   }.freeze
 end

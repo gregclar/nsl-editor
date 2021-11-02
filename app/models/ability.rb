@@ -124,10 +124,12 @@ class Ability
   end
 
   def orchids_matcher_auth
-    can "orchids",                   :all
-    can "orchids_batch",             :all
-    can "orchids_names",             :all
-    can "loader_batches",            :all
-    can "loader_names",              :all
+    can "orchids",                     :all
+    can "orchids_batch",               :all
+    can "orchids_names",               :all
+    can "loader/batches",              :all
+    can "loader/names",                :all
+    can "loader/batch/reviews",        :all
+    can "loader/batch/review_periods", :all
   end
 end

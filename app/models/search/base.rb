@@ -83,6 +83,8 @@ class Search::Base
       when /orchid.processing.log/ then Search::OnOrchidProcessingLogs::Base.new(@parsed_request)
       when /loader.batch/ then Search::OnLoaderBatch::Base.new(@parsed_request)
       when /loader.name/ then Search::OnLoaderName::Base.new(@parsed_request)
+      when /^batch.review$/ then Search::Loader::Batch::Review::Base.new(@parsed_request)
+      when /^batch.review.period$/ then Search::Loader::Batch::Review::Period::Base.new(@parsed_request)
       else raise 'unknown target table'
       end
   end

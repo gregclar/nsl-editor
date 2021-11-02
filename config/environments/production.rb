@@ -119,6 +119,12 @@ Rails.application.configure do
   # config.active_record.database_resolver_context = ActiveRecord::Middleware::DatabaseSelector::Resolver::Session
 end
 
+puts "="*60
+puts "From application.rb"
+puts "whoami: #{`whoami`}"
+puts "environment: #{`env | sort | grep -iv 'password'`}"
+puts "="*60
+
 if ENV['EDITOR_CONFIG_FILE']
   Rails.configuration.env_editor_config_file = "#{ENV['EDITOR_CONFIG_FILE']}"
   Rails.configuration.resolved_editor_config_file = "#{ENV['EDITOR_CONFIG_FILE']}"

@@ -73,6 +73,12 @@
       <% when 'Loader Name' %>  
         <%= render partial: 'application/search_results/loader_name_record', 
           locals: {search_result: record, give_me_focus: give_me_focus} %>
+      <% when 'Batch Review' %>  
+        <%= render partial: 'application/search_results/batch_review_record', 
+          locals: {search_result: record, give_me_focus: give_me_focus} %>
+      <% when 'Review Period' %>  
+        <%= render partial: 'application/search_results/review_period_record', 
+          locals: {search_result: record, give_me_focus: give_me_focus} %>
       <% when 'HelpTopic' %>  
         <%= render partial: 'help_topic_record', 
           locals: {search_result: record, give_me_focus: give_me_focus} %>

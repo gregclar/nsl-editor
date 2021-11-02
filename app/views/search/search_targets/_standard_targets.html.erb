@@ -95,19 +95,24 @@
           <% if Rails.configuration.try(:batch_loader_aware) %>
             <li><a id="search-target-item-loader-batch" 
                    href="#" 
-                   title="Set the search to target loader batch" 
-                   data-help="batch-loader-help" 
-                   data-examples="batch-loader-examples"
-                   data-advanced="batch-loader-advanced" 
+                   title="Search loader batches" 
+                   data-help="loader-batch-search-help" 
+                   data-examples="loader-batch-search-examples"
                 >Loader batches</a>
             </li>
             <li><a id="search-target-item-loader-name" 
                    href="#" 
-                   title="Set the search to target loader name" 
+                   title="Search loader names" 
                    data-help="loader-name-search-help" 
                    data-examples="loader-name-search-examples"
-                   data-advanced="loader-name-search-advanced" 
                 >Loader names</a>
+            </li>
+            <li><a id="search-target-item-batch-review" 
+                   href="#" 
+                   title="Search batch reviews" 
+                   data-help="batch-review-search-help" 
+                   data-examples="batch-review-search-examples"
+                >Batch reviews</a>
             </li>
           <% end %>
 

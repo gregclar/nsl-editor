@@ -28,7 +28,7 @@ class Search::OnLoaderName::ListQuery
 
   def prepare_query
     Rails.logger.debug("Search::OnLoaderName::ListQuery#prepare_query")
-    prepared_query = LoaderName.where("1=1")
+    prepared_query = ::Loader::Name.where("1=1")
     where_clauses = Search::OnLoaderName::WhereClauses.new(@parsed_request, prepared_query)
     prepared_query = where_clauses.sql
     prepared_query = prepared_query.limit(@parsed_request.limit) if @parsed_request.limited

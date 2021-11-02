@@ -68,6 +68,10 @@ class Search::ParsedRequest
     "loader_batches" => "loader batch",
     "loader_name" => "loader name",
     "loader_names" => "loader name",
+    "batch_review" => "batch review",
+    "batch_reviews" => "batch review",
+    "batch_review_period" => "batch review period",
+    "batch_review_periods" => "batch review period",
   }.freeze
 
   def initialize(params)
@@ -248,6 +252,7 @@ class Search::ParsedRequest
       if SIMPLE_QUERY_TARGETS.key?(@query_target)
         @target_table = SIMPLE_QUERY_TARGETS[@query_target]
         @target_button_text = @target_table.capitalize.pluralize
+        Rails.logger.debug(@target_table)
       else
         raise "Cannot parse target: #{@query_target}"
       end
