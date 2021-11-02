@@ -121,14 +121,14 @@ class InstancesController < ApplicationController
       instance_params, current_user.username
     )
     @message = "Instance was copied"
-    render js: "instances/copy_standalone/success"
+    render "instances/copy_standalone/success"
   rescue => e
     handle_other_errors(e,'instances/copy_standalone/error')
   end
 
   def handle_not_unique
     @message = "Error: duplicate record"
-    render js: "create_error", status: :unprocessable_entity
+    render "create_error", status: :unprocessable_entity
   end
   private :handle_not_unique
 
@@ -151,7 +151,7 @@ class InstancesController < ApplicationController
     @instance = Instance::AsEdited.find(params[:id])
     @message = @instance.update_if_changed(instance_params,
                                            current_user.username)
-    render js: "update"
+    render "update"
   rescue => e
     handle_other_errors(e, 'update_error')
   end
@@ -170,7 +170,7 @@ class InstancesController < ApplicationController
   rescue => e
     logger.error(e.to_s)
     @message = e.to_s
-    render js: "update_error", status: :unprocessable_entity
+    render "update_error", status: :unprocessable_entity
   end
 
   def make_back_door_changes
@@ -186,7 +186,7 @@ class InstancesController < ApplicationController
   rescue => e
     logger.error("Instance#destroy exception: #{e}")
     @message = e.to_s
-    render js: "destroy_error", status: 422
+    render "destroy_error", status: 422
   end
 
   def typeahead_for_synonymy

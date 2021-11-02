@@ -129,7 +129,7 @@ class NamesController < ApplicationController
   rescue => e
     logger.error("Controller:Names:create:rescuing exception #{e}")
     @error = e.to_s
-    render js: "create_error", status: 422
+    render "create_error", status: 422
   end
 
   # PUT /names/1.json
@@ -141,10 +141,10 @@ class NamesController < ApplicationController
                                        typeahead_params,
                                        current_user.username)
     refresh_names if refresh_after_update
-    render js: "update"
+    render "update"
   rescue => e
     @message = e.to_s
-    render js: "update_error", status: :unprocessable_entity
+    render "update_error", status: :unprocessable_entity
   end
 
   def rules

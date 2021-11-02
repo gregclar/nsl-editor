@@ -1,4 +1,8 @@
 - :date: 02-Nov-2021
+  :jira_id: '4059'
+  :description: |-
+    Show 'updated' message after Name edit is saved. Make the same fix for some delete and update errors for comments and instances.
+- :date: 02-Nov-2021
   :jira_id: '4058'
   :description: |-
     Add a global debug function to allow things like the Synonymy Report to run.
