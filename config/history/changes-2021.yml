@@ -1,3 +1,7 @@
+- :date: 07-Nov-2021
+  :jira_id: '4043'
+  :description: |-
+    Batch Loader: more components and links for the loader batch system, including orgs and batch review roles; some search refactoring.
 - :date: 06-Nov-2021
   :release: true
 - :date: 05-Nov-2021

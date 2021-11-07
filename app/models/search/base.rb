@@ -81,10 +81,11 @@ class Search::Base
       when /reference/ then Search::OnReference::Base.new(@parsed_request)
       when /orchids/ then Search::OnOrchids::Base.new(@parsed_request)
       when /orchid.processing.log/ then Search::OnOrchidProcessingLogs::Base.new(@parsed_request)
-      when /loader.batch/ then Search::OnLoaderBatch::Base.new(@parsed_request)
-      when /loader.name/ then Search::OnLoaderName::Base.new(@parsed_request)
-      when /^batch.review$/ then Search::Loader::Batch::Review::Base.new(@parsed_request)
-      when /^batch.review.period$/ then Search::Loader::Batch::Review::Period::Base.new(@parsed_request)
+      when /loader.batch/ then Search::OnModel::Base.new(@parsed_request)
+      when /loader.name/ then Search::OnModel::Base.new(@parsed_request)
+      when /^batch.review$/ then Search::OnModel::Base.new(@parsed_request)
+      when /^batch.review.period$/ then Search::OnModel::Base.new(@parsed_request)
+      when /^users$/ then Search::OnModel::Base.new(@parsed_request)
       else raise 'unknown target table'
       end
   end

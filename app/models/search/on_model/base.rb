@@ -16,8 +16,8 @@
 #   See the License for the specific language governing permissions and
 #   limitations under the License.
 #
-# Search on Loader Batch
-class Search::Loader::Batch::Review::Period::Base
+# Search a Model
+class Search::OnModel::Base
   attr_reader :results,
               :limited,
               :info_for_display,
@@ -46,7 +46,7 @@ class Search::Loader::Batch::Review::Period::Base
   end
 
   def run_count_query(parsed_request)
-    count_query = Search::Loader::Batch::Review::Period::CountQuery.new(parsed_request)
+    count_query = Search::User::CountQuery.new(parsed_request)
     @relation = count_query.sql
     @count = relation.count
     @limited = false
@@ -57,8 +57,10 @@ class Search::Loader::Batch::Review::Period::Base
   end
 
   def run_list_query(parsed_request)
-    list_query = Search::Loader::Batch::Review::Period::ListQuery.new(parsed_request)
+    list_query = Search::OnModel::ListQuery.new(parsed_request)
     @relation = list_query.sql
+    debug("@relation: #{@relation}")
+    debug("@relation.to_sql: #{@relation.to_sql}")
     @results = relation.all
     @limited = list_query.limited
     @info_for_display = list_query.info_for_display
@@ -68,7 +70,7 @@ class Search::Loader::Batch::Review::Period::Base
   end
 
   def debug(s)
-    Rails.logger.debug("Search::Loader::Batch::Review::Period::Base: #{s}")
+    Rails.logger.debug("Search::User::Base: #{s}")
   end
 
   def csv?

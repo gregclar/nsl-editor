@@ -421,6 +421,9 @@ Rails.application.routes.draw do
   match "batch_review_periods/:id/tab/:tab", as: "review_period_tab", to: "loader/batch/review_periods#tab", via: :get
   match "batch_review_periods/:id", as: "update_review_period", to: "loader/batch/review_periods#update", via: :patch
 
+  match "users", as: "user", to: "users#show", via: :get
+  match "users/:id/tab/:tab", as: "user_tab", to: "users#tab", via: :get
+
   match "/clear-connections", as: "clear_connections", to: "services#clear_connections", via: :get
   root to: "search#search"
   match "/*random", to: "search#search", via: [:get, :post, :delete, :patch]

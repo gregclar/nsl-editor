@@ -16,19 +16,22 @@
 #   See the License for the specific language governing permissions and
 #   limitations under the License.
 #
-class Search::OnLoaderBatch::FieldRule
+class Search::Loader::Name::FieldRule
   RULES = {
-    "name:"                 => { where_clause: "lower(name) like ? ",
+    "scientific_name:"    => { where_clause: "lower(scientific_name) like ? ",
                                  trailing_wildcard: true,
                                  leading_wildcard: true,
-                                 order: "name"},
+                                 order: "scientific_name"},
+    "batch-id:"           => { multiple_values: false,
+                               where_clause: "loader_batch_id = ? ",
+                               order: "seq"},
     "id:"                 => { multiple_values: true,
                                where_clause: "id = ? ",
                                multiple_values_where_clause: " id in (?)",
-                               order: "name"},
+                               order: "seq"},
     "ids:"                => { multiple_values: true,
                                where_clause: " id = ?",
                                multiple_values_where_clause: " id in (?)",
-                               order: "name"},
+                               order: "seq"},
   }.freeze
 end

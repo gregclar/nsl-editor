@@ -16,10 +16,10 @@
 #   See the License for the specific language governing permissions and
 #   limitations under the License.
 #
-class Search::OnLoaderName::FieldAbbrev
-  ABBREVS = {
-    "loader-batch:" => "batch:",
-    "loader-batch-id:" => "batch:",
-    "batch-id:" => "batch:",
+class Search::UserTable::FieldRule
+  RULES = {
+    "id:"     => { where_clause: " id = ? " },
+    "name:"     => { where_clause: " lower(name) like ? " },
+    "given:"     => { where_clause: " lower(given_name) like ? " },
   }.freeze
 end

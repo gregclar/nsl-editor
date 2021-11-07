@@ -16,22 +16,7 @@
 #   See the License for the specific language governing permissions and
 #   limitations under the License.
 #
-class Search::Loader::Batch::Review::ListQuery
-  attr_reader :sql, :limited, :info_for_display, :common_and_cultivar_included
-
-  def initialize(parsed_request)
-    @parsed_request = parsed_request
-    prepare_query
-    @limited = true
-    @info_for_display = ""
-  end
-
-  def prepare_query
-    Rails.logger.debug("Search::Loader::Batch::Review::ListQuery#prepare_query")
-    prepared_query = ::Loader::Batch::Review.where("1=1")
-    where_clauses = Search::Loader::Batch::Review::WhereClauses.new(@parsed_request, prepared_query)
-    prepared_query = where_clauses.sql
-    prepared_query = prepared_query.limit(@parsed_request.limit) if @parsed_request.limited
-    @sql = prepared_query
-  end
+class Search::Loader::Batch::Review::Period::FieldAbbrev
+  ABBREVS = {
+  }.freeze
 end

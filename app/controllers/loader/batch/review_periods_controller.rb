@@ -62,7 +62,7 @@ class Loader::Batch::ReviewPeriodsController < ApplicationController
 
   # POST /review_periods
   def create
-    @batch_review_period = ::Loader::Batch::ReviewPeriod.create(review_period_params,
+    @batch_review_period = ::Loader::Batch::Review::Period.create(review_period_params,
                                                current_user.username)
     render "create.js"
   rescue => e
@@ -89,7 +89,7 @@ class Loader::Batch::ReviewPeriodsController < ApplicationController
   private
 
   def find_review_period
-    @review_period = Loader::Batch::ReviewPeriod.find(params[:id])
+    @review_period = Loader::Batch::Review::Period.find(params[:id])
   rescue ActiveRecord::RecordNotFound
     flash[:alert] = "We could not find the batch review record."
     redirect_to batch_review_periods_path

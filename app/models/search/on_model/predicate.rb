@@ -16,7 +16,7 @@
 #   See the License for the specific language governing permissions and
 #   limitations under the License.
 #
-class Search::OnLoaderName::Predicate
+class Search::OnModel::Predicate
   attr_reader :canon_field,
               :canon_value,
               :trailing_wildcard,
@@ -32,25 +32,29 @@ class Search::OnLoaderName::Predicate
               :scope_,
               :order
 
-  def initialize(field, value)
+  def initialize(parsed_request, field, value)
+    @parsed_request = parsed_request
     @field = field
     @value = value
+    Rails.logger.debug("rules class string: Search::#{@parsed_request.target_model}::FieldRule::RULES")
+    @rules_class = "Search::#{@parsed_request.target_model}::FieldRule::RULES".constantize
+    @abbrevs_class = "Search::#{@parsed_request.target_model}::FieldAbbrev::ABBREVS".constantize
     @canon_field = build_canon_field(field)
-    rule = Search::OnLoaderName::FieldRule::RULES[@canon_field] || EMPTY_RULE
+    rule = @rules_class[@canon_field] || EMPTY_RULE
     @is_null = value.blank?
     apply_rule(rule)
     @canon_value = build_canon_value(value)
     apply_scope
-    @order = rule[:order] || ""
+    @order = rule[:order] || @parsed_request.default_order_column
     process_value
   end
 
   def debug(s)
-    Rails.logger.debug("Search::OnLoaderName::Predicate - #{s}")
+    Rails.logger.debug("Search::OnModel::Predicate - #{s}")
   end
 
   def inspect
-    "Search::OnLoaderName::Predicate: canon_field: #{@canon_field}"
+    "Search::OnModel::Predicate: canon_field: #{@canon_field}"
   end
 
   def apply_rule(rule)
@@ -116,14 +120,17 @@ class Search::OnLoaderName::Predicate
   end
 
   def build_canon_field(field)
-    if Search::OnLoaderName::FieldRule::RULES.key?(field)
+    debug("build_canon_field(field) for field: #{field}")
+    debug("build_canon_field(field) for field: #{field}")
+    debug("build_canon_field(field) for field: #{field}")
+    debug("build_canon_field(field) for field: #{field}")
+    debug("build_canon_field(field) for field: #{field}")
+    if @rules_class.key?(field)
       field
-    elsif Search::OnLoaderName::FieldRule::RULES.key?(
-      Search::OnLoaderName::FieldAbbrev::ABBREVS[field]
-    )
-      Search::OnLoaderName::FieldAbbrev::ABBREVS[field]
+    elsif @rules_class.key?(@abbrevs_class[field])
+      @abbrevs_class[field]
     else
-      raise "Cannot search LoaderName for: #{field}. You may need to try another
+      raise "Cannot search model for: #{field}. You may need to try another
       search term or target."
     end
   end

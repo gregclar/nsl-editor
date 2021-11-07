@@ -45,9 +45,12 @@ class Search::ParsedRequest
               :query_target,
               :target_table,
               :target_button_text,
+              :target_model,
               :user,
               :where_arguments,
-              :order_instance_query_by_page
+              :order_instance_query_by_page,
+              :default_order_column,
+              :default_query_directive
 
   DEFAULT_LIST_LIMIT = 100
   SIMPLE_QUERY_TARGETS = {
@@ -72,6 +75,50 @@ class Search::ParsedRequest
     "batch_reviews" => "batch review",
     "batch_review_period" => "batch review period",
     "batch_review_periods" => "batch review period",
+    "user" => "users",
+    "users" => "users",
+  }.freeze
+
+  TARGET_MODELS = {
+    "author" => "Author",
+    "instance" => "Instance",
+    "name" => "Name",
+    "reference" => "Reference",
+    "orchids" => "Orchid",
+    "orchid_processing_logs" => "OrchidProcessingLog",
+    "loader batch" => "Loader::Batch",
+    "loader name" => "Loader::Name",
+    "batch review" => "Loader::Batch::Review",
+    "batch review period" => "Loader::Batch::Review::Period",
+    "users" => "UserTable",
+  }.freeze
+
+  DEFAULT_QUERY_DIRECTIVES = {
+    "author" => "name:",
+    "instance" => "name:",
+    "name" => "sort_name:",
+    "reference" => "name:",
+    "orchids" => "taxon:",
+    "orchid_processing_logs" => " logged_at desc",
+    "loader batch" => "name:",
+    "loader name" => "scientific_name:",
+    "batch review" => "name:",
+    "batch review period" => "name:",
+    "users" => "name:",
+  }.freeze
+
+  DEFAULT_ORDER_COLUMNS = {
+    "author" => "name",
+    "instance" => "id",
+    "name" => "sort_name",
+    "reference" => "citation",
+    "orchids" => "name",
+    "orchid_processing_logs" => " logged_at desc",
+    "loader batch" => "name",
+    "loader name" => "scientific_name",
+    "batch review" => "name",
+    "batch review period" => "name",
+    "users" => "name",
   }.freeze
 
   def initialize(params)
@@ -252,7 +299,18 @@ class Search::ParsedRequest
       if SIMPLE_QUERY_TARGETS.key?(@query_target)
         @target_table = SIMPLE_QUERY_TARGETS[@query_target]
         @target_button_text = @target_table.capitalize.pluralize
-        Rails.logger.debug(@target_table)
+        @target_model = TARGET_MODELS[@target_table]
+        @default_order_column = DEFAULT_ORDER_COLUMNS[@target_table]
+        @default_query_directive = DEFAULT_QUERY_DIRECTIVES[@target_table]
+        Rails.logger.debug("target table: #{@target_table}, target model: #{@target_model}; default order column: #{@default_order_column}; default query column: #{@default_query_directive}")
+        Rails.logger.debug("target table: #{@target_table}, target model: #{@target_model}; default order column: #{@default_order_column}; default query column: #{@default_query_directive}")
+        Rails.logger.debug("target table: #{@target_table}, target model: #{@target_model}; default order column: #{@default_order_column}; default query column: #{@default_query_directive}")
+        Rails.logger.debug("target table: #{@target_table}, target model: #{@target_model}; default order column: #{@default_order_column}; default query column: #{@default_query_directive}")
+        Rails.logger.debug("target table: #{@target_table}, target model: #{@target_model}; default order column: #{@default_order_column}; default query column: #{@default_query_directive}")
+        Rails.logger.debug("target table: #{@target_table}, target model: #{@target_model}; default order column: #{@default_order_column}; default query column: #{@default_query_directive}")
+        Rails.logger.debug("target table: #{@target_table}, target model: #{@target_model}; default order column: #{@default_order_column}; default query column: #{@default_query_directive}")
+        Rails.logger.debug("target table: #{@target_table}, target model: #{@target_model}; default order column: #{@default_order_column}; default query column: #{@default_query_directive}")
+        Rails.logger.debug("target table: #{@target_table}, target model: #{@target_model}; default order column: #{@default_order_column}; default query column: #{@default_query_directive}")
       else
         raise "Cannot parse target: #{@query_target}"
       end

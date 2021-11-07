@@ -17,7 +17,7 @@
 #   limitations under the License.
 #
 # Loader BatchReview entity
-class Loader::Batch::ReviewPeriod < ActiveRecord::Base
+class Loader::Batch::Review::Period < ActiveRecord::Base
   strip_attributes
   self.table_name = "batch_review_period"
   self.primary_key = "id"

@@ -1,6 +1,15 @@
 <% increment_tab_index(0) %>
 <%= render partial: 'detail_line', locals: {info: @review_period.name, label: 'Name'} %>
 
+
+<%= render partial: 'detail_line',
+      locals: {info: @review_period.review.name,
+               label: link_to('Review',
+                        search_path(
+                          query_target: 'batch review',
+                          query_string: "id: #{@review_period.batch_review.id}"),
+               title:"Query the batch review",class:'blue')} %>
+
 <%#= render partial: 'detail_line',
       locals: {info: @review_period.batch.name,
                label: link_to('Batch',
