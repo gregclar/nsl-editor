@@ -83,6 +83,8 @@ class Search::ParsedRequest
     "organisations" => "org",
     "org" => "org",
     "orgs" => "org",
+    "batch_reviewer" => "batch reviewer",
+    "batch_reviewers" => "batch reviewer",
   }.freeze
 
   TARGET_MODELS = {
@@ -95,6 +97,7 @@ class Search::ParsedRequest
     "loader batch" => "Loader::Batch",
     "loader name" => "Loader::Name",
     "batch review" => "Loader::Batch::Review",
+    "batch reviewer" => "Loader::Batch::Reviewer",
     "batch review period" => "Loader::Batch::Review::Period",
     "users" => "UserTable",
     "org" => "Org",
@@ -110,6 +113,7 @@ class Search::ParsedRequest
     "loader batch" => "name:",
     "loader name" => "scientific_name:",
     "batch review" => "name:",
+    "batch reviewer" => "name:",
     "batch review period" => "name:",
     "users" => "name:",
     "org" => "name:",
@@ -125,6 +129,7 @@ class Search::ParsedRequest
     "loader batch" => "name",
     "loader name" => "scientific_name",
     "batch review" => "name",
+    "batch reviewer" => "id",
     "batch review period" => "name",
     "users" => "name",
     "org" => "name",

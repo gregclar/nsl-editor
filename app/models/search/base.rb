@@ -84,6 +84,7 @@ class Search::Base
       when /loader.batch/ then Search::OnModel::Base.new(@parsed_request)
       when /loader.name/ then Search::OnModel::Base.new(@parsed_request)
       when /^batch.review$/ then Search::OnModel::Base.new(@parsed_request)
+      when /^batch.reviewer$/ then Search::OnModel::Base.new(@parsed_request)
       when /^batch.review.period$/ then Search::OnModel::Base.new(@parsed_request)
       when /^users$/ then Search::OnModel::Base.new(@parsed_request)
       when /^org$/ then Search::OnModel::Base.new(@parsed_request)

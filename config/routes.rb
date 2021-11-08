@@ -427,6 +427,9 @@ Rails.application.routes.draw do
   match "orgs", as: "org", to: "orgs#show", via: :get
   match "orgs/:id/tab/:tab", as: "org_tab", to: "orgs#tab", via: :get
 
+  match "batch_reviewers", as: "batch_reviewer", to: "loader/batch/reviewers#show", via: :get
+  match "batch_reviewers/:id/tab/:tab", as: "batch_reviewer_tab", to: "loader/batch/reviewers#tab", via: :get
+
   match "/clear-connections", as: "clear_connections", to: "services#clear_connections", via: :get
   root to: "search#search"
   match "/*random", to: "search#search", via: [:get, :post, :delete, :patch]

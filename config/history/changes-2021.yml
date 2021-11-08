@@ -1,3 +1,7 @@
+- :date: 08-Nov-2021
+  :jira_id: '4043'
+  :description: |-
+    Batch Loader: Batch Reviewer now has basic query, list, display.
 - :date: 07-Nov-2021
   :jira_id: '4043'
   :description: |-

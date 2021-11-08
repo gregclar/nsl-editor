@@ -130,6 +130,7 @@ class Ability
     can "loader/batches",              :all
     can "loader/names",                :all
     can "loader/batch/reviews",        :all
+    can "loader/batch/reviewers",      :all
     can "loader/batch/review_periods", :all
     can "users",                       :all
     can "orgs",                        :all
