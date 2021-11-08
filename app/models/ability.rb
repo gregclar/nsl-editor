@@ -132,5 +132,6 @@ class Ability
     can "loader/batch/reviews",        :all
     can "loader/batch/review_periods", :all
     can "users",                       :all
+    can "orgs",                        :all
   end
 end

@@ -424,6 +424,9 @@ Rails.application.routes.draw do
   match "users", as: "user", to: "users#show", via: :get
   match "users/:id/tab/:tab", as: "user_tab", to: "users#tab", via: :get
 
+  match "orgs", as: "org", to: "orgs#show", via: :get
+  match "orgs/:id/tab/:tab", as: "org_tab", to: "orgs#tab", via: :get
+
   match "/clear-connections", as: "clear_connections", to: "services#clear_connections", via: :get
   root to: "search#search"
   match "/*random", to: "search#search", via: [:get, :post, :delete, :patch]

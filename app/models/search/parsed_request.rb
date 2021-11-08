@@ -79,6 +79,10 @@ class Search::ParsedRequest
     "batch_review_periods" => "batch review period",
     "user" => "users",
     "users" => "users",
+    "organisation" => "org",
+    "organisations" => "org",
+    "org" => "org",
+    "orgs" => "org",
   }.freeze
 
   TARGET_MODELS = {
@@ -93,6 +97,7 @@ class Search::ParsedRequest
     "batch review" => "Loader::Batch::Review",
     "batch review period" => "Loader::Batch::Review::Period",
     "users" => "UserTable",
+    "org" => "Org",
   }.freeze
 
   DEFAULT_QUERY_DIRECTIVES = {
@@ -107,6 +112,7 @@ class Search::ParsedRequest
     "batch review" => "name:",
     "batch review period" => "name:",
     "users" => "name:",
+    "org" => "name:",
   }.freeze
 
   DEFAULT_ORDER_COLUMNS = {
@@ -121,6 +127,7 @@ class Search::ParsedRequest
     "batch review" => "name",
     "batch review period" => "name",
     "users" => "name",
+    "org" => "name",
   }.freeze
 
   INCLUDE_INSTANCES_FOR = ["name", "reference"]

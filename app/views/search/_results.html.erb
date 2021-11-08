@@ -82,6 +82,9 @@
       <% when 'User' %>  
         <%= render partial: 'application/search_results/user_record', 
           locals: {search_result: record, give_me_focus: give_me_focus} %>
+      <% when 'Organisation' %>  
+        <%= render partial: 'application/search_results/org_record', 
+          locals: {search_result: record, give_me_focus: give_me_focus} %>
       <% when 'HelpTopic' %>  
         <%= render partial: 'help_topic_record', 
           locals: {search_result: record, give_me_focus: give_me_focus} %>
