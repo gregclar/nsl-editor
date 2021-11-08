@@ -50,7 +50,9 @@ class Search::ParsedRequest
               :where_arguments,
               :order_instance_query_by_page,
               :default_order_column,
-              :default_query_directive
+              :default_query_directive,
+              :include_instances,
+              :include_instances_class
 
   DEFAULT_LIST_LIMIT = 100
   SIMPLE_QUERY_TARGETS = {
@@ -94,10 +96,10 @@ class Search::ParsedRequest
   }.freeze
 
   DEFAULT_QUERY_DIRECTIVES = {
-    "author" => "name:",
+    "author" => "name-or-abbrev:",
     "instance" => "name:",
     "name" => "sort_name:",
-    "reference" => "name:",
+    "reference" => "citation-text:",
     "orchids" => "taxon:",
     "orchid_processing_logs" => " logged_at desc",
     "loader batch" => "name:",
@@ -119,6 +121,13 @@ class Search::ParsedRequest
     "batch review" => "name",
     "batch review period" => "name",
     "users" => "name",
+  }.freeze
+
+  INCLUDE_INSTANCES_FOR = ["name", "reference"]
+
+  INCLUDE_INSTANCES_CLASS = {
+    "name" => "Search::OnName::WithInstances",
+    "references" => "Search::OnName::WithInstances",
   }.freeze
 
   def initialize(params)
@@ -302,6 +311,10 @@ class Search::ParsedRequest
         @target_model = TARGET_MODELS[@target_table]
         @default_order_column = DEFAULT_ORDER_COLUMNS[@target_table]
         @default_query_directive = DEFAULT_QUERY_DIRECTIVES[@target_table]
+        if INCLUDE_INSTANCES_FOR.include?(@target_table)
+          @include_instances = true
+          @include_instances_class = INCLUDE_INSTANCES_CLASS[@target_table]
+        end
         Rails.logger.debug("target table: #{@target_table}, target model: #{@target_model}; default order column: #{@default_order_column}; default query column: #{@default_query_directive}")
         Rails.logger.debug("target table: #{@target_table}, target model: #{@target_model}; default order column: #{@default_order_column}; default query column: #{@default_query_directive}")
         Rails.logger.debug("target table: #{@target_table}, target model: #{@target_model}; default order column: #{@default_order_column}; default query column: #{@default_query_directive}")

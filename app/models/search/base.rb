@@ -76,7 +76,7 @@ class Search::Base
       case @parsed_request.target_table
       when /any/ then raise "cannot run an 'any' search yet"
       when /^name/ then Search::OnName::Base.new(@parsed_request)
-      when /author/ then Search::OnAuthor::Base.new(@parsed_request)
+      when /author/ then Search::OnModel::Base.new(@parsed_request)
       when /instance/ then Search::OnInstance::Base.new(@parsed_request)
       when /reference/ then Search::OnReference::Base.new(@parsed_request)
       when /orchids/ then Search::OnOrchids::Base.new(@parsed_request)

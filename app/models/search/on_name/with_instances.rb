@@ -16,20 +16,26 @@
 #   See the License for the specific language governing permissions and
 #   limitations under the License.
 #
-class Search::OnAuthor::CountQuery
-  attr_reader :sql, :info_for_display, :common_and_cultivar_included
 
-  def initialize(parsed_request)
-    @parsed_request = parsed_request
-    prepare_query
-    @info_for_display = "nothing yet from count query"
-  end
+# Core search class for Name search
+#
+# You can run this in the console, once you have a parsed request:
+#
+# search = Search::OnName::Base.new(parsed_request)
+#
+class Search::OnName::WithInstances
+  attr_reader :names_with_instances
 
-  def prepare_query
-    Rails.logger.debug("Search::OnAuthor::CountQuery#prepare_query")
-    prepared_query = Author.where("1=1")
-    where_clauses = Search::OnAuthor::WhereClauses.new(@parsed_request, prepared_query)
-    prepared_query = where_clauses.sql
-    @sql = prepared_query
+  def initialize(names)
+    results = []
+    names.each do |name|
+      name.display_as_part_of_concept
+      results << name
+      Instance::AsArray::ForName.new(name).results.each do |usage_rec|
+        results << usage_rec
+      end
+    end
+    @names_with_instances = results
   end
 end
+

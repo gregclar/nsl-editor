@@ -36,10 +36,6 @@ class Search::OnModel::ListQuery
     prepared_query = model_class.where("1=1")
     Rails.logger.debug("Search::OnModel::ListQuery#prepare_query sql: #{prepared_query.to_sql}")
     Rails.logger.debug("===========================================================================================")
-    Rails.logger.debug("===========================================================================================")
-    Rails.logger.debug("===========================================================================================")
-    Rails.logger.debug("===========================================================================================")
-    Rails.logger.debug("===========================================================================================")
     where_clauses = Search::OnModel::WhereClauses.new(@parsed_request, prepared_query)
     prepared_query = where_clauses.sql
     prepared_query = prepared_query.limit(@parsed_request.limit) if @parsed_request.limited
