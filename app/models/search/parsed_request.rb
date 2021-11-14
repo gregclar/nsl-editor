@@ -111,7 +111,7 @@ class Search::ParsedRequest
     "orchids" => "taxon:",
     "orchid_processing_logs" => " logged_at desc",
     "loader batch" => "name:",
-    "loader name" => "scientific_name:",
+    "loader name" => "scientific-name:",
     "batch review" => "name:",
     "batch reviewer" => "name:",
     "batch review period" => "name:",
@@ -143,7 +143,6 @@ class Search::ParsedRequest
   }.freeze
 
   def initialize(params)
-    debug("initialize: params: #{params}")
     @params = params
     @query_string = canonical_query_string
     @query_string = @query_string.gsub(/  */, " ") unless @query_string.blank?
@@ -173,7 +172,6 @@ class Search::ParsedRequest
 
   def parse_request
     unused_qs_tokens = normalise_query_string.split(/ /)
-    Rails.logger.debug("unused_qs_tokens: #{unused_qs_tokens}")
     parsed_defined_query = Search::ParsedDefinedQuery.new(@query_target)
     @defined_query = parsed_defined_query.defined_query
     @target_button_text = parsed_defined_query.target_button_text
@@ -327,15 +325,7 @@ class Search::ParsedRequest
           @include_instances = true
           @include_instances_class = INCLUDE_INSTANCES_CLASS[@target_table]
         end
-        Rails.logger.debug("target table: #{@target_table}, target model: #{@target_model}; default order column: #{@default_order_column}; default query column: #{@default_query_directive}")
-        Rails.logger.debug("target table: #{@target_table}, target model: #{@target_model}; default order column: #{@default_order_column}; default query column: #{@default_query_directive}")
-        Rails.logger.debug("target table: #{@target_table}, target model: #{@target_model}; default order column: #{@default_order_column}; default query column: #{@default_query_directive}")
-        Rails.logger.debug("target table: #{@target_table}, target model: #{@target_model}; default order column: #{@default_order_column}; default query column: #{@default_query_directive}")
-        Rails.logger.debug("target table: #{@target_table}, target model: #{@target_model}; default order column: #{@default_order_column}; default query column: #{@default_query_directive}")
-        Rails.logger.debug("target table: #{@target_table}, target model: #{@target_model}; default order column: #{@default_order_column}; default query column: #{@default_query_directive}")
-        Rails.logger.debug("target table: #{@target_table}, target model: #{@target_model}; default order column: #{@default_order_column}; default query column: #{@default_query_directive}")
-        Rails.logger.debug("target table: #{@target_table}, target model: #{@target_model}; default order column: #{@default_order_column}; default query column: #{@default_query_directive}")
-        Rails.logger.debug("target table: #{@target_table}, target model: #{@target_model}; default order column: #{@default_order_column}; default query column: #{@default_query_directive}")
+        debug("target table: #{@target_table}, target model: #{@target_model}; default order column: #{@default_order_column}; default query column: #{@default_query_directive}")
       else
         raise "Cannot parse target: #{@query_target}"
       end

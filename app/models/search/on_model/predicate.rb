@@ -121,10 +121,6 @@ class Search::OnModel::Predicate
 
   def build_canon_field(field)
     debug("build_canon_field(field) for field: #{field}")
-    debug("build_canon_field(field) for field: #{field}")
-    debug("build_canon_field(field) for field: #{field}")
-    debug("build_canon_field(field) for field: #{field}")
-    debug("build_canon_field(field) for field: #{field}")
     if @rules_class.key?(field)
       field
     elsif @rules_class.key?(@abbrevs_class[field])

@@ -29,15 +29,25 @@ class Loader::Batch::Review::Period < ActiveRecord::Base
   validate :end_date_cannot_be_in_the_past
   validate :end_date_must_be_after_start_date
 
-  #has_many :periods_reviewers, class_name: "TvrPeriodsReviewers", foreign_key: "tvr_period_id"
-  #has_many :reviewers, through: :periods_reviewers
-
   belongs_to :batch_review,
              class_name: "Loader::Batch::Review",
              foreign_key: "batch_review_id"
   alias_attribute :review, :batch_review
 
+  has_many :batch_reviewers, class_name: "Loader::Batch::Reviewer", foreign_key: "batch_review_period_id"
+  alias_attribute :reviewers, :batch_reviewers
+
+  has_many :name_review_comments, class_name: "Loader::Name::Review::Comment", foreign_key: "review_period_id"
+  alias_attribute :comments, :name_review_comments # deprecate - confusing with batch comments
+  alias_attribute :name_comments, :name_review_comments
+
+  has_many :names_with_comments, through: :name_review_comments, class_name: "Loader::Name", source: :loader_name
+
   attr_accessor :give_me_focus, :message
+
+  def loader_name_comments(loader_name_id)
+    comments.order(:created_at).collect.select {|x| x.loader_name_id == loader_name_id}
+  end
 
   def fresh?
     created_at > 1.hour.ago

@@ -21,5 +21,6 @@ class Search::Loader::Name::FieldAbbrev
     "loader-batch:" => "batch:",
     "loader-batch-id:" => "batch:",
     "batch-id:" => "batch:",
+    "name:" => "scientific-name:",
   }.freeze
 end

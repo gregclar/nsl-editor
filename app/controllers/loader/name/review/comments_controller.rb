@@ -16,8 +16,8 @@
 #   See the License for the specific language governing permissions and
 #   limitations under the License.
 #
-class Loader::BatchesController < ApplicationController
-  before_action :find_loader_batch, only: [:show, :destroy, :tab]
+class Loader::Name::Review::CommentsController < ApplicationController
+  before_action :find_comment, only: [:show, :destroy, :tab]
 
   # Sets up RHS details panel on the search results page.
   # Displays a specified or default tab.
@@ -25,10 +25,6 @@ class Loader::BatchesController < ApplicationController
     set_tab
     set_tab_index
     @take_focus = params[:take_focus] == 'true'
-    if params[:tab] =~ /\Atab_batch_review\z/
-      @batch_review = Loader::Batch::Review.new
-      @batch_review.batch = @loader_batch
-    end
     render "show", layout: false
   end
   alias tab show
@@ -41,30 +37,33 @@ class Loader::BatchesController < ApplicationController
     end
   end
 
-  def make_default
-    find_loader_batch
-    session[:default_loader_batch_id] = params[:id]
-    session[:default_loader_batch_name] = @loader_batch.name
-    @message = 'Done'
-  end
-
-  def clear_default
-    session[:default_loader_batch_id] = nil
-    session[:default_loader_batch_name] = nil
-    @message = 'Done'
+  def create
+    logger.debug(review_comment_params.inspect)
+    @review_comment = Loader::Name::Review::Comment.new(review_comment_params)
+    logger.debug('before save')
+    @review_comment.save_with_username(current_user.username)
+    logger.debug('after save')
+    render "create"
+  rescue => e
+    logger.error("Loader::Name::Review::Comment.create:rescuing exception #{e}")
+    @error = e.to_s
+    render "create_error", status: :unprocessable_entity
   end
 
   private
 
-  def find_loader_batch
-    @loader_batch = Loader::Batch.find(params[:id])
-  rescue ActiveRecord::RecordNotFound
-    flash[:alert] = "We could not find the loader batch record."
-    redirect_to loader_batches_path
+  def find_comment
+    #@loader_batch = Loader::Batch.find(params[:id])
+  #rescue ActiveRecord::RecordNotFound
+    #flash[:alert] = "We could not find the loader batch record."
+    #redirect_to loader_batches_path
   end
 
-  def loader_batch_params
-    params.require(:loader_batch).permit(:name)
+  def review_comment_params
+    params.require(:loader_name_review_comment).permit(:loader_name_id,
+                                                       :review_period_id,
+                                                       :batch_reviewer_id,
+                                                       :comment)
   end
 
   def set_tab

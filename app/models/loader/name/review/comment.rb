@@ -16,19 +16,20 @@
 #   See the License for the specific language governing permissions and
 #   limitations under the License.
 #
-# Loader BatchReviewer entity
-class Loader::Batch::Reviewer < ActiveRecord::Base
+# Loader NameReviewComment entity
+class Loader::Name::Review::Comment < ActiveRecord::Base
   strip_attributes
-  self.table_name = "batch_reviewer"
+  self.table_name = "name_review_comment"
   self.primary_key = "id"
   self.sequence_name = "nsl_global_seq"
 
-  belongs_to :loader_batch, class_name: "Loader::Batch", foreign_key: "loader_batch_id"
-  alias_attribute :batch, :loader_batch
-  belongs_to :batch_review_period, class_name: "Loader::Batch::Review::Period", foreign_key: "batch_review_period_id"
-  alias_attribute :period, :batch_review_period
-  belongs_to :user_table, class_name: "UserTable", foreign_key: "user_id"
-  alias_attribute :user, :user_table
+  belongs_to :loader_name, class_name: "Loader::Name",
+             foreign_key: "loader_name_id"
+  belongs_to :batch_review_period, class_name: "Loader::Batch::Review::Period",
+             foreign_key: "review_period_id"
+  belongs_to :batch_reviewer, class_name: "Loader::Batch::Reviewer",
+             foreign_key: "batch_reviewer_id"
+  alias_attribute :reviewer, :batch_reviewer
 
   attr_accessor :give_me_focus, :message
 
@@ -37,15 +38,11 @@ class Loader::Batch::Reviewer < ActiveRecord::Base
   end
 
   def display_as
-    'Batch Reviewer'
+    'Review Period'
   end
 
   def allow_delete?
     true
-  end
-
-  def name
-    user.name
   end
 
   def update_if_changed(params, username)
@@ -58,4 +55,35 @@ class Loader::Batch::Reviewer < ActiveRecord::Base
       "No change"
     end
   end
+
+  def fresh?
+    false
+  end
+
+  def record_type
+    'NameReviewComment'
+  end
+
+  def save_with_username(username)
+    Rails.logger.debug('save_with_username')
+    self.created_by = self.updated_by = username
+    #set_defaults
+    save!
+  end
+
+  def update_if_changed(params, username)
+    if has_changes_to_save?
+      logger.debug("changes_to_save: #{changes_to_save.inspect}")
+      self.updated_by = username
+      save!
+      "Updated"
+    else
+      "No change"
+    end
+  end
+
+  def can_be_deleted?
+    true # for now
+  end
 end
+  

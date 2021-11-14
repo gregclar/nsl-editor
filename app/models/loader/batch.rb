@@ -24,6 +24,7 @@ class Loader::Batch < ActiveRecord::Base
   self.sequence_name = "nsl_global_seq"
   has_many :loader_names, class_name: "Loader::Name", foreign_key: "loader_batch_id"
   has_many :batch_reviews, class_name: "Loader::Batch::Review", foreign_key: "loader_batch_id"
+  alias_attribute :reviews, :batch_reviews
 
   attr_accessor :give_me_focus, :message
 

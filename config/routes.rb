@@ -408,6 +408,9 @@ Rails.application.routes.draw do
 
   resources :loader_batches
   match "loader_batches/:id/tab/:tab", as: "loader_batch_tab", to: "loader/batches#tab", via: :get
+  match "loader_batch/make-default/:id", as: "make_default_batch", to: "loader/batches#make_default", via: :post
+  match "loader_batch/clear-default", as: "clear_default_batch", to: "loader/batches#clear_default", via: :post
+
   resources :loader_names
   match "loader_names/:id/tab/:tab", as: "loader_name_tab", to: "loader/names#tab", via: :get
   match "batch_reviews/:id/tab/:tab", as: "batch_review_tab", to: "loader/batch/reviews#tab", via: :get
@@ -429,6 +432,8 @@ Rails.application.routes.draw do
 
   match "batch_reviewers", as: "batch_reviewer", to: "loader/batch/reviewers#show", via: :get
   match "batch_reviewers/:id/tab/:tab", as: "batch_reviewer_tab", to: "loader/batch/reviewers#tab", via: :get
+
+  match "name_review_comments", as: "create_name_review_comment", to: "loader/name/review/comments#create", via: :post
 
   match "/clear-connections", as: "clear_connections", to: "services#clear_connections", via: :get
   root to: "search#search"

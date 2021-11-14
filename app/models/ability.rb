@@ -53,6 +53,7 @@ class Ability
     admin_auth if user.admin?
     treebuilder_auth if user.treebuilder?
     orchids_matcher_auth if user.orchids_matcher?
+    reviewer_auth if user.reviewer?
   end
 
   def basic_auth_1
@@ -135,4 +136,11 @@ class Ability
     can "users",                       :all
     can "orgs",                        :all
   end
+
+  def reviewer_auth
+    can "loader/names",                :all
+    can "loader/batches",              :all
+    can "loader/name/review/comments", :all
+  end
+
 end

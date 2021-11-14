@@ -38,6 +38,21 @@ class Search::OnModel::WhereClauses
   end
 
   def apply_args_to_sql(args)
+    debug("args: #{args.inspect}")
+    debug("args: #{args.inspect}")
+    debug("args: #{args.inspect}")
+    debug("args: #{args.inspect}")
+    debug("args: #{args.inspect}")
+    debug("args: #{args.inspect}")
+    debug("args: #{args.inspect}")
+    debug("args: #{args.inspect}")
+    debug("args: #{args.inspect}")
+    debug("args: #{args.inspect}")
+    debug("args: #{args.inspect}")
+    debug("args: #{args.inspect}")
+    debug("args: #{args.inspect}")
+    debug("args: #{args.inspect}")
+    debug("args: #{args.inspect}")
     x = 0
     until args.blank?
       field, value, args = Search::NextCriterion.new(args).get

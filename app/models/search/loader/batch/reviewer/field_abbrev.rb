@@ -18,5 +18,7 @@
 #
 class Search::Loader::Batch::Reviewer::FieldAbbrev
   ABBREVS = {
+    "period:" => "review-period-id:",
+    "review-period:" => "review-period-id:",
   }.freeze
 end

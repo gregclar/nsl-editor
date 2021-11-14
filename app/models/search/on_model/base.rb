@@ -59,8 +59,6 @@ class Search::OnModel::Base
   def run_list_query(parsed_request)
     list_query = Search::OnModel::ListQuery.new(parsed_request)
     @relation = list_query.sql
-    debug("@relation: #{@relation}")
-    debug("@relation.to_sql: #{@relation.to_sql}")
     @results = relation.all
     @limited = list_query.limited
     @info_for_display = list_query.info_for_display

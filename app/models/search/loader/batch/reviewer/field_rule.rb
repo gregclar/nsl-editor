@@ -24,12 +24,14 @@ class Search::Loader::Batch::Reviewer::FieldRule
     "id:"                 => { multiple_values: true,
                                where_clause: "id = ? ",
                                multiple_values_where_clause: " id in (?)",
-                               order: "name"},
+                               order: "id"},
     "ids:"                => { multiple_values: true,
                                where_clause: " id = ?",
                                multiple_values_where_clause: " id in (?)",
-                               order: "name"},
+                               order: "id"},
     "batch-id:"           => { where_clause: "loader_batch_id = ? ",
-                               order: "name"},
+                               order: "id"},
+    "review-period-id:"   => { where_clause: "batch_review_period_id = ? ",
+                               order: "id"},
   }.freeze
 end

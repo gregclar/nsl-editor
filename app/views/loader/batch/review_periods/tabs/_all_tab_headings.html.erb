@@ -7,8 +7,21 @@
                       link_id: 'loader-batch-review-periods-details-tab', 
                       link_title: 'View a summary',
                       tab_index: @tab_index,
-                      prev_tab: '.search-result.batch-review-periods-edit-tab', 
-                      next_tab: '.search-result.batch-review-periods-edit-tab' } %> 
+                      prev_tab: '.search-result.review-periods-edit-tab', 
+                      next_tab: '.search-result.review-periods-calendar-tab' }
+  %> 
+
+  <%= render partial: 'loader/batch/review_periods/tabs/tab',
+             locals: {first: false,
+                      last: false,
+                      this_tab: 'tab_calendar', 
+                      link_text: 'Calendar', 
+                      link_id: 'loader-batch-review-periods-calendar-tab', 
+                      link_title: 'View the calendar',
+                      tab_index: @tab_index,
+                      prev_tab: '.search-result.review-periods-details-tab', 
+                      next_tab: '.search-result.review-periods-edit-tab' }
+  %> 
 
   <%= render partial: 'loader/batch/review_periods/tabs/tab',
              locals: {first: false,
@@ -18,8 +31,9 @@
                       link_id: 'loader-batch-review-periods-edit-tab', 
                       link_title: 'Edit the period',
                       tab_index: @tab_index,
-                      prev_tab: '.search-result.batch-review-periods-tab', 
-                      next_tab: '.search-result.batch-review-periods-tab' } %> 
+                      prev_tab: '.search-result.review-periods-calendar-tab', 
+                      next_tab: '.search-result.review-periods-details-tab' }
+  %> 
 
 
 </ul>

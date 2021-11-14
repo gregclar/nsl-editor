@@ -22,8 +22,22 @@ class Loader::Name < ActiveRecord::Base
   self.table_name = "loader_name"
   self.primary_key = "id"
   self.sequence_name = "nsl_global_seq"
+  #scope :for_batch, -> { where(loader_batch_id: 51449788) }
+  #scope :for_batch, ->(batch_id = 0) { where("loader_batch_id = ?", batch_id) }
+
+  def self.for_batch(batch_id)
+    if batch_id.nil? || batch_id == -1
+      where("1=1")    
+    else
+      where("loader_batch_id = ?", batch_id)
+    end
+  end
+
+  #default_scope { where(loader_batch_id: 51449788) }
   belongs_to :loader_batch, class_name: "Loader::Batch", foreign_key: "loader_batch_id"
   alias_attribute :batch, :loader_batch
+
+  has_many :name_review_comments, class_name: "Loader::Name::Review::Comment", foreign_key: "loader_name_id"
 
   attr_accessor :give_me_focus, :message
 

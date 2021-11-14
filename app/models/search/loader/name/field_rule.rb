@@ -18,12 +18,15 @@
 #
 class Search::Loader::Name::FieldRule
   RULES = {
-    "scientific_name:"    => { where_clause: "lower(scientific_name) like ? ",
+    "scientific-name:"    => { where_clause: "lower(scientific_name) like ? ",
                                  trailing_wildcard: true,
                                  leading_wildcard: true,
                                  order: "scientific_name"},
-    "batch-id:"           => { multiple_values: false,
-                               where_clause: "loader_batch_id = ? ",
+    "batch-id:"           => { where_clause: "loader_batch_id = ? ",
+                               order: "seq"},
+    "batch-name:"           => { where_clause: "loader_batch_id = (select id from loader_batch where lower(name) = ?)  ",
+                               order: "seq"},
+    "default-batch-name:"   => { where_clause: "loader_batch_id = (select id from loader_batch where lower(name) = ?)  ",
                                order: "seq"},
     "id:"                 => { multiple_values: true,
                                where_clause: "id = ? ",
@@ -32,6 +35,8 @@ class Search::Loader::Name::FieldRule
     "ids:"                => { multiple_values: true,
                                where_clause: " id = ?",
                                multiple_values_where_clause: " id in (?)",
+                               order: "seq"},
+    "has-comment:"        => { where_clause: "exists (select null from name_review_comment nrc where nrc.loader_name_id = loader_name.id)",
                                order: "seq"},
   }.freeze
 end

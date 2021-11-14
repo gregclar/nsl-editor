@@ -1,4 +1,5 @@
 class SearchController < ApplicationController
+  include Search::QueryDefaults
   before_action :hide_details
 
   def search
@@ -40,7 +41,7 @@ class SearchController < ApplicationController
     logger.debug(mapper.partial)
     render partial: mapper.partial
   end
-
+ 
   def reports
   end
 
@@ -54,6 +55,7 @@ class SearchController < ApplicationController
     return false unless params[:query_string].present?
     @focus_id = params[:focus_id]
     params[:current_user] = current_user
+    check_query_defaults
     params[:include_common_and_cultivar_session] = \
       session[:include_common_and_cultivar]
     # Avoid "A copy of Search has been removed from the module tree but is still active" error
@@ -61,7 +63,7 @@ class SearchController < ApplicationController
     @search = ::Search::Base.new(params)
     true
   end
-
+ 
   def run_empty_search
     params["target"] = 'Names'
     @empty_search = true
