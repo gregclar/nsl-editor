@@ -11,9 +11,12 @@
 <%= render partial: 'detail_line', locals: {info: @loader_name.name_comment, label: 'name_comment'} %>
 <%= render partial: 'detail_line', locals: {info: @loader_name.partly, label: 'partly'} %>
 <%= render partial: 'detail_line', locals: {info: @loader_name.auct_non, label: 'auct_non'} %>
-<%= render partial: 'detail_line', locals: {info: @loader_name.unplaced, label: 'unplaced'} %>
 <%= render partial: 'detail_line', locals: {info: @loader_name.doubtful, label: 'doubtful'} %>
 <%= render partial: 'detail_line', locals: {info: @loader_name.hybrid_flag, label: 'hybrid_flag'} %>
+<%= render partial: 'detail_line', locals: {info: @loader_name.parent_id, label: 'parent_id'} %>
+<%= render partial: 'detail_line', locals: {info: @loader_name.unplaced, label: 'unplaced'} %>
+<%= render partial: 'detail_line', locals: {info: @loader_name.excluded, label: 'excluded'} %>
+<%= render partial: 'detail_line', locals: {info: @loader_name.comment, label: 'comment'} %>
 
 <br>
 <%= divider %>

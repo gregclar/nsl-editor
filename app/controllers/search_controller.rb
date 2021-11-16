@@ -36,10 +36,9 @@ class SearchController < ApplicationController
       !session[:include_common_and_cultivar]
   end
 
-  def extras
-    mapper = Search::Mapper::Extras.new(params)
-    logger.debug(mapper.partial)
-    render partial: mapper.partial
+  def help
+    help_content = Search::Help::PageMappings.new(params)
+    render partial: help_content.partial
   end
  
   def reports

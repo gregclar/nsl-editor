@@ -5,8 +5,6 @@
 
     <script>
       window.relative_url_root = "<%= Rails.application.config.action_controller.relative_url_root %>";
-      //window.NG_TEMPLATE_URL="<%= @ng_template_path %>";
-      //taxoTree = "<%= ShardConfig.classification_tree_key %>";
     </script>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/showdown/1.9.1/showdown.js" crossorigin="anonymous"></script>
@@ -83,11 +81,11 @@ input[type="checkbox"]:not([title]) {
         </div>
         <div id="help-search-container"
              class="main-body-container no-left-padding col-xs-12 col-sm-12 col-md-12 col-lg-12 hidden">
-            <%= render partial: 'search/help_search_inner' %>
+            <%= render partial: 'search/tab_inners/help_target_divs' %>
         </div>
         <div id="example-search-container"
              class="main-body-container no-left-padding col-xs-12 col-sm-12 col-md-12 col-lg-12 hidden">
-            <%= render partial: 'search/example_search_inner' %>
+            <%= render partial: 'search/tab_inners/example_target_divs' %>
         </div>
         <div id="search-reports-container"
              class="main-body-container no-left-padding col-xs-12 col-sm-12 col-md-12 col-lg-12 hidden">

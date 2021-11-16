@@ -56,7 +56,7 @@ class ApplicationController < ActionController::Base
   end
 
   def js_render
-    if params[:extras_id] =~ /search-examples/ || params[:extras_id] =~ /search-help/
+    if params[:help_id] =~ /search-examples/ || params[:help_id] =~ /search-help/
       logger.error("Handling unauth request for search-helpd or search-examples")
       render html: "<div class='embedded-notice'><b>Your session may have expired.  Please reload the whole page before continuing.</b></div><script>alert('login...';) </script>".html_safe
     elsif params[:tab].blank? 

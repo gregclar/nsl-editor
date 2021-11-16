@@ -1,3 +1,7 @@
+- :date: 16-Nov-2021
+  :jira_id: '4043'
+  :description: |-
+    Batch Loader: Add several orchid loader features for loader names; add search infrastructure for users, organisations, and batch reviewers.
 - :date: 15-Nov-2021
   :jira_id: '4043'
   :description: |-

@@ -19,7 +19,7 @@ module Search::QueryDefaults
   def value_already_applied?
     id_regex = /batch-id: #{session[:default_loader_batch_id]}/
     name_regex = /batch-name: #{session[:default_loader_batch_name]}/i
-    default_name_regex = /default-batch-name: #{session[:default_loader_batch_name]}/i
+    default_name_regex = /default-batch: #{session[:default_loader_batch_name]}/i
     params[:query_string] =~ id_regex || 
       params[:query_string] =~ name_regex ||
       params[:query_string] =~ default_name_regex
@@ -27,7 +27,7 @@ module Search::QueryDefaults
 
   def apply_default_loader_batch
     remove_old_defaults
-    params[:query_string] = params[:query_string] + " default-batch-name: #{session[:default_loader_batch_name]}"
+    params[:query_string] = params[:query_string] + " default-batch: #{session[:default_loader_batch_name]}"
   end  
 
   def remove_old_defaults
@@ -36,7 +36,7 @@ module Search::QueryDefaults
   end
 
   def remove_old_default_embedded
-    match_data = /(default-batch-name:\s[^:]+)\s+[\w]+:/.match(params[:query_string])
+    match_data = /(default-batch:\s[^:]+)\s+[\w]+:/.match(params[:query_string])
     return if match_data.nil?
 
     reg = /#{match_data[1]}/
@@ -44,7 +44,7 @@ module Search::QueryDefaults
   end
 
   def remove_old_default_at_end_of_string
-    match_data = /(default-batch-name:\s[^:]+)\s*$/.match(params[:query_string])
+    match_data = /(default-batch:\s[^:]+)\s*$/.match(params[:query_string])
     return if match_data.nil?
 
     reg = /#{match_data[1]}/

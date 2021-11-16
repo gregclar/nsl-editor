@@ -6,3 +6,5 @@ drop table if exists batch_review_role;
 drop table if exists users;
 drop table if exists batch_review_period;
 drop table if exists batch_review;
+drop table if exists loader_name_match;
+

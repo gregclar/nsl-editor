@@ -18,12 +18,12 @@
 #
 #   Maps the help and examples for specific search targets to
 #   file locations.
-class Search::Mapper::Extras
+class Search::Help::PageMappings
   attr_reader :partial
 
   def initialize(params)
-    debug("Start for #{params[:extra_id]}")
-    @partial = MAP[params[:extras_id]]
+    debug("Start for #{params[:help_id]}")
+    @partial = MAP[params[:help_id]]
   end
 
   def debug(s)
@@ -79,5 +79,11 @@ class Search::Mapper::Extras
     "loader-name-search-examples" => "loader/names/help/examples",
     "batch-review-search-help" => "loader/batch/reviews/help/fields",
     "batch-review-search-examples" => "loader/batch/reviews/help/examples",
+    "batch-reviewer-search-help" => "loader/batch/reviewers/help/fields",
+    "batch-reviewer-search-examples" => "loader/batch/reviewers/help/examples",
+    "user-search-help" => "users/help/fields",
+    "user-search-examples" => "users/help/examples",
+    "org-search-help" => "orgs/help/fields",
+    "org-search-examples" => "orgs/help/examples",
   }.freeze
 end

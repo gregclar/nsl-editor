@@ -51,4 +51,29 @@ class Loader::Name < ActiveRecord::Base
   def display_as
     'Loader Name'
   end
+
+  def has_parent?
+    !parent_id.blank?
+  end
+
+  def matches
+    []
+  end
+
+  def loader_name_match
+    nil
+  end
+
+  def name_match_no_primary?
+    false
+  end
+
+  def orth_var?
+    return false if name_status.blank?
+    name_status.downcase.match(/\Aorth/)
+  end
+
+  def exclude_from_further_processing?
+    false
+  end
 end

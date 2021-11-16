@@ -22,5 +22,14 @@ class Search::Loader::Name::FieldAbbrev
     "loader-batch-id:" => "batch:",
     "batch-id:" => "batch:",
     "name:" => "scientific-name:",
+    "accepted-with-syn:" => "name-with-syn:",
+    "acc:" => "name-with-syn:",
+    "exc:" => "excluded-with-syn:",
+    "excluded:" => "excluded-with-syn:",
+    "is-synonym:" => "is-syn:",
+    "synonym:" => "is-syn:",
+    "no-rank:" => "rank-is-null:",
+    "no-nsl-rank:" => "nsl-rank-is-null:",
+    "comment:" => "comments:",
   }.freeze
 end

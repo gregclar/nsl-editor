@@ -6,3 +6,4 @@
 \i create-table-batch-reviewer.sql
 \i create-table-batch-review-comment.sql
 \i create-table-name-review-comment.sql
+\i create-table-loader-name-match.sql
