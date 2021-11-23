@@ -23,6 +23,8 @@ class Loader::Batch::Review < ActiveRecord::Base
   self.primary_key = "id"
   self.sequence_name = "nsl_global_seq"
 
+  validates :name, presence: true
+
   belongs_to :loader_batch, class_name: "Loader::Batch", foreign_key: "loader_batch_id"
   alias_attribute :batch, :loader_batch
   has_many :review_periods, class_name: "Loader::Batch::Review::Period", foreign_key: "batch_review_id"

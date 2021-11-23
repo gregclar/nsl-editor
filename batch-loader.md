@@ -141,6 +141,7 @@
 1. Comprehensive navigation links
 1. Compiler comments
     a. compiler to add name review comments, which will be marked as compiler comments (adjust data structure)
+1. Delete review period
 
 ### Not Expected
 1. Reviewer cannot edit, or delete a comment.  (Thoughts?)
