@@ -43,17 +43,6 @@ class Loader::Batch::Review::Comment < ActiveRecord::Base
     true
   end
 
-  def update_if_changed(params, username)
-    self.name = params[:name]
-    if changed?
-      self.updated_by = username
-      save!
-      "Updated"
-    else
-      "No change"
-    end
-  end
-
   # The table isn't in all schemas, so check it's there
   def self.exists?
     begin 
@@ -72,15 +61,6 @@ class Loader::Batch::Review::Comment < ActiveRecord::Base
     'BatchReviewComment'
   end
 
-  #def self.create(params, username)
-    #batch_review_period = self.new(params)
-    #if batch_review_period.save_with_username(username)
-      #batch_review_period
-    #else
-      #raise batch_review_period.errors.full_messages.first.to_s
-    #end
-  #end
-
   def save_with_username(username)
     self.created_by = self.updated_by = username
     #set_defaults
@@ -96,10 +76,6 @@ class Loader::Batch::Review::Comment < ActiveRecord::Base
     else
       "No change"
     end
-  end
-
-  def can_be_deleted?
-    true # for now
   end
 end
   

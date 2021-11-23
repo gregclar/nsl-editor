@@ -24,6 +24,9 @@ class Loader::Batch::ReviewersController < ApplicationController
   def show
     set_tab
     set_tab_index
+    if params[:tab] =~ /\Atab_reviewers\z/
+      @batch_reviewer = Loader::Batch::Reviewer.new
+    end
     @take_focus = params[:take_focus] == 'true'
     render "show", layout: false
   end
@@ -38,6 +41,20 @@ class Loader::Batch::ReviewersController < ApplicationController
     end
   end
 
+  def create
+    @batch_reviewer = ::Loader::Batch::Reviewer.create(batch_reviewer_params,
+                                               current_user.username)
+    render "create"
+  rescue => e
+    logger.error("Controller:Loader::Batch::ReviewersController#create:rescuing exception #{e}")
+    @error = e.to_s
+    render "create_error", status: :unprocessable_entity
+  end
+
+  def destroy
+    @batch_reviewer.destroy
+  end
+
   private
 
   def find_batch_reviewer
@@ -48,7 +65,7 @@ class Loader::Batch::ReviewersController < ApplicationController
   end
 
   def batch_reviewer_params
-    params.require(:loader_batch_reviewer).permit(:id, :name, :loader_batch_id)
+    params.require(:loader_batch_reviewer).permit(:id, :name, :batch_review_period_id, :user_id, :org_id, :batch_review_role_id)
   end
 
   def set_tab

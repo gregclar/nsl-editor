@@ -37,10 +37,10 @@ insert into loader_name
   date_,
   publ_partly,
   publ_note,
-  note,
+  notes,
   footnote,
   distribution,
-  comment_,
+  comment,
   remark,
   original_text,
   seq)
@@ -62,7 +62,10 @@ select (select id from loader_batch where name = 'Second Batch'),
   name_comment,
   partly,
   auct_non,
-  (doubtful = 1),
+  case doubtful
+  when '1' then true
+  else false
+  end,
   synonym_type,
   doubtful,
   case hybrid

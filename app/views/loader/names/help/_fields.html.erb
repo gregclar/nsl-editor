@@ -5,8 +5,10 @@
   <% [
     {field: 'batch-id:', descr: "Search within a batch using its ID."},
     {field: 'batch-name:', descr: "Search within a batch using its name."},
-    {field: 'has-comment:',
+    {field: 'has-review-comment:',
      descr: "Search for loader names that have been commented on."},
+    {field: 'has-review-comment-by:',
+     descr: "Search for loader names that have been commented on by a particular user (user-id)."},
       ].each do |val| %>
   <tr>
     <td class="width-20-percent">

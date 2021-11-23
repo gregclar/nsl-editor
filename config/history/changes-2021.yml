@@ -1,3 +1,7 @@
+- :date: 23-Nov-2021
+  :jira_id: '4078'
+  :description: |-
+    Batch Loader: Next phase of work since last week's walk-through, including adding and removing batch reviewers, and much more.
 - :date: 16-Nov-2021
   :jira_id: '4043'
   :description: |-

@@ -419,10 +419,10 @@ Rails.application.routes.draw do
   match "batch_reviews", as: "batch_review", to: "loader/batch/reviews#show", via: :get
   match "/batch_reviews/:id", as: "delete_batch_review", to: "loader/batch/reviews#destroy", via: :delete
   #resources :batch_reviews
-  match "batch_review_periods", as: "create_batch_review_period", to: "loader/batch/review_periods#create", via: :post
-  match "batch_review_periods", as: "review_period", to: "loader/batch/review_periods#show", via: :get
-  match "batch_review_periods/:id/tab/:tab", as: "review_period_tab", to: "loader/batch/review_periods#tab", via: :get
-  match "batch_review_periods/:id", as: "update_review_period", to: "loader/batch/review_periods#update", via: :patch
+  match "batch_review_periods", as: "create_batch_review_period", to: "loader/batch/review/periods#create", via: :post
+  match "batch_review_periods", as: "review_period", to: "loader/batch/review/periods#show", via: :get
+  match "batch_review_periods/:id/tab/:tab", as: "review_period_tab", to: "loader/batch/review/periods#tab", via: :get
+  match "batch_review_periods/:id", as: "update_review_period", to: "loader/batch/review/periods#update", via: :patch
 
   match "users", as: "user", to: "users#show", via: :get
   match "users/:id/tab/:tab", as: "user_tab", to: "users#tab", via: :get
@@ -432,6 +432,8 @@ Rails.application.routes.draw do
 
   match "batch_reviewers", as: "batch_reviewer", to: "loader/batch/reviewers#show", via: :get
   match "batch_reviewers/:id/tab/:tab", as: "batch_reviewer_tab", to: "loader/batch/reviewers#tab", via: :get
+  match "batch_reviewer", as: "loader_batch_reviewers", to: "loader/batch/reviewers#create", via: :post
+  match "batch_reviewer/:id", as: "delete_batch_reviewer", to: "loader/batch/reviewers#destroy", via: :delete
 
   match "name_review_comments", as: "create_name_review_comment", to: "loader/name/review/comments#create", via: :post
 

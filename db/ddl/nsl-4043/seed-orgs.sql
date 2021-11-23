@@ -7,3 +7,4 @@ insert into org (name,abbrev) values ('Macquarie University','MacqUni');
 insert into org (name,abbrev) values ('The Royal Botanic Garden Sydney','RBGSyd');
 insert into org (name,abbrev) values ('Western Australian Herbarium','WAHerb');
 insert into org (name,abbrev) values ('Australian Tropical Herbarium','ATH');
+insert into org (name,abbrev, no_org) values ('No Organisation - Unaffiliated','NONE', true);

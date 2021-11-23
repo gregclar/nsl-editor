@@ -19,8 +19,11 @@
 #### Loader Names
 1.  Seed dev data (sql)
 1.  Load batch of loader names (in shell with sql)
+1.  Load second batch of loader names (raw orchids data)
 1.  Create (not done at this stage, planned for later)
-1.  Query (basic)
+1.  Query 
+    a.  Transferred in the orchids-processing queries and adapted to loader names
+    b.  Simple batch-review-related queries - e.g. has-review-comment:
 1.  List (basic - needs Orchids style markup)
 1.  Tabs
     a.  Details tab
@@ -28,7 +31,11 @@
     a.  Review tab to add name review comment (if user is authorised)
     a.  Review Comments tab to show comments from all reviews and all periods
 1.  Query Help (basic)
-1.  Query Examples (basic)
+1.  Query Examples
+    a.  Transferred in the examples from orchids-processing
+1.  Data translations on load
+    a.  Unplaced = '1' becomes Expired = true
+    b.  Script to set the parent_id, translating from the raw_id, and raw_parent_id
 
 #### Batch Review
 1.  Create is from loader batch (see above)
@@ -61,6 +68,9 @@
         - Name
         - Start date
         - End date
+    a.  Reviewer tab
+        - List reviewers
+        - Add a reviewer
 1.  Validation rules for periods copied from previous review work
 1.  Created `batch_review_period_vw` (sql)
 
@@ -95,11 +105,42 @@
 
 ## Workflows
 
+### Currently only in shell/sql
+
 1. Create batch
-1. Load batch of loader names (shell/sql)
+1. Load batch of loader names
+1. Create user
+1. Create organisation
+1. Create batch review role
+
+### Available in the Editor
+
 1. Create batch review
-1. Create batch review period
+1. Create batch review period within a batch review
 1. Update review period start and end dates
-1. Create a user with review role for an organisation
+1. Create a batch reviewer with review role for an organisation
+1. Remove a batch reviewer
+   a. only if no comments added
+1. Create name review comment
+1. List name review comments
+    a. reviewer can list loader names with comments and can respond to those comments 
+1. List name review comments by a given batch reviewer
 
+### Loader Functions in the Editor (as for Orchids)
+1. Indented, flagged listings
+1. Comprehensive search options
 
+### Expected
+1. Processing tabs (as for Orchids Loader)
+1. Summary tab (as for Orchids Loader)
+1. Restrictions on reviewer
+    a. should see only relevant data
+       - loader names (only for the batches they are reviewing)
+    b. can comment on loader names only in batches they are reviewing
+    c. can see other comments on loader names in batches they are reviewing
+1. Comprehensive navigation links
+1. Compiler comments
+    a. compiler to add name review comments, which will be marked as compiler comments (adjust data structure)
+
+### Not Expected
+1. Reviewer cannot edit, or delete a comment.  (Thoughts?)

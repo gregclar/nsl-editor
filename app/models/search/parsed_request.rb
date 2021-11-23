@@ -116,7 +116,7 @@ class Search::ParsedRequest
     "batch reviewer" => "name:",
     "batch review period" => "name:",
     "users" => "name:",
-    "org" => "name:",
+    "org" => "name_or_abbrev:",
   }.freeze
 
   DEFAULT_ORDER_COLUMNS = {

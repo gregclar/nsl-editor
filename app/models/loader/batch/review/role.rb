@@ -16,33 +16,21 @@
 #   See the License for the specific language governing permissions and
 #   limitations under the License.
 #
-# Loader Usertable entity
-#
-# Called UserTable to distinguish from the pre-existing user model which is
-# used for authenticatio/authorisation.  This model is for the users table 
-# created during work on the batch loader and batch review subsystem.
-class UserTable < ActiveRecord::Base
+# Loader BatchReviewRole entity
+class Loader::Batch::Review::Role < ActiveRecord::Base
   strip_attributes
-  self.table_name = "users"
+  self.table_name = "batch_review_role"
   self.primary_key = "id"
   self.sequence_name = "nsl_global_seq"
 
   attr_accessor :give_me_focus, :message
-
-  # Note, the PK for the users table is the id column.
-  # That appears as user_id as a foreign key.
-  # The user's login id is in the column name - called that to avoid
-  # confusion with the FK user_id or with the PK id.
-  def userid
-    name
-  end
 
   def fresh?
     created_at > 1.hour.ago
   end
 
   def display_as
-    'User'
+    'Review Role'
   end
 
   def allow_delete?
@@ -60,7 +48,24 @@ class UserTable < ActiveRecord::Base
     end
   end
 
-  def full_name
-    "#{given_name} #{family_name}"
+  # The table isn't in all schemas, so check it's there
+  def self.exists?
+    begin 
+      BatchReviewRole.all.count
+    end
+    true
+  rescue => e
+    false
+  end
+
+  def record_type
+    'BatchReviewRole'
+  end
+
+  def save_with_username(username)
+    self.created_by = self.updated_by = username
+    #set_defaults
+    save
   end
 end
+  

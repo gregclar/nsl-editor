@@ -2,6 +2,9 @@
 <%= render partial: 'detail_line',
            locals: {info: @org.name, label: 'Name'} %>
 
+<%= render partial: 'detail_line',
+           locals: {info: @org.abbrev, label: 'Abbreviation'} %>
+
 
 <%= divider %>
 Organisation #<%= @org.id %>

@@ -9,10 +9,12 @@
                         search_path(query_target: "batch review periods", query_string: "id: #{period.id}"),
                         title:"Query the period",class:'blue') %><br>
     <% period.loader_name_comments(@loader_name.id).each do |comment| %>
-      <%= comment.reviewer.user_table.name %>
+      <%= divider %>
+      Comment by <%= comment.reviewer.user_table.full_name %> (<%= comment.reviewer.org.abbrev %>)
       <%= "#{time_ago_in_words(comment.created_at)} #{formatted_timestamp(comment.created_at)}" %><br>
+      <hr>
       <%= comment.comment %><br><br>
+      <br>
     <% end %>
-  <%= divider %>
   <% end %>
-<% end %><br>
+<% end %>

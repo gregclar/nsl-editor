@@ -38,6 +38,8 @@ class Search::Loader::Name::FieldRule
                                order: "seq"},
     "has-review-comment:" => { where_clause: "exists (select null from name_review_comment nrc where nrc.loader_name_id = loader_name.id)",
                                order: "seq"},
+    "has-review-comment-by:" => { where_clause: "exists (select null from name_review_comment nrc join batch_reviewer br on nrc.batch_reviewer_id = br.id join users u on br.user_id = u.id  where nrc.loader_name_id = loader_name.id and lower(u.name) = ?)",
+                               order: "seq"},
     "name:"               => { trailing_wildcard: true,
                                where_clause: " lower(scientific_name) like ? or lower(scientific_name) like 'x '||? or lower(scientific_name) like '('||? ",
                                       order: "seq"},

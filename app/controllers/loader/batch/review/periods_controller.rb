@@ -16,7 +16,7 @@
 #   See the License for the specific language governing permissions and
 #   limitations under the License.
 #
-class Loader::Batch::ReviewPeriodsController < ApplicationController
+class Loader::Batch::Review::PeriodsController < ApplicationController
   before_action :find_review_period, only: [:show, :destroy, :tab, :update]
 
   # Sets up RHS details panel on the search results page.
@@ -58,15 +58,13 @@ class Loader::Batch::ReviewPeriodsController < ApplicationController
   end
   private :calendar_events
 
-
-
   # POST /review_periods
   def create
     @batch_review_period = ::Loader::Batch::Review::Period.create(review_period_params,
                                                current_user.username)
     render "create.js"
   rescue => e
-    logger.error("Controller:Loader::Batch::ReviewPeriodsController#create:rescuing exception #{e}")
+    logger.error("Controller:Loader::Batch::Review::PeriodsController#create:rescuing exception #{e}")
     @error = e.to_s
     render "create_error.js", status: :unprocessable_entity
   end

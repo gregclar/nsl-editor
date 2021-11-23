@@ -6,7 +6,7 @@
   <% end %>
   <div class="inner">
     <h3>
-      <%= link_to(@org.id, 
+      <%= link_to(@org.name, 
                   search_path(query_target: 'Organisations', 
                               query_string: "id:#{@org.id}"),
                   id: 'tab-heading',
