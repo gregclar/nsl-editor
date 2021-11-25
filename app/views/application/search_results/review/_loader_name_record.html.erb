@@ -1,0 +1,70 @@
+<% if @previous_family.blank? then
+     @previous_family = search_result.family 
+     @show_family = true
+   elsif @previous_family != search_result.family
+     @previous_family = search_result.family 
+     @show_family = true
+   else
+     @show_family = false
+   end
+%>
+
+
+
+
+
+
+
+
+ <% if @show_family %>
+   <tr><td colspan="2"> <span class="loader-name-family"><%= "#{search_result.family}" %> </span> </td></tr>
+ <% end %>
+
+<% if @previous_record_type.blank? then
+     @previous_record_type = search_result.record_type %>
+   <% if search_result.record_type == 'accepted' then %>
+     <%  @stored_distribution = search_result.distribution %>
+   <% end %>
+<% elsif @previous_record_type == 'accepted'  %>
+   <% if search_result.record_type == 'accepted' then %>
+     <% unless @stored_distribution.blank? %>
+       <tr><td></td><td class="min-width-70-percent max-width-90-percent width-80-percent"><span class="review-distribution"><%= @stored_distribution %></span></td></tr>
+     <% end %>
+     <% @stored_distribution = search_result.distribution %>
+   <% end %>
+<% else  %>
+  <!-- <tr><td colspan="2">previous was not accepted</td></tr> -->
+<% end %>
+
+
+
+
+<tr id="search-result-<%= search_result.id %>" 
+  class="search-result show-no-details <%= 'fresh' if search_result.fresh? %>"  
+  data-get-url=""
+  data-edit-url="<%= loader_name_path(id: search_result[:id],tab: 'active_tab_goes_here') %>"
+  data-base-url=""
+  data-tab-url="<%= loader_name_tab_path(id: search_result[:id],tab: 'active_tab_goes_here') %>"
+  data-record-id="<%= search_result.id %>"
+  data-record-type="loader-name"
+  tabindex="<%= increment_tab_index(100) %>"
+    >
+    <td class="nsl-tiny-icon-container takes-focus width-1-percent"><%#= record_icon('orchid') %></td>
+  <td class="text takes-focus name main-content min-width-70-percent max-width-90-percent width-80-percent <%= 'give-me-focus' if give_me_focus %>">
+    <a
+      class="xshow-details-link"
+      tabindex="<%= increment_tab_index %>" 
+      title="Loader Name record. Select to show details."
+      id="<%= %Q(#{search_result.class}-#{search_result.id}) %>">
+      <%= render partial: 'application/search_results/review/link_texts/loader_name', locals: {search_result: search_result} %>
+    </a>
+    <% unless search_result.name_status.blank? %>
+      &nbsp;
+      <span class="padding-zero-dot-2 xbgfirebrick xwhite"><%= search_result.name_status %> </span>
+    <% end %>
+  </td>
+</tr>
+
+
+
+

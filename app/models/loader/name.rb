@@ -40,6 +40,10 @@ class Loader::Name < ActiveRecord::Base
            foreign_key: "parent_id",
            dependent: :restrict_with_exception
 
+  belongs_to :parent,
+           class_name: "Loader::Name",
+           foreign_key: "parent_id"
+
   attr_accessor :give_me_focus, :message
 
   # before_create :set_defaults # rails 6 this was not being called before the validations

@@ -1,0 +1,19 @@
+<% if search_result.has_parent? %>
+  <span class="has-parent">
+    <% case search_result.record_type %>
+    <% when 'accepted' %>
+      wat?
+    <% when 'synonym' %>
+      &mdash;&nbsp;
+    <% when 'misapplied' %>
+      ^^&nbsp;
+    <% when 'hybrid_cross' %>
+      //&nbsp;
+    <% end %>
+  </span>
+<% end %>
+<span class='<%= "#{search_result.record_type}-scientific-name" %>'>
+<%= "#{search_result.scientific_name}" %>
+</span>
+
+ 

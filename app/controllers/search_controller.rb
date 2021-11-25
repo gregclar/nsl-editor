@@ -57,6 +57,7 @@ class SearchController < ApplicationController
     check_query_defaults
     params[:include_common_and_cultivar_session] = \
       session[:include_common_and_cultivar]
+    record_view_param
     # Avoid "A copy of Search has been removed from the module tree but is still active" error
     # https://stackoverflow.com/questions/29636334/a-copy-of-xxx-has-been-removed-from-the-module-tree-but-is-still-active
     @search = ::Search::Base.new(params)
@@ -101,6 +102,15 @@ class SearchController < ApplicationController
     params[:query_target] = "name"
     return if params[:query_string] =~ /show-instances:/
     params[:query_string] = params[:query_string].sub(/\z/, " show-instances:")
+  end
+
+  def record_view_param
+    if params["query_string"] =~ /view:/i
+      @view = params["query_string"].sub(/.*(view: *[A-z]+).*/,'\1').sub(/view: */,'')
+    else
+      @view = 'standard'
+    end
+    logger.debug("@view: #{@view}")
   end
 end
 

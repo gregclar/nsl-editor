@@ -183,6 +183,7 @@ class Search::ParsedRequest
     unused_qs_tokens = parse_common_and_cultivar(unused_qs_tokens)
     unused_qs_tokens = parse_show_instances(unused_qs_tokens)
     unused_qs_tokens = parse_order_instances(unused_qs_tokens)
+    unused_qs_tokens = parse_view(unused_qs_tokens)
     @where_arguments = unused_qs_tokens.join(" ")
   end
 
@@ -311,6 +312,12 @@ class Search::ParsedRequest
       raise "Invalid instance offset: #{bad_instance_offset}"
     end
     joined_tokens
+  end
+
+  def parse_view(tokens)
+    joined_tokens = tokens.join(" ")
+    joined_tokens = joined_tokens.gsub(/view: *[A-z]+/i, "")
+    joined_tokens.split(" ")
   end
 
   def parse_target(tokens)
