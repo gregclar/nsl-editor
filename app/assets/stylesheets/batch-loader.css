@@ -1,7 +1,71 @@
-.loader-name-family {
+.review.loader-name.family {
   font-weight: bold;
+  font-size: 14pt;
 }
 
-.review-distribution {
-  margin-left: 2em;
+.review-loader-name.distribution {
+  margin-left: 4em;
+}
+
+.review-loader-name.taxonomy-comment {
+  color: black;
+  margin: 0.3em 0.3em 0.3em 2em;
+}
+
+.review.loader-name.accepted-scientific-name {
+  font-weight: bold;
+  color: black;
+}
+
+.review-loader-name.synonym-scientific-name {
+  font-style: italic;
+}
+
+.review.loader-name.name-status {
+  background-color: firebrick;
+  color: white;
+  padding: 0.1em;
+}
+
+.review.loader-name.misapplied-flag {
+  background-color: purple;
+  color: white;
+  padding: 0.1em;
+}
+
+.xreview-table td {
+  border: 1px solid black;
+}
+
+.review.has-parent {
+  width: 0;
+}
+
+.review.loader-name.child {
+  margin: 0.3em 0.3em 0.3em 2em;
+  font-style: italic;
+}
+
+.review-table tr {
+  line-height: 1.0em;
+}
+
+tr.review.search-result {
+  line-height: 0.9em;
+}
+
+tr.review.white-space-row {
+  line-height: 2.5em;
+}
+
+tr.review.family {
+  line-height: 2.5em;
+}
+
+tr.review.distribution {
+  line-height: 2.5em;
+}
+
+tr.review.taxonomy-comment {
+  line-height: 2.5em;
 }

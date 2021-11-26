@@ -1,0 +1,14 @@
+     <% unless @stored_comment.blank? %>
+       <tr class="review taxonomy-comment"><td></td>
+       <td class="min-width-70-percent max-width-90-percent width-80-percent">
+         <span class="review-loader-name taxonomy-comment"><%= @stored_comment.html_safe %></span>
+       </td>
+       </tr>
+     <% end %>
+     <% unless @stored_distribution.blank? %>
+       <tr class="review distribution"><td></td>
+       <td class="min-width-70-percent max-width-90-percent width-80-percent">
+         <span class="review-loader-name distribution"><%= @stored_distribution %></span>
+       </td>
+       </tr>
+     <% end %>

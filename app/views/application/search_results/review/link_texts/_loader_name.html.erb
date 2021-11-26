@@ -1,19 +1,14 @@
 <% if search_result.has_parent? %>
-  <span class="has-parent">
-    <% case search_result.record_type %>
-    <% when 'accepted' %>
-      wat?
-    <% when 'synonym' %>
-      &mdash;&nbsp;
-    <% when 'misapplied' %>
-      ^^&nbsp;
-    <% when 'hybrid_cross' %>
-      //&nbsp;
-    <% end %>
-  </span>
+  <% @child = 'child' %>
+<% else %>
+  <% @child = '' %>
 <% end %>
-<span class='<%= "#{search_result.record_type}-scientific-name" %>'>
+<span class='review loader-name <%= @child %> <%= "#{search_result.record_type}-scientific-name" %>'>
 <%= "#{search_result.scientific_name}" %>
 </span>
+<% if search_result.record_type == 'misapplied' then %>
+  <span class="review loader-name misapplied-flag">misapplied</span>
+<% end %>
+
 
  
