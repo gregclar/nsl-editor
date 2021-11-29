@@ -437,6 +437,9 @@ Rails.application.routes.draw do
 
   match "name_review_comments", as: "create_name_review_comment", to: "loader/name/review/comments#create", via: :post
 
+  match "switch_on_review_mode", as: "switch_on_review_mode", to: "loader/batch/review/mode#switch_on", via: :post
+  match "switch_off_review_mode", as: "switch_off_review_mode", to: "loader/batch/review/mode#switch_off", via: :post
+
   match "/clear-connections", as: "clear_connections", to: "services#clear_connections", via: :get
   root to: "search#search"
   match "/*random", to: "search#search", via: [:get, :post, :delete, :patch]

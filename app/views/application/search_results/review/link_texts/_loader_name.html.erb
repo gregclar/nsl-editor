@@ -3,8 +3,8 @@
 <% else %>
   <% @child = '' %>
 <% end %>
-<span class='review loader-name <%= @child %> <%= "#{search_result.record_type}-scientific-name" %>'>
-<%= "#{search_result.scientific_name}" %>
+<span class='review loader-name <%= @child %> <%= "#{search_result.record_type}-full-name" %>'>
+<%= "#{search_result.full_name}" %>
 </span>
 <% if search_result.record_type == 'misapplied' then %>
   <span class="review loader-name misapplied-flag">misapplied</span>

@@ -63,7 +63,11 @@ input[type="checkbox"]:not([title]) {
         >
 
     <div id="screen-too-small-msg">Sorry.... your window is too small to show the editor.  It needs to be wider.</div>
-    <%= render partial: 'search/big_navbar' %>
+    <% if @view_mode == 'review' then %>
+      <%= render partial: 'search/review/top_navbar' %>
+    <% else %>
+      <%= render partial: 'search/top_navbar' %>
+    <% end %>
 
     <div id="main-content" class="container-fluid">
 

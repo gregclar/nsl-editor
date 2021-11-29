@@ -12,12 +12,12 @@
   margin: 0.3em 0.3em 0.3em 2em;
 }
 
-.review.loader-name.accepted-scientific-name {
+.review.loader-name.accepted-full-name {
   font-weight: bold;
   color: black;
 }
 
-.review-loader-name.synonym-scientific-name {
+.review-loader-name.synonym-full-name {
   font-style: italic;
 }
 
@@ -31,10 +31,6 @@
   background-color: purple;
   color: white;
   padding: 0.1em;
-}
-
-.xreview-table td {
-  border: 1px solid black;
 }
 
 .review.has-parent {
@@ -68,4 +64,9 @@ tr.review.distribution {
 
 tr.review.taxonomy-comment {
   line-height: 2.5em;
+}
+
+tr.loader-batch.search-result {
+  line-height: 2em;
+  border-bottom: 1px solid lightgray;
 }

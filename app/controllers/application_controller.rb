@@ -4,7 +4,8 @@ class ApplicationController < ActionController::Base
                 :start_timer,
                 :check_system_broadcast,
                 :authenticate,
-                :check_authorization
+                :authorise,
+                :set_view_mode
   around_action :user_tagged_logging
 
   rescue_from ActionController::InvalidAuthenticityToken, with: :show_login_page
@@ -26,7 +27,7 @@ class ApplicationController < ActionController::Base
     end
   end
 
-  def check_authorization
+  def authorise
     controller = params[:controller]
     action = params[:tab].present? ? params[:tab] : params[:action]
     authorize!(controller, action)
@@ -148,6 +149,24 @@ class ApplicationController < ActionController::Base
   def user_tagged_logging
     logger.tagged(username || 'Anonymous') do
       yield
+    end
+  end
+
+  def set_view_mode
+    if session[:view_mode_set_by_user] == true
+      @view_mode = session[:view_mode]
+      return
+    end
+
+    session[:view_mode] = 'standard'
+    @view_mode = session[:view_mode]
+    return unless defined? @current_user
+
+    return if @current_user.edit?
+
+    if @current_user.reviewer?
+      session[:view_mode] = 'review'
+      @view_mode = session[:view_mode]
     end
   end
 end

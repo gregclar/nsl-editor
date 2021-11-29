@@ -1,11 +1,11 @@
-<div id="big-navbar" class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+<div id="top-navbar" class="navbar navbar-inverse navbar-fixed-top" role="navigation">
   <div class="container-fluid">
     <div class="row">
       <div id="first-navbar" class="no-left-padding navbar-header col-sm-12 col-md-12">
-        <% if @no_navigation %>
-          <%= render 'layouts/no_navigation' %>
+        <% if @no_menus %>
+          <%= render 'layouts/no_menus' %>
         <% else %>
-          <%= render 'layouts/navigation' %>
+          <%= render 'layouts/menus' %>
         <% end %>
       </div>
     </div>

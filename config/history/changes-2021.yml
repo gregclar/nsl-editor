@@ -1,3 +1,7 @@
+- :date: 29-Nov-2021
+  :jira_id: '4078'
+  :description: |-
+    Batch Loader: review mode styling of loader names to allow easy scanning without drilling into details; view mode switchable for compilers
 - :date: 26-Nov-2021
   :jira_id: '4078'
   :description: |-

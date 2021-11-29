@@ -21,9 +21,13 @@
 class Search::Help::PageMappings
   attr_reader :partial
 
-  def initialize(params)
+  def initialize(params, view_mode)
     debug("Start for #{params[:help_id]}")
-    @partial = MAP[params[:help_id]]
+    if view_mode == 'review' then
+      @partial = REVIEW_MAP[params[:help_id]]
+    else
+      @partial = MAP[params[:help_id]]
+    end
   end
 
   def debug(s)
@@ -85,5 +89,12 @@ class Search::Help::PageMappings
     "user-search-examples" => "users/help/examples",
     "org-search-help" => "orgs/help/fields",
     "org-search-examples" => "orgs/help/examples",
+  }.freeze
+
+  REVIEW_MAP = {
+    "loader-batch-search-help" => "loader/batches/help/review_fields",
+    "loader-batch-search-examples" => "loader/batches/help/review_examples",
+    "loader-name-search-help" => "loader/names/help/review_fields",
+    "loader-name-search-examples" => "loader/names/help/review_examples",
   }.freeze
 end

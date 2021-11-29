@@ -37,7 +37,7 @@ class SearchController < ApplicationController
   end
 
   def help
-    help_content = Search::Help::PageMappings.new(params)
+    help_content = Search::Help::PageMappings.new(params, @view_mode)
     render partial: help_content.partial
   end
  
@@ -58,6 +58,7 @@ class SearchController < ApplicationController
     params[:include_common_and_cultivar_session] = \
       session[:include_common_and_cultivar]
     record_view_param
+    apply_view_mode
     # Avoid "A copy of Search has been removed from the module tree but is still active" error
     # https://stackoverflow.com/questions/29636334/a-copy-of-xxx-has-been-removed-from-the-module-tree-but-is-still-active
     @search = ::Search::Base.new(params)
@@ -111,6 +112,15 @@ class SearchController < ApplicationController
       @view = 'standard'
     end
     logger.debug("@view: #{@view}")
+  end
+
+  def apply_view_mode
+    if @view_mode == 'review'
+      @view = 'review'
+    else
+      @view = 'standard'
+    end
+    logger.debug("apply_view_mode - @view: #{@view}")
   end
 end
 

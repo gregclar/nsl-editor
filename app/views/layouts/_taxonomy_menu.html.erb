@@ -6,7 +6,7 @@
 
   <li class="dropdown">
     <a href="#"
-       id="user-dropdown-menu-link"
+       id="draft-taxo-dropdown-menu-link"
        tabindex="4"
        class="dropdown-toggle <%= 'active' if params[:controller].match(/session/) %>"
        title='<%= @working_draft ? selected_draft_title + " is the selected draft" : "Draft taxonomy menu. Choose a draft taxonomy to work on here." %>'
@@ -46,6 +46,18 @@
                     remote: true,
                     tabindex: '-1' %>
       </li>
+
+  <% if can? 'menu', 'tree' %>
+    <li role="presentation" class="divider"></li>
+    <li>
+        <%= link_to "<i class=''></i> Switch to Review Mode".html_safe,
+                    switch_on_review_mode_path,
+                    title: 'See things as a reviewer would',
+                    remote: true,
+                    method: :post,
+                    tabindex: '-1' %>
+    </li>
+  <% end %>
 
     </ul>
   </li>
