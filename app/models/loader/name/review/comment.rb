@@ -31,6 +31,8 @@ class Loader::Name::Review::Comment < ActiveRecord::Base
              foreign_key: "batch_reviewer_id"
   alias_attribute :reviewer, :batch_reviewer
 
+  validates :comment, presence: true
+
   attr_accessor :give_me_focus, :message
 
   def fresh?

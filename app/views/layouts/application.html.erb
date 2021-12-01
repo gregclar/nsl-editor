@@ -73,7 +73,7 @@ input[type="checkbox"]:not([title]) {
 
     <% wide_details =  '' %>
     <% wide_details = 'wide-details' if params[:query_target]&.downcase == 'orchids' %>
-    <% wide_details = 'wide-details' if params[:query_target]&.downcase == 'loader names' %>
+    <% wide_details = 'wide-details' if params[:query_target]&.downcase == 'loader names' && @view_mode == 'standard' %>
     <div id="search-result-details" class="hidden <%= wide_details %>"> </div>
 
 

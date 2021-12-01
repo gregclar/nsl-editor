@@ -1,3 +1,7 @@
+- :date: 01-Dec-2021
+  :jira_id: '4078'
+  :description: |-
+    Batch Loader: tabs now showing/hiding for all loader name records, including taxonomy-comments and distribution
 - :date: 29-Nov-2021
   :jira_id: '4078'
   :description: |-

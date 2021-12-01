@@ -12,9 +12,31 @@
   margin: 0.3em 0.3em 0.3em 2em;
 }
 
-.review.loader-name.accepted-full-name {
+span.review.loader-name.accepted-full-name {
+  font-size: 11pt;
   font-weight: bold;
   color: black;
+}
+
+table tr.review-result.showing-details td a span.review.loader-name.accepted-full-name {
+  color: white;
+  text-decoration: none;
+}
+
+table tr.review-result.showing-details td {
+  margin-top: 0;
+  padding-top: 0.151em;
+  padding-bottom: 0.151em;
+}
+
+tr.review-result.taxonomy-comment.showing-details td a span.review-loader-name.taxonomy-comment {
+  color: white;
+  text-decoration: none;
+}
+
+table tr.review-result.taxonomy-comment.showing-details td a span.review.loader-name.taxonomy-comment {
+  color: white;
+  text-decoration: none;
 }
 
 .review-loader-name.synonym-full-name {
@@ -24,13 +46,15 @@
 .review.loader-name.name-status {
   background-color: firebrick;
   color: white;
-  padding: 0.1em;
+  font-size: 9pt;
+  padding: 0 0.2em 0 0.2em;
 }
 
 .review.loader-name.misapplied-flag {
   background-color: purple;
+  font-size: 9pt;
   color: white;
-  padding: 0.1em;
+  padding: 0 0.2em 0 0.2em;
 }
 
 .review.has-parent {
@@ -40,14 +64,15 @@
 .review.loader-name.child {
   margin: 0.3em 0.3em 0.3em 2em;
   font-style: italic;
+  font-size: 10pt;
 }
 
 .review-table tr {
-  line-height: 1.0em;
+  line-height: 1.2em;
 }
 
-tr.review.search-result {
-  line-height: 0.9em;
+tr.review-result {
+  line-height: 1.0em;
 }
 
 tr.review.white-space-row {
@@ -66,7 +91,11 @@ tr.review.taxonomy-comment {
   line-height: 2.5em;
 }
 
-tr.loader-batch.search-result {
+tr.loader-batch.review-result {
   line-height: 2em;
   border-bottom: 1px solid lightgray;
+}
+
+tr.review-result {
+  cursor: pointer;
 }

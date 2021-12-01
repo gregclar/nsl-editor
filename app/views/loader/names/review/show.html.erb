@@ -10,9 +10,12 @@
                               query_string: "id:#{@loader_name.id}"),
                   id: 'tab-heading',
                   title: "Scientific Name") %>
+                  <% unless params[:component] == 'main' %>
+                  &mdash; <%= params[:component].gsub(/_/,' ') %>
+                  <% end %>
     </h3>
-    <%= render partial: 'loader/names/review/tabs/all_tab_headings' %>
-    <%= render partial: "loader/names/review/tabs/#{@tab}" %>
+    <%= render partial: "loader/names/review/tabs/#{params[:component]}/all_tab_headings" %>
+    <%= render partial: "loader/names/review/tabs/#{params[:component]}/#{@tab}" %>
     <br>
     <span class='server-response-time'><%= "(#{(Time.now - @start_time).round(2)}s)" if @start_time %></span>
 

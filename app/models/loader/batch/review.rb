@@ -44,6 +44,10 @@ class Loader::Batch::Review < ActiveRecord::Base
     true
   end
 
+  def active_periods
+    periods.where("start_date <= Now()").where("end_date is null or end_date >= Now()")
+  end
+
   def update_if_changed(params, username)
     self.name = params[:name]
     if changed?

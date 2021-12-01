@@ -28,6 +28,7 @@ class Loader::Batch::Review::Comment < ActiveRecord::Base
   alias_attribute :review, :batch_review
   belongs_to :batch_review, class_name: "Loader::Batch::Review",
              foreign_key: "batch_review_id"
+  validates :comment, presence: true
 
   attr_accessor :give_me_focus, :message
 

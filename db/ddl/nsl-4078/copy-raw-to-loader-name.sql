@@ -46,7 +46,7 @@ insert into loader_name
   remark,
   original_text,
   seq)
-select (select id from loader_batch where name = 'List 2019 with full name'),
+select (select id from loader_batch where name = 'List 2019 with full name and original text'),
   id,
   parent_id,
   coalesce(record_type,'no-raw-record-type'),

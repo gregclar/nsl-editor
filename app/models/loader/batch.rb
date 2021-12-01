@@ -38,5 +38,23 @@ class Loader::Batch < ActiveRecord::Base
   def display_as
     'Loader Batch'
   end
+
+  def all_periods_of_all_reviews
+    reviews.collect {|r| r.periods}.flatten
+  end
+
+  def all_active_periods_of_all_reviews
+    all_periods_of_all_reviews.select {|p| p.active?}
+  end
+
+  def active_reviews
+    return [] if all_active_periods_of_all_reviews.empty?
+
+    all_active_periods_of_all_reviews.collect {|period| period.review}
+  end
+
+  def active_reviews?
+    !active_reviews.empty?
+  end
 end
 

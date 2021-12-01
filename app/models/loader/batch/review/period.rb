@@ -226,15 +226,13 @@ class Loader::Batch::Review::Period < ActiveRecord::Base
     (end_date.blank? || end_date > Time.now)
   end
 
-# def sorted_reviewers
-#   reviewers.sort {|x,y| x.username <=> y.username }
-# end
+  def reviewer?(username)
+    reviewers.select {|r| r.user.name.downcase == username.downcase}.size > 0
+  end
 
-# def available_reviewers
-#   TaxonomyReviewer
-#     .where(["not exists (select null from tvr_periods_reviewers pr  where pr.tvr_period_id = ? and taxonomy_reviewer.id = pr.taxonomy_reviewer_id)", id])
-#     .sort {|x,y| x.username <=> y.username}
-# end
+  def reviewer_id(username)
+    reviewers.select {|r| r.user.name.downcase == username.downcase}.first.id
+  end
 
   def finite?
     end_date.present?

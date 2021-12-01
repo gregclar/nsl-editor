@@ -5,13 +5,18 @@
    <% if search_result.record_type == 'accepted' then %>
      <%  @stored_distribution = search_result.distribution %>
      <%  @stored_comment = search_result.comment %>
+     <%  @stored_id = search_result.id %>
+     <%  @stored_result = search_result %>
    <% end %>
 <% else %>
    <% @previous_record_type = search_result.record_type %>
    <% if search_result.record_type == 'accepted' then %>
-     <%= render partial: 'application/search_results/review/loader_name_stored_data', locals: {search_result: search_result} %>
+     <%= render partial: 'application/search_results/review/loader_name_stored_comment', locals: {search_result: search_result, give_me_focus: give_me_focus} %>
+     <%= render partial: 'application/search_results/review/loader_name_stored_distribution', locals: {search_result: search_result, give_me_focus: give_me_focus} %>
      <% @stored_distribution = search_result.distribution %>
      <% @stored_comment = search_result.comment %>
+     <%  @stored_id = search_result.id %>
+     <%  @stored_result = search_result %>
      <tr class="review white-space-row"><td colspan="4">&nbsp;</td></tr>
    <% end %>
 <% end %>
@@ -31,15 +36,13 @@
 
 <% if @show_family %>
    <tr class="review family"><td colspan="2"> <span class="review loader-name family"><%= "#{search_result.family}" %> </span> </td></tr>
- <% end %>
-
-
-<tr id="search-result-<%= search_result.id %>" 
-  class="review search-result show-details <%= 'fresh' if search_result.fresh? %>"  
+<% else %>
+<tr id="review-result-<%= search_result.id %>" 
+  class="review-result show-details <%= 'fresh' if search_result.fresh? %>"  
   data-get-url=""
   data-edit-url="<%= loader_name_path(id: search_result[:id],tab: 'active_tab_goes_here') %>"
   data-base-url=""
-  data-tab-url="<%= loader_name_tab_path(id: search_result[:id],tab: 'active_tab_goes_here') %>"
+  data-tab-url="<%= loader_name_review_tab_path(id: search_result[:id],tab: 'active_tab_goes_here') %>"
   data-record-id="<%= search_result.id %>"
   data-record-type="loader-name"
   tabindex="<%= increment_tab_index(100) %>"
@@ -59,6 +62,7 @@
     <% end %>
   </td>
 </tr>
+ <% end %>
 
 
 

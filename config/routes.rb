@@ -412,6 +412,7 @@ Rails.application.routes.draw do
   match "loader_batch/clear-default", as: "clear_default_batch", to: "loader/batches#clear_default", via: :post
 
   resources :loader_names
+  match "loader_names/:id/tab/:tab/:component", as: "loader_name_review_tab", to: "loader/names#tab", via: :get, defaults: { component: 'main' }
   match "loader_names/:id/tab/:tab", as: "loader_name_tab", to: "loader/names#tab", via: :get
   match "batch_reviews/:id/tab/:tab", as: "batch_review_tab", to: "loader/batch/reviews#tab", via: :get
   match "batch_reviews", as: "create_batch_review", to: "loader/batch/reviews#create", via: :post
