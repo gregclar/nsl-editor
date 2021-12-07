@@ -22,7 +22,8 @@ class Loader::Batch::Review::Role < ActiveRecord::Base
   self.table_name = "batch_review_role"
   self.primary_key = "id"
   self.sequence_name = "nsl_global_seq"
-
+  NAME_REVIEWER = 'name reviewer'
+  COMPILER = 'compiler'
   attr_accessor :give_me_focus, :message
 
   def fresh?

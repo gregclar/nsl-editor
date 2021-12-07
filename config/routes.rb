@@ -437,6 +437,12 @@ Rails.application.routes.draw do
   match "batch_reviewer/:id", as: "delete_batch_reviewer", to: "loader/batch/reviewers#destroy", via: :delete
 
   match "name_review_comments", as: "create_name_review_comment", to: "loader/name/review/comments#create", via: :post
+  match "name_review_comments/:id", as: "edit_name_review_comment", to: "loader/name/review/comments#edit", via: :get
+  match "name_review_comments/cancel/:id", as: "cancel_edit_name_review_comment", to: "loader/name/review/comments#cancel_edit", via: :get
+  match "name_review_comments", as: "update_name_review_comment", to: "loader/name/review/comments#update", via: :patch
+  match "name_review_comments/delete/dialog/:id", as: "dialog_to_delete_name_review_comment", to: "loader/name/review/comments#dialog_to_delete", via: :delete
+  match "name_review_comments/cancel/delete/dialog/:id", as: "cancel_dialog_to_delete_name_review_comment", to: "loader/name/review/comments#cancel_dialog_to_delete", via: :get
+  match "name_review_comments/:id", as: "delete_name_review_comment", to: "loader/name/review/comments#destroy", via: :delete
 
   match "switch_on_review_mode", as: "switch_on_review_mode", to: "loader/batch/review/mode#switch_on", via: :post
   match "switch_off_review_mode", as: "switch_off_review_mode", to: "loader/batch/review/mode#switch_off", via: :post

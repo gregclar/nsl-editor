@@ -43,7 +43,7 @@ insert into loader_name
   footnote,
   distribution,
   comment,
-  remark,
+  remark_to_reviewers, 
   original_text,
   seq)
 select (select id from loader_batch where name = 'List 2019 with full name and original text'),

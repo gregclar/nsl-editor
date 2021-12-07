@@ -53,6 +53,7 @@ create table loader_name
   alt_name_for_matching text,
   no_further_processing boolean not null default false,
   excluded boolean not null default false,
+  reviewer_notice text,
   lock_version bigint not null default 0,
   updated_at timestamp with time zone not null default Now(),
   updated_by varchar(255) not null default 'batch',

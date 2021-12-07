@@ -14,7 +14,7 @@
                                      query_string: "#{reviewer.org.abbrev}"),
                          class: 'blue',
                          title: "Query this organisation") %>,&nbsp; 
-    <li/><%= reviewer.role.name %> role
+    <li/><%= reviewer.role.name %>
   <% confirm_delete_link = link_to("Remove",
                                    delete_batch_reviewer_path(reviewer.id),
                                    id: "confirm-delete-review-#{reviewer.id}-link",

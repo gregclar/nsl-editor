@@ -35,6 +35,7 @@ class Loader::Name < ActiveRecord::Base
   alias_attribute :batch, :loader_batch
 
   has_many :name_review_comments, class_name: "Loader::Name::Review::Comment", foreign_key: "loader_name_id"
+  alias_attribute :review_comments, :name_review_comments
   has_many :children,
            class_name: "Loader::Name",
            foreign_key: "parent_id",
@@ -84,5 +85,34 @@ class Loader::Name < ActiveRecord::Base
 
   def child?
     !parent_id.blank?
+  end
+
+  def has_name_review_comments?
+    name_review_comments.size > 0
+  end
+
+  def reviewer_comments(scope = 'any')
+    name_review_comments
+      .includes(batch_reviewer: [:batch_review_role])
+      .select {|comment| comment.reviewer.role.name == Loader::Batch::Review::Role::NAME_REVIEWER}
+      .select {|comment| comment.type.name == scope || scope == 'any'}
+  end
+
+  def reviewer_comments?(scope = 'any')
+    reviewer_comments(scope).size > 0
+  end
+
+  def compiler_comments
+    name_review_comments
+      .includes(batch_reviewer: [:batch_review_role])
+      .select {|comment| comment.reviewer.role.name == Loader::Batch::Review::Role::COMPILER}
+  end
+
+  def compiler_comments?
+    compiler_comments.size > 0
+  end
+
+  def excluded?
+    excluded == true
   end
 end

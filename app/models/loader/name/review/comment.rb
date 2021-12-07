@@ -31,6 +31,10 @@ class Loader::Name::Review::Comment < ActiveRecord::Base
              foreign_key: "batch_reviewer_id"
   alias_attribute :reviewer, :batch_reviewer
 
+  belongs_to :name_review_comment_type, class_name: "Loader::Name::Review::Comment::Type",
+             foreign_key: "name_review_comment_type_id"
+  alias_attribute :type, :name_review_comment_type
+
   validates :comment, presence: true
 
   attr_accessor :give_me_focus, :message
@@ -40,26 +44,11 @@ class Loader::Name::Review::Comment < ActiveRecord::Base
   end
 
   def display_as
-    'Review Period'
+    'Name Review Comment'
   end
 
   def allow_delete?
     true
-  end
-
-  def update_if_changed(params, username)
-    self.name = params[:name]
-    if changed?
-      self.updated_by = username
-      save!
-      "Updated"
-    else
-      "No change"
-    end
-  end
-
-  def fresh?
-    false
   end
 
   def record_type
@@ -74,6 +63,7 @@ class Loader::Name::Review::Comment < ActiveRecord::Base
   end
 
   def update_if_changed(params, username)
+    assign_attributes(params)
     if has_changes_to_save?
       logger.debug("changes_to_save: #{changes_to_save.inspect}")
       self.updated_by = username

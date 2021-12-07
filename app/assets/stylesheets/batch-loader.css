@@ -34,6 +34,7 @@ tr.review-result.taxonomy-comment.showing-details td a span.review-loader-name.t
   text-decoration: none;
 }
 
+
 table tr.review-result.taxonomy-comment.showing-details td a span.review.loader-name.taxonomy-comment {
   color: white;
   text-decoration: none;
@@ -52,6 +53,27 @@ table tr.review-result.taxonomy-comment.showing-details td a span.review.loader-
 
 .review.loader-name.misapplied-flag {
   background-color: purple;
+  font-size: 9pt;
+  color: white;
+  padding: 0 0.2em 0 0.2em;
+}
+
+.review.loader-name.remark-to-reviewers {
+  background-color: yellow;
+  font-size: 9pt;
+  color: black;
+  padding: 0 0.2em 0 0.2em;
+}
+
+tr.review-result span.has-loader-name-review-comments {
+  background-color: salmon;
+  font-size: 9pt;
+  color: white;
+  padding: 0 0.2em 0 0.2em;
+}
+
+tr.review-result span.excluded {
+  background-color: red;
   font-size: 9pt;
   color: white;
   padding: 0 0.2em 0 0.2em;
@@ -98,4 +120,10 @@ tr.loader-batch.review-result {
 
 tr.review-result {
   cursor: pointer;
+}
+
+div.name-comment-display-container {
+}
+
+div.name-comment-edit-container {
 }

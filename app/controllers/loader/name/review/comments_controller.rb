@@ -17,7 +17,7 @@
 #   limitations under the License.
 #
 class Loader::Name::Review::CommentsController < ApplicationController
-  before_action :find_comment, only: [:show, :destroy, :tab]
+  before_action :find_comment, only: [:edit, :cancel_edit, :destroy, :dialog_to_delete, :cancel_dialog_to_delete]
 
   # Sets up RHS details panel on the search results page.
   # Displays a specified or default tab.
@@ -38,6 +38,7 @@ class Loader::Name::Review::CommentsController < ApplicationController
   end
 
   def create
+    logger.debug('create')
     logger.debug(review_comment_params.inspect)
     @review_comment = Loader::Name::Review::Comment.new(review_comment_params)
     logger.debug('before save')
@@ -50,19 +51,57 @@ class Loader::Name::Review::CommentsController < ApplicationController
     render "create_error", status: :unprocessable_entity
   end
 
+  def update
+    logger.debug('update')
+    @review_comment = Loader::Name::Review::Comment.find(review_comment_params[:id])
+    @message = @review_comment.update_if_changed(review_comment_params,
+                                                 current_user.username)
+    render "update"
+  rescue => e
+    logger.error("Loader::Name::Review::Comment#update rescuing #{e}")
+    @message = e.to_s
+    render "update_error", status: :unprocessable_entity
+  end
+
+  def edit
+    render :edit, layout: false
+  end
+
+  def cancel_edit
+    render :cancel_edit, layout: false
+  end
+
+  def dialog_to_delete
+    render :dialog_to_delete, layout: false
+  end
+
+  def cancel_dialog_to_delete
+    render :cancel_dialog_to_delete, layout: false
+  end
+
+  def destroy
+    @review_comment.destroy
+  rescue => e
+    logger.error("Loader::Name::Review::Comment#destroy rescuing #{e}")
+    @message = e.to_s
+    render "destroy_error", status: :unprocessable_entity
+  end
+
   private
 
   def find_comment
-    #@loader_batch = Loader::Batch.find(params[:id])
-  #rescue ActiveRecord::RecordNotFound
-    #flash[:alert] = "We could not find the loader batch record."
+    @review_comment = Loader::Name::Review::Comment.find(params[:id])
+  rescue ActiveRecord::RecordNotFound
+    flash[:alert] = "We could not find the name review comment record."
     #redirect_to loader_batches_path
   end
 
   def review_comment_params
-    params.require(:loader_name_review_comment).permit(:loader_name_id,
+    params.require(:loader_name_review_comment).permit(:id,
+                                                       :loader_name_id,
                                                        :review_period_id,
                                                        :batch_reviewer_id,
+                                                       :name_review_comment_type_id,
                                                        :comment)
   end
 

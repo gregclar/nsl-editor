@@ -1,6 +1,6 @@
 <% if @view == 'standard' %>
   <%= render partial: 'search/standard/container' %>
-<% elsif @view == 'review' %>
+<% elsif @view == 'review' && ['Loader Names', 'Loader names','Loader batches'].include?(params[:query_target]) %>
     <%= render partial: 'search/review/container' %>
 <% else %>
     <%= render partial: 'search/standard/container' %>

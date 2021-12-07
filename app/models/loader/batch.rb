@@ -40,7 +40,7 @@ class Loader::Batch < ActiveRecord::Base
   end
 
   def all_periods_of_all_reviews
-    reviews.collect {|r| r.periods}.flatten
+    reviews.collect {|r| r.periods}.sort {|x,y| x.start_date <=> y.start_date}.flatten
   end
 
   def all_active_periods_of_all_reviews

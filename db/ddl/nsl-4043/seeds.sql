@@ -4,5 +4,4 @@
 \i seed-batch-review.sql
 \i seed-br-period.sql
 \i seed-batch-reviewer.sql
-\i seed-extra-batches.sql
 

@@ -117,7 +117,8 @@ class Ability
     can "trees/workspaces/current", "toggle"
     can "names/typeaheads/for_workspace_parent_name", :all
     can "menu", "tree"
-    can "loader/batch/review/mode", :all
+    can "loader/batch/review/mode",    :all
+    can "loader/name/review/comments", :all
   end
 
   def admin_auth

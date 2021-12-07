@@ -1,3 +1,4 @@
+<% component = params[:component] || 'main' %>
 <div class="focus-details 
   <% tab_tab_index = @tab_index %>
   <% if notice %>
@@ -10,12 +11,10 @@
                               query_string: "id:#{@loader_name.id}"),
                   id: 'tab-heading',
                   title: "Scientific Name") %>
-                  <% unless params[:component] == 'main' %>
-                  &mdash; <%= params[:component].gsub(/_/,' ') %>
-                  <% end %>
+                  &mdash; <%= component.gsub(/_/,' ') %>
     </h3>
-    <%= render partial: "loader/names/review/tabs/#{params[:component]}/all_tab_headings" %>
-    <%= render partial: "loader/names/review/tabs/#{params[:component]}/#{@tab}" %>
+    <%= render partial: "loader/names/review/tabs/#{component}/all_tab_headings" %>
+    <%= render partial: "loader/names/review/tabs/#{component}/#{@tab}" %>
     <br>
     <span class='server-response-time'><%= "(#{(Time.now - @start_time).round(2)}s)" if @start_time %></span>
 

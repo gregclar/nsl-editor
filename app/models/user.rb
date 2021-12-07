@@ -53,4 +53,8 @@ class User < ActiveType::Object
   def reviewer?
     groups.include?("taxonomic-review")
   end
+
+  def compiler?
+    groups.include?("treebuilder")
+  end
 end

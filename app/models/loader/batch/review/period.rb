@@ -45,8 +45,10 @@ class Loader::Batch::Review::Period < ActiveRecord::Base
 
   attr_accessor :give_me_focus, :message
 
-  def loader_name_comments(loader_name_id)
-    comments.order(:created_at).collect.select {|x| x.loader_name_id == loader_name_id}
+  def loader_name_comments(loader_name_id, scope = 'unrestricted')
+    return comments.order(:created_at).collect.select {|x| x.loader_name_id == loader_name_id} if scope == 'unrestricted'
+
+    comments.order(:created_at).collect.select {|x| x.loader_name_id == loader_name_id}.select {|x| x.type.name.downcase == scope.downcase}
   end
 
   def fresh?

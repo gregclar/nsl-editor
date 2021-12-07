@@ -57,7 +57,7 @@ class SearchController < ApplicationController
     check_query_defaults
     params[:include_common_and_cultivar_session] = \
       session[:include_common_and_cultivar]
-    record_view_param
+    #record_view_param
     apply_view_mode
     # Avoid "A copy of Search has been removed from the module tree but is still active" error
     # https://stackoverflow.com/questions/29636334/a-copy-of-xxx-has-been-removed-from-the-module-tree-but-is-still-active
@@ -106,21 +106,29 @@ class SearchController < ApplicationController
   end
 
   def record_view_param
+    Rails.logger.debug("params: #{params.inspect}")
     if params["query_string"] =~ /view:/i
       @view = params["query_string"].sub(/.*(view: *[A-z]+).*/,'\1').sub(/view: */,'')
     else
       @view = 'standard'
     end
-    logger.debug("@view: #{@view}")
+    logger.debug("record_view_param:- @view: #{@view}")
+    throw 'ah'
   end
 
+
   def apply_view_mode
+    Rails.logger.debug("apply_view_mode:    params['query_target']: #{params['query_target']}")
+    return unless ['Loader Names', 'Loader names', 'Loader Batch'].include?(params["query_target"])
+
+    Rails.logger.debug('apply_view_mode is continuing')
+    Rails.logger.debug("apply_view_mode:    @view_mode: #{@view_mode}")
     if @view_mode == 'review'
       @view = 'review'
     else
       @view = 'standard'
     end
-    logger.debug("apply_view_mode - @view: #{@view}")
+    Rails.logger.debug("apply_view_mode:    @view: #{@view}")
   end
 end
 
