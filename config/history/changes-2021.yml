@@ -1,7 +1,7 @@
 - :date: 08-Dec-2021
   :jira_id: '4078'
   :description: |-
-    Batch Loader: comment counts and remarks on main entries; users can edit/delete their own comments; compilers can comment; new queries
+    Batch Loader: comment counts and remarks on main entries; users can edit/delete their own comments; compilers can comment; new queries; adjustments
 - :date: 03-Dec-2021
   :jira_id: '4091'
   :description: |-

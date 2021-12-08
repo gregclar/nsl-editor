@@ -8,7 +8,7 @@
       <%= form.hidden_field :review_period_id %>
       Type*:<br>
       <%= form.collection_select :name_review_comment_type_id, 
-        Loader::Name::Review::Comment::Type.for(tab_focus, @current_user.compiler?).order(:name),
+        Loader::Name::Review::Comment::Type.for(name_review_comment.type.name, @current_user.compiler?).order(:name),
         :id,
         :name,
         {},
