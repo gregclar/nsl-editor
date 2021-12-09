@@ -113,18 +113,11 @@
 1. Create organisation
 1. Create batch review role
 
-### Available in the Editor
+### Batch Review workflows available in the Editor at 08-Dec-2021
 
-1. Create batch review
-1. Create batch review period within a batch review
-1. Update review period start and end dates
-1. Create a batch reviewer with review role for an organisation
-1. Remove a batch reviewer
-   a. only if no comments added
-1. Create name review comment
-1. List name review comments
-    a. reviewer can list loader names with comments and can respond to those comments 
-1. List name review comments by a given batch reviewer
+See separate document.
+
+
 
 ### Loader Functions in the Editor (as for Orchids)
 1. Indented, flagged listings

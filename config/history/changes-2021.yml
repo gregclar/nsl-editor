@@ -1,11 +1,15 @@
 - :date: 08-Dec-2021
   :jira_id: '4078'
   :description: |-
+    Batch Loader: comments easier to pick out and read in the tab; technical work on view-mode.
+- :date: 08-Dec-2021
+  :jira_id: '4078'
+  :description: |-
     Batch Loader: comment counts and remarks on main entries; users can edit/delete their own comments; compilers can comment; new queries; adjustments
 - :date: 03-Dec-2021
   :jira_id: '4091'
   :description: |-
-    Restore common-and-cultivar toggle
+    Restore common-and-cultivar toggle (Moved to production same day, then back-fitted here.)
 - :date: 01-Dec-2021
   :jira_id: '4078'
   :description: |-

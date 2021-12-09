@@ -119,7 +119,7 @@ class SearchController < ApplicationController
 
   def apply_view_mode
     Rails.logger.debug("apply_view_mode:    params['query_target']: #{params['query_target']}")
-    return unless ['Loader Names', 'Loader names', 'Loader Batch'].include?(params["query_target"])
+    return unless ['loader names'].include?(params["query_target"].downcase)
 
     Rails.logger.debug('apply_view_mode is continuing')
     Rails.logger.debug("apply_view_mode:    @view_mode: #{@view_mode}")
