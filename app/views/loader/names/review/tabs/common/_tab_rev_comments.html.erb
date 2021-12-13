@@ -24,10 +24,18 @@
 
     <% end %>
   <% end %>
+<%= divider %>
 <% end %>
 
-<%= divider %>
-<%= render partial: 'detail_line', locals: {label: 'ID', info: @loader_name.id} %>
+<%= render partial: 'detail_line',
+      locals: {info: @loader_name.batch.name,
+               label: link_to('Batch',
+                        search_path(
+                          query_target: 'loader batch',
+                          query_string: "id: #{@loader_name.batch.id}"),
+               title:"Query the loader batch",class:'blue')} %>
+
+<%= render partial: 'detail_line', locals: {label: 'Loader Name ID', info: @loader_name.id} %>
 <%= created_by_whom_and_when(@loader_name).html_safe %>
 <br>
 <%= updated_by_whom_and_when(@loader_name).html_safe %>
