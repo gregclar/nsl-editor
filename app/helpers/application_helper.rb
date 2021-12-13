@@ -95,11 +95,11 @@ module ApplicationHelper
     else
       case Rails.configuration.try("environment")
       when /\Adev/i
-        "Dev Ed"
+        "Dev Editor"
       when /^test/i
-        "Test Ed"
+        "Test Editor"
       when /^stag/i
-        "Stage Ed"
+        "Stage Editor"
       when /^prod/i
         "#{ShardConfig.shard_group_name} Editor"
       else
