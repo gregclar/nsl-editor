@@ -1,3 +1,7 @@
+- :date: 14-Dec-2021
+  :jira_id: '4078'
+  :description: |-
+    Batch Loader: allow a configured tag to customize the page title
 - :date: 13-Dec-2021
   :jira_id: '4078'
   :description: |-
