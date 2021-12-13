@@ -1,5 +1,5 @@
 \i seed-users.sql
-\i seed-orgs.sql
+\i seed-orgs-revised.sql
 \i seed-batch-review-roles.sql
 \i seed-batch-review.sql
 \i seed-br-period.sql

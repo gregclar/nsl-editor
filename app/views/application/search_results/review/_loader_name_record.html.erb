@@ -56,6 +56,10 @@
       title="Loader Name record. Select to show details."
       id="<%= %Q(#{search_result.class}-#{search_result.id}) %>">
       <%= render partial: 'application/search_results/review/link_texts/loader_name', locals: {search_result: search_result} %>
+      <% unless search_result.name_status.blank? %>
+        &nbsp;
+        <span class="review loader-name name-status"><%= search_result.name_status %> </span>
+      <% end %>
       <% if search_result.record_type == 'accepted' && search_result.excluded? %>
         <span class="excluded">excluded</span>
       <% end %>
@@ -69,10 +73,6 @@
         <span class="review loader-name remark-to-reviewers"><%= search_result.remark_to_reviewers.html_safe %></span>
       <% end %>
     </a>
-    <% unless search_result.name_status.blank? %>
-      &nbsp;
-      <span class="review loader-name name-status"><%= search_result.name_status %> </span>
-    <% end %>
   </td>
 </tr>
 

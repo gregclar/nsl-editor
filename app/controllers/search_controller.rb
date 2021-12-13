@@ -66,7 +66,11 @@ class SearchController < ApplicationController
   end
  
   def run_empty_search
-    params["target"] = 'Names'
+    if @view_mode == 'review'
+      params["target"] = 'Loader Batches'
+    else
+      params["target"] = 'Names'
+    end
     @empty_search = true
     @search = Search::Empty.new(params)
   end

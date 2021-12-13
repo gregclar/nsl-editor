@@ -1,3 +1,7 @@
+- :date: 13-Dec-2021
+  :jira_id: '4078'
+  :description: |-
+    Batch Loader: name status now appears directly after the full name in review mode
 - :date: 08-Dec-2021
   :jira_id: '4078'
   :description: |-
