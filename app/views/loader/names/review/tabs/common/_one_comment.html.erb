@@ -1,7 +1,7 @@
 
       <div id="comment-<%= comment.id %>-display-container" class='name-comment-display-container'> 
         <b><%= comment.type.name.titleize %>:</b> &nbsp; <%= comment.comment %><br>
-      &mdash; <%= comment.reviewer.user_table.full_name %> (<%= comment.reviewer.org.abbrev %>)
+      &mdash; <%= comment.reviewer.user_table.full_name %> (<%= comment.reviewer.org.abbrev %>),
       <span title='<%= formatted_timestamp(comment.created_at) %>'>
         <%= "#{time_ago_in_words(comment.created_at)} ago" %>
       </span>

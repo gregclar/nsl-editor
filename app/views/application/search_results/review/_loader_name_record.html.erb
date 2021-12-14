@@ -37,7 +37,7 @@
 
 <% if @show_family %>
    <tr class="review family"><td colspan="2"> <span class="review loader-name family"><%= "#{search_result.family}" %> </span> </td></tr>
-<% end %>
+<% else %>
 <tr id="review-result-<%= search_result.id %>" 
   class="review-result show-details <%= 'fresh' if search_result.fresh? %>"  
   data-get-url=""
@@ -76,6 +76,7 @@
   </td>
 </tr>
 
+<% end %>
 
 
 

@@ -1,7 +1,11 @@
+- :date: 15-Dec-2021
+  :jira_id: '4078'
+  :description: |-
+    Batch Loader: first set of changes arising from yesterday's review
 - :date: 14-Dec-2021
   :jira_id: '4078'
   :description: |-
-    Batch Loader: allow a configured tag to customize the page title
+    Batch Loader: allow for a configured tag to customize the page title
 - :date: 13-Dec-2021
   :jira_id: '4078'
   :description: |-

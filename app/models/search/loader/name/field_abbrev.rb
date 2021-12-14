@@ -30,7 +30,7 @@ class Search::Loader::Name::FieldAbbrev
     "synonym:" => "is-syn:",
     "no-rank:" => "rank-is-null:",
     "no-nsl-rank:" => "nsl-rank-is-null:",
-    "comment:" => "comments:",
+    "concept-note:" => "comment:",
     "remark-to-reviewers:" => "remark:",
   }.freeze
 end

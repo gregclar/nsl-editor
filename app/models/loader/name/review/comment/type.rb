@@ -33,12 +33,12 @@ class Loader::Name::Review::Comment::Type < ActiveRecord::Base
     when 'distribution' then
       self.where(name: 'distribution')
     when 'taxonomy-comment' then
-      self.where(name: 'taxonomy-comment')
+      self.where(name: 'concept-note')
     else
       if compiler then
-        self.where("name not in ('distribution','taxonomy-comment')")
+        self.where("name not in ('distribution','concept-note')")
       else
-        self.where("name not in ('distribution','taxonomy-comment','compiler response')")
+        self.where("name not in ('distribution','concept-note','compiler response')")
       end
     end
   end
