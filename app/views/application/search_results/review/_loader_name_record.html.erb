@@ -2,7 +2,6 @@
 
 <% if @previous_record_type.blank? then %>
   <% @previous_record_type = search_result.record_type %>
-  <% @show_first_record = true %>
    <% if search_result.record_type == 'accepted' then %>
      <%  @stored_distribution = search_result.distribution %>
      <%  @stored_comment = search_result.comment %>
@@ -37,7 +36,9 @@
 
 <% if @show_family %>
    <tr class="review family"><td colspan="2"> <span class="review loader-name family"><%= "#{search_result.family}" %> </span> </td></tr>
-<% else %>
+<% end %>
+
+<% unless @show_family && search_result.rank == 'family' %>
 <tr id="review-result-<%= search_result.id %>" 
   class="review-result show-details <%= 'fresh' if search_result.fresh? %>"  
   data-get-url=""
@@ -77,6 +78,3 @@
 </tr>
 
 <% end %>
-
-
-

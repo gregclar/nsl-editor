@@ -17,6 +17,7 @@
       <% when 'Loader Name' %>  
         <%= render partial: 'application/search_results/review/loader_name_record', 
           locals: {search_result: record, give_me_focus: give_me_focus} %>
+        <% @flush_loader_name = true %>
       <% else %>
         <tr>
           <td class="width-1-percent"></td>
@@ -26,6 +27,11 @@
           <td class="width-5-perent filler"></td>
         </tr>
       <% end %>
+    <% end %>
+
+    <% if @flush_loader_name %>
+    <%= render partial: 'application/search_results/review/loader_name_record', 
+        locals: {search_result: Loader::Name.record_to_flush_results, give_me_focus: false} %>
     <% end %>
 
     <tr>

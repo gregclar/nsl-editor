@@ -115,4 +115,12 @@ class Loader::Name < ActiveRecord::Base
   def excluded?
     excluded == true
   end
+
+  def self.record_to_flush_results
+    r = OpenStruct.new
+    r.record_type = 'accepted'
+    r.id = -1
+    r.flushing = true
+    r
+  end
 end
