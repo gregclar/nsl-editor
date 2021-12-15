@@ -18,8 +18,8 @@
       id="<%= %Q(#{@stored_result.class}-taxonomy-comment-#{@stored_result.id}) %>">
          <span class="review-loader-name taxonomy-comment"><%= @stored_comment.html_safe %></span>
     </a>
-    <% if @stored_result.reviewer_comments?('taxonomy-comment') %>
-      <span class="has-loader-name-review-comments"><%= pluralize(@stored_result.reviewer_comments('taxonomy-comment').size, 'comment') %></span>
+    <% if @stored_result.reviewer_comments?('concept-note') %>
+      <span class="has-loader-name-review-comments"><%= pluralize(@stored_result.reviewer_comments('concept-note').size, 'comment') %></span>
     <% end %>
   </td>
 </tr>

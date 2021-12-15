@@ -1,6 +1,10 @@
 - :date: 15-Dec-2021
   :jira_id: '4078'
   :description: |-
+    Batch Loader: Eradicate 'taxonomy-comment' from visible text; reviewer not offered 'compiler-comment'.
+- :date: 15-Dec-2021
+  :jira_id: '4078'
+  :description: |-
     Batch Loader: Loader Name show record in context link.
 - :date: 15-Dec-2021
   :jira_id: '4078'

@@ -38,7 +38,7 @@ class Loader::Name::Review::Comment::Type < ActiveRecord::Base
       if compiler then
         self.where("name not in ('distribution','concept-note')")
       else
-        self.where("name not in ('distribution','concept-note','compiler response')")
+        self.where("name not in ('distribution','concept-note','compiler-comment')")
       end
     end
   end
