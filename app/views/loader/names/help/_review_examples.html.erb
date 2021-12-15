@@ -35,7 +35,7 @@
 <table class="example-searches table table-striped">
   <% [
       {search_target: 'Loader Names', search_string: "has-review-comment:",explanation: %Q(List loader names with one or more review comments.)},
-      {search_target: 'Loader Names', search_string: "review-comment: some text",explanation: %Q(List loader names with one or more review comments containing the string 'some text'.)},
+      {search_target: 'Loader Names', search_string: "review-comment: authorship",explanation: %Q(List loader names with one or more review comments containing the string 'authorship'.)},
       {search_target: 'Loader Names', search_string: "has-review-comment-by: #{@current_user.username}",explanation: %Q(List loader names with one or more review comments by the current user #{@current_user.username}.)},
       {search_target: 'Loader Names', search_string: "xero has-review-comment:",explanation: %Q(List loader names that start with 'xero' with one or more review comments.)},
       {search_target: 'Loader Names', search_string: "comment-type: distribution",explanation: %Q(List loader names that have a review comment of type 'distribution'.)},
