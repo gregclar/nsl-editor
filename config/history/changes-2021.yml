@@ -1,6 +1,10 @@
 - :date: 16-Dec-2021
   :jira_id: '4078'
   :description: |-
+    Batch Loader: Move the Review Mode switch from the Draft Taxonomy menu to the User menu, and remove the Review Menu (not used)
+- :date: 16-Dec-2021
+  :jira_id: '4078'
+  :description: |-
     Batch Loader: Hide review-mode switch unless app is configured batch-loader aware
 - :date: 16-Dec-2021
   :jira_id: '4078'
