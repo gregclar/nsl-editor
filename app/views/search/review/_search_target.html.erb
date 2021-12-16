@@ -14,12 +14,6 @@
         <span class="caret"></span></button>
 
         <ul id="search-target-list" class="dropdown-menu">
-
-          <% if @current_user.compiler? %>
-            <%= render partial: "search/search_targets/standard_targets" %>
-          <% else %>
-            <%= render partial: "search/review/targets" %>
-          <% end %>
-
+          <%= render partial: "search/review/targets" %>
         </ul>
       </div><!-- /btn-group -->
