@@ -1,4 +1,8 @@
-- :date: 15-Dec-2021
+- :date: 16-Dec-2021
+  :jira_id: '4078'
+  :description: |-
+    Batch Loader: Hide review-mode switch unless app is configured batch-loader aware
+- :date: 16-Dec-2021
   :jira_id: '4078'
   :description: |-
     Batch Loader: Adjust query example for remark search 

@@ -47,6 +47,7 @@
                     tabindex: '-1' %>
       </li>
 
+<% if Rails.configuration.try(:batch_loader_aware) %>
   <% if can? 'menu', 'tree' %>
     <li role="presentation" class="divider"></li>
     <li>
@@ -58,6 +59,7 @@
                     tabindex: '-1' %>
     </li>
   <% end %>
+<% end %>
 
     </ul>
   </li>
