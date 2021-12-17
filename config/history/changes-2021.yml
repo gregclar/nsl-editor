@@ -1,6 +1,10 @@
 - :date: 17-Dec-2021
   :jira_id: '4078'
   :description: |-
+    Batch Loader: upgraded major review searches to return full-context of name and synonyms
+- :date: 17-Dec-2021
+  :jira_id: '4078'
+  :description: |-
     Batch Loader: make name reviewer the default role when adding a reviewer to a period
 - :date: 17-Dec-2021
   :jira_id: '4078'

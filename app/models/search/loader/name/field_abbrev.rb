@@ -32,5 +32,6 @@ class Search::Loader::Name::FieldAbbrev
     "no-nsl-rank:" => "nsl-rank-is-null:",
     "concept-note:" => "comment:",
     "remark-to-reviewers:" => "remark:",
+    "scientific-name:" => "simple-name:",
   }.freeze
 end

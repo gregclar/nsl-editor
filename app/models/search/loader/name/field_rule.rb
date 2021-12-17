@@ -18,9 +18,25 @@
 #
 class Search::Loader::Name::FieldRule
   RULES = {
-    "scientific-name:"    => { where_clause: "lower(scientific_name) like ? ",
-                                 trailing_wildcard: true,
-                                 order: "seq"},
+           "simple-name:" => { where_clause: "(lower(simple_name) like ?)
+        or exists (
+        select null
+          from loader_name parent
+        where parent.id         = loader_name.parent_id
+       and lower(parent.simple_name) like ?)
+        or exists (
+        select null
+          from loader_name child
+        where child.parent_id   = loader_name.id
+       and lower(child.simple_name) like ?)
+        or exists (
+        select null
+          from loader_name sibling
+        where sibling.parent_id = loader_name.parent_id
+       and lower(sibling.simple_name) like ?)",
+           trailing_wildcard: true,
+           order: "seq"},
+
     "batch-id:"           => { where_clause: "loader_batch_id = ? ",
                                order: "seq"},
     "batch-name:"         => { where_clause: "loader_batch_id = (select id from loader_batch where lower(name) = ?)  ",
@@ -35,39 +51,216 @@ class Search::Loader::Name::FieldRule
                                where_clause: " id = ? or parent_id = ?",
                                multiple_values_where_clause: " id in (?)",
                                order: "seq"},
-    "has-review-comment:" => { where_clause: "exists (select null from name_review_comment nrc where nrc.loader_name_id = loader_name.id)",
-                               order: "seq"},
-    "has-review-comment-by:" => { where_clause: "exists (select null from name_review_comment nrc join batch_reviewer br on nrc.batch_reviewer_id = br.id join users u on br.user_id = u.id  where nrc.loader_name_id = loader_name.id and lower(u.name) = ?)",
-                               order: "seq"},
-    "review-comment:" => { where_clause: "exists (select null from name_review_comment nrc where nrc.loader_name_id = loader_name.id and lower(comment) like ?)",
-                                 leading_wildcard: true,
-                                 trailing_wildcard: true,
-                               order: "seq"},
-    "comment-type:" => { where_clause: "exists (select null from name_review_comment nrc where nrc.loader_name_id = loader_name.id and exists( select null from name_review_comment_type nrct where name=? and nrc.name_review_comment_type_id = nrct.id ))",
-                               order: "seq"},
+
+    "has-review-comment:" => 
+    { where_clause: "exists (
+        select null
+          from name_review_comment nrc
+     where nrc.loader_name_id = loader_name.id) 
+                     or exists (
+        select null
+          from name_review_comment pnrc
+     where pnrc.loader_name_id = loader_name.parent_id
+                     )
+                     or exists (
+        select null
+          from name_review_comment pnrc
+     where pnrc.loader_name_id in (select id from loader_name child where loader_name.id = child.parent_id)
+                     )
+                     or exists (
+        select null
+          from name_review_comment pnrc
+     where pnrc.loader_name_id in (select id from loader_name sibling where loader_name.parent_id = sibling.parent_id)
+                     )
+      ",
+      order: "seq"},
+
+   "has-review-comment-by:" => 
+    { where_clause: "exists (
+        select null
+          from name_review_comment nrc
+          join batch_reviewer br
+            on nrc.batch_reviewer_id = br.id
+          join users u
+            on br.user_id = u.id
+     where nrc.loader_name_id = loader_name.id 
+       and lower(u.name)      = ?)
+     or exists (
+        select null
+          from name_review_comment pnrc
+          join batch_reviewer br
+            on pnrc.batch_reviewer_id = br.id
+          join users u
+            on br.user_id = u.id
+     where pnrc.loader_name_id = loader_name.parent_id
+       and lower(u.name)      = ?)
+     or exists (
+        select null
+          from name_review_comment cnrc
+          join batch_reviewer br
+            on cnrc.batch_reviewer_id = br.id
+          join users u
+            on br.user_id = u.id
+     where cnrc.loader_name_id in (select id from loader_name child where loader_name.id = child.parent_id)
+       and lower(u.name)      = ?)
+     or exists (
+        select null
+          from name_review_comment snrc
+          join batch_reviewer br
+            on snrc.batch_reviewer_id = br.id
+          join users u
+            on br.user_id = u.id
+     where snrc.loader_name_id in (select id from loader_name sibling where loader_name.parent_id = sibling.parent_id)
+       and lower(u.name)      = ?)
+      ",
+      order: "seq"},
+
+    "review-comment:" => 
+    { where_clause: "exists (
+        select null
+          from name_review_comment nrc
+     where nrc.loader_name_id = loader_name.id
+     and lower(nrc.comment) like ?
+                     ) 
+                     or exists (
+        select null
+          from name_review_comment pnrc
+     where pnrc.loader_name_id = loader_name.parent_id
+     and lower(pnrc.comment) like ?
+                     ) 
+                     or exists (
+        select null
+          from name_review_comment cnrc
+     where cnrc.loader_name_id in (select id from loader_name child where loader_name.id = child.parent_id)
+     and lower(cnrc.comment) like ?
+                     )
+                     or exists (
+        select null
+          from name_review_comment snrc
+     where snrc.loader_name_id in (select id from loader_name sibling where loader_name.parent_id = sibling.parent_id)
+     and lower(snrc.comment) like ?
+                     ) 
+      ",
+      leading_wildcard: true,
+      trailing_wildcard: true,
+      order: "seq"},
+
+   "comment-type:" => 
+    { where_clause: "exists (
+        select null
+          from name_review_comment nrc
+               join name_review_comment_type nrct
+               on nrc.name_review_comment_type_id = nrct.id
+     where nrc.loader_name_id = loader_name.id
+     and lower(nrct.name) like ?
+                     ) 
+                     or exists (
+        select null
+          from name_review_comment pnrc
+               join name_review_comment_type pnrct
+               on pnrc.name_review_comment_type_id = pnrct.id
+     where pnrc.loader_name_id = loader_name.parent_id
+     and lower(pnrct.name) like ?
+                     ) 
+                     or exists (
+        select null
+          from name_review_comment cnrc
+               join name_review_comment_type cnrct
+               on cnrc.name_review_comment_type_id = cnrct.id
+     where cnrc.loader_name_id in (select id from loader_name child where loader_name.id = child.parent_id)
+     and lower(cnrct.name) like ?
+                     )
+                     or exists (
+        select null
+          from name_review_comment snrc
+               join name_review_comment_type snrct
+               on snrc.name_review_comment_type_id = snrct.id
+     where snrc.loader_name_id in (select id from loader_name sibling where loader_name.parent_id = sibling.parent_id)
+     and lower(snrct.name) like ?
+                     ) 
+      ",
+      leading_wildcard: true,
+      trailing_wildcard: true,
+      order: "seq"},
+
     "record-type:" => { where_clause: " record_type = ?",
                                order: "seq"},
     "excluded:" => { where_clause: " excluded ",
                                order: "seq"},
     "not-excluded:" => { where_clause: " not excluded ",
                                order: "seq"},
-    "has-remark:" => { where_clause: " remark_to_reviewers is not null",
-                               order: "seq"},
-    "remark:" => { where_clause: " lower(remark_to_reviewers) like '%'||?||'%'",
-                               order: "seq"},
-    "distribution:" => { where_clause: " lower(distribution) like '%'||?||'%'",
-                               order: "seq"},
-    "distribution-not:" => { where_clause: " lower(distribution) not like '%'||?||'%'",
-                               order: "seq"},
-    "no-distribution:" => { where_clause: " distribution is null or distribution = '' ",
-                               order: "seq"},
+
+    "remark:" => { where_clause: "(lower(remark_to_reviewers) like ?)
+        or exists (
+        select null
+          from loader_name parent
+        where parent.id         = loader_name.parent_id
+       and lower(parent.remark_to_reviewers) like ?)
+        or exists (
+        select null
+          from loader_name child
+        where child.parent_id   = loader_name.id
+       and lower(child.remark_to_reviewers) like ?)
+        or exists (
+        select null
+          from loader_name sibling
+        where sibling.parent_id = loader_name.parent_id
+       and lower(sibling.remark_to_reviewers) like ?)",
+           leading_wildcard: true,
+           trailing_wildcard: true,
+           order: "seq"},
+
+      "distribution:" => 
+       { where_clause: "(lower(distribution) like ?)
+          or exists (
+          select null
+            from loader_name parent
+          where parent.id = loader_name.parent_id
+         and lower(parent.distribution) like ?)",
+       leading_wildcard: true,
+       trailing_wildcard: true,
+       order: "seq"},
+
+    "distribution-not:" =>
+           { where_clause: "(lower(distribution) not like ?)
+        or exists (
+        select null
+          from loader_name parent
+        where parent.id = loader_name.parent_id
+       and lower(parent.distribution) not like ?)",
+        leading_wildcard: true,
+        trailing_wildcard: true,
+        order: "seq"},
+
+    "no-distribution:" => { 
+        where_clause: " record_type = 'accepted' and (distribution is null or distribution = '') 
+        or exists (
+        select null
+          from loader_name parent
+        where parent.id = loader_name.parent_id
+       and record_type= 'accepted'
+       and (distribution is null or distribution = ''))",
+        order: "seq"},
+
     "name:"               => { trailing_wildcard: true,
                                where_clause: " lower(scientific_name) like ? or lower(scientific_name) like 'x '||? or lower(scientific_name) like '('||? ",
                                       order: "seq"},
     "name-no-wildcard:"   => { where_clause: " lower(scientific_name) like ? or lower(scientific_name) like 'x '||? or lower(scientific_name) like '('||?",
                                       order: "seq"},
     "name-with-syn:"      => { trailing_wildcard: true,
-                               where_clause: " ((lower(scientific_name) like ? or lower(scientific_name) like 'x '||? or lower(scientific_name) like '('||?) and record_type = 'accepted' and unplaced is null) or (parent_id in (select id from orchids where (lower(scientific_name) like ? or lower(scientific_name) like 'x '||? or lower(scientific_name) like '('||?) and record_type = 'accepted' and unplaced is null))",
+                                      where_clause: " ((lower(scientific_name) like ?
+                                   or lower(scientific_name) like 'x '||?
+                                   or lower(scientific_name) like '('||?)
+                                  and record_type = 'accepted'
+                                  and unplaced is null)
+                                   or (parent_id in (
+                                  select id
+                                    from orchids
+                                    where (lower(scientific_name) like ?
+                                      or lower(scientific_name) like 'x '||?
+                                      or lower(scientific_name) like '('||?)
+                                      and record_type = 'accepted'
+                                  and unplaced is null))",
                                order: "seq"},
     "id-with-syn:"        => { where_clause: "id = ? or parent_id = ?",
                                order: "seq"},
@@ -201,11 +394,29 @@ having count(*)                     >  1
     "excluded-with-syn:"   => { trailing_wildcard: true,
                            where_clause: " (lower(scientific_name) like ? and excluded) or (parent_id in (select id from orchids where lower(scientific_name) like ? and record_type = 'accepted' and excluded))",
                                order: "seq"},
-    "comment:"=> { where_clause: "lower(comment) like ?",
-                       leading_wildcard: true,
-                       trailing_wildcard: true,
-                       order: "seq"},
-    "in-current-taxonomy:"=> { where_clause: "loader_name.id in (select distinct o.id
+
+    "comment:" =>
+     { where_clause: "(lower(comment) like ?)
+        or exists (
+        select null
+          from loader_name parent
+        where parent.id = loader_name.parent_id
+       and lower(parent.comment) like ?)
+        or exists (
+        select null
+          from loader_name child
+        where child.parent_id = loader_name.id
+       and lower(child.comment) like ?)
+        or exists (
+        select null
+          from loader_name sibling
+        where sibling.parent_id = loader_name.parent_id
+       and lower(sibling.comment) like ?)",
+           leading_wildcard: true,
+           trailing_wildcard: true,
+           order: "seq"},
+
+"in-current-taxonomy:"=> { where_clause: "loader_name.id in (select distinct o.id
   from loader_name_match orn
   join loader_name o
     on orn.loader_name_id = o.id
