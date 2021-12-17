@@ -1,6 +1,10 @@
 - :date: 17-Dec-2021
   :jira_id: '4078'
   :description: |-
+    Batch Loader: loader name search results now show all synonyms for the last name in the results (applies only to searches that return full-context)
+- :date: 17-Dec-2021
+  :jira_id: '4078'
+  :description: |-
     Batch Loader: users who switch to review mode now see the same list of search targets as users who are always in review mode.
 - :date: 16-Dec-2021
   :jira_id: '4078'

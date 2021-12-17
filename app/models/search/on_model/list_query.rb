@@ -32,8 +32,8 @@ class Search::OnModel::ListQuery
     Rails.logger.debug("Search::OnModel::ListQuery#prepare_query on target: #{@parsed_request.target_table}")
     Rails.logger.debug("Search::OnModel::ListQuery#prepare_query target model: #{@parsed_request.target_model}")
     Rails.logger.debug("===========================================================================================")
-    model_class = @parsed_request.target_model.constantize
-    prepared_query = model_class.where("1=1")
+    @model_class = @parsed_request.target_model.constantize
+    prepared_query = @model_class.where("1=1")
     Rails.logger.debug("Search::OnModel::ListQuery#prepare_query sql: #{prepared_query.to_sql}")
     Rails.logger.debug("===========================================================================================")
     where_clauses = Search::OnModel::WhereClauses.new(@parsed_request, prepared_query)
@@ -44,4 +44,13 @@ class Search::OnModel::ListQuery
     Rails.logger.debug("===========================================================================================")
     @sql = prepared_query
   end
+
+  def trim_results(results)
+    if @parsed_request.trim_results? && results.size >= @parsed_request.limit
+      @model_class.trim_results(results)
+    else
+      results
+    end
+  end
+
 end

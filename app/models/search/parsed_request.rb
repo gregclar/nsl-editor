@@ -142,6 +142,10 @@ class Search::ParsedRequest
     "references" => "Search::OnName::WithInstances",
   }.freeze
 
+  TRIM_RESULTS = {
+    "loader name" => true,
+  }.freeze
+
   def initialize(params)
     @params = params
     @query_string = canonical_query_string
@@ -375,5 +379,9 @@ class Search::ParsedRequest
 
   def canonical_query_string
     @params[:query_string] || @params[:query]
+  end
+
+  def trim_results?
+    TRIM_RESULTS[@target_table].nil? ? false : true
   end
 end

@@ -123,4 +123,35 @@ class Loader::Name < ActiveRecord::Base
     r.flushing = true
     r
   end
+
+  # Aim: Avoid displaying an accepted record without its full context of
+  # trailing synonyms.
+  #
+  # Assumptions: The set of records contains accepted records followed by all
+  # synonyms until the end of the set - the last accepted record in the set may
+  # not have all its syonyms following it in the set - because of the limit
+  # applied to the query.
+  #
+  # If there is only one accepted record in the set, then all synonyms will 
+  # be there.
+  #
+  # An accepted record is a "main" or non-synonym record in this model.
+  #
+  # Only need to trim if the result set is larger than the limit - that rule
+  # is applied before here.
+  #
+  # Algorithm: remove records from the end of the result set until you reach an 
+  # accepted record, then remove that accepted record, but only if there's
+  # more than one accepted record in the set
+  #
+  def self.trim_results(results)
+    ary = results.to_ary
+    if ary.size > 1 && ary.select {|r| r.record_type == 'accepted'}.size > 1
+      until ary[-1].record_type == 'accepted'
+        ary.pop
+      end
+      ary.pop
+    end
+    ary
+  end
 end
