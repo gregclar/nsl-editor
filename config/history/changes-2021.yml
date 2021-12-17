@@ -1,6 +1,10 @@
 - :date: 17-Dec-2021
   :jira_id: '4078'
   :description: |-
+    Batch Loader: make name reviewer the default role when adding a reviewer to a period
+- :date: 17-Dec-2021
+  :jira_id: '4078'
+  :description: |-
     Batch Loader: loader name search results now show all synonyms for the last name in the results (applies only to searches that return full-context)
 - :date: 17-Dec-2021
   :jira_id: '4078'

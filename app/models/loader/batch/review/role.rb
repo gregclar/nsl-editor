@@ -68,5 +68,9 @@ class Loader::Batch::Review::Role < ActiveRecord::Base
     #set_defaults
     save
   end
+
+  def self.name_reviewer_role
+    self.where("name = 'name reviewer'").first
+  end
 end
   

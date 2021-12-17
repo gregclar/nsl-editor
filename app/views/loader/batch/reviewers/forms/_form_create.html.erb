@@ -8,7 +8,10 @@
     <%= form.collection_select :org_id, Org.order(:no_org, :name), :id, :name, {}, {class: 'form-control', title: 'Choose an organisation or indicate the reviewer is unaffiliated'} %>
     <br>
     Role:
-    <%= form.collection_select :batch_review_role_id, Loader::Batch::Review::Role.order(:name), :id, :name, {}, {class: 'form-control', title: 'Choose a role'} %>
+    <%= form.collection_select :batch_review_role_id,
+    Loader::Batch::Review::Role.order(:name),
+    :id, :name, {:selected => Loader::Batch::Review::Role.name_reviewer_role.id},
+    {class: 'form-control', title: 'Choose a role'} %>
     <br>
   <%= form.submit id: "save-new-batch-reviewer-btn", class: 'btn-primary', title: "Add a reviewer", tabindex: increment_tab_index %>
 <% end %>
