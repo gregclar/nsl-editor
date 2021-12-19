@@ -1,6 +1,10 @@
 - :date: 20-Dec-2021
   :jira_id: '4092'
   :description: |-
+    Rails software upgrade for security - requires general workflow testing.
+- :date: 20-Dec-2021
+  :jira_id: '4092'
+  :description: |-
     Show the Common/Cultivars checkbox only when relevant
 - :date: 17-Dec-2021
   :jira_id: '4078'
