@@ -1,6 +1,6 @@
-<% if @view == 'standard' %>
+<% if @view_mode == 'standard' %>
   <%= render partial: 'search/standard/container' %>
-<% elsif @view == 'review' %>
+<% elsif @view_mode == 'review' %>
     <%= render partial: 'search/review/container' %>
 <% else %>
     <%= render partial: 'search/standard/container' %>
