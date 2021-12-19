@@ -44,6 +44,15 @@ function showHelpForSearchTarget(helpElement) {
   makeCurrentlyVisibleHelpMatchTarget();
 }
 
+window.showOrHideCultivarCommonCbox = function(searchTarget) {
+  if (searchTarget == 'Names' || searchTarget == 'Names plus instances') {
+    $('#set-include-common-and-cultivar').removeClass('hidden');
+  } else {
+    $('#set-include-common-and-cultivar').addClass('hidden');
+  }
+}
+
+
 function makeCurrentlyVisibleHelpMatchTarget() {
   if (helpTabVisible()) {
     $('#help-search-tab-container-link').click();
@@ -154,11 +163,12 @@ $( document ).on('turbolinks:load', function() {
 
   $("#search-target-list").on("click", function (e) {
     if (e.target && e.target.nodeName == "A") {
-      debug('setting search-target');
+      debug('setting search-target: e.target.innerHTML:' + e.target.innerHTML);
       document.getElementById('search-target-button-text').innerHTML = e.target.innerHTML;
       document.getElementById('query-target').value = e.target.innerHTML;
       showHelpForSearchTarget(e.target.dataset.help);
       showExamplesForSearchTarget(e.target.dataset.examples);
+      showOrHideCultivarCommonCbox(e.target.innerHTML);
       e.preventDefault()
     }
   });

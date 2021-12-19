@@ -168,6 +168,7 @@
       return linkToRunValRepClicked(event, $(this));
     });
     debug("on load - search-target-button-text: " + $('#search-target-button-text').text().trim());
+    window.showOrHideCultivarCommonCbox($('#search-target-button-text').text().trim());
     // When tabbing to search-result record, need to click to trigger retrieval of details.
     $('a.show-details-link[tabindex]').focus(function(event) {
       return clickOnFocus(event, $(this));
@@ -634,7 +635,6 @@
     $('#search-result-details').show();
     $('#search-result-details').removeClass('hidden');
     record_type = 'instance'; //$('tr.showing-details').attr('data-record-type')
-    instance_id = $('.showing-details').attr('data-instance-id');
     tabIndex = 1; //$('.search-result.showing-details a[tabindex]').attr('tabindex')
     debug(`tabIndex: ${tabIndex}`);
     url = `${inFocus.attr('data-edit-url').replace(/0/, '')}${inFocus.attr('data-instance-id')}?tab=${currentActiveTab(record_type)}&tabIndex=${tabIndex}&rowType=${inFocus.attr('data-row-type')}`;
