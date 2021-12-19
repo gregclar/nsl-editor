@@ -1,5 +1,5 @@
 
-\i rename-remark-col-to-remark-to-reviewers.sql
+--\i rename-remark-col-to-remark-to-reviewers.sql
 
 \i insert-batch.sql
 \i copy-raw-to-loader-name.sql
