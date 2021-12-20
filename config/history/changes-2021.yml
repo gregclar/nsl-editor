@@ -1,3 +1,7 @@
+- :date: 21-Dec-2021
+  :jira_id: '4080'
+  :description: |-
+    Faster version of the earliest-instance-not-primary Names report (which is timing out) - called earliest-instance-not-primary-faster.
 - :date: 20-Dec-2021
   :jira_id: '4078'
   :description: |-
