@@ -1,4 +1,8 @@
 - :date: 20-Dec-2021
+  :jira_id: '4078'
+  :description: |-
+    Batch Loader: reviewers are now not offered the menu option to switch out of review mode.
+- :date: 20-Dec-2021
   :jira_id: '4092'
   :description: |-
     Rails software upgrade for security - requires general workflow testing.

@@ -44,16 +44,19 @@
                     remote: true,
                     method: :post,
                     tabindex: '-1' %>
+         <li role="presentation" class="divider"></li>
       <% else %>
-        <%= link_to "<i class=''></i> Switch out of Review Mode".html_safe,
-                    switch_off_review_mode_path,
-                    title: 'Stop seeing things as a reviewer would',
-                    remote: true,
-                    method: :post,
-                    tabindex: '-1' %>
+         <% if @current_user.edit? %>
+         <%= link_to "<i class=''></i> Switch out of Review Mode".html_safe,
+                     switch_off_review_mode_path,
+                     title: 'Stop seeing things as a reviewer would',
+                     remote: true,
+                     method: :post,
+                     tabindex: '-1' %>
+         <li role="presentation" class="divider"></li>
+         <% end %>
       <% end %>
      </li>
-    <li role="presentation" class="divider"></li>
  
 <% end %>
 
