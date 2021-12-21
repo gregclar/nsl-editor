@@ -1,3 +1,7 @@
+- :date: 22-Dec-2021
+  :jira_id: '4078'
+  :description: |-
+    Batch Loader: in review mode hide the batch-review tab and the details link to batch reviews - neither are needed or appropriate in review-mode
 - :date: 21-Dec-2021
   :jira_id: '4092'
   :description: |-
