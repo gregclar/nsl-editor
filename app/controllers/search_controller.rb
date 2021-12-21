@@ -34,6 +34,7 @@ class SearchController < ApplicationController
   def set_include_common_and_cultivar
     session[:include_common_and_cultivar] = \
       !session[:include_common_and_cultivar]
+    @empty_search = true
   end
 
   def help

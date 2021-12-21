@@ -47,8 +47,10 @@ function showHelpForSearchTarget(helpElement) {
 window.showOrHideCultivarCommonCbox = function(searchTarget) {
   if (searchTarget == 'Names' || searchTarget == 'Names plus instances') {
     $('#set-include-common-and-cultivar').removeClass('hidden');
+    $('#trailing-pipe-for-set-include-common-and-cultivar').removeClass('hidden');
   } else {
     $('#set-include-common-and-cultivar').addClass('hidden');
+    $('#trailing-pipe-for-set-include-common-and-cultivar').addClass('hidden');
   }
 }
 

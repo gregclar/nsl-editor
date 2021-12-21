@@ -122,7 +122,9 @@ class ApplicationController < ActionController::Base
   end
 
   def empty_search
+    params["target"] = Search::Target.new(@view_mode).target
     @search = Search::Empty.new(params)
+    @empty_search = true
   end
 
   def set_debug

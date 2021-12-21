@@ -1,13 +1,17 @@
 - :date: 21-Dec-2021
+  :jira_id: '4092'
+  :description: |-
+    More consistent hiding/showing of the Common/Cultivars switch, also more consistent color styling of the top-LHS brand box e.g. when showing help pages or history pages.
+- :date: 21-Dec-2021
   :jira_id: '4080'
   :description: |-
     Faster version of the earliest-instance-not-primary Names report (which is timing out) - called earliest-instance-not-primary-faster.
-- :date: 20-Dec-2021
+- :date: 21-Dec-2021
   :jira_id: '4078'
   :description: |-
     Batch Loader: reviewers are now not offered the menu option to switch out of review mode.
 - :date: 20-Dec-2021
-  :jira_id: '4092'
+  :jira_id: '4097'
   :description: |-
     Rails software upgrade for security - requires general workflow testing.
 - :date: 20-Dec-2021
