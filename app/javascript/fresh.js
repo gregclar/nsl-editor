@@ -802,12 +802,13 @@
 
   searchResultFocus = function(event, $this) {
     debug('searchResultFocus starting');
+    debug('this id: ' + $this.attr('id'));
     if (!($this.hasClass('showing-details') || $this.hasClass('show-no-details'))) {
       debug('Changing focus: should show details');
       changeFocus(event, $this);
       $('#search-results.nothing-selected').removeClass('nothing-selected').addClass('something-selected');
       $('div#search-result-details').show();
-    }
+    } 
     return event.preventDefault();
   };
 

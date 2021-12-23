@@ -1,3 +1,7 @@
+- :date: 24-Dec-2021
+  :jira_id: '4078'
+  :description: |-
+    Batch Loader: Family loader name records are now selectable and there are queries to retrieve all members of a family, by name or id.
 - :date: 23-Dec-2021
   :jira_id: '4078'
   :description: |-
