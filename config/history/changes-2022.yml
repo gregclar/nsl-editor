@@ -1,4 +1,8 @@
 - :date: 04-Jan-2022
+  :jira_id: '4078'
+  :description: |-
+    Batch Loader: Count query now works for loader name records
+- :date: 04-Jan-2022
   :jira_id: ''
   :description: |-
     Add change history file for 2022

@@ -46,7 +46,7 @@ class Search::OnModel::Base
   end
 
   def run_count_query(parsed_request)
-    count_query = Search::User::CountQuery.new(parsed_request)
+    count_query = Search::OnModel::CountQuery.new(parsed_request)
     @relation = count_query.sql
     @count = relation.count
     @limited = false
