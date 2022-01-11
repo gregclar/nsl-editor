@@ -1,11 +1,15 @@
 - :date: 11-Jan-2022
   :jira_id: '4078'
   :description: |-
+    Batch Loader: Adjustments to the new search targets arrangements.
+- :date: 11-Jan-2022
+  :jira_id: '4078'
+  :description: |-
     Batch Loader: Edit tab for batches
 - :date: 11-Jan-2022
   :jira_id: '4078'
   :description: |-
-    Batch Loader: Reviewers now get search targets for specific batches of loader names, and only for the batches they are reviewing
+    Batch Loader: Reviewers now get search targets for the specific batches of loader names that they are reviewing
 - :date: 07-Jan-2022
   :release: true
 - :date: 04-Jan-2022

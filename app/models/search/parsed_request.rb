@@ -214,7 +214,11 @@ class Search::ParsedRequest
   # after it.
   # Convert multiplication sign to x.
   def normalise_query_string
-    @query_string.strip.gsub(/:/, ": ").gsub(/:  /, ": ")
+    if @query_string.blank?
+      ''
+    else
+      @query_string.strip.gsub(/:/, ": ").gsub(/:  /, ": ")
+    end
   end
 
   def parse_count_or_list(tokens)
@@ -345,7 +349,8 @@ class Search::ParsedRequest
 
   def preprocess_target(tokens)
     if SIMPLE_QUERY_TARGETS.include?(@query_target) ||
-       ADDITIONAL_NON_PREPROCESSED_TARGETS.include?(@query_target)
+       ADDITIONAL_NON_PREPROCESSED_TARGETS.include?(@query_target) ||
+       @query_target.blank?
       @default_query_scope = ''
       @apply_default_query_scope = false
       @original_query_target = @query_target

@@ -21,14 +21,14 @@ class SearchController < ApplicationController
         send_data data
       end
     end
-  rescue ActiveRecord::StatementInvalid => e
-    params[:error_message] = "That query did not work. Please check the \
-    search directives and arguments."
-    logger.error("Search error: #{e}")
-    @search = Search::Error.new(params) unless @search.present?
-  rescue => e
-    params[:error_message] = e.to_s
-    @search = Search::Error.new(params) unless @search.present?
+  #rescue ActiveRecord::StatementInvalid => e
+    #params[:error_message] = "That query did not work. Please check the \
+    #search directives and arguments."
+    #logger.error("Search error: #{e}")
+    #@search = Search::Error.new(params) unless @search.present?
+  #rescue => e
+    #params[:error_message] = e.to_s
+    #@search = Search::Error.new(params) unless @search.present?
   end
 
   def set_include_common_and_cultivar
@@ -78,8 +78,7 @@ class SearchController < ApplicationController
  
   def run_empty_search
     if @view_mode == 'review'
-      #params["target"] = 'Loader Batchesx'
-      params["target"] = Loader::Batch.user_reviewable(@current_user.username).first.name
+      params["target"] = Loader::Batch.user_reviewable(@current_user.username)&.first&.name
     else
       params["target"] = 'Names'
     end
