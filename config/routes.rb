@@ -407,8 +407,13 @@ Rails.application.routes.draw do
   match "/trees/show/valrep", as: "show_valrep", to: "trees#show_valrep", via: :get
   match "/trees/run/valrep", as: "run_valrep", to: "trees#run_valrep", via: :get
 
-  resources :loader_batches
+  namespace :loader do
+    resources :batches
+  end
   match "loader_batches/:id/tab/:tab", as: "loader_batch_tab", to: "loader/batches#tab", via: :get
+  #namespace :loader do
+  #  match "loader_batches/:id", as: "batch_update", to: "batches#update", via: :patch
+  #end
   match "loader_batch/make-default/:id", as: "make_default_batch", to: "loader/batches#make_default", via: :post
   match "loader_batch/clear-default", as: "clear_default_batch", to: "loader/batches#clear_default", via: :post
 

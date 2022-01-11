@@ -17,7 +17,7 @@
 #   limitations under the License.
 #
 class Loader::BatchesController < ApplicationController
-  before_action :find_loader_batch, only: [:show, :destroy, :tab]
+  before_action :find_loader_batch, only: [:show, :destroy, :tab, :update]
 
   # Sets up RHS details panel on the search results page.
   # Displays a specified or default tab.
@@ -39,6 +39,16 @@ class Loader::BatchesController < ApplicationController
       format.html { redirect_to new_search_path }
       format.js {}
     end
+  end
+
+  def update
+    @message = @loader_batch.update_if_changed(loader_batch_params,
+                                               current_user.username)
+    render "update"
+  rescue => e
+    logger.error("Loader::Batches#update rescuing #{e}")
+    @message = e.to_s
+    render "update_error", status: :unprocessable_entity
   end
 
   def make_default
@@ -64,7 +74,7 @@ class Loader::BatchesController < ApplicationController
   end
 
   def loader_batch_params
-    params.require(:loader_batch).permit(:name)
+    params.require(:loader_batch).permit(:name, :description)
   end
 
   def set_tab

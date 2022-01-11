@@ -35,6 +35,7 @@ class Search::OnModel::WhereClauses
     @common_and_cultivar_included = @parsed_request.common_and_cultivar
     @sql = @sql.for_id(@parsed_request.id) if @parsed_request.id
     apply_args_to_sql(args)
+    apply_args_to_sql(@parsed_request.default_query_scope) if @parsed_request.apply_default_query_scope == true
   end
 
   def apply_args_to_sql(args)

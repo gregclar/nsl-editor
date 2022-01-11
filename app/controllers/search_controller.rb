@@ -38,7 +38,17 @@ class SearchController < ApplicationController
   end
 
   def help
+    logger.debug("help params: #{params.inspect}")
+    if params[:help_id].match(/-for-dynamic-target-/) 
+      @dynamic_target = params[:help_id].sub(/.*-for-dynamic-target-/,'')
+                          .gsub(/-/,' ')
+      params[:help_id].sub!(/-for-dynamic-target-.*/,'')
+      logger.debug("@dynamic_target: #{@dynamic_target}")
+    else
+      @dynamic_target = nil
+    end
     help_content = Search::Help::PageMappings.new(params, @view_mode)
+    logger.debug("help_content: #{help_content}")
     render partial: help_content.partial
   end
  
@@ -68,7 +78,8 @@ class SearchController < ApplicationController
  
   def run_empty_search
     if @view_mode == 'review'
-      params["target"] = 'Loader Batches'
+      #params["target"] = 'Loader Batchesx'
+      params["target"] = Loader::Batch.user_reviewable(@current_user.username).first.name
     else
       params["target"] = 'Names'
     end

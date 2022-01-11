@@ -52,7 +52,11 @@ class Search::ParsedRequest
               :default_order_column,
               :default_query_directive,
               :include_instances,
-              :include_instances_class
+              :include_instances_class,
+              :default_query_scope,
+              :apply_default_query_scope,
+              :original_query_target,
+              :original_query_target_for_display
 
   DEFAULT_LIST_LIMIT = 100
   SIMPLE_QUERY_TARGETS = {
@@ -146,6 +150,20 @@ class Search::ParsedRequest
     "loader name" => true,
   }.freeze
 
+  ADDITIONAL_NON_PREPROCESSED_TARGETS = ["review",
+                                         "references_shared_names",
+                                         "references_with_novelties",
+                                         "references_names_full_synonymy",
+                                         "references_with_instances",
+                                         "references with instances",
+                                         "references, names, full synonymy",
+                                         "references + instances",
+                                         "references with novelties",
+                                         "references, accepted names for id",
+                                         "instance is cited",
+                                         "instance is cited by",
+                                         "audit"]
+
   def initialize(params)
     @params = params
     @query_string = canonical_query_string
@@ -183,6 +201,7 @@ class Search::ParsedRequest
     unused_qs_tokens = parse_limit(unused_qs_tokens)
     unused_qs_tokens = parse_instance_offset(unused_qs_tokens)
     unused_qs_tokens = parse_offset(unused_qs_tokens)
+    unused_qs_tokens = preprocess_target(unused_qs_tokens)
     unused_qs_tokens = parse_target(unused_qs_tokens)
     unused_qs_tokens = parse_common_and_cultivar(unused_qs_tokens)
     unused_qs_tokens = parse_show_instances(unused_qs_tokens)
@@ -324,11 +343,42 @@ class Search::ParsedRequest
     joined_tokens.split(" ")
   end
 
+  def preprocess_target(tokens)
+    if SIMPLE_QUERY_TARGETS.include?(@query_target) ||
+       ADDITIONAL_NON_PREPROCESSED_TARGETS.include?(@query_target)
+      @default_query_scope = ''
+      @apply_default_query_scope = false
+      @original_query_target = @query_target
+    else
+      debug("@params: #{@params.inspect}")
+      unless loader_batch_preprocessing?
+        throw "Unknown query target: #{@query_target}"
+      end
+    end
+    tokens 
+  end
+
+  # Todo: convert this procedural code that refers to specific models to model
+  # code or to some sort of declaration
+  def loader_batch_preprocessing?
+    if ::Loader::Batch.user_reviewable(@params[:current_user].username).collect {|batch| batch.name.downcase.gsub(', ',' ').rstrip}.include?(@query_target.downcase.gsub('_',' ').rstrip) then
+      @default_query_scope = "batch-id: #{::Loader::Batch.id_of(@query_target.gsub('_',' '))}"
+      @target_button_text = @query_target
+      @apply_default_query_scope = true
+      @original_query_target = @query_target
+      @query_target = 'loader_names'
+      true
+    else
+      false
+    end
+  end
+
   def parse_target(tokens)
     if @defined_query == false
       if SIMPLE_QUERY_TARGETS.key?(@query_target)
         @target_table = SIMPLE_QUERY_TARGETS[@query_target]
         @target_button_text = @target_table.capitalize.pluralize
+        @original_query_target_for_display = @original_query_target.gsub('_',' ').capitalize
         @target_model = TARGET_MODELS[@target_table]
         @default_order_column = DEFAULT_ORDER_COLUMNS[@target_table]
         @default_query_directive = DEFAULT_QUERY_DIRECTIVES[@target_table]
@@ -338,7 +388,7 @@ class Search::ParsedRequest
         end
         debug("target table: #{@target_table}, target model: #{@target_model}; default order column: #{@default_order_column}; default query column: #{@default_query_directive}")
       else
-        raise "Cannot parse target: #{@query_target}"
+        raise "Cannot parse target: #{@query_target}."
       end
     end
     tokens

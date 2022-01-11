@@ -2,6 +2,8 @@
 <%= render partial: 'detail_line',
            locals: {info: @loader_batch.name, label: 'Name'} %>
 <%= render partial: 'detail_line',
+           locals: {info: @loader_batch.description, label: 'Description'} %>
+<%= render partial: 'detail_line',
       locals: {info: @loader_batch.loader_names.size,
                label: link_to('Loader Names',
                         search_path(
