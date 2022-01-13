@@ -24,6 +24,7 @@
 <table class="example-searches table table-striped">
   <% [
       {search_target: search_target, search_string: "*",explanation: %Q(All names up to the default limit.)},
+      {search_target: search_target, search_string: "* limit: 20",explanation: %Q(First 20 names.)},
       {search_target: search_target, search_string: "* limit: 500",explanation: %Q(First 500 names.)},
       {search_target: search_target, search_string: "a",explanation: %Q(All names starting with 'a'.)},
       {search_target: search_target, search_string: "xerot",explanation: %Q(All names starting with 'xerot'.)},

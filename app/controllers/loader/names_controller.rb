@@ -79,14 +79,17 @@ class Loader::NamesController < ApplicationController
     end
   end
 
+  # Todo: handle multiple periods, including active and inactive
   def period
     @loader_name.batch.reviews&.first&.periods&.first
   end
 
+  # Todo: handle multiple periods, including active and inactive
   def reviewer?
     @loader_name.batch.reviews&.first&.periods&.first&.reviewers&.collect {|x| x.user.userid}&.include?(@current_user.username)
   end
   
+  # Todo: handle multiple periods, including active and inactive
   def reviewer
     @loader_name.batch.reviews&.first&.periods&.first.reviewers.select {|x| x.user.userid == @current_user.username}&.first
   end

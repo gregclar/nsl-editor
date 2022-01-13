@@ -95,21 +95,22 @@ class Loader::Name < ActiveRecord::Base
     name_review_comments
       .includes(batch_reviewer: [:batch_review_role])
       .select {|comment| comment.reviewer.role.name == Loader::Batch::Review::Role::NAME_REVIEWER}
-      .select {|comment| comment.type.name == scope || scope == 'any'}
+      .select {|comment| comment.context == scope || scope == 'any'}
   end
 
   def reviewer_comments?(scope = 'any')
     reviewer_comments(scope).size > 0
   end
 
-  def compiler_comments
+  def compiler_comments(scope = 'any')
     name_review_comments
       .includes(batch_reviewer: [:batch_review_role])
       .select {|comment| comment.reviewer.role.name == Loader::Batch::Review::Role::COMPILER}
+      .select {|comment| comment.context == scope || scope == 'any'}
   end
 
-  def compiler_comments?
-    compiler_comments.size > 0
+  def compiler_comments?(scope = 'any')
+    compiler_comments(scope).size > 0
   end
 
   def excluded?

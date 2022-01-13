@@ -1,4 +1,8 @@
 - :date: 13-Jan-2022
+  :jira_id: '4078'
+  :description: |-
+    Batch Loader: Comments now have clearly distinguished context, commenter role, and type.
+- :date: 13-Jan-2022
   :jira_id: '4027'
   :description: |-
     Removed some more unused remnant code from the tree review project

@@ -102,7 +102,8 @@ class Loader::Name::Review::CommentsController < ApplicationController
                                                        :review_period_id,
                                                        :batch_reviewer_id,
                                                        :name_review_comment_type_id,
-                                                       :comment)
+                                                       :comment,
+                                                       :context)
   end
 
   def set_tab

@@ -48,7 +48,7 @@ class Loader::Batch::Review::Period < ActiveRecord::Base
   def loader_name_comments(loader_name_id, scope = 'unrestricted')
     return comments.order(:created_at).collect.select {|x| x.loader_name_id == loader_name_id} if scope == 'unrestricted'
 
-    comments.order(:created_at).collect.select {|x| x.loader_name_id == loader_name_id}.select {|x| x.type.name.downcase == scope.downcase}
+    comments.order(:created_at).collect.select {|x| x.loader_name_id == loader_name_id}.select {|x| x.context.downcase == scope.downcase}
   end
 
   def fresh?
