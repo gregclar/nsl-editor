@@ -1,4 +1,8 @@
 - :date: 14-Jan-2022
+  :jira_id: '4078'
+  :description: |-
+    Batch Loader: Correctly label the add review period button, hide it after successfully creating a period, add validations and boilerplate advice for users
+- :date: 14-Jan-2022
   :jira_id: '4104'
   :description: |-
     Reference display: on details tab reverse order of published-in-published-by to published-by-published-in

@@ -5,7 +5,7 @@
   <% end %>
   <div class="inner">
     <h3>
-      <%= link_to(@batch_review.name,
+      Batch review: <%= link_to(@batch_review.name,
                   search_path(query_target: 'batch_review', 
                               query_string: "id:#{@batch_review.id}"),
                   id: 'tab-heading',

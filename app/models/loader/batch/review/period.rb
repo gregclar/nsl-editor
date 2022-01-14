@@ -23,8 +23,10 @@ class Loader::Batch::Review::Period < ActiveRecord::Base
   self.primary_key = "id"
   self.sequence_name = "nsl_global_seq"
 
+  validates :name, presence: true, uniqueness: {scope: :batch_review_id, message: 'has been used for another period in the same batch review'}
   validates :start_date, presence: true
   validate :start_date_cannot_be_in_the_past
+  validates :start_date, uniqueness: {scope: :batch_review_id, message: 'has been used for another period in the same batch review'}
   #validate :start_date_cannot_be_changed_once_past, on: :update
   validate :end_date_cannot_be_in_the_past
   validate :end_date_must_be_after_start_date
