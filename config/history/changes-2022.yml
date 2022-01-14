@@ -1,4 +1,8 @@
 - :date: 14-Jan-2022
+  :jira_id: ''
+  :description: |-
+    Security: Upgrade follow-redirects to v1.14.7 due to security alert - general workflow testing would be helpful
+- :date: 14-Jan-2022
   :jira_id: '4078'
   :description: |-
     Batch Loader: Correctly label the add review period button, hide it after successfully creating a period, add validations and boilerplate advice for users
