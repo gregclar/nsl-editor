@@ -1,3 +1,7 @@
+- :date: 14-Jan-2022
+  :jira_id: '4078'
+  :description: |-
+    Batch Loader: Set the default batch on the batch details tab, and, as a consequence, remove the setting tab (standard-mode only)
 - :date: 13-Jan-2022
   :jira_id: '4078'
   :description: |-
