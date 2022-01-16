@@ -1,6 +1,8 @@
 
 <%= render partial: 'loader/names/tabs/details/core_data' %>
 <%= divider %>
+<%= render partial: 'loader/names/tabs/details/name_matches' %>
+<%= divider %>
 <%= render partial: 'loader/names/tabs/details/core_data_2' %>
 <br>
 <br>
@@ -22,10 +24,6 @@
                     label: ''} %>
 <% end %>
 <br>
-<%= divider %>
-<b>Original Text (styled)</b>
-<br>
-<%= @loader_name.original_text&.html_safe %>
 <%= divider %>
 <%= render partial: 'detail_line',
       locals: {info: @loader_name.batch.name,

@@ -126,6 +126,10 @@ class Ability
     can "menu",               "admin"
   end
 
+  def batch_loader_auth
+    can "loader/name", :all
+  end
+
   def orchids_matcher_auth
     can "orchids",                     :all
     can "orchids_batch",               :all

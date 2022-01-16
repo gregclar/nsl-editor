@@ -10,6 +10,21 @@
                       prev_tab: '.search-result.loader-names-review-tab', 
                       next_tab: '.search-result.loader-names-rev-comm-tab' } %> 
 
+  <% if can? 'loader/names', 'update' %>
+
+  <%#= render partial: 'loader/names/tabs/tab', locals: {first: false,
+                                      last: false,
+                                      this_tab: 'tab_edit', 
+                                      link_text: 'Edit Raw', 
+                                      link_id: 'loader-name-edit-tab', 
+                                      link_title: 'Edit Loader Name.',
+                                      tab_index: increment_tab_index,
+                                      prev_tab: '.search-result.loader-name-show-tab', 
+                                      next_tab: '.search-result.loader-name-edit-match-tab'} %> 
+
+  <% end %>
+
+
   <%= render partial: 'loader/names/tabs/tab',
              locals: {first: false,
                       last: false,
