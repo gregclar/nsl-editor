@@ -1,4 +1,8 @@
 - :date: 17-Jan-2022
+  :jira_id: '4111'
+  :description: |-
+    Display simple name in name details - may help clarify loader_name mismatches.
+- :date: 17-Jan-2022
   :jira_id: '4078'
   :description: |-
     Batch Loader: Remove reference to hybrid_level (an Orchids remnant) in raw data display, so that loader name details now show for hybrids
