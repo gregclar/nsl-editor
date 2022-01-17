@@ -2,6 +2,7 @@
 <%= render partial: 'loader/names/tabs/details/core_data' %>
 <%= divider %>
 <%= render partial: 'loader/names/tabs/details/name_matches' %>
+<%= render partial: 'detail_line', locals: {info: @loader_name.alt_name_for_matching, label: 'ex_base_author'} unless @loader_name.alt_name_for_matching.blank? %>
 <%= divider %>
 <%= render partial: 'loader/names/tabs/details/core_data_2' %>
 <br>

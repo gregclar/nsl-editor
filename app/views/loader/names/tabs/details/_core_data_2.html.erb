@@ -7,9 +7,6 @@
 <% unless @loader_name.name_status.blank? %>
   <%= render partial: 'detail_line', locals: {info: @loader_name.name_status, label: 'name status'} %>
 <% end %>
-<% unless @loader_name.hybrid.blank? %>
-  <%= render partial: 'detail_line', locals: {info: @loader_name.hybrid, label: 'hybrid'} %>
-<% end %>
 <% unless @loader_name.family.blank? %>
   <%= render partial: 'detail_line', locals: {info: @loader_name.family, label: 'family'} %>
 <% end %>
@@ -47,8 +44,8 @@
   <%= render partial: 'detail_line', locals: {info: @loader_name.publ_count, label: 'publ count'} %>
 <% end %>
 
-<% unless @loader_name.hybrid_flag.blank? %>
-  <%= render partial: 'detail_line', locals: {info: @loader_name.hybrid_level, label: 'hybrid level'} %>
+<% unless @loader_name.hybrid.blank? %>
+  <%= render partial: 'detail_line', locals: {info: @loader_name.hybrid, label: 'hybrid'} %>
 <% end %>
 <% unless @loader_name.auct_non.blank? %>
   <%= render partial: 'detail_line', locals: {info: @loader_name.auct_non, label: 'auct_non'} %>

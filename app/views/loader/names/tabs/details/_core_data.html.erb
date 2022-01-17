@@ -20,8 +20,6 @@
 <%= render partial: 'detail_line', locals: {info: @loader_name.excluded, label: 'excluded'} unless @loader_name.excluded.blank? %>
 <%= render partial: 'detail_line', locals: {info: @loader_name.comment, label: 'comment'} unless @loader_name.comment.blank? %>
 <%= render partial: 'detail_line', locals: {info: @loader_name.synonym_type, label: 'synonym_type'} unless @loader_name.synonym_type.blank? %>
-<%= render partial: 'detail_line', locals: {info: @loader_name.doubtful, label: 'doubtful'} unless @loader_name.doubtful.blank? %>
-<%= render partial: 'detail_line', locals: {info: @loader_name.hybrid_flag, label: 'hybrid_flag'} unless @loader_name.hybrid_flag.blank? %>
 <%= render partial: 'detail_line', locals: {info: @loader_name.isonym, label: 'isonym'} unless @loader_name.isonym.blank? %>
 <%= render partial: 'detail_line', locals: {info: @loader_name.publ_count, label: 'publ_count'} unless @loader_name.publ_count.blank? %>
 <%= render partial: 'detail_line', locals: {info: @loader_name.article_author, label: 'article_author'} unless @loader_name.article_author.blank? %>
