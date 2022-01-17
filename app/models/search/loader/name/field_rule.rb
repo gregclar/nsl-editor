@@ -281,7 +281,18 @@ class Search::Loader::Name::FieldRule
                                       order: "seq"},
     "is-syn-but-no-syn-type:" => { where_clause: "record_type = 'synonym' and synonym_type is null",
                                       order: "seq"},
-    "no-name-match:"      => { where_clause: "not exists (select null from name where (scientific_name = name.simple_name or alt_name_for_matching = name.simple_name) and exists (select null from name_type nt where name.name_type_id = nt.id and nt.scientific))" ,
+    "no-name-match:" => { where_clause: "not exists (
+        select null
+          from name
+        where (loader_name.simple_name          = name.simple_name
+            or loader_name.alt_name_for_matching = name.simple_name
+            or loader_name.simple_name           = name.full_name
+            or loader_name.alt_name_for_matching = name.full_name)
+          and exists (
+            select null
+              from name_type nt
+            where name.name_type_id = nt.id
+              and nt.scientific))",
                                       order: "seq"},
     "some-name-match:"    => { where_clause: "exists (select null from name where (scientific_name = name.simple_name or alt_name_for_matching = name.simple_name))" ,
                                       order: "seq"},

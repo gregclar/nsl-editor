@@ -156,9 +156,10 @@ class Loader::Name < ActiveRecord::Base
     ary
   end
 
-    # Note: not case-insensitive. Perhaps should be.
   def names_simple_name_matching_taxon
-    ::Name.where(["simple_name = ? or simple_name = ?",simple_name, alt_name_for_matching])
+    ::Name.where(
+      ["simple_name = ? or simple_name = ? or full_name = ? or full_name = ?",
+       simple_name, alt_name_for_matching, simple_name, alt_name_for_matching])
         .joins(:name_type).where(name_type: {scientific: true})
         .order("simple_name, name.id")
   end

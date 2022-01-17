@@ -1,3 +1,7 @@
+- :date: 18-Jan-2022
+  :jira_id: '4111'
+  :description: |-
+    Batch Loader Matching: match also on name.full_name to allow for loader_names with author in loader_name.simple_name
 - :date: 17-Jan-2022
   :jira_id: '4111'
   :description: |-
