@@ -1,3 +1,7 @@
+- :date: 19-Jan-2022
+  :jira_id: '4078'
+  :description: |-
+    Batch Loader: navigate to the home page after switching into or out of review mode to avoid transitional screen being visible
 - :date: 18-Jan-2022
   :jira_id: '4111'
   :description: |-
