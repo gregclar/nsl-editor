@@ -1,3 +1,7 @@
+- :date: 20-Jan-2022
+  :jira_id: '4078'
+  :description: |-
+    Batch Loader: add convenience links for unmatched loader_names that query the name in services and the editor
 - :date: 19-Jan-2022
   :jira_id: '4078'
   :description: |-
