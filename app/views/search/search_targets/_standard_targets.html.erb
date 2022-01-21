@@ -93,6 +93,13 @@
           <li role="separator" class="divider"></li>
 
           <% if Rails.configuration.try(:batch_loader_aware) %>
+            <li><a id="search-target-item-loader-batch-stack" 
+                   href="#" 
+                   title="Search loader batches and retrieve batches, reviews, review periods, reviewers in a stack" 
+                   data-help="loader-batch-search-help" 
+                   data-examples="loader-batch-search-examples"
+                >Batch stacks</a>
+            </li>
             <li><a id="search-target-item-loader-batch" 
                    href="#" 
                    title="Search loader batches" 

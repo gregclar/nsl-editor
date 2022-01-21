@@ -23,7 +23,7 @@ table tr.review-result.showing-details td a span.review.loader-name.accepted-ful
   text-decoration: none;
 }
 
-table tr.review-result.showing-details td {
+table tr.review-result td {
   margin-top: 0;
   padding-top: 0.151em;
   padding-bottom: 0.151em;
@@ -33,7 +33,6 @@ tr.review-result.taxonomy-comment.showing-details td a span.review-loader-name.t
   color: white;
   text-decoration: none;
 }
-
 
 table tr.review-result.taxonomy-comment.showing-details td a span.review.loader-name.taxonomy-comment {
   color: white;
@@ -230,3 +229,30 @@ div.inline-edit-form-container {
   background: lightgray;
 }
 
+/* batch stack */
+
+table tr.search-result.batch-stack td {
+  margin-top: 0;
+  padding-top: 0.151em;
+  padding-bottom: 0.151em;
+}
+tr.search-result.batch-stack td {
+  line-height: 0.7em;
+  border-top: 0px;
+}
+table tr.search-result.batch-stack[data-record-type="loader-batch"] td {
+  padding-top: 0.5em;
+  border-top: 1px solid black;
+}
+tr.search-result.batch-stack td span.batch-review {
+  color: black;
+  margin: 0.3em 0.3em 0.3em 2em;
+}
+tr.search-result.batch-stack td span.review-period {
+  color: black;
+  margin: 0.3em 0.3em 0.3em 4em;
+}
+tr.search-result.batch-stack td span.batch-reviewer {
+  color: black;
+  margin: 0.3em 0.3em 0.3em 6em;
+}

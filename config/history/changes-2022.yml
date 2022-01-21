@@ -1,3 +1,7 @@
+- :date: 21-Jan-2022
+  :jira_id: '4078'
+  :description: |-
+    Batch Loader: add early version of the batch stack query for review
 - :date: 20-Jan-2022
   :jira_id: '4078'
   :description: |-
