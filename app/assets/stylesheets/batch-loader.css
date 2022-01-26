@@ -256,3 +256,5 @@ tr.search-result.batch-stack td span.batch-reviewer {
   color: black;
   margin: 0.3em 0.3em 0.3em 6em;
 }
+
+.calendar-text { margin-top: .3em; }

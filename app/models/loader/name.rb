@@ -164,6 +164,14 @@ class Loader::Name < ActiveRecord::Base
         .order("simple_name, name.id")
   end
 
+  def xnames_simple_name_matching_taxon
+    ::Name.where(
+      ["f_unaccent(simple_name) = f_unaccent(?) or f_unaccent(simple_name) = f_unaccent(?) or f_unaccent(full_name) = f_unaccent(?) or f_unaccent(full_name) = f_unaccent(?)",
+       simple_name, alt_name_for_matching, simple_name, alt_name_for_matching])
+        .joins(:name_type).where(name_type: {scientific: true})
+        .order("simple_name, name.id")
+  end
+
   def matches
     names_simple_name_matching_taxon
   end

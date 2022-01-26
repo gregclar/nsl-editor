@@ -2,15 +2,20 @@ create view batch_stack_vw as
 select * 
 from
 (
-select 'Loader Batch in stack' "display_as", id, name, name batch_name, description, created_at::date, created_at::date as "start", 'A batch ' || name as order_by
+select 'Loader Batch in stack' "display_as", id, name, name batch_name, id batch_id, description, created_at, created_at as "start", 'A batch ' || name as order_by
   from loader_batch
 union
-select 'Batch Review in stack' "display_as", br.id, br.name, lb.name batch_name, '' description, br.created_at::date, br.created_at::date,'A batch '|| lb.name || ' B review ' || br.name as order_by
+select 'Batch Review in stack' "display_as", br.id, br.name, lb.name batch_name, lb.id batch_id, '' description, br.created_at, br.created_at,'A batch '|| lb.name || ' B review ' || br.name as order_by
   from batch_review br
   join loader_batch lb
     on br.loader_batch_id = lb.id
 union
-select 'Review Period in stack' "display_as", brp.id, brp.name, lb.name batch_name, '' description, brp.created_at::date, brp.start_date::date, 'A batch '|| lb.name || ' B review ' || br.name || ' C period ' || brp.start_date::date as order_by
+select 'Review Period in stack' "display_as", brp.id,
+       brp.name || ' (' ||to_char(start_date, 'DD-Mon-YYYY') || 
+         case end_date is null when true then ' - ' else ' end: ' end
+         || coalesce(to_char(end_date, 'DD-Mon-YYYY'),'') || ')' as name,
+       lb.name batch_name, lb.id batch_id, '' description, brp.created_at,
+       brp.start_date::date, 'A batch '|| lb.name || ' B review ' || br.name || ' C period ' || brp.start_date::date as order_by
   from batch_review_period brp
   join batch_review br
     on brp.batch_review_id = br.id
@@ -21,8 +26,9 @@ select 'Batch Reviewer in stack' "display_as",
        brer.id,
        users.given_name || ' ' || users.family_name || ' for ' || org.abbrev as name,
        lb.name batch_name,
+       lb.id batch_id,
        '' description, 
-       brp.created_at::date,
+       brp.created_at,
        brp.start_date::date,
        'A batch '|| lb.name || ' B review ' || br.name || ' C period ' || brp.start_date::date || ' ' || users.name as order_by
   from batch_reviewer brer

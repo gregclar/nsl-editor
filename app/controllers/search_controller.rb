@@ -63,6 +63,11 @@ class SearchController < ApplicationController
 
   def run_local_search
     return false unless params[:query_string].present?
+    logger.debug("focus_id: #{params[:focus_id]}")
+    logger.debug("focus_id: #{params[:focus_id]}")
+    logger.debug("focus_id: #{params[:focus_id]}")
+    logger.debug("focus_id: #{params[:focus_id]}")
+    logger.debug("focus_id: #{params[:focus_id]}")
     @focus_id = params[:focus_id]
     params[:current_user] = current_user
     check_query_defaults

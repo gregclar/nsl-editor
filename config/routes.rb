@@ -430,6 +430,7 @@ Rails.application.routes.draw do
   match "batch_review_periods", as: "review_period", to: "loader/batch/review/periods#show", via: :get
   match "batch_review_periods/:id/tab/:tab", as: "review_period_tab", to: "loader/batch/review/periods#tab", via: :get
   match "batch_review_periods/:id", as: "update_review_period", to: "loader/batch/review/periods#update", via: :patch
+  match "/batch_review_periods/:id", as: "delete_review_period", to: "loader/batch/review/periods#destroy", via: :delete
 
   match "users", as: "user", to: "users#show", via: :get
   match "users/:id/tab/:tab", as: "user_tab", to: "users#tab", via: :get

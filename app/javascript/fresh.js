@@ -187,13 +187,25 @@
   });
 
   optionalFocusOnPageLoad = function() {
+    debug('optionalFocusOnPageLoad');
+    debug('optionalFocusOnPageLoad');
+    debug('optionalFocusOnPageLoad');
+    debug('optionalFocusOnPageLoad');
+    debug('optionalFocusOnPageLoad');
     var focusId, focusSelector;
-    focusId = $('#focus-id').val();
-    focusSelector = `#search-result-${focusId} td a.show-details-link`;
-    if ($(focusSelector).length === 1) {
-      return $(focusSelector).focus();
+    focusId = $('#focus_id').val();
+    if (!focusId) {
+      debug('no focus, so got to first');
+      return $('table.search-results tr td.takes-focus a.show-details-link[tabindex]').first().click();
     } else {
-      return $('table.search-results tr td.takes-focus a.show-details-link[tabindex]').first().focus();
+      focusSelector = `#${focusId}`;
+      if ($(focusSelector).length === 1) {
+        debug('focus, so go there');
+        return $(focusSelector).click();
+      } else {
+        debug('go first anyway');
+        return $('table.search-results tr td.takes-focus a.show-details-link[tabindex]').first().click();
+      }
     }
   };
 
@@ -802,7 +814,7 @@
 
   searchResultFocus = function(event, $this) {
     debug('searchResultFocus starting');
-    debug('this id: ' + $this.attr('id'));
+    $('#focus_id').val($this.find('a').attr('id'));
     if (!($this.hasClass('showing-details') || $this.hasClass('show-no-details'))) {
       debug('Changing focus: should show details');
       changeFocus(event, $this);
@@ -1030,25 +1042,51 @@
     }
   };
 
-  window.moveUpOneSearchResult = function(startRow) {
+  window.xmoveUpOneSearchResult = function(startRow) {
     if (startRow.prev()) {
       return startRow.prev().find('a.show-details-link').focus();
     }
   };
 
-  window.moveDownOneSearchResult = function(startRow) {
-    return startRow.next().find('a.show-details-link').focus();
+  window.moveUpOneSearchResult = function(startRow) {
+    if (startRow.prev()) {
+      if (startRow.prev().find('a.show-details-link').length === 1) {
+        return startRow.prev().find('a.show-details-link').focus();
+      } else {
+        // skip boundary row
+        return startRow.prev().prev().find('a.show-details-link').focus();
+      }
+    }
   };
 
-  window.moveUpOneReviewResult = function(startRow) {
-    if (startRow.prev()) {
-      return startRow.prev().find('a.navigation-link').focus();
+  window.moveDownOneSearchResult = function(startRow) {
+    debug('moveDownOneSearchResult');
+    if (startRow.next().find('a.show-details-link').length === 1) {
+      return startRow.next().find('a.show-details-link').focus();
+    } else {
+      // skip boundary row
+      return startRow.next().next().find('a.show-details-link').focus();
+    }
+  };
+
+  window.moveUpOneReviewResult = function(row) {
+    if (row.prev()) {
+      if (row.prev().find('a.navigation-link').length === 1) {
+        return row.prev().find('a.navigation-link').focus();
+      } else {
+        // skip white-space boundary row
+        return row.prev().prev().find('a.navigation-link').focus();
+      }
     }
   };
 
   window.moveDownOneReviewResult = function(row) {
-    debug('moveDownOneReviewResult')
-    return row.next().find('a.navigation-link').focus();
+    if (row.next().find('a.navigation-link').length === 1) {
+      return row.next().find('a.navigation-link').focus();
+    } else {
+      // skip white-space boundary row
+      return row.next().next().find('a.navigation-link').focus();
+    }
   };
 
   window.moveToSearchResultDetails = function(searchResultDetail, liElementHasClass) {

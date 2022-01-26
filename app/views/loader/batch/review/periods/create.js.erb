@@ -1,4 +1,6 @@
 $('.message-container').html('');
 $('.error-container').html('');
-$('#search-result-details-info-message-container').html('Created.');
+$('#search-result-details-info-message-container').html('<%= "Review Period #{@batch_review_period.id} created. Re-query the batch stack and add reviewers to the review period." %>');
 $('#save-new-batch-review-period-btn').remove();
+$('#focus_id').val('<%= "review-period-#{@batch_review_period.id}" %>');
+$('div.show-after-create').removeClass('hidden');

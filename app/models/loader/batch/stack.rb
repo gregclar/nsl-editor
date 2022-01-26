@@ -22,7 +22,7 @@ class Loader::Batch::Stack < ActiveRecord::Base
   self.table_name = "batch_stack_vw"
 
   def fresh?
-    created_at > 1.hour.ago
+    created_at > 2.hour.ago
   end
 
   def display_asx
