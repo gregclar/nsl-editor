@@ -1,6 +1,10 @@
 - :date: 27-Jan-2022
   :jira_id: '4078'
   :description: |-
+    Batch Loader: remove stray text field supporting enhanced focus on current record after page refresh; add refresh button after batch review created.
+- :date: 27-Jan-2022
+  :jira_id: '4078'
+  :description: |-
     Batch Loader: mainly fleshing out batch stack as the main way of viewing batches, but also improvements to the administrator interface, including delete buttons, queries, and help
 - :date: 21-Jan-2022
   :jira_id: '4078'
