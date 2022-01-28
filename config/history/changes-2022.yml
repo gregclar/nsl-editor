@@ -1,7 +1,7 @@
 - :date: 27-Jan-2022
   :jira_id: '4078'
   :description: |-
-    Batch Loader: remove stray text field supporting enhanced focus on current record after page refresh; add refresh button after batch review created.
+    Orchids: retrofit the broad contextual search developed for <code>loader_name</code> back into the orchid default query <code>taxon-with-syn</code> to improve its handling of synonyms
 - :date: 27-Jan-2022
   :jira_id: '4078'
   :description: |-
