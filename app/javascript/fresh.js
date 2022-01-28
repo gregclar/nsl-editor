@@ -188,12 +188,13 @@
 
   optionalFocusOnPageLoad = function() {
     debug('optionalFocusOnPageLoad');
-    debug('optionalFocusOnPageLoad');
-    debug('optionalFocusOnPageLoad');
-    debug('optionalFocusOnPageLoad');
-    debug('optionalFocusOnPageLoad');
     var focusId, focusSelector;
+    debug('optionalFocusOnPageLoad 1');
+    debug('focus_id: ' + focus_id);
+    debug('optionalFocusOnPageLoad 2');
     focusId = $('#focus_id').val();
+    debug('optionalFocusOnPageLoad 3');
+    debug('focusId: ' + focusId);
     if (!focusId) {
       debug('no focus, so got to first');
       return $('table.search-results tr td.takes-focus a.show-details-link[tabindex]').first().click();

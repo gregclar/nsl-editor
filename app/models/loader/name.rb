@@ -43,7 +43,8 @@ class Loader::Name < ActiveRecord::Base
 
   belongs_to :parent,
            class_name: "Loader::Name",
-           foreign_key: "parent_id"
+           foreign_key: "parent_id",
+           optional: true
 
   attr_accessor :give_me_focus, :message
 
@@ -60,6 +61,22 @@ class Loader::Name < ActiveRecord::Base
 
   def has_parent?
     !parent_id.blank?
+  end
+
+  def update_if_changed(params, username)
+    assign_attributes(params)
+    if changed?
+      self.updated_by = username
+      save!
+      "Updated"
+    else
+      "No change"
+    end
+  end
+
+  def compress_whitespace
+    self.simple_name.squish!
+    self.full_name.squish!
   end
 
   def matches
@@ -156,18 +173,18 @@ class Loader::Name < ActiveRecord::Base
     ary
   end
 
-  def names_simple_name_matching_taxon
+  def xnames_simple_name_matching_taxon
     ::Name.where(
-      ["simple_name = ? or simple_name = ? or full_name = ? or full_name = ?",
-       simple_name, alt_name_for_matching, simple_name, alt_name_for_matching])
+      ["simple_name = ? or full_name = ?",
+       simple_name, simple_name])
         .joins(:name_type).where(name_type: {scientific: true})
         .order("simple_name, name.id")
   end
 
-  def xnames_simple_name_matching_taxon
+  def names_simple_name_matching_taxon
     ::Name.where(
-      ["f_unaccent(simple_name) = f_unaccent(?) or f_unaccent(simple_name) = f_unaccent(?) or f_unaccent(full_name) = f_unaccent(?) or f_unaccent(full_name) = f_unaccent(?)",
-       simple_name, alt_name_for_matching, simple_name, alt_name_for_matching])
+      ["lower(f_unaccent(simple_name)) like lower(f_unaccent(?))",
+       simple_name])
         .joins(:name_type).where(name_type: {scientific: true})
         .order("simple_name, name.id")
   end
@@ -176,4 +193,7 @@ class Loader::Name < ActiveRecord::Base
     names_simple_name_matching_taxon
   end
 
+  def accepted?
+    record_type == 'accepted'
+  end
 end

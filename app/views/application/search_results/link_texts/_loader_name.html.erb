@@ -12,8 +12,8 @@
     <% end %>
   </span>
 <% end %>
-<span class='<%= "#{search_result.record_type}-scientific-name" %>'>
-<%= "#{search_result.scientific_name}" %>
+<span class='<%= "loader-name-simple-name" %>'>
+<%= "#{search_result.simple_name}" %>
 </span>
 | <%= search_result.matches.size %>m
 <% if search_result.loader_name_match.blank? %>

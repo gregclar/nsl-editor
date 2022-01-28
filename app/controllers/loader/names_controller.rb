@@ -17,7 +17,7 @@
 #   limitations under the License.
 #
 class Loader::NamesController < ApplicationController
-  before_action :find_loader_name, only: [:show, :destroy, :tab]
+  before_action :find_loader_name, only: [:show, :destroy, :tab, :update]
 
   # Sets up RHS details panel on the search results page.
   # Displays a specified or default tab.
@@ -43,8 +43,17 @@ class Loader::NamesController < ApplicationController
     end
   end
 
-  private
+  def update
+    @message = @loader_name.update_if_changed(loader_name_params,
+                                               current_user.username)
+    render "update"
+  rescue => e
+    logger.error("Loader::Names#update rescuing #{e}")
+    @message = e.to_s
+    render "update_error", status: :unprocessable_entity
+  end
 
+  private
   def find_loader_name
     @loader_name = Loader::Name.find(params[:id])
   rescue ActiveRecord::RecordNotFound
@@ -53,7 +62,14 @@ class Loader::NamesController < ApplicationController
   end
 
   def loader_name_params
-    params.require(:loader_name).permit(:scientific_name)
+    params.require(:loader_name).permit(:simple_name, :name_id, :instance_id,
+                                   :record_type, :parent, :parent_id, 
+                                   :name_status, :ex_base_author,
+                                   :base_author, :ex_author, :author,
+                                   :synonym_type, :comment, :seq,
+                                   :doubtful,
+                                   :no_further_processing, :notes,
+                                   :distribution)
   end
 
   def set_tab

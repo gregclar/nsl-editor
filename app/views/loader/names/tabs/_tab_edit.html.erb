@@ -1,16 +1,16 @@
 <% increment_tab_index(0) %>
-<h5>Raw Orchid <%#= @orchid.true_record_type.capitalize %></h5>
-<%# if @orchid.accepted? %>
-  <%#= render partial: 'form_for_accepted', locals: { orchid: @orchid } %>
-<%# elsif @orchid.synonym? %>
-  <%#= render partial: 'form_for_synonym', locals: { orchid: @orchid } %>
-<%# elsif @orchid.misapp? %>
-  <%#= render partial: 'form_for_misapp', locals: { orchid: @orchid } %>
-<%# elsif @orchid.hybrid_cross? %>
-  <%#= render partial: 'form_for_hybrid_cross', locals: { orchid: @orchid } %>
+<h5>Raw Details</h5>
+<% if @loader_name.accepted? %>
+  <%= render partial: 'loader/names/tabs/forms/form_for_accepted', locals: { loader_name: @loader_name } %>
+<%# elsif @loader_name.synonym? %>
+  <%#= render partial: 'form_for_synonym', locals: { loader_name: @loader_name } %>
+<%# elsif @loader_name.misapp? %>
+  <%#= render partial: 'form_for_misapp', locals: { loader_name: @loader_name } %>
+<%# elsif @loader_name.hybrid_cross? %>
+  <%#= render partial: 'form_for_hybrid_cross', locals: { loader_name: @loader_name } %>
 <%# else %>
-<!-- Unknown record type: <%#= @orchid.record_type %> -->
-<%# end %>
+<!-- Unknown record type: <%#= @loader_name.record_type %> -->
+<% end %>
 
 <% if @take_focus %>
   <script>

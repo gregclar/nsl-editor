@@ -1,4 +1,8 @@
-- :date: 27-Jan-2022
+- :date: 28-Jan-2022
+  :jira_id: '4078'
+  :description: |-
+    Batch Loader: Add <code>loader_name.simple_name_as_loaded</code> and remove <code>alt_name_for_matching</code>, adjust queries to match, add a new faster <code>no-name-match:</code> query, add edit tab for <code>loader_name</code>.
+- :date: 28-Jan-2022
   :jira_id: '4078'
   :description: |-
     Orchids: retrofit the broad contextual search developed for <code>loader_name</code> back into the orchid default query <code>taxon-with-syn</code> to improve its handling of synonyms

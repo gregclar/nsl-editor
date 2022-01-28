@@ -36,7 +36,24 @@ class Search::Loader::Name::FieldRule
        and lower(sibling.simple_name) like ?)",
            trailing_wildcard: true,
            order: "seq"},
-
+           "simple-name-as-loaded:" => { where_clause: "(lower(simple_name_as_loaded) like ?)
+        or exists (
+        select null
+          from loader_name parent
+        where parent.id         = loader_name.parent_id
+       and lower(parent.simple_name_as_loaded) like ?)
+        or exists (
+        select null
+          from loader_name child
+        where child.parent_id   = loader_name.id
+       and lower(child.simple_name_as_loaded) like ?)
+        or exists (
+        select null
+          from loader_name sibling
+        where sibling.parent_id = loader_name.parent_id
+       and lower(sibling.simple_name_as_loaded) like ?)",
+           trailing_wildcard: true,
+           order: "seq"},
     "batch-id:"           => { where_clause: "loader_batch_id = ? ",
                                order: "seq"},
     "batch-name:"         => { where_clause: "loader_batch_id = (select id from loader_batch where lower(name) = ?)  ",
@@ -281,32 +298,43 @@ class Search::Loader::Name::FieldRule
                                       order: "seq"},
     "is-syn-but-no-syn-type:" => { where_clause: "record_type = 'synonym' and synonym_type is null",
                                       order: "seq"},
-    "no-name-match:" => { where_clause: "not exists (
+    "xno-name-match:" => { where_clause: "not exists (
         select null
           from name
-        where (loader_name.simple_name          = name.simple_name
-            or loader_name.alt_name_for_matching = name.simple_name
-            or loader_name.simple_name           = name.full_name
-            or loader_name.alt_name_for_matching = name.full_name)
+        where loader_name.simple_name || '%'  like name.simple_name
           and exists (
             select null
               from name_type nt
             where name.name_type_id = nt.id
               and nt.scientific))",
                                       order: "seq"},
-    "some-name-match:"    => { where_clause: "exists (select null from name where (scientific_name = name.simple_name or alt_name_for_matching = name.simple_name))" ,
+     "no-name-match:" => { where_clause: "loader_name.id in (select id
+  from loader_name
+ where lower(f_unaccent(simple_name)) in (
+        select lower(f_unaccent(ln.simple_name))
+          from loader_name ln
+        except (
+            select lower(f_unaccent(n.simple_name))
+              from name n
+            union all
+            select lower(f_unaccent(n.full_name))
+          from name n
+          )
+       ) ) ",
+                           order: "seq"},
+    "some-name-match:"    => { where_clause: "exists (select null from name where simple_name = name.simple_name)" ,
                                       order: "seq"},
-    "many-name-match:"    => { where_clause: "1 <  (select count(*) from name where (scientific_name = name.simple_name or alt_name_for_matching = name.simple_name) and exists (select null from name_type nt where name.name_type_id = nt.id and nt.scientific))" ,
+    "many-name-match:"    => { where_clause: "1 <  (select count(*) from name where simple_name = name.simple_name and exists (select null from name_type nt where name.name_type_id = nt.id and nt.scientific))" ,
                                       order: "seq"},
-    "one-name-match:"     => { where_clause: "1 =  (select count(*) from name where (scientific_name = name.simple_name or alt_name_for_matching = name.simple_name) and exists (select null from name_Type nt where name.name_type_id = nt.id and nt.scientific))" ,
+    "one-name-match:"     => { where_clause: "1 =  (select count(*) from name where simple_name = name.simple_name and exists (select null from name_Type nt where name.name_type_id = nt.id and nt.scientific))" ,
                                       order: "seq"},
-    "name-match-no-primary:"     =>   { where_clause: "0 <  (select count(*) from name where (scientific_name = name.simple_name or alt_name_for_matching = name.simple_name) and exists (select null from name_Type nt where name.name_type_id = nt.id and nt.scientific and not exists (select null from instance join instance_type on instance.instance_type_id = instance_type.id where instance_type.primary_instance and name.id = instance.name_id))) AND ( not exists ( select null from loader_name_match where loader_name_match.loader_name_id = loader_name.id )) ",
+    "name-match-no-primary:"     =>   { where_clause: "0 <  (select count(*) from name where simple_name = name.simple_name and exists (select null from name_Type nt where name.name_type_id = nt.id and nt.scientific and not exists (select null from instance join instance_type on instance.instance_type_id = instance_type.id where instance_type.primary_instance and name.id = instance.name_id))) AND ( not exists ( select null from loader_name_match where loader_name_match.loader_name_id = loader_name.id )) ",
                                       order: "seq"},
-    "name-match-eq:"      => { where_clause: "? =  (select count(*) from name where (scientific_name = name.simple_name or alt_name_for_matching = name.simple_name) and exists (select null from name_Type nt where name.name_type_id = nt.id and nt.scientific))",
+    "name-match-eq:"      => { where_clause: "? =  (select count(*) from name where simple_name = name.simple_name and exists (select null from name_Type nt where name.name_type_id = nt.id and nt.scientific))",
                                       order: "seq"},
-    "name-match-gt:"      => { where_clause: "? <  (select count(*) from name where (scientific_name = name.simple_name or alt_name_for_matching = name.simple_name) and exists (select null from name_Type nt where name.name_type_id = nt.id and nt.scientific))",
+    "name-match-gt:"      => { where_clause: "? <  (select count(*) from name where simple_name = name.simple_name and exists (select null from name_Type nt where name.name_type_id = nt.id and nt.scientific))",
                                       order: "seq"},
-    "name-match-gte:"     => { where_clause: "? <=  (select count(*) from name where (scientific_name = name.simple_name or alt_name_for_matching = name.simple_name) and exists (select null from name_Type nt where name.name_type_id = nt.id and nt.scientific))",
+    "name-match-gte:"     => { where_clause: "? <=  (select count(*) from name where simple_name = name.simple_name and exists (select null from name_Type nt where name.name_type_id = nt.id and nt.scientific))",
                                       order: "seq"},
     "partly:"             => { where_clause: "partly is not null",
                                       order: "seq"},
@@ -366,8 +394,6 @@ having count(*)                     >  1
     "hybrid-has-value:"=> { where_clause: "hybrid is not null",
                                       order: "seq"},
     "hybrid-has-no-value:"=> { where_clause: "hybrid is null",
-                                      order: "seq"},
-    "alt-name-for-matching:"=> { where_clause: "lower(alt_scientific_name_for_matching) like ?",
                                       order: "seq"},
     "no-further-processing:"=> { where_clause: " no_further_processing or exists (select null from loader_name kids where kids.parent_id = loader_name.id and kids.no_further_processing) or exists (select null from orchids pa where pa.id = orchids.parent_id and pa.no_further_processing)",
                                order: "seq"},

@@ -41,5 +41,7 @@
 <%= render partial: 'detail_line', locals: {info: @loader_name.distribution, label: 'distribution'} unless @loader_name.distribution.blank? %>
 <%= render partial: 'detail_line', locals: {info: @loader_name.remark_to_reviewers, label: 'remark to reviewers'} unless @loader_name.remark_to_reviewers.blank? %>
 <%= render partial: 'detail_line', locals: {info: @loader_name.no_further_processing | boolean, label: 'no_further_processing'} unless @loader_name.no_further_processing.blank? %>
+<%= render partial: 'detail_line', locals: {info: @loader_name.simple_name, label: 'simple name'} unless @loader_name.simple_name.blank? %>
+<%= render partial: 'detail_line', locals: {info: @loader_name.simple_name_as_loaded, label: 'simple name as loaded'} unless @loader_name.simple_name_as_loaded.blank? || @loader_name.simple_name == @loader_name.simple_name_as_loaded %>
 
 
