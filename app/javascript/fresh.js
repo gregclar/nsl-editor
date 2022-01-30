@@ -190,7 +190,7 @@
     debug('optionalFocusOnPageLoad');
     var focusId, focusSelector;
     debug('optionalFocusOnPageLoad 1');
-    debug('focus_id: ' + focus_id);
+    debug('focusId: ' + focusId);
     debug('optionalFocusOnPageLoad 2');
     focusId = $('#focus_id').val();
     debug('optionalFocusOnPageLoad 3');

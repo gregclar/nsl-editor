@@ -1,3 +1,7 @@
+- :date: 31-Jan-2022
+  :jira_id: '4078'
+  :description: |-
+    Batch Loader: Fix JavaScript bug causing problem in review mode by preventing display of the Queries help page.
 - :date: 28-Jan-2022
   :jira_id: '4078'
   :description: |-
