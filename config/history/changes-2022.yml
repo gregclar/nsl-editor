@@ -1,4 +1,8 @@
 - :date: 31-Jan-2022
+  :jira_id: '4134'
+  :description: |-
+    Instance query: allow the combined query <code>name-status: orth. var. type:autonym</code> to work - a technical SQL improvement in the search engine
+- :date: 31-Jan-2022
   :jira_id: '4078'
   :description: |-
     Batch Loader: Fix JavaScript bug causing problem in review mode by preventing display of the Queries help page.
