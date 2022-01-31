@@ -156,7 +156,7 @@ class Search::OnModel::WhereClauses
 
   def apply_order(rule)
     @sql = if rule.order
-             @sql.order(rule.order)
+             @sql.order(Arel.sql(rule.order))
            else
              @sql.order(@parsed_request.default_order_column)
            end

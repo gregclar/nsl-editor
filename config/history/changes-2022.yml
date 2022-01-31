@@ -1,4 +1,8 @@
 - :date: 31-Jan-2022
+  :jira_id: '4133'
+  :description: |-
+    Search engine internals: switch reference search to use the new streamlined infrastructure.  Results for reference searches should be unchanged.
+- :date: 31-Jan-2022
   :jira_id: '4134'
   :description: |-
     Instance query: allow the combined query <code>name-status: orth. var. type:autonym</code> to work - a technical SQL improvement in the search engine
