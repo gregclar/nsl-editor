@@ -24,12 +24,15 @@
                               query_string: "batch-id: #{@loader_batch.id}",
                               query_target: 'batch reviews'),
                    title:"Query batch reviews",class:'blue')} %>
+  <% end %>
+
   <%= render partial: 'detail_line',
     locals: {label: 'query the stack',
              info: link_to("#{@loader_batch.name} Stack",
                           search_path(
                             query_string: "batch-id: #{@loader_batch.id}",
-                            query_target: 'batch stacks'),
+                            query_target: 'batch stacks',
+                            focus_id: "loader-batch-#{@loader_batch.id}"),
                             title:"Query batch in stack format",class:'blue')} %>
 
   <%= render partial: 'detail_line',
@@ -37,10 +40,10 @@
              info: link_to("All Batch Stacks",
                           search_path(
                             query_string: "*",
-                            query_target: 'batch stacks'),
+                            query_target: 'batch stacks',
+                            focus_id: "loader-batch-#{@loader_batch.id}"),
                  title:"Query the batch stack",class:'blue')} %>
 
-  <% end %>
 
 <% end %>
 

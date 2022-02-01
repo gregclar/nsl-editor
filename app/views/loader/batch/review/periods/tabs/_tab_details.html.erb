@@ -39,7 +39,8 @@
              info: link_to("#{@review_period.review.batch.name} Stack",
                           search_path(
                             query_string: "batch-id: #{@review_period.review.batch.id}",
-                            query_target: 'batch stacks'),
+                            query_target: 'batch stacks',
+                            focus_id: "review-period-#{@review_period.id}"),
                  title:"Query the batch in stack format",class:'blue')} %>
 
 <%= render partial: 'detail_line',
@@ -47,7 +48,8 @@
              info: link_to("All Batch Stacks",
                           search_path(
                             query_string: "*",
-                            query_target: 'batch stacks'),
+                            query_target: 'batch stacks',
+                            focus_id: "review-period-#{@review_period.id}"),
                  title:"Query the batch stack",class:'blue')} %>
 
 <br>
