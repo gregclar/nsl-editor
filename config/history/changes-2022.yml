@@ -1,3 +1,7 @@
+- :date: 1-Feb-2022
+  :jira_id: ''
+  :description: |-
+    Search input form: remove underscores from search targets when search results are displayed e.g. <code>references_with_novelties</code> now appears consistently as <code>references with novelties</code>
 - :date: 31-Jan-2022
   :jira_id: '4133'
   :description: |-
@@ -25,7 +29,7 @@
 - :date: 27-Jan-2022
   :jira_id: '4078'
   :description: |-
-    Batch Loader: mainly fleshing out batch stack as the main way of viewing batches, but also improvements to the administrator interface, including delete buttons, queries, and help
+    Batch Loader: mainly fleshing out batch stack as a convenient way of viewing batches, but also improvements to the administrator interface, including delete buttons, queries, and help text
 - :date: 21-Jan-2022
   :jira_id: '4078'
   :description: |-
