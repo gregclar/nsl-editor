@@ -116,7 +116,7 @@ class Search::Base
       when /\Aaudit\z/
         Audit::DefinedQuery::Base.new(@parsed_request)
       when /\Areferences.with.novelties\z/
-        Reference::DefinedQuery::ReferencesWithNovelties.new(@parsed_request)
+        ::Reference::DefinedQuery::ReferencesWithNovelties.new(@parsed_request)
       when /\Areferences.accepted.names.for.id\z/i
         Reference::DefinedQuery::ReferencesAcceptedNamesForId
       .new(@parsed_request)

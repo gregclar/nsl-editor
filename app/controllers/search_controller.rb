@@ -28,7 +28,7 @@ class SearchController < ApplicationController
     @search = Search::Error.new(params) unless @search.present?
   rescue => e
     params[:error_message] = e.to_s
-    @search = Search::Error.new(params) unless @search.present?
+    run_empty_search_to_show_error(params)
   end
 
   def set_include_common_and_cultivar
@@ -83,6 +83,11 @@ class SearchController < ApplicationController
     else
       params["target"] = 'Names'
     end
+    @empty_search = true
+    @search = Search::Empty.new(params)
+  end
+
+  def run_empty_search_to_show_error(params)
     @empty_search = true
     @search = Search::Empty.new(params)
   end

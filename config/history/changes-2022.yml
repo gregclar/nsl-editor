@@ -1,4 +1,8 @@
 - :date: 1-Feb-2022
+  :jira_id: '4135'
+  :description: |-
+    Search error message: provide error message to explain <code>show-instances:</code> isn't supported for <code>References with novelties</code> queries.  Improve technical aspects of search error messages.
+- :date: 1-Feb-2022
   :jira_id: ''
   :description: |-
     Search input form: remove underscores from search targets when search results are displayed e.g. <code>references_with_novelties</code> now appears consistently as <code>references with novelties</code>

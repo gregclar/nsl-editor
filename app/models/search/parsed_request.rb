@@ -150,6 +150,8 @@ class Search::ParsedRequest
     "references" => "Search::OnName::WithInstances",
   }.freeze
 
+  ALLOW_SHOW_INSTANCES_TARGETS = ["names", "name", "references", "reference"]
+
   TRIM_RESULTS = {
     "loader name" => true,
   }.freeze
@@ -361,7 +363,7 @@ class Search::ParsedRequest
     else
       debug("@params: #{@params.inspect}")
       unless loader_batch_preprocessing?
-        throw "Unknown query target: #{@query_target}"
+        raise "Unknown query target: #{@query_target}"
       end
     end
     tokens 
@@ -413,10 +415,12 @@ class Search::ParsedRequest
 
   def parse_show_instances(tokens)
     if tokens.include?("show-instances:")
+      show_instances_allowed?
       @show_instances = true
       @order_instances_by_page = false
       tokens.delete_if { |x| x.match(/show-instances:/) }
     elsif tokens.include?("show-instances-by-page:")
+      show_instances_allowed?
       @show_instances = true
       @order_instances_by_page = true
       tokens.delete_if { |x| x.match(/show-instances-by-page:/) }
@@ -424,6 +428,12 @@ class Search::ParsedRequest
       @show_instances = false
     end
     tokens
+  end
+
+  def show_instances_allowed?
+    unless ALLOW_SHOW_INSTANCES_TARGETS.include?(@query_target)
+      raise 'The show-instances: directive is not supported for this query'
+    end
   end
 
   def parse_order_instances(tokens)
