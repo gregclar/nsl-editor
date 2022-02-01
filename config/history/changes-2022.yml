@@ -1,3 +1,7 @@
+- :date: 2-Feb-2022
+  :jira_id: '4078'
+  :description: |-
+    Batch Loader: added links to the full Batch Stack on stack element detail tabs; added batch name to the specific batch stack links on the detail tabs.
 - :date: 1-Feb-2022
   :jira_id: '4135'
   :description: |-

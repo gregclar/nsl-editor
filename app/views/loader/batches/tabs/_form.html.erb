@@ -4,8 +4,8 @@
     <label for="name">Name</label>
     <%= form.text_field :name, class: 'form-control', title: 'Edit the name of the batch', required: true %>
     <p class="help-block">
-    Batch name has to be unique and short &mdash; short because it may be listed in the search targets dropdown list &mdash;<br>
-    preferably less than 15 characters.
+    Batch name must be unique and should be short &mdash; it will be listed in the search targets dropdown list &mdash;<br>
+    so best less than 15 characters.
     </p>
   </div>
 
@@ -13,7 +13,7 @@
     <label for="name">Description</label>
     <%= form.text_field :description, class: 'form-control', title: 'Edit the description of the batch' %>
     <p class="help-block">
-    Use the description for additional information - hoping this will support short names.
+    Use the description to supplement the short title.
     </p>
 </div>
   <%= form.submit "Save", id: 'loader-batch-save', class: 'btn btn-primary width-5em', title: "Save changes", tabindex: increment_tab_index %>

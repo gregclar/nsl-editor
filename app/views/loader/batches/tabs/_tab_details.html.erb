@@ -26,11 +26,20 @@
                    title:"Query batch reviews",class:'blue')} %>
   <%= render partial: 'detail_line',
     locals: {label: 'query the stack',
-             info: link_to('Batch Stack',
+             info: link_to("#{@loader_batch.name} Stack",
                           search_path(
                             query_string: "batch-id: #{@loader_batch.id}",
                             query_target: 'batch stacks'),
-                 title:"Query batch in stack format",class:'blue')} %>
+                            title:"Query batch in stack format",class:'blue')} %>
+
+  <%= render partial: 'detail_line',
+    locals: {label: 'query all stacks',
+             info: link_to("All Batch Stacks",
+                          search_path(
+                            query_string: "*",
+                            query_target: 'batch stacks'),
+                 title:"Query the batch stack",class:'blue')} %>
+
   <% end %>
 
 <% end %>
@@ -48,7 +57,7 @@ Loader Batch #<%= @loader_batch.id %>
 
 Review workflow:
 <ol>
-  <li/>Create batch review
+  <li/>Create batch review  &nbsp; &nbsp;  <b> &lt;&lt; Next </b>
   <li/>Create batch review period with date range
   <li/>Add user batch reviewers
   <li/>Review period starts

@@ -21,11 +21,20 @@
            locals: {info: @batch_reviewer.org.name, label: 'representing'} %>
 <%= render partial: 'detail_line',
     locals: {label: 'query the stack',
-             info: link_to('Batch Stack',
+             info: link_to("#{@batch_reviewer.period.review.batch.name} Stack",
                           search_path(
                             query_string: "batch-id: #{@batch_reviewer.period.review.batch.id}",
                             query_target: 'batch stacks'),
                  title:"Query batch in stack format",class:'blue')} %>
+
+<%= render partial: 'detail_line',
+    locals: {label: 'query all stacks',
+             info: link_to("All Batch Stacks",
+                          search_path(
+                            query_string: "*",
+                            query_target: 'batch stacks'),
+                 title:"Query the batch stack",class:'blue')} %>
+
 <br>
 <%= divider %>
 
