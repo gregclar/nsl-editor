@@ -1,6 +1,10 @@
 - :date: 3-Feb-2022
   :jira_id: '4078'
   :description: |-
+    Batch Loader: standardise loader_name match searches (directives, notifications on results, and detail tab queries) to be against simple or full_name, but don't normalise accents because the speed trade-off isn't worth it
+- :date: 3-Feb-2022
+  :jira_id: '4078'
+  :description: |-
     Batch Loader: fix the problem with <code>no-name-match:</code> query, which was identified in the "Corymbia <code>no-name-match:</code>" query returning incomplete results
 - :date: 3-Feb-2022
   :jira_id: '4078'

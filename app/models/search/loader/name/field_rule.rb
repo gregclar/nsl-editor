@@ -305,7 +305,9 @@ class Search::Loader::Name::FieldRule
     "no-name-match:" => { where_clause: "not exists (
         select null
           from name
-        where loader_name.simple_name = name.simple_name
+        where (loader_name.simple_name = name.simple_name
+               or
+               loader_name.simple_name = name.full_name)
           and exists (
             select null
               from name_type nt
@@ -326,12 +328,23 @@ class Search::Loader::Name::FieldRule
           )
        ) ) ",
                            order: "seq"},
-    "some-name-match:"    => { where_clause: "exists (select null from name where loader_name.simple_name = name.simple_name)" ,
+                                  "some-name-match:" => { where_clause: "exists (
+                              select null
+                                from name
+                                where (loader_name.simple_name = name.simple_name
+                               or loader_name.simple_name = name.full_name)
+          and exists (
+            select null
+              from name_type nt
+            where name.name_type_id = nt.id
+              and nt.scientific))",
                                order: "seq"},
     "many-name-match:" => { where_clause: "1 < (
         select count(*)
           from name
-        where loader_name.simple_name = name.simple_name
+        where (loader_name.simple_name = name.simple_name
+               or 
+               loader_name.simple_name = name.full_name)
           and exists (
             select null
               from name_type nt

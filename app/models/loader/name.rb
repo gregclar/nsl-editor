@@ -82,10 +82,6 @@ class Loader::Name < ActiveRecord::Base
     self.full_name.squish!
   end
 
-  def matches
-    []
-  end
-
   def loader_name_match
     nil
   end
@@ -100,7 +96,7 @@ class Loader::Name < ActiveRecord::Base
   end
 
   def exclude_from_further_processing?
-    false
+    no_further_processing == true
   end
 
   def child?
@@ -176,7 +172,7 @@ class Loader::Name < ActiveRecord::Base
     ary
   end
 
-  def xnames_simple_name_matching_taxon
+  def names_simple_or_full_name_matching_taxon
     ::Name.where(
       ["simple_name = ? or full_name = ?",
        simple_name, simple_name])
@@ -184,16 +180,15 @@ class Loader::Name < ActiveRecord::Base
         .order("simple_name, name.id")
   end
 
-  def names_simple_name_matching_taxon
+  def names_unaccent_simple_name_matching_taxon
     ::Name.where(
-      ["lower(f_unaccent(simple_name)) like lower(f_unaccent(?))",
-       simple_name])
+      ["lower(f_unaccent(simple_name)) like lower(f_unaccent(?))", simple_name])
         .joins(:name_type).where(name_type: {scientific: true})
         .order("simple_name, name.id")
   end
 
   def matches
-    names_simple_name_matching_taxon
+    names_simple_or_full_name_matching_taxon
   end
 
   def accepted?
