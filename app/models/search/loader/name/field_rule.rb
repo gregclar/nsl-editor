@@ -302,17 +302,17 @@ class Search::Loader::Name::FieldRule
                                       order: "seq"},
     "is-syn-but-no-syn-type:" => { where_clause: "record_type = 'synonym' and synonym_type is null",
                                       order: "seq"},
-    "xno-name-match:" => { where_clause: "not exists (
+    "no-name-match:" => { where_clause: "not exists (
         select null
           from name
-        where loader_name.simple_name || '%'  like name.simple_name
+        where loader_name.simple_name = name.simple_name
           and exists (
             select null
               from name_type nt
             where name.name_type_id = nt.id
               and nt.scientific))",
                                       order: "seq"},
-     "no-name-match:" => { where_clause: "loader_name.id in (select id
+     "no-name-match-unaccent:" => { where_clause: "loader_name.id in (select id
   from loader_name
  where lower(f_unaccent(simple_name)) in (
         select lower(f_unaccent(ln.simple_name))

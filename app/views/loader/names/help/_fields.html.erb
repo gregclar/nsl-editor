@@ -163,13 +163,15 @@
   <tr><th>Field</th><th>Description</th></tr>
   <% [
     {field_name: 'no-name-match:',
-     description: "match only on CSV data with no matching NSL name"},
+     description: "no matching NSL name"},
+    {field_name: 'no-name-match-unaccent:',
+     description: "no matching NSL name - applies f_unaccent to normalise accented chars"},
     {field_name: 'some-name-match:',
      description: "match only on CSV data with at least one matching NSL name"},
     {field_name: 'many-name-match:',
      description: "match loader names with more than 1 matching NSL name - compares on simple name "},
     {field_name: 'many-name-match-unaccent: Batch Name',
-     description: "match loader names with more than 1 matching NSL name - compares lower(f_unaccent(simple_name) and needs the target batch name as an argument to give correct results"},
+     description: "match loader names with more than 1 matching NSL name - applies f_unaccent to normalise accented chars and <b>needs the target batch name as an argument to give correct results</b>"},
     {field_name: 'one-name-match:',
      description: "match only on CSV data with exactly one matching NSL name"},
     {field_name: 'name-match-eq:',
