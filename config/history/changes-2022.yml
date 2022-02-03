@@ -1,6 +1,10 @@
 - :date: 3-Feb-2022
   :jira_id: '4078'
   :description: |-
+    Batch Loader: set up hybrid flag queries
+- :date: 3-Feb-2022
+  :jira_id: '4078'
+  :description: |-
     Batch Loader: edit synonyms; query <code>many-name-match</code>, <code>many-name-match-unaccent</code>; port other queries; show sequence and batch name on details tab heading
 - :date: 2-Feb-2022
   :jira_id: '4078'
