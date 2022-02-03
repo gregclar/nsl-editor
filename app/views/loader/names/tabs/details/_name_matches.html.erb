@@ -33,5 +33,11 @@
             target: "_editor_to_apni",
             tabindex: increment_tab_index) %>
 
+<% if name_match_count == 0 %>
+  <%= divider %>
+  <%= render partial: 'loader/names/tabs/details/possible_matches' %>
+<% end %>
+
+
 <span id="search-result-details-info-message-container" class="message-container"></span>
 <span id="search-result-details-error-message-container" class="error-container"></span>

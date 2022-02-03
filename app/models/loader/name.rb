@@ -198,4 +198,12 @@ class Loader::Name < ActiveRecord::Base
   def synonym?
     record_type == 'synonym'
   end
+
+  def likely_phrase_name?
+    simple_name =~ /Herbarium/ || simple_name =~ /sp\./ || simple_name =~ / f\./ 
+  end
+
+  def matches_tweaked_for_phrase_name
+    ::Name.where(["regexp_replace(simple_name,'[)(]','','g') = regexp_replace(regexp_replace(?,' [A-z][A-z]* Herbarium','','i'),'[)(]','','g')", simple_name])
+  end
 end
