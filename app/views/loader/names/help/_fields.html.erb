@@ -163,7 +163,7 @@
   <tr><th>Field</th><th>Description</th></tr>
   <% [
     {field_name: 'no-name-match:',
-     description: "no matching NSL name - checks the supplied name against name.simple_name (no authority) and name.full_name (has authority) for scientific names"
+     description: "no matching NSL name - checks the supplied name against name.simple_name (no authority) and name.full_name (has authority) for scientific names"},
     {field_name: 'no-name-match-unaccent:',
      description: "no matching NSL name - applies f_unaccent to normalise accented chars but only compares to name.simple_name (no authority)"},
     {field_name: 'some-name-match:',
@@ -171,7 +171,7 @@
     {field_name: 'many-name-match:',
      description: "match loader names with more than 1 matching NSL name - compares on simple name and full_name of scientific names "},
     {field_name: 'many-name-match-unaccent: Batch Name',
-     description: "match loader names with more than 1 matching NSL name - applies f_unaccent to normalise accented chars and <b>needs the target batch name as an argument to give correct results</b>"},
+     description: "match loader names with more than 1 matching NSL name - applies f_unaccent to normalise accented chars, checks name.simple_name only (for scientific names), and <b>needs the target batch name as an argument to give correct results</b>"},
     {field_name: 'one-name-match:',
      description: "match only on CSV data with exactly one matching NSL name"},
     {field_name: 'name-match-eq:',
