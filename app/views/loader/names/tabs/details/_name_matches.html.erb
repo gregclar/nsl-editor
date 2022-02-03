@@ -1,18 +1,6 @@
 <h4>Name Matches: <%= name_match_count = @loader_name.names_simple_name_matching_taxon.size %></h4>
 <% if @loader_name.names_simple_name_matching_taxon.empty? %>
   <div class="bggray big-vertical-padding" ><h4 class="white">No Matching Names</h4></div>
-  <%= link_to("#{ShardConfig.name_space} #{icon('external-link-square')}".html_safe,
-              "#{Rails.configuration.try('nsl_links')}search/names?product=APNI&name=#{url_encode(@loader_name.simple_name)}",
-            title: "#{ShardConfig.name_space} search. Opens in another tab or window.",
-            class: "rebeccapurple",
-            target: "_editor_to_apni",
-            tabindex: increment_tab_index) %>&nbsp;
-  <%= link_to("Editor query #{icon('external-link-square')}".html_safe,
-              "search?query_target=names&query_string=#{url_encode(@loader_name.simple_name)}",
-            title: "#{ShardConfig.name_space} search. Opens in another tab or window.",
-            class: "rebeccapurple",
-            target: "_editor_to_apni",
-            tabindex: increment_tab_index) %>
 <% end %>
 <% if name_match_count > 0 %>
   <% if name_match_count > 1 %>
@@ -31,6 +19,19 @@
 <%# else %>
   <%#= render partial: 'loader_name/tabs/tab_show_1_name_matches_standard', locals: {name_match_count: name_match_count} %>
 <%# end %>
+
+  <%= link_to("#{ShardConfig.name_space} #{icon('external-link-square')}".html_safe,
+              "#{Rails.configuration.try('nsl_links')}search/names?product=APNI&name=#{url_encode(@loader_name.simple_name)}",
+            title: "#{ShardConfig.name_space} search. Opens in another tab or window.",
+            class: "rebeccapurple",
+            target: "_editor_to_apni",
+            tabindex: increment_tab_index) %>&nbsp;
+  <%= link_to("Editor query #{icon('external-link-square')}".html_safe,
+              "search?query_target=names&query_string=#{url_encode(@loader_name.simple_name)}",
+            title: "#{ShardConfig.name_space} search. Opens in another tab or window.",
+            class: "rebeccapurple",
+            target: "_editor_to_apni",
+            tabindex: increment_tab_index) %>
 
 <span id="search-result-details-info-message-container" class="message-container"></span>
 <span id="search-result-details-error-message-container" class="error-container"></span>

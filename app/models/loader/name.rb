@@ -64,6 +64,9 @@ class Loader::Name < ActiveRecord::Base
   end
 
   def update_if_changed(params, username)
+    # strip_attributes is in place and should make this unnecessary
+    # but it's not working in the way I expect
+    params.keys.each { |key| params[key] = nil if params[key] == '' } 
     assign_attributes(params)
     if changed?
       self.updated_by = username
@@ -195,5 +198,9 @@ class Loader::Name < ActiveRecord::Base
 
   def accepted?
     record_type == 'accepted'
+  end
+
+  def synonym?
+    record_type == 'synonym'
   end
 end

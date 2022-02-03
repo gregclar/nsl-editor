@@ -322,19 +322,94 @@ class Search::Loader::Name::FieldRule
           )
        ) ) ",
                            order: "seq"},
-    "some-name-match:"    => { where_clause: "exists (select null from name where simple_name = name.simple_name)" ,
+    "some-name-match:"    => { where_clause: "exists (select null from name where loader_name.simple_name = name.simple_name)" ,
+                               order: "seq"},
+    "many-name-match:" => { where_clause: "1 < (
+        select count(*)
+          from name
+        where loader_name.simple_name = name.simple_name
+          and exists (
+            select null
+              from name_type nt
+            where name.name_type_id = nt.id
+              and nt.scientific))",
                                       order: "seq"},
-    "many-name-match:"    => { where_clause: "1 <  (select count(*) from name where simple_name = name.simple_name and exists (select null from name_type nt where name.name_type_id = nt.id and nt.scientific))" ,
+    "many-name-match-unaccent:"    => { where_clause: "loader_name.id in (select id
+  from loader_name
+ where lower(f_unaccent(simple_name)) in
+(select l_fa_sn from
+    (
+    select lower(f_unaccent(n.simple_name)) l_fa_sn, 'name' tab
+                      from name n
+    union all
+    select distinct lower(f_unaccent(ln.simple_name)) l_fa_sn, 'loader' tab
+                      from loader_name ln
+     where loader_batch_id = (select id from loader_batch where lower(name) = ?)  
+    )  fred
+group by l_fa_sn
+having count(*) > 2
+))" ,
+  order: "seq"},
+  "one-name-match:" => { where_clause: "1 = (
+      select count(*)
+        from name
+      where loader_name.simple_name = name.simple_name
+        and exists (
+          select null
+            from name_Type nt
+          where name.name_type_id       = nt.id
+     and nt.scientific))",
+                         order: "seq"},
+         "name-match-no-primary:" => { where_clause: "0 < (
+      select count(*)
+        from name
+      where loader_name.simple_name          = name.simple_name
+        and exists (
+          select null
+            from name_Type nt
+          where name.name_type_id                = nt.id
+            and nt.scientific
+            and not exists (
+              select null
+                from instance
+                join instance_type
+                  on instance.instance_type_id        = instance_type.id
+              where instance_type.primary_instance
+     and name.id                          = instance.name_id)))
+     AND ( not exists (
+      select null
+        from loader_name_match
+   where loader_name_match.loader_name_id = loader_name.id )) ",
+                         order: "seq"},
+          "name-match-eq:" => { where_clause: "? = (
+      select count(*)
+        from name
+        where loader_name.simple_name = name.simple_name
+          and exists (
+          select null
+            from name_Type nt
+            where name.name_type_id       = nt.id
+      and nt.scientific))",
                                       order: "seq"},
-    "one-name-match:"     => { where_clause: "1 =  (select count(*) from name where simple_name = name.simple_name and exists (select null from name_Type nt where name.name_type_id = nt.id and nt.scientific))" ,
+           "name-match-gt:" => { where_clause: "? < (
+        select count(*)
+          from name
+        where loader_name.simple_name = name.simple_name
+          and exists (
+            select null
+              from name_Type nt
+            where name.name_type_id       = nt.id
+       and nt.scientific))",
                                       order: "seq"},
-    "name-match-no-primary:"     =>   { where_clause: "0 <  (select count(*) from name where simple_name = name.simple_name and exists (select null from name_Type nt where name.name_type_id = nt.id and nt.scientific and not exists (select null from instance join instance_type on instance.instance_type_id = instance_type.id where instance_type.primary_instance and name.id = instance.name_id))) AND ( not exists ( select null from loader_name_match where loader_name_match.loader_name_id = loader_name.id )) ",
-                                      order: "seq"},
-    "name-match-eq:"      => { where_clause: "? =  (select count(*) from name where simple_name = name.simple_name and exists (select null from name_Type nt where name.name_type_id = nt.id and nt.scientific))",
-                                      order: "seq"},
-    "name-match-gt:"      => { where_clause: "? <  (select count(*) from name where simple_name = name.simple_name and exists (select null from name_Type nt where name.name_type_id = nt.id and nt.scientific))",
-                                      order: "seq"},
-    "name-match-gte:"     => { where_clause: "? <=  (select count(*) from name where simple_name = name.simple_name and exists (select null from name_Type nt where name.name_type_id = nt.id and nt.scientific))",
+           "name-match-gte:" => { where_clause: "? <= (
+        select count(*)
+          from name
+        where loader_name.simple_name = name.simple_name
+          and exists (
+            select null
+              from name_Type nt
+            where name.name_type_id       = nt.id
+       and nt.scientific))",
                                       order: "seq"},
     "partly:"             => { where_clause: "partly is not null",
                                       order: "seq"},

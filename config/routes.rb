@@ -420,6 +420,10 @@ Rails.application.routes.draw do
   match "loader_names/:id/tab/:tab", as: "loader_name_tab", to: "loader/names#tab", via: :get
 
   match "loader_names/:id/tab/:tab/:component", as: "loader_name_review_tab", to: "loader/names#tab", via: :get, defaults: { component: 'main' }
+  match "loader_names/parent_suggestions",
+        as: "loader_names_parent_suggestions",
+        to: "loader/names#parent_suggestions",
+        via: :get
 
   match "batch_reviews/:id/tab/:tab", as: "batch_review_tab", to: "loader/batch/reviews#tab", via: :get
   match "batch_reviews", as: "create_batch_review", to: "loader/batch/reviews#create", via: :post

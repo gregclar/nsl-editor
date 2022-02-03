@@ -751,7 +751,7 @@
         if ($('.give-me-focus')) {
           return debug('give-me-focus ing - changed so not .give-me-focus ing because clicked a tab resulted in focus switching to the first record');
         } else {
-          //$('.give-me-focus').focus()
+          $('.give-me-focus').focus()
           debug('just focus the tab');
           return $('li.active a.tab').focus();
         }
@@ -1040,12 +1040,6 @@
       return makeTargetVisible($target);
     } else {
       return makeTargetInvisible($target);
-    }
-  };
-
-  window.xmoveUpOneSearchResult = function(startRow) {
-    if (startRow.prev()) {
-      return startRow.prev().find('a.show-details-link').focus();
     }
   };
 

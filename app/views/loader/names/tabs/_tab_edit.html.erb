@@ -2,8 +2,8 @@
 <h5>Raw Details</h5>
 <% if @loader_name.accepted? %>
   <%= render partial: 'loader/names/tabs/forms/form_for_accepted', locals: { loader_name: @loader_name } %>
-<%# elsif @loader_name.synonym? %>
-  <%#= render partial: 'form_for_synonym', locals: { loader_name: @loader_name } %>
+<% elsif @loader_name.synonym? %>
+  <%= render partial: 'loader/names/tabs/forms/form_for_synonym', locals: { loader_name: @loader_name } %>
 <%# elsif @loader_name.misapp? %>
   <%#= render partial: 'form_for_misapp', locals: { loader_name: @loader_name } %>
 <%# elsif @loader_name.hybrid_cross? %>

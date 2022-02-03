@@ -4,7 +4,7 @@
   <% end %>
   <div class="inner">
     <h3>
-      <%= link_to(@loader_name.scientific_name,
+      <%= link_to("#{@loader_name.seq}: #{@loader_name.simple_name} (#{@loader_name.batch.name})",
                   search_path(query_target: 'loader_name', 
                               query_string: "id:#{@loader_name.id}"),
                   id: 'tab-heading',
