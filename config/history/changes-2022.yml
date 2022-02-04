@@ -1,6 +1,10 @@
 - :date: 4-Feb-2022
   :jira_id: '4078'
   :description: |-
+    Batch Loader: add simple-name-not-like: search directive
+- :date: 4-Feb-2022
+  :jira_id: '4078'
+  :description: |-
     Batch Loader: add loader-name detail query for non-matched likely-phrase names - it removes herbarium name and brackets from the string and shows any matches
 - :date: 3-Feb-2022
   :jira_id: '4078'

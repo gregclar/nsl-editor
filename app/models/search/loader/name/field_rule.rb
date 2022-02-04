@@ -199,6 +199,7 @@ class Search::Loader::Name::FieldRule
       leading_wildcard: true,
       trailing_wildcard: true,
       order: "seq"},
+   "simple-name-not-like:" => { where_clause: "(lower(simple_name) not like '%'||?||'%')"},
    "family:" => { where_clause: "(lower(family) like ?)"},
    "family-id:" => { where_clause: "(lower(family) like (select lower(simple_name) from loader_name where id = ?))"},
     "record-type:" => { where_clause: " record_type = ?",
