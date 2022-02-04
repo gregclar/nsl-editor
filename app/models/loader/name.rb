@@ -200,10 +200,21 @@ class Loader::Name < ActiveRecord::Base
   end
 
   def likely_phrase_name?
-    simple_name =~ /Herbarium/ || simple_name =~ /sp\./ || simple_name =~ / f\./ 
+    simple_name =~ /Herbarium/ || simple_name =~ /sp\./ || simple_name =~ /[0-9][0-9][0-9]/ 
   end
 
+  # Simple name match, but ignoring herbarium string and parentheses
+  # Also, no requirement for scientific name type
   def matches_tweaked_for_phrase_name
     ::Name.where(["regexp_replace(simple_name,'[)(]','','g') = regexp_replace(regexp_replace(?,' [A-z][A-z]* Herbarium','','i'),'[)(]','','g')", simple_name])
+  end
+
+  def likely_cultivar?
+    simple_name =~ /'/
+  end
+
+  # No requirement for scientific name type
+  def matches_tweaked_for_cultivar
+    ::Name.where(simple_name: simple_name)
   end
 end

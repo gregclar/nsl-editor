@@ -45,6 +45,58 @@
   </tr>
   <% end %>
 </table>
+
+  <h4>Name Matching Directives</h4>
+<table class="table table-striped">
+  <tr><th>Field</th><th>Description</th></tr>
+  <% [
+    {field_name: 'no-name-match:',
+     description: "no matching NSL name - checks the supplied name against name.simple_name (no authority) and name.full_name (has authority) for scientific names"},
+    {field_name: 'no-name-match-unscientific:',
+     description: "same as <code>no-name-match:</code>, but no requirement for the matching name to be <b>scientific</b> - so it allows for cultivars"},
+    {field_name: 'no-name-match-unaccent:',
+     description: "no matching NSL name - applies f_unaccent to normalise accented chars but only compares to name.simple_name (no authority)"},
+    {field_name: 'some-name-match:',
+     description: "checks supplied name against name simple_name or full_name for at least one matching NSL scientific name"},
+    {field_name: 'some-name-match-unscientific:',
+     description: "same as <code>some-name-match:</code> but matching names must be <b>unscientific</b> - this complements <code>no-name-match-unscientific</code> by showing you the matching cultivars etc"},
+    {field_name: 'many-name-match:',
+     description: "match loader names with more than 1 matching NSL name - compares on simple name and full_name of scientific names "},
+    {field_name: 'many-name-match-unaccent: Batch Name',
+     description: "match loader names with more than 1 matching NSL name - applies f_unaccent to normalise accented chars, checks name.simple_name only (for scientific names), and <b>needs the target batch name as an argument to give correct results</b>"},
+    {field_name: 'one-name-match:',
+     description: "match only on CSV data with exactly one matching NSL name"},
+    {field_name: 'name-match-eq:',
+     description: "match only on CSV data with a number of matching NSL names equal to the supplied number"},
+    {field_name: 'name-match-gt:',
+     description: "match only on CSV data with a number of matching NSL names greater than the supplied number"},
+    {field_name: 'name-match-gte:',
+     description: "match only on CSV data with a number of matching NSL names greater than or equal to the supplied number"},
+    {field_name: 'name-match-no-primary:',
+     description: "find Orchids with at least one matching name but no matching name with a primary instance"},
+    {field_name: 'taxon-sharing-name-id:',
+     description: "match only on CSV data orchid that shares a preferred name ID with at least one other CSV data orchid"},
+    {field_name: 'non-misapp-taxon-sharing-name-id:',
+     description: "any non-misapplied orchid that shares a preferred name ID match with at least one other non-misapplied orchid"},
+    {field_name: 'non-misapp-taxon-sharing-name-id-not-pp:',
+     description: "any non-misapplied orchid that shares a preferred name ID match with at least one other non-misapplied orchid, but excluding cases where all the relationships are partial"},
+      ].each do |val| %>
+  <tr>
+    <td class="width-20-percent">
+      <a href="javascript:void(0)" class="xyz searchable-field width-100-percent" title='Add "<%= val[:field_name] %>" field to search.'>
+        <span class="blue"><%= val[:field_name] %></span>
+      </a>
+    </td>
+    <td><%= val[:description].html_safe %></td>
+    <% if val[:partial].present? %>
+      <td><%= render partial: val[:partial] %></td>
+    <% else %>
+      <td></td>
+    <% end %>
+  </tr>
+  <% end %>
+</table>
+
   <h4>More from Orchids (not all tested as at 28 January 2022)</h4>
 <table class="table table-striped">
   <tr><th>Field</th><th>Description</th></tr>
@@ -160,52 +212,6 @@
   <% end %>
 </table>
 
-  <h4>Name Matching Directives</h4>
-<table class="table table-striped">
-  <tr><th>Field</th><th>Description</th></tr>
-  <% [
-    {field_name: 'no-name-match:',
-     description: "no matching NSL name - checks the supplied name against name.simple_name (no authority) and name.full_name (has authority) for scientific names"},
-    {field_name: 'no-name-match-unaccent:',
-     description: "no matching NSL name - applies f_unaccent to normalise accented chars but only compares to name.simple_name (no authority)"},
-    {field_name: 'some-name-match:',
-     description: "checks supplied name against name simple_name or full_name for at least one matching NSL scientific name"},
-    {field_name: 'many-name-match:',
-     description: "match loader names with more than 1 matching NSL name - compares on simple name and full_name of scientific names "},
-    {field_name: 'many-name-match-unaccent: Batch Name',
-     description: "match loader names with more than 1 matching NSL name - applies f_unaccent to normalise accented chars, checks name.simple_name only (for scientific names), and <b>needs the target batch name as an argument to give correct results</b>"},
-    {field_name: 'one-name-match:',
-     description: "match only on CSV data with exactly one matching NSL name"},
-    {field_name: 'name-match-eq:',
-     description: "match only on CSV data with a number of matching NSL names equal to the supplied number"},
-    {field_name: 'name-match-gt:',
-     description: "match only on CSV data with a number of matching NSL names greater than the supplied number"},
-    {field_name: 'name-match-gte:',
-     description: "match only on CSV data with a number of matching NSL names greater than or equal to the supplied number"},
-    {field_name: 'name-match-no-primary:',
-     description: "find Orchids with at least one matching name but no matching name with a primary instance"},
-    {field_name: 'taxon-sharing-name-id:',
-     description: "match only on CSV data orchid that shares a preferred name ID with at least one other CSV data orchid"},
-    {field_name: 'non-misapp-taxon-sharing-name-id:',
-     description: "any non-misapplied orchid that shares a preferred name ID match with at least one other non-misapplied orchid"},
-    {field_name: 'non-misapp-taxon-sharing-name-id-not-pp:',
-     description: "any non-misapplied orchid that shares a preferred name ID match with at least one other non-misapplied orchid, but excluding cases where all the relationships are partial"},
-      ].each do |val| %>
-  <tr>
-    <td class="width-20-percent">
-      <a href="javascript:void(0)" class="xyz searchable-field width-100-percent" title='Add "<%= val[:field_name] %>" field to search.'>
-        <span class="blue"><%= val[:field_name] %></span>
-      </a>
-    </td>
-    <td><%= val[:description].html_safe %></td>
-    <% if val[:partial].present? %>
-      <td><%= render partial: val[:partial] %></td>
-    <% else %>
-      <td></td>
-    <% end %>
-  </tr>
-  <% end %>
-</table>
 
   <h4>Some More Interesting Directives</h4>
 <table class="table table-striped">

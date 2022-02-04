@@ -315,6 +315,13 @@ class Search::Loader::Name::FieldRule
             where name.name_type_id = nt.id
               and nt.scientific))",
                                       order: "seq"},
+    "no-name-match-unscientific:" => { where_clause: "not exists (
+        select null
+          from name
+        where (loader_name.simple_name = name.simple_name
+               or
+               loader_name.simple_name = name.full_name))",
+                                      order: "seq"},
      "no-name-match-unaccent:" => { where_clause: "loader_name.id in (select id
   from loader_name
  where lower(f_unaccent(simple_name)) in (
@@ -329,12 +336,23 @@ class Search::Loader::Name::FieldRule
           )
        ) ) ",
                            order: "seq"},
-                                  "some-name-match:" => { where_clause: "exists (
+    "some-name-match:" => { where_clause: "exists (
                               select null
                                 from name
                                 where (loader_name.simple_name = name.simple_name
                                or loader_name.simple_name = name.full_name)
           and exists (
+            select null
+              from name_type nt
+            where name.name_type_id = nt.id
+              and nt.scientific))",
+                               order: "seq"},
+    "some-name-match-unscientific:" => { where_clause: "exists (
+                              select null
+                                from name
+                                where (loader_name.simple_name = name.simple_name
+                               or loader_name.simple_name = name.full_name)
+          and not exists (
             select null
               from name_type nt
             where name.name_type_id = nt.id

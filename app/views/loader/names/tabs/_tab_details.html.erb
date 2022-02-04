@@ -1,29 +1,14 @@
 
 <%= render partial: 'loader/names/tabs/details/core_data' %>
+<br>
 <%= divider %>
 <%= render partial: 'loader/names/tabs/details/name_matches' %>
+<%= render partial: 'loader/names/tabs/details/link_to_context_view' %>
 <%= divider %>
 <%= render partial: 'loader/names/tabs/details/core_data_2' %>
 <br>
 <br>
-<%= divider %>
 
-<% if @loader_name.child? %>
-  <%= render partial: 'detail_line', 
-           locals: {info: link_to("Query parent (accepted name with synonyms)",
-                                  search_path(query_target: "loader names", query_string: "id-with-syn:#{@loader_name.parent_id}"),
-                                  title: 'See parent',
-                                  class: 'underline'), 
-                    label: ''} %>
-<% else %>
-  <%= render partial: 'detail_line', 
-    locals: {info: link_to("Show #{pluralize(@loader_name.children.size,'synonym')}",
-                                  search_path(query_target: "loader names", query_string: "id-with-syn:#{@loader_name.id}"),
-                                  title: 'See this record with synonyms',
-                                  class: 'underline'), 
-                    label: ''} %>
-<% end %>
-<br>
 <%= divider %>
 <%= render partial: 'detail_line',
       locals: {info: @loader_name.batch.name,
