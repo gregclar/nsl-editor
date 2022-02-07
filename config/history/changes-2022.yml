@@ -1,4 +1,8 @@
 - :date: 7-Feb-2022
+  :jira_id: '3364'
+  :description: |-
+    Stale object error: add more code to reduce and hopefully prevent this problem occurring
+- :date: 7-Feb-2022
   :jira_id: '4122'
   :description: |-
     Name quality check: add possibly-malformed: search directive, with query help text under a quality control heading
