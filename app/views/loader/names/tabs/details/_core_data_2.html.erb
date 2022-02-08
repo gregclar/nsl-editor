@@ -4,26 +4,18 @@
   <%= divider %>
 <% end %>
 <h4>More Raw Data</h4>
-<% unless @loader_name.name_status.blank? %>
-  <%= render partial: 'detail_line', locals: {info: @loader_name.name_status, label: 'name status'} %>
-<% end %>
-<% unless @loader_name.family.blank? %>
-  <%= render partial: 'detail_line', locals: {info: @loader_name.family, label: 'family'} %>
-<% end %>
+<%= render partial: 'detail_line', locals: {info: @loader_name.ex_base_author, label: 'ex_base_author'} unless @loader_name.ex_base_author.blank? %>
+<%= render partial: 'detail_line', locals: {info: @loader_name.base_author, label: 'base_author'} unless @loader_name.base_author.blank? %>
+<%= render partial: 'detail_line', locals: {info: @loader_name.ex_author, label: 'ex_author'} unless @loader_name.ex_author.blank? %>
+<%= render partial: 'detail_line', locals: {info: @loader_name.author, label: 'author'} unless @loader_name.author.blank? %>
 <% unless @loader_name.higher_rank_comment.blank? %>
   <%= render partial: 'detail_line', locals: {info: @loader_name.hr_comment, label: 'hr comment'} %>
-<% end %>
-<% unless @loader_name.subfamily.blank? %>
-  <%= render partial: 'detail_line', locals: {info: @loader_name.subfamily, label: 'subfamily'} %>
 <% end %>
 <% unless @loader_name.tribe.blank? %>
   <%= render partial: 'detail_line', locals: {info: @loader_name.tribe, label: 'tribe'} %>
 <% end %>
 <% unless @loader_name.subtribe.blank? %>
   <%= render partial: 'detail_line', locals: {info: @loader_name.subtribe, label: 'subtribe'} %>
-<% end %>
-<% unless @loader_name.rank.blank? %>
-  <%= render partial: 'detail_line', locals: {info: @loader_name.rank, label: 'rank'} %>
 <% end %>
 <% unless @loader_name.rank_nsl.blank? %>
   <%= render partial: 'detail_line', locals: {info: @loader_name.rank_nsl, label: 'nsl rank'} %>
@@ -107,10 +99,8 @@
 <% unless @loader_name.comment.blank? %>
   <%= render partial: 'detail_line', locals: {info: @loader_name.comment, label: 'comment'} %>
 <% end %>
-<% unless @loader_name.remark_to_reviewers.blank? %>
-  <%= render partial: 'detail_line', locals: {info: @loader_name.remark_to_reviewers, label: 'remark_to_reviewers'} %>
-<% end %>
 <% unless @loader_name.original_text.blank? %>
+  <br>
   <%= divider %>
   <h5>Original Text (HTML)</h5>
   <%= render partial: 'detail_line', locals: {info: @loader_name.original_text.html_safe, label: ''} %>

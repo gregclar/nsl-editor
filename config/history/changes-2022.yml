@@ -9,7 +9,7 @@
 - :date: 4-Feb-2022
   :jira_id: '4078'
   :description: |-
-    Batch Loader - loader names: add <code>no-name-name-unscientific:</code>, <code>some-name-name-unscientific:</code> search directives; add possible matches for cultivars on details and an improved context link
+    Batch Loader - loader names: add <code>no-name-match-unscientific:</code>, <code>some-name-match-unscientific:</code> search directives; add possible matches for cultivars on details and an improved context link
 - :date: 4-Feb-2022
   :jira_id: '4078'
   :description: |-
