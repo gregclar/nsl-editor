@@ -1,4 +1,8 @@
 - :date: 9-Feb-2022
+  :jira_id: '4078'
+  :description: |-
+    Batch Loader: change loader-name <code>is-accepted:</code> search to exclude excluded records
+- :date: 9-Feb-2022
   :jira_id: '4150'
   :description: |-
     Batch Loader: streamline mode-switching and tighten mode-switching permissions and batch loader administration permissions.

@@ -287,7 +287,7 @@ class Search::Loader::Name::FieldRule
                                       order: "seq"},
     "has-no-parent:"      => { where_clause: "parent_id is null",
                                       order: "seq"},
-    "is-accepted:"        => { where_clause: "record_type = 'accepted'",
+    "is-accepted:"        => { where_clause: "record_type = 'accepted' and not excluded",
                                       order: "seq"},
     "is-syn:"             => { where_clause: "record_type = 'synonym'",
                                       order: "seq"},
