@@ -68,6 +68,10 @@ class Search::Loader::Name::FieldRule
                                where_clause: " id = ? or parent_id = ?",
                                multiple_values_where_clause: " id in (?)",
                                order: "seq"},
+    "raw-id:"                 => { multiple_values: true,
+                               where_clause: "raw_id = ? or parent_raw_id = ? ",
+                               multiple_values_where_clause: " raw_id in (?) or parent_raw_id in (?)",
+                               order: "seq"},
 
     "has-review-comment:" => 
     { where_clause: "exists (

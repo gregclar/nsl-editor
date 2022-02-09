@@ -9,7 +9,7 @@
 <%= render partial: 'detail_line', locals: {info: @loader_name.ex_author, label: 'ex_author'} unless @loader_name.ex_author.blank? %>
 <%= render partial: 'detail_line', locals: {info: @loader_name.author, label: 'author'} unless @loader_name.author.blank? %>
 <% unless @loader_name.higher_rank_comment.blank? %>
-  <%= render partial: 'detail_line', locals: {info: @loader_name.hr_comment, label: 'hr comment'} %>
+  <%= render partial: 'detail_line', locals: {info: @loader_name.higher_rank_comment, label: 'higher rank comment'} %>
 <% end %>
 <% unless @loader_name.tribe.blank? %>
   <%= render partial: 'detail_line', locals: {info: @loader_name.tribe, label: 'tribe'} %>

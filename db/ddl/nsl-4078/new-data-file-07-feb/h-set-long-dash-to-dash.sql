@@ -1,5 +1,6 @@
 
 
+begin;
 
 select count(*)
   from loader_name
@@ -7,7 +8,7 @@ select count(*)
    and loader_batch_id = (
     select id
       from loader_batch
- where name            = 'APC List 103 07 Feb'
+ where lower(name) = lower('APC List 103 draft 07 Feb')
        );
 
 update loader_name
@@ -19,5 +20,7 @@ update loader_name
    and loader_batch_id = (
     select id
       from loader_batch
- where name            = 'APC List 103 07 Feb'
+ where lower(name) = lower('APC List 103 draft 07 Feb')
        );
+
+commit;

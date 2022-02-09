@@ -33,5 +33,6 @@ class Search::Loader::Name::FieldAbbrev
     "concept-note:" => "comment:",
     "remark-to-reviewers:" => "remark:",
     "scientific-name:" => "simple-name:",
+    "raw-ids:" => "raw-id:",
   }.freeze
 end
