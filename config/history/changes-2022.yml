@@ -1,4 +1,8 @@
 - :date: 9-Feb-2022
+  :jira_id: '4150'
+  :description: |-
+    Batch Loader: adjust permissions - allow taxonomic reviewers to view loader-name tabs
+- :date: 9-Feb-2022
   :jira_id: '4078'
   :description: |-
     Batch Loader: change loader-name <code>is-accepted:</code> search to exclude excluded records

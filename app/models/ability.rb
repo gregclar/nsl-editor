@@ -121,7 +121,6 @@ class Ability
     can "trees/workspaces/current", "toggle"
     can "names/typeaheads/for_workspace_parent_name", :all
     can "menu", "tree"
-    can "loader/name/review/comments", :all
   end
 
   def admin_auth
@@ -130,7 +129,6 @@ class Ability
   end
 
   def batch_loader_auth
-    can "loader/name",                 :all
     can "loader/batches",              :all
     can "loader/names",                :all
     can "loader/batch/reviews",        :all
@@ -147,6 +145,9 @@ class Ability
   def reviewer_auth
     can "loader/name/review/comments", :all
     can "loader/batch/review/mode",    'switch_on'
+    can "loader/names",                'show' 
+    can "loader/names",                'tab_details' 
+    can "loader/names",                'tab_comment' 
   end
 
 end
