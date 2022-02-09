@@ -128,6 +128,7 @@ class Ability
 
   def batch_loader_auth
     can "loader/name", :all
+    can "loader/batches", :process
   end
 
   def orchids_matcher_auth

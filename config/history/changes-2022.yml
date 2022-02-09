@@ -1,3 +1,7 @@
+- :date: 9-Feb-2022
+  :jira_id: '4078'
+  :description: |-
+    Batch Loader: adjusting the <code>loader-name</code> details tab and starting to add the form for confirming a match; added a stub Loader tab in the main panel.
 - :date: 7-Feb-2022
   :jira_id: '3364'
   :description: |-

@@ -217,4 +217,8 @@ class Loader::Name < ActiveRecord::Base
   def matches_tweaked_for_cultivar
     ::Name.where(simple_name: simple_name)
   end
+
+  def misapplied?
+    record_type == 'misapplied'
+  end
 end

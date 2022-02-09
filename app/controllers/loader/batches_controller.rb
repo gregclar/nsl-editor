@@ -19,6 +19,10 @@
 class Loader::BatchesController < ApplicationController
   before_action :find_loader_batch, only: [:show, :destroy, :tab, :update]
 
+
+  def index
+  end
+
   # Sets up RHS details panel on the search results page.
   # Displays a specified or default tab.
   def show
