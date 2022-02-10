@@ -24,7 +24,7 @@ select 'Review Period in stack' "display_as", brp.id,
 union
 select 'Batch Reviewer in stack' "display_as",
        brer.id,
-       users.given_name || ' ' || users.family_name || ' for ' || org.abbrev as name,
+       users.given_name || ' ' || users.family_name || ' for ' || org.abbrev || ' as ' || brrole.name as name,
        lb.name batch_name,
        lb.id batch_id,
        '' description, 
@@ -42,6 +42,8 @@ select 'Batch Reviewer in stack' "display_as",
     on br.loader_batch_id = lb.id
   join org
     on brer.org_id = org.id
+  join batch_review_role brrole
+    on brer.batch_review_role_id = brrole.id
 ) fred
 order by order_by
 ;

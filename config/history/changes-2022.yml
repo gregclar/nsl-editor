@@ -1,6 +1,10 @@
 - :date: 10-Feb-2022
   :jira_id: '4078'
   :description: |-
+    Batch Loader: add reviewer role to batch stack record from reviewer
+- :date: 10-Feb-2022
+  :jira_id: '4078'
+  :description: |-
     Batch Loader: fix reference to higher_rank_comment so appropriate details display; add search for <code>raw-id:</code>
 - :date: 9-Feb-2022
   :jira_id: '4078'
