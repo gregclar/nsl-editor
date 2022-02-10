@@ -1,6 +1,10 @@
 - :date: 10-Feb-2022
   :jira_id: '4078'
   :description: |-
+    Batch Loader: add default target text if no review targets are available
+- :date: 10-Feb-2022
+  :jira_id: '4078'
+  :description: |-
     Batch Loader: add reviewer role to batch stack record from reviewer
 - :date: 10-Feb-2022
   :jira_id: '4078'
