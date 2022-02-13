@@ -5,4 +5,5 @@
 \i e-bulk-update-loader-name-parent-id.sql
 \i f-clean-tags-out-of-remark-to-reviewers.sal
 \i g-replace-multiplication-signs.sql
-\i h-set-long-dash-to-dash.sql -- maybe unnecessary
+\i h-set-long-dash-to-dash.sql
+\i i-translate-synonym-types.sql

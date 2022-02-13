@@ -17,7 +17,8 @@
 #   limitations under the License.
 #
 class Loader::NamesController < ApplicationController
-  before_action :find_loader_name, only: [:show, :destroy, :tab, :update]
+  before_action :find_loader_name,
+                only: [:show, :destroy, :tab, :update, :set_preferred_match]
 
   # Sets up RHS details panel on the search results page.
   # Displays a specified or default tab.
@@ -53,6 +54,60 @@ class Loader::NamesController < ApplicationController
     render "update_error", status: :unprocessable_entity
   end
 
+  # For a given loader_name record, add or remove a loader_name_match
+  # record confirming the chosen name record for the match
+  def set_preferred_match
+    @message = update_matches
+    render
+  rescue => e
+    logger.error("Loader::Names#set_preferred_match rescuing #{e}")
+    @message = e.to_s
+    render "set_preferred_match_error", status: :unprocessable_entity
+  end
+
+  def update_matches
+    Rails.logger.debug('update_matches')
+    @loader_name_matches = Loader::Name::Match.where(loader_name_id: @loader_name.id)
+    stop_if_nothing_changed
+    return 'No change' if params[:loader_name].blank? 
+
+    #remove_unwanted_orchid_names
+    create_preferred_match unless clearing_all_preferred_matches?
+  end
+
+  def stop_if_nothing_changed
+    return if @loader_name_matches.blank? 
+    changed = false
+    @loader_name_matches.each do |loader_name_match|
+      unless loader_name_match.name_id == loader_name_params[:name_id].to_i &&
+             loader_name_match.instance_id == loader_name_params[:instance_id]
+        changed = true
+      end
+    end
+    raise 'no change required' unless changed
+  end
+
+  def create_preferred_match
+    loader_name_match = ::Loader::Name::Match.new
+    loader_name_match.loader_name_id = @loader_name.id
+    loader_name_match.name_id = loader_name_params[:name_id]
+    loader_name_match.instance_id = loader_name_params[:instance_id] || Name.find(loader_name_params[:name_id]).primary_instances.first.id
+    loader_name_match.relationship_instance_type_id = @loader_name.riti
+    loader_name_match.created_by = loader_name_match.updated_by = username
+    loader_name_match.save!
+  end
+
+  # The clear form sends a name_id of -1
+  # The aim of clear is to remove all chosen matches
+  # i.e. don't set a preferred match
+  def clearing_all_preferred_matches?
+    false #orchid_params[:name_id].to_i < 0
+  end
+
+
+
+
+  #############################################################################
   private
   def find_loader_name
     @loader_name = Loader::Name.find(params[:id])

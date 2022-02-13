@@ -1,7 +1,11 @@
+- :date: 14-Feb-2022
+  :jira_id: '4078'
+  :description: |-
+    Batch Loader: partial work towards selecting preferred loader name match
 - :date: 10-Feb-2022
   :jira_id: '4078'
   :description: |-
-    Batch Loader: add default target text if no review targets are available
+    Batch Loader: add a default search target entry to advise the user they have no reviews if no review targets are available for a user
 - :date: 10-Feb-2022
   :jira_id: '4078'
   :description: |-

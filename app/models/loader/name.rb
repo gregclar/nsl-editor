@@ -46,6 +46,9 @@ class Loader::Name < ActiveRecord::Base
            foreign_key: "parent_id",
            optional: true
 
+  has_many :loader_name_matches, class_name: "Loader::Name::Match", foreign_key: "loader_name_id"
+  alias_attribute :preferred_matches, :loader_name_matches
+
   attr_accessor :give_me_focus, :message
 
   # before_create :set_defaults # rails 6 this was not being called before the validations
@@ -220,5 +223,46 @@ class Loader::Name < ActiveRecord::Base
 
   def misapplied?
     record_type == 'misapplied'
+  end
+
+  def synonym_without_synonym_type?
+    synonym? & synonym_type.blank?
+  end
+
+  # r relationship
+  # i instance
+  # t type
+  # i id
+  def riti
+    return nil if accepted?
+    return InstanceType.find_by_name('misapplied').id if misapplied?
+    if taxonomic?
+      if pp?
+        return InstanceType.find_by_name('pro parte taxonomic synonym').id
+      else
+        return InstanceType.find_by_name('taxonomic synonym').id
+      end
+    elsif nomenclatural?
+      if pp?
+        return InstanceType.find_by_name('pro parte nomenclatural synonym').id
+      else
+        return InstanceType.find_by_name('nomenclatural synonym').id
+      end
+    elsif InstanceType.where(name: synonym_type).size == 1
+      return InstanceType.find_by_name(synonym_type).id
+    elsif synonym_type.blank?
+      throw "The loader-name is a synonym with no synonym type - please set a synonym type in 'Edit Raw' then try again."
+    else
+      throw "LoaderName#riti cannot work out an instance type for loader-name: #{id}: #{simple_name} #{record_type} #{synonym_type}"
+    end
+    throw "LoaderName#riti is stuck with no relationship instance type id for loader-name: #{id}: #{simple_name}"
+  end
+
+  def taxonomic?
+    synonym_type == 'taxonomic synonym'
+  end
+
+  def nomenclatural?
+    synonym_type == 'nomenclatural synonym'
   end
 end

@@ -1,7 +1,37 @@
-<%= form_for(@loader_name, as: 'loader_name', role: 'form', remote: true) do |f| %>
+<%= form_for(@loader_name, as: 'loader_name', url: loader_set_preferred_match_path, role: 'form', remote: true) do |f| %>
   <% @loader_name.matches.each_with_index do |matching_name, index| %>
-        <%#= f.radio_button(:name_id, matching_name.id, checked: orchid_name_ids.include?(matching_name.id), disabled: disable_radio_button) %>
-        <%= label_tag(:"orchid_name_id_#{matching_name.id}", "#{matching_name.full_name} #{matching_name.name_status.name_for_instance_display}", title: "Name ID: #{matching_name.id}") %>
+
+    <% disable_radio_button = !matching_name.has_primary_instance? || matching_name.duplicate? || @loader_name.synonym_without_synonym_type? %>
+    <% if disable_radio_button then 
+        reason_to_disable = '[Radio button is disabled because '
+        reason_to_disable += 'matching name has no primary instance; ' unless matching_name.has_primary_instance? 
+        reason_to_disable += 'matching name is a duplicate; ' if matching_name.duplicate? 
+        reason_to_disable += 'this synonym has no type; ' if @loader_name.synonym_without_synonym_type? 
+        reason_to_disable += ']'
+        reason_to_disable.sub!('; ]',']')
+      %>
+    <% end %>
+
+
+    <% name_ids = @loader_name.loader_name_matches.collect {|preferred| preferred.name_id} %>
+
+    <%= f.radio_button(:name_id, matching_name.id, checked: name_ids.include?(matching_name.id), disabled: disable_radio_button) %>
+    <%= label_tag(:"loader_name_name_id_#{matching_name.id}",
+                  "#{matching_name.full_name} #{matching_name.name_status.name_for_instance_display}",
+                  title: "Name ID: #{matching_name.id}") %>
+    &nbsp;<%= reason_to_disable if disable_radio_button %>
+
+  | <%= link_to("#{ShardConfig.name_space} Editor #{icon('binoculars')}".html_safe,
+                search_path(query_string: "id: #{matching_name.id} show-instances:",query_target: 'names'),
+                          tabindex: increment_tab_index,
+                          title: "Search for #{matching_name.full_name}",
+                          class: 'blue') %>
     <br>
+
   <% end %>
+  <br>
+  <%= f.submit "Save", id: 'save-match', value: 'Save Preferred Match', tabindex: increment_tab_index, title: 'Save changes', class: 'btn btn-primary width-11em', disabled: false %>
+  <input type="reset" value="Reset choice" class="btn btn-default pull-right" title="Reset the radio buttons">
 <% end %>
+
+

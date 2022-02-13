@@ -11,17 +11,6 @@
 <br>
 
 <%= divider %>
-<%= render partial: 'detail_line',
-      locals: {info: @loader_name.batch.name,
-               label: link_to('Batch',
-                        search_path(
-                          query_target: 'loader batch',
-                          query_string: "id: #{@loader_name.batch.id}"),
-               title:"Query the loader batch",class:'blue')} %>
-Loader Name #<%= @loader_name.id %> <br>
-Raw ID #<%= @loader_name.raw_id %><br>
-Seq #<%= @loader_name.seq %>
-<%= divider %>
 
 <h5>Metadata</h5>
 <%= created_by_whom_and_when(@loader_name).html_safe %>
@@ -29,12 +18,4 @@ Seq #<%= @loader_name.seq %>
 <%= updated_by_whom_and_when(@loader_name).html_safe %>
 <br>
 compiler view
-<%= divider %>
-<%= divider %>
-<%= divider %>
-
-
-<%#= render partial: 'orchids/tabs/tab_show_1_name_matches' %>
-<%= divider %>
-<%#= render partial: 'orchids/tabs/tab_show_1_more_info' %>
 <%= divider %>

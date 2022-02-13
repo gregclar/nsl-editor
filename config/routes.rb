@@ -411,11 +411,12 @@ Rails.application.routes.draw do
     resources :batches
   end
   match "loader_batches/:id/tab/:tab", as: "loader_batch_tab", to: "loader/batches#tab", via: :get
-  #namespace :loader do
-  #  match "loader_batches/:id", as: "batch_update", to: "batches#update", via: :patch
-  #end
   match "loader_batch/make-default/:id", as: "make_default_batch", to: "loader/batches#make_default", via: :post
   match "loader_batch/clear-default", as: "clear_default_batch", to: "loader/batches#clear_default", via: :post
+
+  namespace :loader do
+    match "name/:id", as: "set_preferred_match", to: "names#set_preferred_match", via: :patch
+  end
   match "loader_name/:id", as: "loader_name", to: "loader/names#update", via: :put
   match "loader_names/:id/tab/:tab", as: "loader_name_tab", to: "loader/names#tab", via: :get
 
