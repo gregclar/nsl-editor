@@ -1,6 +1,10 @@
 - :date: 14-Feb-2022
   :jira_id: ''
   :description: |-
+    Security: JavaScript and ruby library upgrades
+- :date: 14-Feb-2022
+  :jira_id: ''
+  :description: |-
     Security: upgrade to rails 6.1.4.6
 - :date: 14-Feb-2022
   :jira_id: '4078'
