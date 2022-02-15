@@ -83,6 +83,12 @@
       <% if search_result.record_type == 'accepted' && search_result.excluded? %>
         <span class="excluded">excluded</span>
       <% end %>
+      <% if search_result.isonym? %>
+        <span class="review loader-name isonym">isonym</span>
+      <% end %>
+      <% if search_result.orth_var? %>
+        <span class="review loader-name orth-var">orth. var.</span>
+      <% end %>
       <% if search_result.reviewer_comments? %>
         <span class="reviewer-comment-tag"><%= pluralize(search_result.reviewer_comments.size, 'reviewer comment') %></span>
       <% end %>
@@ -97,5 +103,4 @@
 </tr>
 
 <% end %>
-
 

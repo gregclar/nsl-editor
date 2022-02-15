@@ -57,6 +57,20 @@ table tr.review-result.taxonomy-comment.showing-details td a span.review.loader-
   padding: 0 0.2em 0 0.2em;
 }
 
+.review.loader-name.isonym {
+  background-color: firebrick;
+  color: white;
+  font-size: 9pt;
+  padding: 0 0.2em 0 0.2em;
+}
+
+.review.loader-name.orth-var {
+  background-color: firebrick;
+  color: white;
+  font-size: 9pt;
+  padding: 0 0.2em 0 0.2em;
+}
+
 .review.loader-name.remark-to-reviewers {
   background-color: yellow;
   font-size: 9pt;
