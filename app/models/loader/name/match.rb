@@ -23,5 +23,7 @@ class Loader::Name::Match < ActiveRecord::Base
   self.primary_key = "id"
   self.sequence_name = "nsl_global_seq"
   belongs_to :loader_name, class_name: "Loader::Name", foreign_key: "loader_name_id"
+  validates :loader_name_id, uniqueness: true,
+            unless: Proc.new {|a| a.loader_name.record_type == 'misapplied'}
 end
 

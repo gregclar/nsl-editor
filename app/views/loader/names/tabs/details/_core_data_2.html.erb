@@ -1,13 +1,8 @@
-<% unless @loader_name.notes.blank? %>
-  <h4>Notes</h4>
-  <%= @loader_name.notes.html_safe %>
-  <%= divider %>
-<% end %>
-<h4>More Raw Data</h4>
 <%= render partial: 'detail_line', locals: {info: @loader_name.ex_base_author, label: 'ex_base_author'} unless @loader_name.ex_base_author.blank? %>
 <%= render partial: 'detail_line', locals: {info: @loader_name.base_author, label: 'base_author'} unless @loader_name.base_author.blank? %>
 <%= render partial: 'detail_line', locals: {info: @loader_name.ex_author, label: 'ex_author'} unless @loader_name.ex_author.blank? %>
 <%= render partial: 'detail_line', locals: {info: @loader_name.author, label: 'author'} unless @loader_name.author.blank? %>
+<%= render partial: 'detail_line', locals: {info: @loader_name.rank, label: 'rank'} %>
 <% unless @loader_name.higher_rank_comment.blank? %>
   <%= render partial: 'detail_line', locals: {info: @loader_name.higher_rank_comment, label: 'higher rank comment'} %>
 <% end %>
@@ -100,7 +95,6 @@
   <%= render partial: 'detail_line', locals: {info: @loader_name.comment, label: 'comment'} %>
 <% end %>
 <% unless @loader_name.original_text.blank? %>
-  <br>
   <%= divider %>
   <h5>Original Text (HTML)</h5>
   <%= render partial: 'detail_line', locals: {info: @loader_name.original_text.html_safe, label: ''} %>

@@ -1,24 +1,9 @@
-<h4>Core Raw Data</h4>
-
 <% increment_tab_index(0) %>
-<%= render partial: 'detail_line', locals: {info: @loader_name.id, label: 'ID'} %>
-<%= render partial: 'detail_line', locals: {info: @loader_name.raw_id, label: 'raw ID (from the CSV data)'} %>
-<%= render partial: 'detail_line', locals: {info: @loader_name.seq, label: 'ordering position'} %>
-<%= render partial: 'detail_line', locals: {info: @loader_name.record_type, label: 'record type'} %>
-<%= render partial: 'detail_line',
-      locals: {label: 'batch',
-               info: link_to(@loader_name.batch.name,
-                        search_path(
-                          query_target: 'loader batch',
-                          query_string: "id: #{@loader_name.batch.id}"),
-               title:"Query the loader batch",class:'blue')} %>
-<%= divider %>
 <%= render partial: 'detail_line', locals: {info: @loader_name.family, label: 'family'} %>
 <%= render partial: 'detail_line', locals: {info: @loader_name.subfamily, label: 'subfamily'} unless @loader_name.subfamily.blank?  %>
 <%= render partial: 'detail_line', locals: {info: @loader_name.simple_name, label: 'simple name aka taxon'} unless @loader_name.simple_name.blank? %>
 <%= render partial: 'detail_line', locals: {info: @loader_name.simple_name_as_loaded, label: 'simple name as loaded'} unless @loader_name.simple_name_as_loaded.blank? || @loader_name.simple_name == @loader_name.simple_name_as_loaded %>
 <%= render partial: 'detail_line', locals: {info: @loader_name.full_name, label: 'full name aka taxon full'} unless @loader_name.full_name.blank? %>
-<%= render partial: 'detail_line', locals: {info: @loader_name.rank, label: 'rank'} %>
 
 <%= render partial: 'detail_line', locals: {info: @loader_name.name_status, label: 'name_status'} unless @loader_name.name_status.blank? %>
 <%= render partial: 'detail_line', locals: {info: @loader_name.name_comment, label: 'name_comment'} unless @loader_name.name_comment.blank? %>
@@ -26,7 +11,6 @@
 <%= render partial: 'detail_line', locals: {info: @loader_name.auct_non, label: 'auct_non'} unless @loader_name.auct_non.blank? %>
 <%= render partial: 'detail_line', locals: {info: @loader_name.doubtful, label: 'doubtful'} unless @loader_name.doubtful.blank? %>
 <%= render partial: 'detail_line', locals: {info: @loader_name.hybrid_flag, label: 'hybrid_flag'} unless @loader_name.hybrid_flag.blank? %>
-<%= render partial: 'detail_line', locals: {info: @loader_name.parent_id, label: 'parent_id'} unless @loader_name.parent_id.blank? %>
 <%= render partial: 'detail_line', locals: {info: @loader_name.unplaced, label: 'unplaced'} unless @loader_name.unplaced.blank? %>
 <%= render partial: 'detail_line', locals: {info: @loader_name.excluded, label: 'excluded'} unless @loader_name.excluded.blank? %>
 <%= render partial: 'detail_line', locals: {info: @loader_name.comment, label: 'comment'} unless @loader_name.comment.blank? %>
@@ -44,6 +28,7 @@
       This loader-name is a synonym without a synonym type.  You can fix that on the Edit tab.
       </span>
     <% end %>
+<%= render partial: 'loader/names/tabs/details/link_to_context_view' %>
 
 
 

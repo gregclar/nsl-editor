@@ -265,4 +265,8 @@ class Loader::Name < ActiveRecord::Base
   def nomenclatural?
     synonym_type == 'nomenclatural synonym'
   end
+
+  def pp?
+    partly == 'p.p.'
+  end
 end

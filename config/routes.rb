@@ -415,7 +415,11 @@ Rails.application.routes.draw do
   match "loader_batch/clear-default", as: "clear_default_batch", to: "loader/batches#clear_default", via: :post
 
   namespace :loader do
-    match "name/:id", as: "set_preferred_match", to: "names#set_preferred_match", via: :patch
+    #match "name/:id", as: "set_preferred_match", to: "names#set_preferred_match", via: :patch
+    namespace :name do
+      match "matches/create/:id", as: "matches_set", to: "matches#set", via: :patch
+      match "matches/delete/all/:id", as: "matches_delete_all", to: "matches#delete_all", via: :delete
+    end
   end
   match "loader_name/:id", as: "loader_name", to: "loader/names#update", via: :put
   match "loader_names/:id/tab/:tab", as: "loader_name_tab", to: "loader/names#tab", via: :get

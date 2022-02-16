@@ -131,6 +131,7 @@ class Ability
   def batch_loader_auth
     can "loader/batches",              :all
     can "loader/names",                :all
+    can "loader/name/matches",         :all
     can "loader/batch/reviews",        :all
     can "loader/batch/reviewers",      :all
     can "loader/batch/review/periods", :all
