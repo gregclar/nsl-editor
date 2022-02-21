@@ -18,17 +18,21 @@
 #
 class Loader::Name::MatchesController < ApplicationController
   before_action :find_loader_name, only: [:set]
+  #before_action :find_loader_name_match, only: [:delete]
 
   # For a given loader_name record, a set action may involve
   # a create or a delete or no change because user has radio
-  # buttons to add or remove a match record
+  # buttons to add or remove a match record.
+  # This is for 'accepted' records or synonyms, where only 
+  # one match is allower per loader-name.
   def set
+    throw 'not here!'
     apply_changes
     render
-  # rescue => e
-    # logger.error("Loader::Name::Matches#create rescuing #{e}")
-    # @message = e.to_s
-    # render "create_error", status: :unprocessable_entity
+   rescue => e
+     logger.error("Loader::Name::Matches#create rescuing #{e}")
+     @message = e.to_s
+     render "create_error", status: :unprocessable_entity
   end
 
   def delete_all
@@ -37,6 +41,26 @@ class Loader::Name::MatchesController < ApplicationController
     saved_matches.each do |match|
       match.delete
     end
+  end
+
+  # For misapplications
+  def create_or_delete
+    @loader_name = Loader::Name.find(params[:id])
+    Rails.logger.debug("@loader_name: #{@loader_name.id}")
+    if params[:commit] == 'Remove'
+      delete
+    else
+      create_preferred_match2
+    end
+  end
+
+  def delete
+    @loader_name_match = Loader::Name::Match.where(loader_name_id: loader_name_match_params[:loader_name_id])
+      .where(name_id: loader_name_match_params[:name_id])
+      .where(instance_id: loader_name_match_params[:instance_id]).first
+    @instance_id = loader_name_match_params[:instance_id]
+    @loader_name_match.delete
+    render :delete_for_misapp
   end
 
   private
@@ -112,16 +136,35 @@ class Loader::Name::MatchesController < ApplicationController
     'Saved'
   end
 
+  
+  def create_preferred_match2
+    loader_name_match = ::Loader::Name::Match.new
+    loader_name_match.loader_name_id = @loader_name.id
+    loader_name_match.name_id = loader_name_match_params[:name_id]
+    loader_name_match.instance_id = loader_name_match_params[:instance_id] || ::Name.find(loader_name_match_params[:name_id]).primary_instances.first.id
+    loader_name_match.relationship_instance_type_id = @loader_name.riti
+    loader_name_match.created_by = loader_name_match.updated_by = username
+    loader_name_match.save!
+    @instance_id = loader_name_match_params[:instance_id]
+    render :create_for_misapp
+  end
+
+
   # In this controller because some loader_name_match actions originate from 
   # a loader_name record
   def loader_name_params
     params.require(:loader_name).permit(:simple_name, :name_id, :instance_id,
-                                   :record_type, :parent, :parent_id, 
-                                   :name_status, :ex_base_author,
-                                   :base_author, :ex_author, :author,
-                                   :synonym_type, :comment, :seq,
-                                   :doubtful,
-                                   :no_further_processing, :notes,
-                                   :distribution)
+                                        :record_type, :parent, :parent_id, 
+                                        :name_status, :ex_base_author,
+                                        :base_author, :ex_author, :author,
+                                        :synonym_type, :comment, :seq,
+                                        :doubtful,
+                                        :no_further_processing, :notes,
+                                        :distribution, :loader_name_id)
+  end
+
+  def loader_name_match_params
+    params.require(:loader_name_match).permit(:name_id, :instance_id,
+                                              :loader_name_id)
   end
 end

@@ -68,6 +68,10 @@ class Loader::BatchesController < ApplicationController
     @message = 'Done'
   end
 
+  def stats
+    @stats = Loader::Batch::SummaryCounts::AsStatusReporter::ForAcceptedNames.new('*', 51658646).report
+  end
+
   private
 
   def find_loader_batch

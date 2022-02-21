@@ -269,4 +269,17 @@ class Loader::Name < ActiveRecord::Base
   def pp?
     partly == 'p.p.'
   end
+
+  # This search emulates the default search for LoaderNames, the 
+  # simple-name search.
+  def self.name_string_search(name_string)
+    self.name_string_search_no_excluded(name_string)
+  end
+
+  def self.name_string_search_no_excluded(name_string)
+    ns = name_string.downcase.gsub(/\*/,'%')
+    Loader::Name.where([ "((lower(simple_name) like ? or lower(simple_name) like 'x '||? or lower(simple_name) like '('||?) and record_type = 'accepted' and not doubtful) or (parent_id in (select id from loader_name where (lower(simple_name) like ? or lower(simple_name) like 'x '||? or lower(simple_name) like '('||?) and record_type = 'accepted' and not doubtful))",
+                   ns, ns, ns, ns, ns, ns])
+  end
+
 end

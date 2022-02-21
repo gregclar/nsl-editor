@@ -409,6 +409,7 @@ Rails.application.routes.draw do
 
   namespace :loader do
     resources :batches
+    match "batches/stats/:id", as: "batch_stats", to: "batches#stats", via: :get
   end
   match "loader_batches/:id/tab/:tab", as: "loader_batch_tab", to: "loader/batches#tab", via: :get
   match "loader_batch/make-default/:id", as: "make_default_batch", to: "loader/batches#make_default", via: :post
@@ -419,6 +420,8 @@ Rails.application.routes.draw do
     namespace :name do
       match "matches/create/:id", as: "matches_set", to: "matches#set", via: :patch
       match "matches/delete/all/:id", as: "matches_delete_all", to: "matches#delete_all", via: :delete
+      match "matches/:id", as: "matches", to: "matches#set", via: :post
+      match "matches/add_or_remove/:id", as: "match_add_or_remove", to: "matches#create_or_delete", via: :post
     end
   end
   match "loader_name/:id", as: "loader_name", to: "loader/names#update", via: :put

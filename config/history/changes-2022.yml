@@ -1,7 +1,11 @@
-- :date: 16-Feb-2022
+- :date: 21-Feb-2022
   :jira_id: '4078'
   :description: |-
-    Batch Loader: user can create, remove, and adjust preferred name matches for loader-name accepted records and synonyms (but not yet misapps yet)
+    Batch Loader: user can create, remove, and adjust preferred name matches for loader-name misapplied records; batch summary counts are now available on the Loader tab
+- :date: 21-Feb-2022
+  :jira_id: ''
+  :description: |-
+    Security: update JavaScript library
 - :date: 16-Feb-2022
   :jira_id: '4157'
   :description: |-
