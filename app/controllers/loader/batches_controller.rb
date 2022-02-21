@@ -69,7 +69,7 @@ class Loader::BatchesController < ApplicationController
   end
 
   def stats
-    @stats = Loader::Batch::SummaryCounts::AsStatusReporter::ForAcceptedNames.new('*', 51658646).report
+    @stats = Loader::Batch::SummaryCounts::AsStatusReporter::ForAcceptedNames.new('*', session[:default_loader_batch_id]||0).report
   end
 
   private
