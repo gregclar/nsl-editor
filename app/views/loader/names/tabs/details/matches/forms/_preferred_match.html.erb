@@ -1,5 +1,5 @@
 <%= form_for(@loader_name, as: 'loader_name', url: loader_name_matches_set_path, role: 'form', remote: true) do |f| %>
-  <% @loader_name.matches.each_with_index do |matching_name, index| %>
+  <% @loader_name.matches(type: match_type).each_with_index do |matching_name, index| %>
 
     <% disable_radio_button = !matching_name.has_primary_instance? || matching_name.duplicate? || @loader_name.synonym_without_synonym_type? %>
     <% if disable_radio_button then 

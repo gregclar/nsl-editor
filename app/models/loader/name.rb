@@ -175,7 +175,7 @@ class Loader::Name < ActiveRecord::Base
     ary
   end
 
-  def names_simple_or_full_name_matching_taxon
+  def names_simple_or_full_name_matching_taxon_scientific
     ::Name.where(
       ["simple_name = ? or full_name = ?",
        simple_name, simple_name])
@@ -190,8 +190,16 @@ class Loader::Name < ActiveRecord::Base
         .order("simple_name, name.id")
   end
 
-  def matches
-    names_simple_or_full_name_matching_taxon
+  def matches(type: :strict)
+    if type == :strict
+      names_simple_or_full_name_matching_taxon_scientific
+    elsif type == :cultivar
+      matches_tweaked_for_cultivar
+    elsif type == :phrase
+      matches_tweaked_for_phrase_name
+    else
+      throw "Unknown type of matches requested: #{type}'"
+    end
   end
 
   def accepted?
@@ -210,6 +218,7 @@ class Loader::Name < ActiveRecord::Base
   # Also, no requirement for scientific name type
   def matches_tweaked_for_phrase_name
     ::Name.where(["regexp_replace(simple_name,'[)(]','','g') = regexp_replace(regexp_replace(?,' [A-z][A-z]* Herbarium','','i'),'[)(]','','g')", simple_name])
+      .order("simple_name, name.id")
   end
 
   def likely_cultivar?
@@ -218,7 +227,7 @@ class Loader::Name < ActiveRecord::Base
 
   # No requirement for scientific name type
   def matches_tweaked_for_cultivar
-    ::Name.where(simple_name: simple_name)
+    ::Name.where(simple_name: simple_name).order("simple_name, name.id")
   end
 
   def misapplied?

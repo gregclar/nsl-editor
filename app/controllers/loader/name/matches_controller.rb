@@ -26,7 +26,6 @@ class Loader::Name::MatchesController < ApplicationController
   # This is for 'accepted' records or synonyms, where only 
   # one match is allower per loader-name.
   def set
-    throw 'not here!'
     apply_changes
     render
    rescue => e
