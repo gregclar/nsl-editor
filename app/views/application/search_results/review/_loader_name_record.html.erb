@@ -50,6 +50,10 @@
     >
       <a class="review-show-details-link navigation-link takes-focus show-details" title='title' tabindex="<%= increment_tab_index(100) %>">
         <span class="review loader-name family"><%= "#{search_result.family}" %> </span>
+
+        <% unless search_result.higher_rank_comment.blank? %>
+          <span class="review loader-name remark-to-reviewers"><%= search_result.higher_rank_comment.html_safe %></span>
+        <% end %>
       </a>
     </td>
   </tr>
@@ -97,6 +101,9 @@
       <% end %>
       <% unless search_result.remark_to_reviewers.blank? %>
         <span class="review loader-name remark-to-reviewers"><%= search_result.remark_to_reviewers.html_safe %></span>
+      <% end %>
+      <% unless search_result.higher_rank_comment.blank? %>
+        <span class="review loader-name remark-to-reviewers"><%= search_result.higher_rank_comment.html_safe %></span>
       <% end %>
     </a>
   </td>

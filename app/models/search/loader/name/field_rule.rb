@@ -233,6 +233,26 @@ class Search::Loader::Name::FieldRule
            trailing_wildcard: true,
            order: "seq"},
 
+    "higher-rank-comment:" => { where_clause: "(lower(higher_rank_comment) like ?)
+        or exists (
+        select null
+          from loader_name parent
+        where parent.id         = loader_name.parent_id
+       and lower(parent.higher_rank_comment) like ?)
+        or exists (
+        select null
+          from loader_name child
+        where child.parent_id   = loader_name.id
+       and lower(child.higher_rank_comment) like ?)
+        or exists (
+        select null
+          from loader_name sibling
+        where sibling.parent_id = loader_name.parent_id
+       and lower(sibling.higher_rank_comment) like ?)",
+           leading_wildcard: true,
+           trailing_wildcard: true,
+           order: "seq"},
+
       "distribution:" => 
        { where_clause: "(lower(distribution) like ?)
           or exists (
