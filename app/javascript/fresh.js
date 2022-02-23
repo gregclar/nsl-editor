@@ -743,9 +743,7 @@
     }
     debug(`loadDetails url: ${url}`);
     $('#search-result-details').load(url, function() {
-      debug("before recordCurrentActiveTab");
       recordCurrentActiveTab(record_type);
-      debug("after recordCurrentActiveTab");
       if (tabWasClicked) {
         debug('tab clicked loadDetails');
         if ($('.give-me-focus')) {
