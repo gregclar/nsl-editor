@@ -11,7 +11,7 @@
                           query_target: 'loader names'),
                title:"Query loader names",class:'blue')} %>
 
-<% if @view_mode == 'standard' %>
+<% if @view_mode == ViewMode::STANDARD %>
 
   <% if  @loader_batch.batch_reviews.empty? %>
     <%= render partial: 'detail_line', locals: {info: '',

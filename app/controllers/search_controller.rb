@@ -78,7 +78,7 @@ class SearchController < ApplicationController
   end
  
   def run_empty_search
-    if @view_mode == 'review'
+    if @view_mode == ViewMode::REVIEW
       params["target"] = Loader::Batch.user_reviewable(@current_user.username)&.first&.name
     else
       params["target"] = 'Names'
@@ -131,7 +131,7 @@ class SearchController < ApplicationController
     if params["query_string"] =~ /view:/i
       @view = params["query_string"].sub(/.*(view: *[A-z]+).*/,'\1').sub(/view: */,'')
     else
-      @view = 'standard'
+      @view = ViewMode::STANDARD.to_s
     end
     logger.debug("record_view_param:- @view: #{@view}")
     throw 'ah'
@@ -144,10 +144,10 @@ class SearchController < ApplicationController
 
     Rails.logger.debug('apply_view_mode is continuing')
     Rails.logger.debug("apply_view_mode:    @view_mode: #{@view_mode}")
-    if @view_mode == 'review'
-      @view = 'review'
+    if @view_mode == ViewMode::REVIEW
+      @view = ViewMode::REVIEW.to_s
     else
-      @view = 'standard'
+      @view = ViewMode::STANDARD.to_s
     end
     Rails.logger.debug("apply_view_mode:    @view: #{@view}")
   end

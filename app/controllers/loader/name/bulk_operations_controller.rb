@@ -16,10 +16,9 @@
 #   See the License for the specific language governing permissions and
 #   limitations under the License.
 #
-class Search::Target
-  attr_reader :target
 
-  def initialize(view_mode)
-    @target = view_mode == ::ViewMode::REVIEW ? 'Loader Batches' : 'Names'
+# Based on OrchidsBatchController
+class Loader::Name::BulkOperationsController < ApplicationController
+  def index
   end
 end

@@ -64,7 +64,7 @@ input[type="checkbox"]:not([title]) {
         >
 
     <div id="screen-too-small-msg">Sorry.... your window is too small to show the editor.  It needs to be wider.</div>
-    <% if @view_mode == 'review' then %>
+    <% if @view_mode == ViewMode::REVIEW then %>
       <%= render partial: 'search/review/top_navbar' %>
     <% else %>
       <%= render partial: 'search/top_navbar' %>
@@ -74,7 +74,7 @@ input[type="checkbox"]:not([title]) {
 
     <% wide_details =  '' %>
     <% wide_details = 'wide-details' if params[:query_target]&.downcase == 'orchids' %>
-    <% wide_details = 'wide-details' if params[:query_target]&.downcase == 'loader names' && @view_mode == 'standard' %>
+    <% wide_details = 'wide-details' if params[:query_target]&.downcase == 'loader names' && @view_mode == ViewMode::STANDARD %>
     <div id="search-result-details" class="hidden <%= wide_details %>"> </div>
 
 

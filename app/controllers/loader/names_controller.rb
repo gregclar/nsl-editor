@@ -27,7 +27,7 @@ class Loader::NamesController < ApplicationController
     set_tab_index
     @take_focus = params[:take_focus] == 'true'
     new_comment if params[:tab] =~ /\Atab_review\z/
-    if @view_mode == 'review' then
+    if @view_mode == ::ViewMode::REVIEW then
       render "loader/names/review/show", layout: false
     else
       render "show", layout: false

@@ -10,7 +10,7 @@
                       prev_tab: '.search-result.loader-batch-review-tab', 
                       next_tab: '.search-result.loader-batch-review-tab' } %> 
 
-  <% if @view_mode == 'standard' %>
+  <% if @view_mode == ViewMode::STANDARD %>
 
   <%= render partial: 'loader/batches/tabs/tab',
              locals: {first: false,

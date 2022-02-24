@@ -23,7 +23,7 @@ class Search::Help::PageMappings
 
   def initialize(params, view_mode)
     debug("Start for #{params[:help_id]}")
-    if view_mode == 'review' then
+    if view_mode == ::ViewMode::REVIEW then
       @partial = REVIEW_MAP[params[:help_id]]
     else
       @partial = MAP[params[:help_id]]
