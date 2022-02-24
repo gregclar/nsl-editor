@@ -4,18 +4,14 @@
   <%= render partial: 'loader/names/tabs/forms/form_for_accepted', locals: { loader_name: @loader_name } %>
 <% elsif @loader_name.synonym? %>
   <%= render partial: 'loader/names/tabs/forms/form_for_synonym', locals: { loader_name: @loader_name } %>
-<%# elsif @loader_name.misapp? %>
-  <%#= render partial: 'form_for_misapp', locals: { loader_name: @loader_name } %>
-<%# elsif @loader_name.hybrid_cross? %>
-  <%#= render partial: 'form_for_hybrid_cross', locals: { loader_name: @loader_name } %>
-<%# else %>
-<!-- Unknown record type: <%#= @loader_name.record_type %> -->
+<% elsif @loader_name.misapp? %>
+  <%= render partial: 'loader/names/tabs/forms/form_for_misapp', locals: { loader_name: @loader_name } %>
 <% end %>
 
 <% if @take_focus %>
   <script>
     $(document).ready(function () {
-      document.getElementById('orchid_taxon').focus();
+      $('#loader_name_simple_name').focus();
     })
   </script>
 <% end %>

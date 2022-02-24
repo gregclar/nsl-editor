@@ -104,8 +104,10 @@ class Loader::NamesController < ApplicationController
     false #orchid_params[:name_id].to_i < 0
   end
 
-
-
+  def parent_suggestions
+    typeahead = Loader::Name::AsTypeahead::ForParent.new(params)
+    render json: typeahead.suggestions
+  end
 
   #############################################################################
   private

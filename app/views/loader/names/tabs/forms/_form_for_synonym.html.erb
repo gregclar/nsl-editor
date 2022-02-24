@@ -33,7 +33,7 @@
     <%= render partial: "loader/names/tabs/forms/synonym_type", locals: {f: f, loader_name: loader_name} %>
 
     <div class="form-group">
-      <label for="loader-name-parent-typeahead">Accepted Taxon</label>
+      <label for="loader-name-parent-typeahead">Parent</label>
       <input id="loader-name-parent-typeahead"
              name="loader-name[parent_typeahead]"
              class="typeahead form-control"
@@ -41,12 +41,12 @@
              type="text" 
              tabindex="<%= increment_tab_index %>"
              title="Raw loader name taxon that contains this loader name"
-             value="<%= loader_name.parent.try('taxon') %>"/>
+             value="<%= loader_name.parent.try('simple_name') %>"/>
     </div>
     <%= f.hidden_field(:parent_id, {}) %>
     <script>setUpLoaderNameParentTypeahead();</script>
 
-    <%#= render partial: "name_status", locals: {f: f} %>
+    <%= render partial: "loader/names/tabs/forms/name_status", locals: {f: f} %>
     <%#= render partial: "authors", locals: {f: f} %>
 
     <div class="form-group">

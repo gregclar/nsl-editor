@@ -31,6 +31,8 @@ class Loader::Name < ActiveRecord::Base
     end
   end
 
+  scope :avoids_id, ->(avoid_id) { where("loader_name.id != ?", avoid_id) }
+
   belongs_to :loader_batch, class_name: "Loader::Batch", foreign_key: "loader_batch_id"
   alias_attribute :batch, :loader_batch
 
@@ -233,6 +235,7 @@ class Loader::Name < ActiveRecord::Base
   def misapplied?
     record_type == 'misapplied'
   end
+  alias_attribute :misapp?, :misapplied?
 
   def synonym_without_synonym_type?
     synonym? & synonym_type.blank?
