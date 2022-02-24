@@ -1,3 +1,7 @@
+- :date: 25-Feb-2022
+  :jira_id: '4078'
+  :description: |-
+    Batch Loader: the preferred-name-saved flag is now showing for loader name records - it's blue, not grey, so it shows up even when the record is selected (colour change applies to orchids flag too)
 - :date: 24-Feb-2022
   :jira_id: '4078'
   :description: |-

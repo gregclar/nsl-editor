@@ -87,10 +87,6 @@ class Loader::Name < ActiveRecord::Base
     self.full_name.squish!
   end
 
-  def loader_name_match
-    nil
-  end
-
   def name_match_no_primary?
     false
   end
