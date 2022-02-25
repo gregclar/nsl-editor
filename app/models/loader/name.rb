@@ -290,4 +290,23 @@ class Loader::Name < ActiveRecord::Base
                    ns, ns, ns, ns, ns, ns])
   end
 
+  def self.create(params, username)
+    loader_name = Loader::Name.new(params)
+    #Loader::Name.id = next_sequence_id
+    if loader_name.save_with_username(username)
+      loader_name
+    else
+      raise loader_name.errors.full_messages.first.to_s
+    end
+  end
+
+  def save_with_username(username)
+    self.created_by = self.updated_by = username
+    set_defaults
+    save
+  end
+
+  def set_defaults
+    self.simple_name_as_loaded = simple_name
+  end
 end

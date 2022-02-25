@@ -417,6 +417,10 @@ Rails.application.routes.draw do
 
   namespace :loader do
     #match "name/:id", as: "set_preferred_match", to: "names#set_preferred_match", via: :patch
+    resources :names, only: [:new]
+    match "names/new_row", as: "name_new_row", to: "names#new_row", via: :get
+    match "names/new/:random_id", as: "name_new_with_random_id", to: "names#new", via: :get
+    resources :names, only: [:create]
     namespace :name do
       match "matches/create/:id", as: "matches_set", to: "matches#set", via: :patch
       match "matches/delete/all/:id", as: "matches_delete_all", to: "matches#delete_all", via: :delete

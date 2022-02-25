@@ -1,6 +1,10 @@
 - :date: 25-Feb-2022
   :jira_id: '4078'
   :description: |-
+    Batch Loader: users with batch loader privilege can now create a raw loader-name record from the New menu
+- :date: 25-Feb-2022
+  :jira_id: '4078'
+  :description: |-
     Batch Loader: add the Edit Match processing tab for loader names
 - :date: 25-Feb-2022
   :jira_id: '4078'

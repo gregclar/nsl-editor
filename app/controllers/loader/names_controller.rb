@@ -36,6 +36,19 @@ class Loader::NamesController < ApplicationController
 
   alias tab show
 
+  # GET /orchids/new
+  def new
+    @loader_name = ::Loader::Name.new
+    @loader_name.simple_name = ''
+    @no_search_result_details = true
+    @tab_index = (params[:tabIndex] || "40").to_i
+    respond_to do |format|
+      format.html {}
+      format.js {}
+    end
+  end
+
+
   def new_row
     @random_id = (Random.new.rand * 10_000_000_000).to_i
     respond_to do |format|
@@ -109,6 +122,15 @@ class Loader::NamesController < ApplicationController
     render json: typeahead.suggestions
   end
 
+  def create
+    @loader_name = Loader::Name.create(loader_name_params, current_user.username)
+    render "create.js"
+  rescue => e
+    logger.error("Controller:Loader::Names:create:rescuing exception #{e}")
+    @error = e.to_s
+    render "create_error.js", status: :unprocessable_entity
+  end  # For the 
+
   #############################################################################
   private
   def find_loader_name
@@ -124,9 +146,9 @@ class Loader::NamesController < ApplicationController
                                    :name_status, :ex_base_author,
                                    :base_author, :ex_author, :author,
                                    :synonym_type, :comment, :seq,
-                                   :doubtful,
+                                   :doubtful, :family,
                                    :no_further_processing, :notes,
-                                   :distribution)
+                                   :distribution, :loader_batch_id)
   end
 
   def set_tab
