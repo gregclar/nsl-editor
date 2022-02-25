@@ -422,6 +422,7 @@ Rails.application.routes.draw do
       match "matches/delete/all/:id", as: "matches_delete_all", to: "matches#delete_all", via: :delete
       match "matches/:id", as: "matches", to: "matches#set", via: :post
       match "matches/add_or_remove/:id", as: "match_add_or_remove", to: "matches#create_or_delete", via: :post
+      resources :matches, only: [:update]
     end
   end
   match "loader_name/:id", as: "loader_name", to: "loader/names#update", via: :put

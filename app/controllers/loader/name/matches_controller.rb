@@ -18,6 +18,7 @@
 #
 class Loader::Name::MatchesController < ApplicationController
   before_action :find_loader_name, only: [:set]
+  before_action :find_loader_name_match, only: [:update]
   #before_action :find_loader_name_match, only: [:delete]
 
   # For a given loader_name record, a set action may involve
@@ -62,12 +63,36 @@ class Loader::Name::MatchesController < ApplicationController
     render :delete_for_misapp
   end
 
+  def update
+    case params[:commit] 
+    when nil
+      raise 'no commit param'
+    when /flag.* manually drafted/i
+      flag_as_manually_drafted
+    when /remove.*manually.drafted.flag/i
+      unflag_as_manually_drafted
+    else
+      update_relationship_instance_type
+    end
+  rescue => e
+    logger.error("Loader::Name::MatchesController error: #{e.to_s}")
+    @message = e.to_s
+    render 'update_error', format: :js
+  end
+
   private
   def find_loader_name
     @loader_name = Loader::Name.find(params[:id])
   rescue ActiveRecord::RecordNotFound
     flash[:alert] = "We could not find the loader name record."
     redirect_to loader_names_path
+  end
+
+  def find_loader_name_match
+    @loader_name_match = Loader::Name::Match.find(params[:id])
+  rescue ActiveRecord::RecordNotFound
+    flash[:alert] = "We could not find the loader name match record."
+    redirect_to loader_name_matches_path
   end
 
   def apply_changes
@@ -82,33 +107,11 @@ class Loader::Name::MatchesController < ApplicationController
 
   # Doesn't handle multiple name_ids being passed in params
   def remove_unwanted_loader_names_matches
-    Rails.logger.debug('--                                              start remove_unwanted_loader_names_matches')
-    Rails.logger.debug('--                                              start remove_unwanted_loader_names_matches')
-    Rails.logger.debug('--                                              start remove_unwanted_loader_names_matches')
-    Rails.logger.debug('--                                              start remove_unwanted_loader_names_matches')
     return if @loader_name_matches.blank? 
-    Rails.logger.debug("--                                              @loader_name_matches.size: #{@loader_name_matches.size}") 
-    Rails.logger.debug("--                                              @loader_name_matches.first.id: #{@loader_name_matches.first.id}") 
-    Rails.logger.debug('--                                              continuing remove_unwanted_loader_names_matches')
-    Rails.logger.debug('--                                              continuing remove_unwanted_loader_names_matches')
-    Rails.logger.debug('--                                              continuing remove_unwanted_loader_names_matches')
-    Rails.logger.debug('--                                              continuing remove_unwanted_loader_names_matches')
     @loader_name_matches.each do |match|
-      Rails.logger.debug('--                                            in match remove_unwanted_loader_names_matches')
-      Rails.logger.debug('--                                            in match remove_unwanted_loader_names_matches')
-      Rails.logger.debug('--                                            in match remove_unwanted_loader_names_matches')
-      Rails.logger.debug('--                                            in match remove_unwanted_loader_names_matches')
       unless loader_name_params[:name_id] == match[:name_id]
-        Rails.logger.debug("--                                            Deleting match: #{match.id}")
-        Rails.logger.debug("--                                            Deleting match: #{match.id}")
-        Rails.logger.debug("--                                            Deleting match: #{match.id}")
-        Rails.logger.debug("--                                            Deleting match: #{match.id}")
         match.delete
       end
-      Rails.logger.debug('--                                            end match remove_unwanted_loader_names_matches')
-      Rails.logger.debug('--                                            end match remove_unwanted_loader_names_matches')
-      Rails.logger.debug('--                                            end match remove_unwanted_loader_names_matches')
-      Rails.logger.debug('--                                            end match remove_unwanted_loader_names_matches')
     end
   end
 
@@ -148,6 +151,34 @@ class Loader::Name::MatchesController < ApplicationController
     render :create_for_misapp
   end
 
+  def flag_as_manually_drafted
+    if @loader_name_match.manually_drafted?
+      raise 'no change required'
+    else
+      @loader_name_match.manually_drafted = true
+      @loader_name_match.save!
+    end
+  end
+
+  def unflag_as_manually_drafted
+    if @loader_name_match.manually_drafted?
+      @loader_name_match.manually_drafted = false
+      @loader_name_match.save!
+    else
+      raise 'no change required'
+    end
+  end
+
+  def update_relationship_instance_type
+    raise "No change!" if @loader_name_match.relationship_instance_type_id == loader_name_match_params[:relationship_instance_type_id].to_i
+    @loader_name_match.relationship_instance_type_id = loader_name_match_params[:relationship_instance_type_id]
+    @loader_name_match.updated_by = username
+    @loader_name_match.save!
+  rescue => e
+    logger.error(e.to_s)
+    @message = e.to_s
+    render 'update_error', format: :js
+  end
 
   # In this controller because some loader_name_match actions originate from 
   # a loader_name record
@@ -164,6 +195,7 @@ class Loader::Name::MatchesController < ApplicationController
 
   def loader_name_match_params
     params.require(:loader_name_match).permit(:name_id, :instance_id,
-                                              :loader_name_id)
+                                              :loader_name_id,
+                                             :relationship_instance_type_id)
   end
 end
