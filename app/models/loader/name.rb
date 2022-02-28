@@ -292,7 +292,7 @@ class Loader::Name < ActiveRecord::Base
 
   def self.create(params, username)
     loader_name = Loader::Name.new(params)
-    #Loader::Name.id = next_sequence_id
+    loader_name.created_manually = true
     if loader_name.save_with_username(username)
       loader_name
     else
@@ -308,5 +308,9 @@ class Loader::Name < ActiveRecord::Base
 
   def set_defaults
     self.simple_name_as_loaded = simple_name
+  end
+
+  def ok_to_delete?
+    children.empty? && loader_name_matches.empty?
   end
 end

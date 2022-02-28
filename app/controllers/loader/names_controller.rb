@@ -124,12 +124,20 @@ class Loader::NamesController < ApplicationController
 
   def create
     @loader_name = Loader::Name.create(loader_name_params, current_user.username)
-    render "create.js"
+    render "create"
   rescue => e
     logger.error("Controller:Loader::Names:create:rescuing exception #{e}")
     @error = e.to_s
-    render "create_error.js", status: :unprocessable_entity
-  end  # For the 
+    render "create_error", status: :unprocessable_entity
+  end
+ 
+  def destroy
+    @loader_name.delete
+  rescue => e
+    logger.error("Loader::NamesController#destroy rescuing #{e}")
+    @message = e.to_s
+    render "destroy_error", status: :unprocessable_entity
+  end
 
   #############################################################################
   private

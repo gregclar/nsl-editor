@@ -32,6 +32,16 @@
                                       prev_tab: '.search-result.loader-name-show-tab', 
                                       next_tab: '.search-result.loader-name-edit-match-tab'} %> 
 
+  <%= render partial: 'loader/names/tabs/tab', locals: {first: false,
+                                      last: true,
+                                      this_tab: 'tab_delete_raw', 
+                                      link_text: 'Delete Raw', 
+                                      link_id: 'loader-name-delete-raw-tab', 
+                                      link_title: 'Delete raw loader name record.',
+                                      tab_index: @tab_index,
+                                      prev_tab: '.search-result.loader-name-show-tab', 
+                                      next_tab: '.search-result.loader-name-edit-match-tab'} %> 
+
   <% end %>
 
 </ul>

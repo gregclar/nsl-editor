@@ -416,11 +416,10 @@ Rails.application.routes.draw do
   match "loader_batch/clear-default", as: "clear_default_batch", to: "loader/batches#clear_default", via: :post
 
   namespace :loader do
-    #match "name/:id", as: "set_preferred_match", to: "names#set_preferred_match", via: :patch
     resources :names, only: [:new]
     match "names/new_row", as: "name_new_row", to: "names#new_row", via: :get
     match "names/new/:random_id", as: "name_new_with_random_id", to: "names#new", via: :get
-    resources :names, only: [:create]
+    resources :names, only: [:create, :update, :destroy]
     namespace :name do
       match "matches/create/:id", as: "matches_set", to: "matches#set", via: :patch
       match "matches/delete/all/:id", as: "matches_delete_all", to: "matches#delete_all", via: :delete
@@ -429,7 +428,6 @@ Rails.application.routes.draw do
       resources :matches, only: [:update]
     end
   end
-  match "loader_name/:id", as: "loader_name", to: "loader/names#update", via: :put
   match "loader_names/:id/tab/:tab", as: "loader_name_tab", to: "loader/names#tab", via: :get
 
   match "loader_names/:id/tab/:tab/:component", as: "loader_name_review_tab", to: "loader/names#tab", via: :get, defaults: { component: 'main' }

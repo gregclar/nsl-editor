@@ -1,3 +1,7 @@
+- :date: 28-Feb-2022
+  :jira_id: '4078'
+  :description: |-
+    Batch Loader: name records how have a Delete tab; more detailed info on the Loader tab; and a new <code>created_manually</code> field and matching search directive
 - :date: 25-Feb-2022
   :jira_id: '4078'
   :description: |-
