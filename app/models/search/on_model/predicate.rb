@@ -129,7 +129,7 @@ class Search::OnModel::Predicate
     elsif @rules_class.key?(@abbrevs_class[field])
       @abbrevs_class[field]
     else
-      raise "Cannot search model for: #{field}. You may need to try another
+      raise "Cannot search this target for: #{field}. You may need to try another
       search term or target."
     end
   end
