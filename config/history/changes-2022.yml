@@ -1,3 +1,7 @@
+- :date: 02-Mar-2022
+  :jira_id: ''
+  :description: |-
+    Change 'model' to 'target' in search error message; JavaScript library security upgrade.
 - :date: 28-Feb-2022
   :jira_id: '4078'
   :description: |-
