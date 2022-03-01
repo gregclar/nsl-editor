@@ -38,9 +38,7 @@ class Loader::Batch::SummaryCounts::AsStatusReporter::ForAcceptedNames
               intergrade: intergrades,
               accepted_with_distribution: accepted_with_distribution,
               taxonomy_comments: taxonomy_comments,
-              accepted_doubtful: accepted_doubtful,
-              synonym_doubtful: synonym_doubtful,
-              misapplied_doubtful: misapplied_doubtful,
+              excluded_names: excluded_names,
               # total: orchids_and_their_synonyms
               },
     }
@@ -117,8 +115,8 @@ class Loader::Batch::SummaryCounts::AsStatusReporter::ForAcceptedNames
      text: arg}
   end
 
-  def accepted_doubtful
-    arg = "record_type = 'accepted' and doubtful"
+  def excluded_names
+    arg = "record_type = 'accepted' and excluded"
     {count: core_search.where(arg).count,
      text: arg}
   end
@@ -132,18 +130,6 @@ class Loader::Batch::SummaryCounts::AsStatusReporter::ForAcceptedNames
 
   def accepted_with_distribution
     arg = "record_type = 'accepted' and distribution is not null"
-    {count: core_search.where(arg).count,
-     text: arg}
-  end
-
-  def synonym_doubtful
-    arg = "record_type = 'synonym' and doubtful"
-    {count: core_search.where(arg).count,
-     text: arg}
-  end
-
-  def misapplied_doubtful
-    arg = "record_type = 'misapplied' and doubtful"
     {count: core_search.where(arg).count,
      text: arg}
   end
