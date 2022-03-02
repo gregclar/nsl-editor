@@ -1042,25 +1042,12 @@
   };
 
   window.moveUpOneSearchResult = function(startRow) {
-    if (startRow.prev()) {
-      if (startRow.prev().find('a.show-details-link').length === 1) {
-        return startRow.prev().find('a.show-details-link').focus();
-      } else {
-        // skip boundary row
-        return startRow.prev().prev().find('a.show-details-link').focus();
-      }
-    }
+    return startRow.prev().find('a.show-details-link').focus();
   };
 
   window.moveDownOneSearchResult = function(startRow) {
-    debug('moveDownOneSearchResult');
-    if (startRow.next().find('a.show-details-link').length === 1) {
-      return startRow.next().find('a.show-details-link').focus();
-    } else {
-      // skip boundary row
-      return startRow.next().next().find('a.show-details-link').focus();
-    }
-  };
+    return startRow.next().find('a.show-details-link').focus();
+  }
 
   window.moveUpOneReviewResult = function(row) {
     if (row.prev()) {
