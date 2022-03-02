@@ -1,6 +1,10 @@
 - :date: 02-Mar-2022
   :jira_id: '4078'
   :description: |-
+    Batch Loader: users with batch loader privilege can now create synonyms for loader name records on the Create Syn tab
+- :date: 02-Mar-2022
+  :jira_id: '4078'
+  :description: |-
     Batch Loader: add excluded names entry to summary counts on the Loader tab
 - :date: 02-Mar-2022
   :jira_id: ''
@@ -9,7 +13,7 @@
 - :date: 28-Feb-2022
   :jira_id: '4078'
   :description: |-
-    Batch Loader: name records how have a Delete tab; more detailed info on the Loader tab; and a new <code>created_manually</code> field and matching search directive
+    Batch Loader: name records now have a Delete tab, there's more detailed info on the Loader tab, and a new <code>created_manually</code> field and matching search directive
 - :date: 25-Feb-2022
   :jira_id: '4078'
   :description: |-
@@ -17,7 +21,7 @@
 - :date: 25-Feb-2022
   :jira_id: '4078'
   :description: |-
-    Batch Loader: add the Edit Match processing tab for loader names
+    Batch Loader: users with batch loader privilege can now edit the match processing record loader names on the Edit Match tab
 - :date: 25-Feb-2022
   :jira_id: '4078'
   :description: |-

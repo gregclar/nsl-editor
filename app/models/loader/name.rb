@@ -203,6 +203,7 @@ class Loader::Name < ActiveRecord::Base
   def accepted?
     record_type == 'accepted'
   end
+  alias_attribute :standalone?, :accepted?
 
   def synonym?
     record_type == 'synonym'
@@ -293,6 +294,8 @@ class Loader::Name < ActiveRecord::Base
   def self.create(params, username)
     loader_name = Loader::Name.new(params)
     loader_name.created_manually = true
+    loader_name.loader_batch_id = self.find(params[:parent_id]).loader_batch_id if loader_name.loader_batch_id.blank?
+    loader_name.doubtful = false
     if loader_name.save_with_username(username)
       loader_name
     else

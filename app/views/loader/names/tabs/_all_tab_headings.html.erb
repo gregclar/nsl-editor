@@ -7,8 +7,8 @@
                       link_id: 'loader-name-details-tab', 
                       link_title: 'View a summary',
                       tab_index: @tab_index,
-                      prev_tab: '.search-result.loader-names-review-tab', 
-                      next_tab: '.search-result.loader-names-rev-comm-tab' } %> 
+                      prev_tab: 'loader-names-details-tab', 
+                      next_tab: 'loader-names-details-tab' } %> 
 
   <% if can? 'loader/names', 'update' %>
 
@@ -19,8 +19,8 @@
                                       link_id: 'loader-name-edit-tab', 
                                       link_title: 'Edit Loader Name.',
                                       tab_index: @tab_index,
-                                      prev_tab: '.search-result.loader-name-show-tab', 
-                                      next_tab: '.search-result.loader-name-edit-match-tab'} %> 
+                                      prev_tab: 'loader-name-details-tab', 
+                                      next_tab: 'loader-name-edit-match-tab'} %> 
 
   <%= render partial: 'loader/names/tabs/tab', locals: {first: false,
                                       last: true,
@@ -29,8 +29,8 @@
                                       link_id: 'loader-name-edit-match-tab', 
                                       link_title: 'Edit Loader Name Match.',
                                       tab_index: @tab_index,
-                                      prev_tab: '.search-result.loader-name-show-tab', 
-                                      next_tab: '.search-result.loader-name-edit-match-tab'} %> 
+                                      prev_tab: 'loader-name-edit-tab', 
+                                      next_tab: 'loader-name-delete-raw-tab'} %> 
 
   <%= render partial: 'loader/names/tabs/tab', locals: {first: false,
                                       last: true,
@@ -39,8 +39,18 @@
                                       link_id: 'loader-name-delete-raw-tab', 
                                       link_title: 'Delete raw loader name record.',
                                       tab_index: @tab_index,
-                                      prev_tab: '.search-result.loader-name-show-tab', 
-                                      next_tab: '.search-result.loader-name-edit-match-tab'} %> 
+                                      prev_tab: 'loader-name-edit-match-tab', 
+                                      next_tab: 'loader-name-create-syn-tab'} %> 
+
+  <%= render partial: 'loader/names/tabs/tab', locals: {first: false,
+                                      last: true,
+                                      this_tab: 'tab_create_syn', 
+                                      link_text: 'Create synonym', 
+                                      link_id: 'loader-name-create-syn-tab', 
+                                      link_title: 'Create loader name synonym record.',
+                                      tab_index: @tab_index,
+                                      prev_tab: 'loader-name-delete-raw-tab', 
+                                      next_tab: 'loader-name-details-tab'} %> 
 
   <% end %>
 
