@@ -339,4 +339,13 @@ class Loader::Name < ActiveRecord::Base
     loader_name.record_type = 'misapplied'
     loader_name
   end
+
+  def record_type_as_context
+    case record_type
+      when 'misapplied' then 'misapplication'
+      when 'accepted' then 'main'
+      when 'synonym' then 'synonym'
+      else 'unknown'
+    end
+  end
 end
