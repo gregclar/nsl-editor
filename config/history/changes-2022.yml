@@ -1,6 +1,10 @@
 - :date: 02-Mar-2022
   :jira_id: '4078'
   :description: |-
+    Fix the 'orth. var. orth. var' problem in review mode
+- :date: 02-Mar-2022
+  :jira_id: '4078'
+  :description: |-
     Stop arrowing up/down instance records skipping every second record (side effect of review changes)
 - :date: 02-Mar-2022
   :jira_id: '4078'
