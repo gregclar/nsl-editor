@@ -3,10 +3,7 @@
   Not an accepted raw loader name, so you cannot create a synonym for it.
 <% else %>
   <h4>Create LoaderName synonym for <%= @loader_name.simple_name %></h4>
-  <% loader_name = Loader::Name.new %>
-  <% loader_name.parent_id = @loader_name.id %>
-  <% loader_name.record_type = 'synonym' %>
-  <% loader_name.seq = @loader_name.seq + 1 %>
+  <% loader_name = @loader_name.new_synonym %>
   <%= render partial: 'loader/names/tabs/forms/form_for_synonym', locals: {loader_name: loader_name} %>
 <% end %>
 

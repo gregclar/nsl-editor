@@ -16,6 +16,9 @@
 <%= "#{search_result.simple_name}" %>
 </span>
 | <%= search_result.matches.size %>m
+  <% if search_result.created_manually? %>
+    <span class='flag bgdarkslateblue white'>manually created</span>
+  <% end %>
 <% if search_result.loader_name_matches.blank? %>
   <% case search_result.matches.size %>
   <% when 0 %>

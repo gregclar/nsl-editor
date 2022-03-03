@@ -13,7 +13,11 @@
     <div id="search-result-details-error-message-container" class="message-container"></div>
     <div class="form-group align-right">
       <% if loader_name.id.blank? %>
-          <%= link_to 'Cancel', '/cancel-new-form', class: "btn btn-primary cancel-new-record-link", title: "Cancel new loader name", tabindex: increment_tab_index, data: {element_id: "new-loader-name-#{params[:random_id]}"} %>
+        <%= link_to 'Cancel', '/cancel-new-form', id: "loader-name-cancel",
+          class: "btn btn-primary cancel-new-record-link",
+          title: "Cancel new loader name",
+          tabindex: increment_tab_index,
+          data: {element_id: "new-loader-name-#{params[:random_id]}"} %>
       <% end %>
       <%= f.submit "Save", id: 'loader-name-save', class: 'btn btn-primary width-5em', title: "Save changes", tabindex: increment_tab_index, disabled: false %>
     </div>
@@ -26,11 +30,18 @@
     </div>
 
     <div class="form-group">
+      <label for="full_name">Full Name*</label>
+      <%= f.text_field :full_name, class: 'form-control give-me-focus', required: true, title: "Enter full name", tabindex: increment_tab_index, autofocus: true %>
+    </div>
+
+    <div class="form-group">
       <label for="record_type">Record type*</label>
       <%= f.hidden_field :record_type, value: 'synonym' %>
       <%= f.text_field :record_type, class: 'form-control', value: 'synonym', disabled: true %>
     </div>
     <%= render partial: "loader/names/tabs/forms/synonym_type", locals: {f: f, loader_name: loader_name} %>
+
+    <% unless loader_name.new_record? %>
 
     <div class="form-group">
       <label for="loader-name-parent-typeahead">Parent</label>
@@ -38,13 +49,17 @@
              name="loader-name[parent_typeahead]"
              class="typeahead form-control"
              data-loader-name-id="<%= loader_name.id %>"
+             data-loader-batch-id="<%= loader_name.loader_batch_id %>"
              type="text" 
              tabindex="<%= increment_tab_index %>"
              title="Raw loader name taxon that contains this loader name"
              value="<%= loader_name.parent.try('simple_name') %>"/>
+     <p>If you change the parent, please also consider changing the seq field.</p>
     </div>
-    <%= f.hidden_field(:parent_id, {}) %>
     <script>setUpLoaderNameParentTypeahead();</script>
+
+    <% end %>
+    <%= f.hidden_field(:parent_id, {}) %>
 
     <div class="form-group">
       <label for="family">Family*</label>

@@ -1,3 +1,7 @@
+- :date: 03-Mar-2022
+  :jira_id: '4078'
+  :description: |-
+    Batch Loader: users with batch loader privilege can now create misapps for loader name records via the Create Misapp tab; improved and tightened up Create Synonym process.
 - :date: 02-Mar-2022
   :jira_id: '4078'
   :description: |-
@@ -9,7 +13,7 @@
 - :date: 02-Mar-2022
   :jira_id: '4078'
   :description: |-
-    Batch Loader: users with batch loader privilege can now create synonyms for loader name records on the Create Syn tab
+    Batch Loader: users with batch loader privilege can now create synonyms for loader name records on the Create Synonym tab
 - :date: 02-Mar-2022
   :jira_id: '4078'
   :description: |-

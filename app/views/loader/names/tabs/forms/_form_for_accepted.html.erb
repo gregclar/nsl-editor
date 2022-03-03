@@ -45,8 +45,8 @@
     <div class="form-group">
       <br>
       <label class="form-check-label">
-        <%= f.check_box(:doubtful, {class: 'xform-control', title: 'Excluded.', tabindex: increment_tab_index}) %>
-        Excluded from the APC
+        <%= f.check_box(:excluded, {class: 'xform-control', title: 'Excluded.', tabindex: increment_tab_index}) %>
+        Exclude from the taxonomy
       </label>
     </div>
 
@@ -78,8 +78,8 @@
         <br>
       <label class="form-check-label">
         <%= f.check_box(:no_further_processing,
-                        {class: 'xform-control', title: 'Exclude this record and any of its synonyms from further bulk processing.', tabindex: increment_tab_index}) %>
-        Exclude this record from further bulk processing
+                        {class: 'xform-control', title: 'Prevent any further processing automated processing of this record.', tabindex: increment_tab_index}) %>
+        Prevent any further bulk processing of this record
       </label>
       </div>
     <% end %>

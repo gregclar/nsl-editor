@@ -31,6 +31,7 @@ loaderNameParentSuggestions = new Bloodhound({
     remote: {url: window.relative_url_root + '/loader_names/parent_suggestions?term=%QUERY',
         replace: function(url,query) {
             return window.relative_url_root + '/loader_names/parent_suggestions?' +
+                'loader_batch_id=' + $('#loader-name-parent-typeahead').attr('data-loader-batch-id') + '&' +
                 'loader_name_id=' + $('#loader-name-parent-typeahead').attr('data-loader-name-id') + '&' +
                 'term=' + encodeURIComponent(query.replace(/\|.*/,''))
         }

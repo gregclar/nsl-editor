@@ -2,9 +2,7 @@
   <% @loader_name.matches.each_with_index do |matching_name, index| %>
     <% current_preferred_matches = Loader::Name::Match.where(name_id: matching_name.id).where(loader_name_id: @loader_name.id) %>
     <% current_chosen_instances = current_preferred_matches.collect {|orcn| orcn.instance_id} %>
-    <br>
     <%  if index > 0 %><br><% end %>
-    <br>
     <b>
       <%= "#{matching_name.full_name} #{matching_name.name_status.name_for_instance_display} (id:#{matching_name.id})" %>
     </b>

@@ -316,4 +316,27 @@ class Loader::Name < ActiveRecord::Base
   def ok_to_delete?
     children.empty? && loader_name_matches.empty?
   end
+
+  def new_child
+    loader_name = Loader::Name.new
+    loader_name.parent_id = id
+    loader_name.simple_name = nil
+    loader_name.full_name = nil
+    loader_name.family = family
+    loader_name.seq = seq + 1
+    loader_name.created_manually = true
+    loader_name
+  end
+
+  def new_synonym
+    loader_name = new_child
+    loader_name.record_type = 'synonym'
+    loader_name
+  end
+
+  def new_misapp
+    loader_name = new_child
+    loader_name.record_type = 'misapplied'
+    loader_name
+  end
 end
