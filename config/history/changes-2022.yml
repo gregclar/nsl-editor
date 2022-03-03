@@ -1,4 +1,8 @@
 - :date: 03-Mar-2022
+  :jira_id: '4172'
+  :description: |-
+    Instance query: add a <code>name-type:</code> directive to be used like this: <code>name-type: phrase*</code>; also fix the <code>page-sort:</code> directive to order results by page
+- :date: 03-Mar-2022
   :jira_id: '4078'
   :description: |-
     Batch Loader: users with batch loader privilege can now create misapps for loader name records via the Create Misapp tab; improved and tightened up Create Synonym process.

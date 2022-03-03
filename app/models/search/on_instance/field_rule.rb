@@ -171,6 +171,20 @@ from comment where comment.instance_id = instance.id)",
                                  and exists (select null from ref_type
                                  where ref_type.id = ref.ref_type_id
                                  and lower(ref_type.name) in (?)))" },
+      "name-type:"            => { where_clause: " exists (select null
+                                 from name 
+                                 where name.id = instance.name_id
+                                 and exists (select null
+                                 from name_type
+                                 where name_type.id = name.name_type_id
+                                 and lower(name_type.name) like lower(?)))",
+                                 multiple_values: true,
+                                 multiple_values_where_clause:
+                                 " exists (select null from name
+                                 where name.id = instance.name_id
+                                 and exists (select null from name_type
+                                 where name_type.id = name.name_type_id
+                                 and lower(name_type.name) in (?)))" },
       "cites-an-instance:"    => { where_clause: " cites_id is not null" },
 
       "is-cited-by-an-instance:" => { where_clause: " cited_by_id is not null" },
