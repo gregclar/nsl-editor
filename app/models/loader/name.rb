@@ -343,9 +343,9 @@ class Loader::Name < ActiveRecord::Base
 
   def record_type_as_context
     case record_type
-      when 'misapplied' then 'misapplication'
+      when 'misapplied' then 'synonymy'
+      when 'synonym' then 'synonymy'
       when 'accepted' then 'main'
-      when 'synonym' then 'synonym'
       else 'unknown'
     end
   end
