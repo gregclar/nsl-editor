@@ -1,12 +1,11 @@
-<% if @loader_name.ok_to_delete? %>
-  This button deletes the <b>current</b> record.  
-  <br>
-  <%= @loader_name.simple_name %> (#<%= @loader_name.id %>)
-<% else %>
+<% unless @loader_name.ok_to_delete? %>
   Cannot delete this record because it has relationships with other records:
   <br>Synonyms: <%= @loader_name.children.size %>
   <br>Selected matches: <%= @loader_name.preferred_matches.size %>
-<% end %>
+<% else %>
+  This button deletes the <b>current</b> record.  
+  <br>
+  <%= @loader_name.simple_name %> (#<%= @loader_name.id %>)
 <br>
 <% increment_tab_index(0) %>
 
@@ -49,3 +48,4 @@
 <div id="delete-info-message-container" class="message-container"></div>
 <div id="delete-error-message-container" class="message-container"></div>
 
+<% end %>

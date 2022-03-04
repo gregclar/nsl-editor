@@ -5,6 +5,6 @@
 
     <hr>
     <% @loader_name.record_type = 'accepted' %>
-    <%= render partial: 'form_for_accepted', locals: {loader_name: @loader_name, record_types: ['accepted']} %>
+    <%= render partial: 'loader/names/tabs/forms/form_for_accepted', locals: {loader_name: @loader_name, record_types: ['accepted']} %>
   </div>
 </div>

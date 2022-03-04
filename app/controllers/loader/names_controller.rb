@@ -36,10 +36,9 @@ class Loader::NamesController < ApplicationController
 
   alias tab show
 
-  # GET /orchids/new
   def new
     @loader_name = ::Loader::Name.new
-    @loader_name.simple_name = ''
+    @loader_name.simple_name = nil
     @no_search_result_details = true
     @tab_index = (params[:tabIndex] || "40").to_i
     respond_to do |format|
