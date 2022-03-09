@@ -1,4 +1,6 @@
 - :date: 09-Mar-2022
+  :release: true
+- :date: 09-Mar-2022
   :jira_id: ''
   :description: |-
     Security upgrade: Upgrade Rails to latest 6.1.x
