@@ -1,3 +1,7 @@
+- :date: 11-Mar-2022
+  :jira_id: '4165'
+  :description: |-
+    Name: Do not offer to Delete a Name that has family dependents; show more information about name families on the details tab; add supporting query directives
 - :date: 10-Mar-2022
   :jira_id: '4078'
   :description: |-
