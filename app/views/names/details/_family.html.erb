@@ -2,7 +2,7 @@
   <% if @name.family_members.size > 0 %>
     <%= link_to("#{pluralize(@name.family_members.size,'family member')} #{icon('search')}".html_safe,
       search_path(query_string: "family-id: #{@name.id}",
-                  query_common_and_cultivar: "f",
+                  query_common_and_cultivar: "t",
                   query_target: 'name'),
                   tabindex: increment_tab_index,
                   title: "Retrieve #{pluralize(@name.family_members.size,'child')}.",
