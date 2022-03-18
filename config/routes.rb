@@ -425,6 +425,8 @@ Rails.application.routes.draw do
       match "matches/delete/all/:id", as: "matches_delete_all", to: "matches#delete_all", via: :delete
       match "matches/:id", as: "matches", to: "matches#set", via: :post
       match "matches/add_or_remove/:id", as: "match_add_or_remove", to: "matches#create_or_delete", via: :post
+      match "matches/set-standalone-instance/:id", as: "set_standalone_instance", to: "matches#set_standalone_instance", via: :patch
+      match "matches/clear-standalone-instance/:id", as: "match_clear_standalone_instance", to: "matches#clear_standalone_instance", via: :patch
       resources :matches, only: [:update]
     end
   end

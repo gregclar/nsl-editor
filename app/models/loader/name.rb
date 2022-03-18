@@ -349,4 +349,8 @@ class Loader::Name < ActiveRecord::Base
       else 'unknown'
     end
   end
+
+  def main_entry?
+    record_type == 'accepted'
+  end
 end

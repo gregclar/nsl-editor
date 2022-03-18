@@ -1,3 +1,7 @@
+- :date: 18-Mar-2022
+  :jira_id: '4078'
+  :description: |-
+    Batch Loader: add a new Loader Name tab to set the standalone Reference Instance
 - :date: 11-Mar-2022
   :jira_id: '4165'
   :description: |-
