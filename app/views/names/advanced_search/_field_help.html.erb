@@ -337,10 +337,12 @@
 
 <%= render partial: 'comments/advanced_search/help' %>
 <%= render partial: 'help/id_search_help' %>
-<h5>Source ID</h5>
+<h5>Source</h5>
+<p>Useful for records imported from other systems where the source details have been retained.</p>
 <table class="table table-striped">
   <% [
-      {field_name: 'source-id:', description: "query the original ID of names loaded from other systems e.g. old APNI - one id or comma separated ids"},
+      {field_name: 'source-id:', description: "query the original ID of names loaded from other systems e.g. old APNI;  expects one ID or several comma separated IDs; source IDs are displayed at the bottom of the Name Details tab"},
+      {field_name: 'source-sytem:', description: "query the original source system of names loaded from other systems - the system identifier is displayed at the bottom of the Name Details tab; case-insensitive, takes a wildcard; useful when data has been imported from multiple systems"},
       ].each do |val| %>
   <tr>
     <td class="width-20-percent"><a href="javascript:void(0)" 

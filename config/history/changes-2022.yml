@@ -1,3 +1,7 @@
+- :date: 21-Mar-2022
+  :jira_id: '4192'
+  :description: |-
+    Name target directive: add <code>source-system:</code> to allow querying of name records migrated from other systems where the originating system name is in the <code>name.source_system</code> field.
 - :date: 18-Mar-2022
   :jira_id: '4192'
   :description: |-

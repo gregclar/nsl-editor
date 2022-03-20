@@ -111,6 +111,8 @@ from comment where comment.name_id = name.id)"
   :where_clause: " source_id = ? "
   :allow_common_and_cultivar: true
   :multiple_values_where_clause: " source_id in (?)"
+'source-system:':
+  :where_clause: 'lower(source_system) like ?'
 'author-id:':
   :where_clause: 'author_id = ? '
 'base-author-id:':
