@@ -16,9 +16,12 @@
 #   See the License for the specific language governing permissions and
 #   limitations under the License.
 #
-
-# Based on OrchidsBatchController
-class Loader::Name::BulkOperationsController < ApplicationController
-  def index
-  end
+class Search::BulkProcessingLog::FieldRule
+  RULES = {
+    "latest:"              => { where_clause: "1=1",},
+    "log-entry:"              => { leading_wildcard: true,
+                                   trailing_wildcard: true,
+                                   where_clause: "lower(log_entry) like ?",
+  },
+  }.freeze
 end

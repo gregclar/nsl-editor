@@ -1,3 +1,7 @@
+- :date: 23-Mar-2022
+  :jira_id: '4078'
+  :description: |-
+    Batch Loader: First cut of bulk operations - create preferred matches in place.
 - :date: 21-Mar-2022
   :jira_id: '4192'
   :description: |-

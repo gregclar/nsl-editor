@@ -89,6 +89,7 @@ class Loader::Name::MatchesController < ApplicationController
       @message = 'No change'
     else
       @match.standalone_instance_id = loader_name_match_params[:standalone_instance_id].to_i
+      @match.standalone_instance_found = true
       @match.save!
       @message = 'Saved'
     end
@@ -105,6 +106,7 @@ class Loader::Name::MatchesController < ApplicationController
       @message = 'No change'
     else
       @match.standalone_instance_id = nil
+      @match.standalone_instance_found = false
       @match.save!
       @message = 'Cleared'
     end
