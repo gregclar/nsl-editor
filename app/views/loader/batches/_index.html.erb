@@ -12,10 +12,6 @@
   <%= render partial: 'loader/batches/bulk/form' %>
 <% end %>
 
-<%= link_to "See recent logs", search_path(query_string: "latest:",query_target: 'bulk_processing_logs'), title: "See logs", class: "with-underline" %> 
-<hr class="dark">
-
-
 <%= divider %>
 <% unless session[:default_loader_batch_id].blank? %>
   <h4>Default Batch Summary</h4>

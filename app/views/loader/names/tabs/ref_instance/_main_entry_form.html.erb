@@ -14,8 +14,10 @@
         <%= render partial: "#{wd}/instance_as_part_of_concept_record",
           locals: {record: record, form: form, give_me_focus: give_me_focus}%>
       <% when 'instance-is-cited-by' %>
-        <%= render partial: "#{wd}/instance_is_cited_by",
-          locals: {record: record, form: form, give_me_focus: give_me_focus} %>
+        <% unless record.instance_type.name =~ /\Acommon/ %>
+          <%= render partial: "#{wd}/instance_is_cited_by",
+            locals: {record: record, form: form, give_me_focus: give_me_focus} %>
+        <% end %>
       <% when 'cited-by-relationship-instance-name-only' %>  
         <%= render partial: "#{wd}/instance_cited_by_relationship_instance_name_only", 
            locals: {record: record, form: form, give_me_focus: give_me_focus} %>

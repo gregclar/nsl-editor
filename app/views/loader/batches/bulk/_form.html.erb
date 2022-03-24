@@ -43,6 +43,8 @@
 <div id="add-instances-to-tree-error-message-container" class="error-container message-container"></div>
 <%= link_to "[clear]", orchids_batch_clear_path, class:"hidden message-clearer with-underline", remote: true, title: "Clear the messages" %> 
 <br>
+<%= link_to "Recent logs", search_path(query_string: "latest:",query_target: 'bulk_processing_logs'), title: "See logs", class: "with-underline" %> 
+<hr class="dark">
 <div id="bulk-ops-stats-container" class="">
 </div>
 <%= divider %>

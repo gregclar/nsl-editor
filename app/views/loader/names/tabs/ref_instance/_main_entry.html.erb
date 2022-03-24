@@ -3,8 +3,8 @@
   No preferred match, nothing to do here.
 <% else %>
 
-  <br><br>
   <% @loader_name.preferred_matches.each do |match| %>
+  <br><br>
     <%= render partial: 'loader/names/tabs/ref_instance/main_entry_form', locals: {match: match} %>
   <% end %>
 

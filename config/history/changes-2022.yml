@@ -1,3 +1,7 @@
+- :date: 23-Mar-2022
+  :jira_id: '4192'
+  :description: |-
+    Batch Loader: add batch name to bulk logs; move link to query logs closer to the form; tweak Ref Instance tab wording; prevent choosing synonym; and do not display common names in synonymy on Ref Instance tab.
 - :date: 25-Mar-2022
   :release: true
 - :date: 23-Mar-2022
