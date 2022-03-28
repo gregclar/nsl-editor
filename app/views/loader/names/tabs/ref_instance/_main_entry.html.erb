@@ -4,11 +4,12 @@
 <% else %>
 
   <% @loader_name.preferred_matches.each do |match| %>
-  <br><br>
     <%= render partial: 'loader/names/tabs/ref_instance/main_entry_form', locals: {match: match} %>
   <% end %>
-
-  <% unless @loader_name.preferred_matches.first.standalone_instance_id.blank? %>
+  <br><br>
+  <br><br>
+  <%= divider %>
+  <% unless (@loader_name.preferred_matches.first.standalone_instance_id.blank? && !@loader_name.preferred_matches.first.use_batch_default_reference) %>
     <%= render partial: 'loader/names/tabs/ref_instance/clear_standalone_instance.html.erb' %>
   <% end %>
 

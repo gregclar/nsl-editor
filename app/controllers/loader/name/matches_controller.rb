@@ -82,31 +82,21 @@ class Loader::Name::MatchesController < ApplicationController
   end
 
   def set_standalone_instance
-    @match = @loader_name.preferred_matches.first
-    if @match.standalone_instance_id == loader_name_match_params[:standalone_instance_id].to_i
-      @message = 'No change'
-    elsif loader_name_match_params[:standalone_instance_id].blank?
-      @message = 'No change'
-    else
-      @match.standalone_instance_id = loader_name_match_params[:standalone_instance_id].to_i
-      @match.standalone_instance_found = true
-      @match.save!
-      @message = 'Saved'
+    if loader_name_match_params[:standalone_instance_id] == '1'
+      use_the_default_ref
+    else 
+      continue_set_standalone_instance
     end
-    render 'set_standalone_instance'
-  rescue => e
-    logger.error("Loader::Name::MatchesController set_standalone_instance error: #{e.to_s}")
-    @message = e.to_s
-    render 'set_standalone_instance_error', format: :js
   end
 
   def clear_standalone_instance
     @match = @loader_name.preferred_matches.first
-    if @match.standalone_instance_id.blank? 
+    if @match.standalone_instance_id.blank? && !@match.use_batch_default_reference
       @message = 'No change'
     else
       @match.standalone_instance_id = nil
       @match.standalone_instance_found = false
+      @match.use_batch_default_reference = false
       @match.save!
       @message = 'Cleared'
     end
@@ -214,6 +204,44 @@ class Loader::Name::MatchesController < ApplicationController
     logger.error(e.to_s)
     @message = e.to_s
     render 'update_error', format: :js
+  end
+
+  def continue_set_standalone_instance
+    @match = @loader_name.preferred_matches.first
+    if @match.standalone_instance_id == loader_name_match_params[:standalone_instance_id].to_i
+      @message = 'No change'
+    elsif loader_name_match_params[:standalone_instance_id].blank?
+      @message = 'No change'
+    else
+      @match.use_batch_default_reference = false
+      @match.standalone_instance_id = loader_name_match_params[:standalone_instance_id].to_i
+      @match.standalone_instance_found = true
+      @match.save!
+      @message = 'Saved'
+    end
+    render 'set_standalone_instance'
+  rescue => e
+    logger.error("Loader::Name::MatchesController set_standalone_instance error: #{e.to_s}")
+    @message = e.to_s
+    render 'set_standalone_instance_error', format: :js
+  end
+
+  def use_the_default_ref
+    @match = @loader_name.preferred_matches.first
+    if @match.use_batch_default_reference
+      @message = 'No change'
+    else
+      @match.use_batch_default_reference = true
+      @match.standalone_instance_id = nil
+      @match.standalone_instance_found = false
+      @match.save!
+      @message = 'Saved'
+    end
+    render 'use_the_default_ref'
+  rescue => e
+    logger.error("Loader::Name::MatchesController use_the_default_ref error: #{e.to_s}")
+    @message = e.to_s
+    render 'use_the_default_ref_error', format: :js
   end
 
   # In this controller because some loader_name_match actions originate from 

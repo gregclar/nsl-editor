@@ -1,8 +1,22 @@
-
   <% wd = 'loader/names/tabs/ref_instance/record' %>
   <%= form_with(model: match, url: loader_name_set_standalone_instance_path)  do |form| %>
     <%= form.hidden_field :id %>
   <table border="0">
+  <tr>
+  <td colspan="2" class="text">
+    <b>Use the batch default reference:</b>
+  </td>
+  </tr>
+  <tr>
+  <td colspan="1" class="align-top text width-5-percent padding-right-half-em">
+    <%= form.radio_button :standalone_instance_id, "1", checked: "#{'checked' if match.use_batch_default_reference}", class: "inline pull-left" %>
+  </td>
+  <td colspan="1" class="text width-90-percent">
+    <%= form.label "standalone_instance_id_1", match.loader_name.loader_batch.default_reference.citation.html_safe, class:'indent-level-1 font-weight-normal' %> 
+  </td>
+  </tr>
+  <tr> <td colspan="2" class="text"><br>Or choose an instance from the preferred match:<br></td> </tr>
+  <tr> <td colspan="2" class="text">&nbsp;</td> </tr>
   <% results = Search::OnName::WithInstances.new([match.name]).names_with_instances %>
   <% results.each do |record| %>
     <% give_me_focus = false %>
@@ -33,5 +47,5 @@
     <% end %>
     </table>
       <br>
-    <%= form.submit "Save", remote: true, class: 'btn btn-primary pull-right', title: 'Save the preferred usage.' %>
+    <%= form.submit "Save", remote: true, class: 'width-5em btn btn-primary pull-left', title: 'Save the preferred usage.' %>
 <% end %>

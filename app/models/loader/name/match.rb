@@ -28,5 +28,17 @@ class Loader::Name::Match < ActiveRecord::Base
   belongs_to :instance_type, foreign_key: :relationship_instance_type_id, optional: true
   validates :loader_name_id, uniqueness: true,
             unless: Proc.new {|a| a.loader_name.record_type == 'misapplied'}
+  validates :standalone_instance_id, absence: true, if: :using_default_ref?
+  validates :standalone_instance_found, exclusion: {in: [true], message: 'not found'}, if: :using_default_ref?
+
+  def using_default_ref?
+    use_batch_default_reference == true
+  end
+
+  validates :use_batch_default_reference, exclusion: {in: [true], message:'not both'}, if: :standalone_set?
+
+  def standalone_set?
+    !standalone_instance_id.nil?
+  end
 end
 

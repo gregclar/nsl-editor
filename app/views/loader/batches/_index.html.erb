@@ -1,20 +1,14 @@
 <div id="batch-loader-control-panel" class="reports-inner">
 
-<% increment_tab_index(0) %>
-<h4>Loading Taxonomy Data</h4>
-<%= render partial: 'loader/batches/bulk/overview' %>
-
-<%= divider %>
 <% if session[:default_loader_batch_id].blank? %>
-  Please select a default batch.
+  <h4>Please select a default batch to work on</h4>
 <% else %>
+  <h3>Default batch: <%= session[:default_loader_batch_name] %></h3>
+  <% increment_tab_index(0) %>
+  <h4>Loading Taxonomy Data</h4>
+  <%= render partial: 'loader/batches/bulk/overview' %>
   <h4>Bulk Operations</h4>
   <%= render partial: 'loader/batches/bulk/form' %>
-<% end %>
-
-<%= divider %>
-<% unless session[:default_loader_batch_id].blank? %>
-  <h4>Default Batch Summary</h4>
   <%= render partial: 'loader/batches/bulk/stats' %>
 <% end %>
 

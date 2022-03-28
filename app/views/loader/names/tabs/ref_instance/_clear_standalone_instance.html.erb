@@ -1,6 +1,7 @@
     <%= form_with(url: loader_name_match_clear_standalone_instance_path(@loader_name.id), role: 'form', remote: true, method: :patch) do |f| -%>
       <%= f.hidden_field(:id, value: @loader_name.id) -%>
-      <%= f.submit "Clear the standalone instance", id: 'clear-standalone-instance', tabindex: increment_tab_index,
-        title: 'Clear any saved standalone instance ID', class: 'btn btn-primary width-15em' -%>
+      <%= f.submit "Clear the choices", id: 'clear-standalone-instance', tabindex: increment_tab_index,
+        title: 'Clear any saved choice of the batch default reference or a standalone instance', class: 'btn btn-primary width-10em pull-right' -%>
     <% end -%>
-
+    <br>
+    <br>

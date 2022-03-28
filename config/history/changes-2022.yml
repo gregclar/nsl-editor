@@ -1,3 +1,7 @@
+- :date: 29-Mar-2022
+  :jira_id: '4078'
+  :description: |-
+    Batch Loader: loaders can now set a batch default reference and then choose that reference for a loader name, instead of picking a preferred match specific instance (first cut).
 - :date: 28-Mar-2022
   :jira_id: ''
   :description: |-
