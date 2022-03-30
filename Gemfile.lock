@@ -103,7 +103,7 @@ GEM
     jbuilder (2.11.3)
       activesupport (>= 5.0.0)
     jdbc-postgres (42.2.25)
-    jruby-jars (9.3.4.0)
+    jruby-jars (9.3.1.0)
     jruby-rack (1.1.21)
     kramdown (2.3.1)
       rexml
