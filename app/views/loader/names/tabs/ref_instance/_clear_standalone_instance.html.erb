@@ -1,7 +1,13 @@
+<% if (@loader_name.preferred_matches.first.standalone_instance_id.blank? && !@loader_name.preferred_matches.first.use_batch_default_reference) %>
+  <% maybe_hidden = 'hidden' %>
+<% else %>
+  <% maybe_hidden = '' %>
+<% end %>
+
     <%= form_with(url: loader_name_match_clear_standalone_instance_path(@loader_name.id), role: 'form', remote: true, method: :patch) do |f| -%>
       <%= f.hidden_field(:id, value: @loader_name.id) -%>
       <%= f.submit "Clear the choices", id: 'clear-standalone-instance', tabindex: increment_tab_index,
-        title: 'Clear any saved choice of the batch default reference or a standalone instance', class: 'btn btn-primary width-10em pull-right' -%>
+        title: 'Clear any saved choice of the batch default reference or a standalone instance', id: "clear-button", class: "btn btn-primary width-10em pull-right #{maybe_hidden}" -%>
     <% end -%>
     <br>
     <br>

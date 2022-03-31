@@ -1,18 +1,22 @@
 <% increment_tab_index(0) %>
 <h5>Reference Instance</h5>
+<% unless @loader_name.main_entry? %>
+  This tab does not apply to <%= @loader_name.record_type.pluralize(2) %>.
+<% else %>
 
 
-This is where you choose the usage that matches the taxonomy for a loader name.
+  <% unless @loader_name.preferred_match? %>
+    Loader Name must have a preferred match before doing anything here.
+  <% else %>
 
-Only records that have a preferred match are eligible for this step.
-<br>
-<br>
-It applies only to main entries, not to synonyms or misapplications.
-<%= divider %>
-<% if @loader_name.main_entry? %>
-  <%= render partial: 'loader/names/tabs/ref_instance/main_entry' %>
+    Choose the usage (instance) that matches the loader name taxonomy.
+      <div id="search-result-details-info-message-container-top" class="message-container pull-right"></div>
+      <div id="search-result-details-error-message-container-top" class="error-container pull-right"></div>
+      <br>
+      <br>
+      <%= render partial: 'loader/names/tabs/ref_instance/main_entry' %>
+
+  <% end %>
 <% end %>
-<div id="search-result-details-info-message-container" class="message-container"></div>
-<div id="search-result-details-error-message-container" class="error-container"></div>
 
 

@@ -355,6 +355,10 @@ class Loader::Name < ActiveRecord::Base
     record_type == 'accepted'
   end
 
+  def preferred_match?
+    preferred_matches.size > 0
+  end
+
   def self.create_preferred_matches(name_s, batch_id, authorising_user, work_on_accepted)
     #if work_on_accepted
       self.create_preferred_matches_for_accepted_taxa(name_s, batch_id, authorising_user)

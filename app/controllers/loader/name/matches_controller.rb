@@ -228,7 +228,7 @@ class Loader::Name::MatchesController < ApplicationController
 
   def use_the_default_ref
     @match = @loader_name.preferred_matches.first
-    if @match.use_batch_default_reference
+    if @match.use_batch_default_reference == true
       @message = 'No change'
     else
       @match.use_batch_default_reference = true

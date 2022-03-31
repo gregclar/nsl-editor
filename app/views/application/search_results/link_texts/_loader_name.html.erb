@@ -44,10 +44,10 @@
     <span class='flag on-tree-indicator'>manually drafted</span>
   <% end %>
   <% preferreds = search_result.loader_name_matches.collect{|o| "#{o.name_id}/#{o.instance_id}" } %>
-  <span class="flag preferred-name"><%= preferreds.size %>p</span>
-  <% standalones = search_result.loader_name_matches.select {|orcn| orcn.standalone_instance_id.present?} %>
+  <span class="flag preferred-name" title="Preferred matches"><%= preferreds.size %>p</span>
+  <% standalones = search_result.loader_name_matches.select {|lnm| lnm.standalone_instance_id.present?} %>
   <% if standalones.size > 0 %>
-    <span class="flag standalone-count"><%= "#{standalones.size}i" %></span>
+    <span class="flag standalone-count" title="Standalone instances created or found"><%= "#{standalones.size}s" %></span>
     <% if standalones.size > 1 %>
       <span class="flag standalone-count"><%= "#{standalones.size}i too many!" %></span><%= search_result.id %>, <%= search_result.loader_name_matches.size %>
     <% else %>
@@ -58,6 +58,10 @@
         <span class='flag on-tree-indicator'>current draft</span>
       <% end %>
     <% end %>
+  <% end %>
+  <% use_default_ref = search_result.loader_name_matches.select {|lnm| lnm.using_default_ref?} %>
+  <% if use_default_ref.size > 0 %>
+    <span title="Using default ref" class="bgorange flag use-default-ref-flag"><%= "dr" %></span>
   <% end %>
   <% relationships = search_result.loader_name_matches.select {|orcn| orcn.relationship_instance_id.present?} %>
   <% if relationships.size > 0 %>
