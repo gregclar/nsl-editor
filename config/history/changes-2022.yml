@@ -1,4 +1,8 @@
 - :date: 01-Apr-2022
+  :jira_id: '4078'
+  :description: |-
+    Batch Loader: allow removal of a batch default reference on the batch edit tab
+- :date: 01-Apr-2022
   :jira_id: ''
   :description: |-
     Admin: show hostname on Admin page

@@ -99,7 +99,8 @@ class Loader::BatchesController < ApplicationController
   end
 
   def loader_batch_params
-    params.require(:loader_batch).permit(:name, :description, :default_reference_id)
+    params.require(:loader_batch).permit(:name, :description,
+       :default_reference_id, :default_reference_typeahead)
   end
 
   def set_tab
