@@ -53,7 +53,7 @@ end
 
 group :development, :test do
   gem "pry-rails"
-  gem "pry-rescue"
+  # gem "pry-rescue" # breaks test env. on Mac M1
   gem "webmock"
   # gem "schema_plus"
 end
