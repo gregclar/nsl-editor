@@ -2,6 +2,15 @@
 
 <% if session[:default_loader_batch_id].blank? %>
   <h4>Please select a default batch to work on</h4>
+  <%= render partial: 'detail_line',
+    locals: {label: 'query the batch stacks',
+             info: link_to("Batch Stacks",
+                          search_path(
+                            query_string: "*",
+                            query_target: 'batch stacks',
+             ),
+                            title:"Query batch in stack format",class:'blue')} %>
+
 <% else %>
   <h3>Default batch: <%= session[:default_loader_batch_name] %></h3>
   <% increment_tab_index(0) %>

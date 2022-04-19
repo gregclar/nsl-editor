@@ -5,10 +5,16 @@
     tabindex="<%= increment_tab_index(100) %>"
 >
   <td colspan="1" class="align-top text width-5-percent padding-right-half-em">
-    <%= form.radio_button :standalone_instance_id, record.id, class: "inline pull-right" %>
+    <% unless record.show_apc? %>
+      <%= form.radio_button :standalone_instance_id, record.id, class: "inline pull-right", required: true %>
+    <% end %>
   </td>
   <td colspan="1" class="text width-90-percent">
-    <%= form.label "standalone_instance_id_#{record.id}", record.listing_citation.html_safe, class:'indent-level-1 font-weight-normal' %> 
+    <% if record.show_apc? %>
+      <%= record.listing_citation.html_safe %>
+    <% else %>
+      <%= form.label "standalone_instance_id_#{record.id}", record.listing_citation.html_safe, class:'indent-level-1 font-weight-normal' %> 
+    <% end %>
   </td>
 </tr>
 

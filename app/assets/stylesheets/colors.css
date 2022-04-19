@@ -141,6 +141,11 @@ a:hover.blue           { color: blue; }
   color: white;
 }
 
+.copy-and-append-count {
+  background: mediumvioletred;
+  color: white;
+}
+
 .relationship-statement {
   background: darkslateblue;
   color: white;

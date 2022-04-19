@@ -35,12 +35,18 @@
       <% if @loader_name.loader_name_matches.where(name_id: matching_name.id).first.standalone? %>
         <% si = @loader_name.loader_name_matches.where(name_id: matching_name.id).first.standalone_instance %>
         <br>
-        Standalone Instance:
-        <span class="brown"><%= si.instance_type.name %></span>&nbsp;<span title="Instance ID: <%= si.id %>"><%= si.reference.citation %>:&nbsp;<%= si.page %></span>
-      <% end %>
-      <% if @loader_name.loader_name_matches.where(name_id: matching_name.id).first.using_default_ref? %>
+        <%= render partial: 'detail_line', locals: {info: "#{si.reference.citation}:&nbsp;#{si.page}", label: 'selected instance'} %>
+        <%= render partial: 'detail_line', locals: {info: si.instance_type.name, label: 'selected instance type'} %>
+      <% elsif @loader_name.loader_name_matches.where(name_id: matching_name.id).first.using_default_ref? %>
         <br>
-        Using default reference.
+        Using default reference: <%= @loader_name.loader_batch.default_reference&.citation&.html_safe || 'There is no default reference for this batch' %>
+(currently) 
+      <% elsif @loader_name.loader_name_matches.where(name_id: matching_name.id).first.copy_and_append? %>
+        <br>
+        Copy and append: copy instances from <% si = @loader_name.loader_name_matches.where(name_id: matching_name.id).first.standalone_instance %>
+        <span class="brown"><%= si.instance_type.name %></span>&nbsp;<span title="Instance ID: <%= si.id %>"><%= si.reference.citation %>:&nbsp;<%= si.page %></span>
+        <br>
+        and append to a new instance on the batch default reference: <%= @loader_name.loader_batch.default_reference&.citation&.html_safe || 'There is no default reference for this batch' %>, also add any loader instances.
       <% end %>
     <% end %>
   <% end %>

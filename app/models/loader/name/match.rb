@@ -40,7 +40,33 @@ class Loader::Name::Match < ActiveRecord::Base
   validates :use_batch_default_reference, exclusion: {in: [true], message:'not both'}, if: :standalone?
 
   def standalone?
-    !standalone_instance_id.nil?
+    !standalone_instance_id.blank? && !copy_synonyms_and_append_extras
+  end
+
+  def copy_and_append?
+    !standalone_instance_id.blank? && copy_synonyms_and_append_extras
+  end
+
+  def current_taxonomy_instance_choice
+    case
+      when use_batch_default_reference then
+       'Use batch default reference'
+      when copy_synonyms_and_append_extras then
+       'Copy and append'
+      when standalone_instance_id.present? then
+       'Use an existing instance'
+      else
+       'No choice made'
+    end
+  end
+
+  def taxonomy_choice_made?
+    use_batch_default_reference ||
+    standalone_instance_id.present?
+  end
+
+  def show_default_reference?
+    use_batch_default_reference || copy_synonyms_and_append_extras
   end
 end
 

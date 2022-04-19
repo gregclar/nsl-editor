@@ -19,7 +19,7 @@
     </span>
     <span class="pull-right">
       <%= link_to("#{ShardConfig.name_space} #{icon('external-link-square')}".html_safe,
-              "#{Rails.configuration.try('nsl_links')}nsl/services/rest/name/apni/#{record.id}/api/apni-format",
+              "#{Rails.configuration.try('nsl_links')}rest/name/apni/#{record.id}/api/apni-format",
             title: "#{ShardConfig.name_space} search by ID. Opens in another tab or window.",
             class: "rebeccapurple",
             target: "_editor_to_apni",

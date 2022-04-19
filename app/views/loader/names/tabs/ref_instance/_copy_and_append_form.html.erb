@@ -1,27 +1,21 @@
   <% wd = 'loader/names/tabs/ref_instance/record' %>
-  <%= form_with(model: match, url: loader_name_set_standalone_instance_path)  do |form| %>
+  <%= form_with(model: match, url: loader_name_matches_create_and_copy_path, remote: true)  do |form| %>
+    <div> Choose an instance
+    <%= form.submit "Save", remote: true, class: 'width-5em btn btn-primary pull-right', title: 'Save your choice.' %>
+    </div>
     <%= form.hidden_field :id %>
-    <%= form.submit "Save", remote: true, class: 'width-5em btn btn-primary pull-right', title: 'Save the preferred usage.' %>
+    <%= form.hidden_field :use_batch_default_reference, value: false %>
+    <%= form.hidden_field :standalone_instance_found, value: true %>
+    <div id="search-result-details-info-message-container-top" class="message-container"></div>
+    <div id="search-result-details-error-message-container-top" class="message-container error-container"></div>
+    <br>
   <table border="0">
   <tr>
-  <td colspan="2" class="text">
-    <% if match.loader_name.loader_batch.default_reference.blank? %>
-      <b>[Batch default reference isn't set up.]</b>
-    <% else %>
-      <b>Use the batch default reference:</b>
-      </td>
-      </tr>
-      <tr>
-      <td colspan="1" class="align-top text width-5-percent padding-right-half-em">
-        <%= form.radio_button :standalone_instance_id, "1", checked: "#{'checked' if match.use_batch_default_reference}", disabled: match.loader_name.loader_batch.default_reference.blank?, class: "inline pull-left" %>
-      </td>
-  <td colspan="1" class="text width-90-percent">
-    <%= form.label "standalone_instance_id_1", match.loader_name.loader_batch.default_reference&.citation&.html_safe || 'Disabled because no default reference', class:'indent-level-1 font-weight-normal' %> 
-  </td>
+    <td colspan="2">
+    <b>Copy</b> synonyms from the selected instance and <b>append</b> any additional information from the loader name to
+    and instance attached to the default reference.
+    </td>
   </tr>
-  <tr> <td colspan="2" class="text"><br>Or choose an instance from the preferred match:<br>
-    <% end %>
-  </td> </tr>
   <tr> <td colspan="2" class="text">&nbsp;</td> </tr>
   <% results = Search::OnName::WithInstances.new([match.name]).names_with_instances %>
   <% results.each do |record| %>
@@ -53,5 +47,9 @@
     <% end %>
     </table>
       <br>
-    <%= form.submit "Save", remote: true, class: 'width-5em btn btn-primary pull-left', title: 'Save the preferred usage.' %>
+    <%= form.submit "Save", remote: true, class: 'width-5em btn btn-primary pull-left', title: 'Save your choice.' %>
 <% end %>
+
+
+
+
