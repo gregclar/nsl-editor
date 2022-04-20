@@ -1,7 +1,7 @@
 - :date: 19-Apr-2022
   :jira_id: ''
   :description: |-
-    Security Patches: async 2.6.4, nokogiri 1.13.4
+    Security Patches: async 2.6.4, nokogiri 1.13.4, rails 6.1.5, etc
 - :date: 19-Apr-2022
   :jira_id: '4078'
   :description: |-
