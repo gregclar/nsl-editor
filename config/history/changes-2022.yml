@@ -1,7 +1,7 @@
 - :date: 19-Apr-2022
   :jira_id: '4078'
   :description: |-
-    Batch Loader: Reference instance tab for accepted loader name records.
+    Batch Loader: Loader Name Reference Instance tab operating with a 3-way choice, refined after last week's walk-through in dev.
 - :date: 01-Apr-2022
   :jira_id: ''
   :description: |-
