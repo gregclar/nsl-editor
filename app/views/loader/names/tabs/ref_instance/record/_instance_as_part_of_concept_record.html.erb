@@ -16,11 +16,7 @@
     <% end %>
   </td>
   <td colspan="1" class="text width-90-percent">
-    <% if record.show_apc? %>
-      <%= record.listing_citation.html_safe %>
-    <% else %>
-      <%= form.label "standalone_instance_id_#{record.id}", record.listing_citation.html_safe, class:'indent-level-1 font-weight-normal' %> 
-    <% end %>
+    <%= form.label "standalone_instance_id_#{record.id}", record.listing_citation.html_safe, class:'indent-level-1 font-weight-normal' %> 
   </td>
 </tr>
 
