@@ -1,3 +1,7 @@
+- :date: 20-Apr-2022
+  :jira_id: '4078'
+  :description: |-
+    Batch Loader: refine text and icons in batch stack output
 - :date: 19-Apr-2022
   :jira_id: '4078'
   :description: |-
