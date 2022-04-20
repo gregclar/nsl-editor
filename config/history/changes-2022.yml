@@ -1,6 +1,10 @@
 - :date: 19-Apr-2022
   :jira_id: '4078'
   :description: |-
+    Batch Loader: display remark-to-reviewers and higher-rank-comment in standard loader name listing (it's already showing in review mode)
+- :date: 19-Apr-2022
+  :jira_id: '4078'
+  :description: |-
     Batch Loader: adjust the logic for instances offered for a loader name so taxonomy instances are offered in the copy-and-append flow. Label fix.
 - :date: 19-Apr-2022
   :jira_id: ''

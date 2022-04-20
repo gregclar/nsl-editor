@@ -15,6 +15,14 @@
 <span class='<%= "loader-name-simple-name" %>'>
 <%= "#{search_result.simple_name}" %>
 </span>
+
+<% unless search_result.remark_to_reviewers.blank? %>
+  <span class="review loader-name remark-to-reviewers"><%= search_result.remark_to_reviewers.html_safe %></span>
+<% end %>
+<% unless search_result.higher_rank_comment.blank? %>
+        <span class="review loader-name remark-to-reviewers"><%= search_result.higher_rank_comment.html_safe %></span>
+<% end %>
+
 | <span title="potential matches count"><%= search_result.matches.size %>m</span>
   <% if search_result.created_manually? %>
     <span class='flag bgdarkslateblue white' title='Loader name record was manually created'>manually created</span>
