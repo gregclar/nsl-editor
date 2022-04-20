@@ -1,4 +1,8 @@
 - :date: 19-Apr-2022
+  :jira_id: '4078'
+  :description: |-
+    Batch Loader: adjust the logic for instances offered for a loader name so taxonomy instances are offered in the copy-and-append flow.
+- :date: 19-Apr-2022
   :jira_id: ''
   :description: |-
     Security Patches: async 2.6.4, nokogiri 1.13.4, rails 6.1.5, etc

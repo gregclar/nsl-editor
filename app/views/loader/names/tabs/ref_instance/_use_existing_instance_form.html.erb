@@ -19,7 +19,10 @@
           locals: {record: record, form: form, give_me_focus: give_me_focus} %>
       <% when :instance_as_part_of_concept %>
         <%= render partial: "#{wd}/instance_as_part_of_concept_record",
-          locals: {record: record, form: form, give_me_focus: give_me_focus}%>
+          locals: {record: record,
+                   form: form,
+                   give_me_focus: give_me_focus,
+                   allow_all_even_if_in_current_tree: false }%>
       <% when 'instance-is-cited-by' %>
         <% unless record.instance_type.name =~ /\Acommon/ %>
           <%= render partial: "#{wd}/instance_is_cited_by",

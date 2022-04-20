@@ -5,8 +5,14 @@
     tabindex="<%= increment_tab_index(100) %>"
 >
   <td colspan="1" class="align-top text width-5-percent padding-right-half-em">
-    <% unless record.show_apc? %>
+    <% if allow_all_even_if_in_current_tree %>
       <%= form.radio_button :standalone_instance_id, record.id, class: "inline pull-right", required: true %>
+    <% else %>
+      <% if record.show_apc? %>
+        <%= form.radio_button :standalone_instance_id, record.id, class: "inline pull-right", required: true, disabled: true %>
+      <% else %>
+        <%= form.radio_button :standalone_instance_id, record.id, class: "inline pull-right", required: true %>
+      <% end %>
     <% end %>
   </td>
   <td colspan="1" class="text width-90-percent">
