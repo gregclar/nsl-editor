@@ -12,18 +12,20 @@ function show_use_existing() {
   $('.message-container').html('');
   $('.error-container').html('');
   $('#copy-and-append-form-container').html('');
+  $('#use-existing-instance-form-container').html('Loading...');
+  $('#use-existing-instance-form-container').removeClass('hidden');
   $.get( window.relative_url_root + "/loader/name/matches/use-existing-instance-form/<%= match.id %>", function( data ) {
   });
-  $('#use-existing-instance-form-container').removeClass('hidden')
 }
 function show_copy_and_append() {
   $('.choices').addClass('hidden');
   $('.message-container').html('');
   $('.error-container').html('');
   $('#use-existing-instance-form-container').html('');
+  $('#copy-and-append-form-container').html('Loading...');
+  $('#copy-and-append-form-container').removeClass('hidden');
   $.get( window.relative_url_root + "/loader/name/matches/copy-and-append-form/<%= match.id %>", function( data ) {
   });
-  $('#copy-and-append-form-container').removeClass('hidden');
 }
 </script>
 
