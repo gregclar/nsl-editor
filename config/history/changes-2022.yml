@@ -1,3 +1,7 @@
+- :date: 22-Apr-2022
+  :jira_id: '4078'
+  :description: |-
+    Batch Loader: fix bulk processing logs default query field (so the no-directive query works)
 - :date: 21-Apr-2022
   :jira_id: '4078'
   :description: |-
