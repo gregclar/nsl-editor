@@ -1,4 +1,8 @@
 - :date: 29-Apr-2022
+  :jira_id: '4213'
+  :description: |-
+    Taxonomy profile edit: Edit Profile tab (distribution, comment) for evaluation as partial answer to the question (but not ready for full-scale testing yet)
+- :date: 29-Apr-2022
   :release: true
 - :date: 27-Apr-2022
   :jira_id: ''

@@ -95,7 +95,68 @@ class TreeElement < ActiveRecord::Base
     end
   end
 
-  def profile_key(key_string)
-    profile.keys.find {|key| key_string == key} if profile.present?
+  def profile_key(pkey)
+    return nil unless profile.present?
+
+    if pkey.is_a? String then
+      profile.keys.find {|key| key == pkey}
+    elsif pkey.is_a? Regexp then
+      profile.keys.find {|key| key =~ pkey}
+    else 
+      raise 'Not a string or a regexp....'
+    end
+  end
+
+  #def profile_key_via_regex(key_regex)
+    #profile.keys.find {|key| key_regex =~ key} if profile.present?
+  #end
+
+  def distribution
+    profile[distribution_key]
+  end
+
+  def comment
+    profile[comment_key]
+  end
+
+  # note: deliberatly using the update_all method because allows convenient use of jsonb_set 
+  # note: no validation
+  # note: applies sql directly
+  def update_distribution_directly(new_dist_s, user)
+    TreeElement.where(id: self.id).update_all(%Q(profile = jsonb_set(profile,'{"#{distribution_key}","value"}','"#{new_dist_s}"')))
+    TreeElement.where(id: self.id).update_all(%Q(profile = jsonb_set(profile,'{"#{distribution_key}","updated_by"}','"#{user}"')))
+    TreeElement.where(id: self.id).update_all(%Q(profile = jsonb_set(profile,'{"#{distribution_key}","updated_at"}',to_jsonb(to_char(now()::timestamp,'YYYY-MM-DD"T"HH24:MI:SS+#{utc_offset_s}')))))
+  end
+
+  def update_comment_directly(new_comment, user)
+    TreeElement.where(id: self.id).update_all(%Q(profile = jsonb_set(profile,'{"#{comment_key}","value"}','"#{new_comment}"')))
+    TreeElement.where(id: self.id).update_all(%Q(profile = jsonb_set(profile,'{"#{comment_key}","updated_by"}','"#{user}"')))
+    TreeElement.where(id: self.id).update_all(%Q(profile = jsonb_set(profile,'{"#{comment_key}","updated_at"}',to_jsonb(to_char(now()::timestamp,'YYYY-MM-DD"T"HH24:MI:SS+#{utc_offset_s}')))))
+  end
+
+  def utc_offset_s
+    seconds_offset = Time.now.in_time_zone('Australia/Canberra').utc_offset
+    hours_offset = seconds_offset/3600
+    mins_offset = seconds_offset%3600
+    hours_offset_s = hours_offset.to_s.rjust(2, '0')
+    mins_offset_s = mins_offset.to_s.rjust(2, '0')
+    utc_offset = "#{hours_offset_s}:#{mins_offset_s}"
+  end
+
+  def self.cleanup_distribution_string(s)
+    s = s.split(',').collect {|s| s.strip}
+         .sort_by { |s| TreeElement.region_position(s) || 99 }.uniq.join(', ') 
+  end
+
+  def self.validate_distribution_string(s)
+    s.split(',').each do |val|
+      raise "Invalid value: #{val}" unless DistEntry.exists?(display: val.strip)
+    end
+  end
+
+  # e.g. input dist_entry 'AR (native and naturalised)'
+  #      get the sort_order for AR from dist_region
+  def self.region_position(dist_entry)
+    DistRegion.as_hash[dist_entry.split(' ').first]
   end
 end
