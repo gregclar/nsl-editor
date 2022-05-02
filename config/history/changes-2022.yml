@@ -1,3 +1,7 @@
+- :date: 01-May-2022
+  :jira_id: '4220'
+  :description: |-
+    Taxonomy profile edit: fix display bug on the Instance Detail tab for instances in the current taxonomy. (Slipped through in the preceding changes.)
 - :date: 29-Apr-2022
   :jira_id: '4213'
   :description: |-
