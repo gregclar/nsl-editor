@@ -31,7 +31,7 @@ class TreeElement < ActiveRecord::Base
   has_many :tree_version_elements,
            foreign_key: "tree_element_id"
 
-  has_and_belongs_to_many :dist_entries,
+  has_and_belongs_to_many :tede_dist_entries,
                           class_name: "DistEntry",
                           join_table: "tree_element_distribution_entries",
                           foreign_key: "tree_element_id"
@@ -57,18 +57,18 @@ class TreeElement < ActiveRecord::Base
   def dist_options_disabled
     disabled_options = []
     all = DistEntry.all
-    for n in dist_entries.collect(&:region)
+    for n in tede_dist_entries.collect(&:region)
       disabled_options.concat(all.find_all {|opt| opt.dist_region.name == n}.collect(&:display))
     end
     disabled_options
   end
 
   def current_dist_options
-    dist_entries.collect(&:display)
+    tede_dist_entries.collect(&:display)
   end
 
   def construct_distribution_string
-    dist_entries
+    tede_dist_entries
         .sort {|a, b| a.dist_region.sort_order <=> b.dist_region.sort_order}
         .collect(&:entry)
         .join(', ')
@@ -149,7 +149,7 @@ class TreeElement < ActiveRecord::Base
   end
 
   def self.validate_distribution_string(s)
-    s.split(',').each do |val|
+    s.split(',').collect{|val| val.strip}.each do |val|
       raise "Invalid value: #{val}" unless DistEntry.exists?(display: val.strip)
     end
   end
@@ -158,5 +158,49 @@ class TreeElement < ActiveRecord::Base
   #      get the sort_order for AR from dist_region
   def self.region_position(dist_entry)
     DistRegion.as_hash[dist_entry.split(' ').first]
+  end
+
+  def apply_string_to_tedes
+    add_missing_tedes
+    remove_excess_tedes
+  end
+
+  def missing_tedes
+    distribution_as_arr - tede_entries_arr
+  end
+
+  def add_missing_tedes
+    missing_tedes.each { |value| add_tede(value) }
+  end
+
+  def add_tede(value)
+    tede = Tree::Element::DistributionEntry.new
+    tede.tree_element_id = id
+    tede.dist_entry_id = DistEntry.id_for_display(value)
+    tede.updated_by = @current_user&.username  || 'unknown'
+    tede.save!
+  end
+
+  def excess_tedes
+    tede_entries_arr - distribution_as_arr 
+  end
+
+  def remove_excess_tedes
+    excess_tedes.each { |value| remove_tede(value) }
+  end
+
+  def remove_tede(value)
+    tede = Tree::Element::DistributionEntry
+      .find_by(tree_element_id: id,
+               dist_entry_id: DistEntry.id_for_display(value))
+    tede.delete
+  end
+
+  def distribution_as_arr
+    distribution_value.split(',').collect {|val| val.strip}
+  end
+
+  def tede_entries_arr
+    tede_dist_entries.collect {|entry| entry.display}
   end
 end

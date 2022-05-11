@@ -15,11 +15,18 @@ Current Element in Taxonomy
   <%= JSON.pretty_generate(current_te.profile) %>
   </pre>
 
+<h6>Bubbles (sorted alphabetically, display only)</h6>
+<%= current_te.tede_entries_arr.sort.join(',') %>
+
+<br>
+<br>
+<br>
+<br>
+<br>
 <h6>
 Current Element in Taxonomy
 </h6>
 
-<br>
 <%= form_with model: current_te do |form| %>
   <% show_submit = false %>
   <% if current_te.distribution? %>

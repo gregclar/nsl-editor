@@ -54,6 +54,8 @@ class TreeElementsController < ApplicationController
       @message = 'Distribution changed'
       @refresh = true
       @tree_element.update_distribution_directly(new_cleaned, @current_user.username)
+      te = TreeElement.find(@tree_element.id)
+      te.apply_string_to_tedes
     end
   end
 

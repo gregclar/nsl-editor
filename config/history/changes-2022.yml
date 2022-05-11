@@ -1,3 +1,7 @@
+- :date: 11-May-2022
+  :jira_id: '4213'
+  :description: |-
+    Taxonomy profile edit: early version which aligns the "bubbles" with the edited distribution string
 - :date: 01-May-2022
   :jira_id: '4220'
   :description: |-
