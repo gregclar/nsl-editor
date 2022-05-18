@@ -131,8 +131,9 @@
   <% end %>
 
   <% if @tabs_to_offer.include?('tab_edit_profile') %>
-    <% if can? 'classification', 'place' %>
-      <%= render partial: 'instances/tabs/tab', locals: {first: false,
+    <% if Rails.configuration.try('profile_edit_aware') %>
+      <% if can? 'classification', 'place' %>
+        <%= render partial: 'instances/tabs/tab', locals: {first: false,
                                         last: true,
                                         this_tab: 'tab_edit_profile', 
                                         link_text: "Edit Profile".html_safe,
@@ -141,6 +142,7 @@
                                         tab_index: increment_tab_index,
                                         prev_tab: 'instance-profile-edit-tab',
                                         next_tab: '.search-result.show-details' } %>
+      <% end %>
     <% end %>
   <% end %>
 

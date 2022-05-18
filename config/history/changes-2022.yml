@@ -1,3 +1,7 @@
+- :date: 11-May-2022
+  :jira_id: '4213'
+  :description: |-
+    Taxonomy profile edit: add configuration switch which is off by default - i.e. inactive unless switched on and therefore safe to promote widely.
 - :date: 17-May-2022
   :jira_id: '4234'
   :description: |-
