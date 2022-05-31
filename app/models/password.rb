@@ -24,6 +24,7 @@ class Password < ActiveType::Object
   attribute :new_password_confirmation, :string
   validates :new_password_confirmation, presence: true
   attribute :username, :string
+  attribute :user_cn, :string
 
   def save!
     validate_arguments
@@ -51,13 +52,17 @@ class Password < ActiveType::Object
       raise "new password was not confirmed correctly"
     end
     raise "new password not long enough" if new_password.size < 8
-    raise "new password too long" if new_password.size > 25
+    raise "new password must contain at least one upper-case character A-Z" unless new_password.match(/[A-Z]/)
+    raise "new password must contain at least one lower-case character a-z" unless new_password.match(/[a-z]/)
+    raise "new password must contain at least one symbol or digit" unless new_password.match(/[0-9\[!@#$%^&*()_+-=?|}{\]\-=]/)
+    raise "new password too long" if new_password.size > 50
   end
 
   def change_password
     ldap = Ldap.new
     ldap.username = username
     ldap.password = current_password
+    ldap.user_cn = user_cn
     raise 'current password is wrong' unless ldap.verify_current_password
     ldap.change_password(username, new_password,random_seed)
   end

@@ -1,3 +1,7 @@
+- :date: 31-May-2022
+  :jira_id: '4237'
+  :description: |-
+    Login: Use the Simple Active Directory cloud server for login
 - :date: 23-May-2022
   :jira_id: ''
   :description: |-

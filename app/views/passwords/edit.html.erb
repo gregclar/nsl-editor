@@ -20,7 +20,11 @@
       <div class="form-group">
         <%= form.label :new_password, 'New Password*' %>
         <%= form.password_field :new_password, required: true, title: "Enter your new password", class: 'form-control' %>
-        <p>Must be at least 8 characters long.</p>
+        <% if Rails.configuration.try('ldap_via_active_directory') %>
+          <p>Must be at least 8 characters long and must contain at least 1 upper-case, 1 lower-case and 1 digit or symbol.  Up to 50 characters allowed.</p>
+        <% else %>
+          <p>Must be at least 8 characters long.</p>
+        <% end %>
       </div>
       <div class="form-group">
         <%= form.label :new_password_confirmation, 'New Password confirmation*' %>
