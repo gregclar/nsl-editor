@@ -1,3 +1,7 @@
+- :date: 1-Jun-2022
+  :jira_id: ''
+  :description: |-
+    Security: Upgrade rack.
 - :date: 31-May-2022
   :jira_id: '4237'
   :description: |-
