@@ -37,6 +37,8 @@ class PasswordsController < ApplicationController
     else
       render :edit
     end
+  rescue => e
+    render :edit
   end
 end
 

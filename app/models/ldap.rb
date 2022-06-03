@@ -51,6 +51,18 @@ class Ldap  < ActiveType::Object
     @user_cn || 'unknown'
   end
 
+  def generic_active_directory_user
+    @generic_active_directory_user || false
+  end
+
+  def active_directory_user
+    @active_directory_user || false
+  end
+
+  def openldap_user
+    @openldap_user || false
+  end
+
   # Known groups
   def self.groups
     Ldap.new.admin_search(Rails.configuration.ldap_groups,
@@ -154,23 +166,49 @@ class Ldap  < ActiveType::Object
   end
 
   def validate_via_active_directory
-    result = admin_connection.bind_as(
+    bind_as = admin_connection.bind_as(
       base: Rails.configuration.ldap_users,
       filter: Net::LDAP::Filter.eq('samAccountName', username),
       password: password
     )
-    if result
-      @display_name = result.first[:displayname].first
-      @groups = result.first[:memberof].collect {|x| x.split(',').first.split('=').last}
-      @user_cn = result.first[:dn].first
+    if bind_as
+      @display_name = bind_as.first[:displayname].first
+      @groups = bind_as.first[:memberof].select {|x| x.match(/#{Rails.configuration.group_filter_regex}/i)}.collect {|x| x.split(',').first.split('=').last}
+      @user_cn = bind_as.first[:dn].first
+      @active_directory_user = true
+      @openldap_user = false
+      @generic_active_directory_user = false
       return true
     else
-      errors.add(:connection, "failed")
-      Rails.logger.error("Validating user credentials failed for username: #{username} against AD samAccountName.")
-      return false
+      return validate_generic_user_in_active_directory
     end
   rescue => e
     Rails.logger.error("Exception in validate_user_credentials")
+    Rails.logger.error(e.to_s)
+    errors.add(:connection, "connection failed with exception")
+  end
+
+  def validate_generic_user_in_active_directory
+    bind_as = admin_connection.bind_as(
+      base: Rails.configuration.ldap_generic_users,
+      filter: Net::LDAP::Filter.eq('samAccountName', username),
+      password: password
+    )
+    if bind_as
+      @display_name = bind_as.first[:displayname].first
+      @groups = bind_as.first[:memberof].select {|x| x.match(/#{Rails.configuration.group_filter_regex}/i)}.collect {|x| x.split(',').first.split('=').last}
+      @user_cn = bind_as.first[:dn].first
+      @active_directory_user = true
+      @openldap_user = false
+      @generic_active_directory_user = true
+      return true
+    else
+      errors.add(:connection, "failed")
+      Rails.logger.error("Validating alt user credentials failed for username: #{username} against AD samAccountName.")
+      return false
+    end
+  rescue => e
+    Rails.logger.error("Exception in validate_generic_user_credentials")
     Rails.logger.error(e.to_s)
     errors.add(:connection, "connection failed with exception")
   end
@@ -185,6 +223,9 @@ class Ldap  < ActiveType::Object
       @display_name = ldap_full_name(result)
       @groups = ldap_user_groups
       @user_cn = 'not needed for openldap'
+      @openldap_user = true
+      @active_directory_user = false
+      @generic_active_directory_user = false
       return true
     else
       errors.add(:connection, "failed")

@@ -37,6 +37,10 @@ class SignIn < ActiveType::Object
     @ldap.user_cn
   end
 
+  def generic_active_directory_user
+    @ldap.generic_active_directory_user
+  end
+
   private
 
   def validate_credentials
