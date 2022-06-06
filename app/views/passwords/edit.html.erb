@@ -26,14 +26,8 @@
         <%= form.password_field :new_password_confirmation, required: true, title: "Confirm your new password", class: 'form-control' %>
       </div>
 
-      <%= link_to "<button class='btn btn-primary'>Cancel</button>".html_safe,
-        root_path,
-        id: 'cancel-password-button',
-        class: 'link-holding-button no-highlight',
-        title: 'Select to discard the Change Password form.'
-      %>
-
       <%= form.submit 'Change', title: 'Select to Change Password', class: 'btn btn-primary' %>
+      <button class='btn btn-primary' onclick="$('#change-password-form-container').hide(); return false;">Cancel</button>
  
     <% end %>
 

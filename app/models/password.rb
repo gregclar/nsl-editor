@@ -54,8 +54,8 @@ class Password < ActiveType::Object
     unless new_password != current_password
       raise "new password is the same as the current password you entered"
     end
-    raise "the new password not long enough" if new_password.size < 8
-    raise "the new password too long" if new_password.size > 50
+    raise "the new password is not long enough" if new_password.size < 8
+    raise "the new password is too long" if new_password.size > 50
     if Rails.configuration.try('ldap_via_active_directory')
       raise "the new password must contain at least one upper-case character A-Z" unless new_password.match(/[A-Z]/)
       raise "the new password must contain at least one lower-case character a-z" unless new_password.match(/[a-z]/)
