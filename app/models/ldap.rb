@@ -86,7 +86,7 @@ class Ldap  < ActiveType::Object
 
   # See https://github.com/ruby-ldap/ruby-net-ldap/issues/290
   def change_password(uid,new_password,salt)
-    if Rails.configuration.ldap_via_active_directory
+    if Rails.configuration.try('ldap_via_active_directory')
       change_password_active_directory(uid,new_password,salt)
     else
       change_password_openldap(uid,new_password,salt)

@@ -1,3 +1,7 @@
+- :date: 6-Jun-2022
+  :jira_id: '4237'
+  :description: |-
+    Change Password: correctly validate new passwords in context - for AD or OpenLDAP appropriately
 - :date: 3-Jun-2022
   :jira_id: '4237'
   :description: |-
