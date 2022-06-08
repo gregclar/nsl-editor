@@ -1,4 +1,8 @@
 - :date: 07-Jun-2022
+  :jira_id: '4237'
+  :description: |-
+    Login: show <code>ldap_generic_users</code> on the Admin configuration page
+- :date: 07-Jun-2022
   :jira_id: '4247'
   :description: |-
     Change Password: hitting Enter now submits the form instead of cancelling it
