@@ -1,3 +1,7 @@
+- :date: 21-Jun-2022
+  :jira_id: '4254'
+  :description: |-
+    New Author: creating a new author no longer locks up searching
 - :date: 15-Jun-2022
   :jira_id: '4237'
   :description: |-
