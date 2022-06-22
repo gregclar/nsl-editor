@@ -415,11 +415,6 @@ Rails.application.routes.draw do
     match "batches/stats/hide", as: "hide_batch_stats", to: "batches#hide_stats", via: :get
     match "batches/stats/:id", as: "batch_stats", to: "batches#stats", via: :get
     match "batches/bulk", as: "batches_bulk", to: "batch/bulk#operation", via: :post
-
-#                                  loader_bulk_operation GET                   /loader/batches/bulk_operation(.:format)                                                          loader/batch/bulk_operations#operation
-#                       loader_batch_processing_overview GET                   /loader/batches/processing/overview(.:format)                                                     loader/batches#processing_overview
-#                  loader_batch_processing_overview_hide GET                   /loader/batches/processing/overview/hide(.:format)                                                loader/batches#hide_processing_overview
-    
     match "batches/processing/overview", as: "batch_processing_overview", to: "batches#processing_overview", via: :get
     match "batches/processing/overview/hide", as: "batch_processing_overview_hide", to: "batches#hide_processing_overview", via: :get
     match "batches/bulk/processing/notes", as: "batch_bulk_processing_notes", to: "batches#bulk_processing_notes", via: :get
