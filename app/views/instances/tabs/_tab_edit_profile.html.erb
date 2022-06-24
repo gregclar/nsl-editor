@@ -1,54 +1,44 @@
-<h5>
-  Taxonomy Edit Profile
-</h5>
+<h5>Edit Profile</h5>
 
-<p>This information is displayed with the current instance in the latest accepted taxonomy.
+<p>The latest published taxonomy profile can be edited here.
 
-<h6>
-Current Element in Taxonomy
-</h6>
 <% current_te = @instance.accepted_tree_version_element.tree_element %>
-  #<%= current_te.id %>;
-  <%= current_te.updated_at.strftime("%d-%b-%Y") %>;
-  <%= current_te.updated_by %><br>
-  <pre>
-  <%= JSON.pretty_generate(current_te.profile) %>
-  </pre>
-
-<h6>Bubbles (sorted alphabetically, display only)</h6>
-<%= current_te.tede_entries_arr.sort.join(',') %>
-
-<br>
-<br>
-<br>
-<br>
-<br>
-<h6>
-Current Element in Taxonomy
-</h6>
 
 <%= form_with model: current_te do |form| %>
-  <% show_submit = false %>
-  <% if current_te.distribution? %>
 
-  Distribution: <%= form.text_field :distribution_value, title: 'Distribution', class: 'form-control' %>
-  <br>
-
+  <% if current_te.excluded? %>
+    Distribution: <%= form.text_field :distribution_value, title: 'Distribution', class: 'form-control', disabled: true, placeholder: "Excluded taxa do not have distributions" %>
+    <br>
+  <% else %>
+    Distribution: <%= form.text_field :distribution_value, title: 'Distribution', class: 'form-control' %>
+    <br>
   <% end %>
-
-  <% if current_te.comment? %>
-
-  Comment: <%= form.text_field :comment_value, title: 'Comment', class: 'form-control' %>
+  Comment: <%= form.text_area :comment_value, title: 'Comment', class: 'form-control' %>
+  Note: new lines will be replaced with spaces when saved. Leading and trailing spaces will be removed
   <br>
-
-  <% end %>
-
-  <% if current_te.distribution? || current_te.comment? %>
-
+  <br>
   <%= form.submit :Save, title: 'Save changes', class: 'btn btn-primary width-3em' %>
 
-  <% end %>
 <% end %>
 
 <div id="search-result-details-info-message-container" class="message-container"></div>
 <div id="search-result-details-error-message-container" class="message-container"></div>
+<%= divider %>
+<% unless current_te.profile.blank? %>
+<h6>Raw Data</h6>
+  <%= render partial: 'detail_line', locals: {info: current_te.comment_value, label: 'Comment'} %>
+  <br>
+  <br>
+  <br>
+  <br>
+<%= divider %>
+  <%= render partial: 'detail_line', locals: {info: current_te.id, label: 'Tree Element ID'} %>
+  <pre>
+  <%= JSON.pretty_generate(current_te.profile) %>
+  </pre>
+  <% unless current_te.distribution_value.blank? && current_te.tede_entries_arr.blank? %>
+    <h6>Distribution stored as data ("bubbles")</h6>
+    <%= current_te.tede_entries_arr.join(',') %>
+  <% end %>
+<% end %>
+
