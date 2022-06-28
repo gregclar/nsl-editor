@@ -1,4 +1,8 @@
 - :date: 28-Jun-2022
+  :jira_id: '3307'
+  :description: |-
+    Typeahead caching problem: added cache-busting random param to the various typeahead search scripts
+- :date: 28-Jun-2022
   :jira_id: '4213'
   :description: |-
     Taxonomy profile edit: new version for testing 
