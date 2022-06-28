@@ -1,4 +1,8 @@
 - :date: 28-Jun-2022
+  :jira_id: '3987'
+  :description: |-
+    Synonymy typeahead year problem: the query now matches years against <code>iso_publication_date</code> with <code>like</code> and an auto trailing wildcard
+- :date: 28-Jun-2022
   :jira_id: '3307'
   :description: |-
     Typeahead caching problem: added cache-busting random param to the various typeahead search scripts
