@@ -9,7 +9,6 @@ red_gum_in_taxonomy:
   instance_link: ilink
   name_link: nlink
   previous_element_id:
-  profile: {"APC Dist.": {"value": "Qld, NSW, Vic (naturalised)", "created_at": "2010-02-01T00:00:00+11:00", "created_by": "KIRSTENC", "updated_at": "2018-03-28T13:44:53.668+11:00", "updated_by": "amonro", "source_link": "https://id.biodiversity.org.au/instanceNote/apni/1112211"}} 
   rank: Species
   simple_name: Angophora costata
   source_element_link:
@@ -19,3 +18,4 @@ red_gum_in_taxonomy:
   updated_at: 2020-02-18 19:19:44.173+11
   updated_by: amonro
 
+#  profile: {"APC Dist.": {"value": "Qld, NSW, Vic (naturalised)", "created_at": "2010-02-01T00:00:00+11:00", "created_by": "KIRSTENC", "updated_at": "2018-03-28T13:44:53.668+11:00", "updated_by": "amonro", "source_link": "https://id.biodiversity.org.au/instanceNote/apni/1112211"}} 

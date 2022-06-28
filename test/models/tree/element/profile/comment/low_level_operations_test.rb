@@ -20,9 +20,9 @@ class LowLevelOperationsTest < ActiveSupport::TestCase
 
   def add_comment_where_none_exists
     new_comment = 'comment for where none exists'
-    assert_not_nil(@te.profile, 'Expect profile to exist to start this test')
+    assert_nil(@te.profile, 'Expect no profile to start this test')
     assert_nil(@te.comment, 'Expect no profile comment to start this test')
-    @te.add_comment_to_profile(new_comment, 'fred')
+    @te.add_profile_and_comment(new_comment, 'fred')
     assert_not_nil(@te.comment)
     assert_equal(@te.comment_value, new_comment)
     te = Tree::Element.find(@te.id)

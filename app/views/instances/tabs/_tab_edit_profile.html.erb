@@ -1,6 +1,8 @@
-<h5>Edit Profile</h5>
+<h5>
+  Edit Profile for <%= @instance.name.full_name %>
+</h5>
 
-<p>The latest published taxonomy profile can be edited here.
+<p>Profile in the latest published taxonomy:
 
 <% current_te = @instance.accepted_tree_version_element.tree_element %>
 
@@ -14,31 +16,27 @@
     <br>
   <% end %>
   Comment: <%= form.text_area :comment_value, title: 'Comment', class: 'form-control' %>
-  Note: new lines will be replaced with spaces when saved. Leading and trailing spaces will be removed
+  Note: new lines will be replaced with spaces when saved; leading and trailing spaces will be removed.
   <br>
   <br>
   <%= form.submit :Save, title: 'Save changes', class: 'btn btn-primary width-3em' %>
-
 <% end %>
-
 <div id="search-result-details-info-message-container" class="message-container"></div>
 <div id="search-result-details-error-message-container" class="message-container"></div>
+  <br>
 <%= divider %>
 <% unless current_te.profile.blank? %>
-<h6>Raw Data</h6>
-  <%= render partial: 'detail_line', locals: {info: current_te.comment_value, label: 'Comment'} %>
+  <h5>Technical Profile data</h5>
+  <% unless current_te.distribution_value.blank? && current_te.tede_entries_arr.blank? %>
+    <h6>Distribution stored as data records (AKA "bubbles")</h6>
+    <%= current_te.tede_entries_arr.join(',') %>
+  <% end %>
   <br>
   <br>
-  <br>
-  <br>
-<%= divider %>
+  <h6>Profile stored as JSONB in the Tree Element record</h6>
   <%= render partial: 'detail_line', locals: {info: current_te.id, label: 'Tree Element ID'} %>
   <pre>
   <%= JSON.pretty_generate(current_te.profile) %>
   </pre>
-  <% unless current_te.distribution_value.blank? && current_te.tede_entries_arr.blank? %>
-    <h6>Distribution stored as data ("bubbles")</h6>
-    <%= current_te.tede_entries_arr.join(',') %>
-  <% end %>
 <% end %>
 

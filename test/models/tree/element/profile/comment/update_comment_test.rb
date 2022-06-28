@@ -8,7 +8,7 @@ class UpdateCommentTest < ActiveSupport::TestCase
   end
 
   test "update comment" do
-    te = update_null_comment_to_non_null_value(@te)
+    te = update_null_profile_to_non_null_comment(@te)
     te = update_non_null_comment_to_null_value(te)
     te = update_null_comment_to_null_value(te)
     te = update_null_comment_to_non_null_value(te)
@@ -16,9 +16,19 @@ class UpdateCommentTest < ActiveSupport::TestCase
     te = update_non_null_comment_to_unchanged_value(te)
   end
 
+  def update_null_profile_to_non_null_comment(te)
+    new_comment = 'comment for where no profile exists'
+    assert_nil(te.profile, 'Expect no profile to start this test')
+    assert_nil(te.comment, 'Expect no profile comment to start this test')
+    comment, refresh = te.update_comment(new_comment, 'nncuser')
+    te_changed = Tree::Element.find(te.id)
+    assert_equal(te_changed.comment_value, new_comment)
+    te_changed
+  end
+
   def update_null_comment_to_non_null_value(te)
     new_comment = 'comment for where none exists'
-    assert_not_nil(te.profile, 'Expect profile to exist to start this test')
+    assert_nil(te.profile, 'Expect no profile to start this test')
     assert_nil(te.comment, 'Expect no profile comment to start this test')
     comment, refresh = te.update_comment(new_comment, 'nncuser')
     te_changed = Tree::Element.find(te.id)
@@ -38,7 +48,7 @@ class UpdateCommentTest < ActiveSupport::TestCase
 
   def update_null_comment_to_null_value(te)
     new_comment = nil
-    assert_not_nil(te.profile, 'Expect profile to exist to start this test')
+    assert_nil(te.profile, 'Expect no profile to start this test')
     assert_nil(te.comment, 'Expect profile comment to be null to start this test')
     comment, refresh = te.update_comment(new_comment, 'nncuser')
     te_changed = Tree::Element.find(te.id)

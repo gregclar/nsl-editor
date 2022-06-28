@@ -3,6 +3,8 @@
 module Concerns::Tree::Element::Profile::Distribution extend ActiveSupport::Concern
 
   def distribution
+    return nil if profile.blank?
+
     profile[distribution_key]
   end
 
@@ -107,7 +109,7 @@ module Concerns::Tree::Element::Profile::Distribution extend ActiveSupport::Conc
     def self.validate_distribution_string(s)
       s.split(',').collect{|val| val.strip}.each do |val|
         raise %Q(empty distribution value, likely due to an unnecessary comma) if val.blank?
-        raise %Q(invalid distribution value: "#{val}") unless DistEntry.exists?(display: val.strip)
+        raise %Q(Invalid distribution value: "#{val}") unless DistEntry.exists?(display: val.strip)
       end
       self.reject_duplicates(s)
     end

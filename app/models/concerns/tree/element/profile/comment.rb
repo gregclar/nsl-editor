@@ -3,6 +3,8 @@
 module Concerns::Tree::Element::Profile::Comment extend ActiveSupport::Concern
 
   def comment
+    return nil if profile.blank?
+
     profile[comment_key]
   end
 
