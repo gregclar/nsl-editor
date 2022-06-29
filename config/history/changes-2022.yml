@@ -1,6 +1,10 @@
 - :date: 29-Jun-2022
   :jira_id: '4213'
   :description: |-
+    Taxonomy profile edit: fixed bug where adding a comment to a null comment was wiping out any simultaneous distribution change
+- :date: 29-Jun-2022
+  :jira_id: '4213'
+  :description: |-
     Taxonomy profile edit: fixed problem displaying instance details tree tab
 - :date: 28-Jun-2022
   :jira_id: '3987'

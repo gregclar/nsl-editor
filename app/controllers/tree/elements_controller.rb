@@ -39,6 +39,7 @@ class Tree::ElementsController < ApplicationController
     @distribution_message, dist_refresh = @tree_element.update_distribution(
       tree_element_params[:distribution_value], @current_user.username)
     scope = 'Comment'
+    find_tree_element # pick up refreshed data from database to avoid overwrite
     @comment_message, comment_refresh = @tree_element.update_comment(
       tree_element_params[:comment_value].gsub(/\n/,' ').strip,
       @current_user.username)
