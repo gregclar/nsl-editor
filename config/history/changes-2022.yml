@@ -1,3 +1,7 @@
+- :date: 08-Jul-2022
+  :jira_id: '4213'
+  :description: |-
+    Taxonomy profile edit: refactored and improved edit code while making sure tree_element updated_at/by are set consistently - see also NSL-4261.
 - :date: 29-Jun-2022
   :jira_id: '4213'
   :description: |-

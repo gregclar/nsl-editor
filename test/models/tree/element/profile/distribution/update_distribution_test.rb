@@ -4,6 +4,7 @@ require "test_helper"
 class UpdateDistributionTest < ActiveSupport::TestCase
 
   def setup
+    @te = tree_elements(:red_gum_in_taxonomy)
   end
 
   test "update distribution" do
@@ -25,9 +26,14 @@ class UpdateDistributionTest < ActiveSupport::TestCase
     new_dist = nil
     assert_nil(te.profile, 'Expect no profile to start this test')
     assert_nil(te.distribution, 'Expect no profile distribution to start this test')
-    distribution, refresh = te.update_distribution(new_dist, 'dist user')
+    original_updated_by = te.updated_by
+    original_updated_at = te.updated_at
+    distribution, refresh = te.update_distribution(new_dist, 'd2nulluser')
     te_changed = Tree::Element.find(te.id)
     assert_nil(te_changed.distribution_value, 'Update distribution, update null to null - value is not nil error')
+    assert_equal(original_updated_at, te_changed.updated_at)
+    assert_equal(original_updated_by, te_changed.updated_by)
+    assert_not_equal('unnc2nvuser', te_changed.updated_by)
     te_changed
   end
 
@@ -67,36 +73,52 @@ class UpdateDistributionTest < ActiveSupport::TestCase
     new_dist = ''
     assert_not_nil(te.profile, "Expect profile to start #{tag} test")
     assert_not_nil(te.distribution, "Expect profile distribution to start #{tag} test")
-    message, refresh = te.update_distribution(new_dist, 'dist user')
+    original_updated_by = te.updated_by
+    original_updated_at = te.updated_at
+    message, refresh = te.update_distribution(new_dist, 'rdlcuser')
     te_changed = Tree::Element.find(te.id)
     assert_match(/Distribution removed/, message, "Wrong message '#{message}' for #{tag}") 
     assert(refresh, "Expected refresh for #{tag}") 
     assert_nil(te_changed.distribution_value,
                  "Expected no distribution for #{tag}")
-    te_changed
+    assert_nil(te_changed.distribution_value)
+    assert_not_equal(original_updated_at, te_changed.updated_at)
+    assert_not_equal(original_updated_by, te_changed.updated_by)
+    assert_equal('rdlcuser', te_changed.updated_by)
+te_changed
   end
 
   def update_null_dist_to_valid_dist(te, new_dist)
     tag = 'update_null_dist_to_valid_dist'
-    message, refresh = te.update_distribution(new_dist, 'dist user')
+    original_updated_by = te.updated_by
+    original_updated_at = te.updated_at
+    message, refresh = te.update_distribution(new_dist, 'dnd2vduser')
     te_changed = Tree::Element.find(te.id)
     assert_match(/Distribution added to a fresh profile/i,
                  message, "Unexpected message '#{message}' for #{tag}") 
     assert(refresh, "Expected refresh for #{tag}") 
     assert_equal(new_dist, te_changed.distribution_value,
                  "Expected distribution to be changed for #{tag}")
+    assert_not_equal(original_updated_at, te_changed.updated_at)
+    assert_not_equal(original_updated_by, te_changed.updated_by)
+    assert_equal('dnd2vduser', te_changed.updated_by)
     te_changed
   end
 
   def update_dist_to_valid_dist(te, new_dist)
     tag = 'update_dist_to_valid_dist'
-    message, refresh = te.update_distribution(new_dist, 'dist user')
+    original_updated_by = te.updated_by
+    original_updated_at = te.updated_at
+    message, refresh = te.update_distribution(new_dist, 'ud2vduser')
     te_changed = Tree::Element.find(te.id)
     assert_match(/Distribution changed/i,
                  message, "Unexpected message '#{message}' for #{tag}") 
     assert(refresh, "Expected refresh for #{tag}") 
     assert_equal(new_dist.sub(/,,*$/,''), te_changed.distribution_value,
                  "Expected distribution to be add for #{tag}")
+    assert_not_equal(original_updated_at, te_changed.updated_at)
+    assert_not_equal(original_updated_by, te_changed.updated_by)
+    assert_equal('ud2vduser', te_changed.updated_by)
     te_changed
   end
 

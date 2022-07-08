@@ -10,9 +10,13 @@
 
   <% if current_te.excluded? %>
     Distribution: <%= form.text_field :distribution_value, title: 'Distribution', class: 'form-control', disabled: true, placeholder: "Excluded taxa do not have distributions" %>
-    <br>
   <% else %>
     Distribution: <%= form.text_field :distribution_value, title: 'Distribution', class: 'form-control' %>
+  <% end %>
+  <% unless current_te.profile.blank? %>
+    <% unless current_te.distribution_value.blank? && current_te.tede_entries_arr.blank? %>
+      <%= render partial: 'detail_line', locals: {info: current_te.tede_entries_arr.join(','), label: 'Matching TEDE (bubbles)'} %>
+    <% end %>
     <br>
   <% end %>
   Comment: <%= form.text_area :comment_value, title: 'Comment', class: 'form-control' %>
@@ -20,6 +24,10 @@
   <br>
   <br>
   <%= form.submit :Save, title: 'Save changes', class: 'btn btn-primary width-3em' %>
+  <br>
+  <br>
+  Tree Element:<br>
+  <%= updated_by_whom_and_when(current_te).html_safe %>
 <% end %>
 <div id="search-result-details-info-message-container" class="message-container"></div>
 <div id="search-result-details-error-message-container" class="message-container"></div>
@@ -27,11 +35,6 @@
 <%= divider %>
 <% unless current_te.profile.blank? %>
   <h5>Technical Profile data</h5>
-  <% unless current_te.distribution_value.blank? && current_te.tede_entries_arr.blank? %>
-    <h6>Distribution stored as data records (AKA "bubbles")</h6>
-    <%= current_te.tede_entries_arr.join(',') %>
-  <% end %>
-  <br>
   <br>
   <h6>Profile stored as JSONB in the Tree Element record</h6>
   <%= render partial: 'detail_line', locals: {info: current_te.id, label: 'Tree Element ID'} %>

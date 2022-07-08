@@ -21,6 +21,9 @@ module Concerns::Tree::Element::Profile::Distribution::Tedes extend ActiveSuppor
     tede.dist_entry_id = DistEntry.id_for_display(value)
     tede.updated_by = @current_user&.username  || 'unknown'
     tede.save!
+  rescue => e
+    Rails.logger.error("tedes error with value: #{value}: #{e.to_s}")
+    raise
   end
 
   def excess_tedes

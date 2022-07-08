@@ -22,6 +22,9 @@ require 'open-uri'
 class Tree::Element < ActiveRecord::Base
   include Concerns::Tree::Element::Profile
   include Concerns::Tree::Element::Profile::Distribution
+  include Concerns::Tree::Element::Profile::Distribution::Validations
+  include Concerns::Tree::Element::Profile::Distribution::UpdateAccepted
+  include Concerns::Tree::Element::Profile::Distribution::LowLevelOps
   include Concerns::Tree::Element::Profile::Distribution::Tedes
   include Concerns::Tree::Element::Profile::Comment
   self.table_name = "tree_element"
@@ -41,7 +44,7 @@ class Tree::Element < ActiveRecord::Base
                           join_table: "tree_element_distribution_entries",
                           foreign_key: "tree_element_id"
 
-  def utc_offset_s
+  def deprecated_utc_offset_s
     seconds_offset = Time.now.in_time_zone('Australia/Canberra').utc_offset
     hours_offset = seconds_offset/3600
     mins_offset = seconds_offset%3600

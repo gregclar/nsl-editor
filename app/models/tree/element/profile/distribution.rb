@@ -18,8 +18,17 @@
 #
 # Loader Batch entity
 class Tree::Element::Profile::Distribution
-  def initialize(distribution_string)
+  def initialize(distribution_string, username)
     @distribution_string = distribution_string
+    @username = username
+  end
+
+  def as_hash
+    h = Hash.new
+    h['value'] = @distribution_string
+    h['created_at'] = h['updated_at'] = Time.now
+    h['created_by'] = h['updated_by'] = @username
+    h
   end
 end
 

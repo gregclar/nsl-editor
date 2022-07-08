@@ -28,18 +28,26 @@ class Tree::ElementsController < ApplicationController
     @tab_index = choose_index
     @take_focus = params[:take_focus] == 'true'
     @tree_version = TreeVersion.find(params['tree-version-id'])
-    logger.debug("params: #{params.inspect}")
     render "show", layout: false
   end
 
   alias tab show
 
+  # Update a mini schema of data with optional fields in a jsonb structure.
+  # This process is messy - jsonb not a good choice for data that changes imo.
+  # Note: this code is separate from the tree controller code for 
+  # setting up profile data in a tree draft via services.  This code was added
+  # later to allow editing of profile data in a way that does not involve 
+  # a new version of the taxonomy i.e. CRUD directly into the database.
   def update_profile
     scope = 'Distribution'
     @distribution_message, dist_refresh = @tree_element.update_distribution(
       tree_element_params[:distribution_value], @current_user.username)
     scope = 'Comment'
-    find_tree_element # pick up refreshed data from database to avoid overwrite
+    # After working on distribution part of the schema
+    # start with a fresh record from the database to work on the
+    # comment part of the schema
+    find_tree_element # Pick up refreshed data from database to avoid overwrite
     @comment_message, comment_refresh = @tree_element.update_comment(
       tree_element_params[:comment_value].gsub(/\n/,' ').strip,
       @current_user.username)
