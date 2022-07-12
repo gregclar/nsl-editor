@@ -496,14 +496,16 @@ ul.tree {
 
 div#broadcast {
   position: fixed;
-  top: 86px;
+  top: 89px;
   left: 15px;
-  background: orange;
-  color: white;
-  height: 1.5em;
-  min-height: 1.5em;
+  background: yellow;
+  color: black;
+  height: 20px;
+  max-height: 20px;
   width: 90%;
   padding-left: 8px;
+  border-radius: 4px;
+  z-index: 2343232;
 }
 
 div#search-result-container.sidebar {

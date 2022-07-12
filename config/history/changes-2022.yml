@@ -1,3 +1,7 @@
+- :date: 12-Jul-2022
+  :jira_id: ''
+  :description: |-
+    Broadcast banner: change background and foreground colours for better readability, tweak layout
 - :date: 08-Jul-2022
   :jira_id: '4213'
   :description: |-
