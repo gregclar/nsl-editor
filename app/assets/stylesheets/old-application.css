@@ -496,7 +496,7 @@ ul.tree {
 
 div#broadcast {
   position: fixed;
-  top: 89px;
+  top: 92px;
   left: 15px;
   background: yellow;
   color: black;
@@ -505,7 +505,6 @@ div#broadcast {
   width: 90%;
   padding-left: 8px;
   border-radius: 4px;
-  z-index: 2343232;
 }
 
 div#search-result-container.sidebar {
