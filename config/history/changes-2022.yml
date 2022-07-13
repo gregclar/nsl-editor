@@ -1,6 +1,10 @@
 - :date: 15-Jul-2022
   :jira_id: '4213'
   :description: |-
+    Taxonomy profile edit: unpick the re-factoring that combined add dist with change dist (and same for comments) - was setting jsonb created_at/by for updates
+- :date: 15-Jul-2022
+  :jira_id: '4213'
+  :description: |-
     Taxonomy profile edit: push fix to display code (relying on tree_element.created_at/by which doesn't exist)
 - :date: 12-Jul-2022
   :jira_id: ''

@@ -29,8 +29,11 @@ module Concerns::Tree::Element::Profile::Distribution::LowLevelOps extend Active
 
     throw 'Profile distribution expected' if profile[distribution_key_for_insert].blank?
 
-    dist_object = Tree::Element::Profile::Distribution.new(new_dist, username)
-    self.profile[distribution_key_for_insert] = dist_object.as_hash
+    dist_object = distribution
+    dist_object["value"] = new_dist
+    dist_object['updated_at'] = Time.now
+    dist_object['updated_by'] = username
+    self.profile[distribution_key_for_insert] = dist_object
     self.updated_by = username
     save!
   end
