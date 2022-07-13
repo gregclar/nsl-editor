@@ -3219,9 +3219,7 @@ CREATE TABLE public.tree_element (
     synonyms jsonb,
     synonyms_html text NOT NULL,
     updated_at timestamp with time zone NOT NULL,
-    updated_by character varying(255) NOT NULL,
-    created_at timestamp with time zone,
-    created_by character varying(50)
+    updated_by character varying(255) NOT NULL
 );
 
 
