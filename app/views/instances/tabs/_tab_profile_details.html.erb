@@ -7,7 +7,7 @@ The data is displayed here regardless of the context in which you have queried t
 
 <% @instance.tree_elements.sort {|x,y| y.updated_at <=> x.updated_at}.each do |te| %>
   Tree Element record #<%= te.id %><br>
-  <%= meaningful_update(te).html_safe %>
+  <%= meaningful_update_when_no_created_at(te).html_safe %>
   <pre>
   <%= JSON.pretty_generate(te.profile) %>
   </pre>

@@ -15,7 +15,7 @@
   <% end %>
   <% unless current_te.profile.blank? %>
     <% unless current_te.distribution_value.blank? && current_te.tede_entries_arr.blank? %>
-      <%= render partial: 'detail_line', locals: {info: current_te.tede_entries_arr.join(','), label: 'Matching TEDE (bubbles)'} %>
+      <%= render partial: 'detail_line', locals: {info: "&nbsp;#{current_te.tede_entries_arr.join(', ')}", label: 'Matching TEDE (bubbles)'} %>
     <% end %>
     <br>
   <% end %>
@@ -27,7 +27,7 @@
   <br>
   <br>
   Tree Element:<br>
-  <%= meaningful_update(current_te).html_safe %>
+  <%= meaningful_update_when_no_created_at(current_te).html_safe %>
 <% end %>
 <div id="search-result-details-info-message-container" class="message-container"></div>
 <div id="search-result-details-error-message-container" class="message-container"></div>

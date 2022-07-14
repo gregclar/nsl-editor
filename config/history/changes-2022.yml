@@ -1,3 +1,7 @@
+- :date: 14-Jul-2022
+  :jira_id: '4213'
+  :description: |-
+    Taxonomy profile edit: add spaces to bubble display; change 'Last updated' to 'Created or last updated' on profile tabs bcz <code>tree_element</code> has <code>updated_at/by</code> only
 - :date: 13-Jul-2022
   :jira_id: '4213'
   :description: |-
