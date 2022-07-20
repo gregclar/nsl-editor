@@ -261,8 +261,10 @@ class Ldap  < ActiveType::Object
   def change_password_active_directory(uid,new_password,salt)
     conn = admin_connection
     ops = [ [ :replace, :unicodePwd, unicode_password(new_password) ] ]
-    Rails.logger.debug("ops: #{ops.inspect}")
     person = conn.search(base: Rails.configuration.ldap_users, filter: Net::LDAP::Filter.eq("samAccountName",uid))
+    if person.blank?
+      person = conn.search(base: Rails.configuration.ldap_generic_users, filter: Net::LDAP::Filter.eq("samAccountName",uid))
+    end
     Rails.logger.debug("person.first.dn: #{person.first.dn}")
     if conn.replace_attribute(person.first.dn, 'unicodePwd', unicode_password(new_password))
       Rails.logger.debug('password changed!')
