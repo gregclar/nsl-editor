@@ -103,7 +103,7 @@
   :description: |-
     Taxonomy profile edit: add configuration switch which is off by default - i.e. inactive unless switched on and therefore safe to promote widely.
 - :date: 17-May-2022
-  :jira_id: '4234'
+  :jira_id: '4236'
   :description: |-
     Batch Loader: prevent <code>loader_name</code> being considered in defined queries unless the Editor is aware of the batch loader (via config)
 - :date: 11-May-2022
