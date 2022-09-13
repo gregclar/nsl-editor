@@ -17,9 +17,19 @@
 #   limitations under the License.
 #
 # Loader Batch entity
-class Tree::Element::Profile
-  def initialize(profile_string)
-    @profile_string = profile_string
+class Tree::Element::Profile::CommentObject
+  def initialize(username, text)
+    @username = username
+    @text = text
+  end
+
+  def as_hash
+    h = Hash.new
+    h['value'] = @text
+    h['created_at'] = h['updated_at'] = Time.now
+    h['created_by'] = h['updated_by'] = @username
+    h
   end
 end
+
 

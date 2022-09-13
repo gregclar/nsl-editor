@@ -17,19 +17,20 @@
 #   limitations under the License.
 #
 # Loader Batch entity
-class Tree::Element::Profile::Comment
-  def initialize(username, text)
+class Tree::Element::Profile::DistributionObject
+  def initialize(distribution_string, username)
+    @distribution_string = distribution_string
     @username = username
-    @text = text
   end
 
   def as_hash
     h = Hash.new
-    h['value'] = @text
+    h['value'] = @distribution_string
     h['created_at'] = h['updated_at'] = Time.now
     h['created_by'] = h['updated_by'] = @username
     h
   end
 end
+
 
 
