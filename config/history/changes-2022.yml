@@ -1,3 +1,11 @@
+- :date: 13-Sep-2022
+  :jira_id: 'SYS-209'
+  :description: |-
+    Containers work: adjusting JQuery plumbing to make sure JQuery is always found
+- :date: 13-Sep-2022
+  :jira_id: 'SYS-209'
+  :description: |-
+    Containers work: removing some stubs and cleaning up some distribution editing models so they run under both JRuby and Ruby.
 - :date: 21-Jul-2022
   :release: true
 - :date: 20-Jul-2022
