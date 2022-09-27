@@ -11,6 +11,10 @@ task :build_prod do
   sh "rm -rf test"
   sh "echo clear logs"
   sh "rails log:clear"
+  sh "echo remove git files"
+  sh "rm -rf .git"
+  sh "rm -rf .github"
+  sh "rm -rf .gitignore"
   puts "Ready to tar"
 end
 
