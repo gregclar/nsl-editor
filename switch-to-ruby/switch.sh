@@ -9,10 +9,4 @@ which ruby
 echo 'Modify Gemfile'
 ed Gemfile <  switch-to-ruby/gemfile-commands.ed
 
-which bundle
-gem install bundler:2.3.21
-which bundle
-bundle
-
-rake webpacker:install
 
