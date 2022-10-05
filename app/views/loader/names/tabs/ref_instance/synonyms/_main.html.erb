@@ -1,0 +1,15 @@
+<% if @loader_name.preferred_matches.size == 0 %>
+  No preferred match, nothing to do here.<br>
+<% else %>
+  Preferred match has been set.<br>
+  <% @loader_name.preferred_matches.each do |match| %>
+    <% if match.relationship_instance_id.present? %>
+     <%= render partial: 
+                'loader/names/tabs/ref_instance/synonyms/relationship_instance',
+                locals: {match: match} %>
+    <% else %>
+      No relationship instance has been set.<br>
+    <% end %>
+  <% end %>
+<% end %>
+What about the parent's choice?

@@ -18,7 +18,12 @@
 #
 # Loader Name entity
 class Loader::Name::Match < ActiveRecord::Base
+  include CreateStandaloneInstance
+  include CreateSynonymyInstance
   strip_attributes
+  CREATED = [1,0,0]
+  DECLINED = [0,1,0]
+  ERROR = [0,0,1]
   self.table_name = "loader_name_match"
   self.primary_key = "id"
   self.sequence_name = "nsl_global_seq"
@@ -28,30 +33,56 @@ class Loader::Name::Match < ActiveRecord::Base
   belongs_to :instance_type, foreign_key: :relationship_instance_type_id, optional: true
   belongs_to :standalone_instance, class_name: "::Instance",
     foreign_key: "standalone_instance_id", optional: true
+  belongs_to :relationship_instance, class_name: "::Instance",
+    foreign_key: "relationship_instance_id", optional: true
   validates :loader_name_id, uniqueness: true,
             unless: Proc.new {|a| a.loader_name.record_type == 'misapplied'}
-  validates :standalone_instance_id, absence: true, if: :using_default_ref?
-  validates :standalone_instance_found, exclusion: {in: [true], message: 'not found'}, if: :using_default_ref?
+  #validates :standalone_instance_id, absence: true, if: :using_default_ref?
+  #validates :standalone_instance_found, exclusion: {in: [true], message: 'not found'}, if: :using_default_ref?
+  #validates :use_batch_default_reference, exclusion: {in: [true], message:'not both'}, if: :standalone?
+  #validate :choice_must_match_details
+  before_destroy :can_destroy?
+
+  # how does this work when reversing?
+  def choice_must_match_details
+    if instance_choice_confirmed == true &&
+       !(use_batch_default_reference ||
+         standalone_instance_id.present?)
+       errors.add('Choice must be batch default ref or an identified instance')
+    elsif instance_choice_confirmed == false &&
+          (use_batch_default_reference ||
+           standalone_instance_id.present?)
+       errors.add('Choice has been made, so must be noted')
+    end
+  end
+  
+  def can_destroy?
+    throw :abort
+  end
+
+  def old_taxonomy_choice_made?
+    use_batch_default_reference ||
+    standalone_instance_id.present?
+  end
 
   def using_default_ref?
     use_batch_default_reference == true
   end
 
-  validates :use_batch_default_reference, exclusion: {in: [true], message:'not both'}, if: :standalone?
 
   def standalone?
-    !standalone_instance_id.blank? && !copy_synonyms_and_append_extras
+    !standalone_instance_id.blank? && !copy_append_from_existing_use_batch_def_ref
   end
 
   def copy_and_append?
-    !standalone_instance_id.blank? && copy_synonyms_and_append_extras
+    !standalone_instance_id.blank? && copy_append_from_existing_use_batch_def_ref
   end
 
   def current_taxonomy_instance_choice
     case
       when use_batch_default_reference then
        'Use batch default reference'
-      when copy_synonyms_and_append_extras then
+      when copy_append_from_existing_use_batch_def_ref then
        'Copy and append'
       when standalone_instance_id.present? then
        'Use an existing instance'
@@ -61,12 +92,11 @@ class Loader::Name::Match < ActiveRecord::Base
   end
 
   def taxonomy_choice_made?
-    use_batch_default_reference ||
-    standalone_instance_id.present?
+    instance_choice_confirmed == true
   end
 
   def show_default_reference?
-    use_batch_default_reference || copy_synonyms_and_append_extras
+    use_batch_default_reference || copy_append_from_existing_use_batch_def_ref
   end
 end
 

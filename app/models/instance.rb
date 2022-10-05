@@ -513,7 +513,8 @@ class Instance < ActiveRecord::Base
         comments.blank? &&
         !in_apc? &&
         children.empty? &&
-        not_linked_to_orchids_names?
+        not_linked_to_orchids_names? &&
+        not_linked_to_loader_name_matches?
   end
 
   # This is not handled via an instance association because orchids are only 
@@ -533,7 +534,25 @@ class Instance < ActiveRecord::Base
   def not_linked_to_orchids_names?
     !(linked_to_orchids_names?)
   end
+
+  # This is not handled via an instance association because the loader is only 
+  # in the apni database for now.
+  def linked_to_loader_name_matches?
+    if Rails.configuration.try(:batch_loader_aware)
+      Loader::Name::Match.where(instance_id: id).size > 0 ||
+      Loader::Name::Match.where(standalone_instance_id: id).size > 0 ||
+      Loader::Name::Match.where(relationship_instance_id: id).size > 0
+    else
+      false
+    end
+  end
  
+  # This is not handled via an instance association because the loader is so far
+  # only in the apni database.
+  def not_linked_to_loader_name_matches?
+    !(linked_to_loader_name_matches?)
+  end
+
   def anchor_id
     "Instance-#{id}"
   end

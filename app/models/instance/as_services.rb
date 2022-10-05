@@ -41,6 +41,16 @@ class Instance::AsServices < Instance
   #
   # RestClient throws exceptions for 403, 404 type errors and we handle those
   # based on the structured response to extract a meaningful message.
+  #
+  #
+  #
+  #
+  # No, actually, the deleting agent should return an error when the requested 
+  # action fails, and this delete request is still silently failing to delete
+  # as I test the code now.  Silent failure results in unreliable engineering, 
+  # however dressed up. Fail loudly is the principle.  GUIs guide users in what
+  # they can do, but the application has to protect the data regardless.
+  #
   def self.delete(id)
     logger.info("#{tag}.delete")
     url = delete_uri(id)
@@ -49,6 +59,7 @@ class Instance::AsServices < Instance
     unless response.code == 200 && json["ok"] == true
       raise "Service error: #{json['errors'].try('join')} [#{response.code}]"
     end
+    raise "Services failed to delete." unless Instance.where(id: id).blank?
   rescue RestClient::ExceptionWithResponse => rest_client_exception
     logger.error("Instance::AsServices.delete exception for url: #{url}")
     logger.error(rest_client_exception.response)

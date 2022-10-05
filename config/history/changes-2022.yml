@@ -1,15 +1,20 @@
+- :date: 05-Oct-2022
+  :jira_id: '4078'
+  :description: |-
+    Batch loader: partial work toward creating draft instances in loader (disrupted work, picking up the threads)
 - :date: 13-Sep-2022
-  :jira_id: 'SYS-209'
+  :jira_project: 'SYS'
+  :jira_id: '209'
   :description: |-
     Containers work: adjusting JQuery plumbing to make sure JQuery is always found
 - :date: 13-Sep-2022
-  :jira_id: 'SYS-209'
+  :jira_project: 'SYS'
+  :jira_id: '209'
   :description: |-
     Containers work: removing some stubs and cleaning up some distribution editing models so they run under both JRuby and Ruby.
 - :date: 21-Jul-2022
   :release: true
 - :date: 20-Jul-2022
-  :jira_id: ''
   :description: |-
     Security patching: libraries upgraded
 - :date: 14-Jul-2022

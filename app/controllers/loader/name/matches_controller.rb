@@ -36,9 +36,10 @@ class Loader::Name::MatchesController < ApplicationController
   end
 
   def delete_all
-    saved_matches = Loader::Name::Match.where(loader_name_id: params[:id])
-    raise "No record in delete_all for params[:id]: #{params[:id]}" if saved_matches.empty?
-    saved_matches.each do |match|
+    loader_name = Loader::Name.find(params[:id])
+    raise 'Related instances found' unless loader_name.can_clear_matches?
+
+    loader_name.loader_name_matches.each do |match|
       match.delete
     end
   end
@@ -85,11 +86,12 @@ class Loader::Name::MatchesController < ApplicationController
   end
 
   def use_batch_default_ref
-    @match = Loader::Name::Match.find(params[:id])
+    @match = Loader::Name::Match.find(loader_name_match_params[:id])
     @match.use_batch_default_reference = true
     @match.standalone_instance_id = nil
     @match.standalone_instance_found = false
-    @match.copy_synonyms_and_append_extras = false
+    @match.copy_append_from_existing_use_batch_def_ref = false
+    @match.instance_choice_confirmed = true
     save_if_changed('Confirmed', 'Not confirmed')
     render 'ref_instance_nomination', format: :js
   rescue => e
@@ -109,7 +111,8 @@ class Loader::Name::MatchesController < ApplicationController
     @match.use_batch_default_reference = false
     @match.standalone_instance_id = loader_name_match_params[:standalone_instance_id]
     @match.standalone_instance_found = true
-    @match.copy_synonyms_and_append_extras = false
+    @match.copy_append_from_existing_use_batch_def_ref = false
+    @match.instance_choice_confirmed = true
     save_if_changed
     render 'ref_instance_nomination'
   rescue => e
@@ -129,7 +132,8 @@ class Loader::Name::MatchesController < ApplicationController
     @match.use_batch_default_reference = false
     @match.standalone_instance_id = loader_name_match_params[:standalone_instance_id]
     @match.standalone_instance_found = true
-    @match.copy_synonyms_and_append_extras = true
+    @match.copy_append_from_existing_use_batch_def_ref = true
+    @match.instance_choice_confirmed = true
     save_if_changed
     render 'ref_instance_nomination'
   rescue => e
@@ -143,12 +147,66 @@ class Loader::Name::MatchesController < ApplicationController
     @match.use_batch_default_reference = false
     @match.standalone_instance_id = nil
     @match.standalone_instance_found = false
-    @match.copy_synonyms_and_append_extras = false
+    @match.copy_append_from_existing_use_batch_def_ref = false
+    @match.instance_choice_confirmed = false
     save_if_changed('Cleared', 'Not cleared')
   rescue => e
     logger.error("Loader::Name::MatchesController clear_taxonomy_nomination error: #{e.to_s}")
     @message = e.to_s
     render 'clear_taxonomy_nomination_error', format: :js
+  end
+
+  def clear_standalone_instance
+    @match = Loader::Name::Match.find(params[:id])
+    @match.standalone_instance_id = nil
+    @match.standalone_instance_found = false
+    @match.standalone_instance_created = false
+    save_if_changed('Cleared', 'Nothing to clear')
+  rescue => e
+    logger.error("Loader::Name::MatchesController clear_standalone_instance error: #{e.to_s}")
+    @message = e.to_s
+    render 'clear_standalone_instance_error', format: :js
+  end
+
+  def clear_and_delete_standalone_instance
+    @match = Loader::Name::Match.find(params[:id])
+    @standalone_instance = @match.standalone_instance
+    @match.standalone_instance_id = nil
+    @match.standalone_instance_found = false
+    @match.standalone_instance_created = false
+    save_if_changed('Cleared', 'Nothing to clear')
+    @standalone_instance.delete_as_user(current_user.username)
+  rescue => e
+    logger.error("Loader::Name::MatchesController clear_and_delete_standalone_instance error: #{e.to_s}")
+    @message = e.to_s
+    render 'clear_and_delete_standalone_instance_error', format: :js
+  end
+
+  
+  def clear_relationship_instance
+    @match = Loader::Name::Match.find(params[:id])
+    @match.relationship_instance_id
+    @match.relationship_instance_found = false
+    @match.relationship_instance_created = false
+    save_if_changed('Cleared', 'Nothing to clear')
+  rescue => e
+    logger.error("Loader::Name::MatchesController clear_relationship_instance error: #{e.to_s}")
+    @message = e.to_s
+    render 'clear_relationship_instance_error', format: :js
+  end
+
+  def clear_and_delete_relationship_instance
+    @match = Loader::Name::Match.find(params[:id])
+    @relationship_instance = @match.relationship_instance
+    @match.relationship_instance_id = nil
+    @match.relationship_instance_found = false
+    @match.relationship_instance_created = false
+    save_if_changed('Cleared', 'Nothing to clear')
+    @relationship_instance.delete_as_user(current_user.username)
+  rescue => e
+    logger.error("Loader::Name::MatchesController clear_and_delete_relationship_instance error: #{e.to_s}")
+    @message = e.to_s
+    render 'clear_and_delete_relationship_instance_error', format: :js
   end
 
   private
@@ -280,6 +338,6 @@ class Loader::Name::MatchesController < ApplicationController
                                              :standalone_instance_id,
                                              :standalone_instance_found,
                                              :use_batch_default_reference,
-                                             :copy_synonyms_and_append_extras)
+                                             :copy_append_from_existing_use_batch_def_ref)
   end
 end

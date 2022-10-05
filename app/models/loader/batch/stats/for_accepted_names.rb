@@ -103,8 +103,7 @@ class Loader::Batch::Stats::ForAcceptedNames
   end
 
   def lock_status
-    'not implemented for batch loader yet'
-    #OrchidBatchJobLock.locked? ? 'Locked' : 'Unlocked'
+    Loader::Batch::JobLock.locked? ? 'Locked' : 'Unlocked'
   end
 
   def accepteds
