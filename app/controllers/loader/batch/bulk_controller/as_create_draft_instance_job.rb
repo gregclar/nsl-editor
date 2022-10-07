@@ -67,8 +67,8 @@ class Loader::Batch::BulkController::AsCreateDraftInstanceJob
   end
 
   def log(payload)
-    entry = "Task ##{@job_number}: #{payload}"
-    BulkProcessingLog.log(entry, "Job for #{@authorising_user}")
+    entry = "Job ##{@job_number}: #{payload}"
+    BulkProcessingLog.log(entry, "Bulk job for #{@authorising_user}")
   end
 
   def log_start
@@ -86,7 +86,6 @@ class Loader::Batch::BulkController::AsCreateDraftInstanceJob
 
   def record_result(loader_name)
     tally_result_parts
-    debug(@result.inspect)
   end
 
   def tally_result_parts

@@ -3,10 +3,8 @@
 <h5><%= pluralize(@loader_name.loader_name_matches.size,'Match') %> Chosen </h5>
 <ol>
 <% @loader_name.loader_name_matches.order('id').each do |loader_name_match| %>
-  <li>id: <%= loader_name_match.id %>
-  <li>instance: <%= loader_name_match.instance %>
-  <li>rel instance type id: <%= loader_name_match.relationship_instance_type_id %>
-  <li>name id: <%= loader_name_match.name_id %>
+  <li>Loader name match: #<%= loader_name_match.id %>
+  <li>Name #<%= loader_name_match.name_id %>
     <ul>
       <li><%= loader_name_match.name.full_name %></li>
       <li><%= loader_name_match.instance.reference.citation %></li>
@@ -35,11 +33,12 @@
 <% end %>
 
     </ul>
-    <br>
-    <%= created_by_whom_and_when(loader_name_match).html_safe %>
-    <br>
-    <%= updated_by_whom_and_when(loader_name_match).html_safe %>
-  </li>
+  <li>Instance: #<%= loader_name_match.instance %>
+  <li>rel instance type id: <%= loader_name_match.relationship_instance_type_id %>
+  <li><%= created_by_whom_and_when(loader_name_match).html_safe %>
+  <li><%= updated_by_whom_and_when(loader_name_match).html_safe %>
+  <li>
+  <%= loader_name_match.inspect.gsub(/,/,'<br>').html_safe %>
   <br>
 <% end %>
 </ol>

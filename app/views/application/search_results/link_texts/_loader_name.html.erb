@@ -57,9 +57,10 @@
   <% copy_and_appends = search_result.loader_name_matches.select {|lnm| lnm.standalone_instance_id.present? && lnm.copy_append_from_existing_use_batch_def_ref} %>
 
 
+  <% use_existing_instance = search_result.loader_name_matches.select {|lnm| lnm.use_existing_instance == true} %>
   <% if copy_and_appends.size > 0 %>
     <span class="flag copy-and-append-count" title="Copy and append from standalone"><%= "#{copy_and_appends.size}c" %></span>
-  <% elsif standalones.size > 0 %>
+  <% elsif standalones.size > 0 && use_existing_instance == true %>
     <span class="flag use-existing-instance-count" title="Use existing instance"><%= "#{standalones.size}x" %></span>
     <% if standalones.size > 1 %>
       <span class="flag standalone-count" title="Standalone instance count"><%= "#{standalones.size}i too many!" %></span><%= search_result.id %>, <%= search_result.loader_name_matches.size %>
@@ -74,7 +75,7 @@
   <% end %>
   <% use_default_ref = search_result.loader_name_matches.select {|lnm| lnm.using_default_ref?} %>
   <% if use_default_ref.size > 0 %>
-    <span title="Use default reference" class="flag use-default-ref"><%= "#{use_default_ref.size}d" %></span>
+    <span title="Use batch default reference" class="flag use-default-ref"><%= "#{use_default_ref.size}d" %></span>
   <% end %>
   <% relationships = search_result.loader_name_matches.select {|orcn| orcn.relationship_instance_id.present?} %>
   <% if relationships.size > 0 %>

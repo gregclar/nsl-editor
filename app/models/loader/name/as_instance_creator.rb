@@ -151,7 +151,7 @@ class Loader::Name::AsInstanceCreator
   end
 
   def log_to_table(entry)
-    BulkProcessingLog.log("Task ##{@job_number}: #{entry}", "Job for #{@authorising_user}")
+    BulkProcessingLog.log("Job ##{@job_number}: #{entry}", "Bulk job for #{@authorising_user}")
   rescue => e
     Rails.logger.error("Couldn't log to table: #{e.to_s}")
   end

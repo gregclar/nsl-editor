@@ -92,8 +92,11 @@ class Loader::Batch::BulkController < ApplicationController
                                  @work_on_accepted,
                                  @job_number)
     attempted, created, declined, errors = job.run
-    @message = "Job ##{@job_number} attempted #{attempted}; created #{created}"
-    @message += " draft #{'instance'.pluralize(created)} with #{declined} declined and #{errors} error(s) for #{params[:name_string]}"
+    #@message = "Job ##{@job_number} attempted #{attempted}; created #{created}"
+    @message = "Create draft instances attempted #{attempted}; "
+    @message += "created #{created} draft #{'instance'.pluralize(created)} with"
+    @message += " #{declined} declined and #{errors} error(s) for "
+    @message += "#{params[:name_string]} (job ##{@job_number})"
     Loader::Batch::JobLock.unlock!
     render 'create_draft_instances', locals: {message_container_id_prefix: prefix }
   #rescue => e

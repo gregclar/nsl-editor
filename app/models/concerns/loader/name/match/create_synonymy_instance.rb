@@ -72,17 +72,17 @@ module Loader::Name::Match::CreateSynonymyInstance
     Rails.logger.debug('after five')
     new_instance.cites_id = instance_id
     new_instance.name_id = instance.name_id
-    throw "No relationship instance type id for #{id} #{simple_name}" if relationship_instance_type_id.blank?
+    throw "No relationship instance type id for #{id} #{loader_name.simple_name}" if relationship_instance_type_id.blank?
     new_instance.instance_type_id = relationship_instance_type_id
     new_instance.created_by = new_instance.updated_by = "#{user}"
     new_instance.save!
     note_created(new_instance, user, job)
     return Loader::Name::Match::CREATED
-
   rescue => e
     entry = "LoaderNameMatch#create_relationship_instance: #{e.to_s}"
     logger.error(entry)
     log_to_table(entry, user, job)
+    return Loader::Name::Match::ERROR
   end
 
   def note_created(instance, user, job)
@@ -96,7 +96,7 @@ module Loader::Name::Match::CreateSynonymyInstance
   end
 
   def log_to_table(entry, user, job)
-    BulkProcessingLog.log("Task ##{job}: #{entry}","Bulk job for #{user}")
+    BulkProcessingLog.log("Job ##{job}: #{entry}","Bulk job for #{user}")
   rescue => e
     Rails.logger.error("Couldn't log to table: #{e.to_s}")
   end

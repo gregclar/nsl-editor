@@ -155,7 +155,7 @@ know how to create a standalone instance for this record"
     self.updated_by = 'job'
     self.save!
   end
-
+ 
   def really_create_standalone_instance(ref, user, job)
     Rails.logger.debug('really_create_standalone_instance')
     instance = Instance.new
@@ -175,7 +175,7 @@ know how to create a standalone instance for this record"
   end
 
   def log_to_table(entry, user, job)
-    BulkProcessingLog.log("Task ##{job}: #{entry}","Bulk job for #{user}")
+    BulkProcessingLog.log("Job ##{job}: #{entry}","Bulk job for #{user}")
   rescue => e
     Rails.logger.error("Couldn't log to table: #{e.to_s}")
   end
