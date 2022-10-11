@@ -1,6 +1,8 @@
 
-<%= match.current_taxonomy_instance_choice %>
+<b><%= match.current_taxonomy_instance_choice %>:</b>
+<%= match.current_taxonomy_instance_choice_details %>
 <span class="<%= match.current_taxonomy_instance_choice.downcase.gsub(' ','-') %>">&nbsp; &nbsp;</span>
+<br>
 <br>
 <% if match.show_default_reference? || match.copy_and_append? %>
   <%= render partial: 'detail_line', locals: {info: match.loader_name.loader_batch.default_reference&.citation&.html_safe || 'There is no default reference for this batch', label: 'default reference'} %>

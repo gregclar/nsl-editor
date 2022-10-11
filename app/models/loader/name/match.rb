@@ -81,7 +81,7 @@ class Loader::Name::Match < ActiveRecord::Base
   def current_taxonomy_instance_choice
     case
       when use_batch_default_reference then
-       'Use batch default reference'
+       'Use the batch default reference'
       when copy_append_from_existing_use_batch_def_ref then
        'Copy and append'
       when standalone_instance_id.present? then
@@ -91,12 +91,37 @@ class Loader::Name::Match < ActiveRecord::Base
     end
   end
 
+  def current_taxonomy_instance_choice_details
+    case
+      when use_batch_default_reference then
+       'create a draft instance based on the batch default reference'
+      when copy_append_from_existing_use_batch_def_ref then
+       'create a draft instance based on the batch default reference, then copy synonyms from a selected instance'
+      when standalone_instance_id.present? then
+       'do not create any new instance'
+      else
+       ''
+    end
+  end
+
   def taxonomy_choice_made?
     instance_choice_confirmed == true
   end
 
   def show_default_reference?
     use_batch_default_reference || copy_append_from_existing_use_batch_def_ref
+  end
+
+  def undo_taxonomic_choice
+    self.standalone_instance_id = nil
+    self.standalone_instance_found = false
+    self.use_batch_default_reference = false
+    self.use_existing_instance = false
+    self.copy_append_from_existing_use_batch_def_ref = false
+    self.standalone_instance_id = nil
+    self.standalone_instance_created = false
+    self.standalone_instance_found = false
+    self.instance_choice_confirmed = false
   end
 end
 

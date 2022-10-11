@@ -30,7 +30,9 @@ function show_copy_and_append() {
 </script>
 
 <h5>Choose how this name will be added to taxonomy.</h5>
-Select an option below, then save your choice below the line.
+Select an option below, then confirm or save your choice below the line.
+<br>
+You can undo your confirmed choice up till drafting onto taxonomy.
 <br>
 <br>
 <%= form_with do |f1| %>
@@ -54,17 +56,17 @@ Select an option below, then save your choice below the line.
 
 <% show = match.use_batch_default_reference %>
 <div id="use-batch-default-ref-form-container" class="choices <%= 'hidden' unless show %>">
-  <%= render partial: 'loader/names/tabs/ref_instance/included_names/use_batch_default_ref_form', locals: {match: match} if show %>
+  <%= render partial: 'loader/names/tabs/ref_instance/accepted_names/use_batch_default_ref_form', locals: {match: match} if show %>
 </div>
 
 <% show = match.standalone_instance_id.present? && !match.copy_append_from_existing_use_batch_def_ref %>
 <div id="use-existing-instance-form-container" class="choices <%= 'hidden' unless show %>" >
-  <%= render partial: 'loader/names/tabs/ref_instance/included_names/use_existing_instance_form', locals: {match: match} if show %>
+  <%= render partial: 'loader/names/tabs/ref_instance/accepted_names/use_existing_instance_form', locals: {match: match} if show %>
 </div>
 
 <% show = match.standalone_instance_id.present? && match.copy_append_from_existing_use_batch_def_ref %>
 <div id="copy-and-append-form-container" class="choices <%= 'hidden' unless show %>">
-  <%= render partial: 'loader/names/tabs/ref_instance/included_names/copy_and_append_form', locals: {match: match} if show %>
+  <%= render partial: 'loader/names/tabs/ref_instance/accepted_names/copy_and_append_form', locals: {match: match} if show %>
 </div>
 
 

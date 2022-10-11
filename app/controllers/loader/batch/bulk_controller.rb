@@ -112,7 +112,9 @@ class Loader::Batch::BulkController < ApplicationController
 
   def show_stats
     @work_on_accepted = true # todo: logic for excluded
-    @stats = Loader::Batch::Stats::Reporter.new(params[:name_string], (session[:default_loader_batch_id]||0), @work_on_accepted)
+    @stats = Loader::Batch::Stats::Reporter.new(
+      params[:name_string],
+      (session[:default_loader_batch_id]||0), @work_on_accepted)
     render 'stats'
   end
 

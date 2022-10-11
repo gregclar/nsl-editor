@@ -105,7 +105,7 @@ class Loader::Name < ActiveRecord::Base
     no_further_processing == true || parent&.no_further_processing == true
   end
 
-  def inspect
+  def brief_inspect
     "id: #{id}; simple_name: #{simple_name}"
   end
 
@@ -373,6 +373,12 @@ class Loader::Name < ActiveRecord::Base
 
   def preferred_match?
     preferred_matches.size > 0
+  end
+
+  def preferred_match
+    return nil unless preferred_match?
+    throw 'more than one preferred match' unless preferred_matches.size == 1
+    preferred_matches.first
   end
 
   def self.create_preferred_matches(name_s, batch_id, authorising_user, work_on_accepted)

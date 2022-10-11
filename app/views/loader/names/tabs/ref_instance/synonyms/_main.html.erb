@@ -1,15 +1,46 @@
 <% if @loader_name.preferred_matches.size == 0 %>
-  No preferred match, nothing to do here.<br>
-<% else %>
-  Preferred match has been set.<br>
-  <% @loader_name.preferred_matches.each do |match| %>
-    <% if match.relationship_instance_id.present? %>
-     <%= render partial: 
-                'loader/names/tabs/ref_instance/synonyms/relationship_instance',
-                locals: {match: match} %>
-    <% else %>
-      No relationship instance has been set.<br>
-    <% end %>
+  No preferred match, nothing to do here until there is a preferred match.  <br>
+<% elsif @loader_name.preferred_matches.size == 1 %>
+  Preferred match: <%= @loader_name.preferred_match.name.full_name %><br>
+  <% if @loader_name.parent.preferred_match.instance_choice_confirmed %>
+    Parent's instance choice confirmed:
+    <%= render partial: 'loader/names/tabs/ref_instance/accepted_names/show_current_choice_brief', locals: {match: @loader_name.parent.preferred_match} %> <br><br>
   <% end %>
+  <% if @loader_name.parent.preferred_match.standalone_instance_id.present? %>
+    Parent's standalone instance is identified.<br>
+    <% if @loader_name.parent.preferred_match.standalone_instance_created %>
+      Parent's standalone instance was created by the Loader.
+    <% elsif @loader_name.parent.preferred_match.standalone_instance_found %>
+      Parent's standalone instance was found.
+    <% end %>
+    <br>
+  <% end %><br>
+
+    <% case %>
+    <% when @loader_name.parent.preferred_match.use_existing_instance %>
+    Nothing further here because using an existing instance.<br>
+    <%= link_to("Show the parent's instance in context",
+                search_path(query_target: "Name",
+                            query_string: "id: #{@loader_name.preferred_match.name_id} show-instances:",
+                            focus_id:"Instance-#{@loader_name.parent.preferred_match.standalone_instance_id}"),
+                tabindex: increment_tab_index,
+                title: "Show the instance",
+                class: 'blue') %>
+    <% when @loader_name.parent.preferred_match.use_batch_default_reference %>
+      Parent is using batch default reference so a synonym will be created to match this synonym
+    <% when @loader_name.parent.preferred_match.copy_append_from_existing_use_batch_def_ref %>
+      Parent is using batch default reference to create a new instance based on a selected instance, so this synonym will either be matched by a copied synonym or one will be created for it.
+      <br>
+    <%= link_to("Show the parent's instance in context",
+                search_path(query_target: "Name",
+                            query_string: "id: #{@loader_name.preferred_match.name_id} show-instances:",
+                            focus_id:"Instance-#{@loader_name.parent.preferred_match.standalone_instance_id}"),
+                tabindex: increment_tab_index,
+                title: "Show the instance",
+                class: 'blue') %>
+  <% end %><br>
+
+<% else %>
+  Multiple preferred matches
 <% end %>
-What about the parent's choice?
+<br>

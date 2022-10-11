@@ -453,7 +453,9 @@ Rails.application.routes.draw do
       match "matches/create-and-copy/:id", as: "matches_create_and_copy", to: "matches#create_and_copy", via: :patch
       match "matches/clear-taxonomy-nomination/:id", as: "match_clear_taxonomy_nomination", to: "matches#clear_taxonomy_nomination", via: :patch
       match "matches/clear-standalone-instance/:id", as: "match_clear_standalone_instance", to: "matches#clear_standalone_instance", via: :patch
-      match "matches/clear-and-delete-standalone-instance/:id", as: "match_clear_and_delete_standalone_instance", to: "matches#clear_and_delete_standalone_instance", via: :patch
+      match "matches/clear-and-delete-standalone-instance/:id", 
+        as: "match_clear_and_delete_draft_standalone_instance",
+        to: "matches#clear_and_delete_draft_standalone_instance", via: :patch
       match "matches/clear-relationship-instance/:id", as: "match_clear_relationship_instance", to: "matches#clear_relationship_instance", via: :patch
       match "matches/clear-and-delete-relationship-instance/:id", as: "match-clear-and-delete-relationship-instance", to: "matches#clear_and_delete_relationship_instance", via: :patch
       resources :matches, only: [:update]

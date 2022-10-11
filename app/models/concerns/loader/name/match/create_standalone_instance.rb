@@ -44,22 +44,12 @@ module Loader::Name::Match::CreateStandaloneInstance
     when copy_append_from_existing_use_batch_def_ref == true
       throw 'create and append'
       return create_and_append_using_default_ref(user, job)
-    when standalone_instance_found == true &&
+    when use_existing_instance == true 
+         standalone_instance_found == true &&
          standalone_instance_id.present?
-      return create_using_existing_instance(user, job)
+      return using_existing_instance(user, job)
     else
-      return Loader::Name::Match::ERROR
-      log_error("loader_name_match.id: #{self.id}")
-      log_error("loader_name_match.loader_name_id: #{self.loader_name_id}")
-      log_error("use_batch_default_reference: #{use_batch_default_reference};")
-      log_error("copy_append_from_existing_use_batch_def_ref: \
-#{copy_append_from_existing_use_batch_def_ref}")
-      log_error("standalone_instance_found: \
-#{standalone_instance_found}")
-      log_error("standalone_instance_id.present?: \
-#{standalone_instance_id.present?}")
-      throw "Loader::Name::Match::CreateStandaloneInstance doesn't \
-know how to create a standalone instance for this record"
+      return unknown_option(user, job)
     end
   end
 
@@ -68,7 +58,8 @@ know how to create a standalone instance for this record"
   end
 
   def no_instance_choice_confirmed(user, job)
-    log_to_table("Declined - no instance choice confirmed for #{loader_name.simple_name} #{loader_name.id}",
+    log_to_table("Declined - no instance choice confirmed for " +
+                 "#{loader_name.simple_name} #{loader_name.id}",
                  user, job)
     return Loader::Name::Match::DECLINED
   end
@@ -107,9 +98,20 @@ know how to create a standalone instance for this record"
     [8,4,7]
   end
 
-  def create_using_existing_instance(user, job)
-    throw 'create using existing'
-    [2,9,6]
+  def using_existing_instance(user, job)
+    log_to_table(
+      "Declined - using existing instance for #{loader_name.simple_name} #{loader_name.id}",
+      user, job)
+    return Loader::Name::Match::DECLINED
+  end
+
+  def unknown_option(user, job)
+    log_to_table(
+      "Error - unknown option for #{loader_name.simple_name} #{loader_name.id}",
+      user, job)
+    log_error("Unknown option: ##{self.id} #{self.loader_name_id}")
+    log_error("#{self.inspect}")
+    return Loader::Name::Match::ERROR
   end
 
   def standalone_instance_already_noted?

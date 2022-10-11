@@ -88,9 +88,10 @@ class Loader::Name::MatchesController < ApplicationController
   def use_batch_default_ref
     @match = Loader::Name::Match.find(loader_name_match_params[:id])
     @match.use_batch_default_reference = true
+    @match.use_existing_instance = false
+    @match.copy_append_from_existing_use_batch_def_ref = false
     @match.standalone_instance_id = nil
     @match.standalone_instance_found = false
-    @match.copy_append_from_existing_use_batch_def_ref = false
     @match.instance_choice_confirmed = true
     save_if_changed('Confirmed', 'Not confirmed')
     render 'ref_instance_nomination', format: :js
@@ -108,10 +109,11 @@ class Loader::Name::MatchesController < ApplicationController
     raise 'Please choose an instance' if loader_name_match_params[:standalone_instance_id].blank?
 
     @match = Loader::Name::Match.find(loader_name_match_params[:id])
+    @match.use_existing_instance = true
     @match.use_batch_default_reference = false
+    @match.copy_append_from_existing_use_batch_def_ref = false
     @match.standalone_instance_id = loader_name_match_params[:standalone_instance_id]
     @match.standalone_instance_found = true
-    @match.copy_append_from_existing_use_batch_def_ref = false
     @match.instance_choice_confirmed = true
     save_if_changed
     render 'ref_instance_nomination'
@@ -144,11 +146,7 @@ class Loader::Name::MatchesController < ApplicationController
 
   def clear_taxonomy_nomination
     @match = Loader::Name::Match.find(params[:id])
-    @match.use_batch_default_reference = false
-    @match.standalone_instance_id = nil
-    @match.standalone_instance_found = false
-    @match.copy_append_from_existing_use_batch_def_ref = false
-    @match.instance_choice_confirmed = false
+    @match.undo_taxonomic_choice
     save_if_changed('Cleared', 'Not cleared')
   rescue => e
     logger.error("Loader::Name::MatchesController clear_taxonomy_nomination error: #{e.to_s}")
@@ -158,9 +156,7 @@ class Loader::Name::MatchesController < ApplicationController
 
   def clear_standalone_instance
     @match = Loader::Name::Match.find(params[:id])
-    @match.standalone_instance_id = nil
-    @match.standalone_instance_found = false
-    @match.standalone_instance_created = false
+    @match.undo_taxonomic_choice
     save_if_changed('Cleared', 'Nothing to clear')
   rescue => e
     logger.error("Loader::Name::MatchesController clear_standalone_instance error: #{e.to_s}")
@@ -168,18 +164,44 @@ class Loader::Name::MatchesController < ApplicationController
     render 'clear_standalone_instance_error', format: :js
   end
 
-  def clear_and_delete_standalone_instance
+  # Important to distinguish the case of instance vs draft instance for the sake
+  # of a transaction.  Draft instances will be deleted directly which means 
+  # the delete can be part of a transaction.  (Non-draft instances have to go
+  # through the half-baked Services approach and therefore cannot be part of
+  # a transaction.)
+  def clear_and_delete_draft_standalone_instance
     @match = Loader::Name::Match.find(params[:id])
+    raise "Must be a draft instance" unless @match.standalone_instance.draft == true
     @standalone_instance = @match.standalone_instance
-    @match.standalone_instance_id = nil
-    @match.standalone_instance_found = false
-    @match.standalone_instance_created = false
-    save_if_changed('Cleared', 'Nothing to clear')
-    @standalone_instance.delete_as_user(current_user.username)
-  rescue => e
-    logger.error("Loader::Name::MatchesController clear_and_delete_standalone_instance error: #{e.to_s}")
-    @message = e.to_s
-    render 'clear_and_delete_standalone_instance_error', format: :js
+    ActiveRecord::Base.transaction do
+      @match.standalone_instance_id = nil
+      @match.undo_taxonomic_choice
+      @match.save!
+      Rails.logger.debug("@match is saved")
+      @match.loader_name.children.each do |loader_name_syn|
+        loader_name_syn.loader_name_matches.each do | match |
+          if match.relationship_instance_created ||
+             match.relationship_instance_found
+            if match.relationship_instance_created
+              rel_instance = match.relationship_instance
+              match.relationship_instance_id = nil
+              match.relationship_instance_created = false
+              match.save!
+              rel_instance.delete
+            else
+              match.relationship_instance_id = nil
+              match.relationship_instance_found = false
+              match.save!
+            end
+          end
+        end
+      end
+      @standalone_instance.delete
+    end
+  #rescue => e
+    #logger.error("Loader::Name::MatchesController clear_and_delete_standalone_instance error: #{e.to_s}")
+    #@message = e.to_s
+    #render 'clear_and_delete_draft_standalone_instance_error', format: :js
   end
 
   

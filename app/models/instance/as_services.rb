@@ -51,6 +51,9 @@ class Instance::AsServices < Instance
   # however dressed up. Fail loudly is the principle.  GUIs guide users in what
   # they can do, but the application has to protect the data regardless.
   #
+  # Noting that Services sends errors such as:
+  #   "There are 1 instances that say this cites it."
+  # The Editor shows the Services error to the user for transparency.
   def self.delete(id)
     logger.info("#{tag}.delete")
     url = delete_uri(id)
@@ -65,7 +68,7 @@ class Instance::AsServices < Instance
     logger.error(rest_client_exception.response)
     json = JSON.parse(rest_client_exception.response)
     logger.error("#{tag}.delete exception response.errors: #{json['errors'].join(';')}")
-    raise json["errors"].join(";")
+    raise " from Services: " + json["errors"].join(";")
   rescue
     logger.error("#{tag}.delete exception for url: #{url}")
     raise
