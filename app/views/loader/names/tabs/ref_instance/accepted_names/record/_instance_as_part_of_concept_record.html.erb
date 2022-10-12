@@ -6,17 +6,17 @@
 >
   <td colspan="1" class="align-top text width-5-percent padding-right-half-em">
     <% if allow_all_even_if_in_current_tree %>
-      <%= form.radio_button :standalone_instance_id, record.id, class: "inline pull-right", required: true %>
+      <%= form.radio_button payload_field_name, record.id, class: "inline pull-right", required: true %>
     <% else %>
       <% if record.show_apc? %>
-        <%= form.radio_button :standalone_instance_id, record.id, class: "inline pull-right", required: true, disabled: true %>
+        <%= form.radio_button payload_field_name, record.id, class: "inline pull-right", required: true, disabled: true %>
       <% else %>
-        <%= form.radio_button :standalone_instance_id, record.id, class: "inline pull-right", required: true %>
+        <%= form.radio_button payload_field_name, record.id, class: "inline pull-right", required: true %>
       <% end %>
     <% end %>
   </td>
   <td colspan="1" class="text width-90-percent">
-    <%= form.label "standalone_instance_id_#{record.id}", record.listing_citation.html_safe, class:'indent-level-1 font-weight-normal' %> 
+    <%= form.label "#{payload_field_name}_#{record.id}", record.listing_citation.html_safe, class:'indent-level-1 font-weight-normal' %> 
   </td>
 </tr>
 

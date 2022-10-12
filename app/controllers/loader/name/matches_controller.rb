@@ -128,12 +128,12 @@ class Loader::Name::MatchesController < ApplicationController
   end
 
   def create_and_copy
-    raise 'Please choose an instance' if loader_name_match_params[:standalone_instance_id].blank?
+    raise 'Please choose an instance' if loader_name_match_params[:source_for_copy_instance_id].blank?
 
     @match = Loader::Name::Match.find(loader_name_match_params[:id])
     @match.use_batch_default_reference = false
-    @match.standalone_instance_id = loader_name_match_params[:standalone_instance_id]
-    @match.standalone_instance_found = true
+    @match.use_existing_instance = false
+    @match.source_for_copy_instance_id = loader_name_match_params[:source_for_copy_instance_id]
     @match.copy_append_from_existing_use_batch_def_ref = true
     @match.instance_choice_confirmed = true
     save_if_changed
@@ -360,6 +360,7 @@ class Loader::Name::MatchesController < ApplicationController
                                              :standalone_instance_id,
                                              :standalone_instance_found,
                                              :use_batch_default_reference,
-                                             :copy_append_from_existing_use_batch_def_ref)
+                                             :copy_append_from_existing_use_batch_def_ref,
+                                             :source_for_copy_instance_id)
   end
 end

@@ -29,7 +29,8 @@
           locals: {record: record,
                    form: form,
                    give_me_focus: give_me_focus,
-                   allow_all_even_if_in_current_tree: true }%>
+                   allow_all_even_if_in_current_tree: true,
+                   payload_field_name: :source_for_copy_instance_id }%>
       <% when 'instance-is-cited-by' %>
         <% unless record.instance_type.name =~ /\Acommon/ %>
           <%= render partial: "#{wd}/instance_is_cited_by",

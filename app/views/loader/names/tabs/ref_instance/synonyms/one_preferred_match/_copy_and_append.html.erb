@@ -1,0 +1,25 @@
+
+  <% if @loader_name.parent.preferred_match.instance_choice_confirmed %>
+    Parent's instance choice confirmed:
+    <%= render partial: 'loader/names/tabs/ref_instance/accepted_names/show_current_choice_brief', locals: {match: @loader_name.parent.preferred_match} %> <br><br>
+  <% end %>
+
+
+Parent is using batch default reference to create a new instance with synonymy copied from a selected source, so this synonym will be created (unless it is a duplicate)
+      <br>
+      <br>
+    <%= link_to("Show the parent's selected source instance in context",
+                search_path(query_target: "Name",
+                            query_string: "id: #{@loader_name.preferred_match.name_id} show-instances:",
+                            focus_id:"Instance-#{@loader_name.parent.preferred_match.source_for_copy_instance_id}"),
+                tabindex: increment_tab_index,
+                title: "Show the instance",
+                class: 'blue') %>
+
+  <% if @loader_name.parent.preferred_match.standalone_instance_id.present? %>
+    <% if @loader_name.parent.preferred_match.standalone_instance_created %>
+      Parent's standalone instance was created by the Loader.
+    <% elsif @loader_name.parent.preferred_match.standalone_instance_found %>
+      Parent's standalone instance was found.
+    <% end %>
+  <% end %>

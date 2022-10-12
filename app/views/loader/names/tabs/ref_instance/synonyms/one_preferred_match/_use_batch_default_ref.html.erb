@@ -1,0 +1,16 @@
+
+  <% if @loader_name.parent.preferred_match.instance_choice_confirmed %>
+    Parent's instance choice confirmed:
+    <%= render partial: 'loader/names/tabs/ref_instance/accepted_names/show_current_choice_brief', locals: {match: @loader_name.parent.preferred_match} %>
+  <% end %>
+ <br><br>
+  <% if @loader_name.parent.preferred_match.standalone_instance_id.present? %>
+    <% if @loader_name.parent.preferred_match.standalone_instance_created %>
+      Parent's standalone instance was created by the Loader.
+    <% elsif @loader_name.parent.preferred_match.standalone_instance_found %>
+      Parent's standalone instance was found.
+    <% end %>
+  <% end %>
+
+Parent is using batch default reference so a synonym will be created to match this synonym
+

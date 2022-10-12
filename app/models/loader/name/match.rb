@@ -35,6 +35,8 @@ class Loader::Name::Match < ActiveRecord::Base
     foreign_key: "standalone_instance_id", optional: true
   belongs_to :relationship_instance, class_name: "::Instance",
     foreign_key: "relationship_instance_id", optional: true
+  belongs_to :source_for_copy, class_name: "::Instance",
+    foreign_key: "source_for_copy_instance_id", optional: true
   validates :loader_name_id, uniqueness: true,
             unless: Proc.new {|a| a.loader_name.record_type == 'misapplied'}
   #validates :standalone_instance_id, absence: true, if: :using_default_ref?
@@ -75,7 +77,7 @@ class Loader::Name::Match < ActiveRecord::Base
   end
 
   def copy_and_append?
-    !standalone_instance_id.blank? && copy_append_from_existing_use_batch_def_ref
+    copy_append_from_existing_use_batch_def_ref
   end
 
   def current_taxonomy_instance_choice
@@ -96,7 +98,7 @@ class Loader::Name::Match < ActiveRecord::Base
       when use_batch_default_reference then
        'create a draft instance based on the batch default reference'
       when copy_append_from_existing_use_batch_def_ref then
-       'create a draft instance based on the batch default reference, then copy synonyms from a selected instance'
+       'create a draft instance based on the batch default reference, then copy synonyms from a selected source instance'
       when standalone_instance_id.present? then
        'do not create any new instance'
       else
@@ -122,6 +124,7 @@ class Loader::Name::Match < ActiveRecord::Base
     self.standalone_instance_created = false
     self.standalone_instance_found = false
     self.instance_choice_confirmed = false
+    self.source_for_copy_instance_id = nil
   end
 end
 

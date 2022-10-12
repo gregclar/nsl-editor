@@ -7,9 +7,15 @@
 <% if match.show_default_reference? || match.copy_and_append? %>
   <%= render partial: 'detail_line', locals: {info: match.loader_name.loader_batch.default_reference&.citation&.html_safe || 'There is no default reference for this batch', label: 'default reference'} %>
 <% end %>
-<% if match.standalone?  || match.copy_and_append? %>
+<% if match.standalone?  %>
   <% si = match.standalone_instance %>
-  <%= render partial: 'detail_line', locals: {info: "#{si.reference.citation}:&nbsp;#{si.page}", label: 'selected instance'} %>
-  <%= render partial: 'detail_line', locals: {info: si.instance_type.name, label: 'selected instance type'} %>
+  <%= render partial: 'detail_line', locals: {info: "#{si.reference.citation}:&nbsp;#{si.page}", label: 'standalone instance'} %>
+  <%= render partial: 'detail_line', locals: {info: si.instance_type.name, label: 'standalone instance type'} %>
+<% end %>
+
+<% if match.copy_and_append? %>
+  <% si = match.source_for_copy %>
+  <%= render partial: 'detail_line', locals: {info: "#{si.reference.citation}:&nbsp;#{si.page}", label: 'selected source instance'} %>
+  <%= render partial: 'detail_line', locals: {info: si.instance_type.name, label: 'selected source instance type'} %>
 <% end %>
 
