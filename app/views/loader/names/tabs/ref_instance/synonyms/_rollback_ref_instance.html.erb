@@ -1,6 +1,3 @@
-<br>
-Rollback Ref Instance
-<br>
 <% if match.relationship_instance_found %>
 
     <%= form_with(url: loader_name_match_clear_relationship_instance_path(match.id),
@@ -23,6 +20,8 @@ Rollback Ref Instance
                     class: "btn btn-primary width-18em pull-right" -%>
     <% end %>
 
+<% else %>
+  No rollback option here - check the parent record.
 <% end %>
 
 
