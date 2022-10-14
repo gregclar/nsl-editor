@@ -1,3 +1,7 @@
+- :date: 14-Oct-2022
+  :jira_id: '4078'
+  :description: |-
+    Batch loader: adjustments following two more walk-throughs; the option to <code>use-batch-default-reference</code> is now the default choice for bulk instance create
 - :date: 07-Oct-2022
   :jira_id: '4078'
   :description: |-

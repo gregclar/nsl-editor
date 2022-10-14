@@ -37,16 +37,14 @@ module Loader::Name::Match::CreateStandaloneInstance
   def create_standalone_instance(user, job)
     case
     when instance_choice_confirmed == false
-      return no_instance_choice_confirmed(user, job)
-    when use_batch_default_reference == true &&
-         copy_append_from_existing_use_batch_def_ref == false
+      self.use_batch_default_reference = true
+      self.instance_choice_confirmed = true
+      return create_using_default_ref(user, job)
+    when use_batch_default_reference == true
       return create_using_default_ref(user, job)
     when copy_append_from_existing_use_batch_def_ref == true
-      throw 'create and append'
       return create_and_append_using_default_ref(user, job)
     when use_existing_instance == true 
-         standalone_instance_found == true &&
-         standalone_instance_id.present?
       return using_existing_instance(user, job)
     else
       return unknown_option(user, job)
@@ -95,7 +93,10 @@ module Loader::Name::Match::CreateStandaloneInstance
   end
 
   def create_and_append_using_default_ref(user, job)
-    [8,4,7]
+    log_to_table(
+      "Declined - no code yet written to handle copy-and-append option #{loader_name.simple_name} #{loader_name.id}",
+      user, job)
+    return Loader::Name::Match::DECLINED
   end
 
   def using_existing_instance(user, job)

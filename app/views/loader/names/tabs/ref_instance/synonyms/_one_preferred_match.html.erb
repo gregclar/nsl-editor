@@ -10,6 +10,8 @@
   <% when @loader_name.parent.preferred_match.copy_and_append? %>
     <%= render partial: 'loader/names/tabs/ref_instance/synonyms/one_preferred_match/copy_and_append' %> 
 
+  <% else %>
+    The parent name has no choice made about an instance for taxonomy.
   <% end %>
 
 

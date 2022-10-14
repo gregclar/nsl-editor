@@ -71,9 +71,21 @@ class Loader::Name::Match < ActiveRecord::Base
     use_batch_default_reference == true
   end
 
+  def using_existing_instance?
+    use_existing_instance == true
+  end
 
   def standalone?
+    throw 'standalone? what does this mean?'
     !standalone_instance_id.blank? && !copy_append_from_existing_use_batch_def_ref
+  end
+
+  def standalone_instance?
+    standalone_instance_id.present?
+  end
+
+  def relationship_instance?
+    relationship_instance_id.present?
   end
 
   def copy_and_append?
@@ -100,7 +112,7 @@ class Loader::Name::Match < ActiveRecord::Base
       when copy_append_from_existing_use_batch_def_ref then
        'create a draft instance based on the batch default reference, then copy synonyms from a selected source instance'
       when standalone_instance_id.present? then
-       'do not create any new instance'
+       "don't create an instance"
       else
        ''
     end

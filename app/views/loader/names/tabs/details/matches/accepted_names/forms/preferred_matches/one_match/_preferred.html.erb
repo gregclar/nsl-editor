@@ -2,8 +2,8 @@
       <br>
       Reference Instance choice has been confirmed:
       <% choice_file = case %>
-      <% when @loader_name.loader_name_matches.where(name_id: matching_name.id).first.standalone? %>
-        <% 'standalone_chosen' %>
+    <% when @loader_name.preferred_match.using_existing_instance? %>
+        <% 'use_existing_instance_chosen' %>
       <% when @loader_name.loader_name_matches.where(name_id: matching_name.id).first.using_default_ref? %>
         <% 'use_default_ref_chosen' %>
       <% when @loader_name.loader_name_matches.where(name_id: matching_name.id).first.copy_and_append? %>

@@ -11,6 +11,23 @@
       Parent's standalone instance was found.
     <% end %>
   <% end %>
-
-Parent is using batch default reference so a synonym will be created to match this synonym
-
+<br>
+<br>
+<% if @loader_name.preferred_match.relationship_instance? %>
+  Relationship instance exists
+     <br><br>
+     <%= link_to("Show the relationship instance in context",
+                 search_path(query_target: "Name",
+                             query_string: "id: #{@loader_name.preferred_match.name_id} show-instances:",
+                             focus_id:"Instance-#{@loader_name.preferred_match.relationship_instance_id}"),
+                tabindex: increment_tab_index,
+                title: "Show the instance",
+                class: 'blue') %>
+  <%= divider %>
+  <h5>Undo</h5>
+  <%= render partial:
+    'loader/names/tabs/ref_instance/synonyms/rollback_ref_instance',
+    locals: {match: @loader_name.preferred_match} %>
+<% else %>
+  No relationship instance created yet.
+<% end %>

@@ -109,12 +109,12 @@ class Loader::Name::AsInstanceCreator
   end
 
   def create_standalone
-    return @loader_name.loader_name_matches.first.create_standalone_instance(@authorising_user, @job_number)
+    return @loader_name.preferred_match.create_standalone_instance(@authorising_user, @job_number)
   end
 
   def create_synonymy
-    return @loader_name.loader_name_matches
-      .first.create_or_find_synonymy_instance(@authorising_user, @job_number)
+    return @loader_name.preferred_match
+      .create_or_find_synonymy_instance(@authorising_user, @job_number)
   end
 
   def create_misapp

@@ -10,7 +10,7 @@ module Loader::Name::Match::CreateSynonymyInstance
       log_to_table(entry, user, job)
       return Loader::Name::Match::DECLINED
     end
-    if relationship_instance?
+    if create_relationship_instance?
       entry = "Declined: relationship instance found for "
       entry += "#{loader_name.simple_name} ##{loader_name.id}"
       log_to_table(entry, user, job)
@@ -26,7 +26,7 @@ module Loader::Name::Match::CreateSynonymyInstance
     raise
   end
 
-  def relationship_instance?
+  def create_relationship_instance?
     Rails.logger.debug('before one')
     Rails.logger.debug("before one: id: #{id}")
     return false if loader_name.parent.loader_name_matches.blank?
@@ -57,6 +57,9 @@ module Loader::Name::Match::CreateSynonymyInstance
     if loader_name.parent.loader_name_matches.first.try('standalone_instance_id').blank?
       Rails.logger.debug('qfter three')
       Rails.logger.debug('loader name parent has no standalone instance so cannot create relationship instance')
+      entry = "Declined: loader name parent has no standalone instance so cannot proceed"
+      entry += "#{loader_name.simple_name} ##{loader_name.id}"
+      log_to_table(entry, user, job)
       return Loader::Name::Match::DECLINED
     else
       Rails.logger.debug('qfter three')
