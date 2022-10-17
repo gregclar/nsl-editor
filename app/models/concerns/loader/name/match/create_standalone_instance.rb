@@ -43,7 +43,7 @@ module Loader::Name::Match::CreateStandaloneInstance
     when use_batch_default_reference == true
       return create_using_default_ref(user, job)
     when copy_append_from_existing_use_batch_def_ref == true
-      return create_and_append_using_default_ref(user, job)
+      return copy_and_append(user, job)
     when use_existing_instance == true 
       return using_existing_instance(user, job)
     else
@@ -79,6 +79,12 @@ module Loader::Name::Match::CreateStandaloneInstance
     return Loader::Name::Match::DECLINED
   end
 
+  def no_source_for_copy(user, job)
+    log_to_table("Declined - no source instance to copy #{loader_name.simple_name} #{loader_name.id}",
+                 user, job)
+    return Loader::Name::Match::DECLINED
+  end
+
   def stand_already_noted(user, job)
     log_to_table("Declined - standalone instance already noted for #{loader_name.simple_name} #{loader_name.id}",
                  user, job)
@@ -92,11 +98,65 @@ module Loader::Name::Match::CreateStandaloneInstance
     return Loader::Name::Match::DECLINED
   end
 
-  def create_and_append_using_default_ref(user, job)
+  def copy_and_append(user, job)
+    return no_def_ref(user, job) if loader_name.loader_batch.default_reference.blank?
+    return stand_already_noted(user, job) if standalone_instance_already_noted?
+    return stand_already_for_default_ref(user, job) if standalone_instance_for_default_ref?
+    return no_source_for_copy(user, job) if source_for_copy.blank?
+
+    # STANDALONE INSTANCE
+    # create a standalone instance really_create_standalone_instance
+    new_standalone = Instance.new
+    new_standalone.draft = true
+    new_standalone.name_id = name_id
+    new_standalone.reference_id = loader_name.loader_batch.default_reference.id
+    new_standalone.instance_type_id = InstanceType.secondary_reference.id
+    new_standalone.created_by = new_standalone.updated_by = "bulk for #{user}"
+    new_standalone.save!
+
+    # # NOTE INSTANCE CREATED
+    self.standalone_instance_id = new_standalone.id
+    self.standalone_instance_created = true
+    self.standalone_instance_found = false
+    self.updated_by = "job for #{user}"
+    self.save!
+    
+    Rails.logger.debug("#{' '*138}=")
+    Rails.logger.debug("#{' '*138}=")
+    Rails.logger.debug("#{' '*138}=")
+    Rails.logger.debug("copy_and_append")
+    Rails.logger.debug("===============")
+    Rails.logger.debug("copy_and_append: id: #{self.id}")
+    Rails.logger.debug("copy_and_append: need to create a standalone instance based on batch def ref")
+    Rails.logger.debug("copy_and_append: need to find the source instance")
+    Rails.logger.debug("copy_and_append: source_for_copy.id: #{source_for_copy.id}")
+    Rails.logger.debug("copy_and_append: source_for_copy.class: #{source_for_copy.class}")
+    Rails.logger.debug("copy_and_append: source_for_copy.synonyms.size: #{source_for_copy.synonyms.size}")
+    Rails.logger.debug("copy_and_append: source_for_copy.synonyms.collect ids: #{source_for_copy.synonyms.collect {|cit| cit.id}.inspect}")
+    syns_created = 0
+    source_for_copy.synonyms.each do |source_synonym|
+      Rails.logger.debug("create synonym from source #{source_synonym.id} for new standalone instance #{new_standalone.id}")
+      new_syn = Instance.new
+      new_syn.cites_id = source_synonym.cites_id
+      new_syn.cited_by_id = new_standalone.id
+      new_syn.instance_type_id = source_synonym.instance_type_id
+      new_syn.created_by = new_syn.updated_by = "bulk for #{user}"
+      new_syn.name_id = source_synonym.name_id
+      new_syn.reference_id = new_standalone.reference_id
+      new_syn.save!
+      syns_created += 1
+      log_to_table(
+        "Copy-and-append synonym created for #{new_syn.name.full_name}",
+        user, job)
+    end
+    Rails.logger.debug("#{' '*138}=")
+    Rails.logger.debug("#{' '*138}=")
+    Rails.logger.debug("#{' '*138}=")
+
     log_to_table(
-      "Declined - no code yet written to handle copy-and-append option #{loader_name.simple_name} #{loader_name.id}",
+      "Created - copy-and-append standalone created with synonyms created: #{syns_created} for #{loader_name.simple_name} #{loader_name.id}",
       user, job)
-    return Loader::Name::Match::DECLINED
+    return Loader::Name::Match::CREATED
   end
 
   def using_existing_instance(user, job)

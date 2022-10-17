@@ -10,13 +10,13 @@ module Loader::Name::Match::CreateSynonymyInstance
       log_to_table(entry, user, job)
       return Loader::Name::Match::DECLINED
     end
-    if create_relationship_instance?
-      entry = "Declined: relationship instance found for "
+    if synonym_already_attached?
+      record_synonym_already_there
+      entry = "Declined: synonym already there for "
       entry += "#{loader_name.simple_name} ##{loader_name.id}"
       log_to_table(entry, user, job)
       return Loader::Name::Match::DECLINED
     end
-    Rails.logger.debug('need to create a relationship instance')
     return create_relationship_instance(user, job)
   rescue => e
     entry = "Failed to create instance for #{loader_name.simple_name} "
@@ -26,7 +26,7 @@ module Loader::Name::Match::CreateSynonymyInstance
     raise
   end
 
-  def create_relationship_instance?
+  def synonym_already_attached?
     Rails.logger.debug('before one')
     Rails.logger.debug("before one: id: #{id}")
     return false if loader_name.parent.loader_name_matches.blank?
@@ -38,16 +38,17 @@ module Loader::Name::Match::CreateSynonymyInstance
     instances = Instance.where(name_id: name_id)
                         .where(cites_id: instance_id)
                         .where(cited_by_id: loader_name.parent.loader_name_matches.first.try('standalone_instance_id'))
-    if instances.blank?
-      return false
-    else
-      Rails.logger.debug '        relationship instance!'
-      Rails.logger.debug "        relationship instances: #{instances.size}"
-      self.relationship_instance_found = true
-      self.relationship_instance_id = instances.first.id
-      self.save!
-      return true
-    end
+    return !instances.blank?
+  end
+      
+  def record_synonym_already_there
+    instances = Instance.where(name_id: name_id)
+                        .where(cites_id: instance_id)
+                        .where(cited_by_id: loader_name.parent.loader_name_matches.first.try('standalone_instance_id'))
+    self.relationship_instance_found = true
+    self.relationship_instance_id = instances.first.id
+    self.save!
+    return true
   end
 
   # 
@@ -57,7 +58,7 @@ module Loader::Name::Match::CreateSynonymyInstance
     if loader_name.parent.loader_name_matches.first.try('standalone_instance_id').blank?
       Rails.logger.debug('qfter three')
       Rails.logger.debug('loader name parent has no standalone instance so cannot create relationship instance')
-      entry = "Declined: loader name parent has no standalone instance so cannot proceed"
+      entry = "Declined: loader name parent has no standalone instance so cannot proceed "
       entry += "#{loader_name.simple_name} ##{loader_name.id}"
       log_to_table(entry, user, job)
       return Loader::Name::Match::DECLINED

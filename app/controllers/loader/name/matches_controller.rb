@@ -178,6 +178,9 @@ class Loader::Name::MatchesController < ApplicationController
       @match.undo_taxonomic_choice
       @match.save!
       Rails.logger.debug("@match is saved")
+      @standalone_instance.synonyms.each do |synonym|
+        synonym.delete
+      end
       @match.loader_name.children.each do |loader_name_syn|
         loader_name_syn.loader_name_matches.each do | match |
           if match.relationship_instance_created ||

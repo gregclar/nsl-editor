@@ -1,3 +1,7 @@
+- :date: 17-Oct-2022
+  :jira_id: '4078'
+  :description: |-
+    Batch loader: copy and append processing first cut
 - :date: 14-Oct-2022
   :jira_id: '4078'
   :description: |-

@@ -182,6 +182,11 @@ class Instance < ActiveRecord::Base
            inverse_of: :this_is_cited_by,
            foreign_key: "cited_by_id"
 
+  has_many :synonyms,
+           class_name: "Instance",
+           inverse_of: :this_is_cited_by,
+           foreign_key: "cited_by_id"
+
   has_many :instance_notes,
            dependent: :restrict_with_error
 
