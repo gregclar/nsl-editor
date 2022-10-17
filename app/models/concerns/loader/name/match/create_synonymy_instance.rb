@@ -47,6 +47,7 @@ module Loader::Name::Match::CreateSynonymyInstance
                         .where(cited_by_id: loader_name.parent.loader_name_matches.first.try('standalone_instance_id'))
     self.relationship_instance_found = true
     self.relationship_instance_id = instances.first.id
+    self.created_by = self.updated_by = "bulk"
     self.save!
     return true
   end

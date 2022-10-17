@@ -178,9 +178,20 @@ class Loader::Name::MatchesController < ApplicationController
       @match.undo_taxonomic_choice
       @match.save!
       Rails.logger.debug("@match is saved")
+      Rails.logger.debug("deleting synonyms")
       @standalone_instance.synonyms.each do |synonym|
+        # no association because not all databases aware of loader
+        Rails.logger.debug("detach from loader_name_match")
+        Loader::Name::Match.where(relationship_instance_id: synonym.id).each do |syn_match|
+          syn_match.relationship_instance_id = nil
+          syn_match.relationship_instance_found = false
+          syn_match.relationship_instance_created = false
+          syn_match.created_by = syn_match.updated_by = "bulk"
+          syn_match.save!
+        end
         synonym.delete
       end
+      Rails.logger.debug("after deleting synonyms")
       @match.loader_name.children.each do |loader_name_syn|
         loader_name_syn.loader_name_matches.each do | match |
           if match.relationship_instance_created ||
