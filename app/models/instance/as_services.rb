@@ -62,10 +62,14 @@ class Instance::AsServices < Instance
     unless response.code == 200 && json["ok"] == true
       raise "Service error: #{json['errors'].try('join')} [#{response.code}]"
     end
-    # In the test containers the Instan
-    unless Instance.where(id: id).reload.blank?
-      sleep(10)
-      raise "Instance still exists after Service call to delete." unless Instance.where(id: id).reload.blank?
+    # In the test containers the Instance is being deleted but this test
+    # is still failing
+    begin
+      Instance.find(id)
+      raise "Instance still exists after Service call to delete" 
+    rescue ActiveRecord::RecordNotFound => not_found
+      # Good - it's gone
+      return
     end
   rescue RestClient::ExceptionWithResponse => rest_client_exception
     logger.error("Instance::AsServices.delete exception for url: #{url}")
