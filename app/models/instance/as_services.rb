@@ -62,7 +62,11 @@ class Instance::AsServices < Instance
     unless response.code == 200 && json["ok"] == true
       raise "Service error: #{json['errors'].try('join')} [#{response.code}]"
     end
-    raise "Services failed to delete." unless Instance.where(id: id).blank?
+    # In the test containers the Instan
+    unless Instance.where(id: id).reload.blank?
+      sleep(10)
+      raise "Instance still exists after Service call to delete." unless Instance.where(id: id).reload.blank?
+    end
   rescue RestClient::ExceptionWithResponse => rest_client_exception
     logger.error("Instance::AsServices.delete exception for url: #{url}")
     logger.error(rest_client_exception.response)
