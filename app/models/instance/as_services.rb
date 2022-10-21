@@ -66,7 +66,8 @@ class Instance::AsServices < Instance
     logger.info("instances.size: #{instances.size}")
     if instances.size > 0
       logger.info("retrying instances...")
-      result = ActiveRecord::Base.connection.execute("select * from instance where id = #{id.to_i}")
+      s = (0...9).map { ('a'..'z').to_a[rand(26)] }.join
+      result = ActiveRecord::Base.connection.execute("select instance.*, 'x' #{s} from instance where id = #{id.to_i}")
       logger.info("instances.size: #{result.to_a.size}")
       raise "The instance may not have been deleted." unless result.to_a.size == 0
     end
