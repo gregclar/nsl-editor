@@ -64,7 +64,12 @@ class Instance::AsServices < Instance
     end
     instances = Instance.where(id: id).reload
     logger.info("instances.size: #{instances.size}")
-    raise "Please check if the instance is deleted." unless instances.size == 0
+    if instances.size > 0
+      logger.info("retrying instances...")
+      instances = ActiveRecord::Base.connection.execute(['select count(*) count from instances where id = ?',id])
+      logger.info("instances.size: #{instances.size}")
+      raise "The instance may not have been deleted." unless instances.size == 0
+    end
   rescue RestClient::ExceptionWithResponse => rest_client_exception
     logger.error("Instance::AsServices.delete exception for url: #{url}")
     logger.error(rest_client_exception.response)
