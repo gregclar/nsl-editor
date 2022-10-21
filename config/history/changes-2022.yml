@@ -1,4 +1,8 @@
-- :date: 20-Oct-2022
+- :date: 21-Oct-2022
+  :jira_id: ''
+  :description: |-
+    Modify the build pre-compile to give the font-awesome asset the relative url
+- :date: 21-Oct-2022
   :jira_id: '4353'
   :description: |-
     Container related? False negative when deleting an Instance - diagnostic change 7

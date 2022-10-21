@@ -1,6 +1,6 @@
 desc "build prod"
 task :build_prod do
-  sh "rails assets:precompile"
+  sh "RAILS_ENV=production bundle exec rake assets:precompile RAILS_RELATIVE_URL_ROOT='/nsl/editor'"
   sh "echo 'Modify prod config with time utc'"
   sh "ed config/environments/production.rb <build_prod/config-prod.ed"
   sh "echo 'Modify admin index with build timestamp'"
