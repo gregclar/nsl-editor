@@ -141,9 +141,11 @@ GEM
     netrc (0.11.0)
     nio4r (2.5.8)
     nio4r (2.5.8-java)
-    nokogiri (1.13.7-arm64-darwin)
+    nokogiri (1.13.9-arm64-darwin)
       racc (~> 1.4)
-    nokogiri (1.13.7-java)
+    nokogiri (1.13.9-java)
+      racc (~> 1.4)
+    nokogiri (1.13.9-x86_64-linux)
       racc (~> 1.4)
     pg_search (2.3.6)
       activerecord (>= 5.2)
@@ -284,10 +286,11 @@ PLATFORMS
   arm64-darwin-21
   java
   universal-java-1.8
+  x86_64-linux
 
 DEPENDENCIES
   active_type
-  activerecord-jdbcpostgresql-adapter (>= 61.2.pre.java)
+  activerecord-jdbcpostgresql-adapter (>= 61.2)
   addressable (>= 2.8.0)
   cancancan
   composite_primary_keys
