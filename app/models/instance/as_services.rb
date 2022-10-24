@@ -62,14 +62,10 @@ class Instance::AsServices < Instance
     unless response.code == 200 && json["ok"] == true
       raise "Service error: #{json['errors'].try('join')} [#{response.code}]"
     end
-    instances = Instance.where(id: id).reload
-    logger.info("instances.size: #{instances.size}")
-    if instances.size > 0
-      logger.info("retrying instances...")
-      s = (0...9).map { ('a'..'z').to_a[rand(26)] }.join
-      result = ActiveRecord::Base.connection.execute("select instance.*, 'x' #{s} from instance where id = #{id.to_i}")
-      logger.info("instances.size: #{result.to_a.size}")
-      raise "The instance may not have been deleted." unless result.to_a.size == 0
+    begin
+      instance = Instance.find(id).reload
+    rescue 
+      "The instance has not been deleted." 
     end
   rescue RestClient::ExceptionWithResponse => rest_client_exception
     logger.error("Instance::AsServices.delete exception for url: #{url}")
