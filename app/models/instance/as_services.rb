@@ -51,7 +51,7 @@ class Instance::AsServices < Instance
   # however dressed up. Fail loudly is the principle.  GUIs guide users in what
   # they can do, but the application has to protect the data regardless.
   #
-  # Noting that Services sends errors such as:
+  # Noting that Services sends poorly phrased errors such as:
   #   "There are 1 instances that say this cites it."
   # The Editor shows the Services error to the user for transparency.
   def self.delete(id)
@@ -62,11 +62,14 @@ class Instance::AsServices < Instance
     unless response.code == 200 && json["ok"] == true
       raise "Service error: #{json['errors'].try('join')} [#{response.code}]"
     end
+    instance = nil
     begin
       instance = Instance.find(id).reload
-    rescue 
-      "The instance has not been deleted." 
+    rescue
+      # Good if we can't find it - instance will be blank
     end
+    throw "Checking shows the record wasn't deleted." unless instance.blank?
+    # Good, record deleted
   rescue RestClient::ExceptionWithResponse => rest_client_exception
     logger.error("Instance::AsServices.delete exception for url: #{url}")
     logger.error(rest_client_exception.response)
