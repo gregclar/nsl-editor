@@ -63,8 +63,17 @@ class Instance::AsServices < Instance
     unless response.code == 200 && json["ok"] == true
       raise "Service error: #{json['errors'].try('join')} [#{response.code}]"
     end
-    records = Name.where(id: instance.name_id)
-        .joins(:instances).where(instances: {id: instance.id})
+    logger.info("response.code: #{response.code}")
+    logger.info("sleeping before checking services delete")
+    sleep(4)
+    records = Instance.where(id: id).where(instance_type_id: instance.instance_type_id).reload
+    for i in 1..3
+      unless records.blank?
+        logger.info("checking whether instance deleted loop #{i} sleep 4")
+        sleep(4)
+        records = Instance.where(id: id).where(instance_type_id: instance.instance_type_id).reload
+      end
+    end
     throw "Checking shows the record wasn't deleted." unless records.blank?
   rescue RestClient::ExceptionWithResponse => rest_client_exception
     logger.error("Instance::AsServices.delete exception for url: #{url}")
