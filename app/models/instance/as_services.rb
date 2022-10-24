@@ -56,20 +56,16 @@ class Instance::AsServices < Instance
   # The Editor shows the Services error to the user for transparency.
   def self.delete(id)
     logger.info("#{tag}.delete")
+    instance = Instance.find(id)
     url = delete_uri(id)
     response = RestClient.delete(url, accept: :json)
     json = JSON.parse(response)
     unless response.code == 200 && json["ok"] == true
       raise "Service error: #{json['errors'].try('join')} [#{response.code}]"
     end
-    instance = nil
-    begin
-      instance = Instance.find(id).reload
-    rescue
-      # Good if we can't find it - instance will be blank
-    end
-    throw "Checking shows the record wasn't deleted." unless instance.blank?
-    # Good, record deleted
+    records = Name.where(id: instance.name_id)
+        .joins(:instances).where(instances: {id: instance.id})
+    throw "Checking shows the record wasn't deleted." unless records.blank?
   rescue RestClient::ExceptionWithResponse => rest_client_exception
     logger.error("Instance::AsServices.delete exception for url: #{url}")
     logger.error(rest_client_exception.response)
