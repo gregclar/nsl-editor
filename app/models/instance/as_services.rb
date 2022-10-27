@@ -64,8 +64,8 @@ class Instance::AsServices < Instance
       raise "Service error: #{json['errors'].try('join')} [#{response.code}]"
     end
     logger.info("response.code: #{response.code}")
-    logger.info("sleeping before checking services delete")
-    sleep(4)
+    logger.info("sleeping #{Rails.configuration.try('instance_delete_delay_seconds') || 3}sec before checking services delete")
+    sleep(Rails.configuration.try('instance_delete_delay_seconds') || 3)
     records = Instance.where(id: id).where(instance_type_id: instance.instance_type_id).reload
     for i in 1..3
       unless records.blank?

@@ -1,7 +1,11 @@
+- :date: 27-Oct-2022
+  :jira_id: '4353'
+  :description: |-
+    Instance delete false negative: add config item to allow fine-tuning of the delay
 - :date: 25-Oct-2022
   :jira_id: '4353'
   :description: |-
-    Avoid the false negatives experienced recently when deleting an Instance, still detect true non-deletes.
+    Instance delete false negative: avoid the false negatives but still detect true non-deletes.
 - :date: 21-Oct-2022
   :jira_id: ''
   :description: |-

@@ -2,4 +2,4 @@ $('#confirm-or-cancel-link-container a.btn-danger').addClass('disabled');
 $('#cancel-delete-link').addClass('disabled');
 $('#search-result-details-info-message-container').html('Record deleted.  <br><br>In a few moments it will disappear from the page.');
 $('#instance-delete-info-message-container').html('Record deleted.  <br><br>In a few moments it will disappear from the page.');
-setTimeout(function(){window.showRecordWasDeleted('<%= @instance.id %>', 'instance')},2000);
+setTimeout(function(){window.showRecordWasDeleted('<%= @instance.id %>', 'instance')},600);
