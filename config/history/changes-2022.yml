@@ -1,3 +1,7 @@
+- :date: 28-Oct-2022
+  :jira_id: '4358'
+  :description: |-
+    Configuration: show mapper connection configuration variables on the Admin > Config page
 - :date: 27-Oct-2022
   :jira_id: '4353'
   :description: |-
