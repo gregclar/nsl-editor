@@ -1,4 +1,8 @@
 - :date: 28-Oct-2022
+  :jira_id: '4358'
+  :description: |-
+    Configuration: adjust code to let regression tests pass with null values
+- :date: 28-Oct-2022
   :jira_id: '4353'
   :description: |-
     Instance delete false negative: adjust query code to let regression tests pass

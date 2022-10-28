@@ -180,7 +180,7 @@
         <td>Rails.configuration.x.mapper_api.password clues </td>
         <td> <%= Rails.configuration.x.try(:mapper_api).try(:password).try(:first) %>, 
              <%= Rails.configuration.x.try(:mapper_api).try(:password).try(:last) %>, 
-             <%= Rails.configuration.x.try(:mapper_api).try(:password).try(:length) > 15 %> </td>
+             <%= (Rails.configuration.x.try(:mapper_api).try(:password).try(:length) || 0) > 15 %> </td>
       </tr>
     </table>
 
