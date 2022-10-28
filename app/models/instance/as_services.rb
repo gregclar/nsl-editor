@@ -56,7 +56,7 @@ class Instance::AsServices < Instance
   # The Editor shows the Services error to the user for transparency.
   def self.delete(id)
     logger.info("#{tag}.delete")
-    instance = Instance.find(id)
+    instance = Instance.find_by(id: id)
     url = delete_uri(id)
     response = RestClient.delete(url, accept: :json)
     json = JSON.parse(response)
@@ -66,7 +66,7 @@ class Instance::AsServices < Instance
     logger.info("response.code: #{response.code}")
     logger.info("sleeping #{Rails.configuration.try('instance_delete_delay_seconds') || 3}sec before checking services delete")
     sleep(Rails.configuration.try('instance_delete_delay_seconds') || 3)
-    records = Instance.where(id: id).where(instance_type_id: instance.instance_type_id).reload
+    records = Instance.where(id: id).where(instance_type_id: instance.try(:instance_type_id)).reload
     for i in 1..3
       unless records.blank?
         logger.info("checking whether instance deleted loop #{i} sleep 4")
