@@ -1,20 +1,4 @@
-<% if search_result.has_parent? %>
-  <span class="has-parent">
-    <% case search_result.record_type %>
-    <% when 'accepted' %>
-      wat?
-    <% when 'synonym' %>
-      &mdash;&nbsp;
-    <% when 'misapplied' %>
-      &mdash;&nbsp;
-    <% else %>
-      wat?
-    <% end %>
-  </span>
-<% end %>
-<span class='<%= "loader-name-simple-name" %>'>
-<%= "#{search_result.simple_name}" %>
-</span>
+<% path = 'application/search_results/link_texts/loader/name' %>
 
 <% unless search_result.remark_to_reviewers.blank? %>
   <span class="review loader-name remark-to-reviewers"><%= search_result.remark_to_reviewers.html_safe %></span>

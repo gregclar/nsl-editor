@@ -8,6 +8,11 @@
       <h5>Choice</h5>
         <%= render partial: 'loader/names/tabs/ref_instance/accepted_names/show_current_choice', locals: {match: match} %> 
 
+      <% if match.source_for_copy_instance_id.present? %>
+         <%= render partial: 
+                'loader/names/tabs/ref_instance/accepted_names/copy_and_append/source_instance_summary',
+                locals: {match: match} %>
+      <% end %>
       <% if match.standalone_instance_id.present? %>
      <br><br>
      <%= link_to("Show the standalone instance in context",
@@ -17,11 +22,6 @@
                 tabindex: increment_tab_index,
                 title: "Show the instance",
                 class: 'blue') %>
-      <% end %>
-      <% if match.source_for_copy_instance_id.present? %>
-         <%= render partial: 
-                'loader/names/tabs/ref_instance/accepted_names/copy_and_append/source_instance_summary',
-                locals: {match: match} %>
       <% end %>
  <br><br>
 <%= divider %>

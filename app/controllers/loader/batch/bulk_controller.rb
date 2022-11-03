@@ -19,9 +19,10 @@
 
 # Based on OrchidsBatchController
 class Loader::Batch::BulkController < ApplicationController
-  before_action :set_accepted_excluded_mode, 
+  before_action :set_accepted_excluded_mode,
     only: [:index, :submit, :create_preferred_matches,
            :create_draft_instances]
+  before_action :clean_params 
     #, :add_instances_to_draft_tree]
 
   def index
@@ -146,6 +147,10 @@ class Loader::Batch::BulkController < ApplicationController
       "#{params[:gui_submit_place]}-#{str}"
     end
     str
+  end
+
+  def clean_params
+    params[:name_string] = params[:name_string].try('strip')
   end
 end
 

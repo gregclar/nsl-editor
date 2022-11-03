@@ -5,10 +5,12 @@
   <% end %>
  <br><br>
   <% if @loader_name.parent.preferred_match.standalone_instance_id.present? %>
+    <br>
+    <br>
     <% if @loader_name.parent.preferred_match.standalone_instance_created %>
-      Parent's standalone instance was created by the Loader.
+      Parent's standalone instance has been created.
     <% elsif @loader_name.parent.preferred_match.standalone_instance_found %>
-      Parent's standalone instance was found.
+      Parent's standalone instance has been found.
     <% end %>
   <% end %>
 <br>

@@ -20,6 +20,7 @@
 class Loader::Name::Match < ActiveRecord::Base
   include CreateStandaloneInstance
   include CreateSynonymyInstance
+  include CreateMisappInstance
   strip_attributes
   CREATED = [1,0,0]
   DECLINED = [0,1,0]
@@ -110,7 +111,7 @@ class Loader::Name::Match < ActiveRecord::Base
       when use_batch_default_reference then
        'create a draft instance based on the batch default reference'
       when copy_append_from_existing_use_batch_def_ref then
-       'create a draft instance based on the batch default reference, then copy synonyms from a selected source instance'
+       'create a draft instance for the default reference, attach synonyms from a selected source instance, then append loader details, including synonyms (but not duplicates of sourced synonyms), distribution and comment.'
       when standalone_instance_id.present? then
        "don't create an instance"
       else

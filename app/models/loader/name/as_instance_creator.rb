@@ -91,7 +91,6 @@ class Loader::Name::AsInstanceCreator
     elsif @loader_name.synonym?
       return create_synonymy
     elsif @loader_name.misapplied?
-      throw 'misapp'
       return create_misapp
     else
       throw "Don't know how to handle loader_name #{@loader_name.id}"
@@ -118,7 +117,16 @@ class Loader::Name::AsInstanceCreator
   end
 
   def create_misapp
-    [0,1,0]
+    Rails.logger.debug("create_misapp: matches: #{@loader_name.loader_name_matches.size}")
+    created = declined = errors = 0
+    @loader_name.loader_name_matches.each do |misapp_match|
+      Rails.logger.debug("candidate match: #{misapp_match.inspect}")
+      result = misapp_match.create_or_find_misapp_instance(@authorising_user, @job_number)
+      created += result[0]
+      declined += result[1]
+      errors += result[2]
+    end
+    return [created, declined, errors]
   end
 
   def xcreate

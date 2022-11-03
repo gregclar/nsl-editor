@@ -154,7 +154,7 @@ module Loader::Name::Match::CreateStandaloneInstance
     Rails.logger.debug("#{' '*138}=")
 
     log_to_table(
-      "Created - copy-and-append standalone created with synonyms created: #{syns_created} for #{loader_name.simple_name} #{loader_name.id}",
+      "Created standalone with #{syns_created} synonym (copy-and-append) for #{loader_name.simple_name} #{loader_name.id}",
       user, job)
     return Loader::Name::Match::CREATED
   end

@@ -9,9 +9,14 @@
     <br>
     <%= link_to("Show the parent's instance in context",
             search_path(query_target: "Name",
-                        query_string: "id: #{@loader_name.preferred_match.name_id} show-instances:",
+                        query_string: "id: #{@loader_name.parent.preferred_match.name_id} show-instances:",
                         focus_id:"Instance-#{@loader_name.parent.preferred_match.standalone_instance_id}"),
             tabindex: increment_tab_index,
             title: "Show the instance",
             class: 'blue') %>
 
+<%= divider %>
+<h5>Undo</h5>
+    <%#= render partial: 
+                'loader/names/tabs/ref_instance/synonyms/rollback_ref_instance',
+                locals: {match: @loader_name.preferred_match} %>
