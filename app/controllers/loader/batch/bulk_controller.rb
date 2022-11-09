@@ -71,40 +71,37 @@ class Loader::Batch::BulkController < ApplicationController
   def create_preferred_matches
     prefix = the_prefix('create-preferred-matches-')
     attempted = records = 0
-    attempted, records = Loader::Name.create_preferred_matches(params[:name_string], (session[:default_loader_batch_id]||0), @current_user.username, @work_on_accepted)
-    
-    @message = "Created #{records} matches out of #{attempted} records matching the string '#{params[:name_string]}'"
+    attempted, records = Loader::Name.create_preferred_matches(
+      params[:name_string], (session[:default_loader_batch_id]||0),
+      @current_user.username)
     Loader::Batch::JobLock.unlock!
     @message = "Create preferred matches....attempted: #{attempted}; created: #{records} for records matching '#{params[:name_string]}'"
     render 'create_preferred_matches', locals: {message_container_id_prefix: prefix }
-  #rescue => e
-    #logger.error("BulkController#create_preferred_matches: #{e.to_s}")
-    #logger.error e.backtrace.join("\n")
-    #@message = e.to_s.sub(/uncaught throw/,'').gsub(/"/,'')
-    #render 'error', locals: {message_container_id_prefix: prefix }
+  rescue => e
+    logger.error("BulkController#create_preferred_matches: #{e.to_s}")
+    logger.error e.backtrace.join("\n")
+    @message = e.to_s.sub(/uncaught throw/,'').gsub(/"/,'')
+    render 'error', locals: {message_container_id_prefix: prefix }
   end
 
   def create_draft_instances
-    @work_on_accepted = true    # logic for this is required
     prefix = the_prefix('create-draft-instances-')
     job = AsCreateDraftInstanceJob.new(session[:default_loader_batch_id], 
                                  params[:name_string],
                                  @current_user.username,
-                                 @work_on_accepted,
                                  @job_number)
     attempted, created, declined, errors = job.run
-    #@message = "Job ##{@job_number} attempted #{attempted}; created #{created}"
     @message = "Create draft instances attempted #{attempted}; "
     @message += "created #{created} draft #{'instance'.pluralize(created)} with"
     @message += " #{declined} declined and #{errors} error(s) for "
     @message += "#{params[:name_string]} (job ##{@job_number})"
     Loader::Batch::JobLock.unlock!
     render 'create_draft_instances', locals: {message_container_id_prefix: prefix }
-  #rescue => e
-  #  logger.error("LoaderBatchBulkController#create_draft_instances: #{e.to_s}")
-  #  logger.error e.backtrace.join("\n")
-  #  @message = e.to_s.sub(/uncaught throw/,'').gsub(/"/,'')
-  #  render 'error', locals: {message_container_id_prefix: prefix }
+  rescue => e
+    logger.error("LoaderBatchBulkController#create_draft_instances: #{e.to_s}")
+    logger.error e.backtrace.join("\n")
+    @message = e.to_s.sub(/uncaught throw/,'').gsub(/"/,'')
+    render 'error', locals: {message_container_id_prefix: prefix }
   end
 
   def add_name_string_to_session
@@ -112,10 +109,9 @@ class Loader::Batch::BulkController < ApplicationController
   end
 
   def show_stats
-    @work_on_accepted = true # todo: logic for excluded
     @stats = Loader::Batch::Stats::Reporter.new(
       params[:name_string],
-      (session[:default_loader_batch_id]||0), @work_on_accepted)
+      (session[:default_loader_batch_id]||0))
     render 'stats'
   end
 

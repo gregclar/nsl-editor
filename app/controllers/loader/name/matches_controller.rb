@@ -261,7 +261,6 @@ class Loader::Name::MatchesController < ApplicationController
   end
 
   def apply_changes
-    Rails.logger.debug('apply_changes')
     @loader_name_matches = Loader::Name::Match.where(loader_name_id: @loader_name.id)
     stop_if_nothing_changed
     return 'No change' if params[:loader_name].blank? 

@@ -18,23 +18,17 @@
 
 # Record a preferred matching name for a raw loader name record.
 class Loader::Batch::BulkController::AsCreateDraftInstanceJob
-  def initialize(batch_id, search_string, authorising_user, work_on_accepted,
-                 job_number)
+  def initialize(batch_id, search_string, authorising_user, job_number)
     @batch = Loader::Batch.find(batch_id)
     @search_string = search_string
     @authorising_user = authorising_user
-    @work_on_accepted = work_on_accepted
     @job_number = job_number
   end
 
-  # Loader::Name.create_instance_for_accepted_or_excluded(params[:taxon_string], @current_user.username, @work_on_accepted)
-  # def self.create_instance_for_accepted_or_excluded(taxon_s, authorising_user, work_on_accepted)
+  # Loader::Name.create_instance_for_accepted_or_excluded(params[:taxon_string], @current_user.username
+  # def self.create_instance_for_accepted_or_excluded(taxon_s, authorising_user)
   def run
-    if @work_on_accepted
-      @search = Loader::Name.taxon_string_search_no_excluded(@batch, @search_string)
-    else
-      @search = Loader::Name.taxon_string_search_for_excluded(@batch, @search_string)
-    end
+    @search = Loader::Name.taxon_string_search_in_batch(@batch, @search_string)
     return create_draft_instances
   end
 
@@ -72,13 +66,13 @@ class Loader::Batch::BulkController::AsCreateDraftInstanceJob
   end
 
   def log_start
-    entry = "Started create draft instances for batch: "
+    entry = "<b>STARTED</b>: create draft instances for batch: "
     entry += "#{@batch.name} accepted taxa matching #{@search_string}"
     log(entry)
   end
 
   def log_finish
-    entry = "Finished; records attempted: #{@attempts}; "
+    entry = "<b>FINISHED</b>: records attempted: #{@attempts}; "
     entry += "records created: #{@creates}; "
     entry += "declined: #{@declines}; errors: #{@errors}"
     log(entry)

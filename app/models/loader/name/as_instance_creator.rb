@@ -92,6 +92,8 @@ class Loader::Name::AsInstanceCreator
       return create_synonymy
     elsif @loader_name.misapplied?
       return create_misapp
+    elsif @loader_name.excluded?
+      return create_standalone
     else
       throw "Don't know how to handle loader_name #{@loader_name.id}"
     end

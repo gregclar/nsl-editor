@@ -59,7 +59,7 @@ class Loader::Name::AsNameMatcher
       create_match
       true
     else
-      log_to_table("Making preferred match but no single suitable preferred name found")
+      log_to_table("Failed to make a preferred match because no single suitable preferred name found")
       false
     end
   end
@@ -78,7 +78,7 @@ class Loader::Name::AsNameMatcher
   end
 
   def create_match
-    log_to_table("Make preferred match")
+    log_to_table("Made preferred match")
     pref = @loader_name.loader_name_matches.new
     pref.name_id = @loader_name.matches.first.id
     pref.instance_id = @loader_name.matches.first.primary_instances.first.id

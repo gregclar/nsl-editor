@@ -1,3 +1,7 @@
+- :date: 10-Nov-2022
+  :jira_id: '4078'
+  :description: |-
+    Batch loader: new record types: <q>heading</q> and <q>excluded</q>; processing for <q>excluded</q> records working up to and including draft instance
 - :date: 03-Nov-2022
   :jira_id: '4353'
   :description: |-
