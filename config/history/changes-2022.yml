@@ -1,3 +1,7 @@
+- :date: 16-Nov-2022
+  :jira_id: ''
+  :description: |-
+    Editor patch: Get latest JavaScript libraries: yarn upgrade --latest
 - :date: 14-Nov-2022
   :jira_id: ''
   :description: |-
