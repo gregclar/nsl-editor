@@ -35,6 +35,8 @@ class Loader::Batch::BulkController < ApplicationController
     case params[:submit].downcase
     when 'show stats'
       show_stats
+    when 'refresh stats'
+      show_stats
     when 'hide stats'
       hide_stats
     else
