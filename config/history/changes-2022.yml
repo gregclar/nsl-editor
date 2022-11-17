@@ -1,3 +1,7 @@
+- :date: 18-Nov-2022
+  :jira_id: '4078'
+  :description: |-
+    Batch loader: minor fixes/changes from test walk-through (batch default ref warning/link)
 - :date: 17-Nov-2022
   :jira_id: '4078'
   :description: |-
