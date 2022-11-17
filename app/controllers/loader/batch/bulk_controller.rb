@@ -19,11 +19,7 @@
 
 # Based on OrchidsBatchController
 class Loader::Batch::BulkController < ApplicationController
-  before_action :set_accepted_excluded_mode,
-    only: [:index, :submit, :create_preferred_matches,
-           :create_draft_instances]
   before_action :clean_params 
-    #, :add_instances_to_draft_tree]
 
   def index
     throw 'index'
@@ -119,23 +115,6 @@ class Loader::Batch::BulkController < ApplicationController
 
   def hide_stats
     render 'hide_stats'
-  end
-
-  def set_accepted_excluded_mode
-    #if session[:orchids_work_on_accepted] == true
-      @work_on_accepted = true
-      @work_on_excluded = false
-      #session[:orchids_work_on_excluded] = false
-    #elsif session[:orchids_work_on_excluded] == true
-      #@work_on_accepted = false
-      #@work_on_excluded = true
-      #session[:orchids_work_on_accepted] = false
-    #else
-      #@work_on_accepted = true
-      #@work_on_excluded = false
-      #session[:orchids_work_on_accepted] = true
-      #session[:orchids_work_on_excluded] = false
-    #end
   end
 
   def the_prefix(str)
