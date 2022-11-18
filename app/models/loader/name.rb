@@ -98,11 +98,6 @@ class Loader::Name < ActiveRecord::Base
   end
 
   def no_further_processing?
-    no_further_processing == true
-  end
-
-  # Todo: deprecate - confusing use of "excluded"
-  def excluded_from_further_processing?
     no_further_processing == true || parent&.no_further_processing == true
   end
 
@@ -393,33 +388,6 @@ class Loader::Name < ActiveRecord::Base
       records += loader_name.create_preferred_match(authorising_user)
     end
     entry = "Job <b>FINISHED</b>: create preferred matches for batch: #{Loader::Batch.find(batch_id).name} ANY taxa matching #{name_s}, #{authorising_user}; attempted: #{attempted}, created: #{records}"
-    BulkProcessingLog.log(entry, 'job controller')
-    return attempted, records
-  end
-
-  def self.xcreate_preferred_matches_for_accepted_taxa(name_s, batch_id, authorising_user)
-    entry = "Job started: create preferred matches for batch: #{Loader::Batch.find(batch_id).name} accepted taxa matching #{name_s}, #{authorising_user}"
-    BulkProcessingLog.log(entry, 'job controller')
-    attempted = records = 0
-    self.name_string_search_no_excluded(name_s).where(loader_batch_id: batch_id).order(:seq).each do |loader_name|
-      attempted += 1
-      records += loader_name.create_preferred_match(authorising_user)
-    end
-    entry = "Job finished: create preferred matches for batch: #{Loader::Batch.find(batch_id).name} accepted taxa matching #{name_s}, #{authorising_user}; attempted: #{attempted}, created: #{records}"
-    BulkProcessingLog.log(entry, 'job controller')
-    return attempted, records
-  end
-
-  def self.xcreate_preferred_matches_for_excluded_taxa(name_s, batch_id, authorising_user)
-    attempted = records = 0
-    Orchid.taxon_string_search_for_excluded(name_s).order(:seq).each do |match|
-      attempted += 1
-      records += match.create_preferred_match(authorising_user)
-    end
-    entry = "Job finished: create preferred matches for batch: #{Loader::Batch.find(batch_id).name} excluded taxa matching #{name_s}, #{authorising_user}; attempted: #{attempted}, created: #{records}"
-
-    @log_tag = " for #{@loader_name.id}, batch: #{@loader_name.batch.name} , seq: #{@loader_name.seq} #{@loader_name.simple_name} (#{@loader_name.true_record_type})"
-
     BulkProcessingLog.log(entry, 'job controller')
     return attempted, records
   end

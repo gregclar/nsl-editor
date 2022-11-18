@@ -23,7 +23,7 @@ class Loader::Name::AsInstanceCreator
     debug("loader_name: #{loader_name}")
     debug("authorising_user: #{authorising_user}")
     debug("job_number: #{job_number}")
-    #@tag = " job ##{job_number} for loader_name: #{loader_name.id}, seq: #{loader_name.seq} #{loader_name.scientific_name} (#{loader_name.true_record_type})"
+
     @loader_name = loader_name
     @authorising_user = authorising_user
     @job_number = job_number
@@ -100,7 +100,7 @@ class Loader::Name::AsInstanceCreator
   end
 
   def no_further_processing
-    log_to_table("declined - no further processing for #{@loader_name.id}")
+    log_to_table("Declined - no further processing for #{@loader_name.id}")
     [0,1,0]
   end
 

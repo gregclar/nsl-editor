@@ -82,6 +82,26 @@ class Loader::Batch::BulkController < ApplicationController
     render 'error', locals: {message_container_id_prefix: prefix }
   end
 
+  def create_preferred_matches
+    prefix = the_prefix('create-preferred-matches-')
+    job = AsCreatePreferredMatchesJob.new(session[:default_loader_batch_id], 
+                                 params[:name_string],
+                                 @current_user.username,
+                                 @job_number)
+    attempted, created, declined, errors = job.run
+    @message = "Create preferred matches attempted #{attempted}; "
+    @message += "created #{created} preferred #{'match'.pluralize(created)} with"
+    @message += " #{declined} declined and #{errors} error(s) for "
+    @message += "#{params[:name_string]} (job ##{@job_number})"
+    Loader::Batch::JobLock.unlock!
+    render 'create_preferred_matches', locals: {message_container_id_prefix: prefix }
+  rescue => e
+    logger.error("LoaderBatchBulkController#create_preferred_matches: #{e.to_s}")
+    logger.error e.backtrace.join("\n")
+    @message = e.to_s.sub(/uncaught throw/,'').gsub(/"/,'')
+    render 'error', locals: {message_container_id_prefix: prefix }
+  end
+
   def create_draft_instances
     prefix = the_prefix('create-draft-instances-')
     job = AsCreateDraftInstanceJob.new(session[:default_loader_batch_id], 

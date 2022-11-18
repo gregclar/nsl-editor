@@ -26,14 +26,11 @@ class Loader::Name::AsNameMatcher
   end
 
   def find_or_create_preferred_match
-    if preferred_match?
-      return 0
-    elsif @loader_name.no_further_processing? || 
-       @loader_name.parent.try('no_further_processing?')
-      return 0
-    elsif @loader_name.misapplied?
-      return 0
-    elsif make_preferred_match?
+    return already_exists if preferred_match?
+    return no_further_processing if @loader_name.no_further_processing?
+    return misapp if @loader_name.misapplied?
+
+    if make_preferred_match?
       return 1
     else
       return 0
@@ -52,33 +49,35 @@ class Loader::Name::AsNameMatcher
     return !@loader_name.preferred_matches.empty?
   end
 
+  def already_exists
+    log_to_table("<span class='firebrick'>Declined to make preferred match</span> - existing")
+    [0,1,0]
+  end
+
+  def misapp
+    log_to_table("<span class='firebrick'>Declined to make preferred match</span> - misapps not eligible")
+    [0,1,0]
+  end
+
+  def no_further_processing
+    log_to_table("<span class='firebrick'>Declined to make preferred match</span> - no further processing")
+    [0,1,0]
+  end
+
   def make_preferred_match?
     if exactly_one_matching_name? &&
          matching_name_has_primary? &&
          matching_name_has_exactly_one_primary?
       create_match
-      true
+      log_to_table("<span class='darkgreen'>Made preferred match</span>")
+      [1,0,0]
     else
-      log_to_table("Failed to make a preferred match because no single suitable preferred name found")
-      false
+      log_to_table("<span class='firebrick'>Declined to make a preferred match</span> no single match found")
+      [0,1,0]
     end
-  end
-
-  def non_creation_reason
-    if exactly_one_matching_name?
-      reason += "matching names's instance is not primary; " unless matching_name_has_primary?
-      reason += "matching names has more than one primary instance; " unless matching_name_has_exactly_one_primary?
-      reason = 'Unknown reason' if reason.blank?
-    else
-      reason = "#{@loader_name.matches.size} matching names"
-    end
-  rescue => e
-    Rails.logger.error(e.to_s)
-    reason = "couldn't determine reason"
   end
 
   def create_match
-    log_to_table("Made preferred match")
     pref = @loader_name.loader_name_matches.new
     pref.name_id = @loader_name.matches.first.id
     pref.instance_id = @loader_name.matches.first.primary_instances.first.id
