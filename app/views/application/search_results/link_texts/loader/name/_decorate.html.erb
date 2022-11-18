@@ -38,7 +38,7 @@
   <% preferreds = search_result.loader_name_matches.collect{|o| "#{o.name_id}/#{o.instance_id}" } %>
   <span class="flag preferred-name" title="Preferred matches"><%= preferreds.size %>p</span>
   <% standalones = search_result.loader_name_matches.select {|lnm| lnm.standalone_instance_id.present?} %>
-  <% copy_and_appends = search_result.loader_name_matches.select {|lnm| lnm.standalone_instance_id.present? && lnm.copy_append_from_existing_use_batch_def_ref} %>
+  <% copy_and_appends = search_result.loader_name_matches.select {|lnm| lnm.copy_append_from_existing_use_batch_def_ref == true} %>
 
 
   <% use_existing_instance = search_result.loader_name_matches.select {|lnm| lnm.use_existing_instance == true} %>
