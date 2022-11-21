@@ -1,11 +1,15 @@
+- :date: 21-Nov-2022
+  :jira_id: '4078'
+  :description: |-
+    Batch loader: fixes/changes from test walk-through: add counts of the instance creation choices to batch stats.
 - :date: 18-Nov-2022
   :jira_id: '4078'
   :description: |-
-    Batch loader: fixes/changes from test walk-through (batch default ref warning/link, copy-and-append flag, upgrade/refactored logging for create pref match (color!))
+    Batch loader: fixes/changes from test walk-through: batch default ref warning/link, copy-and-append flag, upgrade/refactored logging for create pref match (color!)
 - :date: 17-Nov-2022
   :jira_id: '4078'
   :description: |-
-    Batch loader: minor fixes/changes from test walk-through (ACCEPTED OR SYN, stats refresh, stats retrieval msg, create date on batch results)
+    Batch loader: minor fixes/changes from test walk-through: ACCEPTED OR SYN, stats refresh, stats retrieval msg, create date on batch results
 - :date: 16-Nov-2022
   :jira_id: ''
   :description: |-
