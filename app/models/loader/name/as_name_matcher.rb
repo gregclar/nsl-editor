@@ -22,13 +22,14 @@ class Loader::Name::AsNameMatcher
     debug("Loader::Name::AsNameMatcher for loader::name: #{loader_name.simple_name} (#{loader_name.record_type})")
     @loader_name = loader_name
     @authorising_user = authorising_user
-    @log_tag = " for #{@loader_name.id}, batch: #{@loader_name.batch.name} , seq: #{@loader_name.seq} #{@loader_name.simple_name} (#{@loader_name.true_record_type})"
+    @log_tag = " ##{@loader_name.id}, batch: #{@loader_name.batch.name} , seq: #{@loader_name.seq} #{@loader_name.simple_name} (#{@loader_name.true_record_type})"
   end
 
   def find_or_create_preferred_match
     return already_exists if preferred_match?
     return no_further_processing if @loader_name.no_further_processing?
     return misapp if @loader_name.misapplied?
+    return parent_using_existing if @loader_name.parent&.preferred_match&.use_existing_instance
 
     if make_preferred_match?
       return 1
@@ -37,8 +38,8 @@ class Loader::Name::AsNameMatcher
     end
   rescue => e
     Rails.logger.error(e.to_s)
-    log_to_table("Error: finding or creating preferred match for batch - #{e.to_s}")
-    return 0
+    log_to_table("<span class='red'>Preferred match error </span> - #{e.to_s}")
+    [0,0,1]
   end
 
   def stop(msg)
@@ -61,6 +62,11 @@ class Loader::Name::AsNameMatcher
 
   def no_further_processing
     log_to_table("<span class='firebrick'>Declined to make preferred match</span> - no further processing")
+    [0,1,0]
+  end
+
+  def parent_using_existing
+    log_to_table("<span class='firebrick'>Declined to make preferred match</span> - parent is using existing instance")
     [0,1,0]
   end
 

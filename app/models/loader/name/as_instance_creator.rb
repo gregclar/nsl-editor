@@ -83,7 +83,7 @@ class Loader::Name::AsInstanceCreator
   #
 
   def create
-    return no_further_processing if @loader_name.excluded_from_further_processing?
+    return no_further_processing if @loader_name.no_further_processing?
     return no_preferred_match unless @loader_name.preferred_match?
 
     if @loader_name.accepted?

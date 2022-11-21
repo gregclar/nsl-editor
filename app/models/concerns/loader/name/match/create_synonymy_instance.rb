@@ -10,15 +10,15 @@ module Loader::Name::Match::CreateSynonymyInstance
       log_to_table(entry, user, job)
       return Loader::Name::Match::DECLINED
     end
-    if synonym_already_attached?
-      record_synonym_already_there
-      entry = "Declined: synonym already there for "
+    if loader_name.parent.preferred_match.use_existing_instance == true
+      entry = "Declined: parent is using existing instance for "
       entry += "#{loader_name.simple_name} ##{loader_name.id}"
       log_to_table(entry, user, job)
       return Loader::Name::Match::DECLINED
     end
-    if loader_name.parent.preferred_match.use_existing_instance == true
-      entry = "Declined: parent is using existing instance for "
+    if synonym_already_attached?
+      record_synonym_already_there
+      entry = "Declined: synonym already there for "
       entry += "#{loader_name.simple_name} ##{loader_name.id}"
       log_to_table(entry, user, job)
       return Loader::Name::Match::DECLINED
@@ -33,14 +33,9 @@ module Loader::Name::Match::CreateSynonymyInstance
   end
 
   def synonym_already_attached?
-    Rails.logger.debug('before one')
-    Rails.logger.debug("before one: id: #{id}")
     return false if loader_name.parent.loader_name_matches.blank?
-
-    Rails.logger.debug('after one')
-    Rails.logger.debug('before two')
     return false if loader_name.parent.loader_name_matches.first.try('standalone_instance_id').blank?
-    Rails.logger.debug('after two')
+
     instances = Instance.where(name_id: name_id)
                         .where(cites_id: instance_id)
                         .where(cited_by_id: loader_name.parent.loader_name_matches.first.try('standalone_instance_id'))

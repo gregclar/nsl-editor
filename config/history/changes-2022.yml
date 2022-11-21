@@ -1,7 +1,7 @@
 - :date: 21-Nov-2022
   :jira_id: '4078'
   :description: |-
-    Batch loader: fixes/changes from test walk-through: add counts of the instance creation choices to batch stats.
+    Batch loader: fixes/changes from test walk-through: add counts of the instance creation choices to batch stats, improve log messages, don't create unnecessary preferred matches
 - :date: 18-Nov-2022
   :jira_id: '4078'
   :description: |-
