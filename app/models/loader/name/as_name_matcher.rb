@@ -18,11 +18,12 @@
 
 # Record a preferred matching name for a raw loader name record.
 class Loader::Name::AsNameMatcher
+  include Constants
+
   def initialize(loader_name, authorising_user)
     debug("Loader::Name::AsNameMatcher for loader::name: #{loader_name.simple_name} (#{loader_name.record_type})")
     @loader_name = loader_name
     @authorising_user = authorising_user
-    @log_tag = " ##{@loader_name.id}, batch: #{@loader_name.batch.name} , seq: #{@loader_name.seq} #{@loader_name.simple_name} (#{@loader_name.true_record_type})"
   end
 
   def find_or_create_preferred_match
@@ -31,15 +32,11 @@ class Loader::Name::AsNameMatcher
     return misapp if @loader_name.misapplied?
     return parent_using_existing if @loader_name.parent&.preferred_match&.use_existing_instance
 
-    if make_preferred_match?
-      return 1
-    else
-      return 0
-    end
+    return make_preferred_match?
   rescue => e
     Rails.logger.error(e.to_s)
-    log_to_table("<span class='red'>Preferred match error </span> - #{e.to_s}")
-    [0,0,1]
+    log_to_table("#{ERROR} - #{e.to_s}")
+    COUNT_ERROR
   end
 
   def stop(msg)
@@ -51,23 +48,23 @@ class Loader::Name::AsNameMatcher
   end
 
   def already_exists
-    log_to_table("<span class='firebrick'>Declined to make preferred match</span> - existing")
-    [0,1,0]
+    log_to_table("#{DECLINED} - existing")
+    COUNT_DECLINED
   end
 
   def misapp
-    log_to_table("<span class='firebrick'>Declined to make preferred match</span> - misapps not eligible")
-    [0,1,0]
+    log_to_table("#{DECLINED} - misapplications are not eligible")
+    COUNT_DECLINED
   end
 
   def no_further_processing
-    log_to_table("<span class='firebrick'>Declined to make preferred match</span> - no further processing")
-    [0,1,0]
+    log_to_table("#{DECLINED} - no further processing")
+    COUNT_DECLINED
   end
 
   def parent_using_existing
-    log_to_table("<span class='firebrick'>Declined to make preferred match</span> - parent is using existing instance")
-    [0,1,0]
+    log_to_table("#{DECLINED} - parent is using an existing instance")
+    COUNT_DECLINED
   end
 
   def make_preferred_match?
@@ -75,11 +72,11 @@ class Loader::Name::AsNameMatcher
          matching_name_has_primary? &&
          matching_name_has_exactly_one_primary?
       create_match
-      log_to_table("<span class='darkgreen'>Made preferred match</span>")
-      [1,0,0]
+      log_to_table(CREATED)
+      COUNT_CREATED
     else
-      log_to_table("<span class='firebrick'>Declined to make a preferred match</span> no single match found")
-      [0,1,0]
+      log_to_table("#{DECLINED} - no single match found")
+      COUNT_DECLINED
     end
   end
 
@@ -90,12 +87,6 @@ class Loader::Name::AsNameMatcher
     pref.relationship_instance_type_id = @loader_name.riti
     pref.created_by = pref.updated_by = "#{@authorising_user}"
     pref.save!
-  end
-
-  def log_to_table(entry)
-    BulkProcessingLog.log("#{entry} #{@log_tag}", @authorising_user)
-  rescue => e
-    Rails.logger.error("Couldn't log to table: #{e.to_s}")
   end
 
   def exactly_one_matching_name?
@@ -117,6 +108,15 @@ class Loader::Name::AsNameMatcher
 
   def simple_name
     @loader_name.simple_name
+  end
+
+  def log_to_table(entry)
+    tag = " ##{@loader_name.id}, batch: #{@loader_name.batch.name},  " +
+      "seq: #{@loader_name.seq} <b>#{@loader_name.simple_name}</b> " +
+      " (#{@loader_name.record_type})"
+    BulkProcessingLog.log("#{entry} #{tag}", @authorising_user)
+  rescue => e
+    Rails.logger.error("Couldn't log to table: #{e.to_s}")
   end
 
   def debug(msg)

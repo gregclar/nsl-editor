@@ -23,7 +23,7 @@ class Loader::Batch::BulkController::AsCreatePreferredMatchesJob
     @search_string = search_string
     @authorising_user = authorising_user
     @job_number = job_number
-    @search = Loader::Name.taxon_string_search_in_batch(@batch, @search_string)
+    @search = ::Loader::Name::BulkSearch.new(search_string, batch_id).search
   end
 
   def run
@@ -44,13 +44,12 @@ class Loader::Batch::BulkController::AsCreatePreferredMatchesJob
                                                     @authorising_user,
                                                     @job_number)
     @result = matcher.create
-    record_result(loader_name)
+    tally_result_parts
   rescue => e
     entry = "Failed to create instance for #{loader_name.simple_name} "
     entry += "##{loader_name.id} - error in do_one_loader_name: #{e.to_s}"
     log(entry)
-    raise
-    #return [0,0,1]
+    @errors += 1
   end
 
   def log(payload)
@@ -69,10 +68,6 @@ class Loader::Batch::BulkController::AsCreatePreferredMatchesJob
     entry += "records created: #{@creates}; "
     entry += "declined: #{@declines}; errors: #{@errors}"
     log(entry)
-  end
-
-  def record_result(loader_name)
-    tally_result_parts
   end
 
   def tally_result_parts

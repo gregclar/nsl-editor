@@ -17,7 +17,7 @@
 #   limitations under the License.
 #
 
-# Based on OrchidsBatchController
+# Bulk operations from the Loader tab.
 class Loader::Batch::BulkController < ApplicationController
   before_action :clean_params 
 
@@ -60,26 +60,10 @@ class Loader::Batch::BulkController < ApplicationController
     logger.error('job lock error')
     @message = 'Job Lock Error'
     render :job_lock_error
-  #rescue => e
-    #logger.error("run_job error: #{e.to_s}")
-    #@message = e.to_s.sub(/uncaught throw/,'').gsub(/"/,'')
-    #render 'error', locals: {message_container_id_prefix: 'bulk-operations-' }
-  end
-
-  def create_preferred_matches
-    prefix = the_prefix('create-preferred-matches-')
-    attempted = records = 0
-    attempted, records = Loader::Name.create_preferred_matches(
-      params[:name_string], (session[:default_loader_batch_id]||0),
-      @current_user.username)
-    Loader::Batch::JobLock.unlock!
-    @message = "Create preferred matches....attempted: #{attempted}; created: #{records} for records matching '#{params[:name_string]}'"
-    render 'create_preferred_matches', locals: {message_container_id_prefix: prefix }
   rescue => e
-    logger.error("BulkController#create_preferred_matches: #{e.to_s}")
-    logger.error e.backtrace.join("\n")
+    logger.error("run_job error: #{e.to_s}")
     @message = e.to_s.sub(/uncaught throw/,'').gsub(/"/,'')
-    render 'error', locals: {message_container_id_prefix: prefix }
+    render 'error', locals: {message_container_id_prefix: 'bulk-operations-' }
   end
 
   def create_preferred_matches
@@ -123,7 +107,9 @@ class Loader::Batch::BulkController < ApplicationController
   end
 
   def add_name_string_to_session
-    session[:name_string] = params[:name_string] unless params[:name_string].blank?
+    unless params[:name_string].blank?
+      session[:name_string] = params[:name_string]
+    end
   end
 
   def show_stats

@@ -56,10 +56,10 @@ module Loader::Name::Match::CreateStandaloneInstance
   end
 
   def no_instance_choice_confirmed(user, job)
-    log_to_table("Declined - no instance choice confirmed for " +
-                 "#{loader_name.simple_name} #{loader_name.id}",
-                 user, job)
-    return Loader::Name::Match::DECLINED
+    log_to_table("#{Loader::Name::Match::DECLINED_INSTANCE} - " +
+                 "no instance choice confirmed for " +
+                 "#{loader_name.simple_name} #{loader_name.id}", user, job)
+    Loader::Name::Match::DECLINED
   end
 
   def create_using_default_ref(user, job)
@@ -74,28 +74,29 @@ module Loader::Name::Match::CreateStandaloneInstance
   end
 
   def no_def_ref(user, job)
-    log_to_table("Declined - no default reference for #{loader_name.simple_name} #{loader_name.id}",
-                 user, job)
-    return Loader::Name::Match::DECLINED
+    log_to_table("#{Loader::Name::Match::DECLINED_INSTANCE} - no default reference " +
+                 "for #{loader_name.simple_name} #{loader_name.id}", user, job)
+    Loader::Name::Match::DECLINED
   end
 
   def no_source_for_copy(user, job)
-    log_to_table("Declined - no source instance to copy #{loader_name.simple_name} #{loader_name.id}",
-                 user, job)
-    return Loader::Name::Match::DECLINED
+    log_to_table("#{Loader::Name::Match::DECLINED_INSTANCE} - no source instance to " +
+                 "copy #{loader_name.simple_name} #{loader_name.id}", user, job)
+    Loader::Name::Match::DECLINED
   end
 
   def stand_already_noted(user, job)
-    log_to_table("Declined - standalone instance already noted for #{loader_name.simple_name} #{loader_name.id}",
-                 user, job)
-    return [0,1,0]
+    log_to_table("#{Loader::Name::Match::DECLINED_INSTANCE} - standalone instance " +
+                 "already noted for #{loader_name.simple_name} " +
+                 "#{loader_name.id}", user, job)
+    Loader::Name::Match::DECLINED
   end
 
   def stand_already_for_default_ref(user, job)
-    log_to_table(
-      "Declined - standalone instance exists for def ref for #{loader_name.simple_name} #{loader_name.id}",
-      user, job)
-    return Loader::Name::Match::DECLINED
+    log_to_table("#{Loader::Name::Match::DECLINED_INSTANCE} - standalone instance " +
+                 "exists for def ref for #{loader_name.simple_name} " +
+                 "#{loader_name.id}", user, job)
+    Loader::Name::Match::DECLINED
   end
 
   def copy_and_append(user, job)
@@ -160,9 +161,9 @@ module Loader::Name::Match::CreateStandaloneInstance
   end
 
   def using_existing_instance(user, job)
-    log_to_table(
-      "Declined - using existing instance for #{loader_name.simple_name} #{loader_name.id}",
-      user, job)
+    log_to_table("#{Loader::Name::Match::DECLINED_INSTANCE} - using existing " +
+                 " instance for #{loader_name.simple_name} #{loader_name.id}",
+                 user, job)
     return Loader::Name::Match::DECLINED
   end
 
@@ -206,7 +207,7 @@ module Loader::Name::Match::CreateStandaloneInstance
     self.standalone_instance_found = false
     self.updated_by = "job for #{user}"
     self.save!
-    log_to_table("Created standalone instance for loader_name " +
+    log_to_table("#{Loader::Name::Match::CREATED_INSTANCE} - standalone for " +
                  "##{self.loader_name_id} #{loader_name.simple_name}",
                  user, job)
   end

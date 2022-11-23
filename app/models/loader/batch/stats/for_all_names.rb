@@ -68,9 +68,18 @@ class Loader::Batch::Stats::ForAllNames
   end
 
   def core_search
-    Loader::Name.name_string_search(@name_string)
-                .joins(:loader_batch)
-                .where(loader_batch: { id: @batch_id })
+    if @name_string.match(/\Afamily:/i)
+      family_string = @name_string.sub(/\Afamily: */i,'')
+      Loader::Name.family_string_search(family_string)
+                  .joins(:loader_batch)
+                  .where(loader_batch: { id: @batch_id })
+                  .where("record_type != 'heading'")
+    else
+      Loader::Name.name_string_search(@name_string)
+                  .joins(:loader_batch)
+                  .where(loader_batch: { id: @batch_id })
+                  .where("record_type != 'heading'")
+    end
   end
 
   def names_and_synonyms_count

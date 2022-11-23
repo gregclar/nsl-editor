@@ -25,6 +25,12 @@ class Loader::Name::Match < ActiveRecord::Base
   CREATED = [1,0,0]
   DECLINED = [0,1,0]
   ERROR = [0,0,1]
+  DECLINED_INSTANCE = "<span class='firebrick'>Declined to make instance</span>"
+  CREATED_INSTANCE = "<span class='darkgreen'>Made instance</span>"
+  ERROR_INSTANCE = "<span class='red'>Failed to make instance</span>"
+  DECLINED_MATCH = "<span class='firebrick'>Declined to make match</span>"
+  CREATED_MATCH = "<span class='darkgreen'>Made match</span>"
+  ERROR_MATCH = "<span class='red'>Failed to make match</span>"
   self.table_name = "loader_name_match"
   self.primary_key = "id"
   self.sequence_name = "nsl_global_seq"
@@ -133,9 +139,9 @@ class Loader::Name::Match < ActiveRecord::Base
     self.use_batch_default_reference = false
     self.use_existing_instance = false
     self.copy_append_from_existing_use_batch_def_ref = false
-    self.standalone_instance_id = nil
-    self.standalone_instance_created = false
-    self.standalone_instance_found = false
+    self.relationship_instance_id = nil
+    self.relationship_instance_created = false
+    self.relationship_instance_found = false
     self.instance_choice_confirmed = false
     self.source_for_copy_instance_id = nil
   end

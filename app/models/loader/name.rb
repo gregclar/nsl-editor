@@ -299,16 +299,14 @@ class Loader::Name < ActiveRecord::Base
   def self.name_string_search(name_string)
     ns = name_string.downcase.gsub(/\*/,'%')
     Loader::Name.where([ "((lower(simple_name) like ? or lower(simple_name) like 'x '||? or lower(simple_name) like '('||?) ) or (parent_id in (select id from loader_name where (lower(simple_name) like ? or lower(simple_name) like 'x '||? or lower(simple_name) like '('||?) ))",
-                   ns, ns, ns, ns, ns, ns])
+                         ns, ns, ns, ns, ns, ns])
   end
 
-
-  def self.xname_string_search_no_excluded(name_string)
-    ns = name_string.downcase.gsub(/\*/,'%')
-    Loader::Name.where([ "((lower(simple_name) like ? or lower(simple_name) like 'x '||? or lower(simple_name) like '('||?) and record_type = 'accepted' and not doubtful) or (parent_id in (select id from loader_name where (lower(simple_name) like ? or lower(simple_name) like 'x '||? or lower(simple_name) like '('||?) and record_type = 'accepted' and not doubtful))",
-                   ns, ns, ns, ns, ns, ns])
+  # This is used in bulk jobs when the user wants to process names in a family. 
+  def self.family_string_search(family_string)
+    ns = family_string.downcase.gsub(/\*/,'%')
+    Loader::Name.where([ "lower(family) like lower(?) ", family_string])
   end
-
 
   def self.create(params, username)
     loader_name = Loader::Name.new(params)
@@ -379,19 +377,6 @@ class Loader::Name < ActiveRecord::Base
     preferred_matches.first
   end
 
-  def self.create_preferred_matches(name_s, batch_id, authorising_user)
-    entry = "Job <b>STARTED</b>: create preferred matches for batch: #{Loader::Batch.find(batch_id).name} ANY taxa matching #{name_s}, #{authorising_user}"
-    BulkProcessingLog.log(entry, 'job controller')
-    attempted = records = 0
-    self.name_string_search(name_s).where(loader_batch_id: batch_id).order(:seq).each do |loader_name|
-      attempted += 1
-      records += loader_name.create_preferred_match(authorising_user)
-    end
-    entry = "Job <b>FINISHED</b>: create preferred matches for batch: #{Loader::Batch.find(batch_id).name} ANY taxa matching #{name_s}, #{authorising_user}; attempted: #{attempted}, created: #{records}"
-    BulkProcessingLog.log(entry, 'job controller')
-    return attempted, records
-  end
-
   def create_preferred_match(authorising_user)
     AsNameMatcher.new(self, authorising_user).find_or_create_preferred_match
   end
@@ -404,61 +389,6 @@ class Loader::Name < ActiveRecord::Base
     end
   end
   
-  # This search emulates the default search for Loader::Names, the 
-  # taxon-string: search.
-  def self.taxon_string_search(taxon_string)
-    self.taxon_string_search_no_excluded(taxon_string)
-  end
-
-  def self.taxon_string_search_in_batch(batch, taxon_string)
-    ts = taxon_string.downcase.gsub(/\*/,'%')
-    Loader::Name.where(["loader_batch_id = ? and ((lower(simple_name) like ?)
-        or exists (
-        select null
-          from loader_name parent
-        where parent.id         = loader_name.parent_id
-       and lower(parent.simple_name) like ?)
-        or exists (
-        select null
-          from loader_name child
-        where child.parent_id   = loader_name.id
-       and lower(child.simple_name) like ?)
-        or exists (
-        select null
-          from loader_name sibling
-        where sibling.parent_id = loader_name.parent_id
-       and lower(sibling.simple_name) like ?) )",
-       batch.id, ts, ts, ts, ts])
-  end
-
-
-  def self.taxon_string_search_no_excluded(batch, taxon_string)
-    ts = taxon_string.downcase.gsub(/\*/,'%')
-    Loader::Name.where(["loader_batch_id = ? and ((lower(simple_name) like ?)
-        or exists (
-        select null
-          from loader_name parent
-        where parent.id         = loader_name.parent_id
-       and lower(parent.simple_name) like ?)
-        or exists (
-        select null
-          from loader_name child
-        where child.parent_id   = loader_name.id
-       and lower(child.simple_name) like ?)
-        or exists (
-        select null
-          from loader_name sibling
-        where sibling.parent_id = loader_name.parent_id
-       and lower(sibling.simple_name) like ?) ) and not excluded",
-       batch.id, ts, ts, ts, ts])
-  end
-
-  def self.taxon_string_search_for_excluded(taxon_string)
-    ts = taxon_string.downcase.gsub(/\*/,'%')
-    Orchid.where([ "((lower(taxon) like ? or lower(taxon) like 'x '||? or lower(taxon) like '('||?) and record_type = 'accepted' and doubtful) or (parent_id in (select id from orchids where (lower(taxon) like ? or lower(taxon) like 'x '||? or lower(taxon) like '('||?) and record_type = 'accepted' and doubtful))",
-                   ts, ts, ts, ts, ts, ts])
-  end
-
   def self.create_instance_for(taxon_s, authorising_user, search)
     records = errors = 0
     @ref = Reference.find(REF_ID)

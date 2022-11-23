@@ -19,39 +19,14 @@
 #   Create a draft instance for a raw loader_name matched with a name record
 class Loader::Name::AsInstanceCreator
   def initialize(loader_name, authorising_user, job_number)
-    debug("initialize")
-    debug("loader_name: #{loader_name}")
+    debug("initialize; loader_name: #{loader_name}; job_number: #{job_number}")
     debug("authorising_user: #{authorising_user}")
-    debug("job_number: #{job_number}")
-
     @loader_name = loader_name
     @authorising_user = authorising_user
     @job_number = job_number
   end
 
-  # Adapted from Orchids logic
-  # ###########################################################
-  #
-  #  if for accepted?
-  #    - create standalone instance based on batch default reference
-  #    OR
-  #    - use the identified existing instance
-  #    OR
-  #    - create standalone instance based on batch default reference,
-  #      append copies of synonyms from the identified existing instance
-  #  elsif for synonym
-  #    make sure the synonym's "accepted" name "parent" has an instance
-  #    create or look for a relationship instance between the "parent"'s instance for
-  #      the accepted name and the primary instance of the synonym
-  #  elsif for hybrid?
-  #    not sure yet
-  #  elsif for misapp?
-  #    not sure yet
-  #  end
-  #
   ###########################################################
-  #
-  # 
   # Instance Case Options for "Accepted" Loader Names
   # (More complicated options than for Orchids, which were all new
   # entries)
@@ -100,13 +75,13 @@ class Loader::Name::AsInstanceCreator
   end
 
   def no_further_processing
-    log_to_table("Declined - no further processing for #{@loader_name.id}")
-    [0,1,0]
+    log_to_table("#{Loader::Name::Match::DECLINED_INSTANCE} - no further processing for #{@loader_name.id}")
+    Loader::Name::Match::DECLINED
   end
 
   def no_preferred_match
-    log_to_table("Declined - no preferred match for ##{@loader_name.id} #{@loader_name.simple_name}")
-    [0,1,0]
+    log_to_table("#{Loader::Name::Match::DECLINED_INSTANCE} - no preferred match for ##{@loader_name.id} #{@loader_name.simple_name}")
+    Loader::Name::Match::DECLINED
   end
 
   def create_standalone
@@ -131,22 +106,6 @@ class Loader::Name::AsInstanceCreator
     return [created, declined, errors]
   end
 
-  def xcreate
-    #return 0 if stop_everything?
-
-    @created = 0
-    @errors = 0
-    @loader_name.preferred_match.each do |preferred_match|
-      begin
-        @created += preferred_match.create_instance(@ref, @authorising_user)
-        log_create_action(@created)
-      rescue => e
-        @errors += 1
-        log_to_table("Errors creating instance for preferred match #{preferred_match.id} - #{e.message}")
-      end 
-    end
-  end
-
   def created
     @created
   end
@@ -161,7 +120,8 @@ class Loader::Name::AsInstanceCreator
   end
 
   def log_to_table(entry)
-    BulkProcessingLog.log("Job ##{@job_number}: #{entry}", "Bulk job for #{@authorising_user}")
+    BulkProcessingLog.log("Job ##{@job_number}: #{entry}",
+                          "Bulk job for #{@authorising_user}")
   rescue => e
     Rails.logger.error("Couldn't log to table: #{e.to_s}")
   end
