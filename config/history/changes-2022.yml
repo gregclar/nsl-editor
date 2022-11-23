@@ -1,6 +1,10 @@
 - :date: 23-Nov-2022
   :jira_id: '4078'
   :description: |-
+    Batch loader: when no matches found, but name could be a cultivar, offer a form for any matching names of type 'cultivar'
+- :date: 23-Nov-2022
+  :jira_id: '4078'
+  :description: |-
     Batch loader: the loader tab search and bulk processing now take <code>family:</code> arguments - making the loader family-aware
 - :date: 21-Nov-2022
   :jira_id: '4078'
