@@ -54,8 +54,7 @@ class Loader::Batch::Stats::ForAllNames
 
   def search
     { string: @name_string,
-      reported: Time.now.strftime("%d-%b-%Y %H:%M:%S"),
-      category: "Accepted" }
+      reported: Time.now.strftime("%d-%b-%Y %H:%M:%S") }
   end
 
   def record_types
@@ -64,6 +63,7 @@ class Loader::Batch::Stats::ForAllNames
       synonym: synonyms,
       misapplied: misapplieds,
       hybrid_cross: hybrid_crosses,
+      headings: headings,
       total: names_and_synonyms_count }
   end
 
@@ -73,12 +73,10 @@ class Loader::Batch::Stats::ForAllNames
       Loader::Name.family_string_search(family_string)
                   .joins(:loader_batch)
                   .where(loader_batch: { id: @batch_id })
-                  .where("record_type != 'heading'")
     else
       Loader::Name.name_string_search(@name_string)
                   .joins(:loader_batch)
                   .where(loader_batch: { id: @batch_id })
-                  .where("record_type != 'heading'")
     end
   end
 
@@ -87,7 +85,7 @@ class Loader::Batch::Stats::ForAllNames
   end
 
   def lock_status
-    Loader::Batch::JobLock.locked? ? "Locked" : "Unlocked"
+    Loader::Batch::Bulk::JobLock.locked? ? "Locked" : "Unlocked"
   end
 
   def accepteds
@@ -108,5 +106,9 @@ class Loader::Batch::Stats::ForAllNames
 
   def hybrid_crosses
     core_search.where("record_type = 'hybrid_cross'").count
+  end
+
+  def headings
+    core_search.where("record_type = 'heading'").count
   end
 end

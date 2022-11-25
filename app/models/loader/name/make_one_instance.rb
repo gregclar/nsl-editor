@@ -17,7 +17,7 @@
 #   limitations under the License.
 
 #   Create a draft instance for a raw loader_name matched with a name record
-class Loader::Name::AsInstanceCreator
+class Loader::Name::MakeOneInstance
   def initialize(loader_name, authorising_user, job_number)
     debug("initialize; loader_name: #{loader_name}; job_number: #{job_number}")
     debug("authorising_user: #{authorising_user}")
@@ -58,8 +58,8 @@ class Loader::Name::AsInstanceCreator
   #
 
   def create
+    return heading if @loader_name.heading?
     return no_further_processing if @loader_name.no_further_processing?
-    return no_preferred_match unless @loader_name.preferred_match?
 
     if @loader_name.accepted?
       return create_standalone
@@ -84,16 +84,55 @@ class Loader::Name::AsInstanceCreator
     Loader::Name::Match::DECLINED
   end
 
+  def heading
+    log_to_table("#{Loader::Name::Match::DECLINED_INSTANCE} - heading entries not processed ##{@loader_name.id} #{@loader_name.simple_name}")
+    Loader::Name::Match::DECLINED
+  end
+
   def create_standalone
-    return @loader_name.preferred_match.create_standalone_instance(@authorising_user, @job_number)
+    return no_preferred_match unless @loader_name.preferred_match?
+
+    MakeOneStandaloneInstance.new(@loader_name,
+                                  @authorising_user,
+                                  @job_number).create
   end
 
   def create_synonymy
-    return @loader_name.preferred_match
-      .create_or_find_synonymy_instance(@authorising_user, @job_number)
+    return no_preferred_match unless @loader_name.preferred_match?
+
+    MakeOneSynonymyInstance.new(@loader_name,
+                                  @authorising_user,
+                                  @job_number).create
   end
 
   def create_misapp
+    return no_preferred_match unless @loader_name.preferred_matches.size > 0
+
+    MakeOneMisappInstance.new(@loader_name,
+                              @authorising_user,
+                              @job_number).create
+  end
+
+  def create_misapp
+    return no_preferred_match unless @loader_name.preferred_matches.size > 0
+
+    created = declined = errors = 0
+    @loader_name.loader_name_matches.each do |misapp_match|
+      Rails.logger.debug("candidate match: #{misapp_match.inspect}")
+      #result = misapp_match.create_or_find_misapp_instance(@authorising_user, @job_number)
+      result = MakeOneMisappInstance.new(@loader_name,
+                                         misapp_match,
+                                         @authorising_user,
+                                         @job_number).create
+      created += result[0]
+      declined += result[1]
+      errors += result[2]
+    end
+    return [created, declined, errors]
+  end
+
+
+  def xcreate_misapp
     Rails.logger.debug("create_misapp: matches: #{@loader_name.loader_name_matches.size}")
     created = declined = errors = 0
     @loader_name.loader_name_matches.each do |misapp_match|

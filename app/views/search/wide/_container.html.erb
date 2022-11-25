@@ -2,7 +2,7 @@
   <%= render partial: 'header' unless @search.blank? %>
 <% end %>
 
-<div id="search-results" class="col-xs-12 col-sm-12 col-md-12 col-lg-12 nothing-selected stylish-scrollbar">
+<div id="search-results" class="wide col-xs-12 col-sm-12 col-md-12 col-lg-12 nothing-selected stylish-scrollbar">
   <div id="search-results-inner" class="no-left-padding col-xs-12 col-sm-12 col-md-12 col-lg-12 search-results-inner">
     <table id="search-results-table-for-logs" class="table table-condensed search-results" data-summary="Results of the latest search.">
       <% unless @search.parsed_request.count %>

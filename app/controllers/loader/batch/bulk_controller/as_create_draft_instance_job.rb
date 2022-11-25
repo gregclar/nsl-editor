@@ -40,16 +40,17 @@ class Loader::Batch::BulkController::AsCreateDraftInstanceJob
 
   def do_one_loader_name(loader_name)
     @attempts += 1
-    creator = ::Loader::Name::AsInstanceCreator.new(loader_name,
-                                                    @authorising_user,
-                                                    @job_number)
+    creator = ::Loader::Name::MakeOneInstance.new(loader_name,
+                                                  @authorising_user,
+                                                  @job_number)
     @result = creator.create
     tally_result_parts
-  rescue => e
-    entry = "Failed xxxxx to create instance for #{loader_name.simple_name} "
-    entry += "##{loader_name.id} - error in do_one_loader_name: #{e.to_s}"
-    log(entry)
-    @errors += 1
+  #rescue => e
+  #  entry = "<span class='red'>Error: failed to create instance</span> "
+  #  entry += "##{loader_name.id} #{loader_name.simple_name} "
+  #  entry += "- error in do_one_loader_name: #{e.to_s}"
+  #  log(entry)
+  #  @errors += 1
   end
 
   def log(payload)

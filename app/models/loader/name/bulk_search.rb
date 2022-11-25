@@ -35,7 +35,6 @@ class Loader::Name::BulkSearch
     end
     search.joins(:loader_batch)
           .where(loader_batch: { id: @batch_id })
-          .where("record_type != 'heading'")
           .order(:seq)
   end
 end

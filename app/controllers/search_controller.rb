@@ -138,13 +138,12 @@ class SearchController < ApplicationController
   end
 
   def apply_view_mode
-    Rails.logger.debug("apply_view_mode:    params['query_target']: #{params['query_target']}")
-    return unless ['loader names'].include?(params["query_target"].downcase) ||
-                  params[:query_target] == 'Bulk processing logs'
+    Rails.logger.info("apply_view_mode:    params['query_target']: #{params['query_target']}")
+    return unless ['loader names','bulk processing logs'].include?(params["query_target"].downcase)
 
 
-    Rails.logger.debug('apply_view_mode is continuing')
-    Rails.logger.debug("apply_view_mode:    @view_mode: #{@view_mode}")
+    Rails.logger.info('apply_view_mode is continuing')
+    Rails.logger.info("apply_view_mode:    @view_mode: #{@view_mode}")
     if params[:query_target] == 'Bulk processing logs'
       @view_mode = ViewMode::WIDE
     elsif @view_mode == ViewMode::REVIEW
@@ -152,7 +151,8 @@ class SearchController < ApplicationController
     else
       @view = ViewMode::STANDARD.to_s
     end
-    Rails.logger.debug("apply_view_mode:    @view: #{@view}")
+    Rails.logger.info("apply_view_mode:    @view_mode: #{@view_mode}")
+    Rails.logger.info("apply_view_mode:    @view: #{@view}")
   end
 end
 

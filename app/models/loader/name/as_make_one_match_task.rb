@@ -17,7 +17,7 @@
 #   limitations under the License.
 
 #   Create a preferred match for a loader_name record
-class Loader::Name::AsPreferredMatcher
+class Loader::Name::AsMakeOneMatchTask
   def initialize(loader_name, authorising_user, job_number)
     debug("initialize Loader::Name::AsPreferredMatcher; job: #{job_number}")
     debug("loader_name: #{loader_name}; authorising_user: #{authorising_user}")
@@ -27,7 +27,8 @@ class Loader::Name::AsPreferredMatcher
   end
 
   def create
-    result = @loader_name.create_preferred_match(@authorising_user)
+    matcher = Loader::Name::AsMakeOneMatch.new(@loader_name, @authorising_user)
+    result = matcher.find_or_create_preferred_match
     created = result[0]
     declined = result[1]
     errors = result[2]

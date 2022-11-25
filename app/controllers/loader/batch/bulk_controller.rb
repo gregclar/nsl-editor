@@ -44,7 +44,7 @@ class Loader::Batch::BulkController < ApplicationController
 
   def run_job
     @job_number = Time.now.to_i
-    raise Loader::Batch::JobLockedError.new(params[:submit]) unless Loader::Batch::JobLock.lock!(params[:submit])
+    raise JobLockedError.new(params[:submit]) unless Loader::Batch::Bulk::JobLock.lock!(params[:submit])
     case params[:submit]
     when 'Create Preferred Matches'
       create_preferred_matches
@@ -56,7 +56,7 @@ class Loader::Batch::BulkController < ApplicationController
       Loader::Batch::JobLock.unlock!
       throw "Editor doesn't understand what you're asking for: #{params[:submit]}"
     end
-  rescue Loader::Batch::JobLockedError => e
+  rescue JobLockedError => e
     logger.error('job lock error')
     @message = 'Job Lock Error'
     render :job_lock_error
@@ -77,7 +77,7 @@ class Loader::Batch::BulkController < ApplicationController
     @message += "created #{created} preferred #{'match'.pluralize(created)} with"
     @message += " #{declined} declined and #{errors} error(s) for "
     @message += "#{params[:name_string]} (job ##{@job_number})"
-    Loader::Batch::JobLock.unlock!
+    Loader::Batch::Bulk::JobLock.unlock!
     render 'create_preferred_matches', locals: {message_container_id_prefix: prefix }
   rescue => e
     logger.error("LoaderBatchBulkController#create_preferred_matches: #{e.to_s}")
@@ -97,7 +97,7 @@ class Loader::Batch::BulkController < ApplicationController
     @message += "created #{created} draft #{'instance'.pluralize(created)} with"
     @message += " #{declined} declined and #{errors} error(s) for "
     @message += "#{params[:name_string]} (job ##{@job_number})"
-    Loader::Batch::JobLock.unlock!
+    Loader::Batch::Bulk::JobLock.unlock!
     render 'create_draft_instances', locals: {message_container_id_prefix: prefix }
   rescue => e
     logger.error("LoaderBatchBulkController#create_draft_instances: #{e.to_s}")
@@ -137,9 +137,3 @@ class Loader::Batch::BulkController < ApplicationController
   end
 end
 
-class Loader::Batch::JobLockedError < StandardError
-  def initialize(tag="unknown", exception_type="custom")
-    @exception_type = exception_type
-    super("Cannot run #{tag} because loader batch jobs are locked - another job is probably running.")
-  end
-end

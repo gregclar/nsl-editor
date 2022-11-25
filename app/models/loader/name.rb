@@ -216,6 +216,10 @@ class Loader::Name < ActiveRecord::Base
   end
   alias_attribute :misapp?, :misapplied?
 
+  def heading?
+    record_type == 'heading'
+  end
+
   # not ideal
   def excluded_rt?
     record_type == 'excluded'
@@ -375,10 +379,6 @@ class Loader::Name < ActiveRecord::Base
     return nil unless preferred_match?
     throw 'more than one preferred match' unless preferred_matches.size == 1
     preferred_matches.first
-  end
-
-  def create_preferred_match(authorising_user)
-    AsNameMatcher.new(self, authorising_user).find_or_create_preferred_match
   end
 
   def true_record_type

@@ -40,14 +40,14 @@ class Loader::Batch::BulkController::AsCreatePreferredMatchesJob
 
   def do_one_loader_name(loader_name)
     @attempts += 1
-    matcher = ::Loader::Name::AsPreferredMatcher.new(loader_name,
-                                                    @authorising_user,
-                                                    @job_number)
+    matcher = ::Loader::Name::AsMakeOneMatchTask.new(loader_name,
+                                                     @authorising_user,
+                                                     @job_number)
     @result = matcher.create
     tally_result_parts
   rescue => e
-    entry = "Failed to create instance for #{loader_name.simple_name} "
-    entry += "##{loader_name.id} - error in do_one_loader_name: #{e.to_s}"
+    entry = "<span class='red'>Error: failed to make preferred match </span>"
+    entry += "##{loader_name.id} #{loader_name.simple_name} - error in do_one_loader_name: #{e.to_s}"
     log(entry)
     @errors += 1
   end

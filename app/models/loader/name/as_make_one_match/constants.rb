@@ -15,7 +15,7 @@
 #   limitations under the License.
 #
 # Loader Name entity
-module Loader::Name::AsNameMatcher::Constants
+module Loader::Name::AsMakeOneMatch::Constants
   COUNT_CREATED = [1,0,0]
   COUNT_DECLINED = [0,1,0]
   COUNT_ERROR = [0,0,1]

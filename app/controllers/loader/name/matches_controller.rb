@@ -175,6 +175,8 @@ class Loader::Name::MatchesController < ApplicationController
     @standalone_instance = @match.standalone_instance
     ActiveRecord::Base.transaction do
       @match.standalone_instance_id = nil
+      @match.standalone_instance_created = false
+      @match.standalone_instance_found = false
       @match.undo_taxonomic_choice
       @match.save!
       Rails.logger.debug("@match is saved")

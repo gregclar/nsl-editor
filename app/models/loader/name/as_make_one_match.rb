@@ -17,11 +17,11 @@
 #   limitations under the License.
 
 # Record a preferred matching name for a raw loader name record.
-class Loader::Name::AsNameMatcher
+class Loader::Name::AsMakeOneMatch
   include Constants
 
   def initialize(loader_name, authorising_user)
-    debug("Loader::Name::AsNameMatcher for loader::name: #{loader_name.simple_name} (#{loader_name.record_type})")
+    @tag = "#{self.class} for #{loader_name.simple_name} (#{loader_name.record_type})"
     @loader_name = loader_name
     @authorising_user = authorising_user
   end
@@ -30,11 +30,12 @@ class Loader::Name::AsNameMatcher
     return already_exists if preferred_match?
     return no_further_processing if @loader_name.no_further_processing?
     return misapp if @loader_name.misapplied?
+    return heading if @loader_name.heading?
     return parent_using_existing if @loader_name.parent&.preferred_match&.use_existing_instance
 
     return make_preferred_match?
   rescue => e
-    Rails.logger.error(e.to_s)
+    Rails.logger.error("#{@tag}: #{e.to_s}")
     log_to_table("#{ERROR} - #{e.to_s}")
     COUNT_ERROR
   end
@@ -54,6 +55,11 @@ class Loader::Name::AsNameMatcher
 
   def misapp
     log_to_table("#{DECLINED} - misapplications are not eligible")
+    COUNT_DECLINED
+  end
+
+  def heading
+    log_to_table("#{DECLINED} - headings don't get processed")
     COUNT_DECLINED
   end
 
@@ -116,10 +122,10 @@ class Loader::Name::AsNameMatcher
       " (#{@loader_name.record_type})"
     BulkProcessingLog.log("#{entry} #{tag}", @authorising_user)
   rescue => e
-    Rails.logger.error("Couldn't log to table: #{e.to_s}")
+    Rails.logger.error("#{@tag}: Couldn't log to table: #{e.to_s}")
   end
 
   def debug(msg)
-    Rails.logger.debug("#{msg}")
+    Rails.logger.debug("${@tag}: #{msg}")
   end
 end

@@ -18,9 +18,6 @@
 #
 # Loader Name entity
 class Loader::Name::Match < ActiveRecord::Base
-  include CreateStandaloneInstance
-  include CreateSynonymyInstance
-  include CreateMisappInstance
   strip_attributes
   CREATED = [1,0,0]
   DECLINED = [0,1,0]
