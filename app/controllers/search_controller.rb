@@ -139,10 +139,11 @@ class SearchController < ApplicationController
 
   def apply_view_mode
     Rails.logger.info("apply_view_mode:    params['query_target']: #{params['query_target']}")
-    return unless ['loader names','bulk processing logs'].include?(params["query_target"].downcase)
+    return unless 
+      ['loader names',
+       'bulk processing logs',
+       'bulk_processing_logs'].include?(params["query_target"].downcase)
 
-
-    Rails.logger.info('apply_view_mode is continuing')
     Rails.logger.info("apply_view_mode:    @view_mode: #{@view_mode}")
     if params[:query_target] == 'Bulk processing logs'
       @view_mode = ViewMode::WIDE

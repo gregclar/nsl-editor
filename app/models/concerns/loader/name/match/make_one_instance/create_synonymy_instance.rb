@@ -1,5 +1,5 @@
 
-module Loader::Name::Match::CreateSynonymyInstance
+module Loader::Name::Match::MakeOneInstance::CreateSynonymyInstance
   extend ActiveSupport::Concern
   def create_or_find_synonymy_instance(user, job)
     Rails.logger.debug("create_or_find_relationship_instance for id: #{loader_name.simple_name} ##{loader_name.id}")
