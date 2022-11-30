@@ -223,12 +223,11 @@ class Loader::Name::MatchesController < ApplicationController
   
   def clear_relationship_instance
     @match = Loader::Name::Match.find(params[:id])
-    @match.relationship_instance_id
-    @match.relationship_instance_found = false
-    @match.relationship_instance_created = false
+    @match.clear_relationship_instance
     save_if_changed('Cleared', 'Nothing to clear')
   rescue => e
     logger.error("Loader::Name::MatchesController clear_relationship_instance error: #{e.to_s}")
+    logger.error(@match.inspect)
     @message = e.to_s
     render 'clear_relationship_instance_error', format: :js
   end

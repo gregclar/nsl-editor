@@ -59,16 +59,16 @@ class Loader::Name::MakeOneInstance::MakeOneStandaloneInstance
   end
 
   def using_existing_instance
-    log_to_table("#{Loader::Name::Match::DECLINED_INSTANCE} - using existing " +
+    log_to_table("#{Constants::DECLINED_INSTANCE} - using existing " +
                  " instance for #{@loader_name.simple_name} #{@loader_name.id}")
-    return Loader::Name::Match::DECLINED
+    return Constants::DECLINED
   end
 
   def stand_already_noted
-    log_to_table("#{Loader::Name::Match::DECLINED_INSTANCE} - standalone instance " +
+    log_to_table("#{Constants::DECLINED_INSTANCE} - standalone instance " +
                  "already noted for #{@loader_name.simple_name} " +
                  "#{@loader_name.id}")
-    Loader::Name::Match::DECLINED
+    Constants::DECLINED
   end
 
   def find_standalone_instances_for_default_ref
@@ -85,7 +85,7 @@ class Loader::Name::MakeOneInstance::MakeOneStandaloneInstance
     when 0
       false
     when 1
-      note_standalone_instance(instances.first)
+      @match.note_standalone_instance_found(instances.first)
       true
     else
       throw 'Unexpected 2+ standalone instances'
@@ -93,10 +93,10 @@ class Loader::Name::MakeOneInstance::MakeOneStandaloneInstance
   end
 
   def stand_already_for_default_ref
-    log_to_table("#{Loader::Name::Match::DECLINED_INSTANCE} - standalone instance " +
+    log_to_table("#{Constants::DECLINED_INSTANCE} - standalone instance " +
                  "exists for def ref for #{@loader_name.simple_name} " +
                  "#{@loader_name.id}")
-    Loader::Name::Match::DECLINED
+    Constants::DECLINED
   end
 
   def unknown_option
@@ -104,7 +104,7 @@ class Loader::Name::MakeOneInstance::MakeOneStandaloneInstance
       "Error - unknown option for #{@loader_name.simple_name} #{@loader_name.id}")
     log_error("Unknown option: ##{@match.id} #{@match.loader_name_id}")
     log_error("#{@match.inspect}")
-    return Loader::Name::Match::ERROR
+    Constants::ERROR
   end
 
   def standalone_instance_already_noted?
@@ -112,8 +112,8 @@ class Loader::Name::MakeOneInstance::MakeOneStandaloneInstance
   end
 
   def log_to_table(entry)
-    BulkProcessingLog.log("Job ##{@job}: #{entry}","Bulk job for #{@user}")
-  rescue => e
-    Rails.logger.error("Couldn't log to table: #{e.to_s}")
+    BulkProcessingLog.log("Job ##{@job}: #{entry}", "Bulk job for #{@user}")
+  rescue StandardError => e
+    Rails.logger.error("Couldn't log to table: #{e}")
   end
 end

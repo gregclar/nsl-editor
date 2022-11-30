@@ -19,7 +19,6 @@
 # Record a preferred matching name for a raw loader name record.
 class Loader::Name::MakeOneInstance::MakeOneStandaloneInstance::CopyAndAppend
   def initialize(loader_name, user, job)
-    @tag = "#{self.class} for #{loader_name.simple_name} (#{loader_name.record_type})"
     @loader_name = loader_name
     @user = user
     @job = job
@@ -58,45 +57,44 @@ class Loader::Name::MakeOneInstance::MakeOneStandaloneInstance::CopyAndAppend
       new_syn.reference_id = new_standalone.reference_id
       new_syn.save!
       syns_created += 1
-      log_to_table(
-        "Copy-and-append synonym created for #{new_syn.name.full_name}")
+      log_to_table("#{Constants::CREATED_INSTANCE} #{new_syn.name.full_name}")
     end
 
     log_to_table(
       "Created standalone with #{syns_created} synonym (copy-and-append) for #{@loader_name.simple_name} #{@loader_name.id}")
-    return Loader::Name::Match::CREATED
+    return Constants::CREATED
   end
 
   def no_def_ref
-    log_to_table("#{Loader::Name::Match::DECLINED_INSTANCE} - no default reference " +
+    log_to_table("#{Constants::DECLINED_INSTANCE} - no default reference " +
                  "for #{@loader_name.simple_name} #{@loader_name.id}", @user, @job)
-    Loader::Name::Match::DECLINED
+    Constants::DECLINED
   end
 
   def no_source_for_copy
-    log_to_table("#{Loader::Name::Match::DECLINED_INSTANCE} - no source instance to " +
+    log_to_table("#{Constants::DECLINED_INSTANCE} - no source instance to " +
                  "copy #{@loader_name.simple_name} #{@loader_name.id}", @user, @job)
-    Loader::Name::Match::DECLINED
+    Constants::DECLINED
   end
 
   def stand_already_noted
-    log_to_table("#{Loader::Name::Match::DECLINED_INSTANCE} - standalone instance " +
+    log_to_table("#{Constants::DECLINED_INSTANCE} - standalone instance " +
                  "already noted for #{@loader_name.simple_name} " +
                  "#{@loader_name.id}")
-    Loader::Name::Match::DECLINED
+    Constants::DECLINED
   end
 
   def stand_already_for_default_ref
-    log_to_table("#{Loader::Name::Match::DECLINED_INSTANCE} - standalone instance " +
+    log_to_table("#{Constants::DECLINED_INSTANCE} - standalone instance " +
                  "exists for def ref for #{@loader_name.simple_name} " +
                  "#{@loader_name.id}")
-    Loader::Name::Match::DECLINED
+    Constants::DECLINED
   end
 
   def using_existing_instance
-    log_to_table("#{Loader::Name::Match::DECLINED_INSTANCE} - using existing " +
+    log_to_table("#{Constants::DECLINED_INSTANCE} - using existing " +
                  " instance for #{@loader_name.simple_name} #{@loader_name.id}")
-    return Loader::Name::Match::DECLINED
+    return Constants::DECLINED
   end
 
   def unknown_option
@@ -104,7 +102,7 @@ class Loader::Name::MakeOneInstance::MakeOneStandaloneInstance::CopyAndAppend
       "Error - unknown option for #{@loader_name.simple_name} #{@loader_name.id}")
     log_error("Unknown option: ##{@match.id} #{@match.loader_name_id}")
     log_error("#{@match.inspect}")
-    return Loader::Name::Match::ERROR
+    return Constants::ERROR
   end
 
   def standalone_instance_already_noted?
@@ -118,7 +116,7 @@ class Loader::Name::MakeOneInstance::MakeOneStandaloneInstance::CopyAndAppend
     @match.standalone_instance_found = false
     @match.updated_by = "job for #{@user}"
     @match.save!
-    log_to_table("#{Loader::Name::Match::CREATED_INSTANCE} - standalone for " +
+    log_to_table("#{Constants::CREATED_INSTANCE} - standalone for " +
                  "##{@match.loader_name_id} #{@loader_name.simple_name}")
   end
 
@@ -130,24 +128,6 @@ class Loader::Name::MakeOneInstance::MakeOneStandaloneInstance::CopyAndAppend
     @match.save!
   end
  
-  def xreally_create_standalone_instance(ref)
-    Rails.logger.debug('really_create_standalone_instance')
-    instance = Instance.new
-    instance.draft = true
-    instance.name_id = @match.name_id
-    instance.reference_id = ref.id 
-    instance.instance_type_id = InstanceType.secondary_reference.id
-    instance.created_by = instance.updated_by = "bulk for #{@user}"
-    instance.save!
-    note_standalone_instance_created(instance)
-    return Loader::Name::Match::CREATED
-  rescue => e
-    Rails.logger.error("Loader::Name::Match#really_create_standalone_instance: #{e.to_s}")
-    Rails.logger.error e.backtrace.join("\n")
-    @message = e.to_s.sub(/uncaught throw/,'').gsub(/"/,'')
-    raise
-  end
-
   def log_to_table(entry)
     BulkProcessingLog.log("Job ##{@job}: #{entry}","Bulk job for #{@user}")
   rescue => e

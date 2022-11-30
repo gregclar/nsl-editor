@@ -168,6 +168,11 @@ a:hover.blue           { color: blue; }
   color: white;
 }
 
+.standalone-statement {
+  background: darkslateblue;
+  color: white;
+}
+
 .on-tree-indicator {
   background: blueviolet;
   color: white;

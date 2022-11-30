@@ -31,7 +31,7 @@ class Loader::Name::MakeOneInstance
   # (More complicated options than for Orchids, which were all new
   # entries)
   #
-  # For "accepted" (aka top-level) loader_names only.  
+  # For "accepted" (aka top-level) loader_names only.
   # ie. these rules do NOT apply to synonyms or misapps.
   #
   # 1. use batch default reference to create a new draft instance and attach
@@ -46,47 +46,46 @@ class Loader::Name::MakeOneInstance
   # Data rules truth table
   # ======================
   #
-  # case | loader_name_match           | loader_name_match               | batch default | loader_name_match      
-  #      | use_batch_default_reference | copy_append_from_existing_use_batch_def_ref | reference     | standalone_instance_id 
+  # case | loader_name_match           | loader_name_match               | batch default | loader_name_match
+  #      | use_batch_default_reference | copy_append_from_existing_use_batch_def_ref | reference     | standalone_instance_id
   # -----|-------------------------------------------------------------------------------------------------------
-  #  1.  | true                        | false                           | must exist    | should not exist       
-  #      |                             |                                 |               |                        
+  #  1.  | true                        | false                           | must exist    | should not exist
+  #      |                             |                                 |               |
   #  2.  | false                       | false                           | n/a           | must exist
-  #      |                             |                                 |               |                        
+  #      |                             |                                 |               |
   #  3.  | true or false?              | true                            | must exist    | should not exist
-  #      |                             |                                 |               |                        
+  #      |                             |                                 |               |
   #
 
   def create
     return heading if @loader_name.heading?
     return no_further_processing if @loader_name.no_further_processing?
 
-    if @loader_name.accepted?
-      return create_standalone
-    elsif @loader_name.synonym?
-      return create_synonymy
-    elsif @loader_name.misapplied?
-      return create_misapp
-    elsif @loader_name.excluded?
-      return create_standalone
+    case
+    when @loader_name.accepted?, @loader_name.excluded?
+      create_standalone
+    when @loader_name.synonym?
+      create_synonymy
+    when @loader_name.misapplied?
+      create_misapp
     else
       throw "Don't know how to handle loader_name #{@loader_name.id}"
     end
   end
 
   def no_further_processing
-    log_to_table("#{Loader::Name::Match::DECLINED_INSTANCE} - no further processing for #{@loader_name.id}")
-    Loader::Name::Match::DECLINED
+    log_to_table("#{Constants::DECLINED_INSTANCE} - no further processing for #{@loader_name.id}")
+    Constants::DECLINED
   end
 
   def no_preferred_match
-    log_to_table("#{Loader::Name::Match::DECLINED_INSTANCE} - no preferred match for ##{@loader_name.id} #{@loader_name.simple_name}")
-    Loader::Name::Match::DECLINED
+    log_to_table("#{Constants::DECLINED_INSTANCE} - no preferred match for ##{@loader_name.id} #{@loader_name.simple_name}")
+    Constants::DECLINED
   end
 
   def heading
-    log_to_table("#{Loader::Name::Match::DECLINED_INSTANCE} - heading entries not processed ##{@loader_name.id} #{@loader_name.simple_name}")
-    Loader::Name::Match::DECLINED
+    log_to_table("#{Constants::DECLINED_INSTANCE} - heading entries not processed ##{@loader_name.id} #{@loader_name.simple_name}")
+    Constants::DECLINED
   end
 
   def create_standalone
@@ -101,8 +100,8 @@ class Loader::Name::MakeOneInstance
     return no_preferred_match unless @loader_name.preferred_match?
 
     MakeOneSynonymyInstance.new(@loader_name,
-                                  @authorising_user,
-                                  @job_number).create
+                                @authorising_user,
+                                @job_number).create
   end
 
   def create_misapp
@@ -119,7 +118,6 @@ class Loader::Name::MakeOneInstance
     created = declined = errors = 0
     @loader_name.loader_name_matches.each do |misapp_match|
       Rails.logger.debug("candidate match: #{misapp_match.inspect}")
-      #result = misapp_match.create_or_find_misapp_instance(@authorising_user, @job_number)
       result = MakeOneMisappInstance.new(@loader_name,
                                          misapp_match,
                                          @authorising_user,
@@ -128,29 +126,7 @@ class Loader::Name::MakeOneInstance
       declined += result[1]
       errors += result[2]
     end
-    return [created, declined, errors]
-  end
-
-
-  def xcreate_misapp
-    Rails.logger.debug("create_misapp: matches: #{@loader_name.loader_name_matches.size}")
-    created = declined = errors = 0
-    @loader_name.loader_name_matches.each do |misapp_match|
-      Rails.logger.debug("candidate match: #{misapp_match.inspect}")
-      result = misapp_match.create_or_find_misapp_instance(@authorising_user, @job_number)
-      created += result[0]
-      declined += result[1]
-      errors += result[2]
-    end
-    return [created, declined, errors]
-  end
-
-  def created
-    @created
-  end
-
-  def errors
-    @errors
+    [created, declined, errors]
   end
 
   def log_create_action(count)
@@ -161,8 +137,8 @@ class Loader::Name::MakeOneInstance
   def log_to_table(entry)
     BulkProcessingLog.log("Job ##{@job_number}: #{entry}",
                           "Bulk job for #{@authorising_user}")
-  rescue => e
-    Rails.logger.error("Couldn't log to table: #{e.to_s}")
+  rescue StandardError => e
+    Rails.logger.error("Couldn't log to table: #{e}")
   end
 
   def scientific_name
@@ -170,9 +146,9 @@ class Loader::Name::MakeOneInstance
   end
 
   def record_failure(msg)
-    msg.sub!(/uncaught throw /,'')
-    msg.gsub!(/"/,'')
-    msg.sub!(/^Failing/,'')
+    msg.sub!(/uncaught throw /, "")
+    msg.gsub!(/"/, "")
+    msg.sub!(/^Failing/, "")
     Rails.logger.error("Loader::Name::AsInstanceCreator failure: #{msg}")
     log_to_table("Loader::Name::AsInstanceCreator failure: #{msg}")
   end
