@@ -27,10 +27,12 @@ class Loader::Batch::Stats::ForAllNames::MatchedWithDecision
     { accepted_batch_default_reference: accepted_choice_default_ref,
       accepted_use_existing_instance: accepted_choice_use_existing_instance,
       accepted_copy_and_append: accepted_choice_copy_and_append,
+      total_accepted_choice_made: accepted_choice_made,
       accepted_no_choice_made: accepted_no_choice_made,
       excluded_batch_default_reference: excluded_choice_default_ref,
       excluded_use_existing_instance: excluded_choice_use_existing_instance,
       excluded_copy_and_append: excluded_choice_copy_and_append,
+      total_excluded_choice_made: excluded_choice_made,
       excluded_no_choice_made: excluded_no_choice_made }
   end
 
@@ -38,6 +40,7 @@ class Loader::Batch::Stats::ForAllNames::MatchedWithDecision
     @core_search.where("record_type = 'accepted'")
                 .joins(:loader_name_matches)
                 .where("loader_name_match.use_batch_default_reference = true")
+                .where(" instance_choice_confirmed ")
                 .count
   end
 
@@ -45,6 +48,7 @@ class Loader::Batch::Stats::ForAllNames::MatchedWithDecision
     @core_search.where("record_type = 'accepted'")
                 .joins(:loader_name_matches)
                 .where("loader_name_match.use_existing_instance = true")
+                .where(" instance_choice_confirmed ")
                 .count
   end
 
@@ -52,6 +56,7 @@ class Loader::Batch::Stats::ForAllNames::MatchedWithDecision
     @core_search.where("record_type = 'accepted'")
                 .joins(:loader_name_matches)
                 .where("copy_append_from_existing_use_batch_def_ref = true")
+                .where(" instance_choice_confirmed ")
                 .count
   end
 
@@ -61,6 +66,14 @@ class Loader::Batch::Stats::ForAllNames::MatchedWithDecision
                 .where("not loader_name_match.use_batch_default_reference")
                 .where(" not loader_name_match.use_existing_instance ")
                 .where(" not copy_append_from_existing_use_batch_def_ref ")
+                .where(" not instance_choice_confirmed ")
+                .count
+  end
+
+  def accepted_choice_made
+    @core_search.where("record_type = 'accepted'")
+                .joins(:loader_name_matches)
+                .where(" instance_choice_confirmed ")
                 .count
   end
 
@@ -82,6 +95,13 @@ class Loader::Batch::Stats::ForAllNames::MatchedWithDecision
     @core_search.where("record_type = 'excluded'")
                 .joins(:loader_name_matches)
                 .where("loader_name_match.copy_append_from_existing_use_batch_def_ref = true")
+                .count
+  end
+
+  def excluded_choice_made
+    @core_search.where("record_type = 'excluded'")
+                .joins(:loader_name_matches)
+                .where(" instance_choice_confirmed ")
                 .count
   end
 

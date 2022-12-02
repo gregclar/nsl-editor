@@ -308,8 +308,8 @@ class Loader::Name < ActiveRecord::Base
 
   # This is used in bulk jobs when the user wants to process names in a family. 
   def self.family_string_search(family_string)
-    ns = family_string.downcase.gsub(/\*/,'%')
-    Loader::Name.where([ "lower(family) like lower(?) ", family_string])
+    fam = family_string.downcase.gsub(/\*/,'%')
+    Loader::Name.where([ "lower(family) like lower(?) ", fam])
   end
 
   def self.create(params, username)

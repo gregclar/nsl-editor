@@ -28,6 +28,7 @@ class Loader::Batch::Stats::ForAllNames::Matched
       excluded_with_preferred_match: excluded_with_preferred_match,
       synonym_with_preferred_match: synonym_with_preferred_match,
       misapplied_with_preferred_match: misapplied_with_preferred_match,
+      total_with_preferred_match: total_with_at_least_one_preferred_match,
       misapplied_preferred_matches: misapplied_preferred_matches }
   end
 
@@ -52,6 +53,15 @@ class Loader::Batch::Stats::ForAllNames::Matched
   def misapplied_with_preferred_match
     @core_search.where("record_type = 'misapplied'")
                 .where("exists
+                      (select null
+                         from loader_name_match match
+                        where loader_name.id = match.loader_name_id)").count
+  rescue StandardError => e
+    e.to_s
+  end
+
+  def total_with_at_least_one_preferred_match
+    @core_search.where("exists
                       (select null
                          from loader_name_match match
                         where loader_name.id = match.loader_name_id)").count

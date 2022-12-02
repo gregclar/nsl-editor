@@ -36,8 +36,8 @@ class Loader::Batch::Stats::ForAllNames
     @report[:search] = search
     @report[:lock] = { status: lock_status }
     @report[:record_types] = record_types
-    @report[:no_further_processing] = NoFurtherProcessing.new(core_search)
-                                                         .report
+    @report[:no_further_processing_by_record_type] =
+      NoFurtherProcessingByRecordType.new(core_search).report
   end
 
   def middle
@@ -62,8 +62,8 @@ class Loader::Batch::Stats::ForAllNames
       excluded: excludeds,
       synonym: synonyms,
       misapplied: misapplieds,
-      hybrid_cross: hybrid_crosses,
       headings: headings,
+      none_of_the_above: none_of_the_aboves,
       total: names_and_synonyms_count }
   end
 
@@ -104,11 +104,14 @@ class Loader::Batch::Stats::ForAllNames
     core_search.where("record_type = 'misapplied'").count
   end
 
-  def hybrid_crosses
-    core_search.where("record_type = 'hybrid_cross'").count
-  end
-
   def headings
     core_search.where("record_type = 'heading'").count
+  end
+
+  def none_of_the_aboves
+    core_search.where("record_type not in " +
+                      " ('accepted','excluded','synonym','misapplied'," +
+                      "'heading')")
+               .count
   end
 end

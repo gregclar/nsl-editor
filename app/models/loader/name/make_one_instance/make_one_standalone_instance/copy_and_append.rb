@@ -19,6 +19,7 @@
 # Record a preferred matching name for a raw loader name record.
 class Loader::Name::MakeOneInstance::MakeOneStandaloneInstance::CopyAndAppend
   def initialize(loader_name, user, job)
+    debug('initialize: #{loader_name.id}')
     @loader_name = loader_name
     @user = user
     @job = job
@@ -26,43 +27,49 @@ class Loader::Name::MakeOneInstance::MakeOneStandaloneInstance::CopyAndAppend
   end
 
   def create
+    debug('create')
+    created = declined = errors = 0
     return no_def_ref if @loader_name.loader_batch.default_reference.blank?
     return no_source_for_copy if @match.source_for_copy.blank?
 
-    # STANDALONE INSTANCE
-    # create a standalone instance really_create_standalone_instance
-    new_standalone = Instance.new
-    new_standalone.draft = true
-    new_standalone.name_id = @match.name_id
-    new_standalone.reference_id = @loader_name.loader_batch.default_reference.id
-    new_standalone.instance_type_id = InstanceType.secondary_reference.id
-    new_standalone.created_by = new_standalone.updated_by = "bulk for #{@user}"
-    new_standalone.save!
+    create_the_standalone
+    created += 1
 
     # # NOTE INSTANCE CREATED
-    @match.standalone_instance_id = new_standalone.id
+    @match.standalone_instance_id = @new_standalone.id
     @match.standalone_instance_created = true
     @match.standalone_instance_found = false
     @match.updated_by = "@job for #{@user}"
     @match.save!
     
-    syns_created = 0
+    syns_copied = 0
     @match.source_for_copy.synonyms.each do |source_synonym|
+      debug("copy syn #{source_synonym.id}")
       new_syn = Instance.new
       new_syn.cites_id = source_synonym.cites_id
-      new_syn.cited_by_id = new_standalone.id
+      new_syn.cited_by_id = @new_standalone.id
       new_syn.instance_type_id = source_synonym.instance_type_id
       new_syn.created_by = new_syn.updated_by = "bulk for #{@user}"
       new_syn.name_id = source_synonym.name_id
-      new_syn.reference_id = new_standalone.reference_id
+      new_syn.reference_id = @new_standalone.reference_id
       new_syn.save!
-      syns_created += 1
-      log_to_table("#{Constants::CREATED_INSTANCE} #{new_syn.name.full_name}")
+      syns_copied += 1
+      log_to_table("#{Constants::COPIED_SYN} #{new_syn.name.full_name}")
     end
+    created += syns_copied
+    [created, declined, errors]
+  end
 
-    log_to_table(
-      "Created standalone with #{syns_created} synonym (copy-and-append) for #{@loader_name.simple_name} #{@loader_name.id}")
-    return Constants::CREATED
+  def create_the_standalone
+    debug('create_the_standalone')
+    @new_standalone = Instance.new
+    @new_standalone.draft = true
+    @new_standalone.name_id = @match.name_id
+    @new_standalone.reference_id = @loader_name.loader_batch.default_reference.id
+    @new_standalone.instance_type_id = InstanceType.secondary_reference.id
+    @new_standalone.created_by = @new_standalone.updated_by = "bulk for #{@user}"
+    @new_standalone.save!
+    log_to_table("#{Constants::CREATED_INSTANCE} #{@new_standalone.name.full_name}")
   end
 
   def no_def_ref
@@ -128,8 +135,12 @@ class Loader::Name::MakeOneInstance::MakeOneStandaloneInstance::CopyAndAppend
     @match.save!
   end
  
+  def debug(str)
+    Rails.logger.debug("CopyAndAppend: #{str}")
+  end
+
   def log_to_table(entry)
-    BulkProcessingLog.log("Job ##{@job}: #{entry}","Bulk job for #{@user}")
+    BulkProcessingLog.log("Job ##{@job}: #{entry}","bulk job for #{@user}")
   rescue => e
     Rails.logger.error("Couldn't log to table: #{e.to_s}")
   end

@@ -62,7 +62,7 @@ class Loader::Name::MakeOneInstance
     return no_further_processing if @loader_name.no_further_processing?
 
     case
-    when @loader_name.accepted?, @loader_name.excluded?
+    when @loader_name.accepted?, @loader_name.excluded_rt?
       create_standalone
     when @loader_name.synonym?
       create_synonymy

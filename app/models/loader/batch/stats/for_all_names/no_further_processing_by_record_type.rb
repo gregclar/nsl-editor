@@ -18,17 +18,17 @@
 
 # Batch Statistics report
 # Returns a hash
-class Loader::Batch::Stats::ForAllNames::NoFurtherProcessing
+class Loader::Batch::Stats::ForAllNames::NoFurtherProcessingByRecordType
   def initialize(core_search)
     @core_search = core_search
   end
 
   def report
-    { accepted: no_further_processing_accepteds,
+    { heading: no_further_processing_headings,
+      accepted: no_further_processing_accepteds,
       excluded: no_further_processing_excludeds,
       synonym: no_further_processing_synonyms,
       misapplied: no_further_processing_misapplieds,
-      hybrid_cross: no_further_processing_hybrid_crosses,
       total: no_further_processing_total }
   end
 
@@ -41,6 +41,11 @@ class Loader::Batch::Stats::ForAllNames::NoFurtherProcessing
 
   def no_further_processing_accepteds
     @core_search.where("record_type = 'accepted'
+                       and no_further_processing").count
+  end
+
+  def no_further_processing_headings
+    @core_search.where("record_type = 'heading'
                        and no_further_processing").count
   end
 
@@ -59,14 +64,6 @@ class Loader::Batch::Stats::ForAllNames::NoFurtherProcessing
 
   def no_further_processing_misapplieds
     @core_search.where("record_type = 'misapplied' and
-                      (no_further_processing or
-                      (select no_further_processing
-                         from loader_name p
-                        where p.id = loader_name.parent_id))").count
-  end
-
-  def no_further_processing_hybrid_crosses
-    @core_search.where("record_type = 'hybrid_cross' and
                       (no_further_processing or
                       (select no_further_processing
                          from loader_name p
