@@ -1,4 +1,8 @@
 - :date: 19-Jan-2023
+  :jira_id: ''
+  :description: |-
+    Update Rails to 6.1.7.1 security patch
+- :date: 19-Jan-2023
   :jira_id: '4396'
   :description: |-
     Choosing menu options like Admin > Configuration should no longer throw away search results or disable other tabs.
