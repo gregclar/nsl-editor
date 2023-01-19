@@ -1,3 +1,11 @@
+- :date: 19-Jan-2023
+  :jira_id: '4396'
+  :description: |-
+    Choosing menu options like Admin > Configuration should no longer throw away search results or disable other tabs.
+- :date: 18-Jan-2023
+  :jira_id: '4078'
+  :description: |-
+    Set up the <code>Enable Add to draft tree</code> button referencing a new feature flag: <code>allow_batch_loader_tree_operations</code>
 - :date: 05-Jan-2023
   :jira_id: '4375'
   :description: |-
