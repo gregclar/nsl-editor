@@ -53,11 +53,11 @@ class Loader::Batch::BulkController < ApplicationController
       create_preferred_matches
     when 'Create Draft Instances'
       create_draft_instances
-    #when 'Add to draft tree'
-    #  add_instances_to_draft_tree
+    when 'Add to draft taxonomy'
+      add_to_draft_taxonomy
     else 
-      Loader::Batch::JobLock.unlock!
-      throw "Editor doesn't understand what you're asking for: #{params[:submit]}"
+      Loader::Batch::Bulk::JobLock.unlock!
+      throw "The Editor app doesn't know how to #{params[:submit]}"
     end
   rescue JobLockedError => e
     logger.error('job lock error')
@@ -70,7 +70,8 @@ class Loader::Batch::BulkController < ApplicationController
   end
 
   def create_preferred_matches
-    prefix = the_prefix('create-preferred-matches-')
+    #prefix = the_prefix('create-preferred-matches-')
+    prefix = 'create-preferred-matches-'
     job = AsCreatePreferredMatchesJob.new(session[:default_loader_batch_id], 
                                  params[:name_string],
                                  @current_user.username,
@@ -90,7 +91,8 @@ class Loader::Batch::BulkController < ApplicationController
   end
 
   def create_draft_instances
-    prefix = the_prefix('create-draft-instances-')
+    #prefix = the_prefix('create-draft-instances-')
+    prefix = 'create-draft-instances-'
     job = AsCreateDraftInstanceJob.new(session[:default_loader_batch_id], 
                                  params[:name_string],
                                  @current_user.username,
@@ -126,6 +128,7 @@ class Loader::Batch::BulkController < ApplicationController
     render 'hide_stats'
   end
 
+  # what is this doing?
   def the_prefix(str)
     if params[:gui_submit_place].nil?
       str
@@ -133,6 +136,24 @@ class Loader::Batch::BulkController < ApplicationController
       "#{params[:gui_submit_place]}-#{str}"
     end
     str
+  end
+
+  def add_to_draft_taxonomy
+    prefix = 'add-to-draft-taxonomy-'
+    job = AddToDraftTaxonomyJob.new(session[:default_loader_batch_id], 
+                                  params[:name_string],
+                                  @working_draft,
+                                  @current_user.username,
+                                  @job_number)
+    job.run
+    @message = job.message
+    Loader::Batch::Bulk::JobLock.unlock!
+    render 'add_to_draft_taxonomy', locals: {message_container_id_prefix: prefix }
+  rescue => e
+    logger.error("LoaderBatchBulkController#add_to_draft_taxonomy: #{e.to_s}")
+    logger.error e.backtrace.join("\n")
+    @message = e.to_s.sub(/uncaught throw/,'').gsub(/"/,'')
+    render 'error', locals: {message_container_id_prefix: prefix }
   end
 
   def clean_params
