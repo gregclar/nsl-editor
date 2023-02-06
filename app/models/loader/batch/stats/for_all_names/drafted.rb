@@ -18,7 +18,7 @@
 
 # Batch Statistics report
 # Returns a hash
-class Loader::Batch::Stats::ForAllNames::InstancesBreakdown
+class Loader::Batch::Stats::ForAllNames::Drafted
   def initialize(core_search)
     @core_search = core_search
   end
