@@ -17,7 +17,7 @@
 #   limitations under the License.
 
 # Record a preferred matching name for a raw loader name record.
-class Loader::Batch::BulkController::AsCreatePreferredMatchesJob
+class Loader::Batch::BulkController::CreatePreferredMatchesJob
   def initialize(batch_id, search_string, authorising_user, job_number)
     @batch = Loader::Batch.find(batch_id)
     @search_string = search_string
@@ -40,7 +40,7 @@ class Loader::Batch::BulkController::AsCreatePreferredMatchesJob
 
   def do_one_loader_name(loader_name)
     @attempts += 1
-    matcher = ::Loader::Name::AsMakeOneMatchTask.new(loader_name,
+    matcher = ::Loader::Name::MakeOneMatchTask.new(loader_name,
                                                      @authorising_user,
                                                      @job_number)
     @result = matcher.create
@@ -53,9 +53,9 @@ class Loader::Batch::BulkController::AsCreatePreferredMatchesJob
   end
 
   def log(payload)
-    entry = "Job ##{@job_number}: #{payload}"
-    BulkProcessingLog.log(entry, "Bulk job for #{@authorising_user}")
+    Loader::Batch::Bulk::JobLog.new(@job_number, payload, @authorising_user).write
   end
+
 
   def log_start
     entry = "<b>STARTED</b>: create preferred matches for batch: "

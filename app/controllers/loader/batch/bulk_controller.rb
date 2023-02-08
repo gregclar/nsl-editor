@@ -70,9 +70,8 @@ class Loader::Batch::BulkController < ApplicationController
   end
 
   def create_preferred_matches
-    #prefix = the_prefix('create-preferred-matches-')
     prefix = 'create-preferred-matches-'
-    job = AsCreatePreferredMatchesJob.new(session[:default_loader_batch_id], 
+    job = CreatePreferredMatchesJob.new(session[:default_loader_batch_id], 
                                  params[:name_string],
                                  @current_user.username,
                                  @job_number)
@@ -91,9 +90,8 @@ class Loader::Batch::BulkController < ApplicationController
   end
 
   def create_draft_instances
-    #prefix = the_prefix('create-draft-instances-')
     prefix = 'create-draft-instances-'
-    job = AsCreateDraftInstanceJob.new(session[:default_loader_batch_id], 
+    job = CreateDraftInstanceJob.new(session[:default_loader_batch_id], 
                                  params[:name_string],
                                  @current_user.username,
                                  @job_number)

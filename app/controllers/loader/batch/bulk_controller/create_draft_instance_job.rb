@@ -17,7 +17,7 @@
 #   limitations under the License.
 
 # Record a preferred matching name for a raw loader name record.
-class Loader::Batch::BulkController::AsCreateDraftInstanceJob
+class Loader::Batch::BulkController::CreateDraftInstanceJob
   def initialize(batch_id, search_string, authorising_user, job_number)
     @batch = Loader::Batch.find(batch_id)
     @search_string = search_string
@@ -53,9 +53,13 @@ class Loader::Batch::BulkController::AsCreateDraftInstanceJob
     @errors += 1
   end
 
-  def log(payload)
+  def xlog(payload)
     entry = "Job ##{@job_number}: #{payload}"
     BulkProcessingLog.log(entry, "Bulk job for #{@authorising_user}")
+  end
+  
+  def log(payload)
+    Loader::Batch::Bulk::JobLog.new(@job_number, payload, @authorising_user).write
   end
 
   def log_start
@@ -78,7 +82,7 @@ class Loader::Batch::BulkController::AsCreateDraftInstanceJob
   end
 
   def debug(s)
-    tag = "Loader::Name::AsCreateDraftInstanceJob" 
+    tag = "Loader::Name::CreateDraftInstanceJob" 
     Rails.logger.debug("#{tag}: #{s}")
   end
 end
