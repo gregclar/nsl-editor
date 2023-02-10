@@ -1,4 +1,8 @@
 - :date: 08-Feb-2023
+  :jira_id: '4424'
+  :description: |-
+    Loader: <q>Not drafted</q> text no longer appears on loader name records which have been allocated an existing instance
+- :date: 08-Feb-2023
   :jira_id: '4423'
   :description: |-
     Loader: bulk operations search now similar to the Orchids one - top-level matches only; added an equivalent <code>bulk-ops:</code> search directive which is linked from the Loader tab
