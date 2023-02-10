@@ -8,10 +8,6 @@ gem 'rails', '~> 6.1.7'
 gem 'pg', '~> 1.1'
 # Use Puma as the app server
 gem 'puma', '>= 5.5.1'
-# Use SCSS for stylesheets
-# gem 'sass-rails', '>= 6'
-# Transpile app-like JavaScript. Read more: https://github.com/rails/webpacker
-# gem 'sassc-rails'
 gem 'webpacker', '~> 5.x'
 # Turbolinks makes navigating your web application faster. Read more: https://github.com/turbolinks/turbolinks
 gem 'turbolinks', '~> 5'
@@ -30,7 +26,6 @@ group :development do
   # Access an interactive console on exception pages or by calling 'console' anywhere in the code.
   gem 'web-console', '>= 3.3.0'
   gem 'awesome_print'
-  # gem 'sass-rails', '>= 6'
 end
 
 group :test do
@@ -66,7 +61,6 @@ gem 'warbler', '~> 2.0.5'
 gem "strip_attributes"
 gem "cancancan"
 gem "active_type"
-# gem "bootstrap-sass"
 gem "font-awesome-rails"
 gem "net-ldap"
 gem "composite_primary_keys"
