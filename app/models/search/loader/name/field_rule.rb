@@ -36,6 +36,30 @@ class Search::Loader::Name::FieldRule
        and lower(sibling.simple_name) like ?)",
            trailing_wildcard: true,
            order: "seq"},
+    "bulk-ops:" => { where_clause: "(
+      (
+        (
+          lower(simple_name) like ?
+          or lower(simple_name) like 'x '||? 
+          or lower(simple_name) like '('||?)
+        )
+        and record_type in ('accepted', 'excluded')
+      ) 
+    or 
+      (parent_id in 
+        (select id 
+           from loader_name 
+          where (
+                  (
+                    lower(simple_name) like ?
+                    or lower(simple_name) like 'x '||?
+                    or lower(simple_name) like '('||?) 
+                  )
+                  and record_type in ('accepted', 'excluded')
+                )
+        )",
+           order: "seq"},
+
     "simple-name-as-loaded:" => { where_clause: "(lower(simple_name_as_loaded) like ?)
         or exists (
         select null

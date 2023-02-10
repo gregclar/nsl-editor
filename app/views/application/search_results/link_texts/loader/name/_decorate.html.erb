@@ -69,7 +69,7 @@
   <% end %>
   <% standalones = search_result.loader_name_matches.select {|match| match.standalone_instance_id.present?} %>
   <% if standalones.size > 0 %>
-    <span class="flag standalone-statement" title='Stanalone instance count'><%= "#{standalones.size}s" %></span>
+    <span class="flag standalone-statement" title='Standalone instance count'><%= "#{standalones.size}s" %></span>
   <% end %>
  
 

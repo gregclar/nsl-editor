@@ -298,11 +298,10 @@ class Loader::Name < ActiveRecord::Base
     partly == 'p.p.'
   end
 
-  # This search emulates the default search for Loader Name, the 
-  # name-string: search.
-  def self.name_string_search(name_string)
+  # This is different to the default name search
+  def self.bulk_operations_search(name_string)
     ns = name_string.downcase.gsub(/\*/,'%')
-    Loader::Name.where([ "((lower(simple_name) like ? or lower(simple_name) like 'x '||? or lower(simple_name) like '('||?) ) or (parent_id in (select id from loader_name where (lower(simple_name) like ? or lower(simple_name) like 'x '||? or lower(simple_name) like '('||?) ))",
+    Loader::Name.where([ Constants::BULK_OPERATIONS_WHERE_FRAG,
                          ns, ns, ns, ns, ns, ns])
   end
 

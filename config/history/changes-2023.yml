@@ -1,4 +1,8 @@
 - :date: 08-Feb-2023
+  :jira_id: '4423'
+  :description: |-
+    Loader: bulk operations search now similar to the Orchids one - top-level matches only; added an equivalent <code>bulk-ops:</code> search directive which is linked from the Loader tab
+- :date: 08-Feb-2023
   :jira_id: '4078'
   :description: |-
     Loader: improve log entries, make them more consistent
@@ -6,7 +10,7 @@
   :jira_id: '4078'
   :description: |-
     Loader: first cut of bulk add to taxonomy (tree)
-- :date: 08-Feb-2023
+- :date: 07-Feb-2023
   :release: true
   :description: Released to staging - production release will follow
 - :date: 19-Jan-2023

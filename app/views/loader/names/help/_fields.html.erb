@@ -350,6 +350,8 @@
 <table class="table table-striped">
   <tr><th>Field</th><th>Description</th></tr>
   <% [
+    {field_name: 'bulk-ops:',
+     description: "searches on a name string exactly as bulk operations search does, wildcards are supported but not supplied (as for bulk ops)"},
     {field_name: 'no-further-processing:',
      description: "search for records flagged to stop further bulk processing"},
     {field_name: 'in-current-taxonomy:',

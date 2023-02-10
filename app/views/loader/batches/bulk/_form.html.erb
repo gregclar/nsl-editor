@@ -74,6 +74,12 @@
 <%= link_to "[clear messages]", orchids_batch_clear_path, class:"hidden message-clearer with-underline", remote: true, title: "Clear the messages" %> 
 <br>
 <%= link_to "Recent logs", search_path(query_string: "latest:",query_target: 'bulk_processing_logs'), title: "See logs", class: "with-underline" %> 
+<br>
+<%= link_to("Show search results for: bulk-ops: #{session[:name_string]}",
+            search_path(query_string: "bulk-ops: #{session[:name_string]}",
+                        query_target: 'Loader names'),
+            class: 'with-underline',
+            title: 'Search loader name') unless session[:name_string].blank? %>
 <hr class="dark">
 <div id="bulk-ops-stats-container" class="">
 </div>

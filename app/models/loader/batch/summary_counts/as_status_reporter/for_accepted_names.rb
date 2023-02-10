@@ -86,7 +86,7 @@ class Loader::Batch::SummaryCounts::AsStatusReporter::ForAcceptedNames
     if @search_string == '%' then
       Loader::Name.where(loader_batch_id: @batch_id)
     else
-      Loader::Name.name_string_search(@search_string).where(loader_batch_id: @batch_id)
+      Loader::Name.bulk_operations_search(@search_string).where(loader_batch_id: @batch_id)
     end
   end
 
