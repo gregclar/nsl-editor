@@ -57,7 +57,6 @@ end
 gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
 
 # Added
-gem 'warbler', '~> 2.0.5'
 gem "strip_attributes"
 gem "cancancan"
 gem "active_type"
