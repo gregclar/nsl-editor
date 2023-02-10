@@ -20,6 +20,7 @@ Rails.application.routes.draw do
   resources :batches
   match "/feedback", as: "feedback", to: "feedback#index", via: :get
   match "/ping", as: "ping_service", to: "services#ping", via: :get
+  match "/version", as: "version_service", to: "services#version", via: :get
   match "services", as: "services", to: "services#index", via: :get
 
   resources :name_tag_names, only: [:show, :post, :create, :new]

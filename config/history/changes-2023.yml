@@ -1,6 +1,10 @@
 - :date: 10-Feb-2023
   :jira_id: '4424'
   :description: |-
+    Loader: Add a /version get end point - currently just returns the app version
+- :date: 10-Feb-2023
+  :jira_id: '4424'
+  :description: |-
     Loader: Display the loader name sequence number at the top of the detail tabs
 - :date: 10-Feb-2023
   :jira_id: '4424'
