@@ -1,3 +1,7 @@
+- :date: 13-Feb-2023
+  :jira_id: '4424'
+  :description: |-
+    Loader: Show the loader name seq as a list item number at the top of the details - this is clearer; also visually separate and gray the batch name
 - :date: 10-Feb-2023
   :jira_id: '4424'
   :description: |-
