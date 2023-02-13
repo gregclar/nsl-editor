@@ -81,12 +81,24 @@
     </div>
 
     <% unless loader_name.id.blank? %>
-      <div class="form-group">
-      <label class="form-check-label">
-        <%= f.check_box(:no_further_processing, {class: 'xform-control', title: 'Prevent further bulk processing of this record.'}) %>
-        Stop further bulk processing of this record
-      </label>
-      </div>
+      <% unless loader_name.preferred_match.blank? %>
+        <% if loader_name.preferred_match.relationship_instance? %>
+          <% disabled = true %>
+          Note: this record already has an associated instance - you cannot switch off bulk processing while that relationship instance is attached.
+        <% else %>
+          <% disabled = false %>
+        <% end %>
+
+        <div class="form-group">
+        <label class="form-check-label">
+          <%= f.check_box(:no_further_processing, {class: 'xform-control',
+                                                   disabled: disabled,
+                                                   title: 'Prevent further bulk processing of this record.'}) %>
+          Stop further bulk processing of this record
+        </label>
+        </div>
+      <% end %>
     <% end %>
+
     <%= f.submit "Save", id: 'loader-name-save', class: 'btn btn-primary width-5em pull-right', title: "Save changes", tabindex: increment_tab_index, disabled: false %>
 <% end %>

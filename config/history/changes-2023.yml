@@ -1,6 +1,10 @@
 - :date: 13-Feb-2023
   :jira_id: '4424'
   :description: |-
+    Loader: Disable no-further-processing flag field for loader name records once a standalone or relationship instance has been associated
+- :date: 13-Feb-2023
+  :jira_id: '4424'
+  :description: |-
     Loader: Details tab for header entries (typically family records) now has a link to query members of the family, if the record's rank is 'family'
 - :date: 13-Feb-2023
   :jira_id: '4424'
