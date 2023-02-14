@@ -59,7 +59,31 @@ class Search::Loader::Name::FieldRule
                 )
         )",
            order: "seq"},
-
+    "bulk-ops-family:" => { where_clause: "(
+      ( lower(simple_name) like ? and rank = 'family')
+    or
+      (
+        (
+          lower(family) like ?
+          or lower(family) like 'x '||? 
+          or lower(family) like '('||?)
+        )
+        and record_type in ('accepted', 'excluded')
+      ) 
+    or 
+      (parent_id in 
+        (select id 
+           from loader_name 
+          where (
+                  (
+                    lower(family) like ?
+                    or lower(family) like 'x '||?
+                    or lower(family) like '('||?) 
+                  )
+                  and record_type in ('accepted', 'excluded')
+                )
+        )",
+           order: "seq"},
     "simple-name-as-loaded:" => { where_clause: "(lower(simple_name_as_loaded) like ?)
         or exists (
         select null
