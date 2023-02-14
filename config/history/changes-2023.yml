@@ -1,4 +1,8 @@
 - :date: 14-Feb-2023
+  :jira_id: '4425'
+  :description: |-
+    Loader: Any logged in user can see the configuration page - no need to make people administrators to see this page
+- :date: 14-Feb-2023
   :jira_id: '4424'
   :description: |-
     Loader: the bulk-ops query can now handle the family: directive - by turning it into a bulk-ops-family: directive

@@ -19,15 +19,16 @@
 require "test_helper"
 
 # Single test per file
-class AdminControllerQAUserCannotSeeConfigTest < ActionController::TestCase
+class AdminControllerQAUserCanSeeConfigTest < ActionController::TestCase
   tests AdminController
 
-  test "qa user should not get configuration" do
+  test "qa user should get configuration" do
     get(:index,
         params: {},
         session: { username: "fred",
                    user_full_name: "Fred Jones",
-                   groups: ["QA"] })
-    assert_response :forbidden, "QA user should not see configuration"
+                   groups: ["QA"] },
+        xhr: true)
+    assert_response :success, "QA user should see configuration"
   end
 end
