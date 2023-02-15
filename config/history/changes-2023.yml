@@ -1,6 +1,10 @@
 - :date: 15-Feb-2023
   :jira_id: '4424'
   :description: |-
+    Loader: Added member count to details for loader_name Family records
+- :date: 15-Feb-2023
+  :jira_id: '4424'
+  :description: |-
     Loader: Added loader name convenience query directive <code>families:</code>, which is equivalent to <code>rank: family</code>
 - :date: 14-Feb-2023
   :jira_id: '4425'

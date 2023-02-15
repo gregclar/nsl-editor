@@ -2,6 +2,7 @@
 Heading entry
 </ul>
 
+<% members = Loader::Name.where(family: @loader_name.simple_name).where(loader_batch_id: @loader_name.loader_batch_id).count - 1 %>
 <% if @loader_name.rank == 'family' %>
   <%= render partial: 'detail_line', 
              locals: {info: link_to("Members of #{@loader_name.simple_name}",
@@ -10,7 +11,7 @@ Heading entry
                      focus_id: "loader-name-#{@loader_name.id}"),
                      title: 'Query family members',
                      class: 'blue underline'), 
-                    label: 'query family members'} %>
+                     label: "query family #{members} members"} %>
 <% end %>
-
+<br>
 
