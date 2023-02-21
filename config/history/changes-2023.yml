@@ -1,8 +1,4 @@
 - :date: 21-Feb-2023
-  :jira_id: '4426'
-  :description: |-
-    LDAP: Handle case where user has no groups
-- :date: 21-Feb-2023
   :jira_id: '4434'
   :description: |-
     Loader: Label seq field consistently
@@ -18,14 +14,6 @@
   :jira_id: '4434'
   :description: |-
     Loader: Fix <code>name-match-no-primary:</code> query
-- :date: 17-Feb-2023
-  :jira_id: '4433'
-  :description: |-
-    LDAP: Added two more layers of protection to prevent a 'generic' SimpleAD user trying to change their password via the Editor
-- :date: 17-Feb-2023
-  :jira_id: '4426'
-  :description: |-
-    LDAP: Re-factored code while making use of the new load-balancer for SimpleAD (via Config) by verifying the SSL Certificate - which hasn't been possible until now
 - :date: 15-Feb-2023
   :jira_id: '4424'
   :description: |-
