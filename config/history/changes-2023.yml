@@ -1,3 +1,7 @@
+- :date: 21-Feb-2023
+  :jira_id: '4434'
+  :description: |-
+    Loader: Fix <code>name-match-no-primary:</code> query
 - :date: 17-Feb-2023
   :jira_id: '4433'
   :description: |-
