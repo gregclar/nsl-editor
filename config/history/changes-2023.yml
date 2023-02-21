@@ -1,6 +1,10 @@
 - :date: 21-Feb-2023
   :jira_id: '4434'
   :description: |-
+    Loader: Allow synonyms and misapplications to be created from existing synonyms and misapplications; make sequencing easier; correct positon of success message
+- :date: 21-Feb-2023
+  :jira_id: '4434'
+  :description: |-
     Loader: Fix <code>name-match-no-primary:</code> query
 - :date: 17-Feb-2023
   :jira_id: '4433'

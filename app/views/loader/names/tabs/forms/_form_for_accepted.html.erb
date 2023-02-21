@@ -19,6 +19,12 @@
     <% end %>
 
     <br>
+
+    <div class="form-group">
+      <label for="seq">Seq*</label>
+      <%= f.text_field(:seq, {class: 'form-control', title: 'For listing the taxon in the correct alphabetical/hierarchical order', tabindex: increment_tab_index}) %>
+    </div>
+
     <div class="form-group">
       <label for="simple_name">Simple Name*</label>
       <%= f.text_field :simple_name, class: 'form-control give-me-focus', required: true, title: "Enter simple name - the value of simple name, as loaded is retained in simple name as loaded", tabindex: increment_tab_index, autofocus: true %>
@@ -70,11 +76,6 @@
     <div class="form-group">
       <label for="distribution">Distribution</label>
       <%= f.text_field(:distribution, {class: 'form-control', title: 'Distribution of the taxon', tabindex: increment_tab_index}) %>
-    </div>
-
-    <div class="form-group">
-      <label for="seq">Seq*</label>
-      <%= f.text_field(:seq, {class: 'form-control', title: 'For listing the taxon in the correct alphabetical/hierarchical order', tabindex: increment_tab_index}) %>
     </div>
 
     <div class="form-group">
