@@ -1,4 +1,8 @@
 - :date: 21-Feb-2023
+  :jira_id: '4426'
+  :description: |-
+    LDAP: Handle case where user has no groups
+- :date: 21-Feb-2023
   :jira_id: '4434'
   :description: |-
     Loader: Label seq field consistently

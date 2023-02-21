@@ -26,39 +26,39 @@ class User < ActiveType::Object
   validates :groups, presence: true
 
   def edit?
-    groups.include?("edit")
+    groups&.include?("edit")
   end
 
   def admin?
-    groups.include?("admin")
+    groups&.include?("admin")
   end
 
   # TODO: remove this - NSL-2007
   def apc?
-    groups.include?("APC")
+    groups&.include?("APC")
   end
 
   def qa?
-    groups.include?("QA")
+    groups&.include?("QA")
   end
 
   def treebuilder?
-    groups.include?("treebuilder")
+    groups&.include?("treebuilder")
   end
 
   def orchids_matcher?
-    groups.include?("orchids-matcher")
+    groups&.include?("orchids-matcher")
   end
 
   def reviewer?
-    groups.include?("taxonomic-review")
+    groups&.include?("taxonomic-review")
   end
 
   def compiler?
-    groups.include?("treebuilder")
+    groups&.include?("treebuilder")
   end
 
   def batch_loader?
-    groups.include?("batch-loader")
+    groups&.include?("batch-loader")
   end
 end
