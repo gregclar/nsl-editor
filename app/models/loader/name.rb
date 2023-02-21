@@ -178,6 +178,7 @@ class Loader::Name < ActiveRecord::Base
     ::Name.where(
       ["simple_name = ? or full_name = ?",
        simple_name, simple_name])
+        .where(duplicate_of_id: nil)
         .joins(:name_type).where(name_type: {scientific: true})
         .order("simple_name, name.id")
   end
@@ -239,6 +240,7 @@ class Loader::Name < ActiveRecord::Base
   # Also, no requirement for scientific name type
   def matches_tweaked_for_phrase_name
     ::Name.where(["regexp_replace(simple_name,'[)(]','','g') = regexp_replace(regexp_replace(?,' [A-z][A-z]* Herbarium','','i'),'[)(]','','g')", simple_name])
+      .where(duplicate_of_id: nil)
       .order("simple_name, name.id")
   end
 
@@ -248,7 +250,9 @@ class Loader::Name < ActiveRecord::Base
 
   # No requirement for scientific name type
   def matches_tweaked_for_cultivar
-    ::Name.where(simple_name: simple_name).order("simple_name, name.id")
+    ::Name.where(simple_name: simple_name)
+          .where(duplicate_of_id: nil)
+          .order("simple_name, name.id")
   end
 
   def synonym_without_synonym_type?
