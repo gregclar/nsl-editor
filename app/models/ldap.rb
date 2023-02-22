@@ -51,19 +51,6 @@ class Ldap  < ActiveType::Object
     @groups
   end
 
-  # Users full name.
-  def user_full_name
-    Rails.logger.info("Ldap#user_full_name")
-    Ldap.new.admin_search(USERS,
-                          "uid",
-                          username,
-                          "cn").first || username
-  rescue => e
-    Rails.logger.error("Error in Ldap#user_full_name for username: #{username}")
-    Rails.logger.error(e.to_s)
-    return username
-  end
-
   def user_full_name
     @display_name || username
   end
@@ -109,9 +96,9 @@ class Ldap  < ActiveType::Object
   def change_password(uid,new_password,salt)
     conn = admin_connection
     ops = [ [ :replace, :unicodePwd, unicode_password(new_password) ] ]
-    person = conn.search(base: USERS, filter: Net::LDAP::Filter.eq("samAccountName",uid))
+    person = conn.search(base: USERS, filter: Net::LDAP::Filter.eq(USERID_FIELD,uid))
     if person.blank?
-      person = conn.search(base: GENERIC_USERS, filter: Net::LDAP::Filter.eq("samAccountName",uid))
+      person = conn.search(base: GENERIC_USERS, filter: Net::LDAP::Filter.eq(USERID_FIELD,uid))
     end
     Rails.logger.debug("person.first.dn: #{person.first.dn}")
     if conn.replace_attribute(person.first.dn, 'unicodePwd', unicode_password(new_password))
@@ -165,7 +152,7 @@ class Ldap  < ActiveType::Object
   def validate_user_credentials
     bind_as = admin_connection.bind_as(
       base: USERS,
-      filter: Net::LDAP::Filter.eq('samAccountName', username),
+      filter: Net::LDAP::Filter.eq(USERID_FIELD, username),
       password: password
     )
     if bind_as
@@ -188,7 +175,7 @@ class Ldap  < ActiveType::Object
   def validate_generic_user_in_active_directory
     bind_as = admin_connection.bind_as(
       base: GENERIC_USERS,
-      filter: Net::LDAP::Filter.eq('samAccountName', username),
+      filter: Net::LDAP::Filter.eq(USERID_FIELD, username),
       password: password
     )
     if bind_as
@@ -201,7 +188,7 @@ class Ldap  < ActiveType::Object
       return true
     else
       errors.add(:connection, "failed")
-      Rails.logger.error("Validating alt user credentials failed for username: #{username} against AD samAccountName.")
+      Rails.logger.error("Validating alt user credentials failed for username: #{username} against AD #{USERID_FIELD}.")
       return false
     end
   rescue => e
@@ -211,7 +198,8 @@ class Ldap  < ActiveType::Object
   end
   
   def ldap_full_name(result)
-    result.first[:dn].first.split(',').select {|x| x =~ /cn=/}.first.split('=').second
+    result.first[:dn].first.split(',')
+      .select {|x| x =~ /cn=/}.first.split('=').second
   rescue => e
     Rails.logger.error("Error getting user full_name from LDAP")
     Rails.logger.error(e.to_s)
@@ -220,12 +208,12 @@ class Ldap  < ActiveType::Object
 
   # Groups user is assigned to.
   def ldap_user_groups
-    Rails.logger.info("Ldap#users_groups:" + GROUPS_PATH)
+    Rails.logger.info("ldap_user_groups start; GROUPS_PATH: #{GROUPS_PATH}")
     Ldap.new.admin_search(GROUPS_PATH,
                           "uniqueMember",
                           "uid=#{username}", "cn")
   rescue => e
-    Rails.logger.error("Error in Ldap#users_groups for username: #{username}")
+    Rails.logger.error("Error in Ldap#ldap_user_groups for username: #{username}")
     Rails.logger.error(e.to_s)
     return ["error getting groups"]
   end
