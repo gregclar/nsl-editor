@@ -64,11 +64,11 @@ class Ldap  < ActiveType::Object
   end
 
   def active_directory_user
-    @active_directory_user || false
+    true
   end
 
   def openldap_user
-    @openldap_user || false
+    false
   end
 
   # Known groups
@@ -156,11 +156,7 @@ class Ldap  < ActiveType::Object
       password: password
     )
     if bind_as
-      @display_name = bind_as.first[:displayname].first
-      @groups = bind_as.first[:memberof].select {|x| x.match(/#{GROUP_FILTER_REGEX}/i)}.collect {|x| x.split(',').first.split('=').last}
-      @user_cn = bind_as.first[:dn].first
-      @active_directory_user = true
-      @openldap_user = false
+      set_bind_as_instance_variables(bind_as)
       @generic_active_directory_user = false
       return true
     else
@@ -172,6 +168,12 @@ class Ldap  < ActiveType::Object
     errors.add(:connection, "connection failed with exception")
   end
 
+  def set_bind_as_instance_variables(bind_as)
+    @display_name = bind_as.first[:displayname].first
+    @groups = bind_as.first[:memberof].select {|x| x.match(/#{GROUP_FILTER_REGEX}/i)}.collect {|x| x.split(',').first.split('=').last}
+    @user_cn = bind_as.first[:dn].first
+  end
+
   def validate_generic_user_in_active_directory
     bind_as = admin_connection.bind_as(
       base: GENERIC_USERS,
@@ -179,11 +181,7 @@ class Ldap  < ActiveType::Object
       password: password
     )
     if bind_as
-      @display_name = bind_as.first[:displayname].first
-      @groups = bind_as.first[:memberof].select {|x| x.match(/#{GROUP_FILTER_REGEX}/i)}.collect {|x| x.split(',').first.split('=').last}
-      @user_cn = bind_as.first[:dn].first
-      @active_directory_user = true
-      @openldap_user = false
+      set_bind_as_instance_variables(bind_as)
       @generic_active_directory_user = true
       return true
     else
