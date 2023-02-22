@@ -29,7 +29,7 @@ class Ldap  < ActiveType::Object
   HOST = Rails.configuration.try('ldap_host')
   # e.g. ldap_host = "ldaps.biodiversity.org.au"
   PORT = Rails.configuration.try('ldap_port')
-  LDAP_BASE = Rails.configuration.try('ldap_base')
+  BASE = Rails.configuration.try('ldap_base')
   # e.g. Rails.configuration.ldap_base = "ou=users,ou=nsl,dc=cloud,dc=biodiversity,dc=org,dc=au"
   GROUPS_PATH = Rails.configuration.try('ldap_groups')
   # e.g. ldap_groups = "ou=groups,cn=dev,dc=nsl,dc=bio,dc=org,dc=au"
@@ -44,7 +44,7 @@ class Ldap  < ActiveType::Object
   ADMIN_PASSWORD = Rails.configuration.try('ldap_admin_password')
   GENERIC_USERS = Rails.configuration.try('ldap_generic_users')
   # e.g. ldap_generic_users: "cn=Users,dc=cloud,dc=biodiversity,dc=org,dc=au"
-  GROUP_FILTER_REGEX = Rails.configuration.try('group_filter_regex') 
+  GROUP_FILTER_REGEX = Rails.configuration.try('ldap_group_filter_regex') 
   # Rails.configuration.group_filter_regex = 'ou=dev,ou=nsl'
 
   def users_groups
@@ -54,7 +54,7 @@ class Ldap  < ActiveType::Object
   # Users full name.
   def user_full_name
     Rails.logger.info("Ldap#user_full_name")
-    Ldap.new.admin_search(Rails.configuration.ldap_users,
+    Ldap.new.admin_search(USERS,
                           "uid",
                           username,
                           "cn").first || username
@@ -86,7 +86,7 @@ class Ldap  < ActiveType::Object
 
   # Known groups
   def self.groups
-    Ldap.new.admin_search(Rails.configuration.ldap_groups,
+    Ldap.new.admin_search(GROUPS_PATH,
                           "objectClass",
                           "groupOfUniqueNames",
                           "cn")
@@ -109,9 +109,9 @@ class Ldap  < ActiveType::Object
   def change_password(uid,new_password,salt)
     conn = admin_connection
     ops = [ [ :replace, :unicodePwd, unicode_password(new_password) ] ]
-    person = conn.search(base: Rails.configuration.ldap_users, filter: Net::LDAP::Filter.eq("samAccountName",uid))
+    person = conn.search(base: USERS, filter: Net::LDAP::Filter.eq("samAccountName",uid))
     if person.blank?
-      person = conn.search(base: Rails.configuration.ldap_generic_users, filter: Net::LDAP::Filter.eq("samAccountName",uid))
+      person = conn.search(base: GENERIC_USERS, filter: Net::LDAP::Filter.eq("samAccountName",uid))
     end
     Rails.logger.debug("person.first.dn: #{person.first.dn}")
     if conn.replace_attribute(person.first.dn, 'unicodePwd', unicode_password(new_password))
@@ -129,25 +129,21 @@ class Ldap  < ActiveType::Object
 
   def admin_connection
     Rails.logger.info("Connecting to Active Directory")
-    Rails.logger.info("ldap_host: #{Rails.configuration.ldap_host}")
-    Rails.logger.info("ldap_port: #{Rails.configuration.ldap_port}")
-    Rails.logger.info("ldap_admin_username: #{Rails.configuration.ldap_admin_username}")
-    ldap = Net::LDAP.new  :host => Rails.configuration.ldap_host,
-                      :port => Rails.configuration.ldap_port,
-                      :base => Rails.configuration.ldap_base,
-                      :encryption => {:method => :simple_tls,
-                                      :tls_options => tls_options
-                              },
-                      :auth => {
-                        :method => :simple,
-                        :username => Rails.configuration.ldap_admin_username,
-                        :password => Rails.configuration.ldap_admin_password
-                      }
+    ldap = Net::LDAP.new  :host => HOST,
+        :port => PORT,
+        :base => BASE,
+        :encryption => {:method => :simple_tls,
+                        :tls_options => tls_options },
+        :auth => {
+          :method => :simple,
+          :username => ADMIN_USERNAME,
+          :password => ADMIN_PASSWORD
+        }
     unless ldap.bind
-      Rails.logger.error("LDAP error: #{ldap.get_operation_result.error_message}")
+      Rails.logger.error("LDAP: #{ldap.get_operation_result.error_message}")
       raise "Failed admin connection!"
     end
-    Rails.logger.info("Admin connection to LDAP succeeded")
+    Rails.logger.info("Admin connection to AD succeeded")
     ldap
   end
 
@@ -168,13 +164,13 @@ class Ldap  < ActiveType::Object
 
   def validate_user_credentials
     bind_as = admin_connection.bind_as(
-      base: Rails.configuration.ldap_users,
+      base: USERS,
       filter: Net::LDAP::Filter.eq('samAccountName', username),
       password: password
     )
     if bind_as
       @display_name = bind_as.first[:displayname].first
-      @groups = bind_as.first[:memberof].select {|x| x.match(/#{Rails.configuration.group_filter_regex}/i)}.collect {|x| x.split(',').first.split('=').last}
+      @groups = bind_as.first[:memberof].select {|x| x.match(/#{GROUP_FILTER_REGEX}/i)}.collect {|x| x.split(',').first.split('=').last}
       @user_cn = bind_as.first[:dn].first
       @active_directory_user = true
       @openldap_user = false
@@ -191,13 +187,13 @@ class Ldap  < ActiveType::Object
 
   def validate_generic_user_in_active_directory
     bind_as = admin_connection.bind_as(
-      base: Rails.configuration.ldap_generic_users,
+      base: GENERIC_USERS,
       filter: Net::LDAP::Filter.eq('samAccountName', username),
       password: password
     )
     if bind_as
       @display_name = bind_as.first[:displayname].first
-      @groups = bind_as.first[:memberof].select {|x| x.match(/#{Rails.configuration.group_filter_regex}/i)}.collect {|x| x.split(',').first.split('=').last}
+      @groups = bind_as.first[:memberof].select {|x| x.match(/#{GROUP_FILTER_REGEX}/i)}.collect {|x| x.split(',').first.split('=').last}
       @user_cn = bind_as.first[:dn].first
       @active_directory_user = true
       @openldap_user = false
@@ -224,8 +220,8 @@ class Ldap  < ActiveType::Object
 
   # Groups user is assigned to.
   def ldap_user_groups
-    Rails.logger.info("Ldap#users_groups:" + Rails.configuration.ldap_groups)
-    Ldap.new.admin_search(Rails.configuration.ldap_groups,
+    Rails.logger.info("Ldap#users_groups:" + GROUPS_PATH)
+    Ldap.new.admin_search(GROUPS_PATH,
                           "uniqueMember",
                           "uid=#{username}", "cn")
   rescue => e
