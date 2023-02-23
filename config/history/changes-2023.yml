@@ -1,4 +1,12 @@
 - :date: 23-Feb-2023
+  :jira_id: '4447'
+  :description: |-
+    Taxonomy: Toggling a taxonomy draft on/off from the menu now doesn't reload the page - instead, the menu display and tab availability are changed via JavaScript.
+- :date: 22-Feb-2023
+  :jira_id: '4426'
+  :description: |-
+    LDAP: Now verifying SimpleAD TLS certificate when logging users in
+- :date: 22-Feb-2023
   :jira_id: '4426'
   :description: |-
     LDAP: Now verifying SimpleAD TLS certificate when logging users in
