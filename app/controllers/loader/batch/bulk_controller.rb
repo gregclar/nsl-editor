@@ -20,53 +20,23 @@
 # Bulk operations from the Loader tab.
 class Loader::Batch::BulkController < ApplicationController
   before_action :clean_params 
+  before_action :set_up_job, only: [:create_preferred_matches,
+                                    :create_draft_instances,
+                                    :add_to_draft_taxonomy]
+
+  rescue_from JobAlreadyLockedError, with: :handle_job_already_locked
 
   def index
     throw 'index'
   end
 
-   # Form has multiple submit buttons.
-  def operation
-    add_name_string_to_session
-    case params[:submit].downcase
-    when 'show stats'
-      show_stats
-    when 'refresh stats'
-      show_stats
-    when 'hide stats'
-      hide_stats
-    else
-      run_job
-    end
-  end
-
   def enable_add; end
   def disable_add; end
 
-  private
-
-  def run_job
-    @job_number = Time.now.to_i
-    raise JobLockedError.new(params[:submit]) unless Loader::Batch::Bulk::JobLock.lock!(params[:submit])
-    case params[:submit]
-    when 'Create Preferred Matches'
-      create_preferred_matches
-    when 'Create Draft Instances'
-      create_draft_instances
-    when 'Add to draft taxonomy'
-      add_to_draft_taxonomy
-    else 
-      Loader::Batch::Bulk::JobLock.unlock!
-      throw "The Editor app doesn't know how to #{params[:submit]}"
-    end
-  rescue JobLockedError => e
-    logger.error('job lock error')
-    @message = 'Job Lock Error'
-    render :job_lock_error
-  rescue => e
-    logger.error("run_job error: #{e.to_s}")
-    @message = e.to_s.sub(/uncaught throw/,'').gsub(/"/,'')
-    render 'error', locals: {message_container_id_prefix: 'bulk-operations-' }
+  def stats
+    @stats = Loader::Batch::Stats::Reporter.new(
+      params[:name_string],
+      (session[:default_loader_batch_id]||0))
   end
 
   def create_preferred_matches
@@ -85,6 +55,7 @@ class Loader::Batch::BulkController < ApplicationController
   rescue => e
     logger.error("LoaderBatchBulkController#create_preferred_matches: #{e.to_s}")
     logger.error e.backtrace.join("\n")
+    pull_down_job
     @message = e.to_s.sub(/uncaught throw/,'').gsub(/"/,'')
     render 'error', locals: {message_container_id_prefix: prefix }
   end
@@ -98,44 +69,18 @@ class Loader::Batch::BulkController < ApplicationController
     attempted, created, declined, errors = job.run
     @message = "Create draft instances attempted #{attempted}; "
     @message += "created #{created} draft #{'instance'.pluralize(created)} with"
-    @message += " #{declined} declined and #{errors} error(s) for "
+    @message += " #{declined} declined and #{errors} #{'error'.pluralize(errors)} for "
     @message += "#{params[:name_string]} (job ##{@job_number})"
     Loader::Batch::Bulk::JobLock.unlock!
     render 'create_draft_instances', locals: {message_container_id_prefix: prefix }
   rescue => e
     logger.error("LoaderBatchBulkController#create_draft_instances: #{e.to_s}")
     logger.error e.backtrace.join("\n")
+    pull_down_job
     @message = e.to_s.sub(/uncaught throw/,'').gsub(/"/,'')
     render 'error', locals: {message_container_id_prefix: prefix }
   end
-
-  def add_name_string_to_session
-    unless params[:name_string].blank?
-      session[:name_string] = params[:name_string]
-    end
-  end
-
-  def show_stats
-    @stats = Loader::Batch::Stats::Reporter.new(
-      params[:name_string],
-      (session[:default_loader_batch_id]||0))
-    render 'stats'
-  end
-
-  def hide_stats
-    render 'hide_stats'
-  end
-
-  # what is this doing?
-  def the_prefix(str)
-    if params[:gui_submit_place].nil?
-      str
-    else
-      "#{params[:gui_submit_place]}-#{str}"
-    end
-    str
-  end
-
+  
   def add_to_draft_taxonomy
     prefix = 'add-to-draft-taxonomy-'
     job = AddToDraftTaxonomyJob.new(session[:default_loader_batch_id], 
@@ -150,12 +95,45 @@ class Loader::Batch::BulkController < ApplicationController
   rescue => e
     logger.error("LoaderBatchBulkController#add_to_draft_taxonomy: #{e.to_s}")
     logger.error e.backtrace.join("\n")
+    pull_down_job
     @message = e.to_s.sub(/uncaught throw/,'').gsub(/"/,'')
     render 'error', locals: {message_container_id_prefix: prefix }
   end
 
+  private
+
+  def add_name_string_to_session
+    unless params[:name_string].blank?
+      session[:name_string] = params[:name_string]
+    end
+  end
+
+  # what is this doing?
+  def the_prefix(str)
+    if params[:gui_submit_place].nil?
+      str
+    else
+      "#{params[:gui_submit_place]}-#{str}"
+    end
+    str
+  end
+  
   def clean_params
     params[:name_string] = params[:name_string].try('strip')
   end
-end
 
+  def set_up_job
+    @job_number = Time.now.to_i
+    raise JobAlreadyLockedError.new(params[:submit]) unless Loader::Batch::Bulk::JobLock.lock!(params[:submit])
+  end
+
+  def pull_down_job
+    Loader::Batch::Bulk::JobLock.unlock!
+  end
+
+  def handle_job_already_locked
+    logger.error('Job already locked error')
+    @message = 'Job Already Locked'
+    render :job_already_locked_error
+  end
+end

@@ -56,7 +56,6 @@ class Loader::Batch::BulkController::CreatePreferredMatchesJob
     Loader::Batch::Bulk::JobLog.new(@job_number, payload, @authorising_user).write
   end
 
-
   def log_start
     entry = "<b>STARTED</b>: create preferred matches for batch: "
     entry += "#{@batch.name} loader names matching #{@search_string}"

@@ -47,17 +47,10 @@ class Loader::Batch::BulkController::AddToDraftTaxonomyJob
                                              @working_draft,
                                              @authorising_user,
                                              @job_number)
-    #@result = drafter.add
     taxo_adder.add
     @adds += taxo_adder.added
     @declines += taxo_adder.declined
     @errors += taxo_adder.errors
-  #rescue => e
-    #entry = "<span class='red'>Error: failed adding to draft taxonomy</span> "
-    #entry += "##{loader_name.id} #{loader_name.simple_name} "
-    #entry += "- error in do_one_loader_name: #{e.to_s}"
-    #log(entry)
-    #@errors += 1
   end
 
   def log(payload)
@@ -84,12 +77,12 @@ class Loader::Batch::BulkController::AddToDraftTaxonomyJob
   end
 
   def build_message
-    @message = "Adds attempted #{@attempts}; "
-    @message += "added: #{@adds} draft #{'instance'.pluralize(@adds)} with"
-    @message += " preflight stops: ...; #{@declines} declined and #{@errors} error(s) for "
+    @message = "Add to draft taxonomy attempted #{@attempts}; "
+    @message += "#{@adds} draft #{'instance'.pluralize(@adds)} added; "
+    @message += " with #{@declines} declined and  #{errors} #{'error'.pluralize(errors)} for "
     @message += "#{@name_string} (job ##{@job_number})"
   end
-
+  
   def debug(s)
     tag = "Loader::Name::AddToDraftTaxonomy" 
     Rails.logger.debug("#{tag}: #{s}")
