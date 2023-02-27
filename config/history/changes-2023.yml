@@ -1,3 +1,7 @@
+- :date: 27-Feb-2023
+  :jira_id: '4452'
+  :description: |-
+    Loader-side-issue: Rename 'Review' to 'Activity' in the search targets dropdown.
 - :date: 24-Feb-2023
   :jira_id: '4078'
   :description: |-
