@@ -95,7 +95,7 @@ class Loader::Batch::SummaryCounts::AsStatusReporter::ForAcceptedNames
   end
 
   def lock_status
-    Loader::Batch::JobLock.locked? ? 'Locked' : 'Unlocked'
+    Loader::Batch::Bulk::JobLock.locked? ? 'Locked' : 'Unlocked'
   end
 
   def accepted_species_and_below

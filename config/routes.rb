@@ -418,6 +418,7 @@ Rails.application.routes.draw do
     match "batches/bulk/matches", as: "batches_bulk_create_matches", to: "batch/bulk#create_preferred_matches", via: :post
     match "batches/bulk/instances", as: "batches_bulk_create_instances", to: "batch/bulk#create_draft_instances", via: :post
     match "batches/bulk/taxonomy", as: "batches_bulk_add_to_draft_taxonomy", to: "batch/bulk#add_to_draft_taxonomy", via: :post
+    match "batches/bulk", as: "batches_bulk", to: "batch/bulk#operation", via: :post
     match "batches/processing/overview", as: "batch_processing_overview", to: "batches#processing_overview", via: :get
     match "batches/processing/overview/hide", as: "batch_processing_overview_hide", to: "batches#hide_processing_overview", via: :get
     match "batches/bulk/processing/notes", as: "batch_bulk_processing_notes", to: "batches#bulk_processing_notes", via: :get
