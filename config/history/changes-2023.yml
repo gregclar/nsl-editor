@@ -1,6 +1,10 @@
 - :date: 24-Feb-2023
   :jira_id: '4078'
   :description: |-
+    Loader: Fix Batch Summary Counts on the Loader tab - largely untouched since copied from Orchids equivalent
+- :date: 24-Feb-2023
+  :jira_id: '4078'
+  :description: |-
     Loader: Repair refactoring bugs preventing access to the Loader tab and to Summary Statistics on that tab
 - :date: 27-Feb-2023
   :jira_id: '4452'
