@@ -1,11 +1,11 @@
+- :date: 24-Feb-2023
+  :jira_id: '4078'
+  :description: |-
+    Loader: Bulk processing code re-factoring - expect no change to features or functions.
 - :date: 23-Feb-2023
   :jira_id: '4447'
   :description: |-
     Taxonomy: Toggling a taxonomy draft on/off from the menu now doesn't reload the page - instead, the menu display and tab availability are changed via JavaScript.
-- :date: 22-Feb-2023
-  :jira_id: '4426'
-  :description: |-
-    LDAP: Now verifying SimpleAD TLS certificate when logging users in
 - :date: 22-Feb-2023
   :jira_id: '4426'
   :description: |-
@@ -17,7 +17,7 @@
 - :date: 21-Feb-2023
   :jira_id: '4434'
   :description: |-
-    Loader: Exclude names marked as duplicats from loader_name matches.
+    Loader: Exclude names marked as duplicates from loader_name matches.
 - :date: 21-Feb-2023
   :jira_id: '4434'
   :description: |-
