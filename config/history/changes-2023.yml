@@ -1,6 +1,10 @@
 - :date: 28-Feb-2023
   :jira_id: '4078'
   :description: |-
+    Loader: Fix bug preventing Loader Name detail tab displaying when <code>original_text</code> is empty
+- :date: 28-Feb-2023
+  :jira_id: '4078'
+  :description: |-
     Loader: Show a hint in red on the Batch details tab about setting a batch default reference; tweak boilerplate on the edit tab
 - :date: 27-Feb-2023
   :jira_id: '4078'
