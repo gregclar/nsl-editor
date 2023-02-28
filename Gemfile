@@ -77,3 +77,8 @@ gem "simple_calendar", "~> 2.0"
 gem "addressable", ">= 2.8.0"
 
 gem 'simplecov', require: false, group: :test
+
+gem "standardrb", group: [:development, :test]
+gem "standard", group: [:development, :test]
+
+
