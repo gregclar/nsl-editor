@@ -84,7 +84,7 @@ class Loader::Batch::SummaryCounts::AsStatusReporter::ForAcceptedNames
   end
 
   def taxonomy_comments
-    arg = "record_type = 'accepted' and comment is not null"
+    arg = "record_type in ('accepted','excluded') and comment is not null"
     {count: core_search.where(arg).count,
      text: arg}
   end

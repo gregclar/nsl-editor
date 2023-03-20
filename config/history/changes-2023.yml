@@ -1,3 +1,7 @@
+- :date: 21-Mar-2023
+  :jira_id: '4453'
+  :description: |-
+    Loader: Minor adjustment to Batch Summary Counts to include <code>excluded</code> record comments in the comment tally
 - :date: 28-Feb-2023
   :jira_id: '4078'
   :description: |-
