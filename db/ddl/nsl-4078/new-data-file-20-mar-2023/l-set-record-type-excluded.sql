@@ -5,6 +5,6 @@ update loader_name
    and loader_batch_id in (
     select id
       from loader_batch
- where name = 'APC List 103 draft 02 feb 2023'
+ where name = 'APC List 103 draft 20 Mar 2023'
        );
 
