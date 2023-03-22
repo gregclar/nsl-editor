@@ -156,5 +156,4 @@ class Ability
     can "loader/names",                'tab_details' 
     can "loader/names",                'tab_comment' 
   end
-
 end
