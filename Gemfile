@@ -4,7 +4,7 @@ git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 ruby '3.1.3'
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
-gem 'rails', '~> 6.1.7'
+gem 'rails', '~> 7.0.0'
 gem 'pg', '~> 1.1'
 # Use Puma as the app server
 gem 'puma', '>= 5.5.1'
@@ -81,4 +81,4 @@ gem 'simplecov', require: false, group: :test
 gem "standardrb", group: [:development, :test]
 gem "standard", group: [:development, :test]
 
-
+gem "sprockets-rails"

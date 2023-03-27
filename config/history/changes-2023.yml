@@ -1,3 +1,7 @@
+- :date: 27-Mar-2023
+  :jira_id: '4470'
+  :description: |-
+    Upgrade: Upgrade to Rails 7
 - :date: 22-Mar-2023
   :jira_id: ''
   :description: |-
