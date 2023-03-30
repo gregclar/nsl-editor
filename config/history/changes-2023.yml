@@ -1,3 +1,7 @@
+- :date: 31-Mar-2023
+  :jira_id: '4471'
+  :description: |-
+    Loader: Links to <q>Editor name query</q> and <q>Editor simple name query</q> open queries that now also show instances.
 - :date: 30-Mar-2023
   :jira_id: '4471'
   :description: |-
