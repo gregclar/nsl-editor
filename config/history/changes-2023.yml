@@ -1,4 +1,20 @@
 - :date: 30-Mar-2023
+  :jira_id: '4471'
+  :description: |-
+    Loader: Improve Details display for misapps with long Original HTML data
+- :date: 30-Mar-2023
+  :jira_id: '4471'
+  :description: |-
+    Loader: Added link to <q>Editor simple name query</q> on Misapps Details tab - compare with existing <q>Editor [full] name query</q> link result for autonyms
+- :date: 30-Mar-2023
+  :jira_id: '4471'
+  :description: |-
+    Loader: Remove unnecessary, unhelpful data fields from the Matches tab, leaving the form for changing the instance type clearly visible
+- :date: 30-Mar-2023
+  :jira_id: '4471'
+  :description: |-
+    Loader: For synonyms and misapps, the link to a context view, via a parent query, is now the actual parent's name - a small convenience improvement
+- :date: 30-Mar-2023
   :jira_id: ''
   :description: |-
     Admin: Make the admin page more verifiably resilient against missing config values - no visible change 
