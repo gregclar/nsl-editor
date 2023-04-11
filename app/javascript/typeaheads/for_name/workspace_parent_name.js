@@ -28,7 +28,7 @@ function setUpWorkspaceParentName() {
 
 window.setUpWorkspaceParentName = setUpWorkspaceParentName;
 
-workspaceParentNameSuggestions = new Bloodhound({
+window.workspaceParentNameSuggestions = new Bloodhound({
     datumTokenizer: Bloodhound.tokenizers.obj.whitespace('value'),
     queryTokenizer: Bloodhound.tokenizers.whitespace,
     remote: {
@@ -45,6 +45,6 @@ workspaceParentNameSuggestions = new Bloodhound({
     limit: 100
 });
 
-workspaceParentNameSuggestions.initialize();
+window.workspaceParentNameSuggestions.initialize();
 
-window.workspaceParentNameSuggestions = workspaceParentNameSuggestions;
+

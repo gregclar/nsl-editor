@@ -67,10 +67,10 @@ module IconHelper
   end
 
   def search_icon_on_tab
-    icon("search")
+    editor_icon("search")
   end
 
   def gray_search_icon
-    icon("search", "", class: "darkgray")
+    editor_icon("search", "", class: "darkgray")
   end
 end
