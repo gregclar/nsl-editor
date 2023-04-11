@@ -48,7 +48,7 @@ module IconHelper
     end
   end
 
-  def icon(icon, text = "", html_options = {})
+  def editor_icon(icon, text = "", html_options = {})
     html_options[:class] = icon_content_class(icon, html_options)
     html = if text.blank?
              content_tag(:i, nil, html_options)
