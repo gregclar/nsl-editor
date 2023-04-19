@@ -1,4 +1,8 @@
-- :date: 27-Mar-2023
+- :date: 19-Apr-2023
+  :jira_id: '4470'
+  :description: |-
+    Upgrade: Fix problem preventing the create-reference action showing a form
+- :date: 13-Apr-2023
   :jira_id: '4470'
   :description: |-
     Upgrade: Upgrade to Rails 7
