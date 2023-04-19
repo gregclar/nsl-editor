@@ -1,6 +1,10 @@
 - :date: 19-Apr-2023
   :jira_id: '4470'
   :description: |-
+    Upgrade: More rendering fixes - removing hard-coded file suffixes - ".js" first noticed on tree menu; also, tree menu fix for icon.
+- :date: 19-Apr-2023
+  :jira_id: '4470'
+  :description: |-
     Upgrade: Fix problem preventing the create-reference action showing a form
 - :date: 13-Apr-2023
   :jira_id: '4470'

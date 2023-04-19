@@ -42,7 +42,7 @@ class TreesController < ApplicationController
   def new_draft
     @no_search_result_details = true
     @tab_index = (params[:tabIndex] || "40").to_i
-    render "new_draft.js"
+    render "new_draft"
   end
 
   def create_draft
@@ -57,24 +57,24 @@ class TreesController < ApplicationController
     if payload
       @message = "#{payload.draftName} created."
       @created_version = TreeVersion.find(payload.versionNumber)
-      render "create_draft.js"
+      render "create_draft"
     else
       @message = "Something went wrong, no payload."
-      render "create_draft_error.js"
+      render "create_draft_error"
     end
   rescue RestClient::Unauthorized, RestClient::Forbidden => e
     @message = json_error(e)
-    render "create_draft_error.js"
+    render "create_draft_error"
   rescue RestClient::ExceptionWithResponse => e
     @message = json_error(e)
-    render "create_draft_error.js"
+    render "create_draft_error"
   end
 
   def edit_draft
     @no_search_result_details = true
     @tab_index = (params[:tabIndex] || "40").to_i
     @diff_link = Tree::AsServices.diff_link(@working_draft.tree.current_tree_version_id, @working_draft.id)
-    render "edit_draft.js"
+    render "edit_draft"
   end
 
   def update_draft
@@ -84,13 +84,13 @@ class TreesController < ApplicationController
     target.log_entry = params[:draft_log]
     target.save!
     @working_draft = target
-    render "update_draft.js"
+    render "update_draft"
   end
 
   def publish_draft
     @no_search_result_details = true
     @tab_index = (params[:tabIndex] || "40").to_i
-    render "publish_draft.js"
+    render "publish_draft"
   end
 
   def publish_version
@@ -103,17 +103,17 @@ class TreesController < ApplicationController
       @message = "#### #{target.draft_name} published as #{target.tree.name} version #{target.id} ####"
       @message += "\nNew draft being created (it may take a couple of minutes to show up)." if json&.autocreate
       @working_draft = nil
-      render "publish_version.js"
+      render "publish_version"
     else
       @message = json_result(response)
-      render "publish_version_error.js"
+      render "publish_version_error"
     end
   rescue RestClient::Unauthorized, RestClient::Forbidden => e
     @message = json_error(e)
-    render "publish_version_error.js"
+    render "publish_version_error"
   rescue RestClient::ExceptionWithResponse => e
     @message = json_error(e)
-    render "publish_version_error.js"
+    render "publish_version_error"
   end
 
   def reports
@@ -132,10 +132,10 @@ class TreesController < ApplicationController
     Tree::AsServices.update_synonymy(request.raw_post, current_user.username)
   rescue RestClient::Unauthorized, RestClient::Forbidden => e
     @message = json_error(e)
-    render "update_synonymy_error.js"
+    render "update_synonymy_error"
   rescue RestClient::Exception => e
     @message = json_error(e)
-    render "update_synonymy_error.js"
+    render "update_synonymy_error"
   end
 
   def update_synonymy_by_instance
@@ -143,10 +143,10 @@ class TreesController < ApplicationController
     Tree::AsServices.update_synonymy_by_instance(request.raw_post, current_user.username)
   rescue RestClient::Unauthorized, RestClient::Forbidden => e
     @message = json_error(e)
-    render "update_synonymy_error.js"
+    render "update_synonymy_error"
   rescue RestClient::Exception => e
     @message = json_error(e)
-    render "update_synonymy_error.js"
+    render "update_synonymy_error"
   end
 
   # Move an existing taxon (inc children) under a different parent
@@ -167,13 +167,13 @@ class TreesController < ApplicationController
                                                    profile: profile.profile_data)
     response = replacement.replace
     @html_out = process_problems(replacement_json_result(response))
-    render "moved_placement.js"
+    render "moved_placement"
   rescue RestClient::Unauthorized, RestClient::Forbidden => e
     @message = json_error(e)
-    render "move_placement_error.js"
+    render "move_placement_error"
   rescue RestClient::ExceptionWithResponse => e
     @message = json_error(e)
-    render "move_placement_error.js"
+    render "move_placement_error"
   end
 
   # Place and instance on the draft tree version
@@ -197,10 +197,10 @@ class TreesController < ApplicationController
     render "place_name"
   rescue RestClient::Unauthorized, RestClient::Forbidden => e
     @message = json_error(e)
-    render "place_name_error.js"
+    render "place_name_error"
   rescue RestClient::ExceptionWithResponse => e
     @message = json_error(e)
-    render "place_name_error.js"
+    render "place_name_error"
   end
 
   def remove_name_placement
@@ -212,10 +212,10 @@ class TreesController < ApplicationController
     render "removed_placement"
   rescue RestClient::Unauthorized, RestClient::Forbidden => e
     @message = json_error(e)
-    render "remove_placement_error.js"
+    render "remove_placement_error"
   rescue RestClient::ExceptionWithResponse => e
     @message = json_error(e)
-    render "remove_placement_error.js"
+    render "remove_placement_error"
   end
 
   def update_comment
@@ -227,10 +227,10 @@ class TreesController < ApplicationController
                                            element_link: tve.element_link,
                                            profile_data: profile_data)
     profile.update
-    render "update_comment.js"
+    render "update_comment"
   rescue RestClient::Unauthorized, RestClient::Forbidden, RestClient::ExceptionWithResponse => e
     @message = json_error(e)
-    render "update_comment_error.js"
+    render "update_comment_error"
   end
 
   def update_distribution
@@ -243,10 +243,10 @@ class TreesController < ApplicationController
                                            element_link: tve.element_link,
                                            profile_data: profile_data)
     profile.update
-    render "update_distribution.js"
+    render "update_distribution"
   rescue RestClient::Unauthorized, RestClient::Forbidden, RestClient::ExceptionWithResponse => e
     @message = json_error(e)
-    render "update_distribution_error.js"
+    render "update_distribution_error"
   end
 
   def update_excluded
@@ -269,10 +269,10 @@ class TreesController < ApplicationController
                                              parent: parent)
     response = reparent.replace
     @html_out = process_problems(replacement_json_result(response))
-    render "update_parent.js"
+    render "update_parent"
   rescue RestClient::Unauthorized, RestClient::Forbidden, RestClient::ExceptionWithResponse => e
     @message = json_error(e)
-    render "update_parent_error.js"
+    render "update_parent_error"
   end
 
   def show_cas

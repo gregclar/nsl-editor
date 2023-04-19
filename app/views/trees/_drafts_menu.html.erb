@@ -13,7 +13,7 @@
     <li role="presentation">
       <% if menu_item.draft_id %>
           <%= link_to("#{menu_item.name} #{menu_item.draft_name}
-                      #{editor_icon('fa_solid', 'fa-check')}".html_safe,
+                      #{editor_icon('check')}".html_safe,
                       toggle_current_workspace_path(id: menu_item.draft_id),
                       { remote: true,
                         method: "post",
@@ -24,3 +24,4 @@
     </li>
 
 <% end %>
+
