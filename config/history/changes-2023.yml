@@ -1,11 +1,13 @@
+- :date: 21-Apr-2023
+  :release: true
 - :date: 20-Apr-2023
-  :jira_id: ''
+  :jira_id: '4493'
   :description: |-
-    Tree Error: Make tree error messages simple strings, without html tags.
+    Tree Profile Edit Errors: Make tree error messages simple strings, without xml/html tags - improving their visibility and legibility.
 - :date: 20-Apr-2023
-  :jira_id: '4470'
+  :jira_id: '4493'
   :description: |-
-    Upgrade: Tree processing errors noticed during upgrade testing and visible in log but not on UI form - make error messages display
+    Tree Profile Edit Errors: Make hidden tree profile update errors visible by no longer treating xml tags as (non-displayed) html; the errors were logged but invisible in GUI because wrapped in &lt; and &gt; glyphs.
 - :date: 06-Apr-2023
   :release: true
 - :date: 31-Mar-2023
