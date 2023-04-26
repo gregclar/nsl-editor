@@ -53,7 +53,7 @@ module IconHelper
     html = if text.blank?
              content_tag(:i, nil, html_options)
            else
-             "content_tag(:i, nil, html_options) #{text}"
+             "#{content_tag(:i, nil, html_options)} #{text}"
            end
     html.html_safe
   end

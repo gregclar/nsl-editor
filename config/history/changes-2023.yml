@@ -1,3 +1,7 @@
+- :date: 26-Apr-2023
+  :jira_id: '4470'
+  :description: |-
+    Upgrade branch: On the Draft Taxonomies menu, any of the listed drafts should now be ticked if and only if they are the selected draft
 - :date: 21-Apr-2023
   :release: true
 - :date: 20-Apr-2023
