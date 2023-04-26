@@ -63,7 +63,7 @@ class TreesController < ApplicationController
       render "create_draft_error"
     end
   rescue RestClient::Unauthorized, RestClient::Forbidden => e
-    @message = json_error(e)
+    @message = e
     render "create_draft_error"
   rescue RestClient::ExceptionWithResponse => e
     @message = json_error(e)
@@ -109,7 +109,7 @@ class TreesController < ApplicationController
       render "publish_version_error"
     end
   rescue RestClient::Unauthorized, RestClient::Forbidden => e
-    @message = json_error(e)
+    @message = e
     render "publish_version_error"
   rescue RestClient::ExceptionWithResponse => e
     @message = json_error(e)
@@ -131,7 +131,7 @@ class TreesController < ApplicationController
     logger.info "Update synonymy"
     Tree::AsServices.update_synonymy(request.raw_post, current_user.username)
   rescue RestClient::Unauthorized, RestClient::Forbidden => e
-    @message = json_error(e)
+    @message = e
     render "update_synonymy_error"
   rescue RestClient::Exception => e
     @message = json_error(e)
@@ -142,7 +142,7 @@ class TreesController < ApplicationController
     logger.info "Update synonymy by instance"
     Tree::AsServices.update_synonymy_by_instance(request.raw_post, current_user.username)
   rescue RestClient::Unauthorized, RestClient::Forbidden => e
-    @message = json_error(e)
+    @message = e
     render "update_synonymy_error"
   rescue RestClient::Exception => e
     @message = json_error(e)
@@ -169,7 +169,7 @@ class TreesController < ApplicationController
     @html_out = process_problems(replacement_json_result(response))
     render "moved_placement"
   rescue RestClient::Unauthorized, RestClient::Forbidden => e
-    @message = json_error(e)
+    @message = e
     render "move_placement_error"
   rescue RestClient::ExceptionWithResponse => e
     @message = json_error(e)
@@ -196,7 +196,7 @@ class TreesController < ApplicationController
     @message = placement_json_result(response)
     render "place_name"
   rescue RestClient::Unauthorized, RestClient::Forbidden => e
-    @message = json_error(e)
+    @message = e
     render "place_name_error"
   rescue RestClient::ExceptionWithResponse => e
     @message = json_error(e)
@@ -211,11 +211,7 @@ class TreesController < ApplicationController
     @message = json_result(response)
     render "removed_placement"
   rescue RestClient::Unauthorized, RestClient::Forbidden => e
-    @message = json_error(e)
-    render "remove_placement_error"
-  rescue RestClient::ExceptionWithResponse => e
-    @message = json_error(e)
-    render "remove_placement_error"
+    @message = e
   end
 
   def update_comment
@@ -229,7 +225,7 @@ class TreesController < ApplicationController
     profile.update
     render "update_comment"
   rescue RestClient::Unauthorized, RestClient::Forbidden, RestClient::ExceptionWithResponse => e
-    @message = json_error(e)
+    @message = e
     render "update_comment_error"
   end
 
@@ -245,7 +241,7 @@ class TreesController < ApplicationController
     profile.update
     render "update_distribution"
   rescue RestClient::Unauthorized, RestClient::Forbidden, RestClient::ExceptionWithResponse => e
-    @message = json_error(e)
+    @message = e
     render "update_distribution_error"
   end
 
@@ -255,7 +251,7 @@ class TreesController < ApplicationController
                                   element_link: params[:taxonUri],
                                   excluded: params[:excluded]).update
   rescue RestClient::Unauthorized, RestClient::Forbidden, RestClient::ExceptionWithResponse => e
-    @message = json_error(e)
+    @message = e
     render :text => @message, :status => 401
   end
 
@@ -271,7 +267,7 @@ class TreesController < ApplicationController
     @html_out = process_problems(replacement_json_result(response))
     render "update_parent"
   rescue RestClient::Unauthorized, RestClient::Forbidden, RestClient::ExceptionWithResponse => e
-    @message = json_error(e)
+    @message = e
     render "update_parent_error"
   end
 

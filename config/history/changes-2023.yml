@@ -1,19 +1,51 @@
+- :date: 21-Apr-2023
+  :release: true
 - :date: 20-Apr-2023
-  :jira_id: '4470'
+  :jira_id: '4493'
   :description: |-
-    Upgrade: Tree processing errors noticed during upgrade testing and visible in log but not on UI form - make error messages display
+    Tree Profile Edit Errors: Make tree error messages simple strings, without xml/html tags - improving their visibility and legibility.
+- :date: 20-Apr-2023
+  :jira_id: '4493'
+  :description: |-
+    Tree Profile Edit Errors: Make hidden tree profile update errors visible by no longer treating xml tags as (non-displayed) html; the errors were logged but invisible in GUI because wrapped in &lt; and &gt; glyphs.
 - :date: 19-Apr-2023
   :jira_id: '4470'
   :description: |-
-    Upgrade: More rendering fixes - removing hard-coded file suffixes - ".js" first noticed on tree menu; also, tree menu fix for icon.
+    Upgrade Branch: More rendering fixes - removing hard-coded file suffixes - ".js" first noticed on tree menu; also, tree menu fix for icon.  <b>(Branch was not in prod release 21 Apr)</b>
 - :date: 19-Apr-2023
   :jira_id: '4470'
   :description: |-
-    Upgrade: Fix problem preventing the create-reference action showing a form
+    Upgrade Branch: Fix problem preventing the create-reference action showing a form  <b>(Branch was not in prod release 21 Apr)</b>
 - :date: 13-Apr-2023
   :jira_id: '4470'
   :description: |-
-    Upgrade: Upgrade to Rails 7
+    Upgrade Branch: Upgrade to Rails 7  <b>(Branch was not in prod release 21 Apr)</b>
+- :date: 06-Apr-2023
+  :release: true
+- :date: 31-Mar-2023
+  :jira_id: '4471'
+  :description: |-
+    Loader: Links to <q>Editor name query</q> and <q>Editor simple name query</q> open queries that now also show instances.
+- :date: 30-Mar-2023
+  :jira_id: '4471'
+  :description: |-
+    Loader: Improve Details display for misapps with long Original HTML data
+- :date: 30-Mar-2023
+  :jira_id: '4471'
+  :description: |-
+    Loader: Added link to <q>Editor simple name query</q> on Misapps Details tab - compare with existing <q>Editor [full] name query</q> link result for autonyms
+- :date: 30-Mar-2023
+  :jira_id: '4471'
+  :description: |-
+    Loader: Remove unnecessary, unhelpful data fields from the Matches tab, leaving the form for changing the instance type clearly visible
+- :date: 30-Mar-2023
+  :jira_id: '4471'
+  :description: |-
+    Loader: For synonyms and misapps, the link to a context view, via a parent query, is now the actual parent's name - a small convenience improvement
+- :date: 30-Mar-2023
+  :jira_id: ''
+  :description: |-
+    Admin: Make the admin page more verifiably resilient against missing config values - no visible change 
 - :date: 22-Mar-2023
   :jira_id: ''
   :description: |-
