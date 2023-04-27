@@ -105,3 +105,4 @@ gem "standard", group: [:development, :test]
 
 gem "rails-ujs"
 gem "font-awesome-sass", "~> 6.4.0"
+gem "csv"

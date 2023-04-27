@@ -1,3 +1,7 @@
+- :date: 27-Apr-2023
+  :jira_id: ''
+  :description: |-
+    Restored csv output for Instance search results
 - :date: 26-Apr-2023
   :jira_id: '4470'
   :description: |-
