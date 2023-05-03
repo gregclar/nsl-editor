@@ -1,7 +1,7 @@
 - :date: 03-May-2023
   :jira_id: '4470'
   :description: |-
-    Upgrade branch: Loader Batches New Review form now submits correctly
+    Upgrade branch: Loader Batches New Review form now submits correctly, and there are more form_with fixes.
 - :date: 03-May-2023
   :jira_id: '4470'
   :description: |-
