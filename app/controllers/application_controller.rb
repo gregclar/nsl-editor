@@ -1,5 +1,5 @@
 class ApplicationController < ActionController::Base
-  protect_from_forgery with: :exception  # from v4, needed in v6?
+  protect_from_forgery with: :exception
   before_action :set_debug,
                 :start_timer,
                 :check_system_broadcast,
