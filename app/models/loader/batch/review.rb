@@ -25,7 +25,7 @@ class Loader::Batch::Review < ActiveRecord::Base
 
   validates :name, presence: true
   validates :name, uniqueness: { scope: :loader_batch_id,
-    message: "must be unique within a batch" }
+    message: "of the Review must be unique within its Batch" }
   before_destroy :abort_if_review_periods
 
   belongs_to :loader_batch, class_name: "Loader::Batch", foreign_key: "loader_batch_id"
