@@ -1,4 +1,8 @@
 - :date: 04-May-2023
+  :jira_id: '4136'
+  :description: |-
+    Added short-hand variants of the <code>show-instances:</code> directive for Name and Reference searches
+- :date: 04-May-2023
   :jira_id: '4460'
   :description: |-
     Refined the error message to make clear it's referring to the Name of a Review for a Batch rather than a Name per se
