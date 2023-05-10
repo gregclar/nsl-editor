@@ -1,4 +1,8 @@
 - :date: 04-May-2023
+  :jira_id: '4499'
+  :description: |-
+    Services error messages: restore the code that extracts json errors from Services responses - this leaves us vulnerable to silent 500 errors, so triaged that by prefixing possible silent/XML errors with "Tree error:", but currently no way to generate 500 errors from Services on demand for testing.
+- :date: 04-May-2023
   :jira_id: '4136'
   :description: |-
     Added short-hand variants of the <code>show-instances:</code> directive for Name and Reference searches
