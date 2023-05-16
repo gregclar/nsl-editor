@@ -1,4 +1,8 @@
 - :date: 16-May-2023
+  :jira_id: '4511'
+  :description: |-
+    Errors in log: removed errant code - these errors were being handled and did not affect record processing for users
+- :date: 16-May-2023
   :jira_id: '4510'
   :description: |-
     Icons: switch to the latest font-awesome-kit - this fixes the Common/Cultivar checkbox display and all icons should display correctly now
