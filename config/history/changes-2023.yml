@@ -1,4 +1,8 @@
 - :date: 17-May-2023
+  :jira_id: '4516'
+  :description: |-
+    Common/Cultivar checkbox: remove the flash of the check box field when a non-Name search result loads
+- :date: 17-May-2023
   :jira_id: '4514'
   :description: |-
     Technical: clean up JS console debug - no affect on user interface
