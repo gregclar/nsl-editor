@@ -1,4 +1,8 @@
 - :date: 07-Jul-2023
+  :jira_id: '4556'
+  :description: |-
+    Rails 7 upgrade: Remove some overlooked Rails 6 remnants - testing will be to confirm no Editor behaviour has changed
+- :date: 07-Jul-2023
   :release: true
 - :date: 05-Jul-2023
   :jira_id: '4549'
