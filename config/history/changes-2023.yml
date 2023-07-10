@@ -1,3 +1,7 @@
+- :date: 10-Jul-2023
+  :jira_id: '4558'
+  :description: |-
+    Security: Replace regex that triggers security alert from typeaheads for referance: duplicate-of, parent, author - no behaviour should change
 - :date: 07-Jul-2023
   :jira_id: '4556'
   :description: |-
