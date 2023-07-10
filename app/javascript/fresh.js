@@ -197,7 +197,9 @@
       return loaderBulkShowStatsClicked(event, $(this));
     });
     debug("on load - search-target-button-text: " + $('#search-target-button-text').text().trim());
-    window.showOrHideCultivarCommonCbox($('#search-target-button-text').text().trim());
+    if (typeof showOrHideCultivarCommonCbox === 'function') {
+      window.showOrHideCultivarCommonCbox($('#search-target-button-text').text().trim());
+    }
     // When tabbing to search-result record, need to click to trigger retrieval of details.
     $('a.show-details-link[tabindex]').focus(function(event) {
       return clickOnFocus(event, $(this));
@@ -645,10 +647,6 @@
 
   showFieldIsNotYetSaved = function($element) {
     $element.addClass('changed').addClass('not-saved');
-  };
-
-  selectedRecords = function() {
-    return $('div#search-results tr td.checkbox-container .stylish-checkbox-checked');
   };
 
   window.loadTreeDetails = function(event, inFocus, tabWasClicked = false) {

@@ -1,3 +1,7 @@
+- :date: 11-Jul-2023
+  :jira_id: '4560'
+  :description: |-
+    Code clean up: Fix problem created as a side-effect of yesterday's JavaScript changes.
 - :date: 10-Jul-2023
   :jira_id: '4560'
   :description: |-
