@@ -1,7 +1,7 @@
 - :date: 11-Jul-2023
   :jira_id: '4561'
   :description: |-
-    Code clean up: Fix CSRF protection weakened or disabled for Name <code>Refresh descendents names...</code> button
+    Code clean up: Fix CSRF protection weakened or disabled for Name <code>Refresh descendents names...</code> button (refined)
 - :date: 11-Jul-2023
   :jira_id: '4560'
   :description: |-
