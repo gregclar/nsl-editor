@@ -1,27 +1,31 @@
 - :date: 11-Jul-2023
+  :jira_id: '4562'
+  :description: |-
+    Code clean up: change underlying code for adding a Name Tag - no behaviour should change
+- :date: 11-Jul-2023
   :jira_id: '4561'
   :description: |-
-    Code clean up: Fix CSRF protection weakened or disabled for Name <code>Refresh descendents names...</code> button (refined)
+    Code clean up: change underlying code for Name <q>Refresh descendents names...</q> button  - no behaviour should change
 - :date: 11-Jul-2023
   :jira_id: '4560'
   :description: |-
-    Code clean up: Fix problem created as a side-effect of yesterday's JavaScript changes.
+    Code clean up: fix problem created as a side-effect of yesterday's JavaScript changes - no behaviour should change.
 - :date: 10-Jul-2023
   :jira_id: '4560'
   :description: |-
-    Code clean up: Remove dead JavaScript code originally intended for multi-record processing - no behaviour should change
+    Code clean up: remove dead JavaScript code originally intended for multi-record processing - no behaviour should change
 - :date: 10-Jul-2023
   :jira_id: '4558'
   :description: |-
-    Security: Replace regex that triggers security alert from typeaheads for name: parent, family, duplicate-of, author, unpub-cit-instance, and author: duplicate-of
+    Security: replace regex in typeahead save processing for <code>name:</code> <code>parent</code>, <code>family</code>, <code>duplicate-of</code>, <code>author</code>, <code>unpub-cit-instance</code>, and <code>author:</code> <code>duplicate-of</code>
 - :date: 10-Jul-2023
   :jira_id: '4558'
   :description: |-
-    Security: Replace regex that triggers security alert from typeaheads for referance: duplicate-of, parent, author - no behaviour should change
+    Security: replace regex in typeahead save processing for <code>reference: duplicate-of</code>, <code>parent</code>, <code>author</code> - no behaviour should change
 - :date: 07-Jul-2023
   :jira_id: '4556'
   :description: |-
-    Rails 7 upgrade: Remove some overlooked Rails 6 remnants - testing will be to confirm no Editor behaviour has changed
+    Rails 7 upgrade: remove some overlooked Rails 6 remnants - testing will be to confirm no Editor behaviour has changed
 - :date: 07-Jul-2023
   :release: true
 - :date: 05-Jul-2023
