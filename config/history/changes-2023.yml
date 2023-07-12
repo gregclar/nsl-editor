@@ -1,3 +1,7 @@
+- :date: 12-Jul-2023
+  :jira_id: '4497'
+  :description: |-
+    Loader: first cut of loader name output intended for printing
 - :date: 11-Jul-2023
   :jira_id: '4562'
   :description: |-
