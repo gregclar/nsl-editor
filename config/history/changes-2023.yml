@@ -1,3 +1,7 @@
+- :date: 13-Jul-2023
+  :jira_id: '4563'
+  :description: |-
+    Loader: remove duplicated 'Drafted' indicator from Loader Name record display
 - :date: 12-Jul-2023
   :jira_id: '4497'
   :description: |-
