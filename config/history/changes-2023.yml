@@ -1,4 +1,8 @@
 - :date: 13-Jul-2023
+  :jira_id: '4497'
+  :description: |-
+    Loader: upgrades to loader name print output based on yesterday's review: excluded names heading and format, phrase name not duplicated
+- :date: 13-Jul-2023
   :jira_id: '4563'
   :description: |-
     Loader: remove duplicated 'Drafted' indicator from Loader Name record display

@@ -6,6 +6,7 @@ h1.showme {
 table.search-results.for-print {
   padding-left: 3em;
 }
+
 tr.search-result.heading {
   font-weight: bold;
   font-size: 15pt;
@@ -24,6 +25,10 @@ tr.search-result span.loader-name.simple-name.accepted {
   font-weight: bold;
 }
 
+tr.search-result span.loader-name.simple-name.excluded {
+  font-style: italic;
+}
+
 tr.search-result span.loader-name.simple-name.synonym {
   font-style: italic;
 }
@@ -32,3 +37,10 @@ tr.search-result.distribution span.distribution-inset {
   width: 6em;
   display: inline-block;
 }
+
+tr.search-result.excluded-header {
+  font-weight: bold;
+  font-size: 12pt;
+  height: 4em;
+}
+
