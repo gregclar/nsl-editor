@@ -1,4 +1,8 @@
 - :date: 13-Jul-2023
+  :jira_id: '4564'
+  :description: |-
+    Version and build ID: add service to report build time and fine-tune the service reporting version
+- :date: 13-Jul-2023
   :jira_id: '4497'
   :description: |-
     Loader: upgrades to loader name print output based on yesterday's review: excluded names heading and format, phrase name not duplicated
