@@ -1,7 +1,7 @@
 - :date: 13-Jul-2023
   :jira_id: '4564'
   :description: |-
-    Version and build ID: add service to report build time and fine-tune the service reporting version
+    Version and build ID (system use): add service to report build time and fine-tune the service reporting version - no user testing required
 - :date: 13-Jul-2023
   :jira_id: '4497'
   :description: |-
