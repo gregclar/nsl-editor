@@ -1,3 +1,7 @@
+- :date: 14-Jul-2023
+  :jira_id: '4565'
+  :description: |-
+    Firefox problem fix: the Editor now works again in Firefox v115
 - :date: 13-Jul-2023
   :jira_id: '4564'
   :description: |-
