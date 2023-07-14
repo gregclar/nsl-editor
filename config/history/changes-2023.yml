@@ -1,4 +1,8 @@
 - :date: 14-Jul-2023
+  :jira_id: '4566'
+  :description: |-
+    Remove Javascript warning message: correct the format of the integrity attribute - no change to behaviour expected
+- :date: 14-Jul-2023
   :jira_id: '4565'
   :description: |-
     Firefox problem fix: the Editor now works again in Firefox v115
