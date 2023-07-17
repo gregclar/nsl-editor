@@ -19,7 +19,7 @@
 #   Add instance to draft taxonomy for a raw loader_name
 class Loader::Name::DraftTaxonomyAdder::PlacerOrReplacer::Placer
   attr_reader :added, :declined, :errors, :result
-  
+
   def initialize(preferred_match, draft, user, job)
     @preferred_match = preferred_match
     @loader_name = preferred_match.loader_name
@@ -34,7 +34,7 @@ class Loader::Name::DraftTaxonomyAdder::PlacerOrReplacer::Placer
   def place
     debug("parent_element_link: #{parent_tve(@preferred_match).element_link}") unless parent_tve(@preferred_match).nil?
     placement = Tree::Workspace::Placement.new(username: @user,
-                                               parent_element_link: parent_tve(@preferred_match).try('element_link'),
+                                               parent_element_link: parent_tve(@preferred_match).try("element_link"),
                                                instance_id: @preferred_match.standalone_instance_id,
                                                excluded: @loader_name.excluded?,
                                                profile: profile,
@@ -51,7 +51,7 @@ class Loader::Name::DraftTaxonomyAdder::PlacerOrReplacer::Placer
   end
 
   def status
-    return [@added, @declined, @errors, @result]
+    [@added, @declined, @errors, @result]
   end
 
   private
@@ -61,30 +61,30 @@ class Loader::Name::DraftTaxonomyAdder::PlacerOrReplacer::Placer
     @draft.name_in_version(preferred_match.name.parent)
   end
 
-  # I did try to use the Tree::ProfileData class, 
+  # I did try to use the Tree::ProfileData class,
   # but it couldn't find the comment_key or distribution_key
-  # without new methods and (more importantly) it requires 
+  # without new methods and (more importantly) it requires
   # a @current_user, which the batch job doesn't have.
   def profile
     hash = {}
     unless @loader_name.comment.blank?
-      hash['APC Comment'] = { value: @loader_name.comment,
+      hash["APC Comment"] = { value: @loader_name.comment,
                               updated_by: @user,
-                              updated_at: Time.now.utc.iso8601}
+                              updated_at: Time.now.utc.iso8601 }
     end
     unless @loader_name.distribution.blank?
-      hash['APC Dist.'] =
-        { value: @loader_name.distribution.split(' | ').join(', '),
+      hash["APC Dist."] =
+        { value: @loader_name.distribution.split(" | ").join(", "),
           updated_by: @user,
-          updated_at: Time.now.utc.iso8601
-        }
+          updated_at: Time.now.utc.iso8601 }
     end
     hash
   end
 
   def debug(msg)
     Rails.logger.debug(
-      "Loader::Name::DraftTaxonomyAdder::PlaceOrReplace::Placer: #{msg}")
+      "Loader::Name::DraftTaxonomyAdder::PlaceOrReplace::Placer: #{msg}"
+    )
   end
 
   def log_to_table(payload)
@@ -92,5 +92,4 @@ class Loader::Name::DraftTaxonomyAdder::PlacerOrReplacer::Placer
   rescue StandardError => e
     Rails.logger.error("Couldn't log to table: #{e}")
   end
-
 end

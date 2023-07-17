@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 #  Copyright 2015 Australian National Botanic Gardens
 #
 #   This file is part of the NSL Editor.
@@ -18,7 +19,7 @@
 #   Place or replace instance in draft taxonomy
 class Loader::Name::DraftTaxonomyAdder::PlacerOrReplacer
   attr_reader :added, :declined, :errors, :result
-  
+
   def initialize(loader_name, draft, user, job)
     @loader_name = loader_name
     @draft = draft
@@ -28,9 +29,8 @@ class Loader::Name::DraftTaxonomyAdder::PlacerOrReplacer
     @result = false
   end
 
-
   # From @loader_name work out the name and instance you're interested in.
-  # 
+  #
   # for all the preferred names/instances of the loader name
   # loop
   #   if the name is on the draft
@@ -48,10 +48,10 @@ class Loader::Name::DraftTaxonomyAdder::PlacerOrReplacer
       else
         @tree_version_element = @draft.name_in_version(preferred_match.name)
         if @tree_version_element.present?
-          debug 'name is on the draft: replace it'
+          debug "name is on the draft: replace it"
           return replace_name(preferred_match)
         else
-          debug 'name is not on the draft: just place it'
+          debug "name is not on the draft: just place it"
           place_name(preferred_match)
         end
       end
@@ -61,12 +61,12 @@ class Loader::Name::DraftTaxonomyAdder::PlacerOrReplacer
     @errors = 1
     @error = json_error(e)
     log_to_table("Error placing or replacing on taxonomy: #{@loader_name.simple_name}, id: #{@loader_name.id}: #{@error}")
-    #if inferred_rank.downcase == 'genus'
-      #raise GenusTaxonomyPlacementError.new("Stopping because failed to add genus #{@loader_name.simple_name}")
-    #else
-      #0
-    #end
-  rescue => e
+    # if inferred_rank.downcase == 'genus'
+    # raise GenusTaxonomyPlacementError.new("Stopping because failed to add genus #{@loader_name.simple_name}")
+    # else
+    # 0
+    # end
+  rescue StandardError => e
     Rails.logger.error("PlaceOrReplace: Error placing or replacing loader_name on taxonomy #{e.message}")
     log_to_table("Error placing/replacing on taxonomy: #{@loader_name.simple_name}, id: #{@loader_name.id}: #{e.message}")
   end
@@ -100,7 +100,7 @@ class Loader::Name::DraftTaxonomyAdder::PlacerOrReplacer
     else
       json&.to_s || err.to_s
     end
-  rescue
+  rescue StandardError
     err.to_s
   end
 
@@ -108,7 +108,7 @@ class Loader::Name::DraftTaxonomyAdder::PlacerOrReplacer
     (@loader_name.rank_nsl ||
      @loader_name.rank ||
      @loader_name&.preferred_matches&.first&.name&.name_rank&.name ||
-     'cannot infer rank')
+     "cannot infer rank")
   end
 
   def log_to_table(payload)

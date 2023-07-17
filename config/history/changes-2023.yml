@@ -1,3 +1,7 @@
+- :date: 18-Jul-2023
+  :jira_id: '4567'
+  :description: |-
+    Code Quality: ran <code>rubocop -a</code> to automatically fix problems detected by linting - no change to behaviour expected
 - :date: 17-Jul-2023
   :jira_id: '4497'
   :description: |-

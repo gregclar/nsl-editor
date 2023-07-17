@@ -68,7 +68,7 @@ module ApplicationHelper
 
   def formatted_date(date)
     date
-    #date.strftime("%d-%b-%Y")
+    # date.strftime("%d-%b-%Y")
   end
 
   def ext_mapper_url
@@ -76,8 +76,8 @@ module ApplicationHelper
   end
 
   def mapper_link(type, id)
-    #this is brittle. Replace with getting the URI from the object or the mapper directly.
-    #see name and instance examples below.
+    # this is brittle. Replace with getting the URI from the object or the mapper directly.
+    # see name and instance examples below.
     %(<a href="#{ext_mapper_url}#{type}/#{ShardConfig.name_space.downcase}/#{id}" title="#{type.capitalize} #{id}"><i class="fa fa-link"></i></a>).html_safe
   end
 
@@ -90,21 +90,19 @@ module ApplicationHelper
   end
 
   def page_title
-    unless Rails.configuration.try('tag').blank?
-      return "#{Rails.configuration.try('tag')}"
+    return "#{Rails.configuration.try('tag')}" unless Rails.configuration.try("tag").blank?
+
+    case Rails.configuration.try("environment")
+    when /\Adev/i
+      "Dev Editor"
+    when /^test/i
+      "Test Editor"
+    when /^stag/i
+      "Stage Editor"
+    when /^prod/i
+      "#{ShardConfig.shard_group_name} Editor"
     else
-      case Rails.configuration.try("environment")
-      when /\Adev/i
-        "Dev Editor"
-      when /^test/i
-        "Test Editor"
-      when /^stag/i
-        "Stage Editor"
-      when /^prod/i
-        "#{ShardConfig.shard_group_name} Editor"
-      else
-        "#{ShardConfig.shard_group_name} Editor"
-      end
+      "#{ShardConfig.shard_group_name} Editor"
     end
   end
 
@@ -127,4 +125,3 @@ class String
     tr("_", " ").upcase
   end
 end
-

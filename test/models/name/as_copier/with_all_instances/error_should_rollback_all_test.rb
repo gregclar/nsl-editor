@@ -33,20 +33,20 @@ class NameAsCopWAllInstancesErrorShouldRollbackAllTest < ActiveSupport::TestCase
 
   def returned_body
     {
-      "class": "silly name class",
-      "_links": { "permalink": [] },
-      "name_element": "redundant name element for id 960477440",
-      "action": "unnecessary action",
-      "result": returned_body_result
+      class: "silly name class",
+      _links: { permalink: [] },
+      name_element: "redundant name element for id 960477440",
+      action: "unnecessary action",
+      result: returned_body_result
     }
   end
 
   def returned_body_result
     {
-      "fullMarkedUpName": "full marked up name for id 960477440",
-      "simpleMarkedUpName": "simple marked up name for id 960477440",
-      "fullName": "full name for id 960477440",
-      "simpleName": "simple name for id 960477440"
+      fullMarkedUpName: "full marked up name for id 960477440",
+      simpleMarkedUpName: "simple marked up name for id 960477440",
+      fullName: "full name for id 960477440",
+      simpleName: "simple name for id 960477440"
     }
   end
 

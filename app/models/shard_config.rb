@@ -33,6 +33,7 @@ class ShardConfig < ActiveRecord::Base
     results = ShardConfig.where(name: "name parent rank restriction")
     return true if results.blank?
     return true if results.first.value == "on"
+
     false
   end
 
@@ -41,7 +42,6 @@ class ShardConfig < ActiveRecord::Base
   end
 
   def self.shard_group_name
-    ShardConfig.find_by(name: 'shard group name').try('value') || 'NSL'
+    ShardConfig.find_by(name: "shard group name").try("value") || "NSL"
   end
 end
-

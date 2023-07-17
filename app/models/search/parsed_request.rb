@@ -150,14 +150,14 @@ class Search::ParsedRequest
     "bulk processing log" => " logged_at desc ",
   }.freeze
 
-  INCLUDE_INSTANCES_FOR = ["name", "reference"]
+  INCLUDE_INSTANCES_FOR = %w[name reference]
 
   INCLUDE_INSTANCES_CLASS = {
     "name" => "Search::OnName::WithInstances",
     "references" => "Search::OnName::WithInstances",
   }.freeze
 
-  ALLOW_SHOW_INSTANCES_TARGETS = ["names", "name", "references", "reference"]
+  ALLOW_SHOW_INSTANCES_TARGETS = %w[names name references reference]
 
   TRIM_RESULTS = {
     "loader name" => true,
@@ -180,7 +180,7 @@ class Search::ParsedRequest
                                          "instance is cited by",
                                          "instance_is_cited_by",
                                          "audit"]
-  SHOW_INSTANCES = 'show-instances:'
+  SHOW_INSTANCES = "show-instances:"
 
   def initialize(params)
     @params = params
@@ -235,7 +235,7 @@ class Search::ParsedRequest
   # Convert multiplication sign to x.
   def normalise_query_string
     if @query_string.blank?
-      ''
+      ""
     else
       @query_string.strip.gsub(/:/, ": ").gsub(/:  /, ": ")
     end
@@ -249,14 +249,15 @@ class Search::ParsedRequest
     elsif tokens.first =~ /\Alist\z/i
       tokens = tokens.drop(1)
       listing
-    else default_list_and_count
+    else
+      default_list_and_count
     end
     tokens
   end
 
   def parse_print_or_display(tokens)
     @print = false
-    if tokens.include?("print:") then 
+    if tokens.include?("print:")
       @print = true
       tokens.delete_if { |x| x.match(/print:/) }
     end
@@ -386,28 +387,26 @@ class Search::ParsedRequest
     if SIMPLE_QUERY_TARGETS.include?(@query_target) ||
        ADDITIONAL_NON_PREPROCESSED_TARGETS.include?(@query_target) ||
        @query_target.blank?
-      @default_query_scope = ''
+      @default_query_scope = ""
       @apply_default_query_scope = false
       @original_query_target = @query_target
-    else
-      if Rails.configuration.try(:batch_loader_aware)
-        unless loader_batch_preprocessing?
-          raise "Unknown query target: #{@query_target}"
-        end
-      end
+    elsif Rails.configuration.try(:batch_loader_aware)
+      raise "Unknown query target: #{@query_target}" unless loader_batch_preprocessing?
     end
-    tokens 
+    tokens
   end
 
-  # Todo: convert this procedural code that refers to specific models to model
+  # TODO: convert this procedural code that refers to specific models to model
   # code or to some sort of declaration
   def loader_batch_preprocessing?
-    if ::Loader::Batch.user_reviewable(@params[:current_user].username).collect {|batch| batch.name.downcase.gsub(', ',' ').rstrip}.include?(@query_target.downcase.gsub('_',' ').rstrip) then
-      @default_query_scope = "batch-id: #{::Loader::Batch.id_of(@query_target.gsub('_',' '))}"
+    if ::Loader::Batch.user_reviewable(@params[:current_user].username).collect do |batch|
+         batch.name.downcase.gsub(", ", " ").rstrip
+       end.include?(@query_target.downcase.gsub("_", " ").rstrip)
+      @default_query_scope = "batch-id: #{::Loader::Batch.id_of(@query_target.gsub('_', ' '))}"
       @target_button_text = @query_target
       @apply_default_query_scope = true
       @original_query_target = @query_target
-      @query_target = 'loader_names'
+      @query_target = "loader_names"
       true
     else
       false
@@ -416,21 +415,20 @@ class Search::ParsedRequest
 
   def parse_target(tokens)
     if @defined_query == false
-      if SIMPLE_QUERY_TARGETS.key?(@query_target)
-        @target_table = SIMPLE_QUERY_TARGETS[@query_target]
-        @target_button_text = @target_table.capitalize.pluralize
-        @original_query_target_for_display = @original_query_target.gsub('_',' ').capitalize
-        @target_model = TARGET_MODELS[@target_table]
-        @default_order_column = DEFAULT_ORDER_COLUMNS[@target_table]
-        @default_query_directive = DEFAULT_QUERY_DIRECTIVES[@target_table]
-        if INCLUDE_INSTANCES_FOR.include?(@target_table)
-          @include_instances = true
-          @include_instances_class = INCLUDE_INSTANCES_CLASS[@target_table]
-        end
-        debug("target table: #{@target_table}, target model: #{@target_model}; default order column: #{@default_order_column}; default query column: #{@default_query_directive}")
-      else
-        raise "Cannot parse target: #{@query_target}."
+      raise "Cannot parse target: #{@query_target}." unless SIMPLE_QUERY_TARGETS.key?(@query_target)
+
+      @target_table = SIMPLE_QUERY_TARGETS[@query_target]
+      @target_button_text = @target_table.capitalize.pluralize
+      @original_query_target_for_display = @original_query_target.gsub("_", " ").capitalize
+      @target_model = TARGET_MODELS[@target_table]
+      @default_order_column = DEFAULT_ORDER_COLUMNS[@target_table]
+      @default_query_directive = DEFAULT_QUERY_DIRECTIVES[@target_table]
+      if INCLUDE_INSTANCES_FOR.include?(@target_table)
+        @include_instances = true
+        @include_instances_class = INCLUDE_INSTANCES_CLASS[@target_table]
       end
+      debug("target table: #{@target_table}, target model: #{@target_model}; default order column: #{@default_order_column}; default query column: #{@default_query_directive}")
+
     end
     tokens
   end
@@ -444,15 +442,14 @@ class Search::ParsedRequest
   end
 
   def inflate_show_instances_abbrevs(tokens)
-    tokens = inflate_token(tokens, 's-i:', SHOW_INSTANCES)
-    tokens = inflate_token(tokens, 'si:', SHOW_INSTANCES)
-    tokens = inflate_token(tokens, 'i:', SHOW_INSTANCES)
-    tokens
+    tokens = inflate_token(tokens, "s-i:", SHOW_INSTANCES)
+    tokens = inflate_token(tokens, "si:", SHOW_INSTANCES)
+    inflate_token(tokens, "i:", SHOW_INSTANCES)
   end
 
   def inflate_token(tokens, abbrev_s, full_s)
     if tokens.include?(abbrev_s)
-      tokens.map! { |x| x == abbrev_s ? full_s : x } 
+      tokens.map! { |x| x == abbrev_s ? full_s : x }
     end
     tokens
   end
@@ -475,9 +472,9 @@ class Search::ParsedRequest
   end
 
   def show_instances_allowed?
-    unless ALLOW_SHOW_INSTANCES_TARGETS.include?(@query_target)
-      raise 'The show-instances: directive is not supported for this query'
-    end
+    return if ALLOW_SHOW_INSTANCES_TARGETS.include?(@query_target)
+
+    raise "The show-instances: directive is not supported for this query"
   end
 
   def parse_order_instances(tokens)
