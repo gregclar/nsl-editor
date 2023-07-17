@@ -38,6 +38,17 @@ tr.search-result.distribution span.distribution-inset {
   display: inline-block;
 }
 
+tr.search-result.comment span.comment-inset {
+  width: 6em;
+  display: inline-block;
+}
+
+tr.search-result.comment span.distribution-inset {
+  width: 6em;
+  display: inline-block;
+  color: red;
+}
+
 tr.search-result.excluded-header {
   font-weight: bold;
   font-size: 12pt;

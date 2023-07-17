@@ -12,11 +12,19 @@
       </span>
     <% else %>
       <span class='loader-name <%= search_result.record_type %> simple-name'>
-          <%= "#{search_result.simple_name}" %>
+          <% if search_result.rank == 'genus' %>
+            <%= "#{search_result.simple_name.upcase}" %>
+          <% else %>
+            <%= "#{search_result.simple_name}" %>
+          <% end %>
       </span>
       <span class='loader-name <%= search_result.record_type %> authority'>
           <%= "#{search_result.full_name.sub(Regexp.new(search_result.simple_name),'')}" %>
       </span>
+    <% end %>
+
+    <% unless search_result.name_status.blank? %>
+      <%= "#{search_result.name_status}" %>
     <% end %>
 
 
@@ -35,11 +43,18 @@
   </td>
 </tr>
 
-
 <tr class="search-result accepted distribution">
     <td>
       <span class="distribution-inset">&nbsp;</span><%= search_result.distribution %>
     </td>
 </tr>
+
+<% unless search_result.comment.blank? %>
+<tr class="search-result accepted comment">
+    <td>
+      <span class="comment-inset">&nbsp;</span>&nbsp;<%= search_result.comment %>
+    </td>
+</tr>
+<% end %>
 
 
