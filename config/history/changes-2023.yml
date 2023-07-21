@@ -1,7 +1,7 @@
 - :date: 21-Jul-2023
   :jira_id: '4575'
   :description: |-
-    Code Quality: mitigate regex substitution code scanning alert for help param
+    Code Quality: mitigate regex substitution code scanning alert for help param (second attempt)
 - :date: 21-Jul-2023
   :jira_id: '4574'
   :description: |-
