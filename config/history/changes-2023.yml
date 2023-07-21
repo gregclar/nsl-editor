@@ -1,4 +1,8 @@
 - :date: 21-Jul-2023
+  :jira_id: '4577'
+  :description: |-
+    Code Quality: mitigate regex substitution code scanning alert for loader name match - no change to behaviour
+- :date: 21-Jul-2023
   :jira_id: '4576'
   :description: |-
     Code Quality: mitigate regex substitution code scanning alert for orchids names - no change to behaviour
