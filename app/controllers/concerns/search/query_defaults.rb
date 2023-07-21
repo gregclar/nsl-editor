@@ -37,7 +37,7 @@ module Search::QueryDefaults
   end
 
   def remove_old_default_embedded
-    match_data = /(default-batch:\s[^:]+)\s+\w+:/.match(params[:query_string])
+    match_data = /(default-batch:\s[^:]{1,500})\s{1,500}\w{1,500}:/.match(params[:query_string])
     return if match_data.nil?
 
     reg = /#{match_data[1]}/
@@ -45,7 +45,7 @@ module Search::QueryDefaults
   end
 
   def remove_old_default_at_end_of_string
-    match_data = /(default-batch:\s[^:]+)\s*$/.match(params[:query_string])
+    match_data = /(default-batch:\s[^:]{1,500})\s*$/.match(params[:query_string])
     return if match_data.nil?
 
     reg = /#{match_data[1]}/
