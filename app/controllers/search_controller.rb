@@ -30,6 +30,9 @@ class SearchController < ApplicationController
 
   def help
     logger.debug("help params: #{params.inspect}")
+    if params[:help_id].length > 1000
+      raise ArgumentError, "Input for help is too long"
+    end
     if params[:help_id].match(/-for-dynamic-target-/)
       @dynamic_target = params[:help_id].sub(/.*-for-dynamic-target-/, "")
                                         .gsub(/-/, " ")

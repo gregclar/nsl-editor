@@ -1,3 +1,11 @@
+- :date: 21-Jul-2023
+  :jira_id: '4575'
+  :description: |-
+    Code Quality: mitigate regex substitution code scanning alert for help param
+- :date: 21-Jul-2023
+  :jira_id: '4574'
+  :description: |-
+    Code Quality: remove uncalled function that was generating a (spurious) code warning - no change to behaviour expected
 - :date: 18-Jul-2023
   :jira_id: '4567'
   :description: |-
