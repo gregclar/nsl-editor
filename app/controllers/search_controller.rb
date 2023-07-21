@@ -123,19 +123,7 @@ class SearchController < ApplicationController
     params[:query_string] = params[:query_string].sub(/\z/, " show-instances:")
   end
 
-  def record_view_param
-    Rails.logger.debug("params: #{params.inspect}")
-    @view = if params["query_string"] =~ /view:/i
-              params["query_string"].sub(/.*(view: *[A-z]+).*/, '\1').sub(/view: */, "")
-            else
-              ViewMode::STANDARD.to_s
-            end
-    logger.debug("record_view_param:- @view: #{@view}")
-    throw "ah"
-  end
-
   def apply_view_mode
-    Rails.logger.info("apply_view_mode:    params['query_target']: #{params['query_target']}")
     return unless
       ["loader names",
        "bulk processing logs",
