@@ -37,9 +37,9 @@ class OrchidsNamesController < ApplicationController
     case params[:commit]
     when nil
       raise "no commit param"
-    when /flag.* manually drafted/i
+    when /flag.{0,500} manually drafted/i
       flag_as_manually_drafted
-    when /remove.*manually.drafted.flag/i
+    when /remove.{0,500} manually.drafted.flag/i
       unflag_as_manually_drafted
     else
       update_relationship_instance_type

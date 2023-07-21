@@ -1,15 +1,19 @@
 - :date: 21-Jul-2023
+  :jira_id: '4576'
+  :description: |-
+    Code Quality: mitigate regex substitution code scanning alert for orchids names - no change to behaviour
+- :date: 21-Jul-2023
   :jira_id: '4575'
   :description: |-
-    Code Quality: mitigate regex substitution code scanning alert for help param (second attempt)
+    Code Quality: mitigate regex substitution code scanning alert for help param (second attempt) - no change to behaviour
 - :date: 21-Jul-2023
   :jira_id: '4574'
   :description: |-
-    Code Quality: remove uncalled function that was generating a (spurious) code warning - no change to behaviour expected
+    Code Quality: remove uncalled function that was generating a (spurious) code warning - no change to behaviour
 - :date: 18-Jul-2023
   :jira_id: '4567'
   :description: |-
-    Code Quality: ran <code>rubocop -a</code> to automatically fix problems detected by linting - no change to behaviour expected
+    Code Quality: ran <code>rubocop -a</code> to automatically fix problems detected by linting - no change to behaviour
 - :date: 17-Jul-2023
   :jira_id: '4497'
   :description: |-
