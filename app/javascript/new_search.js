@@ -176,7 +176,8 @@
   };
 
   searchableFieldClick = function(event, $element) {
-    $('#query-string-field').val($('#query-string-field').val() + ' ' + $element.html().replace(/<[^>]*>/g, '').trim());
+    //$('#query-string-field').val($('#query-string-field').val() + ' ' + $element.html().replace(/<[^>]*>/g, '').trim());
+    $('#query-string-field').val($('#query-string-field').val() + ' ' + $element.attr("data-search-directive") + ' ');
     return $('#query-string-field').focus();
   };
 

@@ -194,12 +194,6 @@ $( document ).on('turbo:load', function() {
     }
   });
 
-  $('a.searchable-field').on('click', function (e) {
-    debug('searchable-field clicked');
-    $('#query-string-field').val($('#query-string-field').val() + ' ' + $(this).html().replace(/<[^>]*>/g, '').trim());
-    $('#query-string-field').focus();
-  });
-
   $('a.search-help-link').on('click', function (e) {
     var targetElement = e.target.dataset.targetElement;
     getContentOnDemand(this);

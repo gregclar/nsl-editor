@@ -1,4 +1,8 @@
 - :date: 21-Jul-2023
+  :jira_id: '4579'
+  :description: |-
+    Code Quality: mitigate code scanning alert in JavaScript code that puts search-direcives into the search field if you click the field name in help - no change to behaviour
+- :date: 21-Jul-2023
   :jira_id: '4578'
   :description: |-
     Code Quality: mitigate regex substitution code scanning alert for query defaults - no change to behaviour
