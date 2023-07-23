@@ -1,3 +1,7 @@
+- :date: 24-Jul-2023
+  :jira_id: '4474'
+  :description: |-
+    Loader: "Stop further bulk processing" flag now available even if no match has been selected
 - :date: 21-Jul-2023
   :jira_id: '4580'
   :description: |-
