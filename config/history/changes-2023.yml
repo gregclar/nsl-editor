@@ -1,7 +1,7 @@
 - :date: 25-Jul-2023
   :jira_id: '4582'
   :description: |-
-    Code Quality: Mitigate code scanning alerts for cross-site scripting involving font-awesome icons, sanitized links, etc - no change to behaviour
+    Code Quality: Mitigate code scanning alerts for cross-site scripting involving font-awesome icons and link text from database - no change to behaviour
 - :date: 25-Jul-2023
   :jira_id: '4581'
   :description: |-

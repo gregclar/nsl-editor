@@ -78,7 +78,7 @@ module ApplicationHelper
   def mapper_link(type, id)
     # this is brittle. Replace with getting the URI from the object or the mapper directly.
     # see name and instance examples below.
-    %(<a href="#{ext_mapper_url}#{type}/#{ShardConfig.name_space.downcase}/#{id}" title="#{type.capitalize} #{id}"><i class="fa fa-link"></i></a>).html_safe
+    %(<a href="#{ext_mapper_url}#{type}/#{sanitize(ShardConfig.name_space.downcase)}/#{id}" title="#{type.capitalize} #{id}"><i class="fa fa-link"></i></a>).html_safe
   end
 
   def mapper_instance_link(instance)
