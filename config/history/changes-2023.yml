@@ -1,4 +1,8 @@
 - :date: 25-Jul-2023
+  :jira_id: '4582'
+  :description: |-
+    Code Quality: Mitigate code scanning alert for cross-site scripting - no change to behaviour
+- :date: 25-Jul-2023
   :jira_id: '4581'
   :description: |-
     Loader: Reject loader-name queries that don't specify a batch unless the user explicitly requests an any-batch search
