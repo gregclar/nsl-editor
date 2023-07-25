@@ -19,9 +19,10 @@
 #   Shard Config model
 class ShardConfig < ActiveRecord::Base
   self.table_name = "shard_config"
+  NAME_SPACE = "name space"
 
   def self.name_space
-    @name_space ||= ShardConfig.find_by(name: "name space").value
+    @name_space ||= ShardConfig.find_by(name: NAME_SPACE).value
   end
 
   def self.classification_tree_key
