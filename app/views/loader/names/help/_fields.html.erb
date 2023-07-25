@@ -1,10 +1,12 @@
 <h4>Loader Name search help</h4>
 <table class="table table-striped">
   <p>Note: setting a default batch will apply that batch to Loader Name searches.
+  <p>Note: when searching for loader-names you need to specify a batch via 'batch-id:', 'batch-name:', or by setting a default batch.  If you really want to search across batches use the 'any-batch:' directive.
   <tr><th>Field</th><th>Description</th></tr>
   <% [
     {field: 'batch-id:', descr: "Search within a batch using its ID."},
     {field: 'batch-name:', descr: "Search within a batch using its name."},
+    {field: 'any-batch:', descr: "Search across all batches."},
     {field: 'id:', descr: "Search by ID or IDs (comma separated)."},
     {field: 'raw-id:', descr: "Search by raw-ID or raw-IDs (comma separated). Raw ID is the ID assigned in the original data - these can be duplicated across batches."},
     {field: 'has-review-comment:',

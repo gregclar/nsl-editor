@@ -1,3 +1,7 @@
+- :date: 25-Jul-2023
+  :jira_id: '4581'
+  :description: |-
+    Loader: Reject loader-name queries that don't specify a batch unless the user explicitly requests an any-batch search
 - :date: 24-Jul-2023
   :jira_id: '4474'
   :description: |-

@@ -180,6 +180,11 @@ class Search::ParsedRequest
                                          "instance is cited by",
                                          "instance_is_cited_by",
                                          "audit"]
+
+  PREPROCESSING_TARGETS = {
+    "loader_names" => "preprocess_loader_names",
+  }
+
   SHOW_INSTANCES = "show-instances:"
 
   def initialize(params)
@@ -188,6 +193,7 @@ class Search::ParsedRequest
     @query_string = @query_string.gsub(/  */, " ") unless @query_string.blank?
     @query_target = (@params["canonical_query_target"] || "").strip.downcase
     @user = @params[:current_user]
+    @original_query_target = @query_target
     parse_request
     @count_allowed = true
   end
@@ -220,8 +226,8 @@ class Search::ParsedRequest
     unused_qs_tokens = parse_limit(unused_qs_tokens)
     unused_qs_tokens = parse_instance_offset(unused_qs_tokens)
     unused_qs_tokens = parse_offset(unused_qs_tokens)
-    unused_qs_tokens = preprocess_target(unused_qs_tokens)
     unused_qs_tokens = parse_target(unused_qs_tokens)
+    unused_qs_tokens = preprocess_target(unused_qs_tokens)
     unused_qs_tokens = parse_common_and_cultivar(unused_qs_tokens)
     unused_qs_tokens = inflate_show_instances_abbrevs(unused_qs_tokens)
     unused_qs_tokens = parse_show_instances(unused_qs_tokens)
@@ -384,20 +390,36 @@ class Search::ParsedRequest
   end
 
   def preprocess_target(tokens)
-    if SIMPLE_QUERY_TARGETS.include?(@query_target) ||
-       ADDITIONAL_NON_PREPROCESSED_TARGETS.include?(@query_target) ||
-       @query_target.blank?
-      @default_query_scope = ""
-      @apply_default_query_scope = false
-      @original_query_target = @query_target
-    elsif Rails.configuration.try(:batch_loader_aware)
-      raise "Unknown query target: #{@query_target}" unless loader_batch_preprocessing?
+    if PREPROCESSING_TARGETS.include?(@query_target) 
+      method = PREPROCESSING_TARGETS[@query_target]
+      send(method)
     end
     tokens
   end
 
+  # ToDo: this should be in the loader/name/ code
+  # Note limitation of any-batch: - it does not override a default batch
+  # Note limitation of the checks: doesn't care if result of search is in only
+  # one batch.
+  #
+  # Called via send
+  def preprocess_loader_names
+    result = loader_batch_preprocessing?
+    unless @params['query_string'].match(/\bdefault-batch:/) ||
+           @params['query_string'].match(/\bbatch-id:/) ||
+           @params['query_string'].match(/\bbatch-name:/) ||
+           @params['query_string'].match(/\bany-batch:/)
+      raise "Please set a default batch, or specify a 'batch-id:', a 'batch-name:' or 'any-batch:'"
+    end
+  end
+
   # TODO: convert this procedural code that refers to specific models to model
   # code or to some sort of declaration
+  # TODO: should be in loader/name code
+  #
+  # Also, clarify what this method is doing.
+  # Users with review access to a batch go thru "then"
+  # Users without review access to a batch go thru "else"
   def loader_batch_preprocessing?
     if ::Loader::Batch.user_reviewable(@params[:current_user].username).collect do |batch|
          batch.name.downcase.gsub(", ", " ").rstrip
@@ -405,8 +427,6 @@ class Search::ParsedRequest
       @default_query_scope = "batch-id: #{::Loader::Batch.id_of(@query_target.gsub('_', ' '))}"
       @target_button_text = @query_target
       @apply_default_query_scope = true
-      @original_query_target = @query_target
-      @query_target = "loader_names"
       true
     else
       false

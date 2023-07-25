@@ -693,5 +693,6 @@ having count(*)                     >  1
     "misapp-matched-without-cross-ref:" => { where_clause: " id in (select o.id from orchids o join loader_name_match orn on o.id = orn.loader_name_id where o.record_type = 'misapplied' and orn.relationship_instance_id is null)",
                                              order: "seq" },
     "created-manually:" => { where_clause: "created_manually" },
+    "any-batch:" => {where_clause: "1=1"},
   }.freeze
 end

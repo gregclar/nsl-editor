@@ -27,7 +27,6 @@ class Search::OnModel::ListQuery
   end
 
   def prepare_query
-    Rails.logger.debug("+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++")
     Rails.logger.debug("===========================================================================================")
     Rails.logger.debug("Search::OnModel::ListQuery#prepare_query on target: #{@parsed_request.target_table}")
     Rails.logger.debug("Search::OnModel::ListQuery#prepare_query target model: #{@parsed_request.target_model}")
