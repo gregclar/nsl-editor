@@ -104,7 +104,7 @@ class Search::Loader::Name::FieldRule
                                   order: "seq" },
     "batch-id:" => { where_clause: "loader_batch_id = ? ",
                      order: "seq" },
-    "batch-name:" => { where_clause: "loader_batch_id = (select id from loader_batch where lower(name) = ?)  ",
+    "batch-name:" => { where_clause: "loader_batch_id in (select id from loader_batch where lower(name) like ?)  ",
                        order: "seq" },
     "default-batch:" => { where_clause: "loader_batch_id = (select id from loader_batch where lower(name) = ?)  ",
                           order: "seq" },
