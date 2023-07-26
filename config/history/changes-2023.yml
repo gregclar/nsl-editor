@@ -1,6 +1,10 @@
 - :date: 26-Jul-2023
   :jira_id: '4584'
   :description: |-
+    Code Quality: Changes affecting Service calls for Reference create, edit -  no change to behaviour
+- :date: 26-Jul-2023
+  :jira_id: '4584'
+  :description: |-
     Code Quality: Changes affecting Service calls for Name create, edit, refresh -  no change to behaviour
 - :date: 25-Jul-2023
   :jira_id: '4583'
