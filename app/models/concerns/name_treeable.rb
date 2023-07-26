@@ -4,15 +4,6 @@
 module NameTreeable
   extend ActiveSupport::Concern
 
-  def apc_as_json
-    Rails.cache.fetch("#{cache_key}/apc_info", expires_in: 2.minutes) do
-      JSON.load(URI.open(Name::AsServices.in_apc_url(id), "Accept" => "text/json"))
-    end
-  rescue StandardError => e
-    logger.error("apc_as_json: #{e} for : #{Name::AsServices.in_apc_url(id)}")
-    "[unknown - service error]"
-  end
-
   def accepted_tree_version_element
     Tree.accepted.first.current_tree_version.name_in_version(self)
   end
