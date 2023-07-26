@@ -410,4 +410,15 @@ class Loader::Name < ActiveRecord::Base
   def match_for_name_id(name_id)
     loader_name_matches.where(name_id: name_id)
   end
+
+  def misapp_html
+    if misapp? && original_text.present?
+      #original_text
+      #Rails::Html::FullSanitizer.new.sanitize(original_text).gsub(/[^:]*:/,'')
+      Rails::Html::FullSanitizer.new.sanitize(original_text)
+      #original_text.gsub(/&amp;/,'zzzzzzz').gsub(/;/,';<br>').gsub(/zzzzzzz/,'&amp;')
+      #<%  (1..@loader_name.original_text.length.div(110)).each do |i|  %>
+   end
+
+  end
 end

@@ -1,4 +1,8 @@
 - :date: 26-Jul-2023
+  :jira_id: '4497'
+  :description: |-
+    Loader: More loader-name print features and adjustments including simpler name styling, misapplied names by-whom-and-where details
+- :date: 26-Jul-2023
   :jira_id: '4584'
   :description: |-
     Code Quality: Change affecting Tree-change-difference display (alerts added for likely unused code) - no change to behaviour

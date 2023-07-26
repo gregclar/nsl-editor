@@ -17,11 +17,8 @@
   <td class="text name main-content" >
 
 
-    <span class='loader-name <%= search_result.record_type %> simple-name'>
-        <%= "#{search_result.simple_name}" %>
-    </span>
-    <span class='loader-name <%= search_result.record_type %> authority'>
-        <%= "#{search_result.full_name.sub(Regexp.new(search_result.simple_name),'')}" %>
+    <span class='loader-name <%= search_result.record_type %> full-name'>
+        <%= "#{search_result.full_name}" %>
     </span>
 
 
