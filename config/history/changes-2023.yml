@@ -1,4 +1,8 @@
 - :date: 27-Jul-2023
+  :jira_id: '4585'
+  :description: |-
+    Loader: Add a note on the loader tab to remind users they need to add their own wildcards
+- :date: 27-Jul-2023
   :jira_id: '4581'
   :description: |-
     Loader: Loader-name <code>batch-name:</code> directive now accepts wildcards, so <code>batch-name: *</code> works.
