@@ -240,7 +240,7 @@ class Orchid::AsStatusReporter::ForExcludedNames
     sql += " and (o.record_type = 'accepted' and o.doubtful)"
     sql += " and (t.current_tree_version_id = t.tree_version_id_fk or not published)"
     sql += " group by t.draft_name, published"
-    records_array = TreeVw.find_by_sql([sql, @taxon_string])
+    records_array = TreeJoinVw.find_by_sql([sql, @taxon_string])
     h = {}
     h[:taxonomy_records] = 0 if records_array.empty?
     records_array.each do |rec|

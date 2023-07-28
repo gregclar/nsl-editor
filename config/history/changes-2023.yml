@@ -1,3 +1,7 @@
+- :date: 28-Jul-2023
+  :jira_id: '4588'
+  :description: |-
+    Tree view: Replace references to <code>tree_vw</code> with references to <code>tree_join_v</code> - no change to behaviour
 - :date: 27-Jul-2023
   :jira_id: '4585'
   :description: |-
