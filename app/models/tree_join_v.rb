@@ -17,8 +17,8 @@
 #   limitations under the License.
 
 #  A tree - usually a classification
-class TreeJoinVw < ActiveRecord::Base
-  self.table_name = "tree_join_vw"
+class TreeJoinV < ActiveRecord::Base
+  self.table_name = "tree_join_v"
 
   belongs_to :instance
   belongs_to :name
