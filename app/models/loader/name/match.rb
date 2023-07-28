@@ -168,4 +168,21 @@ class Loader::Name::Match < ActiveRecord::Base
   def excluded?
     loader_name.excluded? || loader_name.parent&.excluded?
   end
+
+  # Tree ops can occur outside the loader
+  # 
+  # This method checks whether the name is on a draft
+  #
+  # If not, it removes the drafted flag.
+  def verify_drafted_flag
+    Rails.logger.debug('verify_drafted_flag')
+    return 'Verified' if really_drafted?
+    self.drafted = false
+    self.save!
+    return 'Not verified - drafted flag was removed'
+  end
+
+  def really_drafted?
+    TreeJoinV.draft.where("instance_id = ?", standalone_instance_id).present?
+  end
 end

@@ -1,4 +1,8 @@
 - :date: 28-Jul-2023
+  :jira_id: '4586'
+  :description: |-
+    Loader: Added verify link on the Matched Name tab - will verify the drafted flag and remove the flag if not correct
+- :date: 28-Jul-2023
   :jira_id: '4588'
   :description: |-
     Tree view: Replace references to <code>tree_vw</code> with references to <code>tree_join_v</code> - no change to behaviour

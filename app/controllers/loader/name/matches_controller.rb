@@ -246,6 +246,13 @@ class Loader::Name::MatchesController < ApplicationController
     render "clear_and_delete_relationship_instance_error", format: :js
   end
 
+  def verify_drafted
+    @match = Loader::Name::Match.find(params[:id])
+    result = @match.verify_drafted_flag
+    @message = result.to_s
+    render :verify_drafted
+  end
+
   private
 
   def find_loader_name

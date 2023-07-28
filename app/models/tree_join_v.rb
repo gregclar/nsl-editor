@@ -19,6 +19,7 @@
 #  A tree - usually a classification
 class TreeJoinV < ActiveRecord::Base
   self.table_name = "tree_join_v"
+  scope :draft, -> { where('not published') }
 
   belongs_to :instance
   belongs_to :name

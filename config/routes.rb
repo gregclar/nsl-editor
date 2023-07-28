@@ -483,6 +483,7 @@ Rails.application.routes.draw do
                                                        to: "matches#clear_relationship_instance", via: :patch
       match "matches/clear-and-delete-relationship-instance/:id", as: "match-clear-and-delete-relationship-instance",
                                                                   to: "matches#clear_and_delete_relationship_instance", via: :patch
+      match "matches/verify_drafted/:id", as: "matches_verify_drafted", to: "matches#verify_drafted", via: :patch
       resources :matches, only: [:update]
     end
   end
