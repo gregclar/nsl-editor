@@ -1,6 +1,6 @@
 <%= divider %>
 <h4>The Drafted Flags</h4>
-<% if @loader_name.accepted? %>
+<% if @loader_name.accepted? || @loader_name.excluded? %>
   The drafted flags can apply to this record type.
   <br>
   <% if @loader_name.loader_name_matches.size == 0 %>

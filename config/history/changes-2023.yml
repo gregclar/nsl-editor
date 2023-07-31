@@ -1,3 +1,7 @@
+- :date: 01-Aug-2023
+  :jira_id: '4586'
+  :description: |-
+    Loader: Excluded names are now handled on the Matched Name tab and have a link to verify the drafted flag, as for accepted names
 - :date: 31-Jul-2023
   :jira_id: '4591'
   :description: |-
