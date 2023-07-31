@@ -4,48 +4,48 @@
   <p>Note: when searching for loader-names you need to specify a batch via 'batch-id:', 'batch-name:', or by setting a default batch.  If you really want to search across batches use the 'any-batch:' directive.
   <tr><th>Field</th><th>Description</th></tr>
   <% [
-    {field: 'batch-id:', descr: "Search within a batch using its ID."},
-    {field: 'batch-name:', descr: "Search within a batch using its name. Accepts wild-cards."},
-    {field: 'any-batch:', descr: "Search across all batches."},
-    {field: 'id:', descr: "Search by ID or IDs (comma separated)."},
-    {field: 'raw-id:', descr: "Search by raw-ID or raw-IDs (comma separated). Raw ID is the ID assigned in the original data - these can be duplicated across batches."},
-    {field: 'has-review-comment:',
+    {field_name: 'batch-id:', descr: "Search within a batch using its ID."},
+    {field_name: 'batch-name:', descr: "Search within a batch using its name. Accepts wild-cards."},
+    {field_name: 'any-batch:', descr: "Search across all batches."},
+    {field_name: 'id:', descr: "Search by ID or IDs (comma separated)."},
+    {field_name: 'raw-id:', descr: "Search by raw-ID or raw-IDs (comma separated). Raw ID is the ID assigned in the original data - these can be duplicated across batches."},
+    {field_name: 'has-review-comment:',
      descr: "Search for loader names that have been commented on."},
-    {field: 'review-comment:',
+    {field_name: 'review-comment:',
      descr: "Search for loader names that have a comment matching a given string."},
-    {field: 'has-review-comment-by:',
+    {field_name: 'has-review-comment-by:',
      descr: "Search for loader names that have been commented on by a particular user (user-id)."},
-    {field: 'concept-note:',
+    {field_name: 'concept-note:',
      descr: "Search for loader names that have a concept note matching a given string."},
-    {field: 'distribution:',
+    {field_name: 'distribution:',
      descr: "Search for loader names that have a distribution matching a given string."},
-    {field: 'distribution-not:',
+    {field_name: 'distribution-not:',
      descr: "Search for loader names that have a distribution without a given string."},
-    {field: 'no-distribution:',
+    {field_name: 'no-distribution:',
      descr: "Search for loader names that have no distribution string."},
-    {field: 'family:',
+    {field_name: 'family:',
      descr: "Search for loader names for a given family name."},
-    {field: 'family-id:',
+    {field_name: 'family-id:',
      descr: "Search for loader names for a given family ID."},
-    {field: 'simple-name:',
+    {field_name: 'simple-name:',
      descr: "Search for loader names based on simple name."},
-    {field: 'simple-name-as-loaded:',
+    {field_name: 'simple-name-as-loaded:',
      descr: "Search for loader names based on simple name as loaded - this field holds the unchanged value of simple name as loaded.  You can edit simple name, but this field retains the original value."},
-    {field: 'simple-name-not-like:',
+    {field_name: 'simple-name-not-like:',
      descr: "Search for loader names based on simple name not matching the argument. Wildcards are added automatically."},
-    {field: 'remark:',
+    {field_name: 'remark:',
      descr: "Search for loader names containing a remark to reviewers - wildcards are added automatically."},
-    {field: 'higher-rank-comment:',
+    {field_name: 'higher-rank-comment:',
      descr: "Search for loader names containing a higher-rank-comment - wildcards are added automatically."},
-    {field: 'created-manually:',
+    {field_name: 'created-manually:',
      descr: "Search for loader names that users created in the web interface - i.e. 'manually'. Abbreviations: <code>manually-created:</code>, <code>cm:</code>, <code>mc:</code>"},
       ].each do |val| %>
   <tr>
     <td class="width-20-percent">
       <a href="javascript:void(0)" class="searchable-field width-100-percent"
-         data-search-directive="<%= val[:field] %>" 
-         title='Add "<%= val[:field] %>" field to search.'>
-        <span class="blue"><%= val[:field] %></span>
+         data-search-directive="<%= val[:field_name] %>" 
+         title='Add "<%= val[:field_name] %>" field to search.'>
+        <span class="blue"><%= val[:field_name] %></span>
       </a>
     </td>
     <td><%= val[:descr].html_safe %></td>
@@ -96,7 +96,7 @@
   <tr>
     <td class="width-20-percent">
       <a href="javascript:void(0)" class="searchable-field width-100-percent"
-         data-search-directive="<%= val[:field] %>" 
+         data-search-directive="<%= val[:field_name] %>" 
          title='Add "<%= val[:field_name] %>" field to search.'>
         <span class="blue"><%= val[:field_name] %></span>
       </a>
@@ -127,7 +127,7 @@
   <tr>
     <td class="width-20-percent">
       <a href="javascript:void(0)" class="searchable-field width-100-percent"
-         data-search-directive="<%= val[:field] %>" 
+         data-search-directive="<%= val[:field_name] %>" 
          title='Add "<%= val[:field_name] %>" field to search.'>
         <span class="blue"><%= val[:field_name] %></span>
       </a>
@@ -172,7 +172,7 @@
   <tr>
     <td class="width-20-percent">
       <a href="javascript:void(0)" class="searchable-field width-100-percent"
-         data-search-directive="<%= val[:field] %>" 
+         data-search-directive="<%= val[:field_name] %>" 
          title='Add "<%= val[:field_name] %>" field to search.'>
         <span class="blue"><%= val[:field_name] %></span>
       </a>
@@ -209,7 +209,7 @@
   <tr>
     <td class="width-20-percent">
       <a href="javascript:void(0)" class="searchable-field width-100-percent"
-         data-search-directive="<%= val[:field] %>" 
+         data-search-directive="<%= val[:field_name] %>" 
          title='Add "<%= val[:field_name] %>" field to search.'>
         <span class="blue"><%= val[:field_name] %></span>
       </a>
@@ -252,7 +252,7 @@
   <tr>
     <td class="width-20-percent">
       <a href="javascript:void(0)" class="searchable-field width-100-percent"
-         data-search-directive="<%= val[:field] %>" 
+         data-search-directive="<%= val[:field_name] %>" 
          title='Add "<%= val[:field_name] %>" field to search.'>
         <span class="blue"><%= val[:field_name] %></span>
       </a>
@@ -286,7 +286,7 @@
   <tr>
     <td class="width-20-percent">
       <a href="javascript:void(0)" class="searchable-field width-100-percent"
-         data-search-directive="<%= val[:field] %>" 
+         data-search-directive="<%= val[:field_name] %>" 
          title='Add "<%= val[:field_name] %>" field to search.'>
         <span class="blue"><%= val[:field_name] %></span>
       </a>
@@ -316,7 +316,7 @@
   <tr>
     <td class="width-20-percent">
       <a href="javascript:void(0)" class="searchable-field width-100-percent"
-         data-search-directive="<%= val[:field] %>" 
+         data-search-directive="<%= val[:field_name] %>" 
          title='Add "<%= val[:field_name] %>" field to search.'>
         <span class="blue"><%= val[:field_name] %></span>
       </a>
@@ -353,7 +353,7 @@
   <tr>
     <td class="width-20-percent">
       <a href="javascript:void(0)" class="searchable-field width-100-percent"
-         data-search-directive="<%= val[:field] %>" 
+         data-search-directive="<%= val[:field_name] %>" 
          title='Add "<%= val[:field_name] %>" field to search.'>
         <span class="blue"><%= val[:field_name] %></span>
       </a>
@@ -390,7 +390,7 @@
   <tr>
     <td class="width-20-percent">
       <a href="javascript:void(0)" class="searchable-field width-100-percent"
-         data-search-directive="<%= val[:field] %>" 
+         data-search-directive="<%= val[:field_name] %>" 
          title='Add "<%= val[:field_name] %>" field to search.'>
         <span class="blue"><%= val[:field_name] %></span>
       </a>
@@ -415,7 +415,7 @@
   <tr>
     <td class="width-20-percent">
       <a href="javascript:void(0)" class="searchable-field width-100-percent"
-         data-search-directive="<%= val[:field] %>" 
+         data-search-directive="<%= val[:field_name] %>" 
          title='Add "<%= val[:field_name] %>" field to search.'>
         <span class="blue"><%= val[:field_name] %></span>
       </a>
@@ -446,7 +446,7 @@
   <tr>
     <td class="width-20-percent">
       <a href="javascript:void(0)" class="searchable-field width-100-percent"
-         data-search-directive="<%= val[:field] %>" 
+         data-search-directive="<%= val[:field_name] %>" 
          title='Add "<%= val[:field_name] %>" field to search.'>
         <span class="blue"><%= val[:field_name] %></span>
       </a>

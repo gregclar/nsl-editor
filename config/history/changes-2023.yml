@@ -1,3 +1,7 @@
+- :date: 31-Jul-2023
+  :jira_id: '4592'
+  :description: |-
+    Field Help: Clean up code to make it more consistent, change the function that runs when you click a help field so it only copies the field once.
 - :date: 28-Jul-2023
   :jira_id: '4586'
   :description: |-
