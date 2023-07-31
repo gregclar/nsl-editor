@@ -1,9 +1,9 @@
   debug = function(s) {
     var error;
     try {
-      //if (debugSwitch === true) {
+      if (debugSwitch === true) {
         return console.log('debug: ' + s);
-      //}
+      }
     } catch (error1) {
       error = error1;
     }
@@ -25,7 +25,6 @@ function getContentOnDemand(theThis) {
     debug("displayElementID is undefined or empty - you need to set it ");
   } else {
       debug("else displayElementID: "+ displayElementID);
-      debug($('#' + displayElementID).length);
       var $targetElement = $('#' + displayElementID);
       if ($targetElement.attr('data-loaded') === undefined) {
         debug("No entry for " + displayElementID);
