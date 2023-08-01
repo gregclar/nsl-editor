@@ -1,4 +1,8 @@
 - :date: 01-Aug-2023
+  :jira_id: '4593'
+  :description: |-
+    Bulk Processing Logs: Query Help and Query Example tabs are no longer blank and are showing relevant help
+- :date: 01-Aug-2023
   :jira_id: '4589'
   :description: |-
     Loader: Excluded names are now handled on the Matched Name tab and have a link to verify the drafted flag, as for accepted names

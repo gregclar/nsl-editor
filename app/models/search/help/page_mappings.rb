@@ -87,6 +87,8 @@ class Search::Help::PageMappings
     "batch-review-search-examples" => "loader/batch/reviews/help/examples",
     "batch-reviewer-search-help" => "loader/batch/reviewers/help/fields",
     "batch-reviewer-search-examples" => "loader/batch/reviewers/help/examples",
+    "bulk-processing-logs-search-help" => "bulk_processing_logs/help/fields",
+    "bulk-processing-logs-search-examples" => "bulk_processing_logs/help/examples",
     "user-search-help" => "users/help/fields",
     "user-search-examples" => "users/help/examples",
     "org-search-help" => "orgs/help/fields",

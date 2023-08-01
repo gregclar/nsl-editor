@@ -38,9 +38,14 @@ class SearchController < ApplicationController
     else
       @dynamic_target = nil
     end
-    help_content = Search::Help::PageMappings.new(params, @view_mode)
-    logger.debug("help_content: #{help_content}")
-    render partial: help_content.partial
+    help_content_path = Search::Help::PageMappings.new(params, @view_mode)
+    raise 'no help content path' if help_content_path.partial.blank?
+    logger.debug("help_content_path: #{help_content_path}")
+    render partial: help_content_path.partial
+  rescue => e
+    logger.error("SearchController#help error displaying #{help_content_path}")
+    logger.error(e.to_s)
+    logger.error(params.inspect)
   end
 
   def reports; end
