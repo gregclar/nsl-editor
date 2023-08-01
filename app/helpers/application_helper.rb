@@ -89,7 +89,7 @@ module ApplicationHelper
     %(<a href="#{ext_mapper_url}#{name.uri}" title="NAME #{name.id}"><i class="fa fa-link"></i></a>).html_safe
   end
 
-  def page_title
+  def badge
     return "#{Rails.configuration.try('tag')}" unless Rails.configuration.try("tag").blank?
 
     case Rails.configuration.try("environment")
@@ -106,8 +106,19 @@ module ApplicationHelper
     end
   end
 
-  def badge
-    page_title
+  def page_title
+    case Rails.configuration.try("environment")
+    when /\Adev/i
+      "Dev"
+    when /^test/i
+      "Test"
+    when /^stag/i
+      "Stage"
+    when /^prod/i
+      "#{ShardConfig.shard_group_name}"
+    else
+      "#{ShardConfig.shard_group_name}"
+    end + ':' + (params["query_target"] || 'Editor')
   end
 
   def development?

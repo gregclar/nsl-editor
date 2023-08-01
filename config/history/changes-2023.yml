@@ -1,4 +1,8 @@
 - :date: 01-Aug-2023
+  :jira_id: '4596'
+  :description: |-
+    General: Make tab titles more informative to help when using multiple tabs
+- :date: 01-Aug-2023
   :jira_id: '4593'
   :description: |-
     Bulk Processing Logs: Query Help and Query Example tabs are no longer blank and are showing relevant help
