@@ -17,7 +17,7 @@
 - :date: 31-Jul-2023
   :jira_id: '4591'
   :description: |-
-    Loader Query: Fix hybrid-flag queries (e.g. <code>:is-hybrid:</code>, <code>is-intergrate:</code>, <code>is-mso-normal:</code> etc) carried over from orchid code (needed improvement)
+    Loader Query: Fix hybrid-flag queries (e.g. <code>:is-hybrid:</code>, <code>is-intergrade:</code>, <code>is-mso-normal:</code> etc) carried over from orchid code (needed improvement)
 - :date: 31-Jul-2023
   :jira_id: '4592'
   :description: |-
