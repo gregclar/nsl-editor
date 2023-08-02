@@ -1,4 +1,8 @@
 - :date: 02-Aug-2023
+  :jira_id: '4497'
+  :description: |-
+    Loader: Print output changes after review: taxonomic comment italic styling will now work, excluded name status will follow a comment and be italicised 
+- :date: 02-Aug-2023
   :jira_id: '4594'
   :description: |-
     Taxonomy: For the Tree and Edit Profile tabs add text that clarifies where data updates occur - on the draft or published tree

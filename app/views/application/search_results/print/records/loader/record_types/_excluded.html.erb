@@ -18,13 +18,12 @@
 
 
     <span class='loader-name <%= search_result.record_type %> full-name'>
-        <%= "#{search_result.full_name}" %>
+        <%= "#{search_result.full_name}" %><%= ',' unless search_result.name_status.blank? %>
+
+        <% unless search_result.name_status.blank? %>
+          <%= "#{search_result.name_status}" %>
+        <% end %>
     </span>
-
-
-    <% unless search_result.name_status.blank? %>
-      <%= "#{search_result.name_status}" %>
-    <% end %>
 
     <% unless search_result.remark_to_reviewers.blank? %>
         <span class="review loader-name remark-to-reviewers">
@@ -45,7 +44,7 @@
 <% unless search_result.comment.blank? %>
 <tr class="search-result accepted comment">
     <td>
-      <span class="comment-inset">&nbsp;</span>&nbsp;<%= search_result.comment %>
+      <span class="comment-inset">&nbsp;</span>&nbsp;<%= sanitize(search_result.comment, tags: %w(i)).html_safe %>
     </td>
 </tr>
 <% end %>
