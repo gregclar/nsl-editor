@@ -1,3 +1,7 @@
+- :date: 02-Aug-2023
+  :jira_id: '4594'
+  :description: |-
+    Taxonomy: For the Tree and Edit Profile tabs add text that clarifies where data updates occur - on the draft or published tree
 - :date: 01-Aug-2023
   :jira_id: '4596'
   :description: |-
