@@ -321,6 +321,11 @@ class Loader::Name::MatchesController < ApplicationController
     loader_name_match.save!
     @instance_id = loader_name_match_params[:instance_id]
     render :create_for_misapp
+  rescue StandardError => e
+    logger.error(e.to_s)
+    @message = e.to_s
+    @instance = Instance.find(loader_name_match_params[:instance_id])
+    render "create_for_misapp_error", format: :js
   end
 
   def flag_as_manually_drafted

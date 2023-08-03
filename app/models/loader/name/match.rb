@@ -34,11 +34,20 @@ class Loader::Name::Match < ActiveRecord::Base
                                foreign_key: "source_for_copy_instance_id", optional: true
   validates :loader_name_id, uniqueness: true,
                              unless: proc { |a| a.loader_name.record_type == "misapplied" }
-  # validates :standalone_instance_id, absence: true, if: :using_default_ref?
-  # validates :standalone_instance_found, exclusion: {in: [true], message: 'not found'}, if: :using_default_ref?
-  # validates :use_batch_default_reference, exclusion: {in: [true], message:'not both'}, if: :standalone?
-  # validate :choice_must_match_details
+  validate :misapp_pref_matches_from_only_one_name
+
   before_destroy :can_destroy?
+
+  def misapp_pref_matches_from_only_one_name
+    return unless self.loader_name.misapplied?
+
+    return if Loader::Name::Match.where(loader_name_id: loader_name_id)
+                                 .where.not(name_id: name_id)
+                                 .count == 0
+
+    errors.add :base,
+      "Misapplications cannot select matches from more than one name"
+  end
 
   # how does this work when reversing?
   def choice_must_match_details

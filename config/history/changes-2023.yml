@@ -1,3 +1,7 @@
+- :date: 03-Aug-2023
+  :jira_id: '4599'
+  :description: |-
+    Loader: Add validation to prevent misapplications having preferred instances from more than one name record
 - :date: 02-Aug-2023
   :jira_id: '4497'
   :description: |-
