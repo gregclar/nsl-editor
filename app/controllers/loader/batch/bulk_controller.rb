@@ -34,6 +34,7 @@ class Loader::Batch::BulkController < ApplicationController
   def disable_add; end
 
   def stats
+    add_name_string_to_session
     @stats = Loader::Batch::Stats::Reporter.new(
       params[:name_string],
       (session[:default_loader_batch_id] || 0)
@@ -41,6 +42,7 @@ class Loader::Batch::BulkController < ApplicationController
   end
 
   def create_preferred_matches
+    add_name_string_to_session
     prefix = "create-preferred-matches-"
     job = CreatePreferredMatchesJob.new(session[:default_loader_batch_id],
                                         params[:name_string],
@@ -62,6 +64,7 @@ class Loader::Batch::BulkController < ApplicationController
   end
 
   def create_draft_instances
+    add_name_string_to_session
     prefix = "create-draft-instances-"
     job = CreateDraftInstanceJob.new(session[:default_loader_batch_id],
                                      params[:name_string],

@@ -1,4 +1,8 @@
 - :date: 03-Aug-2023
+  :jira_id: '4600'
+  :description: |-
+    Loader: search string will stay in the search/operation field when you refresh the Loader tab
+- :date: 03-Aug-2023
   :jira_id: '4599'
   :description: |-
     Loader: Add validation to prevent misapplications having preferred instances from more than one name record
