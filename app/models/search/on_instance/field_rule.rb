@@ -311,8 +311,8 @@ from instance i
        join name n
        on i.name_id = n.id
   where regexp_replace(lower(n.full_name),' orth. var. ',' ','g') = regexp_replace(lower(i.verbatim_name_string),' orth. var. ',' ','g'))" },
-    "name-status:" => { where_clause: %[ instance.id in (select i.id from instance i join name n on i.name_id = n.id join name_status ns on n.name_status_id = ns.id and lower(ns.name) = lower(?))] },
-    "name-status-not:" => { where_clause: %[ id in (select i.id from instance i join name n on i.name_id = n.id join name_status ns on n.name_status_id = ns.id and lower(ns.name) != lower(?))] },
+    "name-status:" => { where_clause: %[ instance.id in (select i.id from instance i join name n on i.name_id = n.id join name_status ns on n.name_status_id = ns.id and lower(ns.name) like lower(?))] },
+    "name-status-not:" => { where_clause: %[ id in (select i.id from instance i join name n on i.name_id = n.id join name_status ns on n.name_status_id = ns.id and lower(ns.name) not like lower(?))] },
   }.freeze
 
   def self.resolve(field)

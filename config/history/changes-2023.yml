@@ -1,4 +1,8 @@
 - :date: 04-Aug-2023
+  :jira_id: '4520'
+  :description: |-
+    Search: Allow wildcards in Instance <code>name-status:</code> searches
+- :date: 04-Aug-2023
   :jira_id: '4598'
   :description: |-
     Loader: Do not pass tree placement requests to Services without a confirmed tree parent - log error instead
