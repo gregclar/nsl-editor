@@ -32,9 +32,8 @@ class Loader::Name::DraftTaxonomyAdder::PlacerOrReplacer::Placer
   end
 
   def place
-    debug("parent_element_link: #{parent_tve(@preferred_match).element_link}") unless parent_tve(@preferred_match).nil?
     placement = Tree::Workspace::Placement.new(username: @user,
-                                               parent_element_link: parent_tve(@preferred_match).try("element_link"),
+                                               parent_element_link: parent_tve(@preferred_match),
                                                instance_id: @preferred_match.standalone_instance_id,
                                                excluded: @loader_name.excluded?,
                                                profile: profile,
@@ -57,8 +56,9 @@ class Loader::Name::DraftTaxonomyAdder::PlacerOrReplacer::Placer
   private
 
   def parent_tve(preferred_match)
-    Rails.logger.debug("preferred_match.class: #{preferred_match.class}")
-    @draft.name_in_version(preferred_match.name.parent)
+    @draft.name_in_version(preferred_match.name.parent).element_link
+  rescue => e
+    raise "Error identifying tree parent"
   end
 
   # I did try to use the Tree::ProfileData class,
@@ -89,7 +89,7 @@ class Loader::Name::DraftTaxonomyAdder::PlacerOrReplacer::Placer
 
   def log_to_table(payload)
     Loader::Batch::Bulk::JobLog.new(@job, payload, @user).write
-  rescue StandardError => e
+  rescue => e
     Rails.logger.error("Couldn't log to table: #{e}")
   end
 end

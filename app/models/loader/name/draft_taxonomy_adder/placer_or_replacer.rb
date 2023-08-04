@@ -45,6 +45,8 @@ class Loader::Name::DraftTaxonomyAdder::PlacerOrReplacer
         debug "No instance, therefore cannot place this on the Taxonomy."
       elsif preferred_match.drafted?
         debug "Stopping because already drafted."
+      elsif  @draft.name_in_version(preferred_match.name.parent).blank?
+        raise 'No parent on tree, cannot proceed'
       else
         @tree_version_element = @draft.name_in_version(preferred_match.name)
         if @tree_version_element.present?
@@ -60,15 +62,17 @@ class Loader::Name::DraftTaxonomyAdder::PlacerOrReplacer
     @placed_count = 0
     @errors = 1
     @error = json_error(e)
-    log_to_table("Error placing or replacing on taxonomy: #{@loader_name.simple_name}, id: #{@loader_name.id}: #{@error}")
+    log_to_table("<span class='red'>Error from Services placing/replacing on taxonomy:</span> #{@loader_name.simple_name}, ##{@loader_name.id}: #{@error}")
     # if inferred_rank.downcase == 'genus'
     # raise GenusTaxonomyPlacementError.new("Stopping because failed to add genus #{@loader_name.simple_name}")
     # else
     # 0
     # end
-  rescue StandardError => e
-    Rails.logger.error("PlaceOrReplace: Error placing or replacing loader_name on taxonomy #{e.message}")
-    log_to_table("Error placing/replacing on taxonomy: #{@loader_name.simple_name}, id: #{@loader_name.id}: #{e.message}")
+  rescue => e
+    @placed_count = 0
+    @errors = 1
+    Rails.logger.error("PlaceOrReplace: Error (non-Services) placing or replacing loader_name on taxonomy #{e.message}")
+    log_to_table("<span class='red'>Error placing/replacing on taxonomy:</span> #{@loader_name.simple_name}, ##{@loader_name.id}: #{e.message}")
   end
 
   def counts

@@ -1,3 +1,7 @@
+- :date: 04-Aug-2023
+  :jira_id: '4598'
+  :description: |-
+    Loader: Do not pass tree placement requests to Services without a confirmed tree parent - log error instead
 - :date: 03-Aug-2023
   :jira_id: '4600'
   :description: |-
