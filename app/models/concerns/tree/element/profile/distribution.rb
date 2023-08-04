@@ -30,7 +30,7 @@ module Tree::Element::Profile::Distribution
 
   def dist_options_disabled
     disabled_options = []
-    all = DistEntry.all
+    all = DistEntry.all.includes(:dist_region)
     for n in tede_dist_entries.collect(&:region)
       disabled_options.concat(all.find_all do |opt|
                                 opt.dist_region.name == n
