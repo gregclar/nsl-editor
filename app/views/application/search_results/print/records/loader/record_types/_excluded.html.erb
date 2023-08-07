@@ -1,4 +1,5 @@
 
+<%= render partial: 'application/search_results/print/records/loader/record_types/prev_rec_dist_comments' %>
 
 <tr class="search-result excluded top-spacer"><td>&nbsp;</td></tr>
 
@@ -47,6 +48,7 @@
       <span class="comment-inset">&nbsp;</span>&nbsp;<%= sanitize(search_result.comment, tags: %w(i)).html_safe %>
     </td>
 </tr>
+<% @previous_comment = search_result.comment %>
 <% end %>
 
 

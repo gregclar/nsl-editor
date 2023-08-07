@@ -1,3 +1,6 @@
+
+<%= render partial: 'application/search_results/print/records/loader/record_types/prev_rec_dist_comments' %>
+
 <tr class="search-result accepted top-spacer"><td>&nbsp;</td></tr>
 
 <tr id="search-result-<%= search_result.id %>" 
@@ -29,18 +32,11 @@
   </td>
 </tr>
 
-<tr class="search-result accepted distribution">
-    <td>
-      <span class="distribution-inset">&nbsp;</span><%= search_result.distribution %>
-    </td>
-</tr>
+<%= render partial: 'application/search_results/print/records/loader/record_types/std_rec_dist_comments',
+locals: {search_result: search_result} %>
 
-<% unless search_result.comment.blank? %>
-<tr class="search-result accepted comment">
-    <td>
-      <span class="comment-inset">&nbsp;</span>&nbsp;<%= sanitize(search_result.comment, tags: %w(i)).html_safe %>
-    </td>
-</tr>
-<% end %>
+
+<% @previous_distribution = search_result.distribution %>
+<% @previous_comment = search_result.comment %>
 
 
