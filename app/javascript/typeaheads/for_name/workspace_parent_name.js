@@ -15,7 +15,7 @@ function setUpWorkspaceParentName() {
             $('#workspace_parent_name_id').val(datum.id);
             var input = $('#workspace_parent_name_typeahead');
             // avoid triggering code scan
-            var replaced = input.val().replace(/<i class="fa fa-ban red"></i>/, '').trim();
+            var replaced = input.val().replace(/<i class="fa fa-ban red"><\/i>/, '').trim();
             input.val(replaced);
         })
         .on('typeahead:autocompleted', function($e,datum) {
