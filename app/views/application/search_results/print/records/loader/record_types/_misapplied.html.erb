@@ -7,12 +7,7 @@
 <% path = 'application/search_results/link_texts/loader/name' %>
 <%= render partial: "#{path}/indent", locals: {search_result: search_result} %>
 
-<span class='loader-name <%= search_result.record_type %> full-name'>
-<%#= "#{search_result.full_name}" %>
-</span>
-
-<span class="misapplied-by-whom-where"><%= search_result.misapp_html.html_safe  %></span>
-
+<span class="misapplied-by-whom-where"><%= search_result.misapp_html&.gsub(/\*\*[^*]+\*\*/,'')&.html_safe  %></span>
 
 <% unless search_result.remark_to_reviewers.blank? %>
   <span class="review loader-name remark-to-reviewers">

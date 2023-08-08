@@ -1,6 +1,10 @@
 - :date: 08-Aug-2023
   :jira_id: '4497'
   :description: |-
+    Loader: Print output for loader-names - prevent duplicate display of notes-to-compilers for misapplications (which display original html)
+- :date: 08-Aug-2023
+  :jira_id: '4497'
+  :description: |-
     Loader: Print output for loader-names - distribution/comment to appear after synonymy (instrumented version with dist/comm in both places)
 - :date: 07-Aug-2023
   :jira_id: '4523'
