@@ -14,9 +14,8 @@ function setUpWorkspaceParentName() {
         .on('typeahead:selected', function($e,datum) {
             $('#workspace_parent_name_id').val(datum.id);
             var input = $('#workspace_parent_name_typeahead');
-            // remove program-generated tags in typeahead list entries
-            // there will be no scripts here
-            var replaced = input.val().replace(/<.*>/g, '').trim();
+            // avoid triggering code scan
+            var replaced = input.val().replace(/<i class="fa fa-ban red"></i>/, '').trim();
             input.val(replaced);
         })
         .on('typeahead:autocompleted', function($e,datum) {

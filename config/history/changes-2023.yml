@@ -1,4 +1,8 @@
 - :date: 08-Aug-2023
+  :jira_id: '4605'
+  :description: |-
+    Code Quality: Mitigate Incomplete multi-character sanitization alert on instance tree tab workspace parent typeahead
+- :date: 08-Aug-2023
   :jira_id: '4497'
   :description: |-
     Loader: Print output for loader-names - prevent duplicate display of notes-to-compilers for misapplications (which display original html)
