@@ -10,7 +10,7 @@ table.search-results.for-print {
 tr.search-result.heading {
   font-weight: bold;
   font-size: 15pt;
-  height: 6em;
+  height: 2em;
 }
 
 tr.search-result.heading td.text {

@@ -42,13 +42,6 @@
 </tr>
 
 
-<% unless search_result.comment.blank? %>
-<tr class="search-result accepted comment">
-    <td>
-      <span class="comment-inset">&nbsp;</span>&nbsp;<%= sanitize(search_result.comment, tags: %w(i)).html_safe %>
-    </td>
-</tr>
-<% @previous_comment = search_result.comment %>
-<% end %>
+<% @previous_comment = search_result.comment unless search_result.comment.blank? %>
 
 
