@@ -194,6 +194,9 @@ class Search::ParsedRequest
     @query_target = (@params["canonical_query_target"] || "").strip.downcase
     @user = @params[:current_user]
     @original_query_target = @query_target
+    @default_query_scope = ''
+    @apply_default_query_scope = false
+    @original_query_target = @query_target
     parse_request
     @count_allowed = true
   end
@@ -390,27 +393,19 @@ class Search::ParsedRequest
   end
 
   def preprocess_target(tokens)
-    if PREPROCESSING_TARGETS.include?(@query_target) 
-      method = PREPROCESSING_TARGETS[@query_target]
-      send(method)
-    end
-    tokens
-  end
-
-  def preprocess_target(tokens)
-    if SIMPLE_QUERY_TARGETS.include?(@query_target) ||
-       ADDITIONAL_NON_PREPROCESSED_TARGETS.include?(@query_target)
-      @default_query_scope = ''
-      @apply_default_query_scope = false
-      @original_query_target = @query_target
-    else
-      debug("@params: #{@params.inspect}")
-      unless loader_batch_preprocessing?
+    case 
+      when PREPROCESSING_TARGETS.include?(@query_target)
+        method = PREPROCESSING_TARGETS[@query_target]
+        send(method)
+      when SIMPLE_QUERY_TARGETS.include?(@query_target)
+      when ADDITIONAL_NON_PREPROCESSED_TARGETS.include?(@query_target)
+      when loader_batch_preprocessing?
+      else
         throw "Unknown query target: #{@query_target}"
-      end
     end
     tokens 
   end
+
 
   # ToDo: this should be in the loader/name/ code
   # Note limitation of any-batch: - it does not override a default batch
@@ -442,32 +437,13 @@ class Search::ParsedRequest
       @default_query_scope = "batch-id: #{::Loader::Batch.id_of(@query_target.gsub('_', ' '))}"
       debug("@default_query_scope: #{default_query_scope}")
       @target_button_text = @query_target
+      @original_query_target = @query_target
       @query_target = 'loader_names'
       @apply_default_query_scope = true
       true
     else
       false
     end
-  end
-
-  def xparse_target(tokens)
-    if @defined_query == false
-      raise "Cannot parse target: #{@query_target}." unless SIMPLE_QUERY_TARGETS.key?(@query_target)
-
-      @target_table = SIMPLE_QUERY_TARGETS[@query_target]
-      @target_button_text = @target_table.capitalize.pluralize
-      @original_query_target_for_display = @original_query_target.gsub("_", " ").capitalize
-      @target_model = TARGET_MODELS[@target_table]
-      @default_order_column = DEFAULT_ORDER_COLUMNS[@target_table]
-      @default_query_directive = DEFAULT_QUERY_DIRECTIVES[@target_table]
-      if INCLUDE_INSTANCES_FOR.include?(@target_table)
-        @include_instances = true
-        @include_instances_class = INCLUDE_INSTANCES_CLASS[@target_table]
-      end
-      debug("target table: #{@target_table}, target model: #{@target_model}; default order column: #{@default_order_column}; default query column: #{@default_query_directive}")
-
-    end
-    tokens
   end
 
   def parse_target(tokens)
@@ -483,7 +459,6 @@ class Search::ParsedRequest
           @include_instances = true
           @include_instances_class = INCLUDE_INSTANCES_CLASS[@target_table]
         end
-        debug("target table: #{@target_table}, target model: #{@target_model}; default order column: #{@default_order_column}; default query column: #{@default_query_directive}")
       else
         raise "Cannot parse target: #{@query_target}."
       end

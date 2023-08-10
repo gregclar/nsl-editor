@@ -1,7 +1,7 @@
 - :date: 10-Aug-2023
   :jira_id: '4606'
   :description: |-
-    Batch Review: Revive the reviewer search - seems I broke it when working on NSL-4581 (which is now itself not working - temporarily)
+    Batch Review: Revive the reviewer search - seems I broke it when working on NSL-4581
 - :date: 10-Aug-2023
   :jira_id: '4497'
   :description: |-
