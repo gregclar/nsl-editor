@@ -1,4 +1,8 @@
 - :date: 10-Aug-2023
+  :jira_id: '4608'
+  :description: |-
+    Code Quality: Alter a regular expression in the search parser to be more precise
+- :date: 10-Aug-2023
   :jira_id: '4606'
   :description: |-
     Batch Review: Revive the reviewer search - seems I broke it when working on NSL-4581

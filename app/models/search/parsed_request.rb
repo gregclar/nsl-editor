@@ -388,7 +388,7 @@ class Search::ParsedRequest
 
   def parse_view(tokens)
     joined_tokens = tokens.join(" ")
-    joined_tokens = joined_tokens.gsub(/view: *[A-z]+/i, "")
+    joined_tokens = joined_tokens.gsub(/view: *[A-Za-z_]+/i, "")
     joined_tokens.split(" ")
   end
 
