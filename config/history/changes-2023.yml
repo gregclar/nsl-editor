@@ -1,3 +1,7 @@
+- :date: 16-Aug-2023
+  :jira_id: '4497'
+  :description: |-
+    Loader: Print output -- display accepted genus names in upper-case
 - :date: 15-Aug-2023
   :jira_id: '4594'
   :description: |-
