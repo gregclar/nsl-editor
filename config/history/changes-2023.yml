@@ -1,4 +1,8 @@
 - :date: 15-Aug-2023
+  :jira_id: '4594'
+  :description: |-
+    Tree tab: Add extra help text pointing users to the Edit Profile tab
+- :date: 15-Aug-2023
   :jira_id: '4523'
   :description: |-
     ISSN, ISBN: Display ISSN link in style of BHL, don't rely on RHS label for ISBN, validate field lengths of 16 chars
