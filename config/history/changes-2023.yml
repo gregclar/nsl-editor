@@ -1,3 +1,7 @@
+- :date: 17-Aug-2023
+  :jira_id: '4611'
+  :description: |-
+    Reference search: Allow for accented characters in <code>citation:</code> and <code>citation-exact:</code> searches
 - :date: 16-Aug-2023
   :jira_id: '4497'
   :description: |-
