@@ -19,16 +19,20 @@
 require "test_helper"
 load "test/models/search/users.rb"
 
-# Single Search model test on Instance search.
-class SearchOnInstNoteKeyAndNoteCaseSensitiveKeyTest < ActiveSupport::TestCase
-  test "search on instance notes within a specified key simple" do
+# Single Search model test for Reference target.
+class SearchOnRefCitationTextSuffixFragmentSearchTest < ActiveSupport::TestCase
+  test "search on reference citation text for suffix fragment" do
     params = ActiveSupport::HashWithIndifferentAccess.new(
-      query_target: "instance",
-      query_string: "nEotype-nOte-mAtches: MyString",
+      query_target: "reference",
+      query_string: "citation-text: uplicate",
       current_user: build_edit_user
     )
     search = Search::Base.new(params)
-    assert !search.executed_query.results.empty?,
-           "Instances with matching neotype notes expected."
+    assert search.executed_query.results.is_a?(ActiveRecord::Relation),
+           "Results should be an ActiveRecord::Relation."
+    assert_equal 0,
+                 search.executed_query.results.size,
+                 "No results are expected.  Citation text search does not
+                 support suffix text fragments."
   end
 end
