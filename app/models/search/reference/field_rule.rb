@@ -131,7 +131,7 @@ from ref_type where lower(name) like lower(?))" },
 
     "citation-text:" => { scope_: "search_citation_text_for" },
 
-    "citation:" => { trailing_wildcard: true,
+    "citation-token:" => { trailing_wildcard: true,
                      leading_wildcard: true, tokenize: true,
                      where_clause:
                                  " lower(f_unaccent(citation)) like lower(f_unaccent(?)) " },
