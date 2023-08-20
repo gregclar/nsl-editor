@@ -47,7 +47,6 @@ class Search::Reference::DefinedQuery
   end
 
   def run_count_query
-    throw 'x'
     count_query = Search::Reference::DefinedQuery::Count.new(@parsed_request)
     @relation = count_query.sql
     @total = @count = relation.count
