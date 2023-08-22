@@ -1,3 +1,7 @@
+- :date: 22-Aug-2023
+  :jira_id: '4619'
+  :description: |-
+    Loader: First cut of printable output showing review comments
 - :date: 21-Aug-2023
   :jira_id: '4615'
   :description: |-
