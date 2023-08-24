@@ -571,16 +571,18 @@ having count(*)                     >  1
     select null
       from loader_name_match
  where loader_name.id = loader_name_match.loader_name_id
-   and loader_name_match.standalone_instance_id is not null
+   and loader_name_match.instance_choice_confirmed
    and loader_name_match.copy_append_from_existing_use_batch_def_ref)",
                             order: "seq" },
-    "no-nomination:" => { where_clause: " loader_name.record_type = 'accepted' and exists (
-    select null
-      from loader_name_match
- where loader_name.id = loader_name_match.loader_name_id
-   and not loader_name_match.use_batch_default_reference
-   and loader_name_match.standalone_instance_id is null)",
-                          order: "seq" },
+    "no-nomination:" => {
+       where_clause: " loader_name.record_type = 'accepted' and exists (
+                   select null
+                     from loader_name_match
+                   where loader_name.id = loader_name_match.loader_name_id
+                     and not loader_name_match.use_batch_default_reference
+                     and not copy_append_from_existing_use_batch_def_ref
+                     and loader_name_match.standalone_instance_id is null)",
+       order: "seq" },
     "has-no-preferred-name:" => { where_clause: " not exists (select null from loader_name_match where loader_name.id = loader_name_match.loader_name_id)" },
     "created-by:" => { where_clause: "created_by = ?",
                        order: "seq" },

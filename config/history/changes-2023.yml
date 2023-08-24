@@ -1,3 +1,7 @@
+- :date: 24-Aug-2023
+  :jira_id: '4621'
+  :description: |-
+    Loader: Fix taxonomy instance choice queries <code>no-nomination:</code> and <code>copy-and-append:</code>
 - :date: 22-Aug-2023
   :jira_id: '4619'
   :description: |-
