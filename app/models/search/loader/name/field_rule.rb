@@ -575,7 +575,8 @@ having count(*)                     >  1
    and loader_name_match.copy_append_from_existing_use_batch_def_ref)",
                             order: "seq" },
     "no-nomination:" => {
-       where_clause: " loader_name.record_type = 'accepted' and exists (
+       where_clause: " loader_name.record_type in ('accepted','excluded')
+                and exists (
                    select null
                      from loader_name_match
                    where loader_name.id = loader_name_match.loader_name_id

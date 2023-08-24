@@ -1,3 +1,7 @@
+- :date: 25-Aug-2023
+  :jira_id: '4621'
+  :description: |-
+    Loader: Further adjust taxonomy instance choice query <code>no-nomination:</code> to include excluded names too
 - :date: 24-Aug-2023
   :jira_id: '4621'
   :description: |-
