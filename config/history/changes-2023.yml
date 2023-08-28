@@ -1,3 +1,7 @@
+- :date: 28-Aug-2023
+  :jira_id: '4623'
+  :description: |-
+    Loader: Tighten up Reference Instance tab Undo Choice display and validations, including for "use an existing instance" case once drafted to taxonomy
 - :date: 25-Aug-2023
   :jira_id: '4621'
   :description: |-
