@@ -1,3 +1,7 @@
+- :date: 31-Aug-2023
+  :jira_id: '4627'
+  :description: |-
+    Loader: Add INFO logs statements in Editor to show calls to Services API for Tree ops - for tracing current Tree-op problems
 - :date: 30-Aug-2023
   :jira_id: '4625'
   :description: |-
