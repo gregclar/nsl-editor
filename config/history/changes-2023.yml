@@ -1,3 +1,7 @@
+- :date: 30-Aug-2023
+  :jira_id: ''
+  :description: |-
+    Loader: Write an error log entry when Services reports a Rest Request error - e.g. for taxonomy changes
 - :date: 28-Aug-2023
   :jira_id: '4623'
   :description: |-
