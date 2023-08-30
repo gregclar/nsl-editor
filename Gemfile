@@ -54,14 +54,14 @@ end
 
 group :test do
   # gem 'capybara', '>= 2.15'
-  gem "selenium-webdriver"
+  #gem "selenium-webdriver"
   # Easy installation and use of web drivers to run system tests with browsers
   gem "launchy"
   gem "minitest"
   gem "minitest-rails"
   gem "minitest-reporters"
-  gem "mocha", "~> 1.1.0"
-  gem "webdrivers"
+  gem 'mocha', '~> 1.11', '>= 1.11.2'
+  #gem "webdrivers"
   # NoMethodError: assert_template has been extracted to a gem. To continue using it, add:
   gem "rails-controller-testing"
 end
