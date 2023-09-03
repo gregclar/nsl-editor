@@ -1,3 +1,7 @@
+- :date: 04-Sep-2023
+  :jira_id: '4634'
+  :description: |-
+    Loader: Fix <code>acc:</code> search directive
 - :date: 31-Aug-2023
   :jira_id: '4627'
   :description: |-
