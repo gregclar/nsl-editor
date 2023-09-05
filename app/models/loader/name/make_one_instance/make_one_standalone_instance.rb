@@ -59,7 +59,7 @@ class Loader::Name::MakeOneInstance::MakeOneStandaloneInstance
   end
 
   def using_existing_instance
-    log("#{Constants::DECLINED_INSTANCE} - using existing " +
+    log_to_table("#{Constants::DECLINED_INSTANCE} - using existing " +
                  " instance for #{@loader_name.simple_name} #{@loader_name.id}")
     Constants::DECLINED
   end

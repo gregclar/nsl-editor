@@ -1,3 +1,7 @@
+- :date: 06-Sep-2023
+  :jira_id: '4636'
+  :description: |-
+    Loader: Fix method name bug introduced yesterday when adding elapsed time to bulk processing log entries
 - :date: 05-Sep-2023
   :jira_id: '4636'
   :description: |-
