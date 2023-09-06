@@ -174,12 +174,9 @@ class Loader::Name < ActiveRecord::Base
   end
 
   def names_simple_or_full_name_matching_taxon_scientific
-    ::Name.where(
-      ["lower(f_unaccent(simple_name)) = lower(f_unaccent(?)) or \
-       lower(f_unaccent(full_name)) = lower(f_unaccent(?)) or \
-       lower(f_unaccent(simple_name)) = lower(f_unaccent(? || ' ms'))",
-       simple_name, simple_name, simple_name]
-    )
+    ::Name.where(["simple_name = ? or full_name = ?",
+                  simple_name, simple_name]
+                )
           .where(duplicate_of_id: nil)
           .joins(:name_type).where(name_type: { scientific: true })
           .order("simple_name, name.id")
