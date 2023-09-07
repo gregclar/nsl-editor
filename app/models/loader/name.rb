@@ -173,7 +173,7 @@ class Loader::Name < ActiveRecord::Base
     ary
   end
 
-  def names_simple_or_full_name_matching_taxon_scientific
+  def names_simple_or_full_name_matching
     ::Name.where(["simple_name = ? or full_name = ?",
                   simple_name, simple_name]
                 )
@@ -182,17 +182,30 @@ class Loader::Name < ActiveRecord::Base
           .order("simple_name, name.id")
   end
 
-  def names_unaccent_simple_name_matching_taxon
+  def names_simple_or_full_name_matching_allow_for_ms
+    ::Name.where(["simple_name = ? or full_name = ? or simple_name = ? or full_name = ?",
+                  simple_name, simple_name, simple_name + ' MS', simple_name + ' MS']
+                )
+          .where(duplicate_of_id: nil)
+          .joins(:name_type).where(name_type: { scientific: true })
+          .order("simple_name, name.id")
+  end
+
+  # Tried this - much slower, not sure why given Name is set up for lower(f_unaccent()) searches
+  def names_unaccent_simple_name_matching
     ::Name.where(
-      ["lower(f_unaccent(simple_name)) like lower(f_unaccent(?))", simple_name]
+      ["lower(f_unaccent(simple_name)) = lower(f_unaccent(?))", simple_name]
     )
+          .where(duplicate_of_id: nil)
           .joins(:name_type).where(name_type: { scientific: true })
           .order("simple_name, name.id")
   end
 
   def matches(type: :strict)
     if type == :strict
-      names_simple_or_full_name_matching_taxon_scientific
+      #names_simple_or_full_name_matching
+      #names_unaccent_simple_name_matching
+      names_simple_or_full_name_matching_allow_for_ms
     elsif type == :cultivar
       matches_tweaked_for_cultivar
     elsif type == :phrase

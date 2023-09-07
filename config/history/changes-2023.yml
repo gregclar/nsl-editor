@@ -1,3 +1,7 @@
+- :date: 07-Sep-2023
+  :jira_id: '4640'
+  :description: |-
+    Loader: Trial query that allows for 'MS' suffixes on Name simple-names
 - :date: 06-Sep-2023
   :jira_id: '4639'
   :description: |-
