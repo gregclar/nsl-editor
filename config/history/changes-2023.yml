@@ -1,4 +1,8 @@
 - :date: 08-Sep-2023
+  :jira_id: '4497'
+  :description: |-
+    Loader: Printable version - genera name portion only should now be upper-case (also applied upper-case to excluded genera names)
+- :date: 08-Sep-2023
   :jira_id: '4528'
   :description: |-
     Loader: List the usage references of the preferred match on the Reference Instance tab, if no reference choice yet made
