@@ -1,3 +1,7 @@
+- :date: 08-Sep-2023
+  :jira_id: '4528'
+  :description: |-
+    Loader: List the usage references of the preferred match on the Reference Instance tab, if no reference choice yet made
 - :date: 07-Sep-2023
   :jira_id: '4640'
   :description: |-
