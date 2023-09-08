@@ -1,4 +1,8 @@
 - :date: 08-Sep-2023
+  :jira_id: '4523'
+  :description: |-
+    Reference ISSN: Fix display and link
+- :date: 08-Sep-2023
   :jira_id: '4497'
   :description: |-
     Loader: Printable version - genera name portion only should now be upper-case (also applied upper-case to excluded genera names)
