@@ -1,4 +1,8 @@
 - :date: 08-Sep-2023
+  :jira_id: '4642'
+  :description: |-
+    Loader: Add rescue clauses to log_to_table methods - will avoid any unforeseen logging problems falsely reporting a transaction failed
+- :date: 08-Sep-2023
   :jira_id: '4523'
   :description: |-
     Reference ISSN: Fix display and link
