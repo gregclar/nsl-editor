@@ -1,8 +1,12 @@
+- :date: 11-Sep-2023
+  :jira_id: '4643'
+  :description: |- 
+    Loader: Manually added excluded names are now flagged as Excluded in search results
+  :jira_id: '4523'
 - :date: 08-Sep-2023
   :jira_id: '4642'
-  :description: |-
-    Loader: Add rescue clauses to log_to_table methods - will avoid any unforeseen logging problems falsely reporting a transaction failed
-- :date: 08-Sep-2023
+  :description: |- 
+    Loader: Add rescue clauses to log_to_table methods - will avoid any unforeseen logging problems falsely reporting a transaction failed - :date: 08-Sep-2023
   :jira_id: '4523'
   :description: |-
     Reference ISSN: Fix display and link

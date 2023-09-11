@@ -34,6 +34,8 @@ class Loader::Name < ActiveRecord::Base
 
   scope :avoids_id, ->(avoid_id) { where("loader_name.id != ?", avoid_id) }
 
+  validates :record_type, presence: true
+
   belongs_to :loader_batch, class_name: "Loader::Batch", foreign_key: "loader_batch_id"
   alias_attribute :batch, :loader_batch
 
@@ -233,14 +235,8 @@ class Loader::Name < ActiveRecord::Base
     record_type == "heading"
   end
 
-  # not ideal
-  def excluded_rt?
-    record_type == "excluded"
-  end
-
-  # record types 'excluded' and 'synonym' can be excluded names
   def excluded?
-    excluded == true
+    record_type == "excluded"
   end
 
   def likely_phrase_name?
@@ -278,7 +274,7 @@ class Loader::Name < ActiveRecord::Base
   # i id
   def riti
     return nil if accepted?
-    return nil if excluded_rt?
+    return nil if excluded?
 
     return InstanceType.find_by_name("misapplied").id if misapplied?
 
@@ -395,14 +391,6 @@ class Loader::Name < ActiveRecord::Base
 
     throw "more than one preferred match" unless preferred_matches.size == 1
     preferred_matches.first
-  end
-
-  def true_record_type
-    if record_type == "accepted" && excluded?
-      "excluded"
-    else
-      record_type
-    end
   end
 
   def self.create_instance_for(taxon_s, authorising_user, search)

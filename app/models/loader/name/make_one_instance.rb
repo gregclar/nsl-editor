@@ -62,7 +62,7 @@ class Loader::Name::MakeOneInstance
     return heading if @loader_name.heading?
     return no_further_processing if @loader_name.no_further_processing?
 
-    if @loader_name.accepted? || @loader_name.excluded_rt?
+    if @loader_name.accepted? || @loader_name.excluded?
       create_standalone
     elsif @loader_name.synonym?
       create_synonymy
