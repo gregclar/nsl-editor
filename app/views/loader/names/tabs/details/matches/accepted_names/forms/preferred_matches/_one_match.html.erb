@@ -26,6 +26,9 @@
                           title: "Search for #{matching_name.full_name}",
                           class: 'blue') %>
 
+    <% if TreeJoinV.name_in_synonymy?(matching_name.id) %>
+      <span class="red">Warning: name is in synonymy in the accepted tree</span>
+    <% end %>
       <br>
     <% matching_name.primary_instances.each do |p_i| %>
       <span class="brown"><%= p_i.instance_type.name %></span>&nbsp;

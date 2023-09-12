@@ -671,18 +671,22 @@ having count(*)                     >  1
  where o.record_type = 'accepted'
    and orn.name_id in (
     select name_id
-  from current_accepted_tree_version_vw
+  from tree_join_v
+  where accepted_tree
+    and tree_version_id = current_tree_version_id
        )
  order by o.id)",
                                 trailing_wildcard: true,
                                 order: "seq" },
-    "xnot-in-current-taxonomy:" => { where_clause: "loader_name.id in (select id from orchids where record_type = 'accepted') and loader_name.id not in (select distinct o.id
+    "not-in-current-taxonomy:" => { where_clause: "loader_name.id in (select id from orchids where record_type = 'accepted') and loader_name.id not in (select distinct o.id
   from loader_name_match orn
   join loader_name o
     on orn.loader_name_id = o.id
  where orn.name_id in (
     select name_id
-  from current_accepted_tree_version_vw
+  from tree_join_v
+  where accepted_tree
+    and tree_version_id = current_tree_version_id
        )
  order by o.id)",
                                     trailing_wildcard: true,
@@ -697,5 +701,35 @@ having count(*)                     >  1
                                              order: "seq" },
     "created-manually:" => { where_clause: "created_manually" },
     "any-batch:" => {where_clause: "1=1"},
+    "syn-match-in-tree:" => { where_clause: " record_type = 'synonym'
+       and exists (
+        select null
+          from loader_name_match
+        where loader_name.id  = loader_name_match.loader_name_id
+          and exists (
+            select null
+              from tree_join_v
+            where accepted_tree
+              and tree_version_id = current_tree_version_id
+              and instance_id in (
+                select id
+                  from instance
+     where name_id         = loader_name_match.name_id)))",
+       order: "seq" },
+    "name-match-in-syn:" => { where_clause: " record_type in ('accepted', 'excluded')
+       and exists (
+        select null
+          from loader_name_match
+        where loader_name.id  = loader_name_match.loader_name_id
+          and exists (
+            select null
+              from tree_join_v
+            where accepted_tree
+              and tree_version_id = current_tree_version_id
+              and instance_id in (
+                select cited_by_id
+                  from instance
+     where name_id         = loader_name_match.name_id)))",
+       order: "seq" },
   }.freeze
 end
