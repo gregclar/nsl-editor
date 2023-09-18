@@ -38,6 +38,8 @@
   :jira_id: '4636'
   :description: |-
     Loader: Add elapsed time to the log entry for each task recorded in the bulk processing log
+- :date: 18-Sep-2023
+  :release: true
 - :date: 04-Sep-2023
   :jira_id: '4634'
   :description: |-
