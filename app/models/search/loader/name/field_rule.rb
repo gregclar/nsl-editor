@@ -701,7 +701,7 @@ having count(*)                     >  1
                                              order: "seq" },
     "created-manually:" => { where_clause: "created_manually" },
     "any-batch:" => {where_clause: "1=1"},
-    "syn-match-in-tree:" => { where_clause: " record_type = 'synonym'
+    "syn-match-in-tree-tree-join-v:" => { where_clause: " record_type = 'synonym'
        and exists (
         select null
           from loader_name_match
@@ -715,6 +715,22 @@ having count(*)                     >  1
                 select id
                   from instance
      where name_id         = loader_name_match.name_id)))",
+       order: "seq",
+       do_count_totals: false},
+    "syn-match-in-tree-taxon-mv:" => { where_clause: " record_type = 'synonym'
+       and exists (
+        select null
+          from loader_name_match
+        where loader_name.id  = loader_name_match.loader_name_id
+          and exists (
+            select null
+              from taxon_mv
+            where nomenclatural_status in ('legitimate','[n/a]')
+              and taxonomic_status in ('accepted','excluded')
+              and instance_id in (
+                select id
+                  from instance
+                 where name_id = loader_name_match.name_id)))",
        order: "seq",
        do_count_totals: false},
     "name-match-in-syn:" => { where_clause: " record_type in ('accepted', 'excluded')

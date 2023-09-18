@@ -1,7 +1,11 @@
 - :date: 18-Sep-2023
+  :jira_id: '4641'
+  :description: |- 
+    Loader: Change <code>syn-match-in-tree:</code> directive to query using <code>taxon_mv</code> instead of <code>tree_join_v</code> - should be faster
+- :date: 18-Sep-2023
   :jira_id: '4653'
   :description: |- 
-    Search: Build a programmer switch for slow searches to omits totals and thereby speeds up the total search time - apply to <code>syn-match-in-tree:</code> and <code>name-match-in-syn:</code>
+    Search: Build a programmer switch for slow searches that omits totals and thereby speeds up the total search time - apply to <code>syn-match-in-tree:</code> and <code>name-match-in-syn:</code>
 - :date: 12-Sep-2023
   :jira_id: '4641'
   :description: |- 
