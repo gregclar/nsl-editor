@@ -1,3 +1,7 @@
+- :date: 18-Sep-2023
+  :jira_id: '4653'
+  :description: |- 
+    Search: Build a programmer switch for slow searches to omits totals and thereby speeds up the total search time - apply to <code>syn-match-in-tree:</code> and <code>name-match-in-syn:</code>
 - :date: 12-Sep-2023
   :jira_id: '4641'
   :description: |- 

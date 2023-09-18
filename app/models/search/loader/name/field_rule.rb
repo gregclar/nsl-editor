@@ -715,7 +715,8 @@ having count(*)                     >  1
                 select id
                   from instance
      where name_id         = loader_name_match.name_id)))",
-       order: "seq" },
+       order: "seq",
+       do_count_totals: false},
     "name-match-in-syn:" => { where_clause: " record_type in ('accepted', 'excluded')
        and exists (
         select null
@@ -730,6 +731,7 @@ having count(*)                     >  1
                 select cited_by_id
                   from instance
      where name_id         = loader_name_match.name_id)))",
-       order: "seq" },
+       order: "seq",
+       do_count_totals: false },
   }.freeze
 end
