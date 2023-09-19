@@ -565,7 +565,7 @@ having count(*)                     >  1
       from loader_name_match
  where loader_name.id = loader_name_match.loader_name_id
    and loader_name_match.standalone_instance_id is not null
-   and not loader_name_match.copy_append_from_existing_use_batch_def_ref)",
+   and loader_name_match.use_existing_instance)",
                                   order: "seq" },
     "copy-and-append:" => { where_clause: " exists (
     select null

@@ -1,3 +1,7 @@
+- :date: 19-Sep-2023
+  :jira_id: '4657'
+  :description: |- 
+    Loader: Fix <code>loader_name</code> search directive <code>use-existing-instance:</code>
 - :date: 18-Sep-2023
   :jira_id: '4641'
   :description: |- 
