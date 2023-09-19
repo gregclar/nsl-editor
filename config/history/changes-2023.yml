@@ -1,4 +1,8 @@
 - :date: 19-Sep-2023
+  :jira_id: '4623'
+  :description: |- 
+    Loader: Reference Instance tab - fix the undo message for accepted and excluded names once drafted i.e. make clear they cannot be undone
+- :date: 19-Sep-2023
   :jira_id: '4657'
   :description: |- 
     Loader: Fix <code>loader_name</code> search directive <code>use-existing-instance:</code>

@@ -2,7 +2,7 @@
   No undo - instance has been drafted to taxonomy
 <% else %>
 
-  <% path = 'loader/names/tabs/ref_instance/accepted_names/undo_choice' %>
+  <% path = 'loader/names/tabs/ref_instance/accepted_or_excluded_names/undo_choice' %>
   <% if match.standalone_instance_id.blank? %>
     <%= render partial: "#{path}/no_standalone_instance_created_or_chosen", locals: {match: match} %>
   <% else %>

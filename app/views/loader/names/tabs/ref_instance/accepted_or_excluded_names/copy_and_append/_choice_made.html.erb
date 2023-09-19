@@ -1,9 +1,9 @@
       <h5>Choice</h5>
-        <%= render partial: 'loader/names/tabs/ref_instance/accepted_names/show_current_choice', locals: {match: match} %> 
+        <%= render partial: 'loader/names/tabs/ref_instance/accepted_or_excluded_names/show_current_choice', locals: {match: match} %> 
 
       <% if match.source_for_copy_instance_id.present? %>
          <%= render partial: 
-                'loader/names/tabs/ref_instance/accepted_names/copy_and_append/source_instance_summary',
+                'loader/names/tabs/ref_instance/accepted_or_excluded_names/copy_and_append/source_instance_summary',
                 locals: {match: match} %>
       <% end %>
       <% if match.standalone_instance_id.present? %>
@@ -19,7 +19,7 @@
  <br><br>
 <%= divider %>
      <%= render partial: 
-                'loader/names/tabs/ref_instance/accepted_names/undo_choice',
+                'loader/names/tabs/ref_instance/accepted_or_excluded_names/undo_choice',
                 locals: {match: match} %>
       <br> <br>
       <div id="search-result-details-info-message-container" class="message-container"></div>
