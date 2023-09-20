@@ -1,4 +1,8 @@
 - :date: 20-Sep-2023
+  :jira_id: '4623'
+  :description: |- 
+    Loader: Reference Instance tab - manually drafter accepted or excluded names no longer offered undo option
+- :date: 20-Sep-2023
   :jira_id: '4660'
   :description: |- 
     Loader: Reference Instance tab for synonym is no longer blank if parent has preferred match, parent has no decision made, synonym has no preferred match.

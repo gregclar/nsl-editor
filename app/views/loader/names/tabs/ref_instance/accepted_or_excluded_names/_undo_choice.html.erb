@@ -1,5 +1,7 @@
 <% if match.drafted %>
   No undo - instance has been drafted to taxonomy
+<% elsif match.manually_drafted %>
+  No undo - instance has been manually drafted to taxonomy
 <% else %>
 
   <% path = 'loader/names/tabs/ref_instance/accepted_or_excluded_names/undo_choice' %>
