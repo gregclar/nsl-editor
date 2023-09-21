@@ -1,7 +1,7 @@
 - :date: 21-Sep-2023
   :jira_id: '4662'
   :description: |- 
-    Loader: Allow rank to be entered for <code>loader_name</code> records.
+    Loader: Allow rank to be entered for <code>loader_name</code> records, including accepted, excluded, synonym, and misapplication types.
 - :date: 21-Sep-2023
   :jira_id: '4661'
   :description: |- 
