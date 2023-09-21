@@ -1,4 +1,8 @@
 - :date: 21-Sep-2023
+  :jira_id: '4662'
+  :description: |- 
+    Loader: Allow rank to be entered for <code>loader_name</code> records.
+- :date: 21-Sep-2023
   :jira_id: '4661'
   :description: |- 
     Loader: Reference Instance tab no longer offers instance delete as an undo option for synonym or misapplication <code>loader_name</code> records if the parent record is marked as drafted or manually drafted

@@ -156,7 +156,8 @@ class Loader::NamesController < ApplicationController
                                         :synonym_type, :comment, :seq,
                                         :doubtful, :family, :excluded,
                                         :no_further_processing, :notes,
-                                        :distribution, :loader_batch_id)
+                                        :distribution, :loader_batch_id,
+                                        :rank)
   end
 
   def set_tab
