@@ -1,7 +1,11 @@
+- :date: 21-Sep-2023
+  :jira_id: '4661'
+  :description: |- 
+    Loader: Reference Instance tab no longer offers instance delete as an undo option for synonym or misapplication <code>loader_name</code> records if the parent record is marked as drafted or manually drafted
 - :date: 20-Sep-2023
   :jira_id: '4623'
   :description: |- 
-    Loader: Reference Instance tab - manually drafter accepted or excluded names no longer offered undo option
+    Loader: Reference Instance tab - manually drafted accepted or excluded names are no longer offered an undo option
 - :date: 20-Sep-2023
   :jira_id: '4660'
   :description: |- 
