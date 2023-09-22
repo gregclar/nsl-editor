@@ -35,6 +35,7 @@ class Loader::Name < ActiveRecord::Base
   scope :avoids_id, ->(avoid_id) { where("loader_name.id != ?", avoid_id) }
 
   validates :record_type, presence: true
+  validate :validate_family_record
 
   belongs_to :loader_batch, class_name: "Loader::Batch", foreign_key: "loader_batch_id"
   alias_attribute :batch, :loader_batch
@@ -414,7 +415,15 @@ class Loader::Name < ActiveRecord::Base
   def misapp_html
     if misapp? && original_text.present?
       Rails::Html::FullSanitizer.new.sanitize(original_text)
-   end
-
+    end
   end
+
+  def validate_family_record
+    return if rank.blank?
+    return unless rank.downcase == 'family'
+    unless simple_name == family
+      errors.add(:simple_name, "must match family name for a family")
+    end
+  end
+
 end

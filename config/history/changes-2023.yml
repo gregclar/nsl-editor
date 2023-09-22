@@ -1,7 +1,7 @@
 - :date: 22-Sep-2023
   :jira_id: '4669'
   :description: |- 
-    Loader: Allow entry of heading records - from the menu path <code>New</code> > <code>Loader Name heading record</code>
+    Loader: Allow entry of heading records - from the menu path <code>New</code> > <code>Loader Name heading record</code> (Second cut)
 - :date: 21-Sep-2023
   :jira_id: '4662'
   :description: |- 
