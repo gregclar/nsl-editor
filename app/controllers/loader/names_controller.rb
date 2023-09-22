@@ -55,6 +55,26 @@ class Loader::NamesController < ApplicationController
     end
   end
 
+  def new_heading
+    @loader_name = ::Loader::Name.new
+    @loader_name.simple_name = nil
+    @no_search_result_details = true
+    @tab_index = (params[:tabIndex] || "40").to_i
+    @loader_name.record_type = 'heading'
+    respond_to do |format|
+      format.html {}
+      format.js {}
+    end
+  end
+
+  def new_heading_row
+    @random_id = (Random.new.rand * 10_000_000_000).to_i
+    respond_to do |format|
+      format.html { redirect_to new_search_path }
+      format.js {}
+    end
+  end
+
   def update
     @message = @loader_name.update_if_changed(loader_name_params,
                                               current_user.username)
