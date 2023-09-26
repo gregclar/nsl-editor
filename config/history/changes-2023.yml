@@ -1,3 +1,7 @@
+- :date: 26-Sep-2023
+  :jira_id: '4671'
+  :description: |- 
+    Loader: Allow for <code>acc:</code> and <code>exc:</code> directives to be combined with <code>family:</code> directive in Loader tab searches
 - :date: 22-Sep-2023
   :jira_id: '4669'
   :description: |- 

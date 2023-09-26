@@ -318,10 +318,30 @@ class Loader::Name < ActiveRecord::Base
                         ns, ns, ns, ns, ns, ns])
   end
 
-  # This is used in bulk jobs when the user wants to process names in a family.
+  def self.simple_name_search(name_string)
+    self.bulk_operations_search(name_string)
+  end
+
+  # This is used in bulk jobs
   def self.family_string_search(family_string)
     fam = family_string.downcase.gsub(/\*/, "%")
     Loader::Name.where(["lower(family) like lower(?) ", fam])
+  end
+
+  # This is used in bulk jobs
+  def self.acc_string_search(acc_string)
+    name = acc_string.downcase.gsub(/\*/, "%")
+    Loader::Name.where(["record_type = 'accepted' and lower(simple_name) like lower(?) ", name])
+  end
+
+  # This is used in bulk jobs 
+  def self.exc_string_search(exc_string)
+    name = exc_string.downcase.gsub(/\*/, "%")
+    Loader::Name.where(["record_type = 'excluded' and lower(simple_name) like lower(?) ", name])
+  end
+
+  def self.accepted_or_excluded_search
+    Loader::Name.where("record_type in ('accepted','excluded')")
   end
 
   def self.create(params, username)

@@ -339,16 +339,14 @@ class Search::Loader::Name::FieldRule
                           where_clause: " ((lower(simple_name) like ?
                                    or lower(simple_name) like 'x '||?
                                    or lower(simple_name) like '('||?)
-                                  and record_type = 'accepted'
-                                  and not excluded)
+                                  and record_type = 'accepted')
                                    or (parent_id in (
                                   select id
                                     from loader_name
                                     where (lower(simple_name) like ?
                                       or lower(simple_name) like 'x '||?
                                       or lower(simple_name) like '('||?)
-                                      and record_type = 'accepted'
-                                  and not excluded))",
+                                      and record_type = 'accepted'))",
                           order: "seq" },
     "id-with-syn:" => { where_clause: "id = ? or parent_id = ?",
                         order: "seq" },
