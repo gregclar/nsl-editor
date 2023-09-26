@@ -95,6 +95,6 @@ select (select id from loader_batch where name = 'APC 2022 Updates'),
   remark,
   original_text,
   (id*10)
-  from loader_batch_raw_names_20_mar_2023 raw
+  from loader_batch_raw_names_26_sep_2023 raw
   order by raw.id
 ;
