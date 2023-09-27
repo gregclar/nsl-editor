@@ -11,3 +11,6 @@
 \i k-remove-trailing-white-full-name.sql 
 \i l-set-record-type-excluded.sql
 \i m-update-family-records-to-headings.sql
+\i n-update-name-brackets-without-trailing-space.sql
+\i o-fix-name-sp-dot-no-leading-space.sql
+
