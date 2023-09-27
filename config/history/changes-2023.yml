@@ -1,3 +1,7 @@
+- :date: 27-Sep-2023
+  :jira_id: '4674'
+  :description: |- 
+    Loader: Fix bug stopping details tab displaying in cases where the matching name has no primary instance
 - :date: 26-Sep-2023
   :jira_id: '4671'
   :description: |- 
