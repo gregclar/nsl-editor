@@ -58,7 +58,6 @@
   :jira_id: '4643'
   :description: |- 
     Loader: Manually added excluded names are now flagged as Excluded in search results
-  :jira_id: '4523'
 - :date: 08-Sep-2023
   :jira_id: '4642'
   :description: |- 
