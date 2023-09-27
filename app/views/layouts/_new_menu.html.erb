@@ -112,7 +112,10 @@
           Loader name accepted or excluded record (needs default batch set)
         </li>
         <li role="presentation">
-          Loader name heading record (needs default batch set)
+          Loader name heading (needs default batch set)
+        </li>
+        <li role="presentation">
+          Loader name note (needs default batch set)
         </li>
       <% else %>
         <li role="presentation">
@@ -125,9 +128,17 @@
         </li>
 
         <li role="presentation">
-          <%= link_to "Loader Name heading record",
+          <%= link_to "Loader Name heading",
                     loader_name_new_heading_row_path,
                     title: 'Add a new "heading" loader-name within the current loader-batch',
+                    remote: true,
+                    tabindex: '-1' %>
+        </li>
+
+        <li role="presentation">
+          <%= link_to "Loader Name note",
+                    loader_name_new_note_row_path,
+                    title: 'Add a new "note" loader-name within the current loader-batch',
                     remote: true,
                     tabindex: '-1' %>
         </li>

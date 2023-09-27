@@ -236,6 +236,10 @@ class Loader::Name < ActiveRecord::Base
     record_type == "heading"
   end
 
+  def note?
+    record_type == "note"
+  end
+
   def excluded?
     record_type == "excluded"
   end

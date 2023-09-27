@@ -1,4 +1,8 @@
 - :date: 27-Sep-2023
+  :jira_id: '4677'
+  :description: |- 
+    Loader: Allow entry, edit, and display of a <code>loader_name</code> note record type within a batch.
+- :date: 27-Sep-2023
   :jira_id: '4674'
   :description: |- 
     Loader: Fix bug stopping details tab displaying in cases where the matching name has no primary instance
@@ -11,7 +15,7 @@
   :description: |- 
     Loader: Allow entry of heading records - from the menu path <code>New</code> > <code>Loader Name heading record</code> (Second cut)
 - :date: 21-Sep-2023
-  :jira_id: '4662'
+  :jira_id: '4663'
   :description: |- 
     Loader: Allow rank to be entered for <code>loader_name</code> records, including accepted, excluded, synonym, and misapplication types.
 - :date: 21-Sep-2023
