@@ -1,7 +1,8 @@
 
     <% disable_radio_button = !matching_name.has_primary_instance? ||
                               matching_name.duplicate? ||
-                              @loader_name.synonym_without_synonym_type? %>
+                              @loader_name.synonym_without_synonym_type? ||
+                              !@loader_name.can_clear_matches? %>
 
     <% if disable_radio_button then %>
       <% reason_to_disable = 

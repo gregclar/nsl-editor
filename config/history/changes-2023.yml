@@ -1,4 +1,8 @@
 - :date: 27-Sep-2023
+  :jira_id: '4678'
+  :description: |- 
+    Loader: Prevent alternative match being selected after first selected match has been drafted - covers accepted, excluded, synonyms record types
+- :date: 27-Sep-2023
   :jira_id: '4677'
   :description: |- 
     Loader: Allow entry, edit, and display of a <code>loader_name</code> note record type within a batch.
