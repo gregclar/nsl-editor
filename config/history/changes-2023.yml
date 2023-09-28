@@ -1,3 +1,7 @@
+- :date: 28-Sep-2023
+  :jira_id: '4671'
+  :description: |- 
+    Loader: Fix queries for <code>acc:</code> and <code>exc:</code> so they include results for synonms and misapplications
 - :date: 27-Sep-2023
   :jira_id: '4678'
   :description: |- 

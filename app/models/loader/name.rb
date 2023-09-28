@@ -335,13 +335,21 @@ class Loader::Name < ActiveRecord::Base
   # This is used in bulk jobs
   def self.acc_string_search(acc_string)
     name = acc_string.downcase.gsub(/\*/, "%")
-    Loader::Name.where(["record_type = 'accepted' and lower(simple_name) like lower(?) ", name])
+    Loader::Name.where(["(record_type = 'accepted' and lower(simple_name) like lower(?))  or
+                        (exists (select null from loader_name parent 
+                                  where parent.id = loader_name.parent_id
+                                    and parent.record_type = 'accepted'
+                                    and lower(parent.simple_name) like lower(?)))", name, name])
   end
 
   # This is used in bulk jobs 
   def self.exc_string_search(exc_string)
     name = exc_string.downcase.gsub(/\*/, "%")
-    Loader::Name.where(["record_type = 'excluded' and lower(simple_name) like lower(?) ", name])
+    Loader::Name.where(["(record_type = 'excluded' and lower(simple_name) like lower(?))  or
+                        (exists (select null from loader_name parent 
+                                  where parent.id = loader_name.parent_id
+                                    and parent.record_type = 'excluded'
+                                    and lower(parent.simple_name) like lower(?)))", name, name])
   end
 
   def self.accepted_or_excluded_search
