@@ -54,6 +54,8 @@
   :jira_id: '4641'
   :description: |- 
     Loader: Warn on detail tab when a loader name match conflicts with the current tree; add <code>syn-match-in-tree:</code> and <code>name-match-in-syn:</code> directives to list such cases
+- :date: 28-Sep-2023
+  :release: true
 - :date: 11-Sep-2023
   :jira_id: '4643'
   :description: |- 
