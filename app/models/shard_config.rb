@@ -29,6 +29,11 @@ class ShardConfig < ActiveRecord::Base
     ShardConfig.find_by(name: "classification tree key").value
   end
 
+  def self.classification_tree_label
+    ShardConfig.find_by(name: "classification tree label").value ||
+      'local taxonomy'
+  end
+
   # On by default
   def self.name_parent_rank_restriction
     results = ShardConfig.where(name: "name parent rank restriction")

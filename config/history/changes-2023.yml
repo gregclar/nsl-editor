@@ -1,3 +1,7 @@
+- :date: 29-Sep-2023
+  :jira_id: '4682'
+  :description: |- 
+    Taxonomy: Replace hard-coded reference to 'APC' with appropriate term for the local taxonomy when reporting an instance is not eligible for deletion.
 - :date: 28-Sep-2023
   :jira_id: '4671'
   :description: |- 
