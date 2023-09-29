@@ -1,4 +1,8 @@
 - :date: 29-Sep-2023
+  :jira_id: '4688'
+  :description: |- 
+    Loader: Order batch stack by batch create date
+- :date: 29-Sep-2023
   :jira_id: '4682'
   :description: |- 
     Taxonomy: Replace hard-coded reference to 'APC' with appropriate term for the local taxonomy on the instance details tab
