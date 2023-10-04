@@ -2,7 +2,8 @@
   :jira_id: '4641'
   :description: |- 
     Loader: Adjust <code>name-match-in-syn</code> and associated detail logic to ignore drafted and manually drafted matched records
-- :jira_id: '4688'
+- :date: 29-Sep-2023
+  :jira_id: '4688'
   :description: |- 
     Loader: Order batch stack by batch create date
 - :date: 29-Sep-2023
