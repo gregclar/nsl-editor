@@ -736,6 +736,8 @@ having count(*)                     >  1
         select null
           from loader_name_match
         where loader_name.id  = loader_name_match.loader_name_id
+          and not drafted
+          and not manually_drafted
           and exists (
             select null
               from tree_join_v
