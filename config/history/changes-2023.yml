@@ -1,4 +1,8 @@
 - :date: 05-Oct-2023
+  :jira_id: '4661'
+  :description: |- 
+    Loader: Make conditional text about undo options for synonyms/misapps of drafted names, with copy-and-append chosen, consistent with other choices
+- :date: 05-Oct-2023
   :jira_id: '4641'
   :description: |- 
     Loader: Adjust <code>name-match-in-syn</code> and associated detail logic to ignore drafted and manually drafted matched records
