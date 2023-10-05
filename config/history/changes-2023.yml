@@ -1,4 +1,8 @@
 - :date: 05-Oct-2023
+  :jira_id: '4670'
+  :description: |- 
+    Loader: Allow user to insert new top-level record (ie. accepted or excluded record) at a defined point
+- :date: 05-Oct-2023
   :jira_id: '4661'
   :description: |- 
     Loader: Make conditional text about undo options for synonyms/misapps of drafted names, with copy-and-append chosen, consistent with other choices

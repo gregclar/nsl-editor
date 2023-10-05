@@ -454,8 +454,10 @@ Rails.application.routes.draw do
     match "names/new_heading_row", as: "name_new_heading_row", to: "names#new_heading_row", via: :get
     match "names/new_note_row", as: "name_new_note_row", to: "names#new_note_row", via: :get
     match "names/new/:random_id", as: "name_new_with_random_id", to: "names#new", via: :get
+    match "names/new/:random_id/:loader_name_id", as: "name_new_with_random_id_and_start_id", to: "names#new", via: :get
     match "names_heading/new/:random_id", as: "name_heading_new_with_random_id", to: "names#new_heading", via: :get
     match "names_note/new/:random_id", as: "name_note_new_with_random_id", to: "names#new_note", via: :get
+    match "names/new_row_here/:id", as: "name_new_row_here", to: "names#new_row_here", via: :get
     resources :names, only: %i[create update destroy]
     namespace :name do
       match "matches/create/:id", as: "matches_set", to: "matches#set", via: :patch
