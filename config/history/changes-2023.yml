@@ -1,3 +1,7 @@
+- :date: 09-Oct-2023
+  :jira_id: '4654'
+  :description: |- 
+    Change History: Set up change history page to report the status of jiras
 - :date: 05-Oct-2023
   :jira_id: '4670'
   :description: |- 

@@ -1,0 +1,29 @@
+span.xjira {
+  background: red;
+}
+
+span.jira.in-test {
+  background: indigo;
+}
+
+span.jira.tested {
+  background: green;
+}
+
+span.jira.in-progress {
+  background: chocolate;
+}
+
+span.jira.deployed {
+  background: indigo;
+}
+
+span.jira.closed {
+  background: indigo;
+}
+
+span.jira.open {
+  background: mediumvioletred;
+}
+
+
