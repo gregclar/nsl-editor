@@ -61,8 +61,6 @@
     <tr><td class="width-40-percent min-width-10em">resolved_editor_config_file </td><td> <%= Rails.configuration.try(:resolved_editor_config_file) || '' %> </td></tr>
     <tr><td class="width-40-percent min-width-10em">action_controller.relative_url_root</td>
         <td> <%= Rails.configuration.try('action_controller').try(:relative_url_root) %> </td></tr>
-    <tr><td class="width-40-percent min-width-10em">action_controller.relative_url_root</td>
-        <td> <%= Rails.application.config.action_controller.try(:relative_url_root) %> </td></tr>
     <tr><td class="width-40-percent min-width-10em">ActionController::Base.config.relative_url_root </td>
         <td> <%= ActionController::Base.config.relative_url_root  %> </td></tr>
 
