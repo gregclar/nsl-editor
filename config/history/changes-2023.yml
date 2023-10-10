@@ -1,4 +1,8 @@
 - :date: 10-Oct-2023
+  :jira_id: '4709'
+  :description: |- 
+    Loader: Correctly record context of name review comments when created - so we know if the comment was for a distribution, synonym, etc
+- :date: 10-Oct-2023
   :jira_id: '4654'
   :description: |- 
     Change History: Adjust colors to show different Jira statuses more clearly
