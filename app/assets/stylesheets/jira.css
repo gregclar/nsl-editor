@@ -1,9 +1,5 @@
-span.xjira {
-  background: red;
-}
-
 span.jira.in-test {
-  background: indigo;
+  background: darkred;
 }
 
 span.jira.tested {
@@ -19,11 +15,14 @@ span.jira.deployed {
 }
 
 span.jira.closed {
-  background: indigo;
+  background: navy;
 }
 
 span.jira.open {
-  background: mediumvioletred;
+  background: yellow;
+}
+span.jira.open a {
+  color: black;
 }
 
 

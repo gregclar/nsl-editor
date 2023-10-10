@@ -13,6 +13,11 @@
       <%= link_to "Changes #{params[:year]} showing Jira statuses", history_for_year_path(params[:year],'true'), title: 'Changes history', class: 'blue with-underline' %>
       (Can be slower when not cached.)
       </p>
+      <% if Rails.env == "development" %>
+        <p><b>
+        Developer note: caching is switched off in development by default.
+        </b></p>
+      <% end %>
     <% end %>
     <% if defined? the_note %>
       <p><%= the_note %></p>
