@@ -1,3 +1,7 @@
+- :date: 12-Oct-2023
+  :jira_id: ''
+  :description: |- 
+    Loader: Fix detail tab not displaying for loader name records with no preferred match
 - :date: 11-Oct-2023
   :jira_id: '4660'
   :description: |- 
