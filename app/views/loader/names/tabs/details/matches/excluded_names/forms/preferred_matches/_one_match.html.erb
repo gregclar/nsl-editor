@@ -27,7 +27,7 @@
                           title: "Search for #{matching_name.full_name}",
                           class: 'blue') %>
 
-    <% unless @loader_name.preferred_match.drafted? %>
+    <% unless @loader_name.preferred_match&.drafted? %>
       <% if TreeJoinV.name_in_synonymy?(matching_name.id) %>
         <span class="red">Warning: name is in synonymy in the accepted tree</span>
       <% end %>
