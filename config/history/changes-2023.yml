@@ -1,4 +1,8 @@
 - :date: 12-Oct-2023
+  :jira_id: '4641'
+  :description: |- 
+    Loader: New, revised and faster query for <code>name-match-in-syn</code> which excludes misapplications and pro parte synonyms from the results.
+- :date: 12-Oct-2023
   :jira_id: ''
   :description: |- 
     Loader: Fix detail tab not displaying for loader name records with no preferred match - for accepted names, and also for excluded names
