@@ -1,4 +1,8 @@
 - :date: 13-Oct-2023
+  :jira_id: '4712'
+  :description: |- 
+    Loader: Do not print genus names without an author abbreviation twice
+- :date: 13-Oct-2023
   :jira_id: '4669'
   :description: |- 
     Loader: Give a more understandable error message if user tries to create a loader_name record without setting a default batch
