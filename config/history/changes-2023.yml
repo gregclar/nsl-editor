@@ -1,3 +1,7 @@
+- :date: 13-Oct-2023
+  :jira_id: '4713'
+  :description: |- 
+    Loader: Correct the query used on the loader_name detail tab to detect and warn about name-match-in-synonymy cases.
 - :date: 12-Oct-2023
   :jira_id: '4641'
   :description: |- 
