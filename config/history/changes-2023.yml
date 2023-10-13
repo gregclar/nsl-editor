@@ -1,4 +1,8 @@
 - :date: 13-Oct-2023
+  :jira_id: '4669'
+  :description: |- 
+    Loader: Give a more understandable error message if user tries to create a loader_name record without setting a default batch
+- :date: 13-Oct-2023
   :jira_id: '4713'
   :description: |- 
     Loader: Correct the query used on the loader_name detail tab to detect and warn about name-match-in-synonymy cases.

@@ -169,6 +169,7 @@ class Loader::NamesController < ApplicationController
   end
 
   def create
+    raise 'Please set a default batch' if session[:default_loader_batch_name].blank?
     @loader_name = Loader::Name.create(loader_name_params, current_user.username)
     render "create"
   rescue StandardError => e
