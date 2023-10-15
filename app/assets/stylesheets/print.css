@@ -20,7 +20,8 @@ tr.search-result.heading td.text {
   text-align: center;
 }
 
-tr.search-result span.loader-name.remark-to-reviewers {
+tr.search-result span.loader-name.remark-to-reviewers,
+tr.note {
   background: yellow;
 }
 

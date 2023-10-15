@@ -1,7 +1,11 @@
+- :date: 16-Oct-2023
+  :jira_id: '4677'
+  :description: |- 
+    Loader: Allow note records to print and print them with a yellow background
 - :date: 13-Oct-2023
   :jira_id: '4712'
   :description: |- 
-    Loader: Do not print genus names without an author abbreviation twice
+    Loader: Do not print genus names twice (even) when they have no authority 
 - :date: 13-Oct-2023
   :jira_id: '4669'
   :description: |- 
