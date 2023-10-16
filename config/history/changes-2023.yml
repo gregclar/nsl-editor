@@ -1,3 +1,7 @@
+- :date: 17-Oct-2023
+  :jira_id: '4715'
+  :description: |- 
+    Loader: Loader Name note records are now called in-batch-notes; fixed loader-name detail tabbing bug
 - :date: 16-Oct-2023
   :jira_id: '4707'
   :description: |- 

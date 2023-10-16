@@ -69,13 +69,13 @@ class Loader::NamesController < ApplicationController
     end
   end
 
-  def new_note
+  def new_in_batch_note
     @loader_name = ::Loader::Name.new
     @loader_name.simple_name = 'not applicable'
     @loader_name.family = 'not applicable'
     @no_search_result_details = true
     @tab_index = (params[:tabIndex] || "40").to_i
-    @loader_name.record_type = 'note'
+    @loader_name.record_type = 'in-batch-note'
     respond_to do |format|
       format.html {}
       format.js {}
@@ -90,7 +90,7 @@ class Loader::NamesController < ApplicationController
     end
   end
 
-  def new_note_row
+  def new_in_batch_note_row
     @random_id = (Random.new.rand * 10_000_000_000).to_i
     respond_to do |format|
       format.html { redirect_to new_search_path }
