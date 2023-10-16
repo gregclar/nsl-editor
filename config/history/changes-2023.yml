@@ -1,4 +1,8 @@
 - :date: 16-Oct-2023
+  :jira_id: '4707'
+  :description: |- 
+    Loader: Copy-and-Append synonymy creation now completes even if a copied synonym fails validation - error is logged, but process continues
+- :date: 16-Oct-2023
   :jira_id: '4677'
   :description: |- 
     Loader: Allow note records to print and print them with a yellow background
