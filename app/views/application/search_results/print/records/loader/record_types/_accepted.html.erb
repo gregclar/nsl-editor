@@ -4,8 +4,9 @@
 
 <tr id="search-result-<%= search_result.id %>" 
     class="search-result <%= search_result.record_type %> ">
-  <td class="text name main-content" colspan="4" >
 
+
+  <td class="text name main-content" colspan="5" >
 
     <span class='loader-name <%= search_result.record_type %> full-name'>
       <% if search_result.rank == 'genus'  %>
@@ -34,6 +35,7 @@
     <% end %>
 
   </td>
+
 </tr>
 
 

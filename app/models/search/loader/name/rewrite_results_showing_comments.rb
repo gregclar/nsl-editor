@@ -30,7 +30,9 @@ class Search::Loader::Name::RewriteResultsShowingComments
           waiting_for_next_accepted = true
         end
       end
-      if rec[:record_type] == 'in-batch-note' then
+      if rec[:record_type] == 'in-batch-note' ||
+         rec[:record_type] == 'heading'
+      then
         unless @previous_accepted_rec.nil?
           dist_and_dist_comments(@previous_accepted_rec)
           concept_note_and_cn_comments(@previous_accepted_rec)

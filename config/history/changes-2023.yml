@@ -1,6 +1,10 @@
 - :date: 18-Oct-2023
   :jira_id: '4619'
   :description: |- 
+    Loader: Second cut of print output showing review comments etc, with layout fixes and logic fixes (before any user testing)
+- :date: 18-Oct-2023
+  :jira_id: '4619'
+  :description: |- 
     Loader: First cut of print output showing review comments, including for distribution and concept notes placed after synonymy
 - :date: 17-Oct-2023
   :jira_id: '4715'

@@ -1,11 +1,11 @@
 
-<tr class="search-result excluded top-spacer"><td>&nbsp;</td></tr>
+<tr class="search-result excluded top-spacer"><td colspan="5">&nbsp;</td></tr>
 
 <%# Show this heading once per family at most and only on the first occurrence %>
 <%# Presumes excludeds etc are grouped at the end of a family %>
 <% if !(defined? @family_excluded_header_shown) || (@family_excluded_header_shown != search_result.family) %>
   <tr class="search-result excluded-header">
-    <td colspan="4">UNPLACED, DOUBTFUL AND EXCLUDED NAMES</td>
+    <td colspan="5">UNPLACED, DOUBTFUL AND EXCLUDED NAMES</td>
   </tr>
   <% @family_excluded_header_shown = search_result.family %>
 <% end %>
@@ -13,7 +13,7 @@
 
 <tr id="search-result-<%= search_result.id %>" 
     class="search-result <%= search_result.record_type %> ">
-  <td class="text name main-content" colspan="4" >
+  <td class="text name main-content" colspan="5" >
 
 
     <span class='loader-name <%= search_result.record_type %> full-name'>
