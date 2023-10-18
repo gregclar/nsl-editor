@@ -22,8 +22,8 @@ class Search::Loader::Name::RewriteResultsShowingComments
           waiting_for_next_accepted = true
         else
           unless @previous_accepted_rec.nil?
-            dist_and_dist_comments(@previous_accepted_rec)
             concept_note_and_cn_comments(@previous_accepted_rec)
+            dist_and_dist_comments(@previous_accepted_rec)
             @previous_accepted_rec = nil
           end
           @previous_accepted_rec = rec.clone
@@ -31,11 +31,12 @@ class Search::Loader::Name::RewriteResultsShowingComments
         end
       end
       if rec[:record_type] == 'in-batch-note' ||
-         rec[:record_type] == 'heading'
+         rec[:record_type] == 'heading' ||
+         rec[:record_type] == 'excluded'
       then
         unless @previous_accepted_rec.nil?
-          dist_and_dist_comments(@previous_accepted_rec)
           concept_note_and_cn_comments(@previous_accepted_rec)
+          dist_and_dist_comments(@previous_accepted_rec)
           @previous_accepted_rec = nil
         end
       end

@@ -1,11 +1,11 @@
 <tr id="search-result-<%= search_result.id %>" 
     class="search-result <%= search_result.record_type %> <%= 'fresh' if search_result.fresh? %>"  
     >
-    <td class="text name main-content width-100-percent" colspan="5" >
+    <td width="40" class="first-indent"></td>
+    <td class="text name main-content width-100-percent" colspan="5">
 
 
 <% path = 'application/search_results/link_texts/loader/name' %>
-<%= render partial: "#{path}/indent", locals: {search_result: search_result} %>
 
     <span class='loader-name <%= search_result.record_type %> full-name'>
       <%= "#{search_result.full_name}" %><%= ',' unless search_result.name_status.blank? %>

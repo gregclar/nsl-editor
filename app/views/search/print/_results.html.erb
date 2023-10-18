@@ -9,15 +9,6 @@
       <% when 'Name Review Comment' %>  
         <%= render partial: 'application/search_results/print/records/loader/name/review/comments', 
           locals: {search_result: record, give_me_focus: nil} %>
-      <% when 'Loader Name Distribution' %>  
-        <%= render partial: 'application/search_results/print/records/loader/record_types/distribution',
-          locals: {search_result: record, give_me_focus: nil} %>
-      <% when 'Loader Name Concept Note' %>  
-        <%= render partial: 'application/search_results/print/records/loader/record_types/concept_note',
-          locals: {search_result: record, give_me_focus: nil} %>
-      <% when 'Loader Name In-Batch-Note' %>  
-        <%= render partial: 'application/search_results/print/records/loader/record_types/in_batch_note',
-          locals: {search_result: record, give_me_focus: nil} %>
       <% else %>
         <tr>
           <td class="width-1-percent"></td>
@@ -34,5 +25,7 @@
         <br> <br> <br> <br> <br>
       </td>
     </tr>
+
+
 
 
