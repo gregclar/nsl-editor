@@ -52,7 +52,7 @@ class Search::OnModel::Base
   def run_count_query(parsed_request)
     count_query = Search::OnModel::CountQuery.new(parsed_request)
     @relation = count_query.sql
-    @count = relation.count
+    @count = @relation.count
     @limited = false
     @info_for_display = count_query.info_for_display
     @common_and_cultivar_included = count_query.common_and_cultivar_included
@@ -63,7 +63,7 @@ class Search::OnModel::Base
   def run_list_query(parsed_request)
     list_query = Search::OnModel::ListQuery.new(parsed_request)
     @relation = list_query.sql
-    @results = relation.all
+    @results = @relation.all
     @results = list_query.trim_results(@results)
     @limited = list_query.limited
     @info_for_display = list_query.info_for_display
@@ -106,10 +106,11 @@ class Search::OnModel::Base
   def consider_loader_name_comments(parsed_request)
     return unless parsed_request.show_loader_name_comments
 
-    show_loader_name_comments(parsed_request)
+    #@results = show_loader_name_comments(parsed_request)
+    @results = Search::Loader::Name::RewriteResultsShowingComments.new(@results).results
   end
 
-  def show_loader_name_comments(parsed_request)
+  def orig_show_loader_name_comments(parsed_request)
     results_with_comments = []
     @results.each do |rec|
       results_with_comments << rec
@@ -120,6 +121,83 @@ class Search::OnModel::Base
       comments_query.results.each { |i| results_with_comments << i }
     end
     @results = results_with_comments
+  end
+
+  def show_loader_name_comments_2(parsed_request)
+    results_with_comments = []
+    @results.each do |rec|
+      Rails.logger.debug('results with comments')
+      results_with_comments << rec
+      comments_query = Loader::Name::Review::Comment::AsArray::ForLoaderName
+                        .new(rec, 'accepted')
+      comments_query.results.each { |i| results_with_comments << i }
+      unless rec['distribution'].blank?
+        h = Hash.new
+        h[:display_as] = 'Loader Name Distribution'
+        h[:record_type] = 'distribution'
+        h[:payload] = rec['distribution']
+        results_with_comments << h
+      end
+      comments_query = Loader::Name::Review::Comment::AsArray::ForLoaderName
+                        .new(rec, 'distribution')
+      comments_query.results.each { |i| results_with_comments << i }
+      unless rec['comment'].blank?
+        h = Hash.new
+        h[:display_as] = 'Loader Name Concept Note'
+        h[:record_type] = 'concept-note'
+        h[:payload] = rec['comment']
+        results_with_comments << h
+      end
+      comments_query = Loader::Name::Review::Comment::AsArray::ForLoaderName
+                        .new(rec, 'concept-note')
+      comments_query.results.each { |i| results_with_comments << i }
+    end
+    @results = results_with_comments
+  end
+
+  def show_loader_name_comments(parsed_request)
+    results_with_comments = []
+    @results.each do |rec|
+      Rails.logger.debug('results with comments')
+      results_with_comments << rec
+
+
+      comments_query = Loader::Name::Review::Comment::AsArray::ForLoaderName
+                        .new(rec, 'accepted')
+      comments_query.results.each { |i| results_with_comments << i }
+
+
+      if rec[:record_type] == 'accepted' then
+
+        unless rec['distribution'].blank?
+          dist = Hash.new
+          dist[:display_as] = 'Loader Name'
+          dist[:record_type] = 'distribution'
+          dist[:payload] = rec['distribution']
+          results_with_comments << dist
+        end
+        dist_comments = Loader::Name::Review::Comment::AsArray::ForLoaderName
+                          .new(rec, 'distribution')
+        dist_comments.results.each { |i| results_with_comments << i }
+  
+  
+        unless rec['comment'].blank?
+          h = Hash.new
+          h[:display_as] = 'Loader Name'
+          h[:record_type] = 'concept-note'
+          h[:payload] = "payload: #{rec['comment']}"
+          results_with_comments << h
+        end
+        comments_query = Loader::Name::Review::Comment::AsArray::ForLoaderName
+                          .new(rec, 'concept-note')
+        comments_query.results.each { |i| results_with_comments << i }
+  
+
+      end
+
+
+    end
+    results_with_comments
   end
 
   def debug(s)

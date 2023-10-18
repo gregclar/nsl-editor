@@ -1,3 +1,7 @@
+- :date: 18-Oct-2023
+  :jira_id: '4619'
+  :description: |- 
+    Loader: First cut of print output showing review comments, including for distribution and concept notes placed after synonymy
 - :date: 17-Oct-2023
   :jira_id: '4715'
   :description: |- 

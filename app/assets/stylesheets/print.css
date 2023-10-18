@@ -21,7 +21,7 @@ tr.search-result.heading td.text {
 }
 
 tr.search-result span.loader-name.remark-to-reviewers,
-tr.note {
+tr.in-batch-note {
   background: yellow;
 }
 

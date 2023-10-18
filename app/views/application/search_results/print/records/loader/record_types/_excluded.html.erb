@@ -1,13 +1,11 @@
 
-<%= render partial: 'application/search_results/print/records/loader/record_types/prev_rec_dist_comments' %>
-
 <tr class="search-result excluded top-spacer"><td>&nbsp;</td></tr>
 
 <%# Show this heading once per family at most and only on the first occurrence %>
 <%# Presumes excludeds etc are grouped at the end of a family %>
 <% if !(defined? @family_excluded_header_shown) || (@family_excluded_header_shown != search_result.family) %>
   <tr class="search-result excluded-header">
-    <td colspan="2">UNPLACED, DOUBTFUL AND EXCLUDED NAMES</td>
+    <td colspan="4">UNPLACED, DOUBTFUL AND EXCLUDED NAMES</td>
   </tr>
   <% @family_excluded_header_shown = search_result.family %>
 <% end %>
@@ -15,7 +13,7 @@
 
 <tr id="search-result-<%= search_result.id %>" 
     class="search-result <%= search_result.record_type %> ">
-  <td class="text name main-content" colspan="2" >
+  <td class="text name main-content" colspan="4" >
 
 
     <span class='loader-name <%= search_result.record_type %> full-name'>
@@ -45,8 +43,5 @@
 
   </td>
 </tr>
-
-
-<% @previous_comment = search_result.comment unless search_result.comment.blank? %>
 
 

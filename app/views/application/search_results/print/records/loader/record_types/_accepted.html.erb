@@ -1,11 +1,10 @@
 
-<%= render partial: 'application/search_results/print/records/loader/record_types/prev_rec_dist_comments' %>
 
-<tr class="search-result accepted top-spacer"><td>&nbsp;</td></tr>
+<tr class="search-result accepted top-spacer"><td colspan="4">&nbsp;</td></tr>
 
 <tr id="search-result-<%= search_result.id %>" 
     class="search-result <%= search_result.record_type %> ">
-  <td class="text name main-content" colspan="2" >
+  <td class="text name main-content" colspan="4" >
 
 
     <span class='loader-name <%= search_result.record_type %> full-name'>
@@ -37,7 +36,5 @@
   </td>
 </tr>
 
-<% @previous_distribution = search_result.distribution %>
-<% @previous_comment = search_result.comment %>
 
 
