@@ -1,4 +1,8 @@
 - :date: 19-Oct-2023
+  :jira_id: '4722'
+  :description: |- 
+    Loader: Remove comment field from input forms for synonyms, misapplieds, and headings.
+- :date: 19-Oct-2023
   :jira_id: '4721'
   :description: |- 
     Loader: Features based on rank should match case-insensitively - e.g. family heading records should work with 'family' or 'Family'
