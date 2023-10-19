@@ -1,7 +1,11 @@
 - :date: 19-Oct-2023
+  :jira_id: ''
+  :description: |- 
+    Loader: Change history pages - heading for these pages now matches the menu label ie. "Changes 9999" rather than "9999 Changes"
+- :date: 19-Oct-2023
   :jira_id: '4722'
   :description: |- 
-    Loader: Remove comment field from input forms for synonyms, misapplieds, and headings.
+    Loader: Remove comment field from input forms for synonyms, misapplieds, and headings
 - :date: 19-Oct-2023
   :jira_id: '4721'
   :description: |- 
