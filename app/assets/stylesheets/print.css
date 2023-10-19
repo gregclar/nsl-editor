@@ -79,3 +79,8 @@ tr.search-result.excluded-header {
   height: 4em;
 }
 
+ 
+span.compiler-note {
+  background: lightgreen;
+  color: black;
+}

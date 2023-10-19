@@ -1,4 +1,8 @@
 - :date: 19-Oct-2023
+  :jira_id: '4725'
+  :description: |- 
+    Loader: Show notes (for compilers) on the LHS and on printout, but not for reviewers. Highlight in green.
+- :date: 19-Oct-2023
   :jira_id: ''
   :description: |- 
     Loader: Change history pages - heading for these pages now matches the menu label ie. "Changes 9999" rather than "9999 Changes"
