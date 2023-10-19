@@ -1,4 +1,8 @@
 - :date: 19-Oct-2023
+  :jira_id: '4720'
+  :description: |- 
+    Loader: Allow entry of full name when creating a new loader name record
+- :date: 19-Oct-2023
   :jira_id: '4619'
   :description: |- 
     Loader: Further improvements to print output based on review yesterday as noted in Jira
