@@ -46,6 +46,8 @@
   :jira_id: '4712'
   :description: |- 
     Loader: Do not print genus names twice (even) when they have no authority 
+- :date: 20-Oct-2023
+  :release: true
 - :date: 13-Oct-2023
   :jira_id: '4669'
   :description: |- 
