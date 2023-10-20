@@ -442,6 +442,7 @@ Rails.application.routes.draw do
   match "loader_batches/:id/tab/:tab", as: "loader_batch_tab", to: "loader/batches#tab", via: :get
   match "loader_batch/make-default/:id", as: "make_default_batch", to: "loader/batches#make_default", via: :post
   match "loader_batch/clear-default", as: "clear_default_batch", to: "loader/batches#clear_default", via: :post
+  match "loader/batch/clear", as: "loader_batch_clear", to: "loader/batches#clear", via: :get
   match "loader/batch/unlock", as: "loader_batch_unlock", to: "loader/batch/job_lock#unlock", via: :post
   match "loader/batch/bulk/enable_add", as: "loader_batch_bulk_enable_add", to: "loader/batch/bulk#enable_add",
                                         via: :post

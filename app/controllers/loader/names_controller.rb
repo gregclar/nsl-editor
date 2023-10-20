@@ -130,7 +130,6 @@ class Loader::NamesController < ApplicationController
     stop_if_nothing_changed
     return "No change" if params[:loader_name].blank?
 
-    # remove_unwanted_orchid_names
     create_preferred_match unless clearing_all_preferred_matches?
   end
 
@@ -161,7 +160,7 @@ class Loader::NamesController < ApplicationController
   # The aim of clear is to remove all chosen matches
   # i.e. don't set a preferred match
   def clearing_all_preferred_matches?
-    false # orchid_params[:name_id].to_i < 0
+    false # orc hid_params[:name_id].to_i < 0
   end
 
   def parent_suggestions
