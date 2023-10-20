@@ -1,4 +1,8 @@
 - :date: 20-Oct-2023
+  :jira_id: '4728'
+  :description: |- 
+    Loader: Fix <code>instance-is-cited:</code> query
+- :date: 20-Oct-2023
   :jira_id: '4727'
   :description: |- 
     Loader: Remove loader code dependencies on orchid code in the Editor
