@@ -26,7 +26,12 @@
                   remote: true) %>
     <% end %>
     <% unless search_result.notes.blank? %>
-      <span class="fat <%= search_result.record_type == 'in-batch-note' ? 'in-batch-note' : 'compiler-note' %>"><%= search_result.notes %></span>
+      <% case search_result.record_type %>
+      <% when 'in-batch-note' %>
+        <span class="fat in-batch-note" title="In-Batch Note"><%= search_result.notes %></span>
+      <% else %>
+        <span class="fat compiler-note" title="Compiler Note"><%= search_result.notes %></span>
+      <% end %>
     <% end %>
   </td>
   <td class="takes-focus width-5-percent filler">&nbsp;</td>

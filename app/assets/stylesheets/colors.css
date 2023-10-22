@@ -195,8 +195,9 @@ a:hover.blue           { color: blue; }
 
 .search-result .flag,
 .search-result .fat {
-  padding: 0.4em 0.3em 0.2em 0.4em;
+  padding: 0.1em 0.3em 0.1em 0.4em;
 }
+
 
 .search-result span.isonym {
   background: peru;
