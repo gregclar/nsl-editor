@@ -70,7 +70,7 @@ class Search::OnModel::Base
     @common_and_cultivar_included = list_query.common_and_cultivar_included
     @do_count_totals = list_query.do_count_totals
     consider_instances(parsed_request)
-    consider_loader_name_comments(parsed_request)
+    consider_loader_name_extras(parsed_request)
     if @do_count_totals then
       @count = @results.size
       calculate_total
@@ -103,101 +103,10 @@ class Search::OnModel::Base
     parsed_request.order_instances_by_page ? "page" : "name"
   end
 
-  def consider_loader_name_comments(parsed_request)
+  def consider_loader_name_extras(parsed_request)
     return unless parsed_request.show_loader_name_comments
 
-    #@results = show_loader_name_comments(parsed_request)
     @results = Search::Loader::Name::RewriteResultsShowingComments.new(@results).results
-  end
-
-  def orig_show_loader_name_comments(parsed_request)
-    results_with_comments = []
-    @results.each do |rec|
-      results_with_comments << rec
-      comments_query = Loader::Name::Review::Comment::AsArray::ForLoaderName
-                        .new(rec,
-                             parsed_request.limit,
-                             parsed_request.instance_offset)
-      comments_query.results.each { |i| results_with_comments << i }
-    end
-    @results = results_with_comments
-  end
-
-  def show_loader_name_comments_2(parsed_request)
-    results_with_comments = []
-    @results.each do |rec|
-      Rails.logger.debug('results with comments')
-      results_with_comments << rec
-      comments_query = Loader::Name::Review::Comment::AsArray::ForLoaderName
-                        .new(rec, 'accepted')
-      comments_query.results.each { |i| results_with_comments << i }
-      unless rec['distribution'].blank?
-        h = Hash.new
-        h[:display_as] = 'Loader Name Distribution'
-        h[:record_type] = 'distribution'
-        h[:payload] = rec['distribution']
-        results_with_comments << h
-      end
-      comments_query = Loader::Name::Review::Comment::AsArray::ForLoaderName
-                        .new(rec, 'distribution')
-      comments_query.results.each { |i| results_with_comments << i }
-      unless rec['comment'].blank?
-        h = Hash.new
-        h[:display_as] = 'Loader Name Concept Note'
-        h[:record_type] = 'concept-note'
-        h[:payload] = rec['comment']
-        results_with_comments << h
-      end
-      comments_query = Loader::Name::Review::Comment::AsArray::ForLoaderName
-                        .new(rec, 'concept-note')
-      comments_query.results.each { |i| results_with_comments << i }
-    end
-    @results = results_with_comments
-  end
-
-  def show_loader_name_comments(parsed_request)
-    results_with_comments = []
-    @results.each do |rec|
-      Rails.logger.debug('results with comments')
-      results_with_comments << rec
-
-
-      comments_query = Loader::Name::Review::Comment::AsArray::ForLoaderName
-                        .new(rec, 'accepted')
-      comments_query.results.each { |i| results_with_comments << i }
-
-
-      if rec[:record_type] == 'accepted' then
-
-        unless rec['distribution'].blank?
-          dist = Hash.new
-          dist[:display_as] = 'Loader Name'
-          dist[:record_type] = 'distribution'
-          dist[:payload] = rec['distribution']
-          results_with_comments << dist
-        end
-        dist_comments = Loader::Name::Review::Comment::AsArray::ForLoaderName
-                          .new(rec, 'distribution')
-        dist_comments.results.each { |i| results_with_comments << i }
-  
-  
-        unless rec['comment'].blank?
-          h = Hash.new
-          h[:display_as] = 'Loader Name'
-          h[:record_type] = 'concept-note'
-          h[:payload] = "payload: #{rec['comment']}"
-          results_with_comments << h
-        end
-        comments_query = Loader::Name::Review::Comment::AsArray::ForLoaderName
-                          .new(rec, 'concept-note')
-        comments_query.results.each { |i| results_with_comments << i }
-  
-
-      end
-
-
-    end
-    results_with_comments
   end
 
   def debug(s)
