@@ -104,13 +104,15 @@ class Search::OnModel::Base
   end
 
   def consider_loader_name_extras(parsed_request)
-    return unless parsed_request.show_loader_name_comments
+    return unless parsed_request.target_model == 'Loader::Name'
 
-    @results = Search::Loader::Name::RewriteResultsShowingComments.new(@results).results
+    show_comments = parsed_request.show_loader_name_comments
+    @results = Search::Loader::Name::RewriteResultsShowingExtras
+      .new(@results, show_comments).results
   end
 
   def debug(s)
-    Rails.logger.debug("Search::User::Base: #{s}")
+    Rails.logger.debug("Search::OnModel::Base: #{s}")
   end
 
   def csv?

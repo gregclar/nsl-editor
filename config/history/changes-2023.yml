@@ -1,3 +1,7 @@
+- :date: 24-Oct-2023
+  :jira_id: '4619'
+  :description: |- 
+    Loader: Print - concept notes and distributions now appear with or without the <code>src:</code> (<code>show-review-comments:</code>) directive
 - :date: 23-Oct-2023
   :jira_id: '4619'
   :description: |- 
