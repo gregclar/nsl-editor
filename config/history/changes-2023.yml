@@ -1,7 +1,7 @@
 - :date: 23-Oct-2023
-  :jira_id: '4734'
+  :jira_id: '4619'
   :description: |- 
-    Loader: Add link to loader names on any batch's detail tab - even if it's not the default batch
+    Loader: Print - comments on excluded names now appear
 - :date: 23-Oct-2023
   :jira_id: '4731'
   :description: |- 

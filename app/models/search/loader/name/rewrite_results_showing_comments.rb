@@ -9,41 +9,50 @@ class Search::Loader::Name::RewriteResultsShowingComments
   def results
     debug('START OF RESULTS')
     @results_with_comments = []
-    waiting_for_next_accepted = false
-    first_accepted_record = true
+    waiting_for_next_top_level_record = false
+    first_top_level_record = true
     @results.each do |rec|
-      debug("TOP OF LOOP  rec.id: #{rec.id}; rec[:record_type]: #{rec[:record_type].upcase}")
+      debug("TOP OF LOOP  rec.id: #{rec.id}; rec[:record_type]: #{rec[:record_type].upcase} rec[:simple_name]: #{rec[:simple_name]}")
 
-      if rec[:record_type] == 'accepted' then
-        debug(' ---- FOUND an accepted record')
-        if first_accepted_record then
-          first_accepted_record = false
-          @previous_accepted_rec = rec.clone
-          waiting_for_next_accepted = true
+
+      # ######################################################################
+      # Do we need to add comment/distribution into the array at this point?
+      # ######################################################################
+      if rec[:record_type] == 'accepted' || rec[:record_type] == 'excluded' then
+        debug(' ---- FOUND an accepted or excluded record')
+        if first_top_level_record then
+          # No we do not
+          first_top_level_record = false
+          @previous_top_level_rec = rec.clone
+          waiting_for_next_top_level_record = true
         else
-          unless @previous_accepted_rec.nil?
-            concept_note_and_cn_comments(@previous_accepted_rec)
-            dist_and_dist_comments(@previous_accepted_rec)
-            @previous_accepted_rec = nil
+          unless @previous_top_level_rec.nil?
+            # Yes we do
+            concept_note_and_cn_comments(@previous_top_level_rec)
+            dist_and_dist_comments(@previous_top_level_rec)
+            @previous_top_level_rec = nil
           end
-          @previous_accepted_rec = rec.clone
-          waiting_for_next_accepted = true
+          @previous_top_level_rec = rec.clone
+          waiting_for_next_top_level_record = true
         end
       end
       if rec[:record_type] == 'in-batch-note' ||
-         rec[:record_type] == 'heading' ||
-         rec[:record_type] == 'excluded'
+         rec[:record_type] == 'heading'
       then
-        unless @previous_accepted_rec.nil?
-          concept_note_and_cn_comments(@previous_accepted_rec)
-          dist_and_dist_comments(@previous_accepted_rec)
-          @previous_accepted_rec = nil
+        unless @previous_top_level_rec.nil?
+            # Yes we do
+          concept_note_and_cn_comments(@previous_top_level_rec)
+          dist_and_dist_comments(@previous_top_level_rec)
+          @previous_top_level_rec = nil
         end
       end
       debug(" ---- Adding rec #{rec.id}")
       @results_with_comments << rec
       comments_query = Loader::Name::Review::Comment::AsArray::ForLoaderName
                         .new(rec, 'accepted')
+      comments_query.results.each { |i| @results_with_comments << i }
+      comments_query = Loader::Name::Review::Comment::AsArray::ForLoaderName
+                        .new(rec, 'excluded')
       comments_query.results.each { |i| @results_with_comments << i }
       comments_query = Loader::Name::Review::Comment::AsArray::ForLoaderName
                         .new(rec, 'synonym')
@@ -82,6 +91,7 @@ class Search::Loader::Name::RewriteResultsShowingComments
       h[:display_as] = 'Loader Name'
       h[:record_type] = 'concept-note'
       h[:payload] = rec['comment']
+      debug(h.inspect)
       @results_with_comments << h
     end
     debug(" ---- ---- Adding concept-note comments for #{rec.id}")
