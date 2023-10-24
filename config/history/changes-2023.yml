@@ -1,4 +1,8 @@
 - :date: 24-Oct-2023
+  :jira_id: '4736'
+  :description: |- 
+    Loader: Allow tabbing to the <code>record_type</code> field in natural order when adding or editing <code>loader_name</code> records
+- :date: 24-Oct-2023
   :jira_id: '4737'
   :description: |- 
     Loader: Allow entry of <code>remark_to_reviewers</code>
