@@ -105,6 +105,7 @@ class Search::OnModel::Base
 
   def consider_loader_name_extras(parsed_request)
     return unless parsed_request.target_model == 'Loader::Name'
+    return unless parsed_request.print
 
     show_comments = parsed_request.show_loader_name_comments
     @results = Search::Loader::Name::RewriteResultsShowingExtras
