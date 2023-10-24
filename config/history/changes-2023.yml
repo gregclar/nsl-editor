@@ -1,4 +1,8 @@
 - :date: 24-Oct-2023
+  :jira_id: '4735'
+  :description: |- 
+    Loader: Link from any loader_name details tab to its family and the family's members
+- :date: 24-Oct-2023
   :jira_id: '4734'
   :description: |- 
     Loader: Improve the link to loader names on the batch details tab
