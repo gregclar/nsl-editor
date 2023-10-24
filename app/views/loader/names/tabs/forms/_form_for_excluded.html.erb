@@ -73,6 +73,11 @@
       <label for="notes">Notes</label>
       <%= f.text_area :notes, class: 'form-control', title: "Enter notes", tabindex: increment_tab_index, autofocus: true %>
     </div>
+
+    <div class="form-group">
+      <label for="remark_to_reviewers">Remark to reviewers</label>
+      <%= f.text_area :remark_to_reviewers, class: 'form-control', title: "Enter remark to reviewers", tabindex: increment_tab_index, autofocus: true %>
+    </div>
     <%= divider %>
 
     <% unless loader_name.id.blank? %>
