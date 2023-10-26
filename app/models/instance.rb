@@ -105,7 +105,7 @@ class Instance < ActiveRecord::Base
           page"))
   }
 
-  scope :xin_nested_instance_type_order, lambda {
+  scope :in_nested_instance_type_order, lambda {
     raw_sql = <<-SQL
       case instance_type.name
         when 'basionym' then 1
@@ -125,7 +125,7 @@ class Instance < ActiveRecord::Base
     order(Arel.sql(raw_sql))
   }
 
-  scope :in_nested_instance_type_order, lambda {
+  scope :new_in_nested_instance_type_order, lambda {
     raw_sql = <<-SQL
       case taxonomic
         when true then 

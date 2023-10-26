@@ -70,9 +70,9 @@
                                       link_title: 'Choose the reference instance for the taxonomy record.',
                                       tab_index: @tab_index,
                                       prev_tab: 'loader-name-create-misapp-tab', 
-                                      next_tab: 'loader-name-seq-ops-tab'} %> 
+                                      next_tab: 'loader-name-details-tab'} %> 
 
-  <%= render partial: 'loader/names/tabs/tab', locals: {first: false,
+  <%#= render partial: 'loader/names/tabs/tab', locals: {first: false,
                                       last: true,
                                       this_tab: 'tab_seq_ops', 
                                       link_text: 'Seq<br/>Ops'.html_safe, 
