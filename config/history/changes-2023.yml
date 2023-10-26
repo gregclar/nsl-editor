@@ -1,3 +1,7 @@
+- :date: 27-Oct-2023
+  :jira_id: '4743'
+  :description: |- 
+    Loader: Improve the ordering of synonymy when the <code>show-instance:</code> directive is used
 - :date: 26-Oct-2023
   :jira_id: '4740'
   :description: |- 

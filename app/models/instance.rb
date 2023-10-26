@@ -107,35 +107,25 @@ class Instance < ActiveRecord::Base
 
   scope :in_nested_instance_type_order, lambda {
     raw_sql = <<-SQL
-      case instance_type.name
-        when 'basionym' then 1
-        when 'replaced synonym' then 2
-        when 'common name' then 99
-        when 'vernacular name' then 99
-        else 3
-      end,
-      case nomenclatural
-        when true then 1
-      else 2 end,
-      case taxonomic
-        when true then 2
-        else 1
-      end
-    SQL
-    order(Arel.sql(raw_sql))
-  }
-
-  scope :new_in_nested_instance_type_order, lambda {
-    raw_sql = <<-SQL
-      case taxonomic
+    case taxonomic
         when true then 
           case pro_parte 
             when true then 2
             else 1
           end
-        else 3
+        when false then
+          case nomenclatural
+            when true then
+              case pro_parte
+                when true then 4
+                else 3
+              end
+            else
+              98
+          end
+        else 99
       end,
-      reference.iso_publication_date,
+      ref_that_cites.iso_publication_date,
       instance_type.sort_order,
       case instance_type.name
         when 'basionym' then 1
@@ -147,6 +137,10 @@ class Instance < ActiveRecord::Base
       case nomenclatural
         when true then 1
       else 2
+      end,
+      case ns.name
+      when 'orth. var.' then 2
+      else 1
       end
     SQL
     order(Arel.sql(raw_sql))
