@@ -1,6 +1,12 @@
-<%= "<span class='purple'><br>instance:#{search_result.id}".html_safe +
+<%#= "<span class='purple'><br>instance:#{search_result.id}".html_safe +
             " </span><span class='sienna'>name:#{search_result.name_id}".html_safe +
             " </span><span class='purple'>reference:#{search_result.reference_id}".html_safe +
             " </span><span class='sienna'>cites id:#{search_result.cites_id}".html_safe +
             " </span><span class='red'>cited by id:#{search_result.cited_by_id}".html_safe +
             " </span><span class='sienna'>[#{search_result.type}]</span><span class='red'> #{ search_result.try('display_as') || search_result.class.to_s}</span>".html_safe if @debug %>
+
+        <%= "<span class='purple'>#{'taxonomic' if search_result.instance_type.taxonomic}</span>".html_safe %>
+        <%= "<span class='purple'>#{'pp' if search_result.instance_type.pro_parte}</span>".html_safe %>
+        <%#= "<span class='purple'>#{search_result.this_is_cited_by.try('reference').try('iso_publication_date')}</span>".html_safe %>
+        <%= "<span class='purple'>#{search_result.this_cites.try('reference').try('iso_publication_date')}</span>".html_safe %>
+        <%#= "<span class='purple'>#{search_result.reverse_of_this_is_cited_by.try('reference').try('iso_publication_date')}</span>".html_safe %>

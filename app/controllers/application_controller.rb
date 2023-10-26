@@ -139,7 +139,7 @@ class ApplicationController < ActionController::Base
   end
 
   def set_debug
-    @debug = false
+    @debug = true
   end
 
   def start_timer

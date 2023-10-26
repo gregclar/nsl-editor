@@ -76,4 +76,10 @@ class Loader::Batch < ActiveRecord::Base
       "No change"
     end
   end
+
+  def multiply_all_sequence_values(factor)
+    raise "Zero is not acceptable as a factor" if factor == 0
+
+    Loader::Name.where('loader_batch_id = ?', self.id).update_all(seq: Arel.sql("seq * #{factor}"))
+  end
 end
