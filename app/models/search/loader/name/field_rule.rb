@@ -757,5 +757,37 @@ having count(*)                     >  1
    and not pni_type.pro_parte
      )",
        order: "seq" },
+    "syn-clash-with-syn:" => { where_clause: "
+       exists (
+       select null
+  from loader_name parent
+  join loader_name_match parent_match
+    on parent.id = parent_match.loader_name_id
+  join loader_name child
+    on parent.id = child.parent_id
+  join loader_name_match child_match
+    on child.id = child_match.loader_name_id
+  join instance cmi
+    on child_match.name_id = cmi.name_id
+  join instance_type cmi_type
+    on cmi.instance_type_id = cmi_type.id
+  join instance citer
+    on cmi.cited_by_id = citer.id
+  join instance_type citer_type
+    on citer.instance_type_id = citer_type.id
+  join tree_join_v citer_tree
+    on citer.id = citer_tree.instance_id
+  join name cot_name
+    on citer_tree.name_id = cot_name.id
+ where loader_name.id = parent.id
+   and parent.record_type in ('accepted', 'excluded')
+   and cmi_type.relationship
+   and not cmi_type.misapplied
+   and not cmi_type.pro_parte
+   and citer_tree.tree_version_id = current_tree_version_id
+   and parent_match.name_id != cot_name.id
+   and child.record_type != 'misapplied'
+     )",
+       order: "seq" },
   }.freeze
 end

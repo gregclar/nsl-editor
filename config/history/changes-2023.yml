@@ -1,4 +1,8 @@
 - :date: 27-Oct-2023
+  :jira_id: '4744'
+  :description: |- 
+    Loader: Add clash search <code>syn-clash-with-syn:</code>
+- :date: 27-Oct-2023
   :jira_id: '4743'
   :description: |- 
     Loader: Improve the ordering of synonymy when the <code>show-instance:</code> directive is used
