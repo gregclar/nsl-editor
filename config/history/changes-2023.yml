@@ -1,7 +1,7 @@
 - :date: 27-Oct-2023
   :jira_id: '4744'
   :description: |- 
-    Loader: Add clash search <code>syn-clash-with-syn:</code>
+    Loader: Add clash search <code>syn-clash-with-syn:</code>. Second cut: shows synonyms in question as well.
 - :date: 27-Oct-2023
   :jira_id: '4743'
   :description: |- 
