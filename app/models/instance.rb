@@ -74,9 +74,10 @@ class Instance < ActiveRecord::Base
   # The page ordering aims to emulate a numeric ordering process that
   # handles assorted text and page ranges in the character data.
   scope :ordered_by_page, lambda {
-    order(Arel.sql("Lpad(
-            Regexp_replace(
-              Regexp_replace(page, '[A-z. ]','','g'),
+    raw_sql = <<-SQL
+    Lpad(
+      Regexp_replace(
+        Regexp_replace(page, '[A-z. ]','','g'),
             '[^0-9]*([0-9][0-9]*).*', '\\1')
             ||
             Regexp_replace(
@@ -86,7 +87,9 @@ class Instance < ActiveRecord::Base
               '~','Z'),
           12,'0'),
           page,
-          name.full_name"))
+          name.full_name
+    SQL
+    order(Arel.sql(raw_sql))
   }
 
   # doesn't require join on name, unlike the above
