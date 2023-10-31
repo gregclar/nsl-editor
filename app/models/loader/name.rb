@@ -19,6 +19,7 @@
 # Loader Name entity
 class Loader::Name < ActiveRecord::Base
   include PreferredMatch
+  include SortColBulkChanges
   strip_attributes
   self.table_name = "loader_name"
   self.primary_key = "id"
@@ -95,18 +96,39 @@ class Loader::Name < ActiveRecord::Base
     if sort_col.blank?
       case record_type
       when 'accepted'
-        self.sort_col = family + '.family.' + record_type + '.' + simple_name
+        self.sort_col = "#{family.downcase}.family.#{record_type}.#{simple_name.downcase}"
       when 'excluded'
-        self.sort_col = family + '.family.' + record_type + '.' + simple_name
+        self.sort_col = "#{family.downcase}.family.#{record_type}.#{simple_name.downcase}"
       when 'synonym'
-        self.sort_col = parent.sort_col + '.a-synonym.user-to-set'
+        self.sort_col = "#{parent.sort_col}.a-syn.#{synonym_sort_col_tail}"
       when 'misapplied'
-        self.sort_col = parent.sort_col + '.b-misapplied.user-to-set'
+        self.sort_col = "#{parent.sort_col}.b-mis.#{simple_name.downcase}"
       when 'heading'
         if rank.downcase == 'family'
-          self.sort_col = family + '.family' 
+          self.sort_col = "#{family.downcase}.family"
+        else
+          self.sort_col = 'aaa-non-family-heading'
         end
+      when 'in-batch-note'
+        self.sort_col = 'aaaa-in-batch-note'
+      else
+        self.sort_col = "aaaaaa-unexpected-record-type-#{record_type}"
       end
+    end
+  end
+
+  def synonym_sort_col_tail
+    case synonym_type
+    when 'taxonomic synonym' then
+      "a-taxonomic-synonym.#{simple_name.downcase}"
+    when 'nomenclatural synonym' then
+      "j-nomenclatural-synonym.#{simple_name.downcase}.a-not-orthographic-variant"
+    when 'isonym' then
+      "m-isonym.#{simple_name.downcase}"
+    when 'orthographic variant' then
+      "j-nomenclatural-synonym.#{simple_name.downcase}.x-orthographic-variant"
+    else
+      "x-#{synonym_type}.#{simple_name.downcase}"
     end
   end
 
