@@ -58,7 +58,7 @@ class Loader::Name < ActiveRecord::Base
   attr_accessor :give_me_focus, :message
 
   # before_create :set_defaults # rails 6 this was not being called before the validations
-  before_save :compress_whitespace
+  before_save :compress_whitespace, :set_sort_col
 
   def fresh?
     created_at > 1.hour.ago
@@ -89,6 +89,23 @@ class Loader::Name < ActiveRecord::Base
   def compress_whitespace
     simple_name.squish!
     full_name.squish!
+  end
+
+  def set_sort_col
+      case record_type
+      when 'accepted'
+        self.sort_col = family + '.family.' + record_type + '.' + simple_name
+      when 'excluded'
+        self.sort_col = family + '.family.' + record_type + '.' + simple_name
+      when 'synonym'
+        self.sort_col = parent.sort_col + '.a-synonym.user-to-set'
+      when 'misapplied'
+        self.sort_col = parent.sort_col + '.b-misapplied.user-to-set'
+      when 'heading'
+        if rank.downcase == 'family'
+          self.sort_col = family + '.family' 
+        end
+      end
   end
 
   def name_match_no_primary?
@@ -397,12 +414,14 @@ class Loader::Name < ActiveRecord::Base
   def new_synonym(base_seq: seq)
     loader_name = new_child(base_seq)
     loader_name.record_type = "synonym"
+    loader_name.sort_col = sort_col + '.a-synonym.'+'user-to-complete'
     loader_name
   end
 
   def new_misapp(base_seq: seq)
     loader_name = new_child(base_seq)
     loader_name.record_type = "misapplied"
+    loader_name.sort_col = sort_col + '.b-misapp.'+'user-to-complete'
     loader_name
   end
 

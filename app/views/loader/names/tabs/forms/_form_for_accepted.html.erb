@@ -21,13 +21,9 @@
       <input type="hidden" name="random_id" value="<%= params[:random_id] %>"/>
       <% end %>
     <% end %>
-
     <br>
 
-    <div class="form-group">
-      <label for="seq">Seq*</label>
-      <%= f.text_field(:seq, {class: 'form-control give-me-focus', title: 'For listing the taxon in the correct order', tabindex: increment_tab_index}) %>
-    </div>
+    <%= render partial: "loader/names/tabs/forms/sort_col_or_seq", locals: {loader_name: loader_name, f: f} %>
 
     <div class="form-group">
       <label for="simple_name">Simple Name*</label>

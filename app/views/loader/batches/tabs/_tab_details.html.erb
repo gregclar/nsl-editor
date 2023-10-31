@@ -10,6 +10,10 @@
            '<span class="red">Set a default ref on the Edit tab </span>',
            label: 'default reference'} %>
 
+<%= render partial: 'detail_line',
+  locals: {info: @loader_batch.use_sort_col_for_ordering,
+           label: 'order using sort-col'} %>
+
   <%= render partial: 'detail_line',
     locals: {label: 'for this batch',
              info: link_to("Loader Names",

@@ -35,25 +35,7 @@ class Search::Loader::Name::FieldRule
         where sibling.parent_id = loader_name.parent_id
        and lower(sibling.simple_name) like ?)",
                         trailing_wildcard: true,
-                        order: "seq" },
-    "sn2:" => { where_clause: "(lower(simple_name) like ?)
-        or exists (
-        select null
-          from loader_name parent
-        where parent.id         = loader_name.parent_id
-       and lower(parent.simple_name) like ?)
-        or exists (
-        select null
-          from loader_name child
-        where child.parent_id   = loader_name.id
-       and lower(child.simple_name) like ?)
-        or exists (
-        select null
-          from loader_name sibling
-        where sibling.parent_id = loader_name.parent_id
-       and lower(sibling.simple_name) like ?)",
-                        trailing_wildcard: true,
-                        order: "sort_col" },
+                        order: "sort_col, seq" },
     "bulk-ops:" => { where_clause: "(
       (
         (

@@ -8,6 +8,7 @@ Notes:<br>
 <br>
 <br>
 <br>
+<%= render partial: 'detail_line', locals: {info: @loader_name.sort_col, label: 'value for sorting'} %>
 <%= divider %>
 <h5>Metadata</h5>
 <%= render partial: 'detail_line', locals: {info: @loader_name.id, label: 'ID'} %>

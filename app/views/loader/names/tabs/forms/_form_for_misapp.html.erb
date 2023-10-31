@@ -12,13 +12,7 @@
     <input type="hidden" name="random_id" value="<%= params[:random_id] %>"/>
     <br>
 
-
-    <div class="form-group">
-      <label for="seq">Seq*</label>
-      <%= f.number_field(:seq, {class: 'form-control give-me-focus',
-                                title: 'For listing the name in the correct order',
-                                tabindex: increment_tab_index}) %>
-    </div>
+    <%= render partial: "loader/names/tabs/forms/sort_col_or_seq", locals: {loader_name: loader_name, f: f} %>
 
     <div class="form-group">
       <label for="simple_name">Simple Name*</label>
@@ -77,12 +71,12 @@
 
     <div class="form-group">
       <label for="notes">Notes</label>
-      <%= f.text_area :notes, class: 'form-control', title: "Enter notes", tabindex: increment_tab_index, autofocus: true %>
+      <%= f.text_area :notes, class: 'form-control', title: "Enter notes", tabindex: increment_tab_index %>
     </div>
 
     <div class="form-group">
       <label for="remark_to_reviewers">Remark to reviewers</label>
-      <%= f.text_area :remark_to_reviewers, class: 'form-control', title: "Enter remark to reviewers", tabindex: increment_tab_index, autofocus: true %>
+      <%= f.text_area :remark_to_reviewers, class: 'form-control', title: "Enter remark to reviewers", tabindex: increment_tab_index %>
     </div>
 
     <%= divider %>

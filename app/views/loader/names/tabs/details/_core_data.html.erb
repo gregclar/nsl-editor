@@ -45,5 +45,11 @@
     <% end %>
 <%= render partial: 'loader/names/tabs/details/link_to_context_view' %>
 
+<% if @loader_name.batch.use_sort_col_for_ordering %>
+<%= render partial: 'detail_line', locals: {info: @loader_name.sort_col, label: 'value for sorting'} %>
+<% else %>
+  This batch uses seq field for sorting. Alt value for sorting should be empty<br>
+<%= render partial: 'detail_line', locals: {info: @loader_name.sort_col, label: 'alt value for sorting'} %>
+<% end %>
 
 
