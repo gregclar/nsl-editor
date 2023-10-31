@@ -1,7 +1,7 @@
 - :date: 31-Oct-2023
   :jira_id: '4745'
   :description: |- 
-    Loader: Add a new sorting mechanism for loader_name records, an alternative to plain sequence sorting.
+    Loader: Add a new sorting mechanism for loader_name records, an alternative to plain sequence sorting; with adjustments.
 - :date: 27-Oct-2023
   :jira_id: '4744'
   :description: |- 

@@ -92,6 +92,7 @@ class Loader::Name < ActiveRecord::Base
   end
 
   def set_sort_col
+    if sort_col.blank?
       case record_type
       when 'accepted'
         self.sort_col = family + '.family.' + record_type + '.' + simple_name
@@ -106,6 +107,7 @@ class Loader::Name < ActiveRecord::Base
           self.sort_col = family + '.family' 
         end
       end
+    end
   end
 
   def name_match_no_primary?
