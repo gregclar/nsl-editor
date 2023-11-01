@@ -1,7 +1,11 @@
+- :date: 01-Nov-2023
+  :jira_id: '4747'
+  :description: |- 
+    Loader: Allow conversion between excluded and accepted statuses
 - :date: 31-Oct-2023
   :jira_id: '4745'
   :description: |- 
-    Loader: Add a new sorting mechanism for loader_name records, an alternative to plain sequence sorting; with adjustments. Refinements.
+    Loader: Add a new sorting mechanism for loader_name records, an alternative to plain sequence sorting; with adjustments. Added some refinements.
 - :date: 27-Oct-2023
   :jira_id: '4744'
   :description: |- 
