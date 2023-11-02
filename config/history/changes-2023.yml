@@ -1,4 +1,8 @@
-- :date: 02-Oct-2023
+- :date: 02-Nov-2023
+  :jira_id: '4756'
+  :description: |- 
+    Loader: Misapplication names now re-appearing in print output.
+- :date: 02-Nov-2023
   :jira_id: '4745'
   :description: |- 
     Loader: Adjust the algorithm for the synonymy sort key to match revised synonym ordering spec. Rename <code>sort_col</code> to <code>sort_key</code>.
