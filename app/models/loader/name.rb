@@ -119,16 +119,28 @@ class Loader::Name < ActiveRecord::Base
 
   def synonym_sort_col_tail
     case synonym_type
-    when 'taxonomic synonym' then
-      "a-taxonomic-synonym.#{simple_name.downcase}"
-    when 'nomenclatural synonym' then
-      "j-nomenclatural-synonym.#{simple_name.downcase}.a-not-orthographic-variant"
-    when 'isonym' then
-      "m-isonym.#{simple_name.downcase}"
-    when 'orthographic variant' then
-      "j-nomenclatural-synonym.#{simple_name.downcase}.x-orthographic-variant"
+    when "isonym" then
+      "a-isonym"
+    when "orthographic variant" then
+      "b-orth-var"
+    when "basionym" then
+      "c-basionym"
+    when "replaced synonym" then
+      "d-replaced-syn"
+    when "alternative name" then
+      "e-alt-name"
+    when "nomenclatural synonym" then
+      "f-nom-syn"
+    when "taxonomic synonym" then
+      "d-tax-syn"
+    when "doubtful pro parte taxonomic synonym" then
+      "d-tax-syn"
+    when "doubtful-taxonomic-synonym" then
+      "d-tax-syn"
+    when "pro parte taxonomic synonym" then
+      "d-tax-syn"
     else
-      "x-#{synonym_type}.#{simple_name.downcase}"
+      "x-is-unknown-#{synonym_type}"
     end
   end
 

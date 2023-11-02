@@ -1,3 +1,7 @@
+- :date: 02-Oct-2023
+  :jira_id: '4745'
+  :description: |- 
+    Loader: Adjust the algorithm for the synonymy sort key to match revised synonym ordering spec.
 - :date: 01-Nov-2023
   :jira_id: '4747'
   :description: |- 
