@@ -20,8 +20,8 @@ module Loader::Name::SortKeyBulkChanges
       puts n
     end
 
-    # Order is important because synonyms and misapplieds build sort_key on
-    # their parent's sort_key value
+    # Order is important here because synonyms and misapplieds build
+    # sort_key using their parent's sort_key value
     # ##############################################################
     # WARNING: this will reset all loader_name sorting for the batch
     # ##############################################################

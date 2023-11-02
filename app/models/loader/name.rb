@@ -104,10 +104,10 @@ class Loader::Name < ActiveRecord::Base
       when 'misapplied'
         self.sort_key = "#{parent.sort_key}.b-mis.#{simple_name.downcase}"
       when 'heading'
-        if rank.downcase == 'family'
+        if rank.blank? || rank.downcase == 'family'
           self.sort_key = "#{family.downcase}.family"
         else
-          self.sort_key = 'aaa-non-family-heading'
+          self.sort_key = "aaa-rank-#{rank}-heading"
         end
       when 'in-batch-note'
         self.sort_key = 'aaaa-in-batch-note'
@@ -115,6 +115,10 @@ class Loader::Name < ActiveRecord::Base
         self.sort_key = "aaaaaa-unexpected-record-type-#{record_type}"
       end
     end
+  rescue => e
+    puts e.to_s
+    puts "set_sort_key: record_type: #{record_type}; rank: #{rank}; family: #{family}"
+    raise
   end
 
   def synonym_sort_key_tail
