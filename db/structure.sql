@@ -4864,7 +4864,7 @@ CREATE TABLE loader.loader_batch (
     updated_at timestamp with time zone DEFAULT now() NOT NULL,
     updated_by character varying(50) DEFAULT USER NOT NULL,
     default_reference_id bigint,
-    use_sort_col_for_ordering boolean DEFAULT true NOT NULL
+    use_sort_key_for_ordering boolean DEFAULT true NOT NULL
 );
 
 
@@ -5159,7 +5159,7 @@ CREATE TABLE loader.loader_name (
     full_name text DEFAULT 'not-supplied-on-load'::text NOT NULL,
     simple_name_as_loaded text NOT NULL,
     created_manually boolean DEFAULT false NOT NULL,
-    sort_col text
+    sort_key text
 );
 
 

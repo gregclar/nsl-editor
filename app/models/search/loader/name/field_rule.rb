@@ -35,7 +35,7 @@ class Search::Loader::Name::FieldRule
         where sibling.parent_id = loader_name.parent_id
        and lower(sibling.simple_name) like ?)",
                         trailing_wildcard: true,
-                        order: "sort_col, seq" },
+                        order: "sort_key, seq" },
     "bulk-ops:" => { where_clause: "(
       (
         (

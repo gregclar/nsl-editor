@@ -19,7 +19,7 @@
 # Loader Name entity
 class Loader::Name < ActiveRecord::Base
   include PreferredMatch
-  include SortColBulkChanges
+  include SortKeyBulkChanges
   strip_attributes
   self.table_name = "loader_name"
   self.primary_key = "id"
@@ -59,7 +59,7 @@ class Loader::Name < ActiveRecord::Base
   attr_accessor :give_me_focus, :message
 
   # before_create :set_defaults # rails 6 this was not being called before the validations
-  before_save :compress_whitespace, :set_sort_col
+  before_save :compress_whitespace, :set_sort_key
 
   def fresh?
     created_at > 1.hour.ago
@@ -92,32 +92,32 @@ class Loader::Name < ActiveRecord::Base
     full_name.squish!
   end
 
-  def set_sort_col
-    if sort_col.blank?
+  def set_sort_key
+    if sort_key.blank?
       case record_type
       when 'accepted'
-        self.sort_col = "#{family.downcase}.family.#{record_type}.#{simple_name.downcase}"
+        self.sort_key = "#{family.downcase}.family.#{record_type}.#{simple_name.downcase}"
       when 'excluded'
-        self.sort_col = "#{family.downcase}.family.#{record_type}.#{simple_name.downcase}"
+        self.sort_key = "#{family.downcase}.family.#{record_type}.#{simple_name.downcase}"
       when 'synonym'
-        self.sort_col = "#{parent.sort_col}.a-syn.#{synonym_sort_col_tail}"
+        self.sort_key = "#{parent.sort_key}.a-syn.#{synonym_sort_key_tail}"
       when 'misapplied'
-        self.sort_col = "#{parent.sort_col}.b-mis.#{simple_name.downcase}"
+        self.sort_key = "#{parent.sort_key}.b-mis.#{simple_name.downcase}"
       when 'heading'
         if rank.downcase == 'family'
-          self.sort_col = "#{family.downcase}.family"
+          self.sort_key = "#{family.downcase}.family"
         else
-          self.sort_col = 'aaa-non-family-heading'
+          self.sort_key = 'aaa-non-family-heading'
         end
       when 'in-batch-note'
-        self.sort_col = 'aaaa-in-batch-note'
+        self.sort_key = 'aaaa-in-batch-note'
       else
-        self.sort_col = "aaaaaa-unexpected-record-type-#{record_type}"
+        self.sort_key = "aaaaaa-unexpected-record-type-#{record_type}"
       end
     end
   end
 
-  def synonym_sort_col_tail
+  def synonym_sort_key_tail
     case synonym_type
     when "isonym" then
       "a-isonym"
@@ -450,14 +450,14 @@ class Loader::Name < ActiveRecord::Base
   def new_synonym(base_seq: seq)
     loader_name = new_child(base_seq)
     loader_name.record_type = "synonym"
-    loader_name.sort_col = sort_col + '.a-synonym.'+'user-to-complete'
+    loader_name.sort_key = sort_key + '.a-synonym.'+'user-to-complete'
     loader_name
   end
 
   def new_misapp(base_seq: seq)
     loader_name = new_child(base_seq)
     loader_name.record_type = "misapplied"
-    loader_name.sort_col = sort_col + '.b-misapp.'+'user-to-complete'
+    loader_name.sort_key = sort_key + '.b-misapp.'+'user-to-complete'
     loader_name
   end
 
