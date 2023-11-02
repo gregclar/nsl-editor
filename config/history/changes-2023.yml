@@ -1,4 +1,8 @@
 - :date: 02-Nov-2023
+  :jira_id: '4720'
+  :description: |- 
+    Loader: On insert <code>loader_name.simple_name</code> is now not copied over the top of <code>full_name</code>.
+- :date: 02-Nov-2023
   :jira_id: '4756'
   :description: |- 
     Loader: Misapplication names now re-appearing in print output.

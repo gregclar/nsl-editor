@@ -417,7 +417,6 @@ class Loader::Name < ActiveRecord::Base
                                     .loader_batch_id
     end
     loader_name.doubtful = false
-    loader_name.full_name = loader_name.simple_name
     raise loader_name.errors.full_messages.first.to_s unless loader_name.save_with_username(username)
 
     loader_name
