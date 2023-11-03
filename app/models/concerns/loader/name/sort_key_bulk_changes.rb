@@ -20,6 +20,23 @@ module Loader::Name::SortKeyBulkChanges
       puts n
     end
 
+    # This will reset empty in-batch-note sort_keys only
+    def set_sort_key_for_in_batch_note(batch)
+      n = 0 
+      batch.loader_names.where(record_type: 'in-batch-note').each do |rec|
+        puts "#{rec.simple_name} - #{rec.sort_key}"
+        if rec.sort_key.blank?
+          rec.set_sort_key
+          rec.save!
+          n += 1
+        else
+          puts "Non-blank in-batch-note sort_key so not re-setting"
+        end
+        puts "#{rec.simple_name} - #{rec.sort_key}"
+      end
+      puts n
+    end
+
     # Order is important here because synonyms and misapplieds build
     # sort_key using their parent's sort_key value
     # ##############################################################
@@ -31,7 +48,7 @@ module Loader::Name::SortKeyBulkChanges
       set_sort_key(batch,'excluded')
       set_sort_key(batch,'synonym')
       set_sort_key(batch,'misapplied')
-      set_sort_key(batch,'in-batch-note')
+      set_sort_key_for_in_batch_note(batch)
     end
 
   end # class_methods

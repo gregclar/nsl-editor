@@ -1,6 +1,10 @@
 - :date: 03-Nov-2023
   :jira_id: '4745'
   :description: |- 
+    Loader: Fix the <code>sort_key</code> component for taxonomic synonyms so they do really sort after nomenclatural synonyms, and update misapp <code>sort_key</code> to still sort to the bottom.
+- :date: 03-Nov-2023
+  :jira_id: '4745'
+  :description: |- 
     Loader: Sorting - make <code>rank</code> a required field for heading records, but also give it a default value of 'family'.
 - :date: 02-Nov-2023
   :jira_id: '4720'

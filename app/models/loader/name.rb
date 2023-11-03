@@ -102,7 +102,7 @@ class Loader::Name < ActiveRecord::Base
       when 'synonym'
         self.sort_key = "#{parent.sort_key}.a-syn.#{synonym_sort_key_tail}"
       when 'misapplied'
-        self.sort_key = "#{parent.sort_key}.b-mis.#{simple_name.downcase}"
+        self.sort_key = "#{parent.sort_key}.b-mis.z-mis"
       when 'heading'
         if rank.blank? || rank.downcase == 'family'
           self.sort_key = "#{family.downcase}.family"
@@ -136,13 +136,13 @@ class Loader::Name < ActiveRecord::Base
     when "nomenclatural synonym" then
       "f-nom-syn"
     when "taxonomic synonym" then
-      "d-tax-syn"
+      "g-tax-syn"
     when "doubtful pro parte taxonomic synonym" then
-      "d-tax-syn"
+      "g-tax-syn"
     when "doubtful-taxonomic-synonym" then
-      "d-tax-syn"
+      "g-tax-syn"
     when "pro parte taxonomic synonym" then
-      "d-tax-syn"
+      "g-tax-syn"
     else
       "x-is-unknown-#{synonym_type}"
     end
