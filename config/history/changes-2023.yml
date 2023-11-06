@@ -1,3 +1,7 @@
+- :date: 06-Nov-2023
+  :jira_id: '4757'
+  :description: |- 
+    Loader: Allow users to add and save full name on create
 - :date: 03-Nov-2023
   :jira_id: '4745'
   :description: |- 
