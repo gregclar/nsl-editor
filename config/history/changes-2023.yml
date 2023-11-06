@@ -1,4 +1,8 @@
 - :date: 06-Nov-2023
+  :jira_id: '4745'
+  :description: |- 
+    Loader: Allow optional entry of Family and Simple Name for <code>in-batch-notes</code> and, if entered, use them in the <code>sort_key</code>
+- :date: 06-Nov-2023
   :jira_id: '4757'
   :description: |- 
     Loader: Allow users to add and save full name on create

@@ -72,8 +72,7 @@ class Loader::NamesController < ApplicationController
 
   def new_in_batch_note
     @loader_name = ::Loader::Name.new
-    @loader_name.simple_name = 'In-Batch-Note'
-    @loader_name.family = 'In-Batch-Note'
+    @loader_name.simple_name = @loader_name.full_name = nil
     @no_search_result_details = true
     @tab_index = (params[:tabIndex] || "40").to_i
     @loader_name.record_type = 'in-batch-note'

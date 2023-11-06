@@ -20,6 +20,8 @@
 class Loader::Name < ActiveRecord::Base
   include PreferredMatch
   include SortKeyBulkChanges
+  NA = 'N/A'
+
   strip_attributes
   self.table_name = "loader_name"
   self.primary_key = "id"
@@ -37,6 +39,10 @@ class Loader::Name < ActiveRecord::Base
 
   validates :record_type, presence: true
   validate :validate_family_record
+  validates :family, presence: true
+  validates :simple_name, presence: true
+  validates :simple_name_as_loaded, presence: true
+  validates :full_name, presence: true
 
   belongs_to :loader_batch, class_name: "Loader::Batch", foreign_key: "loader_batch_id"
   alias_attribute :batch, :loader_batch
@@ -59,6 +65,7 @@ class Loader::Name < ActiveRecord::Base
   attr_accessor :give_me_focus, :message
 
   # before_create :set_defaults # rails 6 this was not being called before the validations
+  before_validation :set_in_batch_note_defaults
   before_save :compress_whitespace, :set_sort_key
 
   def fresh?
@@ -87,12 +94,22 @@ class Loader::Name < ActiveRecord::Base
     end
   end
 
+  def set_in_batch_note_defaults
+    if record_type == 'in-batch-note'
+      self.simple_name_as_loaded = NA
+      self.family = NA if family.blank?
+      self.simple_name = NA if simple_name.blank?
+      self.full_name = self.simple_name
+    end
+  end
+
   def compress_whitespace
     simple_name.squish!
     full_name.squish!
   end
 
   def set_sort_key
+    normalise_sort_key unless sort_key.blank?
     if sort_key.blank?
       case record_type
       when 'accepted'
@@ -110,7 +127,7 @@ class Loader::Name < ActiveRecord::Base
           self.sort_key = "aaa-rank-#{rank}-heading"
         end
       when 'in-batch-note'
-        self.sort_key = 'aaaa-in-batch-note'
+        self.sort_key = in_batch_note_sort_key if sort_key.blank?
       else
         self.sort_key = "aaaaaa-unexpected-record-type-#{record_type}"
       end
@@ -119,6 +136,21 @@ class Loader::Name < ActiveRecord::Base
     puts e.to_s
     puts "set_sort_key: record_type: #{record_type}; rank: #{rank}; family: #{family}"
     raise
+  end
+
+  def normalise_sort_key
+    self.sort_key = sort_key.downcase unless sort_key == sort_key.downcase
+  end
+
+  def in_batch_note_sort_key
+    case
+    when family == NA && simple_name == NA
+      'aaaa-in-batch-note'
+    when simple_name == NA
+      "#{family.downcase}.family.a.in-batch-note"
+    else
+      "#{family.downcase}.family.accepted.#{simple_name.downcase}.x.in-batch-note"
+    end
   end
 
   def synonym_sort_key_tail
