@@ -296,7 +296,7 @@ class Loader::Name < ActiveRecord::Base
   def matches(type: :strict)
     if type == :strict
       #names_simple_or_full_name_matching
-      #names_unaccent_simple_name_matching
+      #names_unaccent_simple_name_matching # 20 x slower
       names_simple_or_full_name_matching_allow_for_ms
     elsif type == :cultivar
       matches_tweaked_for_cultivar
