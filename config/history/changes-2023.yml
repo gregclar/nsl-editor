@@ -1,4 +1,8 @@
 - :date: 08-Nov-2023
+  :jira_id: '4758'
+  :description: |- 
+    Loader: Set default rank to species for record creation
+- :date: 08-Nov-2023
   :jira_id: '4738'
   :description: |- 
     Loader: The <code>any-batch:</code> directive now works even if you have set a default batch.
