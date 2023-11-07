@@ -1,3 +1,7 @@
+- :date: 08-Nov-2023
+  :jira_id: '4738'
+  :description: |- 
+    Loader: The <code>any-batch:</code> directive now works even if you have set a default batch.
 - :date: 06-Nov-2023
   :jira_id: '4745'
   :description: |- 
