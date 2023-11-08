@@ -1,4 +1,8 @@
 - :date: 08-Nov-2023
+  :jira_id: '4761'
+  :description: |- 
+    Loader: Handle use of html tags for italics and hyperlinks in compiler comments (not review comments)
+- :date: 08-Nov-2023
   :jira_id: '4759'
   :description: |- 
     Loader: Set record type to accepted by default for top-level names (accepted/misapplied)
