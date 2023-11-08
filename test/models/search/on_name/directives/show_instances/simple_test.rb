@@ -65,9 +65,9 @@ class SimpleTest < ActiveSupport::TestCase
     confirm_disp(search, 5, "instance_as_part_of_concept")
     confirm_inst(search, 5, "Angophora costata (Gaertn.) Britten")
     confirm_disp(search, 6, "instance-is-cited-by")
-    #confirm_inst(search, 7, "Angophora lanceolata Cav.")
-    #confirm_disp(search, 7, "instance-is-cited-by")
-    #confirm_inst(search, 6, "Metrosideros costata Gaertn.")
+    # confirm_inst(search, 7, "Angophora lanceolata Cav.")
+    # confirm_disp(search, 7, "instance-is-cited-by")
+    # confirm_inst(search, 6, "Metrosideros costata Gaertn.")
   end
 
   def show_results(search)
