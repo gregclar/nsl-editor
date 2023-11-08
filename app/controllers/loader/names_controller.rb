@@ -39,8 +39,8 @@ class Loader::NamesController < ApplicationController
   def new
     @anchor =  Loader::Name.find(params[:loader_name_id]) unless params[:loader_name_id].blank?
     @loader_name = ::Loader::Name.new
-    @loader_name.simple_name = nil
-    @loader_name.full_name = nil
+    @loader_name.simple_name = @loader_name.full_name = nil
+    @loader_name.record_type = 'accepted'
     @loader_name.rank = 'species'
     @loader_name.seq = @anchor.seq + 1 unless @anchor.blank?
     @no_search_result_details = true

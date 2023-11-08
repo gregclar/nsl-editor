@@ -1,4 +1,8 @@
 - :date: 08-Nov-2023
+  :jira_id: '4759'
+  :description: |- 
+    Loader: Set record type to accepted by default for top-level names (accepted/misapplied)
+- :date: 08-Nov-2023
   :jira_id: '4758'
   :description: |- 
     Loader: Set default rank to species for record creation
