@@ -1,4 +1,8 @@
 - :date: 08-Nov-2023
+  :jira_id: '4769'
+  :description: |- 
+    General: Ran rubocop auto-correction -a options - testing needs to confirm BAU for main workflows.
+- :date: 08-Nov-2023
   :jira_id: '4745'
   :description: |- 
     Loader: Fixed case of <code>loader_name</code> records in batches that don't use <code>sort_key</code> being allocated a <code>sort_key</code> value on update.
