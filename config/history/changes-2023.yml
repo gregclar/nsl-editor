@@ -70,6 +70,8 @@
   :jira_id: '4734'
   :description: |- 
     Loader: Improve the link to loader names on the batch details tab
+- :date: 03-Nov-2023
+  :release: true
 - :date: 24-Oct-2023
   :jira_id: '4736'
   :description: |- 
