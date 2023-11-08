@@ -66,7 +66,7 @@ class Loader::Name < ActiveRecord::Base
 
   # before_create :set_defaults # rails 6 this was not being called before the validations
   before_validation :set_in_batch_note_defaults
-  before_save :compress_whitespace, :set_sort_key
+  before_save :compress_whitespace, :consider_sort_key
 
   def fresh?
     created_at > 1.hour.ago
@@ -106,6 +106,14 @@ class Loader::Name < ActiveRecord::Base
   def compress_whitespace
     simple_name.squish!
     full_name.squish!
+  end
+
+  def consider_sort_key
+    if loader_batch.use_sort_key_for_ordering
+      set_sort_key
+    else
+      self.sort_key = nil
+    end
   end
 
   def set_sort_key

@@ -1,4 +1,8 @@
 - :date: 08-Nov-2023
+  :jira_id: '4745'
+  :description: |- 
+    Loader: Fixed case of <code>loader_name</code> records in batches that don't use <code>sort_key</code> being allocated a <code>sort_key</code> value on update.
+- :date: 08-Nov-2023
   :jira_id: '4761'
   :description: |- 
     Loader: Handle use of html tags for italics and hyperlinks in compiler comments (not review comments)
