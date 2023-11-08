@@ -18,6 +18,8 @@
   :jira_id: '4758'
   :description: |- 
     Loader: Set default rank to species for record creation
+- :date: 09-Nov-2023
+  :release: true
 - :date: 08-Nov-2023
   :jira_id: '4738'
   :description: |- 
