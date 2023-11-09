@@ -490,14 +490,18 @@ class Loader::Name < ActiveRecord::Base
   def new_synonym(base_seq: seq)
     loader_name = new_child(base_seq)
     loader_name.record_type = "synonym"
-    loader_name.sort_key = sort_key + ".a-synonym." + "user-to-complete"
+    unless sort_key.blank?
+      loader_name.sort_key = sort_key + ".a-synonym." + "user-to-complete"
+    end
     loader_name
   end
 
   def new_misapp(base_seq: seq)
     loader_name = new_child(base_seq)
     loader_name.record_type = "misapplied"
-    loader_name.sort_key = sort_key + ".b-misapp." + "user-to-complete"
+    unless sort_key.blank?
+      loader_name.sort_key = sort_key + ".b-misapp." + "user-to-complete"
+    end
     loader_name
   end
 

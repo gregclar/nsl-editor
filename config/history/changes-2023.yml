@@ -1,4 +1,8 @@
 - :date: 09-Nov-2023
+  :jira_id: '4745'
+  :description: |- 
+    Loader: Fix bug preventing access to Create Synonym or Create Misapp tabs for batches ordered by seq
+- :date: 09-Nov-2023
   :jira_id: '4760'
   :description: |- 
     Loader: Print output: distribution and comments for the last record in a print out now display. 
