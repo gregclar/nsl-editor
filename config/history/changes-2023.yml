@@ -1,4 +1,8 @@
 - :date: 09-Nov-2023
+  :jira_id: '4770'
+  :description: |- 
+    Loader: Make <code>seq</code> number field available when adding <code>loader_name</code> records to batches that order by <code>seq</code>
+- :date: 09-Nov-2023
   :jira_id: '4745'
   :description: |- 
     Loader: Fix bug preventing access to Create Synonym or Create Misapp tabs for batches ordered by seq
