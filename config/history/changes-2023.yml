@@ -1,3 +1,7 @@
+- :date: 09-Nov-2023
+  :jira_id: '4760'
+  :description: |- 
+    Loader: Print output: distribution and comments for the last record in a print out now display. 
 - :date: 08-Nov-2023
   :jira_id: '4769'
   :description: |- 

@@ -13,6 +13,7 @@ class Search::Loader::Name::RewriteResultsShowingExtras
     @results.each do |rec|
       one_record(rec)
     end
+    flush_data_for_last_record
     @results_with_comments
   end
 
@@ -51,6 +52,10 @@ class Search::Loader::Name::RewriteResultsShowingExtras
     concept_note_and_cn_comments(@previous_top_level_rec)
     dist_and_dist_comments(@previous_top_level_rec)
     @previous_top_level_rec = nil
+  end
+
+  def flush_data_for_last_record
+    push_preceding
   end
 
   def dist_and_dist_comments(rec)
