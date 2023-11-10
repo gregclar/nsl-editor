@@ -1,4 +1,8 @@
 - :date: 10-Nov-2023
+  :jira_id: '3323'
+  :description: |- 
+    Instances: Make page field full width to avoid scrolling for long entries
+- :date: 10-Nov-2023
   :jira_id: '4761'
   :description: |- 
     Loader: Handle use of html tags for italics and hyperlinks in remarks to reviewers in print: and Editor display
