@@ -100,3 +100,4 @@ gem "standardrb", group: %i[development test]
 gem "csv"
 gem "font-awesome-sass", "~> 6.4.0"
 gem "rails-ujs"
+gem "unf_ext", "< 0.0.9"
