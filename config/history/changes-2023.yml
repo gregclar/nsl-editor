@@ -1,3 +1,7 @@
+- :date: 14-Nov-2023
+  :jira_id: '4778'
+  :description: |- 
+    Loader: Display "Handmade" on manually created <code>loader_name</code> records only for batches parsed from Word docs
 - :date: 13-Nov-2023
   :jira_id: '4777'
   :description: |- 
