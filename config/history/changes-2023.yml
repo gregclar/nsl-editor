@@ -1,3 +1,7 @@
+- :date: 13-Nov-2023
+  :jira_id: '4475'
+  :description: |- 
+    Loader: Don't show the "Too Many Matches" message on <code>loader_name</code> details tab when a preferred match has been chosen
 - :date: 10-Nov-2023
   :jira_id: '3323'
   :description: |- 
