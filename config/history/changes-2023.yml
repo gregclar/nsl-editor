@@ -1,4 +1,8 @@
 - :date: 14-Nov-2023
+  :jira_id: '4763'
+  :description: |- 
+    Loader: Bulk jobs: the trailing log entry for each job now includes the job's search criteria
+- :date: 14-Nov-2023
   :jira_id: '4778'
   :description: |- 
     Loader: Display "Handmade" on manually created <code>loader_name</code> records only for batches parsed from Word docs
