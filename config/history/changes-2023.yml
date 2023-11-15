@@ -1,3 +1,7 @@
+- :date: 15-Nov-2023
+  :jira_id: '4782'
+  :description: |- 
+    Name query with instances: "Unpublished" relationship instances are again being displayed
 - :date: 14-Nov-2023
   :jira_id: '4763'
   :description: |- 
