@@ -1,7 +1,7 @@
 - :date: 16-Nov-2023
   :jira_id: '4779'
   :description: |-
-    Loader: Bulk jobs: Provide summary of declined additions in loader logs "end" message - first cut for create preferred match jobs
+    Loader: Bulk jobs: Provide summary of declined additions in loader logs "end" message - first cut for create preferred match and create draft instances
 - :date: 15-Nov-2023
   :jira_id: '4782'
   :description: |- 

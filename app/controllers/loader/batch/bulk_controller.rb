@@ -48,11 +48,10 @@ class Loader::Batch::BulkController < ApplicationController
                                         params[:name_string],
                                         @current_user.username,
                                         @job_number)
-    attempted, created, declined, errors = job.run
-    @message = "Create preferred matches attempted #{attempted}; "
-    @message += "created #{created} preferred #{'match'.pluralize(created)} with"
-    @message += " #{declined} declined and #{errors} error(s) for "
-    @message += "#{params[:name_string]} (job ##{@job_number})"
+    result_h = job.run
+    @message = "Create preferred matches "
+    @message += "for #{params[:name_string]} (job ##{@job_number}) "
+    @message += "with result: #{result_h.inspect}"
     Loader::Batch::Bulk::JobLock.unlock!
     render "create_preferred_matches", locals: { message_container_id_prefix: prefix }
   rescue StandardError => e
@@ -70,11 +69,10 @@ class Loader::Batch::BulkController < ApplicationController
                                      params[:name_string],
                                      @current_user.username,
                                      @job_number)
-    attempted, created, declined, errors = job.run
-    @message = "Create draft instances attempted #{attempted}; "
-    @message += "created #{created} draft #{'instance'.pluralize(created)} with"
-    @message += " #{declined} declined and #{errors} #{'error'.pluralize(errors)} for "
-    @message += "#{params[:name_string]} (job ##{@job_number})"
+    result_h = job.run
+    @message = "Create draft instances "
+    @message += "for #{params[:name_string]} (job ##{@job_number}) "
+    @message += "with result: #{result_h.inspect}"
     Loader::Batch::Bulk::JobLock.unlock!
     render "create_draft_instances", locals: { message_container_id_prefix: prefix }
   rescue StandardError => e
