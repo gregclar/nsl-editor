@@ -75,7 +75,6 @@ class Loader::Name::MakeOneInstance
 
   def no_further_processing
     log_to_table("#{Constants::DECLINED_INSTANCE} - no further processing for #{@loader_name.id}")
-    Constants::DECLINED
     {declines: 1, decline_reasons: {no_further_processing: 1}}
   end
 

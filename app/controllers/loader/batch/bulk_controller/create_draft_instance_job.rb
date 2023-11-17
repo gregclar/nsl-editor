@@ -53,6 +53,7 @@ class Loader::Batch::BulkController::CreateDraftInstanceJob
     @job_h.deep_merge!({errors: 1, error_reasons: {"#{e.to_s}": 1}}) { |key, old, new| old + new}
   end
 
+
   def log(payload)
     Loader::Batch::Bulk::JobLog.new(@job_number, payload, @authorising_user).write
   end
@@ -66,7 +67,7 @@ class Loader::Batch::BulkController::CreateDraftInstanceJob
   def log_finish
     entry = "<b>FINISHED</b>: create draft instances for batch: "
     entry += "#{@batch.name} accepted taxa matching #{@search_string}"
-    entry += "#{@job_h.inspect}"
+    entry += "#{@job_h.to_html_list.html_safe}"
     log(entry)
   end
 

@@ -1,3 +1,7 @@
+- :date: 17-Nov-2023
+  :jira_id: '4779'
+  :description: |-
+    Loader: Bulk jobs: Provide informative job summaries, especially reasons for declines and errors, on the page and in the log
 - :date: 16-Nov-2023
   :jira_id: '4779'
   :description: |-
