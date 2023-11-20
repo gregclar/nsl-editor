@@ -4,6 +4,7 @@
 <% loader_name.family = @instance.name.family.simple_name %>
 <% loader_name.rank = @instance.name.name_rank.name.downcase %>
 <% loader_name.record_type = 'accepted' %>
+<% loader_name.loaded_from_instance_id = @instance.id %>
 
 <%= form_with(model: loader_name, role: 'form', remote: true) do |form| %>
     <div class="form-group">
@@ -26,6 +27,7 @@
     <%= form.hidden_field :full_name %>
     <%= form.hidden_field :family %>
     <%= form.hidden_field :rank %>
+    <%= form.hidden_field :loaded_from_instance_id %>
 
     <div class="form-group">
       <label for="record_type">Record type - accepted or excluded *</label>

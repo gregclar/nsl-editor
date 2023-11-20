@@ -210,7 +210,8 @@ class Loader::NamesController < ApplicationController
                                         :doubtful, :family, :excluded,
                                         :no_further_processing, :notes,
                                         :distribution, :loader_batch_id,
-                                        :rank, :remark_to_reviewers, :sort_key)
+                                        :rank, :remark_to_reviewers, :sort_key,
+                                        :loaded_from_instance_id)
   end
 
   def set_tab
