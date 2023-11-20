@@ -605,6 +605,7 @@ class Instance < ActiveRecord::Base
   end
 
   # simple i.e. not a relationship instance
+  # Deprecate simple - standalone is the accepted term now
   def simple?
     standalone?
   end
@@ -612,11 +613,11 @@ class Instance < ActiveRecord::Base
   # simple i.e. not a relationship instance
   # Should be based on instance_type.relationship flag
   def relationship?
-    !simple?
+    !standalone?
   end
 
   def type
-    simple? ? "simple" : "relationship"
+    standalone? ? "standalone" : "relationship"
   end
 
   def misapplied?

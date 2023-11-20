@@ -1,3 +1,7 @@
+- :date: 21-Nov-2023
+  :jira_id: '4790'
+  :description: |-
+    Loader: Provide an add-to-batch form on a new "Loader" tab for a standalone instance - first cut
 - :date: 17-Nov-2023
   :jira_id: '4779'
   :description: |-
