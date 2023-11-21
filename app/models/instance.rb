@@ -110,6 +110,10 @@ class Instance < ActiveRecord::Base
 
   scope :in_nested_instance_type_order, lambda {
     raw_sql = <<-SQL
+      case nomenclatural
+        when true then 1
+      else 2
+      end,
     case taxonomic
         when true then#{' '}
           case pro_parte#{' '}
@@ -136,10 +140,6 @@ class Instance < ActiveRecord::Base
         when 'common name' then 99
         when 'vernacular name' then 99
         else 3
-      end,
-      case nomenclatural
-        when true then 1
-      else 2
       end,
       case ns.name
       when 'orth. var.' then 2
