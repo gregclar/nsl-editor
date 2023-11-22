@@ -1,3 +1,7 @@
+- :date: 22-Nov-2023
+  :jira_id: '4794'
+  :description: |-
+    Synonymy: Can now list instances by name in Hershkovitz (2020) reference - and can now also list instances in other cases affected by this problem
 - :date: 21-Nov-2023
   :jira_id: '4793'
   :description: |-
