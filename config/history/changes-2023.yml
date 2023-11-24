@@ -1,4 +1,8 @@
 - :date: 24-Nov-2023
+  :jira_id: '4796'
+  :description: |-
+    Synonymy: Further improvements to synonymy sorting for reference queries showing instances
+- :date: 24-Nov-2023
   :release: true
 - :date: 22-Nov-2023
   :jira_id: '4794'
