@@ -13,7 +13,10 @@ Heading entry
                      class: 'blue underline'), 
                      label: "query family #{members} members"} %>
 <% end %>
-<%= render partial: 'detail_line', locals: {info: @loader_name.sort_key, label: 'value for sorting'} %>
+<%= render partial: 'detail_line', locals: {info: @loader_name.simple_name, label: 'Simple Name'} %>
+<%= render partial: 'detail_line', locals: {info: @loader_name.full_name, label: 'Full Name'} %>
+<%= render partial: 'detail_line', locals: {info: @loader_name.family, label: 'Family'} %>
+<%= render partial: 'detail_line', locals: {info: @loader_name.sort_key, label: 'Value for sorting'} %>
 <br>
 
 <h5>Metadata</h5>

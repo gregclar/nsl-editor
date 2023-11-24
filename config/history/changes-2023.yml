@@ -1,4 +1,8 @@
 - :date: 24-Nov-2023
+  :jira_id: '4800'
+  :description: |-
+    Loader: Add <code>full_name</code> field to form for creating a <code>loader_name</code> heading record; add name fields to details tab
+- :date: 24-Nov-2023
   :jira_id: '4796'
   :description: |-
     Synonymy: Further improvements to synonymy sorting for reference queries showing instances

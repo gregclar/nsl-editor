@@ -62,6 +62,7 @@ class Loader::NamesController < ApplicationController
   def new_heading
     @loader_name = ::Loader::Name.new
     @loader_name.simple_name = nil
+    @loader_name.full_name = nil
     @no_search_result_details = true
     @tab_index = (params[:tabIndex] || "40").to_i
     @loader_name.record_type = "heading"
