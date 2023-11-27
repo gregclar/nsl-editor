@@ -454,9 +454,7 @@ class Loader::Name < ActiveRecord::Base
 
   def self.create(params, username)
     loader_name = Loader::Name.new(params)
-    if consider_seq(params)
-      loader_name.seq = calc_seq(params)
-    end
+    loader_name.seq = calc_seq(params) if consider_seq(params)
     loader_name.created_manually = true
     if loader_name.loader_batch_id.blank?
       loader_name.loader_batch_id = find(params[:parent_id])
@@ -468,15 +466,6 @@ class Loader::Name < ActiveRecord::Base
     loader_name
   end
   
-  def self.consider_seq(params)
-    Rails.logger.debug("params: #{params.inspect}")
-    if Loader::Batch.find(params["loader_batch_id"]).use_sort_key_for_ordering
-      return 0
-    else
-      calc_seq(params)
-    end
-  end
-
   def save_with_username(username)
     self.created_by = self.updated_by = username
     set_defaults
