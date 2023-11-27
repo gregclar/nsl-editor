@@ -1,3 +1,7 @@
+- :date: 27-Nov-2023
+  :jira_id: '4801'
+  :description: |-
+    Loader: Extend add-to-batch for a standalone instance to all batches, including seq-ordered batches - determine an approximate initial sequence
 - :date: 24-Nov-2023
   :jira_id: '4800'
   :description: |-

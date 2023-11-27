@@ -5,12 +5,13 @@
 <% loader_name.rank = @instance.name.name_rank.name.downcase %>
 <% loader_name.record_type = 'accepted' %>
 <% loader_name.loaded_from_instance_id = @instance.id %>
+<% loader_name.loader_batch_id = session[:default_loader_batch_id] %>
 
 <%= form_with(model: loader_name, role: 'form', remote: true) do |form| %>
     <div class="form-group">
       <label for="loader_batch_id">Batch*</label>
       <%= form.select :loader_batch_id,
-        Loader::Batch.where(use_sort_key_for_ordering: true).order(:name).map { |batch| [batch.name, batch.id] },
+        Loader::Batch.order(:name).map { |batch| [batch.name, batch.id] },
         {include_blank: true},
         class: 'form-control',
         required: true,
