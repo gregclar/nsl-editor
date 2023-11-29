@@ -31,7 +31,8 @@ module Search::QueryDefaults
   def value_not_needed?
     id_regex = /\bid:/
     id_with_sth_regex = /\bid-[a-z-]*:/
-    params[:query_string] =~ id_regex || id_with_sth_regex
+    params[:query_string] =~ id_regex ||
+      params[:query_string] =~ id_with_sth_regex
   end
 
   def apply_default_loader_batch

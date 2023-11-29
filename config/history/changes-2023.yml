@@ -1,4 +1,8 @@
 - :date: 29-Nov-2023
+  :jira_id: '4807'
+  :description: |-
+    Loader: Fix bug preventing normal <code>loader_name</code> searching with default batch in place
+- :date: 29-Nov-2023
   :jira_id: '4802'
   :description: |-
     Loader: Allow synonym instance data to be flipped into a batch as an accepted/excluded name; allow citing name to become its synonym in the loader
