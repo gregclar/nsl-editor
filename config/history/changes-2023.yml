@@ -1,3 +1,7 @@
+- :date: 29-Nov-2023
+  :jira_id: '4807'
+  :description: |-
+    Loader: Searches on <code>loader_name</code> with <code>id:</code> or <code>id-with-syn:</code> directives do not get the <code>default-batch:</code> directive imposed on them
 - :date: 28-Nov-2023
   :jira_id: '4801'
   :description: |-

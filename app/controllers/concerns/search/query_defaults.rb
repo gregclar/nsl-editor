@@ -12,7 +12,7 @@ module Search::QueryDefaults
       remove_old_defaults
       return false
     end
-    return false if value_already_applied?
+    return false if value_already_applied? || value_not_needed?
 
     true
   end
@@ -26,6 +26,12 @@ module Search::QueryDefaults
       params[:query_string] =~ name_regex ||
       params[:query_string] =~ default_name_regex ||
       params[:query_string] =~ any_batch_regex
+  end
+
+  def value_not_needed?
+    id_regex = /id:/
+    id_with_sth_regex = /id-[a-z-]*:/
+    params[:query_string] =~ id_regex || id_with_sth_regex
   end
 
   def apply_default_loader_batch
