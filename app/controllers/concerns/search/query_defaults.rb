@@ -28,11 +28,14 @@ module Search::QueryDefaults
       params[:query_string] =~ any_batch_regex
   end
 
+  # gsub on dashes needed because they count as word-boundaries,
+  # hence 'family-id:' was matching /\bid:/
+  # had to stop that
   def value_not_needed?
     id_regex = /\bid:/
-    id_with_sth_regex = /\bid-[a-z-]*:/
-    params[:query_string] =~ id_regex ||
-      params[:query_string] =~ id_with_sth_regex
+    id_with_syn_regex = /\bid-with-syn:/
+    params[:query_string].gsub(/-/,'') =~ id_regex ||
+      params[:query_string] =~ id_with_syn_regex
   end
 
   def apply_default_loader_batch

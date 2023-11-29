@@ -1,7 +1,11 @@
 - :date: 29-Nov-2023
+  :jira_id: '4807'
+  :description: |-
+    Loader: Problem with <code>family-id:</code> directive fixed
+- :date: 29-Nov-2023
   :jira_id: '4808'
   :description: |-
-    Loader: Add fields for Notes and Remarks to citing-record-as-syn add-to-batch form
+    Loader: Add fields for Notes and Remarks to citing-record-as-syn add-to-batch form - more to come
 - :date: 29-Nov-2023
   :jira_id: '4807'
   :description: |-
