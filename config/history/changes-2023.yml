@@ -1,4 +1,8 @@
 - :date: 29-Nov-2023
+  :jira_id: '4808'
+  :description: |-
+    Loader: Add fields for Notes and Remarks to citing-record-as-syn add-to-batch form
+- :date: 29-Nov-2023
   :jira_id: '4807'
   :description: |-
     Loader: Fix bug preventing normal <code>loader_name</code> searching with default batch in place

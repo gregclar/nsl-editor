@@ -65,6 +65,16 @@
       tabindex: increment_tab_index %>
     </div>
 
+    <div class="form-group">
+      <label for="notes">Notes for Compilers</label>
+      <%= form.text_area :notes, class: 'form-control', title: "Enter notes", tabindex: increment_tab_index, autofocus: true %>
+    </div>
+
+    <div class="form-group">
+      <label for="remark_to_reviewers">Remark to reviewers</label>
+      <%= form.text_area :remark_to_reviewers, class: 'form-control', title: "Enter remark to reviewers", tabindex: increment_tab_index, autofocus: true %>
+    </div>
+
     <div class="form-group align-right">
       <%= form.submit "Save", id: 'loader-name-save', class: 'btn btn-primary width-5em', 
         title: "Save changes", tabindex: increment_tab_index, disabled: false %>
