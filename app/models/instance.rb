@@ -259,6 +259,10 @@ class Instance < ActiveRecord::Base
   has_many :instance_notes,
            dependent: :restrict_with_error
 
+  has_many :loader_names,
+           class_name: "Loader::Name",
+           foreign_key: "loaded_from_instance_id"
+
   # has_many :apc_instance_notes,
   #         class_name: "InstanceNote",
   #         dependent: :restrict_with_error,

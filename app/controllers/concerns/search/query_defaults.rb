@@ -29,8 +29,8 @@ module Search::QueryDefaults
   end
 
   def value_not_needed?
-    id_regex = /id:/
-    id_with_sth_regex = /id-[a-z-]*:/
+    id_regex = /\bid:/
+    id_with_sth_regex = /\bid-[a-z-]*:/
     params[:query_string] =~ id_regex || id_with_sth_regex
   end
 
