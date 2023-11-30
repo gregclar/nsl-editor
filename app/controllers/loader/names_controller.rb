@@ -176,6 +176,10 @@ class Loader::NamesController < ApplicationController
     end
 
     @loader_name = Loader::Name.create(loader_name_params, current_user.username)
+    unless loader_name_params["loaded_from_instance_id"].blank?
+      @loader_name.create_match_to_loaded_from_instance_name(current_user.username)
+    end
+
     render "create"
   rescue StandardError => e
     logger.error("Controller:Loader::Names:create:rescuing exception #{e}")

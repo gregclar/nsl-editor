@@ -1,6 +1,10 @@
 - :date: 30-Nov-2023
   :jira_id: '4808'
   :description: |-
+    Loader: When creating a loader_name record from an existing name/instance, automatically also create a preferred match to that name/instance
+- :date: 30-Nov-2023
+  :jira_id: '4808'
+  :description: |-
     Loader: After adding a loader_name record from an existing instance the Loader (details) tab will be automatically refreshed after about 1 second
 - :date: 29-Nov-2023
   :jira_id: '4807'
