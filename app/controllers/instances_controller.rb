@@ -252,7 +252,9 @@ class InstancesController < ApplicationController
     end
     offer << "tab_comments"
     offer << "tab_copy_to_new_reference" if offer_tab_copy_to_new_ref?
-    offer << "tab_batch_loader" if Rails.configuration.try('batch_loader_aware')
+    if Rails.configuration.try('batch_loader_aware') && can?('loader/names', 'update') && !@instance.unpublished_citation?
+        offer << "tab_batch_loader" 
+    end
     offer
   end
 
