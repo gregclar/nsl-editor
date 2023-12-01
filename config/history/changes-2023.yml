@@ -1,6 +1,10 @@
 - :date: 01-Dec-2023
   :jira_id: '4808'
   :description: |-
+    Loader: Gather comment and distribution data from the accepted concept (or excluded concept for comment) into the synonym add-to-batch flipper form when appropriate
+- :date: 01-Dec-2023
+  :jira_id: '4808'
+  :description: |-
     Loader: Tighten controls on when an add-to-batch Loader tab is offered: user must be a batch loader and not offered for unpub synonyms
 - :date: 30-Nov-2023
   :jira_id: '4808'
