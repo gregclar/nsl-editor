@@ -485,6 +485,7 @@ class Loader::Name < ActiveRecord::Base
     loader_name.parent_id = id
     loader_name.simple_name = loader_name.full_name = nil
     loader_name.family = family
+    loader_name.loader_batch_id = loader_batch_id
     loader_name.seq = base_seq + 1
     loader_name.created_manually = true
     loader_name
