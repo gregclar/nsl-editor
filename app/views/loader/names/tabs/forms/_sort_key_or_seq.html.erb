@@ -1,4 +1,4 @@
-<% if (@loader_name.try('loader_batch') || Loader::Batch.find(session[:default_loader_batch_id])).use_sort_key_for_ordering %>
+<% if (loader_name.try('loader_batch') || Loader::Batch.find(session[:default_loader_batch_id])).use_sort_key_for_ordering %>
    <% unless loader_name.new_record? %>
    <div class="form-group">
         <label for="sort_key">Sort key</label>
