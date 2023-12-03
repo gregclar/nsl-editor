@@ -1,7 +1,7 @@
-- :date: 01-Dec-2023
-  :jira_id: '4811'
+- :date: 04-Dec-2023
+  :jira_id: '4808'
   :description: |-
-    Loader: Fix error preventing addition of synonym/misapplication without a default batch, and allow successful creation of synonym/misapplication record
+    Loader: Add appropriate misapp instance types to the synonym type drop down on the instance-to-synonym flipper form
 - :date: 01-Dec-2023
   :jira_id: '4808'
   :description: |-
