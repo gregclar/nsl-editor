@@ -7,7 +7,7 @@ Heading entry
   <%= render partial: 'detail_line', 
              locals: {info: link_to("Members of #{@loader_name.family}",
          search_path(query_target: "loader names",
-                     query_string: "family-id: #{@loader_name.id}",
+                     query_string: "family-id: #{@loader_name.id} batch-id: #{@loader_name.batch.id}",
                      focus_id: "loader-name-#{@loader_name.id}"),
                      title: 'Query family members',
                      class: 'blue underline'), 
