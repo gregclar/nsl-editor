@@ -1,4 +1,8 @@
 - :date: 04-Dec-2023
+  :jira_id: '4786'
+  :description: |-
+    Loader: Allow access to misapplication modifiers at point of creation - via the synonym type field labelled Misapplied type
+- :date: 04-Dec-2023
   :jira_id: '3319'
   :description: |-
     Instance notes and adnots: Make the Name context for notes and adnots clear
