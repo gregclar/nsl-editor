@@ -1,4 +1,8 @@
 - :date: 04-Dec-2023
+  :jira_id: '3319'
+  :description: |-
+    Instance notes and adnots: Make the Name context for notes and adnots clear
+- :date: 04-Dec-2023
   :jira_id: '4812'
   :description: |-
     Loader: Do not offer Create Synonym or Create Misapp forms when the current (highlighted) record is neither accepted nor excluded.
