@@ -1,3 +1,7 @@
+- :date: 05-Dec-2023
+  :jira_id: '4797'
+  :description: |-
+    Loader: Improve robustness of loader against nonsense directives - reject invalid directives and halt operation with message
 - :date: 04-Dec-2023
   :jira_id: '4786'
   :description: |-
