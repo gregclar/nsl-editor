@@ -41,16 +41,18 @@
     <%= form.hidden_field :name_status %>
     <%= form.hidden_field :loaded_from_instance_id %>
 
-    <div class="form-check">
-      <label class="form-check-label">
-        <%= form.check_box(:add_sibling_synonyms,
-                           {title: "Also take sibling synonyms across to the loader"},
-                           checked_value = 'true',
-                           unchecked_value = 'false') %>
-        Take  <%= "#{pluralize(siblings.size, 'sibling synonym')}" %> across to the loader as well
-      </label>
-    </div>
-    <br/>
+    <% if siblings.size > 0 %>
+      <div class="form-check">
+        <label class="form-check-label">
+          <%= form.check_box(:add_sibling_synonyms,
+                             {title: "Also take sibling synonyms across to the loader"},
+                             checked_value = 'true',
+                             unchecked_value = 'false') %>
+          Take  <%= "#{pluralize(siblings.size, 'sibling synonym')}" %> across to the loader as well
+        </label>
+      </div>
+      <br/>
+    <% end %>
 
     <div class="form-group">
       <label for="record_type">Record type - accepted or excluded *</label>

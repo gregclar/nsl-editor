@@ -1,6 +1,10 @@
 - :date: 06-Dec-2023
   :jira_id: '4808'
   :description: |-
+    Loader: Refinement to previous change - offer to carry across sibling synonyms only if there are any sibling synonyms - don't offer to carry zero synonyms
+- :date: 06-Dec-2023
+  :jira_id: '4808'
+  :description: |-
     Loader: The synonym-to-loader-accepted-or-excluded flipper form now offers the option to also carry across the flipped synonym's sibling synonyms (first cut)
 - :date: 05-Dec-2023
   :jira_id: '4797'
