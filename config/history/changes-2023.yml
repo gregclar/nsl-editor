@@ -1,4 +1,8 @@
 - :date: 07-Dec-2023
+  :jira_id: '4817'
+  :description: |-
+    Loader: Fix Name parent editing typeahead bug which set family based on parent but only if typeahead was selected, not if typeahead was autocompleted
+- :date: 07-Dec-2023
   :jira_id: '4808'
   :description: |-
     Loader: Refinement to previous change - offer to carry across sibling synonyms only if there are any sibling synonyms - don't offer to carry zero synonyms
