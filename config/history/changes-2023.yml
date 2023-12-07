@@ -1,5 +1,5 @@
 - :date: 08-Dec-2023
-  :jira_id: '4816'
+  :jira_id: '4818'
   :description: |-
     Names: Apply validation rule to detect parent != family when names of rank genus are saved with a parent ranked as a family
 - :date: 07-Dec-2023
