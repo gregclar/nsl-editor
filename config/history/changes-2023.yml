@@ -1,4 +1,8 @@
 - :date: 07-Dec-2023
+  :jira_id: '4816'
+  :description: |-
+    Names: Add query directive <code>parent-different-to-family:</code>, intended to be combined with <code>rank: genus</code> to find genera whose family isn't the same as their parent
+- :date: 07-Dec-2023
   :jira_id: '4817'
   :description: |-
     Loader: Fix Name parent editing typeahead bug which set family based on parent but only if typeahead was selected, not if typeahead was autocompleted

@@ -800,5 +800,7 @@ FROM
          where r.name = 'Genus'
           )
    and child.simple_name not like parent.simple_name || '%')"
+'parent-different-to-family:':
+  :where_clause: 'name.id in (select id from name where parent_id != family_id)'
 
 
