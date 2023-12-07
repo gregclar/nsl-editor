@@ -19,12 +19,13 @@
 require "test_helper"
 
 # Single Name model test.
-class NameUpdateGenusParentFamilyIgnoreNonGenusTest < ActiveSupport::TestCase
+class NameUpdateGenusParentFamilyBothMatchTest < ActiveSupport::TestCase
   test "name update set names simple" do
-    @name = names(:a_species)
-    assert(@name.parent == names(:a_genus), "Parent should start out as a_genus")
+    @name = names(:a_genus)
+    assert(@name.parent == names(:a_family), "Parent should start out as a_family")
     assert(@name.family == names(:a_family), "Parent should start out as a_family")
-    @name.parent = names(:acacia)
+    @name.parent = names(:proteaceae)
+    @name.family = names(:proteaceae)
     assert(@name.save!)
   end
 end
