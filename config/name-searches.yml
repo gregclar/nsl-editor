@@ -780,7 +780,7 @@ from comment where comment.name_id = name.id)"
 	*
 FROM
 	subordinates)"
-'bad-namepath:':
+'bad-name-path:':
   :where_clause: "id in
   (select name.id
   from name

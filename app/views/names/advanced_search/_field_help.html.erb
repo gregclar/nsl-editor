@@ -337,6 +337,7 @@
 <table class="table table-striped">
   <% [
       {field_name: 'possibly-malformed:', description: "search for names attached to a genus that don't start with the genus name - they might be malformed"},
+      {field_name: 'bad-name-path:', description: "search for names that have a malformed name-path i.e. based on comparison with its parent's name-path"},
       ].each do |val| %>
   <tr>
     <td class="width-20-percent">

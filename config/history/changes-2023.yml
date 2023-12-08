@@ -1,4 +1,8 @@
 - :date: 08-Dec-2023
+  :jira_id: '4819'
+  :description: |-
+    Names: Document Name search directive <code>bad-name-path:</code>, confirm bad-name-paths found in Name records can be fixed by Name update or <code>Refresh name path</code>
+- :date: 08-Dec-2023
   :jira_id: '4818'
   :description: |-
     Names: Apply validation rule to detect parent != family when names of rank genus are saved with a parent ranked as a family
