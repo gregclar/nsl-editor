@@ -78,6 +78,6 @@ module NameValidatable
 
     errors.add(
       :parent_id,
-      "Parent/Family mismatch: the genus parent should match the genus family if the parent is ranked as a family")
+      "Family mismatch: for genus names with family-ranked parent, parent and family fields should match")
   end
 end
