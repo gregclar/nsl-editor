@@ -1,3 +1,7 @@
+- :date: 15-Dec-2023
+  :jira_id: '3319'
+  :description: |-
+    Instance adnots: Fix adnot spelling and show reference context on the Adnot tab
 - :date: 13-Dec-2023
   :jira_id: '4818'
   :description: |-
