@@ -171,7 +171,7 @@ class Loader::Name::MatchesController < ApplicationController
   # a transaction.)
   def clear_and_delete_draft_standalone_instance
     @match = Loader::Name::Match.find(params[:id])
-    raise "Must be a draft instance" unless @match.standalone_instance.draft == true
+    raise "Must be a draft instance to delete from here" unless @match.standalone_instance.draft == true
 
     @standalone_instance = @match.standalone_instance
     ActiveRecord::Base.transaction do
@@ -215,10 +215,10 @@ class Loader::Name::MatchesController < ApplicationController
       end
       @standalone_instance.delete
     end
-    # rescue => e
-    # logger.error("Loader::Name::MatchesController clear_and_delete_standalone_instance error: #{e.to_s}")
-    # @message = e.to_s
-    # render 'clear_and_delete_draft_standalone_instance_error', format: :js
+    rescue => e
+      logger.error("Loader::Name::MatchesController clear_and_delete_standalone_instance error: #{e.to_s}")
+      @message = e.to_s
+      render 'clear_and_delete_draft_standalone_instance_error', format: :js
   end
 
   def clear_relationship_instance
