@@ -1,4 +1,8 @@
 - :date: 08-Jan-2024
+  :jira_id: '4828'
+  :description: |-
+    Copy to loader: Set copied <code>name_status</code> blank if source name status is 'legitimate'
+- :date: 08-Jan-2024
   :jira_id: '4846'
   :description: |-
     History: Set up change history for 2024
