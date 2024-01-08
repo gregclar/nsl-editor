@@ -55,6 +55,10 @@
   :description: |-
     Loader: Add appropriate misapp instance types to the synonym type drop down on the instance-to-synonym flipper form
 - :date: 01-Dec-2023
+  :jira_id: '4811'
+  :description: |-
+    Loader: Fix error preventing addition of synonym/misapplication without a default batch, and allow successful creation of synonym/misapplication record
+- :date: 01-Dec-2023
   :jira_id: '4808'
   :description: |-
     Loader: Gather comment and distribution data from the accepted concept (or excluded concept for comment) into the synonym add-to-batch flipper form when appropriate
