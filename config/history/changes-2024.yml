@@ -1,7 +1,11 @@
 - :date: 09-Jan-2024
+  :jira_id: '4849'
+  :description: |-
+    Security: Sanitize a query param for the typeahead reference lookup when editing a synonym 
+- :date: 09-Jan-2024
   :jira_id: '4848'
   :description: |-
-    Security: Upgrade Puma gem
+    Security: Upgrade Puma and Nokogiri gems
 - :date: 09-Jan-2024
   :jira_id: '4831'
   :description: |-
