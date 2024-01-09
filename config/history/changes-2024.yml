@@ -1,5 +1,5 @@
 - :date: 09-Jan-2024
-  :jira_id: '4849'
+  :jira_id: '4850'
   :description: |-
     Security: Sanitize a query param for the typeahead reference lookup when editing a synonym 
 - :date: 09-Jan-2024
