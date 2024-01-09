@@ -1,3 +1,7 @@
+- :date: 09-Jan-2024
+  :jira_id: '4831'
+  :description: |-
+    Loader: Misapplied names created directly from name data now display better in print output
 - :date: 08-Jan-2024
   :jira_id: '4828'
   :description: |-
