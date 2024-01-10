@@ -33,7 +33,7 @@ class Search::OnName::WithInstancesToCopy
       Instance::AsArray::ForName.new(name)
       .results
       .reject { |i| i.instance_type.relationship && i.instance_type.unsourced }
-      .reject { |i| i.instance_type.name == 'trade name'a}
+      .reject { |i| i.instance_type.name == 'trade name' }
       .each do |usage_rec|
         results << usage_rec
       end
