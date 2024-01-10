@@ -1,3 +1,7 @@
+- :date: 10-Jan-2024
+  :jira_id: '4839'
+  :description: |-
+    Loader: Don't copy common names during <quote>copy and append</quote>
 - :date: 09-Jan-2024
   :jira_id: '4850'
   :description: |-
