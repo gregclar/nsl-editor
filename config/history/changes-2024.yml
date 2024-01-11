@@ -1,3 +1,7 @@
+- :date: 11-Jan-2024
+  :jira_id: '4826'
+  :description: |-
+    Loader: Ensure batches using sort key are being processed in order
 - :date: 10-Jan-2024
   :jira_id: '4839'
   :description: |-
