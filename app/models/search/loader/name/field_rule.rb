@@ -602,7 +602,7 @@ having count(*)                     >  1
                         order: "sort_key, seq" },
     "no-hybrid-flag:" => { where_clause: "hybrid_flag is null",
                            order: "sort_key, seq" },
-    "xno-further-processing:" => { where_clause: " no_further_processing or exists (select null from loader_name kids where kids.parent_id = loader_name.id and kids.no_further_processing) or exists (select null from orchids pa where pa.id = orchids.parent_id and pa.no_further_processing)",
+    "no-further-processing:" => { where_clause: " no_further_processing or exists (select null from loader_name kids where kids.parent_id = loader_name.id and kids.no_further_processing) or exists (select null from loader_name pa where pa.id = loader_name.parent_id and pa.no_further_processing)",
                                    order: "sort_key, seq" },
     "isonym:" => { where_clause: "isonym is not null",
                    order: "sort_key, seq" },

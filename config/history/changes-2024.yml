@@ -1,4 +1,8 @@
 - :date: 12-Jan-2024
+  :jira_id: '4827'
+  :description: |-
+    Loader: The no-further-processing query directive works
+- :date: 12-Jan-2024
   :jira_id: '4854'
   :description: |-
     Loader: Success message now shows when clearing instance choice
