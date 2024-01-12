@@ -194,7 +194,6 @@ class Loader::Name::MatchesController < ApplicationController
         end
         synonym.delete
       end
-      Rails.logger.debug("after deleting synonyms")
       @match.loader_name.children.each do |loader_name_syn|
         loader_name_syn.loader_name_matches.each do |match|
           if match.relationship_instance_created ||
@@ -214,11 +213,12 @@ class Loader::Name::MatchesController < ApplicationController
         end
       end
       @standalone_instance.delete
+      @message = "Draft standalone instance and all synonyms removed"
     end
-    rescue => e
-      logger.error("Loader::Name::MatchesController clear_and_delete_standalone_instance error: #{e.to_s}")
-      @message = e.to_s
-      render 'clear_and_delete_draft_standalone_instance_error', format: :js
+  rescue => e
+    logger.error("Loader::Name::MatchesController clear_and_delete_standalone_instance error: #{e.to_s}")
+    @message = e.to_s
+    render 'clear_and_delete_draft_standalone_instance_error', format: :js
   end
 
   def clear_relationship_instance
@@ -240,6 +240,7 @@ class Loader::Name::MatchesController < ApplicationController
     @match.relationship_instance_created = false
     save_if_changed("Cleared", "Nothing to clear")
     @relationship_instance.delete_as_user(current_user.username)
+    @message = "Deleted"
   rescue StandardError => e
     logger.error("Loader::Name::MatchesController clear_and_delete_relationship_instance error: #{e}")
     @message = e.to_s

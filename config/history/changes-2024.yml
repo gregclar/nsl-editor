@@ -1,4 +1,8 @@
 - :date: 12-Jan-2024
+  :jira_id: '4854'
+  :description: |-
+    Loader: Success message now shows when clearing instance choice
+- :date: 12-Jan-2024
   :jira_id: '4866'
   :description: |-
     Security: Bundle update gems/libraries
