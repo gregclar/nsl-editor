@@ -374,26 +374,31 @@ class Search::Loader::Name::FieldRule
                           order: "seq" },
     "syn-but-no-syn-type:" => { where_clause: "record_type = 'synonym' and synonym_type is null",
                                 order: "seq" },
-    "no-name-match:" => { where_clause: "not exists (
+    "no-name-match:" => { where_clause: "record_type not in ('heading')
+     and not exists (
         select null
           from name
         where (loader_name.simple_name = name.simple_name
                or
                loader_name.simple_name = name.full_name)
+          and duplicate_of_id is null
           and exists (
             select null
               from name_type nt
             where name.name_type_id = nt.id
               and nt.scientific))",
                           order: "seq" },
-    "no-name-match-unscientific:" => { where_clause: "not exists (
+    "no-name-match-unscientific:" => { where_clause: "record_type not in ('heading')
+     and not exists (
         select null
           from name
-        where (loader_name.simple_name = name.simple_name
+        where duplicate_of_id is null
+        and (loader_name.simple_name = name.simple_name
                or
                loader_name.simple_name = name.full_name))",
                                        order: "seq" },
-    "no-name-match-unaccent:" => { where_clause: "loader_name.id in (select id
+    "no-name-match-unaccent:" => { where_clause: "record_type not in ('heading')
+    and loader_name.id in (select id
   from loader_name
  where lower(f_unaccent(simple_name)) in (
         select lower(f_unaccent(ln.simple_name))
@@ -401,47 +406,55 @@ class Search::Loader::Name::FieldRule
         except (
             select lower(f_unaccent(n.simple_name))
               from name n
+             where duplicate_of_id is null
             union all
             select lower(f_unaccent(n.full_name))
           from name n
+           where duplicate_of_id is null
           )
        ) ) ",
                                    order: "seq" },
-    "some-name-match:" => { where_clause: "exists (
+    "some-name-match:" => { where_clause: "record_type not in ('heading')
+        and exists (
                               select null
                                 from name
                                 where (loader_name.simple_name = name.simple_name
                                or loader_name.simple_name = name.full_name)
+          and duplicate_of_id is null
           and exists (
             select null
               from name_type nt
             where name.name_type_id = nt.id
               and nt.scientific))",
                             order: "seq" },
-    "some-name-match-unscientific:" => { where_clause: "exists (
+    "some-name-match-unscientific:" => { where_clause: "record_type not in ('heading')
+      and exists (
                               select null
                                 from name
                                 where (loader_name.simple_name = name.simple_name
                                or loader_name.simple_name = name.full_name)
+          and duplicate_of_id is null
           and not exists (
             select null
               from name_type nt
             where name.name_type_id = nt.id
               and nt.scientific))",
                                          order: "seq" },
-    "many-name-match:" => { where_clause: "1 < (
+    "many-name-match:" => { where_clause: "record_type not in ('heading')
+     and 1 < (
         select count(*)
           from name
         where (loader_name.simple_name = name.simple_name
                or
                loader_name.simple_name = name.full_name)
+          and duplicate_of_id is null
           and exists (
             select null
               from name_type nt
             where name.name_type_id = nt.id
-              and nt.scientific))",
-                            order: "seq" },
-    "many-name-match-unaccent:" => { where_clause: "loader_name.id in (select id
+              and nt.scientific))"},
+    "many-name-match-unaccent:" => { where_clause: "record_type not in ('heading')
+ and loader_name.id in (select id
   from loader_name
  where lower(f_unaccent(simple_name)) in
 (select l_fa_sn from
@@ -457,23 +470,29 @@ group by l_fa_sn
 having count(*) > 2
 ))",
                                      order: "seq" },
-    "one-name-match:" => { where_clause: "1 = (
+    "one-name-match:" => { where_clause: "record_type not in ('heading')
+  and 1 = (
       select count(*)
         from name
-      where loader_name.simple_name = name.simple_name
+      where (loader_name.simple_name = name.simple_name
+             or
+             loader_name.simple_name = name.full_name)
+        and duplicate_of_id is null
         and exists (
           select null
             from name_Type nt
           where name.name_type_id       = nt.id
      and nt.scientific))",
                            order: "seq" },
-    "name-match-no-primary:" => { where_clause: "
-   record_type != 'heading'
+    "name-match-no-primary:" => { where_clause: " record_type != 'heading'
    and exists ( select null
              from name
                   join name_type nty
                   on name.name_type_id = nty.id
-                where loader_name.simple_name = name.simple_name
+      where duplicate_of_id is null
+      and (loader_name.simple_name = name.simple_name
+             or
+             loader_name.simple_name = name.full_name)
                   and nty.name = 'scientific'
                 )
    and not exists (
@@ -490,30 +509,40 @@ having count(*) > 2
                       and nty.name = 'scientific'
           )",
                                   order: "sort_key, seq" },
-    "name-match-eq:" => { where_clause: "? = (
+    "name-match-eq:" => { where_clause: "record_type not in ('heading')
+ and ? = (
       select count(*)
         from name
-        where loader_name.simple_name = name.simple_name
+      where (loader_name.simple_name = name.simple_name
+             or
+             loader_name.simple_name = name.full_name)
+   and duplicate_of_id is null
           and exists (
           select null
             from name_Type nt
             where name.name_type_id       = nt.id
       and nt.scientific))",
                           order: "sort_key, seq" },
-    "name-match-gt:" => { where_clause: "? < (
+    "name-match-gt:" => { where_clause: "record_type not in ('heading')
+ and ? < (
         select count(*)
           from name
-        where loader_name.simple_name = name.simple_name
+      where (loader_name.simple_name = name.simple_name
+             or
+             loader_name.simple_name = name.full_name)
           and exists (
             select null
               from name_Type nt
             where name.name_type_id       = nt.id
        and nt.scientific))",
                           order: "sort_key, seq" },
-    "name-match-gte:" => { where_clause: "? <= (
+    "name-match-gte:" => { where_clause: "record_type not in ('heading')
+ and ? <= (
         select count(*)
           from name
-        where loader_name.simple_name = name.simple_name
+      where (loader_name.simple_name = name.simple_name
+             or
+             loader_name.simple_name = name.full_name)
           and exists (
             select null
               from name_Type nt

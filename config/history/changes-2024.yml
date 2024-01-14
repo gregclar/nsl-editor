@@ -1,3 +1,7 @@
+- :date: 15-Jan-2024
+  :jira_id: '4783'
+  :description: |-
+    Loader: Exclude heading records and duplicate names from the <code>many-name-match</code> search and from similar <code>name-match</code> searches
 - :date: 12-Jan-2024
   :jira_id: '4827'
   :description: |-
