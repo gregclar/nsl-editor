@@ -1,4 +1,8 @@
 - :date: 15-Jan-2024
+  :jira_id: '4870'
+  :description: |-
+    Loader: Loader name search directives should all order by <code>sort_key, seq</code>
+- :date: 15-Jan-2024
   :jira_id: '4783'
   :description: |-
     Loader: Exclude heading records and duplicate names from the <code>many-name-match</code> search and from similar <code>name-match</code> searches
