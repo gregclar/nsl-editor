@@ -558,8 +558,9 @@ class Loader::Name < ActiveRecord::Base
     return if rank.blank?
     return unless rank.downcase == "family"
 
-    return if simple_name == family
+    return if family == simple_name
+    return if family == full_name
 
-    errors.add(:simple_name, "must match family name for a family")
+    errors.add(:family, "must match simple name or full name for a family")
   end
 end

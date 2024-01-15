@@ -1,4 +1,8 @@
 - :date: 15-Jan-2024
+  :jira_id: '4805'
+  :description: |-
+    Loader: Loader Name family, for a record ranked family, can match either simple name or (now also) full name
+- :date: 15-Jan-2024
   :jira_id: '4824'
   :description: |-
     Loader: Misapplication type choice now flows through to matches and to each draft instance
