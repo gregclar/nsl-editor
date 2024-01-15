@@ -1,4 +1,8 @@
 - :date: 15-Jan-2024
+  :jira_id: '4784'
+  :description: |-
+    Loader: Honour "doubtful" flag for synonyms in parsed batches when creating preferred matches
+- :date: 15-Jan-2024
   :jira_id: '4832'
   :description: |-
     Loader: Allow the <code>loader_name</code> <q>families</q> search directive to accept and use an argument
