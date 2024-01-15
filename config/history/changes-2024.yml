@@ -1,4 +1,8 @@
 - :date: 15-Jan-2024
+  :jira_id: '4832'
+  :description: |-
+    Loader: Allow the <code>loader_name</code> <q>families</q> search directive to accept and use an argument
+- :date: 15-Jan-2024
   :jira_id: '4805'
   :description: |-
     Loader: Loader Name family, for a record ranked family, can match either simple name or (now also) full name
