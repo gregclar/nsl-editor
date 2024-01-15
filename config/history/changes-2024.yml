@@ -1,7 +1,11 @@
+- :date: 16-Jan-2024
+  :jira_id: '4840'
+  :description: |-
+    Loader: Position <q>Manually drafted</q> flag in same place as <q>Drafted</q>
 - :date: 15-Jan-2024
   :jira_id: '4784'
   :description: |-
-    Loader: Honour "doubtful" flag for synonyms in parsed batches when creating preferred matches
+    Loader: Honour <code>doubtful</code> flag for synonyms in parsed batches when creating preferred matches
 - :date: 15-Jan-2024
   :jira_id: '4832'
   :description: |-
