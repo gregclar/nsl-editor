@@ -378,7 +378,7 @@ class Loader::Name < ActiveRecord::Base
     return nil if accepted?
     return nil if excluded?
 
-    return InstanceType.find_by_name("misapplied").id if misapplied?
+    return InstanceType.find_by_name(synonym_type).id if misapplied?
 
     if taxonomic?
       return InstanceType.find_by_name("pro parte taxonomic synonym").id if pp?

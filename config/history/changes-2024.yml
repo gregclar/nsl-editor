@@ -1,4 +1,8 @@
 - :date: 15-Jan-2024
+  :jira_id: '4824'
+  :description: |-
+    Loader: Misapplication type choice now flows through to matches and to each draft instance
+- :date: 15-Jan-2024
   :jira_id: '4870'
   :description: |-
     Loader: Loader name search directives should all order by <code>sort_key, seq</code>
