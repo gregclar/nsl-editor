@@ -22,8 +22,10 @@ class Loader::Name < ActiveRecord::Base
   include SortKeyBulkChanges
   include SeqCalculator
   include SiblingSynonyms
+  include SourcedSynonyms
   NA = "N/A"
   attr_accessor :add_sibling_synonyms
+  attr_accessor :add_sourced_synonyms
 
   strip_attributes
   self.table_name = "loader_name"

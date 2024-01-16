@@ -1,4 +1,8 @@
 - :date: 16-Jan-2024
+  :jira_id: '4847'
+  :description: |-
+    Loader: Allow addition of synonymy and profile fields along with accepted name from instance
+- :date: 16-Jan-2024
   :jira_id: '4840'
   :description: |-
     Loader: Position <q>Manually drafted</q> flag in same place as <q>Drafted</q>
