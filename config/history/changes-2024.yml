@@ -1,3 +1,7 @@
+- :date: 17-Jan-2024
+  :jira_id: '4804'
+  :description: |-
+    Loader: New record type <code>in-batch-compiler-note</code> is available
 - :date: 16-Jan-2024
   :jira_id: '4847'
   :description: |-

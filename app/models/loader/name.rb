@@ -23,7 +23,8 @@ class Loader::Name < ActiveRecord::Base
   include SeqCalculator
   include SiblingSynonyms
   include SourcedSynonyms
-  NA = "N/A"
+  include InBatchNote
+  include InBatchCompilerNote
   attr_accessor :add_sibling_synonyms
   attr_accessor :add_sourced_synonyms
 
@@ -70,7 +71,7 @@ class Loader::Name < ActiveRecord::Base
   attr_accessor :give_me_focus, :message
 
   # before_create :set_defaults # rails 6 this was not being called before the validations
-  before_validation :set_in_batch_note_defaults
+  before_validation :set_in_batch_note_defaults, :set_in_batch_compiler_note_defaults
   before_save :compress_whitespace, :consider_sort_key
 
   def fresh?
@@ -97,15 +98,6 @@ class Loader::Name < ActiveRecord::Base
     else
       "No change"
     end
-  end
-
-  def set_in_batch_note_defaults
-    return unless record_type == "in-batch-note"
-
-    self.simple_name_as_loaded = NA
-    self.family = NA if family.blank?
-    self.simple_name = NA if simple_name.blank?
-    self.full_name = simple_name
   end
 
   def compress_whitespace
@@ -141,6 +133,8 @@ class Loader::Name < ActiveRecord::Base
                         end
       when "in-batch-note"
         self.sort_key = in_batch_note_sort_key if sort_key.blank?
+      when "in-batch-compiler-note"
+        self.sort_key = in_batch_compiler_note_sort_key if sort_key.blank?
       else
         self.sort_key = "aaaaaa-unexpected-record-type-#{record_type}"
       end
@@ -153,16 +147,6 @@ class Loader::Name < ActiveRecord::Base
 
   def normalise_sort_key
     self.sort_key = sort_key.downcase unless sort_key == sort_key.downcase
-  end
-
-  def in_batch_note_sort_key
-    if family == NA && simple_name == NA
-      "aaaa-in-batch-note"
-    elsif simple_name == NA
-      "#{family.downcase}.family.a.in-batch-note"
-    else
-      "#{family.downcase}.family.accepted.#{simple_name.downcase}.x.in-batch-note"
-    end
   end
 
   def synonym_sort_key_tail
@@ -333,10 +317,6 @@ class Loader::Name < ActiveRecord::Base
 
   def heading?
     record_type == "heading"
-  end
-
-  def in_batch_note?
-    record_type == "in-batch-note"
   end
 
   def excluded?
