@@ -74,6 +74,15 @@ class Loader::Name < ActiveRecord::Base
   before_validation :set_in_batch_note_defaults, :set_in_batch_compiler_note_defaults
   before_save :compress_whitespace, :consider_sort_key
 
+  before_save :set_children_to_new_batch_id, if: :will_save_change_to_loader_batch_id?
+
+  def set_children_to_new_batch_id
+    children.each do |child|
+      child.loader_batch_id = loader_batch_id
+      child.save!
+    end
+  end
+
   def fresh?
     created_at > 1.hour.ago
   end
