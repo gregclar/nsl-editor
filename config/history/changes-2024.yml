@@ -1,4 +1,8 @@
 - :date: 17-Jan-2024
+  :jira_id: '4874'
+  :description: |-
+    Loader: Cleanup redundant data and fields on forms used to create synonym and misapplied records
+- :date: 17-Jan-2024
   :jira_id: '4804'
   :description: |-
     Loader: New record type <code>in-batch-compiler-note</code> is available
