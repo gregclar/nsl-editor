@@ -1,4 +1,8 @@
 - :date: 18-Jan-2024
+  :jira_id: '4823'
+  :description: |-
+    Loader: Offer copy of comment text for excluded names when adding to batch
+- :date: 18-Jan-2024
   :jira_id: '4845'
   :description: |-
     Loader: Follow up to correctly set <code>sort_key</code> values for synonyms and misapplieds
