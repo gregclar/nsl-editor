@@ -79,6 +79,15 @@ class Loader::Name < ActiveRecord::Base
   def set_children_to_new_batch_id
     children.each do |child|
       child.loader_batch_id = loader_batch_id
+      # Have to set sort_key here - the default callback to set it fails
+      # because at that point in processing the parent's sort_key is empty
+      child.sort_key = if child.record_type == 'synonym' 
+                         synonym_sort_key(sort_key, child.synonym_type)
+                       elsif child.record_type = 'misapplied'
+                         misapp_sort_key(sort_key)
+                       else
+                         "unknown record type: #{child.record_type}"
+                       end
       child.save!
     end
   end
@@ -131,9 +140,9 @@ class Loader::Name < ActiveRecord::Base
       when "excluded"
         self.sort_key = "#{family.downcase}.family.#{record_type}.#{simple_name.downcase}"
       when "synonym"
-        self.sort_key = "#{parent.sort_key}.a-syn.#{synonym_sort_key_tail}"
+        self.sort_key = synonym_sort_key(parent.sort_key)
       when "misapplied"
-        self.sort_key = "#{parent.sort_key}.b-mis.z-mis"
+        self.sort_key = misapp_sort_key(parent.sort_key)
       when "heading"
         self.sort_key = if rank.blank? || rank.downcase == "family"
                           "#{family.downcase}.family"
@@ -158,8 +167,16 @@ class Loader::Name < ActiveRecord::Base
     self.sort_key = sort_key.downcase unless sort_key == sort_key.downcase
   end
 
-  def synonym_sort_key_tail
-    case synonym_type
+  def synonym_sort_key(parent_sort_key, syn_type = synonym_type)
+    "#{parent_sort_key}.a-syn.#{synonym_sort_key_tail(syn_type)}"
+  end
+
+  def misapp_sort_key(parent_sort_key)
+    "#{parent_sort_key}.b-mis.z-mis"
+  end
+
+  def synonym_sort_key_tail(syn_type = synonym_type)
+    case syn_type
     when "isonym"
       "a-isonym"
     when "orthographic variant"
@@ -181,7 +198,7 @@ class Loader::Name < ActiveRecord::Base
     when "pro parte taxonomic synonym"
       "g-tax-syn"
     else
-      "x-is-unknown-#{synonym_type}"
+      "x-is-unknown-#{syn_type}"
     end
   end
 

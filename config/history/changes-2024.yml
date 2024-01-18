@@ -1,4 +1,8 @@
 - :date: 18-Jan-2024
+  :jira_id: '4845'
+  :description: |-
+    Loader: Follow up to correctly set <code>sort_key</code> values for synonyms and misapplieds
+- :date: 17-Jan-2024
   :jira_id: '4768'
   :description: |-
     Loader: Display synonymy qualifiers <q>?</q>, <q>p.p.</q> for doubtful/pro parte synonyms in web and print views
