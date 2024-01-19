@@ -1,4 +1,8 @@
 - :date: 19-Jan-2024
+  :jira_id: '4875'
+  :description: |-
+    Loader: Refined <code>sort_key</code> value algorithm to fix problem with genus synonymy displaying after species
+- :date: 19-Jan-2024
   :jira_id: '4822'
   :description: |-
     Loader: Don't allow invalid distribution strings in loader name records
