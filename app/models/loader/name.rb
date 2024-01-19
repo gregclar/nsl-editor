@@ -49,6 +49,7 @@ class Loader::Name < ActiveRecord::Base
   validates :simple_name, presence: true
   validates :simple_name_as_loaded, presence: true
   validates :full_name, presence: true
+  validate :validate_distribution
 
   belongs_to :loader_batch, class_name: "Loader::Batch", foreign_key: "loader_batch_id"
   alias_attribute :batch, :loader_batch
@@ -578,5 +579,16 @@ class Loader::Name < ActiveRecord::Base
     return if family == full_name
 
     errors.add(:family, "must match simple name or full name for a family")
+  end
+
+  def validate_distribution
+    dv = DistributionValidator.new(distribution,
+                                   DistRegion.all
+                                             .order(:sort_order)
+                                             .collect(&:name))
+    return if dv.validate
+
+
+    errors.add(:distribution, dv.error)
   end
 end

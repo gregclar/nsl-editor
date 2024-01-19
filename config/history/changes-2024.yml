@@ -1,3 +1,7 @@
+- :date: 19-Jan-2024
+  :jira_id: '4822'
+  :description: |-
+    Loader: Don't allow addition of misordered distributions
 - :date: 18-Jan-2024
   :jira_id: '4823'
   :description: |-
