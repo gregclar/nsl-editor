@@ -25,11 +25,13 @@ class Loader::Name::DistributionValidator
   #
   def initialize(dist_s, allowed_regions)
     @dist_s = dist_s
-    @allowed_regions = allowed_regions
-    @dist_regions = dist_s.gsub(/ *\([^)]*\)/, "")
-                          .split(/, */)
-    @dist_qualifiers = dist_s.split(/, */)
-                             .collect {|e| e.sub(/.*(\(.*\)).*/, '\1')}
+    if dist_s.blank?
+      @dist_regions = @dist_qualifiers = []
+    else
+      @allowed_regions = allowed_regions
+      @dist_regions = dist_s&.gsub(/ *\([^)]*\)/, "")&.split(/, */)
+      @dist_qualifiers = dist_s&.split(/, */)&.collect {|e| e.sub(/.*(\(.*\)).*/, '\1')}
+    end
   end
 
   def dist_region_indexes
@@ -37,6 +39,8 @@ class Loader::Name::DistributionValidator
   end
 
   def validate
+    return true if @dist_s.blank?
+
     dist_has_no_empty_entries &&
       dist_has_no_trailing_comma &&
       dist_regions_are_valid &&
@@ -44,6 +48,7 @@ class Loader::Name::DistributionValidator
       dist_regions_are_ordered_correctly &&
       dist_region_entries_are_all_valid
   end
+
   def dist_regions_are_valid
     @dist_regions.each do |reg|
       @error = "#{reg} is an unknown region in: #{@dist_s}"

@@ -582,6 +582,8 @@ class Loader::Name < ActiveRecord::Base
   end
 
   def validate_distribution
+    return unless accepted?
+
     dv = DistributionValidator.new(distribution,
                                    DistRegion.all
                                              .order(:sort_order)
