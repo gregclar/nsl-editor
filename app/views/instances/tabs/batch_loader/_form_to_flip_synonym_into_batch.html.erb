@@ -11,7 +11,7 @@
 <% loader_name.distribution = @instance.name.accepted_distribution %>
 <% loader_name.add_sibling_synonyms = false %>
 <% citer = @instance.this_is_cited_by %>
-<% siblings = Instance.where(cited_by_id: citer.id).where.not(id: @instance.id) %>
+<% siblings = Instance.sourced_sibling_synonyms_and_misapps(@instance) %>
 
 
 <h5>Add <%= loader_name.simple_name %> to a batch</h5>

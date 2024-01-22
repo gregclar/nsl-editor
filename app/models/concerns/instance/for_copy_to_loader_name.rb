@@ -3,6 +3,16 @@
 module Instance::ForCopyToLoaderName
   extend ActiveSupport::Concern
 
+  class_methods do
+    def sourced_sibling_synonyms_and_misapps(instance)
+      Instance.where(cited_by_id: instance.this_is_cited_by)
+              .where.not(id: instance.id) 
+              .joins(:instance_type)
+              .where(instance_type: { unsourced: false })
+              .where.not(instance_type: { name: 'trade name' })
+    end
+  end
+
   def loader_name_for_accepted_excluded
     loader_name = Loader::Name.new
     loader_name.simple_name = name.simple_name

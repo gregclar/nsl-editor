@@ -1,4 +1,8 @@
 - :date: 23-Jan-2024
+  :jira_id: '4872'
+  :description: |-
+    Loader: Synonym flipper-to-accepted form does not offer to take unsourced siblings or trade names
+- :date: 23-Jan-2024
   :jira_id: '4877'
   :description: |-
     Loader: Synonym flipper-to-accepted form shouldn't be offered for trade names
