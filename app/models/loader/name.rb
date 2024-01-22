@@ -26,6 +26,7 @@ class Loader::Name < ActiveRecord::Base
   include SourcedSynonyms
   include InBatchNote
   include InBatchCompilerNote
+  include HeadingRecord
   attr_accessor :add_sibling_synonyms
   attr_accessor :add_sourced_synonyms
 
@@ -34,7 +35,7 @@ class Loader::Name < ActiveRecord::Base
   self.primary_key = "id"
   self.sequence_name = "nsl_global_seq"
 
-  def self.for_batch(batch_id)
+   def self.for_batch(batch_id)
     if batch_id.nil? || batch_id == -1
       where("1=1")
     else

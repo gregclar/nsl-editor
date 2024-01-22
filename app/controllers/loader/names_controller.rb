@@ -203,6 +203,14 @@ class Loader::NamesController < ApplicationController
     render "destroy_error", status: :unprocessable_entity
   end
 
+  def create_heading
+    Loader::Name.create_family_heading(params) 
+    @message = 'Created - the record will be available next time you query the family'
+  rescue StandardError => e
+    logger.error("Loader::NamesController#create_heading rescuing #{e}")
+    @message = e.to_s
+    render "create_heading_error", status: :unprocessable_entity
+  end
   #############################################################################
   private
 

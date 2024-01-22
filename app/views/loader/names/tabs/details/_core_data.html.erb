@@ -8,6 +8,28 @@
                      class: 'blue underline'), 
                      label: "query family members"} %>
 
+<% if Loader::Name.where("loader_batch_id = ?", @loader_name.loader_batch_id)
+                  .where("simple_name = ? or full_name = ?",
+                         @loader_name.family,
+                         @loader_name.family)
+                  .empty? %>
+  <%= divider %>
+  Create a heading record for this record's family <%= @loader_name.family %>?
+  <%= form_with url: loader_names_create_heading_path, remote: true do |form| %>
+    <%= form.hidden_field :family, value: @loader_name.family %>
+    <%= form.hidden_field :loader_batch_id, value: @loader_name.loader_batch_id %>
+    <%= form.submit class: 'btn btn-default',
+                    value: "Create",
+                    title: 'Create a heading record in the current batch'%>
+  <% end %>
+  <div id="create-heading-info-message-container" class="message-container"></div>
+  <div id="create-heading-error-message-container" 
+       class="error-container message-container">
+  </div>
+  <%= divider %>
+<% end %>
+
+
 <%= render partial: 'detail_line', locals: {info: @loader_name.subfamily, label: 'subfamily'} unless @loader_name.subfamily.blank?  %>
 <%= render partial: 'detail_line', locals: {info: @loader_name.simple_name, label: 'simple name aka taxon'} unless @loader_name.simple_name.blank? %>
 <%= render partial: 'detail_line', locals: {info: @loader_name.simple_name_as_loaded, label: 'simple name as loaded'} unless @loader_name.simple_name_as_loaded.blank? || @loader_name.simple_name == @loader_name.simple_name_as_loaded %>
