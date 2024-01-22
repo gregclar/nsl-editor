@@ -27,6 +27,21 @@ module Instance::ForCopyToLoaderName
     loader_name
   end
 
+  def loader_name_for_synonym_flip_to_accepted
+    loader_name = Loader::Name.new
+    loader_name.simple_name = name.simple_name
+    loader_name.full_name = name.full_name
+    loader_name.family = name.family.simple_name
+    loader_name.rank = name.name_rank.name.downcase
+    loader_name.record_type = 'accepted'
+    loader_name.loaded_from_instance_id = self.id
+    loader_name.name_status = name.name_status.name.downcase.sub(/\Alegitimate\z/,'')
+    loader_name.comment = name.accepted_or_excluded_comment
+    loader_name.distribution = name.accepted_distribution
+    loader_name.add_sibling_synonyms = false
+    loader_name
+  end
+
   def synonyms_for_copy_to_loader_name
     copyable_syns = synonyms.reject {|s| s.instance_type.unsourced}
                             .reject {|s| s.instance_type.name == 'trade name'}
