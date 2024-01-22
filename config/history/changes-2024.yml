@@ -1,3 +1,7 @@
+- :date: 23-Jan-2024
+  :jira_id: '4877'
+  :description: |-
+    Loader: Synonym flipper-to-accepted form shouldn't be offered for trade names
 - :date: 22-Jan-2024
   :jira_id: '4836'
   :description: |-
