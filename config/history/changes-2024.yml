@@ -1,4 +1,8 @@
 - :date: 23-Jan-2024
+  :jira_id: '4739'
+  :description: |-
+    Loader: Allow addition of new records under family (and synonyms and misapplieds) with family set in new record
+- :date: 23-Jan-2024
   :jira_id: '4872'
   :description: |-
     Loader: Synonym flipper-to-accepted form does not offer to take unsourced siblings or trade names (with minor refactoring)
