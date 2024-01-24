@@ -1,4 +1,8 @@
 - :date: 24-Jan-2024
+  :jira_id: '4879'
+  :description: |-
+    Loader: Replace the sql for <code>syn-match-in-tree</code> with a faster version
+- :date: 24-Jan-2024
   :jira_id: '4878'
   :description: |-
     Loader: Add Instance search directive <code>syn-conflicts-with-loader-batch</code>
