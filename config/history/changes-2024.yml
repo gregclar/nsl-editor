@@ -1,3 +1,7 @@
+- :date: 24-Jan-2024
+  :jira_id: '4878'
+  :description: |-
+    Loader: Add Instance search directive <code>syn-conflicts-with-loader-batch</code>
 - :date: 23-Jan-2024
   :jira_id: '4739'
   :description: |-
