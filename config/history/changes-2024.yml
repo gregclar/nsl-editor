@@ -1,3 +1,7 @@
+- :date: 30-Jan-2024
+  :jira_id: '4883'
+  :description: |-
+    Orchids: Remove all Orchid Loader code from the Editor
 - :date: 29-Jan-2024
   :jira_id: '4882'
   :description: |-

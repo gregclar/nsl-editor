@@ -480,7 +480,7 @@ class Loader::Name < ActiveRecord::Base
       errors += creator.errors || 0
     end
     entry = "Job finished: create instance for preferred matches for '#{taxon_s}', #{authorising_user}; records created: #{records}; errors: #{errors}"
-    OrchidProcessingLog.log(entry, "job controller")
+    BulkProcessingLog.log(entry, "job controller")
     [records, errors]
   end
 
