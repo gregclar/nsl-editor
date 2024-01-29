@@ -1,4 +1,8 @@
 - :date: 29-Jan-2024
+  :jira_id: '4882'
+  :description: |-
+    Loader: Add batch job that removes synonymy conflicts from draft taxonomy
+- :date: 29-Jan-2024
   :jira_id: '4879'
   :description: |-
     Loader: Modify sql to query the draft accepted tree in <code>syn-match-in-tree</code>, not the current published tree
