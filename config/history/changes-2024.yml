@@ -1,7 +1,11 @@
 - :date: 29-Jan-2024
+  :jira_id: '4879'
+  :description: |-
+    Loader: Modify sql to query the draft accepted tree in <code>syn-match-in-tree</code>, not the current published tree
+- :date: 29-Jan-2024
   :jira_id: '4878'
   :description: |-
-    Loader: Modify sql to query the draft accepted tree in <code>syn-conflicts-with-loader-batch</code>, not the current published tree.
+    Loader: Modify sql to query the draft accepted tree in <code>syn-conflicts-with-loader-batch</code>, not the current published tree
 - :date: 24-Jan-2024
   :jira_id: '4879'
   :description: |-

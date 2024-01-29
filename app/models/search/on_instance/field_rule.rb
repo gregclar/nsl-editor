@@ -313,21 +313,25 @@ from instance i
   where regexp_replace(lower(n.full_name),' orth. var. ',' ','g') = regexp_replace(lower(i.verbatim_name_string),' orth. var. ',' ','g'))" },
     "name-status:" => { where_clause: %[ instance.id in (select i.id from instance i join name n on i.name_id = n.id join name_status ns on n.name_status_id = ns.id and lower(ns.name) like lower(?))] },
     "name-status-not:" => { where_clause: %[ id in (select i.id from instance i join name n on i.name_id = n.id join name_status ns on n.name_status_id = ns.id and lower(ns.name) not like lower(?))] },
-    "syn-conflicts-with-loader-batch:" => { where_clause: " id in (select i.id
+    "syn-conflicts-with-loader-batch:" => { where_clause: " id in (
+   select instance.id
   from loader_name ln 
        join loader_name_match lnm
        on ln.id = lnm.loader_name_id
-       join instance i
-       on lnm.name_id = i.name_id 
-       join taxon_mv tmv 
-       on i.id = tmv.instance_id 
+       join instance
+       on lnm.name_id = instance.name_id 
+       join tree_join_v tjv 
+       on instance.id = tjv.instance_id 
        join loader_batch lb
        on ln.loader_batch_id = lb.id
- where tmv.nomenclatural_status in ('legitimate','[n/a]')
-   and tmv.taxonomic_status in ('accepted','excluded')
+       join name
+       on tjv.name_id = name.id
+       join name_status ns
+       on name.name_status_id = ns.id
+ where ns.name in ('legitimate','[n/a]')
    and ln.record_type = 'synonym'
-   and lower(lb.name) = lower(?)
-                                            )",
+   and not tjv.published
+   and lower(lb.name) = lower(?))",
                            order: "instance.id" },
   }.freeze
 
