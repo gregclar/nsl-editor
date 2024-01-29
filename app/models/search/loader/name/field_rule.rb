@@ -634,7 +634,7 @@ having count(*)                     >  1
     "drafted:" => { where_clause: " id in (select loader_name_id from loader_name_match where drafted)"},
     "xmisapp-matched-without-cross-ref:" => { where_clause: " id in (select o.id from orchids o join loader_name_match orn on o.id = orn.loader_name_id where o.record_type = 'misapplied' and orn.relationship_instance_id is null)"},
     "created-manually:" => { where_clause: "created_manually" },
-"syn-match-in-tree-faster-join:" => { where_clause: " id in (select ln.id
+"syn-match-in-tree-faster-join-b:" => { where_clause: " id in (select ln.id
   from loader_name ln 
        join loader_name_match lnm
        on ln.id = lnm.loader_name_id
@@ -648,7 +648,25 @@ having count(*)                     >  1
    and tmv.taxonomic_status in ('accepted','excluded')
    and ln.record_type = 'synonym')"
                                      },
-    "name-match-in-syn:" => { where_clause: " record_type in ('accepted', 'excluded')
+"syn-match-in-tree-faster-join:" => { where_clause: " id in (select ln.id
+  from loader_name ln 
+       join loader_name_match lnm
+       on ln.id = lnm.loader_name_id
+       join instance i
+       on lnm.name_id = i.name_id 
+       join tree_join_v tjv 
+       on i.id = tjv.instance_id 
+       join loader_batch lb
+       on ln.loader_batch_id = lb.id
+       join name 
+       on tjv.name_id = name.id
+       join name_status ns
+       on name.name_status_id= ns.id
+ where ns.name in ('legitimate','[n/a]')
+   and ln.record_type = 'synonym'
+   and not tjv.published)"
+     },
+  "name-match-in-syn:" => { where_clause: " record_type in ('accepted', 'excluded')
        and exists (
        select null
        from loader_name_match
