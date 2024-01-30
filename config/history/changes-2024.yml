@@ -1,4 +1,8 @@
 - :date: 30-Jan-2024
+  :jira_id: ''
+  :description: |-
+    Ruby: Upgrade to Ruby 3.3.0
+- :date: 30-Jan-2024
   :jira_id: '4883'
   :description: |-
     Orchids: Remove all Orchid Loader code from the Editor
