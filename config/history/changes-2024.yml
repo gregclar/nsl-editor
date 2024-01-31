@@ -1,4 +1,8 @@
 - :date: 01-Feb-2024
+  :jira_id: ''
+  :description: |-
+    Ruby: Upgrade to Ruby 3.3.0 - Jira SYS-252
+- :date: 01-Feb-2024
   :jira_id: '4831'
   :description: |-
     Loader: Formatting of misapplied names in print output: parenthetical authors now shown again
