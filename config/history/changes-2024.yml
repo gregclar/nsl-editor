@@ -1,3 +1,7 @@
+- :date: 31-Jan-2024
+  :jira_id: '4831'
+  :description: |-
+    Loader: Formatting of misapplied names in print output: add "auct. non"; avoid doubling of authorship
 - :date: 30-Jan-2024
   :jira_id: '4883'
   :description: |-
