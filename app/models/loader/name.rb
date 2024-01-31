@@ -27,6 +27,7 @@ class Loader::Name < ActiveRecord::Base
   include InBatchNote
   include InBatchCompilerNote
   include HeadingRecord
+  include Misapplieds
   attr_accessor :add_sibling_synonyms
   attr_accessor :add_sourced_synonyms
 
