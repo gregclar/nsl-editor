@@ -1,6 +1,10 @@
 - :date: 01-Feb-2024
   :jira_id: '4831'
   :description: |-
+    Loader: Formatting of misapplied names in print output: parenthetical authors now shown again
+- :date: 01-Feb-2024
+  :jira_id: '4831'
+  :description: |-
     Loader: Formatting of misapplied names in print output: "auct. non" now in italics, p.p. added for partials, space added after colon before page
 - :date: 31-Jan-2024
   :jira_id: '4831'
