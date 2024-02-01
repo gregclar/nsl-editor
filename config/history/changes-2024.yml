@@ -1,4 +1,8 @@
 - :date: 01-Feb-2024
+  :jira_id: '4888'
+  :description: |-
+    Instances: Show citation page/figure details in typeahead suggestions for synonyms 
+- :date: 01-Feb-2024
   :jira_id: '4844'
   :description: |-
     Reference ISBN: Allow for up to 17 characters
