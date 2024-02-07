@@ -88,9 +88,9 @@ class Loader::Name::MakeOneInstance::MakeOneSynonymyInstance
     note_created(new_instance)
     {creates: 1}
   rescue StandardError => e
-    entry = "LoaderNameMatch#create_relationship_instance: #{e}"
-    entry = "#{Constants::FAILED_INSTANCE}: ##{loader_name.id} #{e}"
+    entry = "LoaderNameMatch#create_relationship_instance: ##{@loader_name.id} #{e}"
     Rails.logger.error(entry)
+    entry = "#{Constants::FAILED_INSTANCE}: ##{@loader_name.id} #{e}"
     log_to_table(entry)
     {errors: 1, error_reasons: {"#{e.to_s}": 1}}
   end
