@@ -1,3 +1,7 @@
+- :date: 07-Feb-2024
+  :jira_id: '4831'
+  :description: |-
+    Loader: Formatting misapplieds in print output: italicise 'p.p.' and prefix with comma-space.
 - :date: 01-Feb-2024
   :jira_id: '4888'
   :description: |-

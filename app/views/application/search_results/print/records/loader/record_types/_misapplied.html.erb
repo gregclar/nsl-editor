@@ -33,11 +33,11 @@
     <span class="misapplied-by-whom-where">
     <% search_result.preferred_matches.each_with_index do | match, ndx | %>
       <% string = "#{match.instance.reference.citation}: #{match.instance.page}" %>
-      <% pp = search_result.partial_misapplied? ? ' p.p.' : '' %>
+      <% pp = search_result.partial_misapplied? ? ', <i>p.p.</i>' : '' %>
       <% if size == 1 || ndx == size - 1 %>
-        <%= "#{string}#{pp}]" %>
+        <%= "#{string}#{pp}]".html_safe %>
       <% else %> 
-        <%= "#{string}#{pp};" %>
+        <%= "#{string}#{pp};".html_safe %>
       <% end %>
     <% end %>
     </span>
