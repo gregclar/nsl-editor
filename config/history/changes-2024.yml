@@ -1,3 +1,11 @@
+- :date: 13-Feb-2024
+  :jira_id: '4909'
+  :description: |-
+    Instance: Apply the same rules to display of the "as a draft" checkbox on the Edit form as on the New Instance form i.e. a draft tree must be selected
+- :date: 13-Feb-2024
+  :jira_id: '3119'
+  :description: |-
+    Instance: Move "as a draft" checkbox to bottom of Edit form to match its position on the New Instance form
 - :date: 07-Feb-2024
   :jira_id: '4897'
   :description: |-
