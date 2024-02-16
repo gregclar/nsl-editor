@@ -1,4 +1,8 @@
 - :date: 16-Feb-2024
+  :jira_id: '4916'
+  :description: |-
+    Loader: Add a checkbox for the Doubtful field to the edit forms for synonyms and misapplieds
+- :date: 16-Feb-2024
   :jira_id: '4911'
   :description: |-
     Loader: Report a clearly expressed error on attempt to create draft instances needing a batch default reference when no such default is set

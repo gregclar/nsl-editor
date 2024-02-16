@@ -21,6 +21,14 @@
 
     <%= render partial: "loader/names/tabs/forms/synonym_type", locals: {f: f, loader_name: loader_name} %>
 
+    <div class="form-group">
+    <label class="form-check-label" title="Synonymy may be doubtful" >
+      <%= f.check_box(:doubtful, {class: '',
+                                  title: 'Synonymy may be doubtful'}) %>
+      Doubtful
+    </label>
+    </div>
+
     <% unless loader_name.new_record? %>
 
     <div class="form-group">
