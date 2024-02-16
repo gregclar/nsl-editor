@@ -1,3 +1,7 @@
+- :date: 16-Feb-2024
+  :jira_id: '4910'
+  :description: |-
+    Loader: Remove 'undefined method' error when creating misapplied preferred matches on parsed batches - default the relationship type to 'misapplied'
 - :date: 13-Feb-2024
   :jira_id: '4909'
   :description: |-
