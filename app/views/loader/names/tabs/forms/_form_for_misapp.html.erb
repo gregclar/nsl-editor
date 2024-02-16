@@ -27,6 +27,14 @@
     <%= render partial: "loader/names/tabs/forms/misapp_synonym_type", 
                locals: {f: f, loader_name: loader_name} %>
 
+    <div class="form-group">
+    <label class="form-check-label" title="Misapplication may be doubtful" >
+      <%= f.check_box(:doubtful, {class: '',
+                                  title: 'Misapplication may be doubtful'}) %>
+      Doubtful
+    </label>
+    </div>
+
     <% unless loader_name.new_record? %>
 
     <div class="form-group">
