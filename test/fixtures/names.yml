@@ -2679,4 +2679,20 @@ ptychocaryum_ghaeri:
   updated_by: greg
   created_by: greg
 
+darwinia_sp_7: 
+  simple_name: Darwinia sp. 7
+  full_name: Darwinia sp. 7 (Chiddarcooping; S.D.Hopper 6944)
+  name_element: sp. 7 (Chiddarcooping; S.D.Hopper 6944)
+  name_rank: species
+  name_status: na
+  name_type: phrase_name
+  namespace: apni
+  parent: 
+  family: cyperaceae
+  name_path: 'Eukaryota/Plantae/Magnoliophyta/Magnoliopsida/Rosidae/Myrtales/Myrtaceae/Darwinia/sp.'
+  uri: agh
+  updated_by: greg
+  created_by: greg
+
+
 
