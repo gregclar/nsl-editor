@@ -146,6 +146,8 @@
   :jira_id: '4824'
   :description: |-
     Loader: Misapplication type choice now flows through to matches and to each draft instance
+- :date: 09-Feb-2024
+  :release: true
 - :date: 15-Jan-2024
   :jira_id: '4870'
   :description: |-
