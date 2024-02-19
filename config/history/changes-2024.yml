@@ -1,7 +1,7 @@
-- :date: 16-Feb-2024
-  :jira_id: '4916'
+- :date: 19-Feb-2024
+  :jira_id: '2820'
   :description: |-
-    Loader: Add a checkbox for the Doubtful field to the edit forms for synonyms and misapplieds
+    Synonymy typeahead: Treat 4 consecutive digits as a year for searching, rather than just any sequence of digits; improve placeholder text
 - :date: 16-Feb-2024
   :jira_id: '4911'
   :description: |-

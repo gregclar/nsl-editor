@@ -1052,3 +1052,13 @@ instance_for_name_in_taxonomy:
   source_id_string: gcmd
   page: exclude-from-ordering-test
 
+darwinia_sp_7_in_briggs_and_leigh_1996:
+  name: darwinia_sp_7
+  reference: rare_or_threatened_australian_plants
+  instance_type: secondary_reference
+  page: exclude-from-ordering-test
+  verbatim_name_string: l
+  namespace: apni
+  created_by: tester
+  updated_by: tester
+

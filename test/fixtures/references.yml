@@ -2289,3 +2289,18 @@ syntrinema_genus_novum:
   volume: 21(8-20)
   created_by: tester
   updated_by: tester
+
+rare_or_threatened_australian_plants:
+  title: rare_or_threatened_australian_plants
+  citation: Briggs, J.D. & Leigh, J.H. (1996), Rare or Threatened Australian Plants
+  citation_html: Briggs, J.D. & Leigh, J.H. (1996), Rare or Threatened Australian Plants
+  display_title: Rare or Threatened Australian Plants
+  author: briggs_and_leigh
+  ref_author_role: author
+  language: undetermined
+  namespace: apni
+  ref_type: book
+  iso_publication_date: 1996
+  created_by: tester
+  updated_by: tester
+
