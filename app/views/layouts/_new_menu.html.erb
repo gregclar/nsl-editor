@@ -92,6 +92,7 @@
         </li>
 
       <% if Rails.configuration.try('batch_loader_aware') && @current_user.batch_loader? %>
+        <li role="presentation" class="divider"></li>
         <% if session[:default_loader_batch_id].blank? %> 
         <li role="presentation">
           Set default batch to enable: 
