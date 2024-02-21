@@ -1,3 +1,7 @@
+- :date: 22-Feb-2024
+  :jira_id: '4934'
+  :description: |-
+    Loader: Add menu divider on the New menu above the Batch Loader options
 - :date: 21-Feb-2024
   :jira_id: '4847'
   :description: |-
