@@ -1,3 +1,7 @@
+- :date: 21-Feb-2024
+  :jira_id: '4633'
+  :description: |-
+    Loader: Minor tweak to Ref Instance tab logic to remove unneeded SQL query for synonym logic - no change to behaviour
 - :date: 19-Feb-2024
   :jira_id: '2820'
   :description: |-
