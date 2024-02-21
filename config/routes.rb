@@ -22,7 +22,6 @@ Rails.application.routes.draw do
   match "/ping", as: "ping_service", to: "services#ping", via: :get
   match "/version", as: "version_service", to: "services#version", via: :get
   match "/build", as: "build_service", to: "services#build", via: :get
-  match "services", as: "services", to: "services#index", via: :get
 
   resources :name_tag_names, only: %i[show post create new]
   match "name_tag_names/:name_id/:tag_id",

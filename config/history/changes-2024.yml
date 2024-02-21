@@ -1,4 +1,8 @@
 - :date: 21-Feb-2024
+  :jira_id: '4483'
+  :description: |-
+    Services: Remove unnecessary services index page which listed the ping service.  Ping, build, and other services will still be available.
+- :date: 21-Feb-2024
   :jira_id: '4633'
   :description: |-
     Loader: Minor tweak to Ref Instance tab logic to remove unneeded SQL query for synonym logic - no change to behaviour
