@@ -559,8 +559,8 @@ having count(*) > 2
     "nsl-rank:" => { where_clause: "lower(nsl_rank) like ?"},
     "not-nsl-rank:" => { where_clause: "lower(nsl_rank) not like ?"},
     "no-nsl-rank:" => { where_clause: "nsl_rank is null"},
-    "doubtful:" => { where_clause: "doubtful is not null"},
-    "not-doubtful:" => { where_clause: "doubtful is null"},
+    "doubtful:" => { where_clause: "doubtful"},
+    "not-doubtful:" => { where_clause: "not doubtful"},
     "excluded-with-syn:" => { trailing_wildcard: true,
                               where_clause: " (lower(simple_name) like ? and record_type = 'excluded') or (parent_id in (select id from loader_name where lower(simple_name) like ? and record_type = 'excluded'))"},
 
