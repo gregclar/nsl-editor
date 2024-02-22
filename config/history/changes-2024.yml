@@ -1,4 +1,8 @@
 - :date: 22-Feb-2024
+  :jira_id: '4936'
+  :description: |-
+    Loader: Synonyms with a syn type that includes ‘pro parte' get a trailing, italicised ‘p.p.' preceded by a comma in print view
+- :date: 22-Feb-2024
   :jira_id: '4934'
   :description: |-
     Loader: Add menu divider on the New menu above the Batch Loader options
