@@ -126,6 +126,8 @@
   :jira_id: '4823'
   :description: |-
     Loader: Offer copy of comment text for excluded names when adding to batch
+- :date: 22-Feb-2024
+  :release: true
 - :date: 18-Jan-2024
   :jira_id: '4845'
   :description: |-
