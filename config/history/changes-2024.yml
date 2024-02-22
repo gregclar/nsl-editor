@@ -1,4 +1,7 @@
 - :date: 22-Feb-2024
+  :jira_id: '4939'
+  :description: |-
+    Loader: The <code>doubtful:</code> and <code>not-doubtful:</code> search directives for <code>Loader Name</code> now search for <code>true</code> and <code>false</code> respectively
   :jira_id: '4936'
   :description: |-
     Loader: Synonyms with a syn type that includes ‘pro parte' get a trailing, italicised ‘p.p.' preceded by a comma in print view
