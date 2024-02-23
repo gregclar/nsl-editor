@@ -12,7 +12,7 @@
   e.g. before the comma
 %>
 <% if search_result.misapp_html.blank? %>
-[<span 
+  [<%= '?' if search_result.doubtful? %><span 
 <% else %>
 <span 
 <% end %>
