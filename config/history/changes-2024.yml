@@ -1,4 +1,8 @@
 - :date: 26-Feb-2024
+  :jira_id: '4946'
+  :description: |-
+    Search: Remove some code no longer used 
+- :date: 26-Feb-2024
   :jira_id: '4944'
   :description: |-
     Loader: Allow copy of concepts to a loader batch from target instances only
