@@ -1,3 +1,7 @@
+- :date: 26-Feb-2024
+  :jira_id: '4944'
+  :description: |-
+    Loader: Allow copy of concepts to a loader batch from target instances only
 - :date: 23-Feb-2024
   :jira_id: '4937'
   :description: |-
