@@ -1,3 +1,7 @@
+- :date: 27-Feb-2024
+  :jira_id: '4942'
+  :description: |-
+    Loader: When copying accepted name ensure link to primary instance is maintained
 - :date: 26-Feb-2024
   :jira_id: '4941'
   :description: |-
