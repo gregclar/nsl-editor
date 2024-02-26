@@ -1,4 +1,8 @@
 - :date: 26-Feb-2024
+  :jira_id: '4941'
+  :description: |-
+    Loader: When copying synonymy include existing matches for misapplications
+- :date: 26-Feb-2024
   :jira_id: '4946'
   :description: |-
     Search: Remove some code no longer used 
