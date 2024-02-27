@@ -718,7 +718,8 @@ having count(*) > 2
    and parent_match.name_id != cot_name.id
    and child.record_type != 'misapplied'
      ))"},
-  "any-batch:" => { where_clause: "1=1" },
+  "any-batch:" => { where_clause: "1=1",
+                    takes_no_arg: true},
   "no-family-heading:" => { 
       where_clause: "id in (
       select id 
