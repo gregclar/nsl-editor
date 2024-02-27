@@ -1,4 +1,8 @@
 - :date: 27-Feb-2024
+  :jira_id: '4948'
+  :description: |-
+    Loader: Changes to Ref Instance tab in hopes of reducing the sticky tabs problem
+- :date: 27-Feb-2024
   :jira_id: '4942'
   :description: |-
     Loader: When copying accepted name ensure link to primary instance is maintained
