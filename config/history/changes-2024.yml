@@ -1,4 +1,8 @@
 - :date: 27-Feb-2024
+  :jira_id: '4945'
+  :description: |-
+    Loader: Searches on <code>any-batch:</code> with an argument will give an error message; field help now also explains it takes no argument
+- :date: 27-Feb-2024
   :jira_id: '4948'
   :description: |-
     Loader: Changes to Ref Instance tab in hopes of reducing the sticky tabs problem
