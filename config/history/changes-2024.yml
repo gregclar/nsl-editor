@@ -1,3 +1,7 @@
+- :date: 04-Mar-2024
+  :jira_id: '4955'
+  :description: |-
+    Copy: When a Name or Instance is copied the source fields are no longer copied into the new record
 - :date: 01-Mar-2024
   :jira_id: ''
   :description: |-
