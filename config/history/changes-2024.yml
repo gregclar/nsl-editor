@@ -1,3 +1,7 @@
+- :date: 08-Mar-2024
+  :jira_id: '4950'
+  :description: |-
+    Loader: The "Take N sourced synonyms" checkbox is now ticked by default
 - :date: 04-Mar-2024
   :jira_id: '4955'
   :description: |-
