@@ -1,4 +1,8 @@
 - :date: 08-Mar-2024
+  :jira_id: '4953'
+  :description: |-
+    Loader: When copying an excluded name to the loader, the record type dropdown defaults to excluded
+- :date: 08-Mar-2024
   :jira_id: '4950'
   :description: |-
     Loader: The "Take N sourced synonyms" checkbox is now ticked by default
