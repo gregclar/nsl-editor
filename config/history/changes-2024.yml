@@ -1,4 +1,8 @@
 - :date: 08-Mar-2024
+  :jira_id: '4916'
+  :description: |-
+    Loader: Remove doubtful checkbox from forms to create synonym or misapplied (reverse previous change)
+- :date: 08-Mar-2024
   :jira_id: '4953'
   :description: |-
     Loader: When copying an excluded name to the loader, the record type dropdown defaults to excluded
