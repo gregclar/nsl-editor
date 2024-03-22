@@ -138,6 +138,8 @@
   :jira_id: '4882'
   :description: |-
     Loader: Add batch job that removes synonymy conflicts from draft taxonomy
+- :date: 22-Mar-2024
+  :release: true
 - :date: 29-Jan-2024
   :jira_id: '4879'
   :description: |-
