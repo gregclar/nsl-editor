@@ -503,6 +503,8 @@ having count(*) > 2
        and nt.scientific))"},
     "partly:" => { where_clause: "partly is not null"},
     "not-partly:" => { where_clause: "partly is null"},
+    "publ-partly:" => { where_clause: "publ_partly is not null"},
+    "not-publ-partly:" => { where_clause: "publ_partly is null"},
     "name-sharing-name-id:" => { where_clause: " id in (select loader_name_id from loader_name_match where name_id in (select name_id from loader_name_match group by name_id having count(*) > 1))"},
     "has-preferred-name:" => { where_clause: " exists (select null from loader_name_match where loader_name.id = loader_name_match.loader_name_id)"},
     "has-preferred-name-without-instance:" => { where_clause: " exists (select null from loader_name_match orn where loader_name.id = orn.loader_name_id and orn.standalone_instance_id is null and orn.relationship_instance_id is null)"},
