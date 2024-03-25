@@ -1,3 +1,7 @@
+- :date: 25-Mar-2024
+  :jira_id: '4882'
+  :description: |-
+    Loader: Make Delete-Syn-Conflicts button active
 - :date: 08-Mar-2024
   :jira_id: '4916'
   :description: |-
