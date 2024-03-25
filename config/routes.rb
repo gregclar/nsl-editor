@@ -380,6 +380,8 @@ Rails.application.routes.draw do
     match "batches/bulk/stats", as: "batches_bulk_stats", to: "batch/bulk#stats", via: :post
     match "batches/bulk/matches", as: "batches_bulk_create_matches", to: "batch/bulk#create_preferred_matches",
                                   via: :post
+    match "batches/bulk/syn-conflicts", as: "batches_bulk_remove_syn_conflicts", to: "batch/bulk#remove_syn_conflicts",
+                                  via: :post
     match "batches/bulk/instances", as: "batches_bulk_create_instances", to: "batch/bulk#create_draft_instances",
                                     via: :post
     match "batches/bulk/taxonomy", as: "batches_bulk_add_to_draft_taxonomy", to: "batch/bulk#add_to_draft_taxonomy",
