@@ -231,9 +231,13 @@
   <tr><th>Field</th><th>Description</th></tr>
   <% [
     {field_name: 'partly:',
-     description: "match only on CSV data where the partly field has any data in it, which is uniformly 'p.p.' - it's essentially a flag where p.p. means true"},
+     description: "match only on CSV data where the partly field has any data in it, which is uniformly 'p.p.' - it's essentially a flag where p.p. means true and is generally for synonyms"},
     {field_name: 'not-partly:',
      description: "match only on CSV data where the partly field has no data"},
+    {field_name: 'publ-partly:',
+     description: "match only on CSV data where the publ_partly field has any data in it, which is uniformly 'p.p.' - it's essentially a flag where p.p. means true and is generally for misapplieds"},
+    {field_name: 'not-publ-partly:',
+     description: "match only on CSV data where the publ_partly field has no data"},
     {field_name: 'name-status:',
      description: "match fragment on the name status field (leading and trailing wildcards added automatically)"},
     {field_name: 'name-status-exact:',
