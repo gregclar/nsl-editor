@@ -1,4 +1,8 @@
 - :date: 25-Mar-2024
+  :jira_id: '4975'
+  :description: |-
+    Loader: Fix "as a an" typo from listing of names in batch on the instance loader tab
+- :date: 26-Mar-2024
   :jira_id: '4977'
   :description: |-
     Loader: Handle print problem that arose checking for partial misapplied records - allow for synonym type or <code>publ_partly</code>
