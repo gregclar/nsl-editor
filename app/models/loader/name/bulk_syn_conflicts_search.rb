@@ -38,7 +38,6 @@ class Loader::Name::BulkSynConflictsSearch
     .joins(" inner join loader_name_match on loader_name_match.name_id = tree_join_v.name_id")
     .joins(" inner join loader_name on loader_name.id = loader_name_match.loader_name_id")
     .joins(" inner join loader_batch on loader_batch.id = loader_name.loader_batch_id")
-    .where(" loader_batch.name = 'APC 2023 Updates' ")
     .where(" loader_name.record_type = 'synonym' ")
     .where(" tree_join_v.published = false ")
     .where(" lower(loader_name.simple_name) like lower(?)",
