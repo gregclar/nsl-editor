@@ -1,3 +1,7 @@
+- :date: 27-Mar-2024
+  :jira_id: '4882'
+  :description: |-
+    Loader: Remove hard-coded batch name from query!
 - :date: 25-Mar-2024
   :jira_id: '4975'
   :description: |-
