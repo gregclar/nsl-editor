@@ -1,3 +1,7 @@
+- :date: 03-Apr-2024
+  :jira_id: '4879'
+  :description: |-
+    Loader: Also remove help and example notes warning about slowness of the clash searches <code>syn-match-in-tree</code> and <code>name-match-in-syn</code>
 - :date: 02-Apr-2024
   :jira_id: '4882'
   :description: |-
