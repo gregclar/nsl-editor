@@ -1,3 +1,7 @@
+- :date: 02-Apr-2024
+  :jira_id: '4882'
+  :description: |-
+    Loader: Apply a feature flag to the Delete Syn Conflicts button
 - :date: 27-Mar-2024
   :jira_id: '4882'
   :description: |-
