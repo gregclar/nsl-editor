@@ -1,3 +1,7 @@
+- :date: 04-Apr-2024
+  :jira_id: '4955'
+  :description: |-
+    Loader: Show <code>source</code> information for migrated references only
 - :date: 03-Apr-2024
   :jira_id: '4941'
   :description: |-
