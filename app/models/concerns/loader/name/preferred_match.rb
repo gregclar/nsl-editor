@@ -9,7 +9,6 @@ module Loader::Name::PreferredMatch
 
   def create_match_to_loaded_from_instance_name(current_user)
     instance = Instance.find(loaded_from_instance_id)
-
     loader_name_match = ::Loader::Name::Match.new
     loader_name_match.loader_name_id = id
     loader_name_match.name_id = instance.name_id
@@ -22,8 +21,16 @@ module Loader::Name::PreferredMatch
     Rails.logger.error("No primary instance isn't fatal, but no preferred match will be made.")
   end
 
-  # Watch out for rare but possible case of no primary instance
   def instance_id_for_match(instance)
+    if misapplied?
+      instance.id
+    else
+      instance_id_for_non_misapplied_match(instance)
+    end
+  end
+
+  # Watch out for rare but possible case of no primary instance
+  def instance_id_for_non_misapplied_match(instance)
     if instance.standalone?
       primary_instance = instance.name.primary_instances&.first
       if primary_instance.nil?
