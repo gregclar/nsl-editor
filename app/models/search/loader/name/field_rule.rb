@@ -633,7 +633,11 @@ having count(*) > 2
        on name.name_status_id= ns.id
  where ns.name in ('legitimate','[n/a]')
    and ln.record_type = 'synonym'
-   and not tjv.published)"
+   and not tjv.published
+   and tjv.accepted_tree
+   and ln.synonym_type not like '%partial%'
+   and ln.partly is null
+   and lower(ln.simple_name) like lower(?))"
      },
   "name-match-in-syn:" => { where_clause: " record_type in ('accepted', 'excluded')
        and exists (

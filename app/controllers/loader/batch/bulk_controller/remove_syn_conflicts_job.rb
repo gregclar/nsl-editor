@@ -30,18 +30,42 @@ class Loader::Batch::BulkController::RemoveSynConflictsJob
   def run
     log_start
     @job_h = {attempts: 0, creates: 0, declines: 0, errors: 0}
-    @search.order(:seq).each do |instance_id|
-      do_one_instance(instance_id)
+    @search.order(:seq).each do |tree_join_record|
+      if preflight_checks_pass?(tree_join_record) 
+        do_one_instance(tree_join_record)
+        sleep(20)
+      end
     end
     log_finish
     @job_h
   end
 
   private
+ 
+  def preflight_checks_pass?(tree_join_record)
+    preflight_check_for_sub_taxa(tree_join_record)
+    true
+  rescue => e
+    log_preflight_decline_to_table(tree_join_record, e.to_s)
+    result_h = {attempts: 1, declines: 1, decline_reasons: {"#{e.to_s}": 1}}
+    @job_h.deep_merge!(result_h) { |key, old, new| old + new}
+    false
+  end
 
-  def do_one_instance(instance_id)
+  def preflight_check_for_sub_taxa(tree_join_record)
+    raise "has sub-taxa" if tree_join_record.has_sub_taxa_in_draft_accepted_tree?
+  end
+
+  def log_preflight_decline_to_table(tree_join_record, error)
+    content = "#{tree_join_record.name} declined because #{error}"
+    Loader::Batch::Bulk::JobLog.new(@job_number, content, @authorising_user).write
+  rescue StandardError => e
+    Rails.logger.error("Couldn't save log to bulk processing log table: #{e}")
+  end
+
+  def do_one_instance(tree_join_record)
     @job_h[:attempts] += 1
-    taxo_remover = ::Loader::Name::DraftTaxonomyRemover.new(instance_id,
+    taxo_remover = ::Loader::Name::DraftTaxonomyRemover.new(tree_join_record,
                                                         @working_draft,
                                                         @authorising_user,
                                                         @job_number)
@@ -51,7 +75,7 @@ class Loader::Batch::BulkController::RemoveSynConflictsJob
   rescue StandardError => e
     Rails.logger.error(e.to_s)
     entry = "<span class='red'>Error: failed to remove syn confli t</span>"
-    entry += "##{instance_id} - error in do_one_instance: #{e}"
+    entry += "##{tree_join_record} - error in do_one_instance: #{e}"
     log(entry)
     @job_h.deep_merge({errors: 1}) { | key, old, new | old + new }
   end
