@@ -20,10 +20,10 @@
 class Loader::Batch::BulkController::RemoveSynConflictsJob
   def initialize(batch_id, search_string, authorising_user, job_number)
     @batch = Loader::Batch.find(batch_id)
-    @search_string = search_string
+    @search_string = search_string.downcase
     @authorising_user = authorising_user
     @job_number = job_number
-    @search = ::Loader::Name::BulkSynConflictsSearch.new(search_string, batch_id).search
+    @search = ::Loader::Name::BulkSynConflictsSearch.new(@search_string, batch_id).search
   end
 
 
@@ -33,7 +33,8 @@ class Loader::Batch::BulkController::RemoveSynConflictsJob
     @search.order(:seq).each do |tree_join_record|
       if preflight_checks_pass?(tree_join_record) 
         do_one_instance(tree_join_record)
-        sleep(20)
+        # trial to avoid catastrophic failures in Services/Mapper
+        sleep(Rails.configuration.try('bulk_job_delay_seconds') || 10)
       end
     end
     log_finish

@@ -56,9 +56,20 @@ class Loader::Name::BulkSynConflictsSearch
     .where(" tree_join_v.accepted_tree = true ")
     .where(" name_status.name in  ('legitimate','[n/a]')")
     .where(" tree_join_v.name_id = name.id ")
-    .where(" lower(loader_name.simple_name) like lower(?)",
+    .select(" tree_join_v.* ")
+    loader_name_restriction
+  end
+
+  def loader_name_restriction
+    if @search_s.match(/\Afamily:.*\z/)
+      @search = @search.where(" lower(loader_name.family) like lower(?)",
+                              @search_s.downcase
+                                       .sub(/ *family: */,'')
+                                       .gsub(/\*/,'%'))
+    else
+      @search = @search.where(" lower(loader_name.simple_name) like lower(?)",
            @search_s.downcase.gsub(/\*/,'%'))
-      .select(" tree_join_v.* ")
+    end
   end
 end
 
