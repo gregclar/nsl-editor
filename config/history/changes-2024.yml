@@ -1,4 +1,8 @@
 - :date: 08-Apr-2024
+  :jira_id: '5005'
+  :description: |-
+    Loader: Tick sibling synonyms check box by default 
+- :date: 08-Apr-2024
   :jira_id: '5017'
   :description: |-
     Loader: Added search directive <code>syn-match-in-tree-family</code>
