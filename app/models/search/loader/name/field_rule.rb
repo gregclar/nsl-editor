@@ -625,6 +625,28 @@ having count(*) > 2
    and ln.partly is null
    and lower(ln.simple_name) like lower(?))"
      },
+"syn-match-in-tree-family:" => { where_clause: " id in (select ln.id
+  from loader_name ln 
+       join loader_name_match lnm
+       on ln.id = lnm.loader_name_id
+       join instance i
+       on lnm.name_id = i.name_id 
+       join tree_join_v tjv 
+       on i.id = tjv.instance_id 
+       join loader_batch lb
+       on ln.loader_batch_id = lb.id
+       join name 
+       on tjv.name_id = name.id
+       join name_status ns
+       on name.name_status_id= ns.id
+ where ns.name in ('legitimate','[n/a]')
+   and ln.record_type = 'synonym'
+   and not tjv.published
+   and tjv.accepted_tree
+   and ln.synonym_type not like '%partial%'
+   and ln.partly is null
+   and lower(ln.family) like lower(?))"
+     },
   "name-match-in-syn:" => { where_clause: " record_type in ('accepted', 'excluded')
        and exists (
        select null
