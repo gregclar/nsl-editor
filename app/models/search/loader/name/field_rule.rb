@@ -603,20 +603,6 @@ having count(*) > 2
     "manually-drafted:" => { where_clause: " id in (select loader_name_id from loader_name_match where manually_drafted)"},
     "drafted:" => { where_clause: " id in (select loader_name_id from loader_name_match where drafted)"},
     "created-manually:" => { where_clause: "created_manually" },
-"syn-match-in-tree-faster-join-b:" => { where_clause: " id in (select ln.id
-  from loader_name ln 
-       join loader_name_match lnm
-       on ln.id = lnm.loader_name_id
-       join instance i
-       on lnm.name_id = i.name_id 
-       join taxon_mv tmv 
-       on i.id = tmv.instance_id 
-       join loader_batch lb
-       on ln.loader_batch_id = lb.id
- where tmv.nomenclatural_status in ('legitimate','[n/a]')
-   and tmv.taxonomic_status in ('accepted','excluded')
-   and ln.record_type = 'synonym')"
-                                     },
 "syn-match-in-tree-faster-join:" => { where_clause: " id in (select ln.id
   from loader_name ln 
        join loader_name_match lnm
