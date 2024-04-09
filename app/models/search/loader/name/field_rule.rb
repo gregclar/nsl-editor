@@ -623,7 +623,8 @@ having count(*) > 2
    and tjv.accepted_tree
    and ln.synonym_type not like '%partial%'
    and ln.partly is null
-   and lower(ln.simple_name) like lower(?))"
+   and lower(ln.simple_name) like lower(?))",
+   not_exists_clause: " needs an argument"
      },
 "syn-match-in-tree-family:" => { where_clause: " id in (select ln.id
   from loader_name ln 
