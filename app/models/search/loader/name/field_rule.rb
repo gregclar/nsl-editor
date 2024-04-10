@@ -646,7 +646,8 @@ having count(*) > 2
    and tjv.accepted_tree
    and ln.synonym_type not like '%partial%'
    and ln.partly is null
-   and lower(ln.family) like lower(?))"
+   and lower(ln.family) like lower(?))",
+   not_exists_clause: " needs an argument"
      },
   "name-match-in-syn:" => { where_clause: " record_type in ('accepted', 'excluded')
        and exists (
