@@ -1,4 +1,6 @@
 - :date: 10-Apr-2024
+  :release: true
+- :date: 10-Apr-2024
   :jira_id: '5017'
   :description: |-
     Loader: Throw a query error if <code>syn-match-in-tree-family</code> directive is used without an argument
