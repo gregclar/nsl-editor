@@ -55,7 +55,7 @@
 
     <%= divider %>
 
-    <% unless loader_name.id.blank? %>
+    <% unless loader_name.new_record? %>
         <% if loader_name&.loader_name_matches&.collect {|lnm| lnm.relationship_instance}.compact.blank? %>
           <% disabled = false %>
         <% else %>

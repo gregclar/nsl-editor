@@ -1,3 +1,7 @@
+- :date: 12-Apr-2024
+  :jira_id: '4980'
+  :description: |-
+    Loader: Allow users to create new batch
 - :date: 11-Apr-2024
   :jira_id: '4997'
   :description: |-
