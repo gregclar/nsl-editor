@@ -1,4 +1,8 @@
 - :date: 12-Apr-2024
+  :jira_id: '4983'
+  :description: |-
+    Loader: Show that a name is in a batch
+- :date: 12-Apr-2024
   :jira_id: '4996'
   :description: |-
     Loader Name: On the Reference Instance tab show available reference instances even after choice made
