@@ -53,7 +53,7 @@
 
     <%= divider %>
 
-    <% unless loader_name.id.blank? %>
+    <% unless loader_name.new_record? %>
         <% if loader_name&.preferred_match&.relationship_instance? %>
           <% disabled = true %>
           Note: this record already has an associated instance - you cannot switch off bulk processing while that relationship instance is attached.
