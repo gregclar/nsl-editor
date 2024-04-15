@@ -58,7 +58,7 @@ class Loader::Batch::BulkController::RemoveSynConflictsJob
   end
 
   def preflight_check_for_sub_taxa(tree_join_record)
-    raise "has sub-taxa" if tree_join_record.has_sub_taxa_in_draft_accepted_tree?
+    raise "declined - has sub-taxa" if tree_join_record.has_sub_taxa_in_draft_accepted_tree?
   end
 
   def log_preflight_decline_to_table(tree_join_record, decline_info)
