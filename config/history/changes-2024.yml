@@ -1,4 +1,8 @@
 - :date: 16-Apr-2024
+  :jira_id: '4979'
+  :description: |-
+    Loader: Fix case so that matched name with no primary instance is correctly reported
+- :date: 16-Apr-2024
   :jira_id: '5021'
   :description: |-
     Loader: Delete-syn-conflicts job - add 'declined - ' to decline message for 'has sub-taxa' - minor but important improvement

@@ -80,7 +80,7 @@ class Loader::Name::MakeOneMatch
   end
 
   def match_name_has_primary?
-    !@loader_name.name_match_no_primary?
+    @loader_name.matches.first.primary_instances.size > 0
   end
 
   def match_name_just_one_primary?
