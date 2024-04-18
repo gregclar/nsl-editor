@@ -134,6 +134,7 @@ class Ability
     can "loader/batches",              :all
     can "loader/names",                :all
     can "loader/name/matches",         :all
+    can "loader/name/match/suggestions/for_intended_tree_parent", :all
     can "loader/batch/reviews",        :all
     can "loader/batch/reviewers",      :all
     can "loader/batch/review/periods", :all

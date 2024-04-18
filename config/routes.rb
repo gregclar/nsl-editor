@@ -460,6 +460,15 @@ Rails.application.routes.draw do
 
   match "loader_names/:id/tab/:tab/:component", as: "loader_name_review_tab", to: "loader/names#tab", via: :get,
                                                 defaults: { component: "main" }
+  match "loader/name/match/suggestions/for_intended_tree_parent/index",
+        as: "loader_name_matches_suggestions_for_intended_tree_parent",
+        to: "loader/name/match/suggestions/for_intended_tree_parent#index",
+        via: :get
+  #match "names/typeaheads/for_unpub_cit/index",
+        #as: "names_typeahead_for_unpub_cit",
+        #to: "names/typeaheads/for_unpub_cit#index",
+        #via: :get
+
   match "loader_names/parent_suggestions",
         as: "loader_names_parent_suggestions",
         to: "loader/names#parent_suggestions",
