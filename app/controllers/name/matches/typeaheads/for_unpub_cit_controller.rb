@@ -17,7 +17,7 @@
 #   limitations under the License.
 #
 #   Names are central to the NSL.
-class Names::Typeaheads::ForUnpubCitController < ApplicationController
+class Names::Matches::Typeaheads::ForUnpubCitController < ApplicationController
   def index
     typeahead = Name::AsTypeahead::ForUnpubCit.new(params)
     render json: typeahead.suggestions
