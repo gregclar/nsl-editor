@@ -26,7 +26,6 @@ class Loader::Batch::BulkController::RemoveSynConflictsJob
     @search = ::Loader::Name::BulkSynConflictsSearch.new(@search_string, batch_id).search
   end
 
-
   def run
     log_start
     @job_h = {attempts: 0, creates: 0, declines: 0, errors: 0}
@@ -48,6 +47,7 @@ class Loader::Batch::BulkController::RemoveSynConflictsJob
  
   def preflight_checks_pass?(tree_join_record)
     preflight_check_for_sub_taxa(tree_join_record)
+    preflight_check_for_nfp(tree_join_record)
     true
   rescue => e
     Rails.logger.error("Loader::Batch::BulkController::RemoveSynConflictsJob.preflight_checks_pass?: #{e}")
@@ -59,6 +59,11 @@ class Loader::Batch::BulkController::RemoveSynConflictsJob
 
   def preflight_check_for_sub_taxa(tree_join_record)
     raise "declined - has sub-taxa" if tree_join_record.has_sub_taxa_in_draft_accepted_tree?
+  end
+
+  def preflight_check_for_nfp(tree_join_record)
+    loader_name = Loader::Name.find(tree_join_record.loader_name_id)
+    raise "declined - NFP" if loader_name.no_further_processing?
   end
 
   def log_preflight_decline_to_table(tree_join_record, decline_info)

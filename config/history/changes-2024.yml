@@ -1,4 +1,8 @@
 - :date: 19-Apr-2024
+  :jira_id: '5022'
+  :description: |-
+    Loader: Delete syn conflicts job now respects no further processing
+- :date: 19-Apr-2024
   :jira_id: '4965'
   :description: |-
     Loader: Sort typeahead suggestions by rank then full name; add name status to suggestion
