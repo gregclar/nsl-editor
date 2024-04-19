@@ -41,39 +41,28 @@ class Loader::Name::Match::AsTypeahead::ForIntendedTreeParentInstance
     @params[:term].tr("*", "%").downcase + "%"
   end
 
-  # Any names ie. not just name on tree
-  def alt_core_query
-    Instance.joins(:name)
-      .joins(:reference)
-      .where(['lower(f_unaccent(simple_name)) like lower(f_unaccent(?))',
-              prepared_search_term])
-      .select("instance.id, name.simple_name, reference.citation")
-      .order("simple_name, citation")
-      .limit(40)
-      .limit(SEARCH_LIMIT)
-  end
-
   # Only names in the draft accepted tree
+  # Select on full name
+  # Show full name and name status (unless 'legitimate')
   def core_query
     Instance.joins(:tree_join_v)
-      .joins(:name)
-      .where(['lower(f_unaccent(name.simple_name)) like lower(f_unaccent(?))',
+      .joins(name: [:name_rank, :name_status])
+      .where(['lower(f_unaccent(name.full_name)) like lower(f_unaccent(?))',
               prepared_search_term])
       .where('tree_join_v.accepted_tree = true')
       .where('tree_join_v.instance_id = instance.id')
       .where('tree_join_v.published = false')
-      .select("instance.id, name.full_name")
-      .order("name.full_name")
+      .select("instance.id, name.full_name, case name_status.name when 'legitimate' then null else name_status.name end as status")
+      .order("name_rank.sort_order, name.full_name")
       .limit(40)
       .limit(SEARCH_LIMIT)
   end
 
   def query
     @qry = core_query
-    @qry = @qry.select("id")
-               .collect do |instance|
-      { value: "#{instance.full_name}",
-        id: instance.id }
+    @qry = @qry.collect do |qry|
+      { value: "#{qry.full_name} #{qry.status}",
+        id: qry.id }
     end
   end
 end
