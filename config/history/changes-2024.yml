@@ -1,3 +1,7 @@
+- :date: 22-Apr-2024
+  :jira_id: '5029'
+  :description: |-
+    Loader: Add a top line Batch menu to set and show the default batch
 - :date: 19-Apr-2024
   :jira_id: '5022'
   :description: |-
