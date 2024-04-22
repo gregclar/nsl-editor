@@ -140,6 +140,7 @@ class Ability
     can "loader/batch/review/periods", :all
     can "loader/batch/bulk",           :all
     can "loader/batch/job_lock",       :all
+    can "menu",                        "batch"
   end
 
   def reviewer_auth
