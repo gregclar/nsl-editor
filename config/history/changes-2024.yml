@@ -1,4 +1,8 @@
 - :date: 23-Apr-2024
+  :jira_id: '5033'
+  :description: |-
+    Show the nomenclatural status of Names listed in the Name parent suggestions on the Edit tab
+- :date: 23-Apr-2024
   :jira_id: '5032'
   :description: |-
     Show the nomenclatural status for Name parent or parents on the Details tab
