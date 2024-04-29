@@ -1,4 +1,8 @@
 - :date: 29-Apr-2024
+  :jira_id: '5042'
+  :description: |-
+    Loader: Reinstate success message when saving via loader Edit tab
+- :date: 29-Apr-2024
   :jira_id: '5024'
   :description: |-
     Loader: Relax requirement for name to have only legitimate or n/a status in synonymy conflict report and removal
