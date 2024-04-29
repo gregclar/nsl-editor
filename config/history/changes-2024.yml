@@ -1,4 +1,8 @@
 - :date: 29-Apr-2024
+  :jira_id: '5018'
+  :description: |-
+    Loader: Include synonymy creation failure in log summary
+- :date: 29-Apr-2024
   :jira_id: '5040'
   :description: |-
     Loader: Fix Loader tab explanation of <code>family</code> search directive with comma-separated values
