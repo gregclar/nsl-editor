@@ -1,4 +1,8 @@
 - :date: 29-Apr-2024
+  :jira_id: '5024'
+  :description: |-
+    Loader: Relax requirement for name to have only legitimate or n/a status in synonymy conflict report and removal
+- :date: 29-Apr-2024
   :jira_id: '5041'
   :description: |-
     Loader: Fix indenting of error and decline reasons in job summary
