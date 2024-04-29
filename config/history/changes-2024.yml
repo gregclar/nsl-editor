@@ -1,3 +1,7 @@
+- :date: 29-Apr-2024
+  :jira_id: '5040'
+  :description: |-
+    Loader: Fix Loader tab explanation of <code>family</code> search directive with comma-separated values
 - :date: 23-Apr-2024
   :jira_id: '5033'
   :description: |-
