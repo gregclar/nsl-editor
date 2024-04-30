@@ -1,4 +1,8 @@
 - :date: 30-Apr-2024
+  :jira_id: '5045'
+  :description: |-
+    Loader: Don't offer incorrect relationships when "flipping" accepted name
+- :date: 30-Apr-2024
   :jira_id: '5043'
   :description: |-
     Loader: Add validation to prevent an invalid record-type being saved as a <code>loader_name</code> parent record
