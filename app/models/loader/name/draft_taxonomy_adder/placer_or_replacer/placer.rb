@@ -55,27 +55,12 @@ class Loader::Name::DraftTaxonomyAdder::PlacerOrReplacer::Placer
 
   private
 
-  def parent_tve
-    if @preferred_match.intended_tree_parent_instance_id.blank?
-      name_parent_tve
-    else
-      intended_parent_tve
-    end
-  end
-
-  def name_parent_tve
-    @draft.name_in_version(@preferred_match.name.parent).element_link
-  rescue StandardError => e
-    raise "Error identifying name parent in draft: #{e.to_s}"
-  end
-
   # Observation: I set this up so has user to select an instance for the
   # intended parent, but here where we use that value we just take the name.
-  def intended_parent_tve
-    @draft.name_in_version(@preferred_match.intended_tree_parent_instance.name)
-          .element_link
+  def parent_tve
+    @draft.name_in_version(@preferred_match.parent_for_taxonomy).element_link
   rescue StandardError => e
-    raise "Error identifying intended parent in draft: #{e.to_s}"
+    raise "Error identifying parent for taxonomy in draft: #{e.to_s}"
   end
 
   # I did try to use the Tree::ProfileData class,
