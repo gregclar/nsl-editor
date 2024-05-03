@@ -58,25 +58,9 @@ class Loader::Name::DraftTaxonomyAdder::PlacerOrReplacer::Replacer
   private
 
   def parent_name
-    if @preferred_match.intended_tree_parent_instance_id.blank?
-      name_parent
-    else
-      intended_parent
-    end
-  end
-
-  def name_parent
-    @draft.name_in_version(@preferred_match.name.parent)
+    @draft.name_in_version(@preferred_match.parent_for_taxonomy)
   rescue StandardError => e
-    raise "Error identifying replace name parent in draft: #{e.to_s}"
-  end
-
-  # Observation: I set this up so has user to select an instance for the
-  # intended parent, but here where we use that value we just take the name.
-  def intended_parent
-    @draft.name_in_version(@preferred_match.intended_tree_parent_instance.name)
-  rescue StandardError => e
-    raise "Error identifying intended replace parent in draft: #{e.to_s}"
+    raise "Error identifying parent for taxonomy in draft: #{e.to_s}"
   end
 
   # I did try to use the Tree::ProfileData class,
