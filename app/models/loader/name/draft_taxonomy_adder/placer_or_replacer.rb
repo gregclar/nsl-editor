@@ -46,13 +46,15 @@ class Loader::Name::DraftTaxonomyAdder::PlacerOrReplacer
         debug "No instance, therefore cannot place this on the Taxonomy."
       elsif preferred_match.drafted?
         debug "Stopping because already drafted."
-      elsif @draft.name_in_version(preferred_match.parent_for_taxonomy).blank?
-        raise "No parent on tree, cannot proceed with parent: #{preferred_match.parent_for_taxonomy.simple_name}"
+      elsif @draft.name_in_version(preferred_match.name.parent).blank?
+        raise "No parent on tree, cannot proceed"
       else
-        @tree_version_element = @draft.name_in_version(preferred_match.parent_for_taxonomy)
+        @tree_version_element = @draft.name_in_version(preferred_match.name)
         if @tree_version_element.present?
+          debug "name is on the draft: replace it"
           return replace_name(preferred_match)
         else
+          debug "name is not on the draft: just place it"
           place_name(preferred_match)
         end
       end

@@ -32,9 +32,9 @@ class Loader::Name::Match < ActiveRecord::Base
                                      foreign_key: "relationship_instance_id", optional: true
   belongs_to :source_for_copy, class_name: "::Instance",
                                foreign_key: "source_for_copy_instance_id", optional: true
-  belongs_to :intended_tree_parent_name, class_name: "::Name",
-                                         foreign_key: "intended_tree_parent_name_id", 
-                                         optional: true
+  belongs_to :intended_tree_parent_instance, class_name: "::Instance",
+                                             foreign_key: "intended_tree_parent_instance_id", 
+                                             optional: true
   validates :loader_name_id, uniqueness: true,
                              unless: proc { |a| a.loader_name.record_type == "misapplied" }
   validate :misapp_pref_matches_from_only_one_name
@@ -199,13 +199,5 @@ class Loader::Name::Match < ActiveRecord::Base
 
   def really_drafted?
     TreeJoinV.draft.where("instance_id = ?", standalone_instance_id).present?
-  end
-
-  def parent_for_taxonomy
-    if intended_tree_parent_name_id.blank?
-      name.parent
-    else
-      intended_tree_parent_name
-    end
   end
 end
