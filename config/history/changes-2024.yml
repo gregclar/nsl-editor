@@ -1,4 +1,8 @@
 - :date: 06-May-2024
+  :jira_id: '5053'
+  :description: |-
+    Loader: Re-arrange batch work area buttons to make it harder to press delete-syn-conflicts button accidentally
+- :date: 06-May-2024
   :jira_id: '5035'
   :description: |-
     Loader: Revision of adjustments to use of nominated parent - now selecting just a name
