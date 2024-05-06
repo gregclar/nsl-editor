@@ -9,7 +9,7 @@
     <% elsif preferred_match.manually_drafted? %>
         This loader-name is already manually drafted so it's too late to set an intended taxonomy parent.
     <% elsif preferred_match.intended_tree_parent_name.present? %>
-      Intended taxonomy parent: <%= preferred_match.intended_tree_parent_name&.full_name %>
+        Intended taxonomy parent: <%= preferred_match.intended_tree_parent_name&.full_name %>
         <%= render partial: 'loader/names/tabs/matched_name/clear_intended_parent', locals: {preferred_match: preferred_match} %>
     <% else %>
         Name parent: <%= preferred_match.name.parent.full_name %>
@@ -20,11 +20,11 @@
             <section class='block width-100-percent'>
               <input id="loader-name-match-intended-tree-parent-name-typeahead"
                      class="typeahead form-control width-100-percent give-me-focus"
-                     title="Enter an instance.  Typeahead field on name and year.  Only names with instances are listed."
+                     title="Enter a name."
                      tabindex="<%= increment_tab_index %>"
                      type="text"
                      required='true'
-                     placeholder="Enter name to narrow down instance"
+                     placeholder="Enter name"
                      value=""/>
             </section>
           </div>
