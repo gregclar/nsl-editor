@@ -56,7 +56,7 @@ class Loader::Name::DraftTaxonomyAdder::PlacerOrReplacer::Placer
   private
 
   def parent_tve
-    if @preferred_match.intended_tree_parent_instance_id.blank?
+    if @preferred_match.intended_tree_parent_name.blank?
       name_parent_tve
     else
       intended_parent_tve
@@ -69,10 +69,8 @@ class Loader::Name::DraftTaxonomyAdder::PlacerOrReplacer::Placer
     raise "Error identifying name parent in draft: #{e.to_s}"
   end
 
-  # Observation: I set this up so has user to select an instance for the
-  # intended parent, but here where we use that value we just take the name.
   def intended_parent_tve
-    @draft.name_in_version(@preferred_match.intended_tree_parent_instance.name)
+    @draft.name_in_version(@preferred_match.intended_tree_parent_name)
           .element_link
   rescue StandardError => e
     raise "Error identifying intended parent in draft: #{e.to_s}"
