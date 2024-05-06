@@ -411,6 +411,14 @@ Rails.application.routes.draw do
                                         via: :post
   match "loader/batch/bulk/disable_add", as: "loader_batch_bulk_disable_add", to: "loader/batch/bulk#disable_add",
                                          via: :post
+  match "loader/batch/bulk/enable_delete_syn_conflict",
+        as: "loader_batch_bulk_enable_delete_syn_conflict",
+        to: "loader/batch/bulk#enable_delete_syn_conflict",
+        via: :post
+  match "loader/batch/bulk/disable_delete_syn_conflict",
+        as: "loader_batch_bulk_disable_delete_syn_conflict",
+        to: "loader/batch/bulk#disable_delete_syn_conflict",
+        via: :post
 
   namespace :loader do
     resources :names, only: [:new]
