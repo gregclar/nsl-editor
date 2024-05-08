@@ -1,7 +1,11 @@
+- :date: 09-May-2024
+  :jira_id: '5014'
+  :description: |-
+    Loader: Put the link to the <code>loader_name</code> record on the same line as the boiler plate text
 - :date: 06-May-2024
   :jira_id: '5014'
   :description: |-
-    Loader: Make text indicating instance is linked to loader name into clickable link
+    Loader: Make text indicating <code>instance</code> is linked to <code>loader_name</code> into clickable link
 - :date: 06-May-2024
   :jira_id: '5053'
   :description: |-
