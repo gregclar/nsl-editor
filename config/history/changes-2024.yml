@@ -1,4 +1,6 @@
 - :date: 09-May-2024
+  :release: true
+- :date: 09-May-2024
   :jira_id: '5014'
   :description: |-
     Loader: Put the link to the <code>loader_name</code> record on the same line as the boiler plate text
