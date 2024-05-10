@@ -1,3 +1,7 @@
+- :date: 10-May-2024
+  :jira_id: '5057'
+  :description: |-
+    Loader: Added feature to let user set a batch's synonym <code>sort_key</code> values in bulk using <code>taxon_mv_new</code> as a trial
 - :date: 09-May-2024
   :release: true
 - :date: 09-May-2024
