@@ -4,7 +4,7 @@ module Loader::Batch::SortKey
   UPDATE_SYN_SORT_KEYS = <<-SQL
 update loader_name
    set sort_key = (select sort_key||' '||usage_order
-                     from taxon_mv_new t
+                     from taxon_name_usage_v t
                      join loader_name_match m
                        on t.instance_id = m.instance_id
                      join loader_name l
@@ -21,8 +21,9 @@ update loader_name
 SQL
 
 
-  # Synonyms will benefit from being supplemented with the taxon_mv 
-  # usage_order value
+  # Synonyms sort_key will be supplemented with the 
+  # taxon_name_usage_v.usage_order value
+  # for better ordering
   def refresh_synonym_sort_keys
     Loader::Name.set_short_sort_key_for_synonyms(self)
     sanitized_s = ActiveRecord::Base::sanitize_sql([UPDATE_SYN_SORT_KEYS,

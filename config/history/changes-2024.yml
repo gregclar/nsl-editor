@@ -1,3 +1,7 @@
+- :date: 14-May-2024
+  :jira_id: '5057'
+  :description: |-
+    Loader: Switch to use <code>taxon_name_usage_v</code> to set a batch's synonym <code>sort_key</code> values in bulk. Task runs slower but has better coverage.
 - :date: 10-May-2024
   :jira_id: '5057'
   :description: |-
