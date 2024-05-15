@@ -1,3 +1,7 @@
+- :date: 15-May-2024
+  :jira_id: '4829'
+  :description: |-
+    Loader: Reverse the order of <code>simple_name</code> and <code>full_name</code> on data entry forms
 - :date: 14-May-2024
   :jira_id: '5057'
   :description: |-
