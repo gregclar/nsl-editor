@@ -1,4 +1,8 @@
 - :date: 15-May-2024
+  :jira_id: '5066'
+  :description: |-
+    Loader: Set rank value for <code>loader_name</code> records being copied as sibling <code>synonyms</code> from <code>name</code> data
+- :date: 15-May-2024
   :jira_id: '5063'
   :description: |-
     Loader: Stop edit forms setting rank to fixed values for headers, synonyms, misapplieds.  Set rank to 'no-rank' for notes. Rank query with no argument looks for null values.
