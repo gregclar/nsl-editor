@@ -1,4 +1,8 @@
 - :date: 15-May-2024
+  :jira_id: '5065'
+  :description: |-
+    Loader: Use <code>display_name</code> for rank-denoting terms when adding <code>names</code> to batch
+- :date: 15-May-2024
   :jira_id: '5066'
   :description: |-
     Loader: Set rank value for <code>loader_name</code> records being copied as sibling <code>synonyms</code> from <code>name</code> data
