@@ -1,3 +1,7 @@
+- :date: 16-May-2024
+  :jira_id: '5069'
+  :description: |-
+    Loader: Make 'none' the default rank for in-batch notes
 - :date: 15-May-2024
   :jira_id: '5065'
   :description: |-
