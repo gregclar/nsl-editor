@@ -1,4 +1,8 @@
 - :date: 16-May-2024
+  :jira_id: '5068'
+  :description: |-
+    Loader: Standardise number/position of error messages when saving without rank
+- :date: 16-May-2024
   :jira_id: '5069'
   :description: |-
     Loader: Make 'none' the default rank for in-batch notes
