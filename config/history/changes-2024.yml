@@ -1,7 +1,7 @@
 - :date: 16-May-2024
   :jira_id: '5067'
   :description: |-
-    Loader: Standardise number/position of error messages when saving without rank
+    Loader: Make rank field mandatory on entry and update
 - :date: 16-May-2024
   :jira_id: '5068'
   :description: |-
