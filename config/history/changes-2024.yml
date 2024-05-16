@@ -1,4 +1,8 @@
 - :date: 16-May-2024
+  :jira_id: '5073'
+  :description: |-
+    Loader: Stop auto-refreshing the loader-name edit tab after form changes are saved or a save is attempted
+- :date: 16-May-2024
   :jira_id: '5067'
   :description: |-
     Loader: Make rank field mandatory on entry and update
