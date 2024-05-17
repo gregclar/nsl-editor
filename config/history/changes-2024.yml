@@ -1,7 +1,11 @@
 - :date: 17-May-2024
+  :jira_id: '5057'
+  :description: |-
+    Loader: Added feature flag <code>batch_loader_usage_order_aware</code> to show or hide the <code>sort_key/useage_order</code> trial
+- :date: 17-May-2024
   :jira_id: ''
   :description: |-
-    Security patches: two depenabot patches merged
+    Security: Merged two dependabot patches
 - :date: 17-May-2024
   :jira_id: '5019'
   :description: |-
