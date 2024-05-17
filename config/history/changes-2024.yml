@@ -1,3 +1,7 @@
+- :date: 17-May-2024
+  :jira_id: '5013'
+  :description: |-
+    Loader: Stop flagging synonyms as clashing with names in taxonomy if the synonym <code>loader_name_match</code> record has a partial relationship type
 - :date: 16-May-2024
   :jira_id: '5073'
   :description: |-

@@ -50,7 +50,6 @@ class Loader::Batch::BulkController::RemoveSynConflictsJob
     preflight_check_for_nfp(tree_join_record)
     true
   rescue => e
-    Rails.logger.error("Loader::Batch::BulkController::RemoveSynConflictsJob.preflight_checks_pass?: #{e}")
     log_preflight_decline_to_table(tree_join_record, e.to_s)
     result_h = {attempts: 1, declines: 1, decline_reasons: {"#{e.to_s}": 1}}
     @job_h.deep_merge!(result_h) { |key, old, new| old + new}
