@@ -1,4 +1,8 @@
 - :date: 17-May-2024
+  :jira_id: ''
+  :description: |-
+    Security patches: two depenabot patches merged
+- :date: 17-May-2024
   :jira_id: '5019'
   :description: |-
     Loader: Allow multiple comma-separated arguments for the <code>family</code> and <code>families</code> search directives
