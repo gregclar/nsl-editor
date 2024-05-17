@@ -608,6 +608,8 @@ having count(*) > 2
   from loader_name ln 
        join loader_name_match lnm
        on ln.id = lnm.loader_name_id
+       join instance_type rel_type
+       on lnm.relationship_instance_type_id = rel_type.id
        join instance i
        on lnm.name_id = i.name_id 
        join tree_join_v tjv 
@@ -620,6 +622,7 @@ having count(*) > 2
    and not tjv.published
    and tjv.accepted_tree
    and ln.synonym_type not like '%partial%'
+   and not rel_type.pro_parte
    and ln.partly is null
    and lower(ln.simple_name) like lower(?))",
    not_exists_clause: " needs an argument"
@@ -628,6 +631,8 @@ having count(*) > 2
   from loader_name ln 
        join loader_name_match lnm
        on ln.id = lnm.loader_name_id
+       join instance_type rel_type
+       on lnm.relationship_instance_type_id = rel_type.id
        join instance i
        on lnm.name_id = i.name_id 
        join tree_join_v tjv 
@@ -640,6 +645,7 @@ having count(*) > 2
    and not tjv.published
    and tjv.accepted_tree
    and ln.synonym_type not like '%partial%'
+   and not rel_type.pro_parte
    and ln.partly is null
    and lower(ln.family) like lower(?))",
    not_exists_clause: " needs an argument"
