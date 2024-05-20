@@ -18,6 +18,7 @@
 
 # Remove a conflicting synonym
 class Loader::Batch::BulkController::RemoveSynConflictsJob
+  DECLINED_REMOVE = "<span class='firebrick'>Declined to remove conflict</span>"
   def initialize(batch_id, search_string, authorising_user, job_number)
     @batch = Loader::Batch.find(batch_id)
     @search_string = search_string.downcase
@@ -66,7 +67,7 @@ class Loader::Batch::BulkController::RemoveSynConflictsJob
   end
 
   def log_preflight_decline_to_table(tree_join_record, decline_info)
-    content = "#{tree_join_record.element_link} #{tree_join_record.simple_name} #{decline_info}"
+    content = "#{DECLINED_REMOVE} - #{tree_join_record.element_link} #{tree_join_record.simple_name} #{decline_info}"
     log_to_table(content)
   end
 
