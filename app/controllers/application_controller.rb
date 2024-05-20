@@ -183,13 +183,13 @@ end
 class Hash
   def to_html_list
     s = '<ul>'
-    self.each do |key, value| 
+    self.sort.to_h.each do |key, value| 
 
       if value.nil?
-        s += "<li>#{key}</li>"
+      #  s += "<li>#{key}</li>"
       elsif value.is_a?(Hash)
         s += "<li>#{key}<ul>"
-        s += value.to_html_list
+        s += value.sort.to_h.to_html_list
         s += "</ul></li>"
       else
         s += "<li>#{key}: #{value}</li>"

@@ -52,7 +52,7 @@ class Loader::Batch::BulkController::RemoveSynConflictsJob
     true
   rescue => e
     log_preflight_decline_to_table(tree_join_record, e.to_s)
-    result_h = {attempts: 1, declines: 1, decline_reasons: {"#{e.to_s}": 1}}
+    result_h = {attempts: 1, declines: 1, declines_reasons: {"#{e.to_s}": 1}}
     @job_h.deep_merge!(result_h) { |key, old, new| old + new}
     false
   end

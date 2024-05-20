@@ -1,4 +1,8 @@
 - :date: 20-May-2024
+  :jira_id: '5048'
+  :description: |-
+    Loader: Improve job report summaries - sort the name-value pairs for output 
+- :date: 20-May-2024
   :jira_id: '5054'
   :description: |-
     Loader: Log declines for Remove/Delete Syn Conflicts jobs in standard firebrick colour with standard initial wording
