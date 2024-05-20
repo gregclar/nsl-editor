@@ -1,4 +1,8 @@
 - :date: 20-May-2024
+  :jira_id: '5055'
+  :description: |-
+    Loader: Improve how the Batch menu works and hide the De-duplicate tab
+- :date: 20-May-2024
   :jira_id: '5048'
   :description: |-
     Loader: Improve job report summaries - sort the name-value pairs for output 
