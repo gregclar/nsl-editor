@@ -1,3 +1,7 @@
+- :date: 20-May-2024
+  :jira_id: '5054'
+  :description: |-
+    Loader: Log declines for Remove/Delete Syn Conflicts jobs in standard firebrick colour with standard initial wording
 - :date: 17-May-2024
   :jira_id: '5057'
   :description: |-
