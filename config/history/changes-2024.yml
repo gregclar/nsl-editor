@@ -1,4 +1,8 @@
 - :date: 21-May-2024
+  :jira_id: '5078'
+  :description: |-
+    Loader: Improve use of batch name in queries, especially if default batch name is changed
+- :date: 21-May-2024
   :jira_id: '5079'
   :description: |-
     Loader: Some improvements to Loader Batch query and display

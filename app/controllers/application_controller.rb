@@ -5,7 +5,8 @@ class ApplicationController < ActionController::Base
                 :check_system_broadcast,
                 :authenticate,
                 :authorise,
-                :set_view_mode
+                :set_view_mode,
+                :set_session_default_loader_batch_name
   #  around_action :user_tagged_logging
 
   rescue_from ActionController::InvalidAuthenticityToken, with: :show_login_page
@@ -177,6 +178,13 @@ class ApplicationController < ActionController::Base
     return unless @current_user.reviewer?
 
     @view_mode = session[:view_mode] = ViewMode::REVIEW
+  end
+
+  def set_session_default_loader_batch_name
+    return if session[:default_loader_batch_id].blank?
+
+    session[:default_loader_batch_name] =
+      Loader::Batch.find(session[:default_loader_batch_id]).name
   end
 end
 
