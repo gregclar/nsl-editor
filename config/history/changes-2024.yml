@@ -1,3 +1,7 @@
+- :date: 21-May-2024
+  :jira_id: '5079'
+  :description: |-
+    Loader: Some improvements to Loader Batch query and display
 - :date: 20-May-2024
   :jira_id: '5055'
   :description: |-
