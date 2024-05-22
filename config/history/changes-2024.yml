@@ -1,4 +1,8 @@
 - :date: 22-May-2024
+  :jira_id: '5081'
+  :description: |-
+    Loader: Offer the 'Clear the matches' button on Details if a preferred match is found but not amongst the candidate matches
+- :date: 22-May-2024
   :jira_id: '5062'
   :description: |-
     Loader: Fix missing rank value error when copying instance with synonym to loader
