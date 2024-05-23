@@ -46,10 +46,7 @@ class Loader::NamesController < ApplicationController
     @loader_name.family = @anchor.family unless @anchor.blank?
     @no_search_result_details = true
     @tab_index = (params[:tabIndex] || "40").to_i
-    respond_to do |format|
-      format.html {}
-      format.js {}
-    end
+    render :new
   end
 
   def new_row
