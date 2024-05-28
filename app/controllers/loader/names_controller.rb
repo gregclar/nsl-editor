@@ -64,10 +64,7 @@ class Loader::NamesController < ApplicationController
     @no_search_result_details = true
     @tab_index = (params[:tabIndex] || "40").to_i
     @loader_name.record_type = "heading"
-    respond_to do |format|
-      format.html {}
-      format.js {}
-    end
+    render :new_heading
   end
 
   def new_in_batch_note
@@ -76,10 +73,7 @@ class Loader::NamesController < ApplicationController
     @no_search_result_details = true
     @tab_index = (params[:tabIndex] || "40").to_i
     @loader_name.record_type = "in-batch-note"
-    respond_to do |format|
-      format.html {}
-      format.js {}
-    end
+    render :new_in_batch_note
   end
 
   def new_heading_row

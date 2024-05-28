@@ -671,9 +671,6 @@
 
   window.loadDetails = function(event, inFocus, tabWasClicked = false) {
     debug('window.loadDetails starting');
-    debug('inFocus.attr(_data-record-type_): ' + inFocus.attr('data-record-type'));
-    debug($('tr.showing-details').length);
-    debug($('tr.showing-details').attr('data-record-type'));
     return loadStandardDetails(event, inFocus, tabWasClicked);
   };
 
