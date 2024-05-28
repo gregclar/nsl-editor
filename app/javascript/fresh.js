@@ -1017,7 +1017,7 @@
   $(secondCell).addClass('main-content').addClass('give-me-focus');
   $(secondCell).addClass('min-width-40-percent').addClass('max-width-100-percent').addClass('width-90-percent');
   // Append a text node to the cell
-  let label = document.createTextNode('New Loader Name Record');
+  let label = document.createTextNode('New Accepted or Excluded Loader Name');
   let link = document.createElement('a');
   $(link).addClass('show-details-link');
   $(link).attr('title','New loader name record. Select to see details');
