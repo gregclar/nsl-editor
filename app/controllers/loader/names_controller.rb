@@ -51,10 +51,41 @@ class Loader::NamesController < ApplicationController
 
   def new_row
     @random_id = (Random.new.rand * 10_000_000_000).to_i
-    respond_to do |format|
-      format.html { redirect_to new_search_path }
-      format.js {}
-    end
+    render :new_row, 
+           locals: {partial: 'new_row', 
+                    locals_for_partial:
+               {tab_path: "#{loader_name_new_with_random_id_path(@random_id)}",
+                link_id: "link-new-loader-name-#{@random_id}",
+                link_title: "New loader name accepted or excluded record.",
+                link_text: "New Accepted or Excluded Loader Name"
+               }
+                   }
+  end
+
+  def new_heading_row
+    @random_id = (Random.new.rand * 10_000_000_000).to_i
+    render :new_row, 
+           locals: {partial: 'new_row', 
+                    locals_for_partial:
+               {tab_path: "#{loader_name_heading_new_with_random_id_path(@random_id)}",
+                link_id: "link-new-loader-name-#{@random_id}",
+                link_title: "New loader name heading record.",
+                link_text: "New Loader Name Heading"
+               }
+                   }
+  end
+
+  def new_in_batch_note_row
+    @random_id = (Random.new.rand * 10_000_000_000).to_i
+    render :new_row, 
+           locals: {partial: 'new_row', 
+                    locals_for_partial:
+               {tab_path: "#{loader_name_in_batch_note_new_with_random_id_path(@random_id)}",
+                link_id: "link-new-loader-name-#{@random_id}",
+                link_title: "New loader name in-batch-note record.",
+                link_text: "New Loader Name In-Batch-Note"
+               }
+                   }
   end
 
   def new_heading
@@ -74,22 +105,6 @@ class Loader::NamesController < ApplicationController
     @tab_index = (params[:tabIndex] || "40").to_i
     @loader_name.record_type = "in-batch-note"
     render :new_in_batch_note
-  end
-
-  def new_heading_row
-    @random_id = (Random.new.rand * 10_000_000_000).to_i
-    respond_to do |format|
-      format.html { redirect_to new_search_path }
-      format.js {}
-    end
-  end
-
-  def new_in_batch_note_row
-    @random_id = (Random.new.rand * 10_000_000_000).to_i
-    respond_to do |format|
-      format.html { redirect_to new_search_path }
-      format.js {}
-    end
   end
 
   def new_row_here
