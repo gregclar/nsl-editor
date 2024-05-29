@@ -62,6 +62,8 @@
   :jira_id: '5067'
   :description: |-
     Loader: Make rank field mandatory on entry and update
+- :date: 29-May-2024
+  :release: true
 - :date: 16-May-2024
   :jira_id: '5068'
   :description: |-
