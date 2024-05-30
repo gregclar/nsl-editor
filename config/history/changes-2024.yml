@@ -1,3 +1,7 @@
+- :date: 30-May-2024
+  :jira_id: '5087'
+  :description: |-
+    Loader: Clean up stray success message that appeared after toggling Batch menu default batch options
 - :date: 29-May-2024
   :jira_id: '5038'
   :description: |-
