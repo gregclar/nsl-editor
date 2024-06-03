@@ -1,4 +1,8 @@
 - :date: 03-Jun-2024
+  :jira_id: '5094'
+  :description: |-
+    Loader: Show nomenclatural status in loader view
+- :date: 03-Jun-2024
   :jira_id: '5082'
   :description: |-
     Loader: Copy across non-legitimate nomenclatural status of synonyms into the Loader
