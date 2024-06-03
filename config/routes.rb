@@ -467,6 +467,9 @@ Rails.application.routes.draw do
       match "matches/clear-and-delete-relationship-instance/:id", as: "match-clear-and-delete-relationship-instance",
                                                                   to: "matches#clear_and_delete_relationship_instance", via: :patch
       match "matches/verify_drafted/:id", as: "matches_verify_drafted", to: "matches#verify_drafted", via: :patch
+      match "matches/prepare_force_remove/:id", as: "matches_prepare_force_remove", to: "matches#prepare_force_remove", via: :post
+      match "matches/cancel_force_remove/:id", as: "matches_cancel_force_remove", to: "matches#cancel_force_remove", via: :post
+      match "matches/force_remove/:id", as: "matches_force_remove", to: "matches#force_remove", via: :delete
       resources :matches, only: [:update]
     end
   end
