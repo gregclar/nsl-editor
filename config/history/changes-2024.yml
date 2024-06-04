@@ -1,3 +1,7 @@
+- :date: 05-Jun-2024
+  :jira_id: '5095'
+  :description: |-
+    Editor: Security - fix 16 Brakeman warnings
 - :date: 04-Jun-2024
   :jira_id: ''
   :description: |-
