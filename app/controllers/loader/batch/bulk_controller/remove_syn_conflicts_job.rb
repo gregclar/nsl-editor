@@ -77,7 +77,7 @@ class Loader::Batch::BulkController::RemoveSynConflictsJob
                                                         @working_draft,
                                                         @authorising_user,
                                                         @job_number)
-    result = taxo_remover.remove
+    #result = taxo_remover.remove
     @job_h.deep_merge!(taxo_remover.result_h) { |key, old, new| old + new}
  
   rescue StandardError => e

@@ -1,4 +1,8 @@
 - :date: 05-Jun-2024
+  :jira_id: '5097'
+  :description: |-
+    Loader: Allow users to query and fix synonymy clashes using multiple taxon arguments in family context
+- :date: 05-Jun-2024
   :jira_id: '5095'
   :description: |-
     Editor: Security - fix 16 Brakeman warnings
