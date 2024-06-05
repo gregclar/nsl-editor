@@ -1,3 +1,7 @@
+- :date: 06-Jun-2024
+  :jira_id: ''
+  :description: |-
+    Editor: Security - update gems including Rails from 7.0.8.3 to 7.0.8.4
 - :date: 05-Jun-2024
   :jira_id: '5097'
   :description: |-
@@ -9,7 +13,7 @@
 - :date: 04-Jun-2024
   :jira_id: ''
   :description: |-
-    Editor: Security - update gems including from Rails 7.0.8.1 to 7.0.8.3
+    Editor: Security - update gems including Rails from 7.0.8.1 to 7.0.8.3
 - :date: 03-Jun-2024
   :jira_id: '5094'
   :description: |-
