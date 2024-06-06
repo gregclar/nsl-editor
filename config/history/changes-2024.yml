@@ -1,4 +1,8 @@
 - :date: 06-Jun-2024
+  :jira_id: '5098'
+  :description: |-
+    Loader: Use <code>misapp_html</code> for misapplications in 2022 Updates list
+- :date: 06-Jun-2024
   :jira_id: ''
   :description: |-
     Editor: Security - update gems including Rails from 7.0.8.3 to 7.0.8.4
