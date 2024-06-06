@@ -1,4 +1,8 @@
 - :date: 06-Jun-2024
+  :jira_id: '5086'
+  :description: |-
+    Loader: Refresh sort key values when loader records are edited
+- :date: 06-Jun-2024
   :jira_id: '5098'
   :description: |-
     Loader: Use <code>misapp_html</code> for misapplications in 2022 Updates list
