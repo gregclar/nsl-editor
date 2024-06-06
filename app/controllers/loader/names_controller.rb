@@ -241,7 +241,8 @@ class Loader::NamesController < ApplicationController
                                         :rank, :remark_to_reviewers, :sort_key,
                                         :loaded_from_instance_id,
                                         :add_sibling_synonyms,
-                                        :add_sourced_synonyms)
+                                        :add_sourced_synonyms,
+                                        :original_text)
   end
 
   def set_tab

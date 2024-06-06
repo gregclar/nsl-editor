@@ -543,7 +543,8 @@ having count(*) > 2
     "updated-by:" => { where_clause: "updated_by = ?"},
     "not-created-by:" => { where_clause: "created_by != ?"},
     "not-created-by-batch:" => { where_clause: "created_by != 'batch'"},
-    "original-text:" => { where_clause: "lower(original_text) like ?"},
+    "original-text:" => { where_clause: "lower(original_text) like ?",
+                          not_exists_clause: " original_text is null"},
     "original-text-has-×:" => { where_clause: "lower(original_text) like '%×%'"},
     "original-text-has-x:" => { where_clause: "lower(original_text) like '%×%'"},
     "hybrid-flag:" => { where_clause: "hybrid_flag like ?"},
@@ -804,6 +805,6 @@ group by loader_name.family, family.simple_name) subq
 where simple_name is null
  )
 )",
-  },
+  }
   }.freeze
 end
