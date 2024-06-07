@@ -828,6 +828,7 @@
         moveToSearchResultDetails($this, 'first');
         break;
       case arrowUp:
+        debug('searchResultKeyNavigation arrowUp');
         moveUpOneSearchResult($this);
         break;
       case arrowDown:
@@ -955,6 +956,9 @@
   };
 
   window.moveUpOneSearchResult = function(startRow) {
+    debug('moveUpOneSearchResult:  arrowUp');
+    debug('moveUpOneSearchResult:  '+startRow.prev().length.toString());
+    debug('moveUpOneSearchResult:  '+startRow.prev().find('a.show-details-link').length.toString());
     return startRow.prev().find('a.show-details-link').focus();
   };
 

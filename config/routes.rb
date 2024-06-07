@@ -222,7 +222,9 @@ Rails.application.routes.draw do
         to: "references#typeahead_on_citation_for_parent", via: :get
   match "references/new_row",
         as: "reference_new_row", to: "references#new_row", via: :get
-  resources :references, only: %i[new create update destroy]
+  match "references/new/:random_id",
+        as: "new_reference_with_random_id", to: "references#new", via: :get
+  resources :references, only: %i[create update destroy]
   match "references/:id",
         as: "reference_show",
         to: "references#show",
