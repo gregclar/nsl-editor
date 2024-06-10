@@ -1,3 +1,7 @@
+- :date: 11-Jun-2024
+  :jira_id: '5109'
+  :description: |-
+    Loader: Remove syn conflicts job checks for NFP before checking for sub-taxa
 - :date: 07-Jun-2024
   :jira_id: '5104'
   :description: |-
