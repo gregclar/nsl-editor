@@ -100,21 +100,28 @@ class NamesController < ApplicationController
   # GET /names/new_row
   def new_row
     @random_id = (Random.new.rand * 10_000_000_000).to_i
-    @category = params[:type].tr("-", " ")
-    logger.debug("@category: #{@category}")
-    respond_to do |format|
-      format.html { redirect_to new_search_path }
-      format.js {}
-    end
+    @category = params[:type].tr(" ", "-")
+    @category_display = params[:type].tr("-", " ")
+    render :new_row, 
+      locals: {partial: 'new_row', 
+               locals_for_partial:
+          {tab_path: "#{new_name_with_category_and_random_id_path(@category, @random_id)}",
+           link_id: "link-new-name-#{@category}-#{@random_id}",
+           link_title: new_row_link_title,
+           link_text: new_row_link_text,
+           name_category: @category
+          }
+              }
   end
 
   # GET /names/new
   def new
-    logger.debug("new name")
     @tab_index = (params[:tabIndex] || "40").to_i
+    @category = params[:category]
+    @category_display = @category.gsub(/[_-]/,' ')
     @name = new_name_for_category
     @no_search_result_details = true
-    render "new"
+    render :new
   end
 
   # POST /names
@@ -252,19 +259,19 @@ class NamesController < ApplicationController
 
   def new_name_for_category
     case params[:category]
-    when "scientific"
+    when /scientific\z/
       Name::AsNew.scientific
-    when "scientific_family"
-      Name::AsNew.scientific_family
+    when /scientific.family.or.above/
+      Name::AsNew.scientific_family_or_above
     when "phrase"
       Name::AsNew.phrase
-    when "hybrid formula"
+    when /hybrid.formula\z/
       Name::AsNew.scientific_hybrid
-    when "hybrid formula unknown 2nd parent"
+    when /hybrid.formula.unknown.2nd.parent/
       Name::AsNew.scientific_hybrid_unknown_2nd_parent
-    when "cultivar hybrid"
+    when /cultivar.hybrid/
       Name::AsNew.cultivar_hybrid
-    when "cultivar"
+    when /cultivar\z/
       Name::AsNew.cultivar
     else
       Name::AsNew.other
@@ -312,5 +319,17 @@ class NamesController < ApplicationController
 
   def dependent_params
     params.permit(:id, :dependent_type)
+  end
+
+  def new_row_link_title
+    return "New #{@category_display} Name" unless @category.match(/family-or/)
+
+    "New Scientific Name - Family or Above"
+  end
+
+  def new_row_link_text
+    return "New #{@category_display} Name".titleize unless @category.match(/family-or/)
+
+    "New Scientific Name - Family or Above"
   end
 end
