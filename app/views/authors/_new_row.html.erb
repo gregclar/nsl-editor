@@ -1,4 +1,3 @@
-<% link = "link-new-author-#{@random_id}" %>
 <tr id="new-author-<%= @random_id %>" 
   class="new-record new-author search-result show-details"  
   data-record-type="author"
@@ -15,7 +14,7 @@
   <td class="takes-focus width-5-percent filler">&nbsp;</td>
   <script>
     $(document).ready(function () {
-      document.getElementById("<%= link %>").click();
+      document.getElementById("<%= link_id %>").click();
     })
   </script>
 </tr>

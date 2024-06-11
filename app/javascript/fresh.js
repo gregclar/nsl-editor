@@ -729,10 +729,6 @@
       recordCurrentActiveTab(record_type);
       if (tabWasClicked) {
         debug('tab was clicked loadStandardDetails');
-        debug('tab was clicked loadStandardDetails');
-        debug('tab was clicked loadStandardDetails');
-        debug('tab was clicked loadStandardDetails');
-        debug('tab was clicked loadStandardDetails');
         if ($('.give-me-focus')) {
           return debug('give-me-focus ing - changed so not .give-me-focus ing because clicked a tab resulted in focus switching to the first record');
         } else {
@@ -828,7 +824,6 @@
         moveToSearchResultDetails($this, 'first');
         break;
       case arrowUp:
-        debug('searchResultKeyNavigation arrowUp');
         moveUpOneSearchResult($this);
         break;
       case arrowDown:
@@ -956,9 +951,6 @@
   };
 
   window.moveUpOneSearchResult = function(startRow) {
-    debug('moveUpOneSearchResult:  arrowUp');
-    debug('moveUpOneSearchResult:  '+startRow.prev().length.toString());
-    debug('moveUpOneSearchResult:  '+startRow.prev().find('a.show-details-link').length.toString());
     return startRow.prev().find('a.show-details-link').focus();
   };
 
