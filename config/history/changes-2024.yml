@@ -1,4 +1,8 @@
 - :date: 12-Jun-2024
+  :jira_id: '5112'
+  :description: |-
+    Editor: Remove repeated duplicate-of info from Author details tab metadata
+- :date: 12-Jun-2024
   :jira_id: '5104'
   :description: |-
     Editor: Make it possible to arrow in and out of new records created from the New menu (8 types of new Name records)
