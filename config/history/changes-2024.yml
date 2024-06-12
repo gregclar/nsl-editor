@@ -1,4 +1,8 @@
 - :date: 12-Jun-2024
+  :jira_id: '5113'
+  :description: |-
+    Loader: Match relationship type will take account of doubt
+- :date: 12-Jun-2024
   :jira_id: '5112'
   :description: |-
     Editor: Remove repeated duplicate-of info from Author details tab metadata
