@@ -1,3 +1,7 @@
+- :date: 13-Jun-2024
+  :jira_id: '5104'
+  :description: |-
+    Loader: Fix bug from NSL-5104 yesterday - when creating names they are now correctly shown as created
 - :date: 12-Jun-2024
   :jira_id: '5113'
   :description: |-
