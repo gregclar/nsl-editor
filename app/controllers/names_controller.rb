@@ -101,11 +101,11 @@ class NamesController < ApplicationController
   # Ajax only.
   def update
     @name = Name::AsEdited.find(params[:id])
-    refresh_after_update = refresh_names_after_update?
+    name_before_change = @name.dup
     @message = @name.update_if_changed(name_params,
                                        typeahead_params,
                                        current_user.username)
-    refresh_names if refresh_after_update
+    check_children(name_before_change) unless @message.downcase == 'no change'
     render "update"
   rescue StandardError => e
     @message = e.to_s
@@ -239,12 +239,22 @@ class NamesController < ApplicationController
     end
   end
 
-  def refresh_names_after_update?
-    @name.name_element != name_params[:name_element]
+  def check_children(name_before_change)
+    if @name.simple_name != name_before_change.simple_name #||
+         #@name.full_name != name_before_change.full_name ||
+         #@name.name_path != name_before_change.name_path
+      refresh_names
+    end
   end
 
   def refresh_names
-    NameChildrenRefresherJob.new.perform(@name.id)
+    refreshed_names_tally = 0
+    refreshed_names_tally = NameChildrenRefresherJob.new.perform(@name.id)
+    if refreshed_names_tally > 0
+      @message += "; also updated \
+      #{ActionController::Base.helpers.pluralize(refreshed_names_tally,\
+      'child')}."
+    end
   end
 
   def name_params
