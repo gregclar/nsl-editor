@@ -240,9 +240,9 @@ class NamesController < ApplicationController
   end
 
   def check_children(name_before_change)
-    if @name.simple_name != name_before_change.simple_name #||
-         #@name.full_name != name_before_change.full_name ||
-         #@name.name_path != name_before_change.name_path
+    if @name.simple_name != name_before_change.simple_name ||
+         @name.full_name != name_before_change.full_name ||
+         @name.name_path != name_before_change.name_path
       refresh_names
     end
   end
