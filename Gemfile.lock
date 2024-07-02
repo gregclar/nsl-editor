@@ -397,7 +397,7 @@ DEPENDENCIES
   websocket-extensions (>= 0.1.5)
 
 RUBY VERSION
-   ruby 3.3.0p0
+   ruby 3.3.3p89
 
 BUNDLED WITH
-   2.4.22
+   2.5.14
