@@ -1,0 +1,73 @@
+<% if profile_item_id.present? %>
+  <!-- Debugging: Display passed parameters -->
+  <h2>Profile Item ID: <%= profile_item_id %></h2>
+
+  <h4>Add Reference</h4>
+
+  <input id="instance-reference-typeahead"
+  class="typeahead form-control width-100-percent give-me-focus" 
+  tabindex="<%= increment_tab_index %>"
+  type="text" 
+  data-excluded-id="<%= @instance.reference.id %>"
+  required
+  title="Start typing to see a list of references to choose from."
+  placeholder="Reference wildcarded order-insensitive citation search"
+  value=""/>
+
+
+  <%= form_with url: profile_references_path, method: :post, remote: true, html: { data: { type: :json, form_type: 'annotation_form' } } do |f| %>
+    <!-- Hidden fields with parameters -->
+    <%= hidden_field_tag :profile_item_id, profile_item_id %>
+
+    <%= f.submit 'Add', style: 'background-color: #5a5a5a; color: white; border: none; padding: 5px 10px; cursor: pointer; border-radius: 4px; margin-left: 10px;' %>
+    <% end %>
+<% end %>
+
+<script> setUpInstanceReferenceFoa(); </script>
+
+
+<script>
+# // Simple lock variable
+# let typeaheadLock = false;
+
+# // Function to initialize typeahead with lock
+# function setUpInstanceReference() {
+#     alert("======================================");
+#     // Initialize typeahead for each input element with the class 'instance-reference-typeahead'
+#     $('.instance-reference-typeahead').each(function() {
+#         if (typeaheadLock) {
+#             console.log('Typeahead is already initializing or initialized, skipping...');
+#             return;  // If locked, skip further initialization
+#         }
+
+#         typeaheadLock = true;  // Acquire lock
+
+#         $(this).typeahead(
+#             { highlight: true, minLength: 1 }, // Ensure minLength is set
+#             {
+#                 name: 'instance-reference',
+#                 displayKey: 'value',
+#                 source: referenceByCitation.ttAdapter()
+#             })
+#             .on('typeahead:selected', function($e, datum) {
+#                 $('#instance_reference_id').val(datum.id);
+#             })
+#             .on('typeahead:closed', function($e, datum) {
+#                 // NOOP: cannot distinguish tabbing through vs emptying vs typing text.
+#                 // Users must select.
+#             })
+#             .on('typeahead:rendered', function() {
+#                 typeaheadLock = false;  // Release lock after rendering completes
+#                 console.log('Typeahead initialization completed, lock released.');
+#             });
+
+#         typeaheadLock = false;  // Ensure lock is released after setup
+#     });
+# }
+
+# // Call the function directly when the script loads
+
+# setUpInstanceReference();
+
+</script>
+

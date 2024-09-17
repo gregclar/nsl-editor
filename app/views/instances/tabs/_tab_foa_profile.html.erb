@@ -1,1 +1,468 @@
-<h2>Foa Profile</h2>
+
+<% @data_hash_foas_all.each do |display_html, details| %>
+  <div style="padding: 5px; margin: 5px 0; background-color: white;">
+    <label><%= display_html %></label>
+    <h1><%= @instance_id %></h1>
+    <% existing_entry = @data_hash_existent_foas[display_html] %>
+    <div id="message_<%= display_html.parameterize %>" class="message-container"></div> <!-- Message container -->
+    
+    <!-- Profile Text Form -->
+    <%= form_with url: profile_texts_path, method: :post, remote: true, html: { data: { type: :json, form_type: 'profile_text_form' } } do %>
+      <input type="hidden" name="foa[instance_id]" value="<%= @instance_id %>"> <!-- Pass instance_id dynamically -->
+      <input type="hidden" name="foa[display_html]" value="<%= display_html %>">
+      <input type="hidden" name="foa[is_new]" value="<%= existing_entry ? 'false' : 'true' %>"> <!-- Set is_new parameter -->
+      
+      <% if existing_entry %>
+        <!-- Fields for existing entry -->
+        <input type="hidden" name="foa[profile_item_id]" value="<%= existing_entry['profile_item_id'] %>">
+        <input type="hidden" name="foa[profile_text_id]" value="<%= existing_entry['profile_text_id'] %>">
+        <input type="hidden" name="foa[profile_item_type_id]" value="<%= existing_entry['profile_item_type_id'] %>">
+        <input type="hidden" name="foa[profile_product_id]" value="<%= existing_entry['profile_product_id'] %>">
+        <div id="simplemde-container">
+          <textarea class="form-control editor-textarea custom-height" title="Enter verbatim name" rows="4" tabindex="1112" name="foa[text_value]" id="editor_<%= display_html.parameterize %>"><%= existing_entry['text_value'] %></textarea>
+        </div>
+      <% else %>
+        <!-- Fields for new entry -->
+        <input type="hidden" name="foa[profile_item_type_id]" value="<%= details['profile_item_type_id'] %>">
+        <input type="hidden" name="foa[profile_product_id]" value="<%= details['profile_product_id'] %>">
+        <input type="hidden" name="foa[profile_object_type_id]" value="<%= details['profile_object_type_id'] %>">
+        <div id="simplemde-container">
+          <textarea class="form-control editor-textarea custom-height" title="Enter verbatim name" rows="4" tabindex="1112" name="foa[text_value]" id="editor_<%= display_html.parameterize %>"></textarea>
+        </div>
+      <% end %>
+      <%= submit_tag 'Save', style: 'background-color: #5a5a5a; color: white; border: none; padding: 5px 10px; cursor: pointer; border-radius: 4px;' %>
+    <% end %>
+
+    <!-- Add Annotation Section -->
+    <% annotation_value = existing_entry ? existing_entry['annotation_value'] : '' %>
+    <div id="add_annotation_<%= display_html.parameterize %>" data-url="<%= render_add_annotation_profile_annotations_path %>">
+      <%= render partial: 'instances/tabs/add_annotation', 
+        locals: { 
+          profile_item_id: existing_entry&.dig('profile_item_id') || @profile_item_id,
+          annotation_value: annotation_value
+        } %>
+    </div>
+
+
+
+
+    <% reference_annotation_value = 'reference_annotation_value_default' %>
+    <div id="add_reference_<%= display_html.parameterize %>" data-url="<%= render_add_reference_profile_references_path %>">
+      <%= render partial: 'instances/tabs/add_reference', 
+        locals: { 
+          profile_item_id: existing_entry&.dig('profile_item_id') || @profile_item_id,
+          reference_annotation_value: reference_annotation_value || ''
+        } %>
+    </div>
+  
+  </div>
+<% end %>
+
+
+
+
+<!-- SimpleMDE CSS -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/simplemde/latest/simplemde.min.css">
+<style>
+    #simplemde-container .editor-preview h1,
+    #simplemde-container .editor-preview-side h1 {
+      display: block;
+      font-size: 2em;
+      margin-block-start: 0.67em;
+      margin-block-end: 0.67em;
+      margin-inline-start: 0px;
+      margin-inline-end: 0px;
+      font-weight: bold;
+      unicode-bidi: isolate;
+    }
+
+    #simplemde-container .editor-preview h2,
+    #simplemde-container .editor-preview-side h2 {
+      display: block;
+      font-size: 1.5em;
+      margin-block-start: 0.83em;
+      margin-block-end: 0.83em;
+      margin-inline-start: 0px;
+      margin-inline-end: 0px;
+      font-weight: bold;
+      unicode-bidi: isolate;
+    }
+
+    #simplemde-container .editor-preview h3,
+    #simplemde-container .editor-preview-side h3 {
+      display: block;
+      font-size: 1.17em;
+      margin-block-start: 1em;
+      margin-block-end: 1em;
+      margin-inline-start: 0px;
+      margin-inline-end: 0px;
+      font-weight: bold;
+      unicode-bidi: isolate;
+    }
+
+    #simplemde-container .editor-preview h4,
+    #simplemde-container .editor-preview-side h4 {
+      display: block;
+      font-size: 1em;
+      margin-block-start: 1.33em;
+      margin-block-end: 1.33em;
+      margin-inline-start: 0px;
+      margin-inline-end: 0px;
+      font-weight: bold;
+      unicode-bidi: isolate;
+    }
+
+    #simplemde-container .editor-preview h5,
+    #simplemde-container .editor-preview-side h5 {
+      display: block;
+      font-size: 0.83em;
+      margin-block-start: 1.67em;
+      margin-block-end: 1.67em;
+      margin-inline-start: 0px;
+      margin-inline-end: 0px;
+      font-weight: bold;
+      unicode-bidi: isolate;
+    }
+
+    #simplemde-container .editor-preview h6,
+    #simplemde-container .editor-preview-side h6 {
+      display: block;
+      font-size: 0.67em;
+      margin-block-start: 2.33em;
+      margin-block-end: 2.33em;
+      margin-inline-start: 0px;
+      margin-inline-end: 0px;
+      font-weight: bold;
+      unicode-bidi: isolate;
+    }
+
+    #simplemde-container .editor-preview p,
+    #simplemde-container .editor-preview-side p {
+      font-size: 1em;
+      line-height: 1.5;
+      margin-bottom: 1em;
+    }
+
+    #simplemde-container .editor-preview blockquote,
+    #simplemde-container .editor-preview-side blockquote {
+      font-size: 1.2em;
+      margin-left: 1.5em;
+      color: #666;
+      border-left: 4px solid #ccc;
+      padding-left: 1em;
+    }
+
+    #simplemde-container .editor-preview ul,
+    #simplemde-container .editor-preview ol,
+    #simplemde-container .editor-preview-side ul,
+    #simplemde-container .editor-preview-side ol {
+      margin: 1em 0;
+      padding-left: 2em;
+    }
+
+    #simplemde-container .editor-preview li,
+    #simplemde-container .editor-preview-side li {
+      margin-bottom: 0.5em;
+    }
+
+    #simplemde-container .editor-preview code,
+    #simplemde-container .editor-preview-side code {
+      font-family: "Courier New", Courier, monospace;
+      background-color: #f8f8f8;
+      padding: 2px 4px;
+      border-radius: 4px;
+    }
+
+    /* Base styles for container */
+    #simplemde-container {
+      font-family: Arial, sans-serif;
+      color: #333;
+      line-height: 1.5;
+    }
+    
+  .editor-textarea {
+    display: none; /* Hide the textarea initially */
+  }
+  .custom-height {
+    height: 100px; /* Default height corresponding to 4 rows */
+  }
+  .CodeMirror {
+    min-height: 100px; /* Minimum height corresponding to 4 rows */
+  }
+  .message-container {
+    margin-top: 5px;
+  }
+  .notice {
+    color: green;
+  }
+  .alert {
+    color: red;
+  }
+</style>
+
+<!-- SimpleMDE JS -->
+<script src="https://cdn.jsdelivr.net/simplemde/latest/simplemde.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/markdown-it/dist/markdown-it.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/markdown-it-sub/dist/markdown-it-sub.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/markdown-it-sup/dist/markdown-it-sup.min.js"></script>
+
+<script>
+  function parameterize(string) {
+    return string.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)+/g, '');
+  }
+
+  // Define the custom event
+  var simpleMDELoadedEvent = new CustomEvent('simpleMDELoaded');
+
+  // Dispatch the custom event when SimpleMDE is loaded
+  function onSimpleMDELoad() {
+    document.dispatchEvent(simpleMDELoadedEvent);
+  }
+
+  // Add the script load event listener
+  var simpleMDEScript = document.querySelector('script[src="https://cdn.jsdelivr.net/simplemde/latest/simplemde.min.js"]');
+  simpleMDEScript.addEventListener('load', onSimpleMDELoad);
+
+  // Add an event listener for the custom event
+  document.addEventListener('simpleMDELoaded', function() {
+    console.log('SimpleMDE is loaded');
+    document.querySelectorAll('textarea.editor-textarea').forEach(function(textarea) {
+      console.log('Initializing SimpleMDE for', textarea.id);
+      textarea.style.display = 'block'; // Show the textarea
+
+      // Check if SimpleMDE instance already exists and destroy it
+      if (textarea.simplemdeInstance) {
+        textarea.simplemdeInstance.toTextArea();
+        textarea.simplemdeInstance = null;
+      }
+
+      // Initialize SimpleMDE
+      var simplemde = new SimpleMDE({
+        element: textarea,
+        spellChecker: false,
+        forceSync: true,
+        toolbar: [
+          "bold", "italic", "heading", "|",
+          "quote", "code", "link", "image", "table", "|",
+          {
+            name: "subscript",
+            action: function customSubscriptFunction(editor) {
+              var cm = editor.codemirror;
+              var cursorPos = cm.getCursor();
+              cm.replaceSelection('~');
+              cm.setCursor(cursorPos.line, cursorPos.ch + 1);
+              cm.focus();
+            },
+            className: "fa fa-subscript",
+            title: "Insert Subscript",
+          },
+          {
+            name: "superscript",
+            action: function customSuperscriptFunction(editor) {
+              var cm = editor.codemirror;
+              var cursorPos = cm.getCursor();
+              cm.replaceSelection('^');
+              cm.setCursor(cursorPos.line, cursorPos.ch + 1);
+              cm.focus();
+            },
+            className: "fa fa-superscript",
+            title: "Insert Superscript",
+          },
+          "|",
+          {
+            name: "male",
+            action: function customSpecialCharFunction(editor) {
+              var cm = editor.codemirror;
+              var cursorPos = cm.getCursor();
+              cm.replaceSelection('♂');
+              cm.setCursor(cursorPos.line, cursorPos.ch + 1);
+              cm.focus();
+            },
+            className: "fa fa-mars",
+            title: "Insert Male Symbol",
+          },
+          {
+            name: "female",
+            action: function customSpecialCharFunction(editor) {
+              var cm = editor.codemirror;
+              var cursorPos = cm.getCursor();
+              cm.replaceSelection('♀');
+              cm.setCursor(cursorPos.line, cursorPos.ch + 1);
+              cm.focus();
+            },
+            className: "fa fa-venus",
+            title: "Insert Female Symbol",
+          },
+          {
+            name: "plus-minus",
+            action: function customSpecialCharFunction(editor) {
+              var cm = editor.codemirror;
+              var cursorPos = cm.getCursor();
+              cm.replaceSelection('±');
+              cm.setCursor(cursorPos.line, cursorPos.ch + 1);
+              cm.focus();
+            },
+            className: "fa fa-plus-minus",
+            title: "Insert Plus-Minus Symbol",
+          },
+          {
+            name: "en-dash",
+            action: function customSpecialCharFunction(editor) {
+              var cm = editor.codemirror;
+              var cursorPos = cm.getCursor();
+              cm.replaceSelection('–');
+              cm.setCursor(cursorPos.line, cursorPos.ch + 1);
+              cm.focus();
+            },
+            className: "fa fa-minus",
+            title: "Insert En Dash",
+          },
+          {
+            name: "degree",
+            action: function customSpecialCharFunction(editor) {
+              var cm = editor.codemirror;
+              var cursorPos = cm.getCursor();
+              cm.replaceSelection('°');
+              cm.setCursor(cursorPos.line, cursorPos.ch + 1);
+              cm.focus();
+            },
+            className: "fa fa-circle",
+            title: "Insert Degree Symbol",
+          },
+          {
+            name: "multiplication",
+            action: function customSpecialCharFunction(editor) {
+              var cm = editor.codemirror;
+              var cursorPos = cm.getCursor();
+              cm.replaceSelection('×');
+              cm.setCursor(cursorPos.line, cursorPos.ch + 1);
+              cm.focus();
+            },
+            className: "fa fa-times",
+            title: "Insert Multiplication Symbol",
+          },
+          "preview", "side-by-side", "fullscreen"
+        ],
+        status: ["lines", "words", "cursor"],
+        previewRender: function(plainText) {
+          var md = window.markdownit()
+                      .use(window.markdownitSub)
+                      .use(window.markdownitSup);
+          return md.render(plainText);
+        }
+      });
+
+      // Store the SimpleMDE instance on the textarea element
+      textarea.simplemdeInstance = simplemde;
+
+      // Adjust the CodeMirror instance
+      var cm = simplemde.codemirror;
+
+      // Function to adjust height based on content
+      function adjustHeight() {
+        if (simplemde.isSideBySideActive()) {
+          return; // Skip height adjustment when in side-by-side mode
+        }
+        var contentHeight = cm.getScrollerElement().querySelector('.CodeMirror-sizer').scrollHeight;
+        var padding = 10; // Add some padding to ensure no clipping
+        var newHeight = contentHeight + padding;
+        var wrapperElement = cm.getWrapperElement();
+        var scrollerElement = cm.getScrollerElement();
+        
+        wrapperElement.style.height = newHeight + 'px';
+        scrollerElement.style.maxHeight = newHeight + 'px';
+        scrollerElement.style.height = newHeight + 'px';
+        
+        console.log('===============================');
+        console.log('wrapperElement.style.height:', wrapperElement.style.height);
+        console.log('scrollerElement.style.maxHeight:', scrollerElement.style.maxHeight);
+        console.log('scrollerElement.style.height:', scrollerElement.style.height);
+      }
+
+      // Initial height setting based on content
+      if (simplemde.value().trim() === "") {
+        // Set initial height to 4 rows when empty
+        var initialHeight = '100px'; // 100px corresponds to 4 rows
+        var wrapperElement = cm.getWrapperElement();
+        var scrollerElement = cm.getScrollerElement();
+        
+        wrapperElement.style.height = initialHeight;
+        scrollerElement.style.maxHeight = initialHeight;
+        scrollerElement.style.height = initialHeight;
+        
+        console.log('===============================');
+        console.log('Initial empty editor height settings');
+        console.log('wrapperElement.style.height:', wrapperElement.style.height);
+        console.log('scrollerElement.style.maxHeight:', scrollerElement.style.maxHeight);
+        console.log('scrollerElement.style.height:', scrollerElement.style.height);
+      } else {
+        // Adjust height based on content
+        adjustHeight();
+      }
+
+      // Adjust height on content change
+      cm.on('change', adjustHeight);
+
+      // Adjust height when exiting side-by-side mode
+      cm.on('modeChange', function() {
+        if (!simplemde.isSideBySideActive()) {
+          setTimeout(adjustHeight, 0);
+        }
+      });
+
+      console.log('********************************************* textarea height:', textarea.style.height);
+      console.log('********************************************* textarea rows:', textarea.rows);
+      console.log('********************************************* textarea backgroundColor:', textarea.backgroundColor);
+      console.log('SimpleMDE initialized for', textarea.id, ':', simplemde);
+    });
+  });
+
+  document.addEventListener('ajax:success', function(event) {
+    var response = event.detail[0];
+    console.log(response);  // Ensure response contains the expected data
+
+    var displayHtml = response.display_html || 'default_value';  // Replace 'default_value' with an appropriate fallback
+    var profileItemId = response.profile_item_id;
+    alert("==== profileItemId: "+profileItemId)
+    if (!displayHtml) {
+      console.error('displayHtml is undefined!');
+      return;  // Exit if displayHtml is not set
+    }
+
+    var annotationSection = document.querySelector(`#add_annotation_${parameterize(displayHtml)}`);
+    if (annotationSection) {
+      var url = annotationSection.getAttribute('data-url'); // Retrieve the URL from data attribute
+
+      $.ajax({
+        url: url,
+        method: 'GET',
+        data: {
+          instance_id: response.instance_id,
+          display_html: response.display_html,
+          profile_item_id: profileItemId,
+          authenticity_token: '<%= form_authenticity_token %>'  // Include authenticity token
+        },
+        success: function(data) {
+          annotationSection.innerHTML = data;  // Replace content with the partial
+        },
+        error: function() {
+          console.error('Failed to load Add Annotation partial.');
+        }
+      });
+    } else {
+      console.error('Annotation section not found for displayHtml:', displayHtml);
+    }
+  });
+
+
+  document.addEventListener('ajax:error', function(event) {
+    var response = event.detail[0];
+    var displayHtml = response.display_html;
+    var messageDiv = document.createElement('div');
+    messageDiv.className = 'alert';
+    messageDiv.innerText = response.error;
+    var messageContainer = document.getElementById('message_' + parameterize(displayHtml));
+    messageContainer.innerHTML = '';
+    messageContainer.appendChild(messageDiv);
+  });
+</script>

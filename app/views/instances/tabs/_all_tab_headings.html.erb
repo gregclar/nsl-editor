@@ -161,15 +161,16 @@
   <% end %>
 
   <% if @tabs_to_offer.include?('tab_foa_profile') %>
-    <%= render partial: 'instances/tabs/tab', locals: {first: false,
-                                    last: true,
-                                    this_tab: 'tab_foa_profile', 
-                                    link_text: "foa profile".html_safe,
-                                    link_id: 'instance-foa-profile-tab', 
-                                    link_title: 'Foa',
-                                    tab_index: increment_tab_index,
-                                    prev_tab: 'instance-edit-profile-tab',
-                                    next_tab: '.search-result.show-details' } %>
-  <% end %>
-
+    <% if can? :view, :foa_profile %>
+      <%= render partial: 'instances/tabs/tab', locals: {first: false,
+                                      last: true,
+                                      this_tab: 'tab_foa_profile', 
+                                      link_text: "foa profile".html_safe,
+                                      link_id: 'instance-foa-profile-tab', 
+                                      link_title: 'Foa',
+                                      tab_index: increment_tab_index,
+                                      prev_tab: 'instance-edit-profile-tab',
+                                      next_tab: '.search-result.show-details' } %>
+      <% end %>
+    <% end %>
 </ul>

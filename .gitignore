@@ -6,7 +6,11 @@
 
 # Ignore bundler config.
 /.bundle
+Gemfile.lock
+# Ignore history files.
+.history/
 
+.gitignore
 # Ignore all logfiles and tempfiles.
 /log/*
 /tmp/*

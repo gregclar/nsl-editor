@@ -110,17 +110,17 @@ class InstancesController < ApplicationController
 
   # Copy an instance with its citations
   def copy_standalone
-    logger.debug("copy_standalone")
-    current_instance = Instance::AsCopier.find(params[:id])
-    current_instance.multiple_primary_override =
-      instance_params[:multiple_primary_override] == "1"
-    current_instance.duplicate_instance_override =
-      instance_params[:duplicate_instance_override] == "1"
-    @instance = current_instance.copy_with_citations_to_new_reference(
-      instance_params, current_user.username
-    )
-    @message = "Instance was copied"
-    render "instances/copy_standalone/success"
+    logger.debug("================================= copy_standalone ===========================================")
+    # current_instance = Instance::AsCopier.find(params[:id])
+    # current_instance.multiple_primary_override =
+    #   instance_params[:multiple_primary_override] == "1"
+    # current_instance.duplicate_instance_override =
+    #   instance_params[:duplicate_instance_override] == "1"
+    # @instance = current_instance.copy_with_citations_to_new_reference(
+    #   instance_params, current_user.username
+    # )
+    # @message = "Instance was copied"
+    # render "instances/copy_standalone/success"
   rescue StandardError => e
     handle_other_errors(e, "instances/copy_standalone/error")
   end
@@ -206,10 +206,84 @@ class InstancesController < ApplicationController
 
   def find_instance
     @instance = Instance.find(params[:id])
+    # get all the display_html from the profile_product table, it is what a user can do
+    sql_get_all_display_html = <<-SQL
+    SELECT 
+      pp.display_html as display_html, 
+      pot.name as pot_name,
+      p.id as product_id,
+      pp.id as profile_product_id,
+      pit.id as profile_item_type_id, 
+      pot.id as profile_object_type_id
+    FROM temp_profile.product p
+    JOIN temp_profile.profile_product pp on p.id = pp.product_id
+    JOIN temp_profile.profile_item_type pit on pp.profile_item_type_id = pit.id
+    JOIN temp_profile.profile_object_type pot on pit.profile_object_type_id = pot.id
+    ORDER BY pp.sort_order;
+    SQL
+
+    foas_all = ActiveRecord::Base.connection.execute(sql_get_all_display_html)
+    # Initialize the hash to store the data
+    data_hash_foas_all = {}
+
+    foas_all.each do |row|
+      data_hash_foas_all[row['display_html']] = {
+      "pot_name" => row['pot_name'],
+      "product_id" => row['product_id'],
+      "profile_product_id" => row['profile_product_id'],
+      "profile_item_type_id" => row['profile_item_type_id'],
+      "profile_object_type_id" => row['profile_object_type_id']
+    }
+    end
+
+    instance_id = params[:id]  
+    sql_get_existent_display_html_by_instance_id = ActiveRecord::Base.sanitize_sql_array([<<-SQL, instance_id])
+      SELECT pp.display_html AS display_html,
+            pi.id AS profile_item_id,
+            ptx.id AS profile_text_id,
+            pit.id AS profile_item_type_id,
+            pp.id AS profile_product_id,
+            ptx.value AS text_value,
+            pan.value as annotation_value,
+            pan.id as profile_annotation_id
+      FROM temp_profile.profile_item pi
+      JOIN temp_profile.profile_text ptx ON pi.profile_text_id = ptx.id
+      JOIN temp_profile.profile_item_type pit ON pi.profile_item_type_id = pit.id
+      JOIN temp_profile.profile_product pp ON pit.id = pp.profile_item_type_id
+      LEFT JOIN temp_profile.profile_annotation pan ON pan.profile_item_id = pi.id
+      WHERE pi.instance_id = ?;
+    SQL
+    
+    foas_existent = ActiveRecord::Base.connection.execute(sql_get_existent_display_html_by_instance_id)
+
+    data_hash_existent_foas = {}
+    foas_existent.each do |row|
+      data_hash_existent_foas[row['display_html']] = {
+        "profile_item_id" => row['profile_item_id'],
+        "profile_text_id" => row['profile_text_id'],
+        "profile_item_type_id" => row['profile_item_type_id'],
+        "profile_product_id" => row['profile_product_id'],
+        "text_value" => row['text_value'],
+        "annotation_value" => row['annotation_value'],
+        "profile_annotation_id" => row['profile_annotation_id']
+      }
+    end
+
+
+  Rails.logger.debug " =================== Data Hash Existent FOAs: #{data_hash_existent_foas.inspect}=================="
+
+
+    @data_hash_foas_all = data_hash_foas_all
+    @data_hash_existent_foas = data_hash_existent_foas
+    @instance_id = instance_id
+
+
+
   rescue ActiveRecord::RecordNotFound
     flash[:alert] = "We could not find the instance."
     redirect_to instances_path
   end
+  
 
   def instance_params
     params.require(:instance).permit(:instance_type,
@@ -225,7 +299,8 @@ class InstancesController < ApplicationController
                                      :multiple_primary_override,
                                      :duplicate_instance_override,
                                      :draft,
-                                     :parent_id)
+                                     :parent_id,
+                                     :instance_id)
   end
 
   def row_params

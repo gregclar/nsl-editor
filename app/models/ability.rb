@@ -44,6 +44,8 @@ class Ability
   # authorization checks prevent non-editors changing data.
   def initialize(user)
     user ||= User.new(groups: [])
+    can :manage, Profile::ProfileText
+    can :manage, Profile::ProfileAnnotation
     basic_auth_1
     basic_auth_2
     edit_auth if user.edit?
@@ -54,6 +56,18 @@ class Ability
     treebuilder_auth if user.treebuilder?
     reviewer_auth if user.reviewer?
     batch_loader_auth if user.batch_loader?
+    foa_auth if user.foa?
+
+    Rails.logger.debug "======================================Setting abilities for user: #{user.inspect}"
+
+    # need to create a group for foa groups
+    # foa_auth if user.foa?
+  end
+
+  def foa_auth
+    can :read, Profile::ProfileText
+    can :read, Profile::ProfileAnnotation
+    can :view, :foa_profile
   end
 
   def basic_auth_1
@@ -84,6 +98,10 @@ class Ability
   end
 
   def edit_auth
+    can :manage, Profile::ProfileText 
+    can :manage, Profile::ProfileAnnotation
+    can "profile_annotations", :all
+    can "profile_texts",           :all
     can "authors",            :all
     can "comments",           :all
     can "instances",          :all
@@ -99,6 +117,8 @@ class Ability
   end
 
   def qa_auth
+    can :manage, Profile::ProfileText
+    can :manage, Profile::ProfileAnnotation
     can "batches",                   :all
     can "tree_versions",             :all
     can "tree_version_elements",     :all
@@ -126,6 +146,8 @@ class Ability
   end
 
   def admin_auth
+    can :manage, Profile::ProfileText
+    can :manage, Profile::ProfileAnnotation
     can "admin",              :all
     can "menu",               "admin"
   end
