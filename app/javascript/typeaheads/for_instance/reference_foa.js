@@ -1,5 +1,6 @@
 
 function setUpInstanceReferenceFoa() {
+    alert("setUpInstanceReferenceFoa!!");
     $('#instance-reference-typeahead').typeahead(
         {highlight: true},
         {
