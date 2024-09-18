@@ -5,25 +5,28 @@
   <h4>Add Reference</h4>
 
   <!-- Input field with dynamically generated unique ID -->
-    <input
-    id="instance-reference-typeahead-<%= profile_item_id %>" 
-    class="typeahead form-control width-100-percent give-me-focus" 
-    title="Enter the reference.  Typeahead for reference citation, allows unordered fragments."
-    required="true"
-    autofocus="true"
-    tabindex="<%= increment_tab_index %>"
-    type="text" 
-    placeholder="Reference wildcarded order-insensitive citation search"
-    value="<%= @instance.reference.try('title') %>"/>
 
   <%= form_with url: profile_references_path, method: :post, remote: true, html: { data: { type: :json, form_type: 'annotation_form' } } do |f| %>
     <!-- Hidden fields with parameters -->
     <%= hidden_field_tag :profile_item_id, profile_item_id %>
+    <%= f.hidden_field :reference_id, id: "reference-id-hidden-#{profile_item_id}" %> <!-- Hidden field for reference_id -->
+
+    <!-- Properly formatted input field -->
+    <input
+      id="instance-reference-typeahead-<%= profile_item_id %>" 
+      class="typeahead form-control width-100-percent give-me-focus" 
+      title="Enter the reference.  Typeahead for reference citation, allows unordered fragments."
+      required="true"
+      autofocus="true"
+      tabindex="<%= increment_tab_index %>"
+      type="text" 
+      placeholder="Reference wildcarded order-insensitive citation search"
+      value="<%= @instance.reference.try('title') %>"/>
 
     <%= f.submit 'Add', style: 'background-color: #5a5a5a; color: white; border: none; padding: 5px 10px; cursor: pointer; border-radius: 4px; margin-left: 10px;' %>
   <% end %>
 <% end %>
 
 <script>
-    # alert('instance-reference-typeahead-<%= profile_item_id %>');
+    setUpInstanceReferenceFoa('<%= profile_item_id %>');
 </script>

@@ -27,13 +27,26 @@ class ProfileReferencesController < ApplicationController
 
   # Create or update a profile reference
   def create
-    Rails.logger.debug "------ Profile Reference Controller Create Action hit."
+      Rails.logger.debug "------ Profile Reference Controller Create Action hit."
   
-    profile_item_id = params[:profile_item_id] rescue nil
-    text_value = params[:text_value] rescue nil
-
-    Rails.logger.debug "Parsed profile_item_id: #{profile_item_id}"
-    Rails.logger.debug "Parsed text_value: #{text_value}"
+      # Extracting parameters with error handling in case of missing parameters
+      profile_item_id = params[:profile_item_id] rescue nil
+      reference_id = params[:reference_id] rescue nil
+  
+      # Logging the extracted parameters to verify they are passed correctly
+      Rails.logger.debug "Received profile_item_id: #{profile_item_id}"
+      Rails.logger.debug "Received reference_id: #{reference_id}"
+  
+      # Example logic for handling the profile reference
+      if profile_item_id.present? && reference_id.present?
+        Rails.logger.debug "Both profile_item_id and reference_id are present. Proceeding with creation/update logic."
+        
+        # Here, you would implement your create or update logic as needed.
+        
+      else
+        Rails.logger.debug "Missing one or both parameters: profile_item_id: #{profile_item_id}, reference_id: #{reference_id}"
+        render json: { error: "Required parameters missing." }, status: :unprocessable_entity
+      end
 
     # @profile_reference = Profile::ProfileReference.find_by(profile_item_id: profile_item_id)
 
