@@ -45,13 +45,15 @@
 
 
 
-
-    <% reference_annotation_value = 'reference_annotation_value_default' %>
+    reference_id
+    <% reference_id =  existing_entry ? existing_entry['reference_id'] : '' %>
+    <% reference_annotation =  existing_entry ? existing_entry['reference_annotation'] : '' %>
     <div id="add_reference_<%= display_html.parameterize %>" data-url="<%= render_add_reference_profile_references_path %>">
       <%= render partial: 'instances/tabs/add_reference', 
         locals: { 
           profile_item_id: existing_entry&.dig('profile_item_id') || @profile_item_id,
-          reference_annotation_value: reference_annotation_value || ''
+          reference_annotation: reference_annotation,
+          reference_id: reference_id
         } %>
     </div>
   

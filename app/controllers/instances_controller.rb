@@ -246,12 +246,15 @@ class InstancesController < ApplicationController
               pp.id AS profile_product_id,
               ptx.value AS text_value,
               pan.value as annotation_value,
-              pan.id as profile_annotation_id
+              pan.id as profile_annotation_id,
+              pref.reference_id as reference_id,
+			        pref.annotation as reference_annotation
         FROM temp_profile.profile_item pi
         JOIN temp_profile.profile_text ptx ON pi.profile_text_id = ptx.id
         JOIN temp_profile.profile_item_type pit ON pi.profile_item_type_id = pit.id
         JOIN temp_profile.profile_product pp ON pit.id = pp.profile_item_type_id
         LEFT JOIN temp_profile.profile_annotation pan ON pan.profile_item_id = pi.id
+        LEFT JOIN temp_profile.profile_reference pref ON pref.profile_item_id =pi.id
         WHERE pi.instance_id = ?;
       SQL
       
@@ -266,7 +269,9 @@ class InstancesController < ApplicationController
           "profile_product_id" => row['profile_product_id'],
           "text_value" => row['text_value'],
           "annotation_value" => row['annotation_value'],
-          "profile_annotation_id" => row['profile_annotation_id']
+          "profile_annotation_id" => row['profile_annotation_id'],
+          "reference_id" => row['reference_id'],
+          "reference_annotation" => row['reference_annotation']
         }
       end
 
