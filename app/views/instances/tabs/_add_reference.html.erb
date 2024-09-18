@@ -22,6 +22,12 @@
       type="text" 
       placeholder="Reference wildcarded order-insensitive citation search"
       value="<%= @instance.reference.try('title') %>"/>
+      
+      <%= f.text_field :reference_annotation, 
+      id: "reference-annotation-#{profile_item_id}",
+      class: "form-control width-100-percent", 
+      placeholder: "Enter reference annotation", 
+      required: false %> <!-- Optional field -->
 
     <%= f.submit 'Add', style: 'background-color: #5a5a5a; color: white; border: none; padding: 5px 10px; cursor: pointer; border-radius: 4px; margin-left: 10px;' %>
   <% end %>
