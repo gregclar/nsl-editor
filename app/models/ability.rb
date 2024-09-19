@@ -80,6 +80,8 @@ class Ability
     can "sessions",           :all
     can "trees",              "ng"
     can "passwords",          "edit"
+    can "passwords",          "show_password_form"
+    can "passwords",          "password_changed"
     can "passwords",          "update"
   end
 
