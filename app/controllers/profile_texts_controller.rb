@@ -115,7 +115,7 @@ class ProfileTextsController < ApplicationController
         Rails.logger.debug "Created Profile Item with ID: #{profile_item_id}"
   
         respond_to do |format|
-          format.json { render json: { message: 'Profile Text was successfully created.', profile_text_id: profile_text_id, profile_item_id: profile_item_id, display_html: display_html }, status: :ok }
+          format.json { render json: { message: 'Profile Text was successfully created.', profile_text_id: profile_text_id, profile_item_id: profile_item_id, instance_id: instance_id, display_html: display_html }, status: :ok }
         end
       else
         Rails.logger.debug "################################## Profile Text is not new"
@@ -129,7 +129,7 @@ class ProfileTextsController < ApplicationController
         SQL
   
         respond_to do |format|
-          format.json { render json: { message: 'Profile Text was successfully updated.', profile_item_id: profile_item_id, profile_text_id: profile_text_id, display_html: display_html }, status: :ok }
+          format.json { render json: { message: 'Profile Text was successfully updated.', profile_item_id: profile_item_id, instance_id: instance_id, profile_text_id: profile_text_id, display_html: display_html }, status: :ok }
         end
       end
   

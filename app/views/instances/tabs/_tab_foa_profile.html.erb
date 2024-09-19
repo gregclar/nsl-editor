@@ -454,6 +454,38 @@
     } else {
       console.error('Annotation section not found for displayHtml:', displayHtml);
     }
+    
+    var referenceSection = document.querySelector(`#add_reference_${parameterize(displayHtml)}`);
+    if (referenceSection) {
+      var url = referenceSection.getAttribute('data-url'); // Retrieve the URL from data attribute
+
+      $.ajax({
+        url: url,
+        method: 'GET',
+        data: {
+          instance_id: response.instance_id,
+          display_html: response.display_html,
+          profile_item_id: profileItemId,
+          authenticity_token: '<%= form_authenticity_token %>'  // Include authenticity token
+        },
+        success: function(data) {
+          referenceSection.innerHTML = data;  // Replace content with the partial
+          // Ensure that the JavaScript embedded in the loaded partial runs
+          var scriptTags = referenceSection.querySelectorAll('script');
+          scriptTags.forEach(function(scriptTag) {
+            eval(scriptTag.innerHTML); // Execute the JavaScript within the script tag
+          });
+        },
+        error: function() {
+          console.error('Failed to load Add Reference partial.');
+        }
+      });
+    } else {
+      console.error('Reference section not found for displayHtml:', displayHtml);
+    }
+
+
+
   });
 
 

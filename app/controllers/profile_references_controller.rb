@@ -20,10 +20,20 @@ class ProfileReferencesController < ApplicationController
   # Render the add reference form dynamically via AJAX
   def render_add_reference
     profile_item_id = params[:profile_item_id]
-    reference_annotation_value = params[:reference_annotation_value] || ""
-
-    render partial: 'instances/tabs/add_reference', locals: { profile_item_id: profile_item_id, reference_annotation_value: reference_annotation_value }
+    reference_annotation = params[:reference_annotation] || ""
+    reference_id = params[:reference_id] || ""
+    instance_id = params[:instance_id] || ""
+  
+    # Find or initialize @instance based on the passed parameters
+    @instance = Instance.find(instance_id) if instance_id.present?
+  
+    render partial: 'instances/tabs/add_reference', 
+           locals: { profile_item_id: profile_item_id, 
+                     reference_annotation: reference_annotation, 
+                     reference_id: reference_id, 
+                     instance: @instance }
   end
+  
 
   def create
     Rails.logger.debug "------ Profile Reference Controller Create Action hit."
