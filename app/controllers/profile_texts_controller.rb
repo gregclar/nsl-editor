@@ -43,7 +43,7 @@ class ProfileTextsController < ApplicationController
       # raise StandardError.new("This is a dummy error for testing purposes.")
 
       # Debugging information
-      Rails.logger.debug "&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&& Profile Text Params: #{profile_text_params.inspect}"
+      Rails.logger.debug "Profile Text Params: #{profile_text_params.inspect}"
   
       is_new = ActiveModel::Type::Boolean.new.cast(profile_text_params[:is_new])
       instance_id = profile_text_params[:instance_id]
@@ -115,7 +115,7 @@ class ProfileTextsController < ApplicationController
         Rails.logger.debug "Created Profile Item with ID: #{profile_item_id}"
   
         respond_to do |format|
-          format.json { render json: { message: 'Profile Text was successfully created.', profile_text_id: profile_text_id, profile_item_id: profile_item_id, instance_id: instance_id, display_html: display_html }, status: :ok }
+          format.json { render json: { message: 'Profile Text was successfully created.', updated: false, created: true, profile_text_id: profile_text_id, profile_item_id: profile_item_id, instance_id: instance_id, display_html: display_html }, status: :ok }
         end
       else
         Rails.logger.debug "################################## Profile Text is not new"
@@ -129,7 +129,7 @@ class ProfileTextsController < ApplicationController
         SQL
   
         respond_to do |format|
-          format.json { render json: { message: 'Profile Text was successfully updated.', profile_item_id: profile_item_id, instance_id: instance_id, profile_text_id: profile_text_id, display_html: display_html }, status: :ok }
+          format.json { render json: { message: 'Profile Text was successfully updated.', updated: true, created: false, profile_item_id: profile_item_id, instance_id: instance_id, profile_text_id: profile_text_id, display_html: display_html }, status: :ok }
         end
       end
   

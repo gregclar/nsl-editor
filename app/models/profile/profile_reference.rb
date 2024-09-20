@@ -2,6 +2,7 @@
 module Profile
     class ProfileReference < ApplicationRecord
       self.table_name = "temp_profile.profile_reference"
+      self.locking_column = nil
       # Assuming `id` is the primary key by default
       # self.primary_key = "id"
       # self.sequence_name = "nsl_global_seq"

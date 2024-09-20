@@ -2,6 +2,7 @@
   <%= form_with url: profile_references_path, method: :post, remote: true, html: { data: { type: :json, form_type: 'annotation_form' } } do |f| %>
     <!-- Hidden fields with parameters -->
     <%= hidden_field_tag :profile_item_id, profile_item_id %>
+    <%= hidden_field_tag :reference_id_raw, reference_id %>
     <%= f.hidden_field :reference_id, id: "reference-id-hidden-#{profile_item_id}" %> <!-- Hidden field for reference_id -->
     <h4>Select Reference</h4>
 

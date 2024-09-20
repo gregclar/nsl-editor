@@ -60,12 +60,12 @@ class ProfileAnnotationsController < ApplicationController
         Rails.logger.debug "+++++++++++++++++++++++ Profile annotation updated successfully. +++++++++++++++++++++"
   
         # Render a JSON response indicating success
-        render json: { message: 'Profile annotation updated successfully.', annotation: @profile_annotation }, status: :ok
+        render json: { message: 'Profile annotation updated successfully.', annotation: @profile_annotation, annotation_updated: true, profile_item_id: profile_item_id}, status: :ok
       else
         Rails.logger.error "=========================== Failed to update profile annotation: #{@profile_annotation.errors.full_messages.join(', ')}"
   
         # Render a JSON response indicating failure with error messages
-        render json: { errors: @profile_annotation.errors.full_messages }, status: :unprocessable_entity
+        render json: { errors: @profile_annotation.errors.full_messages, profile_item_id: profile_item_id }, status: :unprocessable_entity
       end
     else
       # Create a new ProfileAnnotation
@@ -84,12 +84,12 @@ class ProfileAnnotationsController < ApplicationController
         Rails.logger.debug "+++++++++++++++++++++++ Profile annotation created successfully. +++++++++++++++++++++"
   
         # Render a JSON response indicating success
-        render json: { message: 'Profile annotation created successfully.', annotation: @profile_annotation }, status: :created
+        render json: { message: 'Profile annotation created successfully.', profile_item_id: profile_item_id, annotation: @profile_annotation, annotation_created: true }, status: :created
       else
         Rails.logger.error "=========================== Failed to create profile annotation: #{@profile_annotation.errors.full_messages.join(', ')}"
   
         # Render a JSON response indicating failure with error messages
-        render json: { errors: @profile_annotation.errors.full_messages }, status: :unprocessable_entity
+        render json: { errors: @profile_annotation.errors.full_messages, profile_item_id: profile_item_id, annotation_error: true}, status: :unprocessable_entity
       end
     end
   end

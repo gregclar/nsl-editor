@@ -34,6 +34,7 @@
     <% end %>
 
     <!-- Add Annotation Section -->
+    <div id="annotation_message_<%= existing_entry&.dig('profile_item_id') || @profile_item_id %>" class="message-container"></div>
     <% annotation_value = existing_entry ? existing_entry['annotation_value'] : '' %>
     <div id="add_annotation_<%= display_html.parameterize %>" data-url="<%= render_add_annotation_profile_annotations_path %>">
       <%= render partial: 'instances/tabs/add_annotation', 
@@ -428,61 +429,88 @@
       return;  // Exit if displayHtml is not set
     }
 
-    var annotationSection = document.querySelector(`#add_annotation_${parameterize(displayHtml)}`);
-    if (annotationSection) {
-      var url = annotationSection.getAttribute('data-url'); // Retrieve the URL from data attribute
+    if(response.created) {
+      alert('created');
+      var annotationSection = document.querySelector(`#add_annotation_${parameterize(displayHtml)}`);
+      if (annotationSection) {
+        var url = annotationSection.getAttribute('data-url'); // Retrieve the URL from data attribute
+  
+        $.ajax({
+          url: url,
+          method: 'GET',
+          data: {
+            instance_id: response.instance_id,
+            display_html: response.display_html,
+            profile_item_id: profileItemId,
+            authenticity_token: '<%= form_authenticity_token %>'  // Include authenticity token
+          },
+          success: function(data) {
+            annotationSection.innerHTML = data;  // Replace content with the partial
+          },
+          error: function() {
+            console.error('Failed to load Add Annotation partial.');
+          }
+        });
+      } else {
+        console.error('Annotation section not found for displayHtml:', displayHtml);
+      }
+      
+      var referenceSection = document.querySelector(`#add_reference_${parameterize(displayHtml)}`);
+      if (referenceSection) {
+        var url = referenceSection.getAttribute('data-url'); // Retrieve the URL from data attribute
+  
+        $.ajax({
+          url: url,
+          method: 'GET',
+          data: {
+            instance_id: response.instance_id,
+            display_html: response.display_html,
+            profile_item_id: profileItemId,
+            authenticity_token: '<%= form_authenticity_token %>'  // Include authenticity token
+          },
+          success: function(data) {
+            referenceSection.innerHTML = data;  // Replace content with the partial
+            // Ensure that the JavaScript embedded in the loaded partial runs
+            var scriptTags = referenceSection.querySelectorAll('script');
+            scriptTags.forEach(function(scriptTag) {
+              eval(scriptTag.innerHTML); // Execute the JavaScript within the script tag
+            });
+          },
+          error: function() {
+            console.error('Failed to load Add Reference partial.');
+          }
+        });
+      } else {
+        console.error('Reference section not found for displayHtml:', displayHtml);
+      }
+    }
 
-      $.ajax({
-        url: url,
-        method: 'GET',
-        data: {
-          instance_id: response.instance_id,
-          display_html: response.display_html,
-          profile_item_id: profileItemId,
-          authenticity_token: '<%= form_authenticity_token %>'  // Include authenticity token
-        },
-        success: function(data) {
-          annotationSection.innerHTML = data;  // Replace content with the partial
-        },
-        error: function() {
-          console.error('Failed to load Add Annotation partial.');
-        }
-      });
-    } else {
-      console.error('Annotation section not found for displayHtml:', displayHtml);
+    if(response.created || response.updated) {
+      var messageDiv = document.createElement('div');
+      messageDiv.className = 'notice';
+      messageDiv.innerText = response.message;
+      var messageContainer = document.getElementById('message_' + parameterize(displayHtml));
+      messageContainer.innerHTML = ''; // Clear existing messages
+      messageContainer.appendChild(messageDiv);
+    }
+
+    if (response.annotation_created || response.annotation_updated) {
+      var profileItemId = response.profile_item_id; // Use profile_item_id
+      var messageDiv = document.createElement('div');
+      messageDiv.className = 'notice';
+      messageDiv.innerText = response.message;
+      
+      // Use profile_item_id to find the correct message container
+      var messageContainer = document.getElementById('annotation_message_' + profileItemId);
+      
+      if (messageContainer) {
+        messageContainer.innerHTML = ''; // Clear existing messages
+        messageContainer.appendChild(messageDiv);
+      } else {
+        console.error('Annotation message container not found for profile_item_id: ' + profileItemId);
+      }
     }
     
-    var referenceSection = document.querySelector(`#add_reference_${parameterize(displayHtml)}`);
-    if (referenceSection) {
-      var url = referenceSection.getAttribute('data-url'); // Retrieve the URL from data attribute
-
-      $.ajax({
-        url: url,
-        method: 'GET',
-        data: {
-          instance_id: response.instance_id,
-          display_html: response.display_html,
-          profile_item_id: profileItemId,
-          authenticity_token: '<%= form_authenticity_token %>'  // Include authenticity token
-        },
-        success: function(data) {
-          referenceSection.innerHTML = data;  // Replace content with the partial
-          // Ensure that the JavaScript embedded in the loaded partial runs
-          var scriptTags = referenceSection.querySelectorAll('script');
-          scriptTags.forEach(function(scriptTag) {
-            eval(scriptTag.innerHTML); // Execute the JavaScript within the script tag
-          });
-        },
-        error: function() {
-          console.error('Failed to load Add Reference partial.');
-        }
-      });
-    } else {
-      console.error('Reference section not found for displayHtml:', displayHtml);
-    }
-
-
-
   });
 
 
@@ -495,5 +523,17 @@
     var messageContainer = document.getElementById('message_' + parameterize(displayHtml));
     messageContainer.innerHTML = '';
     messageContainer.appendChild(messageDiv);
+
+    if(response.annotation_error) {
+      var messageDiv = document.createElement('div');
+      messageDiv.className = 'notice';
+      messageDiv.innerText = response.message;
+      var messageContainer = document.getElementById('annotation_message_' + parameterize(displayHtml));
+      messageContainer.innerHTML = ''; // Clear existing messages
+      messageContainer.appendChild(messageDiv);
+    }
+
+
+
   });
 </script>
