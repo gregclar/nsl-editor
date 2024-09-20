@@ -1,17 +1,9 @@
 <% if profile_item_id.present? %>
-  <!-- Debugging: Display passed parameters -->
-  <h2>Profile Item ID: <%= profile_item_id %></h2>
-  <h2>reference_annotation: <%= reference_annotation %></h2>
-  <h2>reference_id: <%= reference_id %></h2>
-
-  <h4>Add Reference</h4>
-
-  <!-- Input field with dynamically generated unique ID -->
-
   <%= form_with url: profile_references_path, method: :post, remote: true, html: { data: { type: :json, form_type: 'annotation_form' } } do |f| %>
     <!-- Hidden fields with parameters -->
     <%= hidden_field_tag :profile_item_id, profile_item_id %>
     <%= f.hidden_field :reference_id, id: "reference-id-hidden-#{profile_item_id}" %> <!-- Hidden field for reference_id -->
+    <h4>Select Reference</h4>
 
     <!-- Properly formatted input field -->
     <input
@@ -24,13 +16,15 @@
       type="text" 
       placeholder="Reference wildcarded order-insensitive citation search"
       value="<%= reference_id.present? ? Reference.find(reference_id).try(:title) : @instance.reference.try('title') %>"/>
+    <h4>Add Reference Annotation</h4>
 
       <%= f.text_field :reference_annotation, 
       id: "reference-annotation-#{profile_item_id}",
       class: "form-control width-100-percent", 
       placeholder: "Enter reference annotation", 
       value: reference_annotation,
-      required: false %> <!-- Optional field -->
+      required: false,
+      style: "background-color: white;" %> 
 
     <%= f.submit 'Add', style: 'background-color: #5a5a5a; color: white; border: none; padding: 5px 10px; cursor: pointer; border-radius: 4px; margin-left: 10px;' %>
   <% end %>

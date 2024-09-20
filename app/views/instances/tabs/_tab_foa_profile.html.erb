@@ -19,7 +19,7 @@
         <input type="hidden" name="foa[profile_item_type_id]" value="<%= existing_entry['profile_item_type_id'] %>">
         <input type="hidden" name="foa[profile_product_id]" value="<%= existing_entry['profile_product_id'] %>">
         <div id="simplemde-container">
-          <textarea class="form-control editor-textarea custom-height" title="Enter verbatim name" rows="4" tabindex="1112" name="foa[text_value]" id="editor_<%= display_html.parameterize %>"><%= existing_entry['text_value'] %></textarea>
+          <textarea class="form-control editor-textarea custom-height" title="Enter verbatim name" rows="4" tabindex="1112" name="foa[text_value]" id="editor_<%= display_html.parameterize %>" required="true"><%= existing_entry['text_value'] %></textarea>
         </div>
       <% else %>
         <!-- Fields for new entry -->
@@ -27,7 +27,7 @@
         <input type="hidden" name="foa[profile_product_id]" value="<%= details['profile_product_id'] %>">
         <input type="hidden" name="foa[profile_object_type_id]" value="<%= details['profile_object_type_id'] %>">
         <div id="simplemde-container">
-          <textarea class="form-control editor-textarea custom-height" title="Enter verbatim name" rows="4" tabindex="1112" name="foa[text_value]" id="editor_<%= display_html.parameterize %>"></textarea>
+          <textarea class="form-control editor-textarea custom-height" title="Enter verbatim name" rows="4" tabindex="1112" name="foa[text_value]" id="editor_<%= display_html.parameterize %>" required="true"></textarea>
         </div>
       <% end %>
       <%= submit_tag 'Save', style: 'background-color: #5a5a5a; color: white; border: none; padding: 5px 10px; cursor: pointer; border-radius: 4px;' %>
@@ -43,9 +43,6 @@
         } %>
     </div>
 
-
-
-    reference_id
     <% reference_id =  existing_entry ? existing_entry['reference_id'] : '' %>
     <% reference_annotation =  existing_entry ? existing_entry['reference_annotation'] : '' %>
     <div id="add_reference_<%= display_html.parameterize %>" data-url="<%= render_add_reference_profile_references_path %>">
