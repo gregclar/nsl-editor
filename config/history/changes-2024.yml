@@ -1,3 +1,7 @@
+- :date: 24-Sep-2024
+  :jira_id: '5056'
+  :description: |-
+    Loader Name: Restrict new workflow tab to a specific security group
 - :date: 23-Sep-2024
   :jira_id: ''
   :description: |-
