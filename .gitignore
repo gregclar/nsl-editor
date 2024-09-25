@@ -6,11 +6,9 @@
 
 # Ignore bundler config.
 /.bundle
-Gemfile.lock
 # Ignore history files.
 .history/
 
-.gitignore
 # Ignore all logfiles and tempfiles.
 /log/*
 /tmp/*
@@ -43,3 +41,12 @@ tags
 coverage
 hs_err*.log
 .vscode
+.pgpass
+.nsl
+
+# Ignore env configs
+.env*
+
+# Ignore vpn configs
+*.ovpn
+/vpn
