@@ -48,6 +48,13 @@ class ApplicationController < ActionController::Base
 
   private
 
+   # Add nested directories for partials
+   def _prefixes
+     @_prefixes_with_partials ||= super | %w(application/search_results
+                  application/search_results/link_texts
+                  )
+   end
+
   def ask_user_to_sign_in
     session[:url_after_sign_in] = request.url
     respond_to do |format|
@@ -182,6 +189,7 @@ class ApplicationController < ActionController::Base
 
   def set_session_default_loader_batch_name
     return if session[:default_loader_batch_id].blank?
+    return if Loader::Batch.where(id: session[:default_loader_batch_id])
 
     session[:default_loader_batch_name] =
       Loader::Batch.find(session[:default_loader_batch_id]).name

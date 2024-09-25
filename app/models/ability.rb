@@ -57,6 +57,7 @@ class Ability
     treebuilder_auth if user.treebuilder?
     reviewer_auth if user.reviewer?
     batch_loader_auth if user.batch_loader?
+    loader_2_tab_auth if user.loader_2_tab_loader?
     foa_auth if user.foa?
 
     Rails.logger.debug "======================================Setting abilities for user: #{user.inspect}"
@@ -96,6 +97,8 @@ class Ability
     can "sessions",           :all
     can "trees",              "ng"
     can "passwords",          "edit"
+    can "passwords",          "show_password_form"
+    can "passwords",          "password_changed"
     can "passwords",          "update"
   end
 
@@ -169,6 +172,10 @@ class Ability
     can "loader/batch/bulk",           :all
     can "loader/batch/job_lock",       :all
     can "menu",                        "batch"
+  end
+
+  def loader_2_tab_auth
+    can "loader/instances-loader-2",   :all
   end
 
   def reviewer_auth

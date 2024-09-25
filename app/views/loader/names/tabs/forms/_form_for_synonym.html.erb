@@ -1,4 +1,4 @@
-<%= form_with(model: loader_name, role: 'form', remote: true) do |f| %>
+<%= form_with(model: loader_name, role: 'form', data: { turbo: false }, local: false) do |f| %>
     <%= f.submit "Save", id: 'loader-name-save', class: 'btn btn-primary width-5em pull-right', title: "Save changes", tabindex: increment_tab_index, disabled: false %>
     <div id="search-result-details-info-message-container" class="message-container"></div>
     <div id="search-result-details-error-message-container" class="message-container error-container"></div>
@@ -41,7 +41,7 @@
 
     <div class="form-group">
       <label for="family">Family*</label>
-      <%= f.text_field :family, class: 'form-control give-me-focus', required: true, title: "Enter family name", tabindex: increment_tab_index, autofocus: true %>
+      <%= f.text_field :family, class: 'form-control', required: true, title: "Enter family name", tabindex: increment_tab_index, autofocus: true %>
     </div>
 
     <div class="form-group">
