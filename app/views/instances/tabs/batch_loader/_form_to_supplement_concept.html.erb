@@ -4,20 +4,10 @@
 <% syn_for_copy = @instance.synonyms_for_copy_to_loader_name %>
 
 
-<h5>Add <%= loader_name.simple_name %> and its synonymy to an existing concept in a batch</h5>
+<h5>Add <%= loader_name.simple_name %> and its synonymy to an existing concept in <%= session[:default_loader_batch_name] %></h5>
 
 
 <%= form_with(model: loader_name, role: 'form', data: { turbo: false }, local: false) do |form| %>
-    <div class="form-group">
-      <label for="loader_batch_id">Batch <span class="red">*</span></label>
-      <%= form.select :loader_batch_id,
-        Loader::Batch.order(:name).map { |batch| [batch.name, batch.id] },
-        {include_blank: true},
-        class: 'form-control',
-        required: true,
-        title: 'Must be within a batch',
-        tabindex: increment_tab_index %>
-    </div>
 
     <%= form.hidden_field :simple_name %>
     <%= form.hidden_field :full_name %>
@@ -42,7 +32,7 @@
 
 
     <div class="form-group">
-      <label for="loader-name-parent-typeahead">Concept/Parent<span class="red">*</span></label>
+      <label for="loader-name-parent-typeahead">Concept/Parent from <%= session[:default_loader_batch_name] %><span class="red">*</span></label>
       <input id="loader-name-parent-typeahead"
              name="loader_name[parent_typeahead]"
              class="typeahead form-control"

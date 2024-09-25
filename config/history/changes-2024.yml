@@ -1,3 +1,7 @@
+- :date: 25-Sep-2024
+  :jira_id: '5180'
+  :description: |-
+    Loader: Remove the batch drop down from Loader 2 tab because it's not honoured by the typeahead dropdown and therefore misleading
 - :date: 24-Sep-2024
   :jira_id: '5056'
   :description: |-
