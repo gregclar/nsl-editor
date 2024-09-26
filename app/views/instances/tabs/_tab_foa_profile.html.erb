@@ -225,9 +225,9 @@
 
   // Add an event listener for the custom event
   document.addEventListener('simpleMDELoaded', function() {
-    console.log('SimpleMDE is loaded');
+    debug('SimpleMDE is loaded');
     document.querySelectorAll('textarea.editor-textarea').forEach(function(textarea) {
-      console.log('Initializing SimpleMDE for', textarea.id);
+      debug('Initializing SimpleMDE for', textarea.id);
       textarea.style.display = 'block'; // Show the textarea
 
       // Check if SimpleMDE instance already exists and destroy it
@@ -373,10 +373,10 @@
         scrollerElement.style.maxHeight = newHeight + 'px';
         scrollerElement.style.height = newHeight + 'px';
         
-        console.log('===============================');
-        console.log('wrapperElement.style.height:', wrapperElement.style.height);
-        console.log('scrollerElement.style.maxHeight:', scrollerElement.style.maxHeight);
-        console.log('scrollerElement.style.height:', scrollerElement.style.height);
+        debug('===============================');
+        debug('wrapperElement.style.height:', wrapperElement.style.height);
+        debug('scrollerElement.style.maxHeight:', scrollerElement.style.maxHeight);
+        debug('scrollerElement.style.height:', scrollerElement.style.height);
       }
 
       // Initial height setting based on content
@@ -390,11 +390,11 @@
         scrollerElement.style.maxHeight = initialHeight;
         scrollerElement.style.height = initialHeight;
         
-        console.log('===============================');
-        console.log('Initial empty editor height settings');
-        console.log('wrapperElement.style.height:', wrapperElement.style.height);
-        console.log('scrollerElement.style.maxHeight:', scrollerElement.style.maxHeight);
-        console.log('scrollerElement.style.height:', scrollerElement.style.height);
+        debug('===============================');
+        debug('Initial empty editor height settings');
+        debug('wrapperElement.style.height:', wrapperElement.style.height);
+        debug('scrollerElement.style.maxHeight:', scrollerElement.style.maxHeight);
+        debug('scrollerElement.style.height:', scrollerElement.style.height);
       } else {
         // Adjust height based on content
         adjustHeight();
@@ -410,16 +410,13 @@
         }
       });
 
-      console.log('********************************************* textarea height:', textarea.style.height);
-      console.log('********************************************* textarea rows:', textarea.rows);
-      console.log('********************************************* textarea backgroundColor:', textarea.backgroundColor);
-      console.log('SimpleMDE initialized for', textarea.id, ':', simplemde);
+      debug('SimpleMDE initialized for', textarea.id, ':', simplemde);
     });
   });
 
   document.addEventListener('ajax:success', function(event) {
     var response = event.detail[0];
-    console.log(response);  // Ensure response contains the expected data
+    debug(response);  // Ensure response contains the expected data
 
     var displayHtml = response.display_html || 'default_value';  // Replace 'default_value' with an appropriate fallback
     var profileItemId = response.profile_item_id;
