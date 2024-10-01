@@ -209,24 +209,23 @@ class InstancesController < ApplicationController
     # get all the display_html from the profile_product table, it is what a user can do
     if Rails.configuration.try('foa_profile_aware')
       sql_get_all_display_html = <<-SQL
-      SELECT 
-        pp.display_html as display_html, 
-        pot.name as pot_name,
-        p.id as product_id,
-        pp.id as profile_product_id,
-        pit.id as profile_item_type_id, 
-        pot.id as profile_object_type_id
-      FROM temp_profile.product p
-      JOIN temp_profile.profile_product pp on p.id = pp.product_id
-      JOIN temp_profile.profile_item_type pit on pp.profile_item_type_id = pit.id
-      JOIN temp_profile.profile_object_type pot on pit.profile_object_type_id = pot.id
-      ORDER BY pp.sort_order;
+        SELECT 
+          pic.display_html as display_html, 
+          pot.name as pot_name,
+          p.id as product_id,
+          pic.id as product_item_config_id,
+          pit.id as profile_item_type_id, 
+          pot.id as profile_object_type_id
+        FROM product p
+        JOIN product_item_config pic on p.id = pic.product_id
+        JOIN profile_item_type pit on pic.profile_item_type_id = pit.id
+        JOIN profile_object_type pot on pit.profile_object_type_id = pot.id
+        WHERE pic.display_html IS NOT NULL
+        ORDER BY pic.sort_order;
       SQL
 
       foas_all = ActiveRecord::Base.connection.execute(sql_get_all_display_html)
-      # Initialize the hash to store the data
       data_hash_foas_all = {}
-
       foas_all.each do |row|
         data_hash_foas_all[row['display_html']] = {
         "pot_name" => row['pot_name'],
@@ -238,49 +237,31 @@ class InstancesController < ApplicationController
       end
 
       instance_id = params[:id]  
-      sql_get_existent_display_html_by_instance_id = ActiveRecord::Base.sanitize_sql_array([<<-SQL, instance_id])
-        SELECT pp.display_html AS display_html,
+      sql_get_existent_display_html_by_instance_id = ActiveRecord::Base.sanitize_sql_array([
+        "SELECT pic.display_html AS display_html,
               pi.id AS profile_item_id,
               ptx.id AS profile_text_id,
               pit.id AS profile_item_type_id,
-              pp.id AS profile_product_id,
+              pic.id AS product_item_config_id,
               ptx.value AS text_value,
               pan.value as annotation_value,
               pan.id as profile_annotation_id,
               pref.reference_id as reference_id,
 			        pref.annotation as reference_annotation
-        FROM temp_profile.profile_item pi
-        JOIN temp_profile.profile_text ptx ON pi.profile_text_id = ptx.id
-        JOIN temp_profile.profile_item_type pit ON pi.profile_item_type_id = pit.id
-        JOIN temp_profile.profile_product pp ON pit.id = pp.profile_item_type_id
-        LEFT JOIN temp_profile.profile_annotation pan ON pan.profile_item_id = pi.id
-        LEFT JOIN temp_profile.profile_reference pref ON pref.profile_item_id =pi.id
-        WHERE pi.instance_id = ?;
-      SQL
-      
+        FROM profile_item pi
+        JOIN profile_text ptx ON pi.profile_text_id = ptx.id
+        JOIN product_item_config pic ON pic.id = pi.product_item_config_id
+        JOIN profile_item_type pit ON pic.profile_item_type_id = pit.id
+        LEFT JOIN profile_annotation pan ON pan.profile_item_id = pi.id
+        LEFT JOIN profile_reference pref ON pref.profile_item_id =pi.id
+        WHERE pi.instance_id = ? AND pic.display_html IS NOT NULL", instance_id])
+
       foas_existent = ActiveRecord::Base.connection.execute(sql_get_existent_display_html_by_instance_id)
 
-      data_hash_existent_foas = {}
-      foas_existent.each do |row|
-        data_hash_existent_foas[row['display_html']] = {
-          "profile_item_id" => row['profile_item_id'],
-          "profile_text_id" => row['profile_text_id'],
-          "profile_item_type_id" => row['profile_item_type_id'],
-          "profile_product_id" => row['profile_product_id'],
-          "text_value" => row['text_value'],
-          "annotation_value" => row['annotation_value'],
-          "profile_annotation_id" => row['profile_annotation_id'],
-          "reference_id" => row['reference_id'],
-          "reference_annotation" => row['reference_annotation']
-        }
-      end
+      Rails.logger.debug " =================== Data Hash Existent FOAs: #{foas_existent.inspect}=================="
 
-
-      Rails.logger.debug " =================== Data Hash Existent FOAs: #{data_hash_existent_foas.inspect}=================="
-
-
-      @data_hash_foas_all = data_hash_foas_all
-      @data_hash_existent_foas = data_hash_existent_foas
+      @data_hash_foas_all = foas_all.group_by{|f| f['display_html']}  
+      @data_hash_existent_foas = foas_existent.group_by{|f| f['display_html']}  
       @instance_id = instance_id
     end
 

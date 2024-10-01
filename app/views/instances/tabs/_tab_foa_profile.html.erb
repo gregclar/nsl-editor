@@ -1,61 +1,66 @@
 
 <% @data_hash_foas_all.each do |display_html, details| %>
-  <div style="padding: 5px; margin: 5px 0; background-color: white;">
+  <div>
     <label><%= display_html %></label>
     <h1><%= @instance_id %></h1>
-    <% existing_entry = @data_hash_existent_foas[display_html] %>
+    <% existing_entries = @data_hash_existent_foas[display_html] || [] %>
     <div id="message_<%= display_html.parameterize %>" class="message-container"></div> <!-- Message container -->
-    
-    <!-- Profile Text Form -->
-    <%= form_with url: profile_texts_path, method: :post, remote: true, html: { data: { type: :json, form_type: 'profile_text_form' } } do %>
-      <input type="hidden" name="foa[instance_id]" value="<%= @instance_id %>"> <!-- Pass instance_id dynamically -->
-      <input type="hidden" name="foa[display_html]" value="<%= display_html %>">
-      <input type="hidden" name="foa[is_new]" value="<%= existing_entry ? 'false' : 'true' %>"> <!-- Set is_new parameter -->
-      
-      <% if existing_entry %>
-        <!-- Fields for existing entry -->
-        <input type="hidden" name="foa[profile_item_id]" value="<%= existing_entry['profile_item_id'] %>">
-        <input type="hidden" name="foa[profile_text_id]" value="<%= existing_entry['profile_text_id'] %>">
-        <input type="hidden" name="foa[profile_item_type_id]" value="<%= existing_entry['profile_item_type_id'] %>">
-        <input type="hidden" name="foa[profile_product_id]" value="<%= existing_entry['profile_product_id'] %>">
-        <div id="simplemde-container">
-          <textarea class="form-control editor-textarea custom-height" title="Enter verbatim name" rows="4" tabindex="1112" name="foa[text_value]" id="editor_<%= display_html.parameterize %>" required="true"><%= existing_entry['text_value'] %></textarea>
-        </div>
-      <% else %>
-        <!-- Fields for new entry -->
-        <input type="hidden" name="foa[profile_item_type_id]" value="<%= details['profile_item_type_id'] %>">
-        <input type="hidden" name="foa[profile_product_id]" value="<%= details['profile_product_id'] %>">
-        <input type="hidden" name="foa[profile_object_type_id]" value="<%= details['profile_object_type_id'] %>">
-        <div id="simplemde-container">
-          <textarea class="form-control editor-textarea custom-height" title="Enter verbatim name" rows="4" tabindex="1112" name="foa[text_value]" id="editor_<%= display_html.parameterize %>" required="true"></textarea>
-        </div>
-      <% end %>
-      <%= submit_tag 'Save', style: 'background-color: #5a5a5a; color: white; border: none; padding: 5px 10px; cursor: pointer; border-radius: 4px;' %>
-    <% end %>
-
-    <!-- Add Annotation Section -->
-    <div id="annotation_message_<%= existing_entry&.dig('profile_item_id') || @profile_item_id %>" class="message-container"></div>
-    <% annotation_value = existing_entry ? existing_entry['annotation_value'] : '' %>
-    <div id="add_annotation_<%= display_html.parameterize %>" data-url="<%= render_add_annotation_profile_annotations_path %>">
-      <%= render partial: 'instances/tabs/add_annotation', 
-        locals: { 
-          profile_item_id: existing_entry&.dig('profile_item_id') || @profile_item_id,
-          annotation_value: annotation_value
-        } %>
-    </div>
-
-    <% reference_id =  existing_entry ? existing_entry['reference_id'] : '' %>
-    <% reference_annotation =  existing_entry ? existing_entry['reference_annotation'] : '' %>
-    <div id="add_reference_<%= display_html.parameterize %>" data-url="<%= render_add_reference_profile_references_path %>">
-      <%= render partial: 'instances/tabs/add_reference', 
-        locals: { 
-          profile_item_id: existing_entry&.dig('profile_item_id') || @profile_item_id,
-          reference_annotation: reference_annotation,
-          reference_id: reference_id
-        } %>
-    </div>
-  
   </div>
+  <% details.each do |detail| %>
+    <% existing_entry = existing_entries.select{|e| e['display_html'] == detail['display_html'] && e['product_item_config_id'] == detail['product_item_config_id']}.first %>
+    <div style="padding: 5px; margin: 5px 0; background-color: white;">
+      <!-- Profile Text Form -->
+      <%= form_with url: profile_texts_path, method: :post, remote: true, html: { data: { type: :json, form_type: 'profile_text_form' } } do %>
+        <input type="hidden" name="foa[instance_id]" value="<%= @instance_id %>"> <!-- Pass instance_id dynamically -->
+        <input type="hidden" name="foa[display_html]" value="<%= display_html %>">
+        <input type="hidden" name="foa[is_new]" value="<%= existing_entry ? 'false' : 'true' %>"> <!-- Set is_new parameter -->
+        
+        <% if existing_entry %>
+          <!-- Fields for existing entry -->
+          <input type="hidden" name="foa[profile_item_id]" value="<%= existing_entry['profile_item_id'] %>">
+          <input type="hidden" name="foa[profile_text_id]" value="<%= existing_entry['profile_text_id'] %>">
+          <input type="hidden" name="foa[profile_item_type_id]" value="<%= existing_entry['profile_item_type_id'] %>">
+          <input type="hidden" name="foa[product_item_config_id]" value="<%= existing_entry['product_item_config_id'] %>">
+          <div id="simplemde-container">
+            <textarea class="form-control editor-textarea custom-height" title="Enter verbatim name" rows="4" tabindex="1112" name="foa[text_value]" id="editor_<%= display_html.parameterize %>" required="true"><%= existing_entry['text_value'] %></textarea>
+          </div>
+        <% else %>
+          <%# detail = details.first %>
+          <!-- Fields for new entry -->
+          <input type="hidden" name="foa[profile_item_type_id]" value="<%= detail['profile_item_type_id'] %>">
+          <input type="hidden" name="foa[product_item_config_id]" value="<%= detail['product_item_config_id'] %>">
+          <input type="hidden" name="foa[profile_object_type_id]" value="<%= detail['profile_object_type_id'] %>">
+          <div id="simplemde-container">
+            <textarea class="form-control editor-textarea custom-height" title="Enter verbatim name" rows="4" tabindex="1112" name="foa[text_value]" id="editor_<%= display_html.parameterize %>" required="true"></textarea>
+          </div>
+        <% end %>
+        <%= submit_tag 'Save', style: 'background-color: #5a5a5a; color: white; border: none; padding: 5px 10px; cursor: pointer; border-radius: 4px;' %>
+      <% end %>
+
+      <!-- Add Annotation Section -->
+      <div id="annotation_message_<%= existing_entry&.dig('profile_item_id') || @profile_item_id %>" class="message-container"></div>
+      <% annotation_value = existing_entry ? existing_entry['annotation_value'] : '' %>
+      <div id="add_annotation_<%= display_html.parameterize %>" data-url="<%= render_add_annotation_profile_annotations_path %>">
+        <%= render partial: 'instances/tabs/add_annotation', 
+          locals: { 
+            profile_item_id: existing_entry&.dig('profile_item_id') || @profile_item_id,
+            annotation_value: annotation_value
+          } %>
+      </div>
+
+      <% reference_id =  existing_entry ? existing_entry['reference_id'] : '' %>
+      <% reference_annotation =  existing_entry ? existing_entry['reference_annotation'] : '' %>
+      <div id="add_reference_<%= display_html.parameterize %>" data-url="<%= render_add_reference_profile_references_path %>">
+        <%= render partial: 'instances/tabs/add_reference', 
+          locals: { 
+            profile_item_id: existing_entry&.dig('profile_item_id') || @profile_item_id,
+            reference_annotation: reference_annotation,
+            reference_id: reference_id
+          } %>
+      </div>
+    
+    </div>
+  <% end %>
 <% end %>
 
 

@@ -37,10 +37,7 @@ class ProfileTextsController < ApplicationController
   # POST /profile_texts.json
   def create
     begin
-      profile_text_params = params.require(:foa).permit(:instance_id, :display_html, :text_value, :profile_item_id, :profile_text_id, :profile_item_type_id, :profile_product_id, :profile_object_type_id, :is_new)
-
-      # testing error message handling
-      # raise StandardError.new("This is a dummy error for testing purposes.")
+      profile_text_params = params.require(:foa).permit(:instance_id, :display_html, :text_value, :profile_item_id, :profile_text_id, :profile_item_type_id, :product_item_config_id, :profile_object_type_id, :is_new)
 
       # Debugging information
       Rails.logger.debug "Profile Text Params: #{profile_text_params.inspect}"
@@ -55,14 +52,12 @@ class ProfileTextsController < ApplicationController
         Rails.logger.debug "^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ Profile Text is new ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^"
   
         # Check for existing record
-        existing_record_query = ActiveRecord::Base.sanitize_sql_array([<<-SQL, instance_id, display_html])
-          SELECT pp.display_html, pi.id as profile_item_id, ptx.id as profile_text_id, ptx.value
-          FROM temp_profile.profile_item pi
-          JOIN temp_profile.profile_text ptx ON pi.profile_text_id = ptx.id
-          JOIN temp_profile.profile_item_type pit ON pi.profile_item_type_id = pit.id
-          JOIN temp_profile.profile_product pp ON pit.id = pp.profile_item_type_id
-          WHERE pi.instance_id = ? AND pp.display_html = ?;
-        SQL
+        existing_record_query = ActiveRecord::Base.sanitize_sql_array([
+          "SELECT pic.display_html, pi.id as profile_item_id, ptx.id as profile_text_id, ptx.value
+          FROM profile_item pi
+          JOIN profile_text ptx ON pi.profile_text_id = ptx.id
+          JOIN product_item_config pic ON pi.product_item_config_id = pic.id
+          WHERE pi.instance_id = ? AND pic.display_html = ?", instance_id, display_html])
   
         existing_record = ActiveRecord::Base.connection.execute(existing_record_query).first
   
@@ -77,40 +72,49 @@ class ProfileTextsController < ApplicationController
         end
   
         # Find the correct profile_item_type_id using display_html
-        result = ActiveRecord::Base.connection.execute(ActiveRecord::Base.sanitize_sql_array([<<-SQL, display_html]))
-          SELECT pit.id
-          FROM temp_profile.profile_product pp
-          JOIN temp_profile.profile_item_type pit ON pp.profile_item_type_id = pit.id
-          WHERE pp.display_html = ?;
-        SQL
+        result = ActiveRecord::Base.connection.execute(ActiveRecord::Base.sanitize_sql_array([
+          "SELECT pit.id
+          FROM product_item_config pic
+          JOIN profile_item_type pit ON pic.profile_item_type_id = pit.id
+          WHERE pic.display_html = ?", display_html]))
   
         profile_item_type_id = result.first['id']
   
-        # Get the product_id from profile_product_id
-        profile_product_id = profile_text_params[:profile_product_id]
-        product_result = ActiveRecord::Base.connection.execute(ActiveRecord::Base.sanitize_sql_array([<<-SQL, profile_product_id]))
-          SELECT product_id
-          FROM temp_profile.profile_product
-          WHERE id = ?;
-        SQL
+        # Get the product_id from product_item_config
+        product_item_config_id = profile_text_params[:product_item_config_id]
+        product_result = ActiveRecord::Base.connection.execute(ActiveRecord::Base.sanitize_sql_array([
+          "SELECT product_id
+          FROM product_item_config
+          WHERE id = ?;", product_item_config_id]))
   
         product_id = product_result.first['product_id']
   
         # Create new profile_text
-        profile_text_result = ActiveRecord::Base.connection.execute(ActiveRecord::Base.sanitize_sql_array([<<-SQL, profile_text_params[:text_value], current_time, created_by, current_time, updated_by]))
-          INSERT INTO temp_profile.profile_text (value, created_at, created_by, updated_at, updated_by)
-          VALUES (?, ?, ?, ?, ?)
-          RETURNING id;
-        SQL
+        profile_text_result = ActiveRecord::Base.connection.execute(ActiveRecord::Base.sanitize_sql_array([
+          "INSERT INTO profile_text (value, created_at, created_by, updated_at, updated_by)
+          VALUES (?, ?, ?, ?, ?) RETURNING id", 
+          profile_text_params[:text_value], 
+          current_time, 
+          created_by, 
+          current_time, 
+          updated_by]))
+
         profile_text_id = profile_text_result.first['id']
         Rails.logger.debug "Created Profile Text with ID: #{profile_text_id}"
   
         # Create new profile_item linked to the new profile_text and profile_item_type_id
-        profile_item_result = ActiveRecord::Base.connection.execute(ActiveRecord::Base.sanitize_sql_array([<<-SQL, instance_id, profile_text_id, profile_item_type_id, product_id, profile_text_params[:profile_object_type_id], current_time, created_by, current_time, updated_by]))
-          INSERT INTO temp_profile.profile_item (instance_id, profile_text_id, profile_item_type_id, product_id, profile_object_type_id, created_at, created_by, updated_at, updated_by)
-          VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
-          RETURNING id;
-        SQL
+        profile_item_result = ActiveRecord::Base.connection.execute(ActiveRecord::Base.sanitize_sql_array([
+          "INSERT INTO profile_item (instance_id, profile_text_id, product_item_config_id, profile_object_rdf_id, created_at, created_by, updated_at, updated_by)
+          VALUES (?, ?, ?, ?, ?, ?, ?, ?) RETURNING id", 
+          instance_id, 
+          profile_text_id, 
+          product_item_config_id, 
+          profile_text_params[:profile_object_type_id], 
+          current_time, 
+          created_by, 
+          current_time, 
+          updated_by]))
+
         profile_item_id = profile_item_result.first['id']
         Rails.logger.debug "Created Profile Item with ID: #{profile_item_id}"
   
@@ -122,11 +126,10 @@ class ProfileTextsController < ApplicationController
         profile_item_id = profile_text_params[:profile_item_id]
         # Logic for updating existing profile text
         profile_text_id = profile_text_params[:profile_text_id]
-        ActiveRecord::Base.connection.execute(ActiveRecord::Base.sanitize_sql_array([<<-SQL, profile_text_params[:text_value], current_time, updated_by, profile_text_id]))
-          UPDATE temp_profile.profile_text
+        ActiveRecord::Base.connection.execute(ActiveRecord::Base.sanitize_sql_array([
+          "UPDATE profile_text
           SET value = ?, updated_at = ?, updated_by = ?
-          WHERE id = ?;
-        SQL
+          WHERE id = ?", profile_text_params[:text_value], current_time, updated_by, profile_text_id]))
   
         respond_to do |format|
           format.json { render json: { message: 'Profile Text was successfully updated.', updated: true, created: false, profile_item_id: profile_item_id, instance_id: instance_id, profile_text_id: profile_text_id, display_html: display_html }, status: :ok }
