@@ -1,7 +1,7 @@
-# app/models/profile/profile_annotation.rb
+# app/models/profile/profile_item_annotation.rb
 # == Schema Information
 #
-# Table name: profile_annotation(An annotation made on a profile.)
+# Table name: profile_item_annotation(An annotation made on a profile item.)
 #
 #  id(A system wide unique identifier allocated to each profile annotation record.)                   :bigint           not null, primary key
 #  api_date(The date when a system user, script, jira or services task last changed this record.)     :timestamptz
@@ -19,19 +19,16 @@
 #
 # Indexes
 #
-#  profile_annotation_item_i  (profile_item_id)
+#  profile_item_annotation_item_i  (profile_item_id)
 #
 # Foreign Keys
 #
-#  profile_annotation_profile_item_id_fkey  (profile_item_id => profile_item.id)
+#  profile_item_annotation_profile_item_id_fkey  (profile_item_id => profile_item.id)
 #
 module Profile
-    class ProfileAnnotation < ApplicationRecord
-      self.table_name = "profile_annotation"
-      # Assuming `id` is the primary key by default
-      # self.primary_key = "id"
-      # self.sequence_name = "nsl_global_seq"
-  
+    class ProfileItemAnnotation < ApplicationRecord
+      self.table_name = "profile_item_annotation"
+
       belongs_to :profile_item, class_name: 'Profile::ProfileItem', foreign_key: 'profile_item_id'
       
       validates :value, presence: true

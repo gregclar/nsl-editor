@@ -46,8 +46,7 @@ class ProfileAnnotationsController < ApplicationController
     Rails.logger.debug "Parsed text_value: #{text_value}"
   
     # Check for existing ProfileAnnotation based on profile_item_id
-    @profile_annotation = Profile::ProfileAnnotation.find_by(profile_item_id: profile_item_id)
-  
+    @profile_annotation = Profile::ProfileItemAnnotation.find_by(profile_item_id: profile_item_id)
     if @profile_annotation
       # Update the existing ProfileAnnotation
       Rails.logger.debug "Updating Profile Annotation with profile_item_id: #{profile_item_id}"
@@ -72,7 +71,7 @@ class ProfileAnnotationsController < ApplicationController
       Rails.logger.debug "Creating a new Profile Annotation."
   
       # Initialize a new ProfileAnnotation with the extracted parameters
-      @profile_annotation = Profile::ProfileAnnotation.new(
+      @profile_annotation = Profile::ProfileItemAnnotation.new(
         profile_item_id: profile_item_id,
         value: text_value,
         created_by: current_user_id, # Set created_by to the current user's ID or system user

@@ -7,9 +7,9 @@
 #  api_date(The date when a system user, script, jira or services task last changed this record.)     :timestamptz
 #  api_name(The name of a system user, script, jira or services task which last changed this record.) :string(50)
 #  created_by(The user id of the person who created this data)                                        :string(50)       not null
-#  deprecated(Object type no longer available for use.)                                               :boolean          default(FALSE)
 #  description_html(The global definition of this term.)                                              :text
 #  internal_notes(Team notes about the management or maintenance of this item type.)                  :text
+#  is_deprecated(Object type no longer available for use.)                                            :boolean          default(FALSE)
 #  lock_version(Internal Postgres management for record locking.)                                     :integer          default(0), not null
 #  name(The full path to this profile item type as a Postgres btree.)                                 :text             not null
 #  sort_order(The default sort order for the superset of terms.)                                      :decimal(5, 2)    not null
@@ -22,7 +22,6 @@
 # Indexes
 #
 #  pit_path_u                    (name) UNIQUE
-#  pit_rdf_u                     (rdf_id) UNIQUE
 #  profile_item_type_rdf_id_key  (rdf_id) UNIQUE
 #
 # Foreign Keys

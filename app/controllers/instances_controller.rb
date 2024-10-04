@@ -28,7 +28,7 @@ class InstancesController < ApplicationController
   # Sets up RHS details panel on the search results page.
   # Displays a specified or default tab.
   def show
-        @tab = tab_or_default_tab
+    @tab = tab_or_default_tab
     @tab_index = (params[:tabIndex] || "1").to_i
     @tabs_to_offer = tabs_to_offer
     @row_type = params["row-type"]
@@ -208,6 +208,7 @@ class InstancesController < ApplicationController
     @instance = Instance.find(params[:id])
     # get all the display_html from the profile_product table, it is what a user can do
     if Rails.configuration.try('foa_profile_aware')
+      
       sql_get_all_display_html = <<-SQL
         SELECT 
           pic.display_html as display_html, 
@@ -223,26 +224,15 @@ class InstancesController < ApplicationController
         WHERE pic.display_html IS NOT NULL
         ORDER BY pic.sort_order;
       SQL
-
       foas_all = ActiveRecord::Base.connection.execute(sql_get_all_display_html)
-      data_hash_foas_all = {}
-      foas_all.each do |row|
-        data_hash_foas_all[row['display_html']] = {
-        "pot_name" => row['pot_name'],
-        "product_id" => row['product_id'],
-        "profile_product_id" => row['profile_product_id'],
-        "profile_item_type_id" => row['profile_item_type_id'],
-        "profile_object_type_id" => row['profile_object_type_id']
-      }
-      end
 
-      instance_id = params[:id]  
       sql_get_existent_display_html_by_instance_id = ActiveRecord::Base.sanitize_sql_array([
         "SELECT pic.display_html AS display_html,
               pi.id AS profile_item_id,
               ptx.id AS profile_text_id,
               pit.id AS profile_item_type_id,
-              pic.id AS product_item_config_id,
+              pot.id AS profile_object_type_id,
+              pic.id AS profile_product_id,
               ptx.value AS text_value,
               pan.value as annotation_value,
               pan.id as profile_annotation_id,
@@ -250,19 +240,29 @@ class InstancesController < ApplicationController
 			        pref.annotation as reference_annotation
         FROM profile_item pi
         JOIN profile_text ptx ON pi.profile_text_id = ptx.id
-        JOIN product_item_config pic ON pic.id = pi.product_item_config_id
-        JOIN profile_item_type pit ON pic.profile_item_type_id = pit.id
-        LEFT JOIN profile_annotation pan ON pan.profile_item_id = pi.id
-        LEFT JOIN profile_reference pref ON pref.profile_item_id =pi.id
-        WHERE pi.instance_id = ? AND pic.display_html IS NOT NULL", instance_id])
-
+        JOIN profile_object_type pot ON pi.profile_object_rdf_id = pot.rdf_id
+        JOIN profile_item_type pit ON pit.profile_object_type_id = pot.id
+        JOIN product_item_config pic ON pit.id = pic.profile_item_type_id
+        LEFT JOIN profile_item_annotation pan ON pan.profile_item_id = pi.id
+        LEFT JOIN profile_item_reference pref ON pref.profile_item_id =pi.id
+        WHERE pi.instance_id = ? AND pic.display_html IS NOT NULL", @instance.id])
       foas_existent = ActiveRecord::Base.connection.execute(sql_get_existent_display_html_by_instance_id)
 
-      Rails.logger.debug " =================== Data Hash Existent FOAs: #{foas_existent.inspect}=================="
-
-      @data_hash_foas_all = foas_all.group_by{|f| f['display_html']}  
-      @data_hash_existent_foas = foas_existent.group_by{|f| f['display_html']}  
-      @instance_id = instance_id
+      @existing_profile_items = Profile::ProfileItem.where(instance_id: @instance.id).
+        joins(:product_item_config).
+        joins("INNER JOIN profile_object_type ON profile_object_type.rdf_id = profile_item.profile_object_rdf_id").
+        select('
+          profile_item.id,
+          profile_item.id AS profile_item_id,
+          profile_text_id AS profile_text_id,
+          product_item_config.id AS product_item_config_id,
+          product_item_config.display_html AS display_html,
+          product_item_config.profile_item_type_id AS profile_item_type_id,
+          profile_object_type.id AS profile_object_type_id'
+        ).to_a
+      
+      @data_hash_foas_all = foas_all.group_by{|f| f['display_html']}
+      @data_hash_existent_foas = foas_existent.group_by{|f| f['display_html']}
     end
 
   rescue ActiveRecord::RecordNotFound

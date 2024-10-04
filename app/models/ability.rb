@@ -45,8 +45,8 @@ class Ability
   def initialize(user)
     user ||= User.new(groups: [])
     can :manage, Profile::ProfileText
-    can :manage, Profile::ProfileAnnotation
-    can :manage, Profile::ProfileReference
+    can :manage, Profile::ProfileItemAnnotation
+    can :manage, Profile::ProfileItemReference
     basic_auth_1
     basic_auth_2
     edit_auth if user.edit?
@@ -68,8 +68,8 @@ class Ability
 
   def foa_auth
     can :read, Profile::ProfileText
-    can :read, Profile::ProfileAnnotation
-    can :read, Profile::ProfileReference
+    can :read, Profile::ProfileItemAnnotation
+    can :read, Profile::ProfileItemReference
     can :view, :foa_profile
   end
 
@@ -104,8 +104,8 @@ class Ability
 
   def edit_auth
     can :manage, Profile::ProfileText 
-    can :manage, Profile::ProfileAnnotation
-    can :manage, Profile::ProfileReference
+    can :manage, Profile::ProfileItemAnnotation
+    can :manage, Profile::ProfileItemReference
     can "profile_annotations", :all
     can "profile_references", :all
     can "profile_texts",           :all
@@ -125,8 +125,8 @@ class Ability
 
   def qa_auth
     can :manage, Profile::ProfileText
-    can :manage, Profile::ProfileAnnotation
-    can :manage, Profile::ProfileReference
+    can :manage, Profile::ProfileItemAnnotation
+    can :manage, Profile::ProfileItemReference
     can "batches",                   :all
     can "tree_versions",             :all
     can "tree_version_elements",     :all
@@ -155,8 +155,8 @@ class Ability
 
   def admin_auth
     can :manage, Profile::ProfileText
-    can :manage, Profile::ProfileAnnotation
-    can :manage, Profile::ProfileReference
+    can :manage, Profile::ProfileItemAnnotation
+    can :manage, Profile::ProfileItemReference
     can "admin",              :all
     can "menu",               "admin"
   end

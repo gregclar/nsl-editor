@@ -36,39 +36,35 @@ class ProfileReferencesController < ApplicationController
   
 
   def create
-    Rails.logger.debug "------ Profile Reference Controller Create Action hit.----------"
-    
     profile_item_id = params[:profile_item_id] rescue nil
     reference_id = params[:reference_id].present? ? params[:reference_id] : params[:reference_id_raw]
     # reference_id = 17521
     reference_annotation = params[:reference_annotation] rescue nil  # New annotation field
 
-    Rails.logger.debug "Parsed profile_item_id: #{profile_item_id}"
-    Rails.logger.debug "%%%%%%%%%%%%%%%%%%%%%%%%%%% Parsed reference_id: #{reference_id}"
-    Rails.logger.debug "Parsed reference_annotation: #{reference_annotation}"
-
-    # Attempt to find an existing ProfileReference
-    @profile_reference = Profile::ProfileReference.find_by(profile_item_id: profile_item_id, reference_id: reference_id)
+    # Attempt to find an existing ProfileItemReference
+    @profile_reference = Profile::ProfileItemReference.find_by(profile_item_id: profile_item_id, reference_id: reference_id)
     if @profile_reference
       Rails.logger.debug "Updating Profile Reference with profile_item_id: #{profile_item_id} and reference_id: #{reference_id}"
 
+      @profile_reference.update(
+        annotation: ActiveRecord::Base.sanitize_sql(reference_annotation),
+        updated_by: current_user_id
+      )
       # Build the raw SQL update query
-      sql_update_query = <<-SQL
-        UPDATE temp_profile.profile_reference
-        SET annotation = '#{ActiveRecord::Base.sanitize_sql(reference_annotation)}',
-            updated_at = '#{Time.current}',
-            updated_by = '#{current_user_id}'
-        WHERE profile_item_id = #{ActiveRecord::Base.sanitize_sql(profile_item_id)}
-          AND reference_id = #{ActiveRecord::Base.sanitize_sql(reference_id)};
-      SQL
+      # sql_update_query = <<-SQL
+      #   UPDATE temp_profile.profile_reference
+      #   SET annotation = '#{ActiveRecord::Base.sanitize_sql(reference_annotation)}',
+      #       updated_at = '#{Time.current}',
+      #       updated_by = '#{current_user_id}'
+      #   WHERE profile_item_id = #{ActiveRecord::Base.sanitize_sql(profile_item_id)}
+      #     AND reference_id = #{ActiveRecord::Base.sanitize_sql(reference_id)};
+      # SQL
   
-      # Execute the raw SQL query
-      ActiveRecord::Base.connection.execute(sql_update_query)
+      # # Execute the raw SQL query
+      # ActiveRecord::Base.connection.execute(sql_update_query)
     else
-      # Create a new ProfileReference
-      Rails.logger.debug "----- Creating a new Profile Reference."
-
-      @profile_reference = Profile::ProfileReference.new(
+      # Create a new ProfileReference (Profile item can have multiple profile references)
+      @profile_reference = Profile::ProfileItemReference.new(
         profile_item_id: profile_item_id,
         reference_id: reference_id,
         annotation: reference_annotation,  # Assign annotation to the annotation column

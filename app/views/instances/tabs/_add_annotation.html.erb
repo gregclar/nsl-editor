@@ -1,10 +1,5 @@
 <% if profile_item_id.present? %>
-  <!-- Debugging: Display passed parameters -->
-  <h2>Profile Item ID: <%= profile_item_id %></h2>
-
-  
-
-  <h4>Add Annotation</h4>
+  <h4>Annotate this profile item:</h4>
   <%= form_with url: profile_annotations_path, method: :post, remote: true, html: { data: { type: :json, form_type: 'annotation_form' } } do |f| %>
     <div style="margin-top: 10px; display: flex; align-items: center;">
       <!-- Hidden fields with parameters -->
