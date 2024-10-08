@@ -33,6 +33,7 @@ module Profile
     self.table_name = "product"
     
     has_many :product_item_configs, class_name: 'Profile::ProductItemConfig', foreign_key: 'product_id'
+    has_many :profile_items, through: :product_item_configs, class_name: 'Profiles::ProfileItem'
     
     belongs_to :reference, optional: true
     

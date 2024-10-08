@@ -46,5 +46,9 @@ module Profile
     validates :profile_item_type_id, presence: true
 
     scope :distinct_display_htmls, -> { select(:id, :display_html).distinct.where.not(display_html: nil).order(display_html: :asc) }
+    scope :profile_item_by_instance, ->(instance_id) { profile_items.where(i)}
+
+    scope :profile_items_by_instance_id, ->(instance_id) { joins(:profile_items).where({profile_item: {instance_id: instance_id }}) }
+
   end
 end

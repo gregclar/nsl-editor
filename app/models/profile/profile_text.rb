@@ -26,7 +26,10 @@ module Profile
     strip_attributes
     self.table_name = "profile_text"
 
-    validates :value_html, presence: true
+    has_one :profile_item, class_name: "Profile::ProfileItem", foreign_key: "profile_text_id"
+    has_one :product_item_config, through: :profile_item
+
+    validates :value_md, presence: true
     validates :value, presence: true
   end
 end

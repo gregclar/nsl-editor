@@ -110,17 +110,16 @@ class InstancesController < ApplicationController
 
   # Copy an instance with its citations
   def copy_standalone
-    logger.debug("================================= copy_standalone ===========================================")
-    # current_instance = Instance::AsCopier.find(params[:id])
-    # current_instance.multiple_primary_override =
-    #   instance_params[:multiple_primary_override] == "1"
-    # current_instance.duplicate_instance_override =
-    #   instance_params[:duplicate_instance_override] == "1"
-    # @instance = current_instance.copy_with_citations_to_new_reference(
-    #   instance_params, current_user.username
-    # )
-    # @message = "Instance was copied"
-    # render "instances/copy_standalone/success"
+    current_instance = Instance::AsCopier.find(params[:id])
+    current_instance.multiple_primary_override =
+      instance_params[:multiple_primary_override] == "1"
+    current_instance.duplicate_instance_override =
+      instance_params[:duplicate_instance_override] == "1"
+    @instance = current_instance.copy_with_citations_to_new_reference(
+      instance_params, current_user.username
+    )
+    @message = "Instance was copied"
+    render "instances/copy_standalone/success"
   rescue StandardError => e
     handle_other_errors(e, "instances/copy_standalone/error")
   end
@@ -206,65 +205,11 @@ class InstancesController < ApplicationController
 
   def find_instance
     @instance = Instance.find(params[:id])
-    # get all the display_html from the profile_product table, it is what a user can do
     if Rails.configuration.try('foa_profile_aware')
-      
-      sql_get_all_display_html = <<-SQL
-        SELECT 
-          pic.display_html as display_html, 
-          pot.name as pot_name,
-          p.id as product_id,
-          pic.id as product_item_config_id,
-          pit.id as profile_item_type_id, 
-          pot.id as profile_object_type_id
-        FROM product p
-        JOIN product_item_config pic on p.id = pic.product_id
-        JOIN profile_item_type pit on pic.profile_item_type_id = pit.id
-        JOIN profile_object_type pot on pit.profile_object_type_id = pot.id
-        WHERE pic.display_html IS NOT NULL
-        ORDER BY pic.sort_order;
-      SQL
-      foas_all = ActiveRecord::Base.connection.execute(sql_get_all_display_html)
-
-      sql_get_existent_display_html_by_instance_id = ActiveRecord::Base.sanitize_sql_array([
-        "SELECT pic.display_html AS display_html,
-              pi.id AS profile_item_id,
-              ptx.id AS profile_text_id,
-              pit.id AS profile_item_type_id,
-              pot.id AS profile_object_type_id,
-              pic.id AS profile_product_id,
-              ptx.value AS text_value,
-              pan.value as annotation_value,
-              pan.id as profile_annotation_id,
-              pref.reference_id as reference_id,
-			        pref.annotation as reference_annotation
-        FROM profile_item pi
-        JOIN profile_text ptx ON pi.profile_text_id = ptx.id
-        JOIN profile_object_type pot ON pi.profile_object_rdf_id = pot.rdf_id
-        JOIN profile_item_type pit ON pit.profile_object_type_id = pot.id
-        JOIN product_item_config pic ON pit.id = pic.profile_item_type_id
-        LEFT JOIN profile_item_annotation pan ON pan.profile_item_id = pi.id
-        LEFT JOIN profile_item_reference pref ON pref.profile_item_id =pi.id
-        WHERE pi.instance_id = ? AND pic.display_html IS NOT NULL", @instance.id])
-      foas_existent = ActiveRecord::Base.connection.execute(sql_get_existent_display_html_by_instance_id)
-
-      @existing_profile_items = Profile::ProfileItem.where(instance_id: @instance.id).
-        joins(:product_item_config).
-        joins("INNER JOIN profile_object_type ON profile_object_type.rdf_id = profile_item.profile_object_rdf_id").
-        select('
-          profile_item.id,
-          profile_item.id AS profile_item_id,
-          profile_text_id AS profile_text_id,
-          product_item_config.id AS product_item_config_id,
-          product_item_config.display_html AS display_html,
-          product_item_config.profile_item_type_id AS profile_item_type_id,
-          profile_object_type.id AS profile_object_type_id'
-        ).to_a
-      
-      @data_hash_foas_all = foas_all.group_by{|f| f['display_html']}
-      @data_hash_existent_foas = foas_existent.group_by{|f| f['display_html']}
+      # TODO: Confirm with Greg on how we are going to identify a product from the UI
+      @product = Profile::Product.find_by(name: "FOA") 
+      @product_configs_and_profile_items = find_or_initialize_profile_items(@product.id, @instance.id)
     end
-
   rescue ActiveRecord::RecordNotFound
     flash[:alert] = "We could not find the instance."
     redirect_to instances_path
@@ -401,5 +346,31 @@ class InstancesController < ApplicationController
       parent = parent.parent
     end
     @working_draft.tree_version_elements.order(tree_element_id: "asc").first
+  end
+
+  def find_or_initialize_profile_items(product_id, instance_id)
+    # TODO: Optimise this method!! 
+    # We may not even need this if we first create the profile item
+    # before adding profile texts, references, and annotations.
+
+    # Fetch all product item configs with display_html and associated ProfileItems
+    product_item_configs = Profile::ProductItemConfig
+      .where.not(display_html: nil)
+      .where(product_id: product_id)
+      .includes(:profile_items) # Eager load associated profile items
+  
+    # Fetch existing profile items for quick lookup
+    existing_profile_items = Profile::ProfileItem
+      .where(product_item_config_id: product_item_configs.pluck(:id), instance_id: instance_id)
+      .index_by(&:product_item_config_id) # Create a hash for O(1) lookup
+  
+    # Map the product item configs to their associated profile items
+    product_item_configs.map do |product_item_config|
+      # Find or initialize the associated ProfileItem
+      profile_item = existing_profile_items[product_item_config.id] || Profile::ProfileItem.new(product_item_config: product_item_config, instance_id: instance_id)
+  
+      # Return the product item config and associated or newly initialized profile item
+      { product_item_config: product_item_config, profile_item: profile_item }
+    end
   end
 end

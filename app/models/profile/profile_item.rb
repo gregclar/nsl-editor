@@ -46,32 +46,21 @@ module Profile
     class ProfileItem < ApplicationRecord
       self.table_name = "profile_item"
 
-      #has_one :profile_object, through: :profile_object_type, source: 'Profile::ProfileObjectType'
-      #belongs_to :profile_object, polymorphic: true
+      # belongs_to :instance
       belongs_to :product_item_config, class_name: 'Profile::ProductItemConfig', foreign_key: 'product_item_config_id'
-      belongs_to :profile_object_type, class_name: 'Profile::ProfileObjectType', primary_key: 'rdf_id', foreign_key: 'profile_object_rdf_id'
+      has_one :product, through: :product_item_config
+      
+      # # Self-referential association
+      # belongs_to :source_profile_item, class_name: 'Profile::ProfileItem', optional: true
+      # has_many :sub_profile_items, class_name: 'Profile::ProfileItem', foreign_key: 'source_profile_item_id'
+
       belongs_to :profile_text, class_name: 'Profile::ProfileText', foreign_key: 'profile_text_id'
-      belongs_to :instance
-      # belongs_to :product, through: :product_item_config
-      # belongs_to :profile_item_type, through: :product_item_config
-      
-      # Self-referential association
-      belongs_to :source_profile_item, class_name: 'Profile::ProfileItem', optional: true
-      has_many :sub_profile_items, class_name: 'Profile::ProfileItem', foreign_key: 'source_profile_item_id'
-      
+      belongs_to :profile_object_type, class_name: 'Profile::ProfileObjectType', primary_key: 'rdf_id', foreign_key: 'profile_object_rdf_id', optional: true
       has_one :profile_item_annotation, class_name: 'Profile::ProfileItemAnnotation', foreign_key: 'profile_item_id'
       has_many :profile_item_references, class_name: 'Profile::ProfileItemReference', foreign_key: 'profile_item_id'
+      has_one :profile_item_type, through: :profile_object_type, class_name: 'Profile::ProfileItemType'
       
       validates :statement_type, presence: true
-      
-      def profile_object
-        case profile_object_type.rdf_id
-        when "text"
-          Profile::ProfileText.find(self.profile_text_id)
-        else
-          nil
-        end
-      end
       
     end
   end

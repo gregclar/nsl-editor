@@ -4,7 +4,6 @@
     <%= hidden_field_tag :profile_item_id, profile_item_id %>
     <%= hidden_field_tag :reference_id_raw, reference_id %>
     <%= f.hidden_field :reference_id, value: reference_id, id: "reference-id-hidden-#{profile_item_id}" %> <!-- Hidden field for reference_id -->
-    <h4>Select Reference</h4>
 
     <!-- Properly formatted input field -->
     <input
@@ -17,7 +16,7 @@
       type="text" 
       placeholder="Reference wildcarded order-insensitive citation search"
       value="<%= reference_id.present? ? Reference.find(reference_id).try(:title) : '' %>"/>
-    <h4>Add Reference Annotation</h4>
+    <h4>Add a reference annotation</h4>
 
       <%= f.text_field :reference_annotation, 
       id: "reference-annotation-#{profile_item_id}",
