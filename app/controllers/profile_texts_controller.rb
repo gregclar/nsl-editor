@@ -17,20 +17,11 @@
 #   limitations under the License.
 #
 class ProfileTextsController < ApplicationController
-  before_action :set_profile_text, :find_profile_item, only: %i[show edit update destroy]
-
-  # GET /profile_texts/1
-  # GET /profile_texts/1.json
-  def show; end
+  before_action :set_profile_text, :find_profile_item, only: %i[update destroy]
 
   # GET /profile_texts/new
   def new
     @profile_text = Profile::ProfileText.new
-  end
-
-  # GET /profile_texts/1/edit
-  def edit
-    render "edit"
   end
 
   # POST /profile_texts
@@ -38,10 +29,10 @@ class ProfileTextsController < ApplicationController
   def create
     permitted_profile_text_params = params.require(:profile_text).permit(:value)
     permitted_profile_item_params = params.require(:profile_item).permit(:id, :instance_id, :product_item_config_id, :profile_object_rdf_id)
-    
+
     product_item_config = Profile::ProductItemConfig.find(permitted_profile_item_params[:product_item_config_id])
     @profile_item = Profile::ProfileItem.find_or_create_by(permitted_profile_item_params)
-    
+
     raise("Profile text already exists") unless @profile_item.new_record?
 
     @profile_item.tap do |pi|
@@ -66,7 +57,7 @@ class ProfileTextsController < ApplicationController
     @message = e.to_s
     render "create_failed", status: :unprocessable_entity
   end
-  
+
 
   # PATCH/PUT /profile_texts/1
   # PATCH/PUT /profile_texts/1.json

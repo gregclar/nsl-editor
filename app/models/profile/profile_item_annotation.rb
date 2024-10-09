@@ -30,8 +30,10 @@ module Profile
       self.table_name = "profile_item_annotation"
 
       belongs_to :profile_item, class_name: 'Profile::ProfileItem', foreign_key: 'profile_item_id'
-      
+      has_one :product_item_config, through: :profile_item
+
       validates :value, presence: true
+      validates :profile_item_id, uniqueness: true
     end
   end
-  
+

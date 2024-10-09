@@ -17,24 +17,10 @@
 #   limitations under the License.
 #
 Rails.application.routes.draw do
-      resources :profile_texts, only: %i[show new edit create update destroy create_foa]
-      match "profile_texts/create_foa",
-      as: "create_foa",
-      to: "profile_texts#create_foa",
-      via: :post
+  resources :profile_texts, only: %i[new create update destroy]
+  resources :profile_item_annotations, only: %i[create update]
+  resources :profile_item_references, only: %i[create update]
 
-      resources :profile_annotations, only: [:create] do
-            collection do
-              get :render_add_annotation
-            end
-          end
-      
-      resources :profile_item_references do
-            collection do
-                  get :render_add_reference
-            end
-      end
-  
   resources :batches
   match "/feedback", as: "feedback", to: "feedback#index", via: :get
   match "/ping", as: "ping_service", to: "services#ping", via: :get
