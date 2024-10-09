@@ -29,7 +29,7 @@ Rails.application.routes.draw do
             end
           end
       
-      resources :profile_references do
+      resources :profile_item_references do
             collection do
                   get :render_add_reference
             end

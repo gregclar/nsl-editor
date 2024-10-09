@@ -29,8 +29,8 @@ module Profile
       belongs_to :profile_item, class_name: 'Profile::ProfileItem', foreign_key: 'profile_item_id'
       belongs_to :reference, class_name: 'Reference', foreign_key: 'reference_id'
       
-      validates :profile_item_id, presence: true
-      validates :reference_id, presence: true
+      validates :profile_item_id, presence: true, uniqueness: { scope: :reference_id }
+      validates :reference_id, presence: true, uniqueness: { scope: :profile_item_id }
     end
   end
   

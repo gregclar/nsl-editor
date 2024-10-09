@@ -106,8 +106,8 @@ class Ability
     can :manage, Profile::ProfileText 
     can :manage, Profile::ProfileItemAnnotation
     can :manage, Profile::ProfileItemReference
-    can "profile_annotations", :all
-    can "profile_references", :all
+    can "profile_item_annotations", :all
+    can "profile_item_references", :all
     can "profile_texts",           :all
     can "authors",            :all
     can "comments",           :all
