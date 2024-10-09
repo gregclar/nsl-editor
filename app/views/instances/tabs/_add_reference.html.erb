@@ -7,7 +7,7 @@
 
     <!-- Properly formatted input field -->
     <input
-      id="instance-reference-typeahead-<%= profile_item_id %>" 
+      id="instance-reference-typeahead-<%= profile_item_id %>-<%= reference_id %>" 
       class="typeahead form-control width-100-percent give-me-focus" 
       title="Enter the reference.  Typeahead for reference citation, allows unordered fragments."
       required="true"
@@ -19,7 +19,7 @@
     <h4>Add a reference annotation</h4>
 
       <%= f.text_field :reference_annotation, 
-      id: "reference-annotation-#{profile_item_id}",
+      id: "reference-annotation-#{profile_item_id}-#{reference_id}",
       class: "form-control width-100-percent", 
       placeholder: "Enter reference annotation", 
       value: reference_annotation,
@@ -31,5 +31,5 @@
 <% end %>
 
 <script>
-  setUpInstanceReferenceFoa('<%= profile_item_id %>');
+  setUpInstanceReferenceFoa('<%= profile_item_id %>-<%= reference_id %>');
 </script>

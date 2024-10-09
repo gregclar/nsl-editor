@@ -14,25 +14,45 @@
     <% profile_text = profile_item.profile_text || Profile::ProfileText.new %>
     <% url = profile_text.persisted? ? profile_text_path(id: profile_text.id) : profile_texts_path %>
     <% method = profile_text.persisted? ? :put : :post %>
-    <%= form_with(model: profile_text, url: url, method: method, remote: true, html: { data: { type: 'json', form_type: 'profile_text_form' } }) do |f| %>
-      <%= hidden_field_tag "profile_item[id]", profile_item.id %>
-      <%= hidden_field_tag "profile_item[instance_id]", @instance.id %>
-      <%= hidden_field_tag "profile_item[product_item_config_id]", product_item_config.id %>
-      <%= hidden_field_tag "profile_item[profile_object_rdf_id]", product_item_config.profile_item_type.rdf_id %>
-      <%= hidden_field_tag "id", profile_text.id %>
+    <div id="profile_text_form_<%= product_item_config.display_html.parameterize %>" >
+      <%= render partial: "profile_texts/form", 
+        locals: {
+          profile_text: profile_text,
+          url: url,
+          method: method,
+          product_item_config: product_item_config,
+          instance_id: @instance.id,
+          profile_item: profile_item
+        }  
+      %>
+    </div>
+    <!-- Profile Reference List -->
+    <% if profile_item.persisted? %>
+      <% profile_item.profile_item_references.each do |profile_item_reference| %>
+          <div>
+            <p>Reference: <%= profile_item_reference.reference.title %></p>
+            <p>Annotation: <%= profile_item_reference.annotation %></p>
+            <div style="display: none" id="edit_reference_<%= profile_item_reference.id %>" data-url="<%= render_add_reference_profile_references_path %>">
+              <%= render partial: 'instances/tabs/add_reference', 
+                locals: { 
+                  profile_item_id: profile_item.id,
+                  reference_annotation: profile_item_reference.annotation,
+                  reference_id: profile_item_reference.reference_id
+                } %>
+            </div> 
+          </div>
+      <% end %>
 
-      <div id="simplemde-container">
-        <%= text_area_tag "profile_text[value]", profile_item.profile_text.try(:value).to_s, 
-          class: "form-control editor-textarea custom-height",
-          title: "Enter verbatim name",
-          rows: 4,
-          tabindex: 1112,
-          id: "editor_#{product_item_config.display_html.parameterize}",
-          required: true
-        %>
+      <!-- Profile Item Reference Form -->
+      <div id="add_reference_<%= product_item_config.display_html.parameterize %>" data-url="<%= render_add_reference_profile_references_path %>">
+        <h4>Add a reference</h4>
+        <%= render partial: 'instances/tabs/add_reference', 
+          locals: { 
+            profile_item_id: profile_item.id,
+            reference_annotation: '',
+            reference_id: ''
+          } %>
       </div>
-      
-      <%= submit_tag 'Save', style: 'background-color: #5a5a5a; color: white; border: none; padding: 5px 10px; cursor: pointer; border-radius: 4px;' %>
     <% end %>
   </div>
 <% end %>
@@ -171,7 +191,7 @@
   .notice {
     color: green;
   }
-  .alert {
+  .debug {
     color: red;
   }
 </style>
@@ -199,314 +219,200 @@
   var simpleMDEScript = document.querySelector('script[src="https://cdn.jsdelivr.net/simplemde/latest/simplemde.min.js"]');
   simpleMDEScript.addEventListener('load', onSimpleMDELoad);
 
+  function renderEditor(textarea) {
+    debug('Initializing SimpleMDE for', textarea.id);
+    textarea.style.display = 'block'; // Show the textarea
+
+    // Check if SimpleMDE instance already exists and destroy it
+    if (textarea.simplemdeInstance) {
+      textarea.simplemdeInstance.toTextArea();
+      textarea.simplemdeInstance = null;
+    }
+
+    // Initialize SimpleMDE
+    var simplemde = new SimpleMDE({
+      element: textarea,
+      spellChecker: false,
+      forceSync: true,
+      toolbar: [
+        "bold", "italic", "heading", "|",
+        "quote", "code", "link", "image", "table", "|",
+        {
+          name: "subscript",
+          action: function customSubscriptFunction(editor) {
+            var cm = editor.codemirror;
+            var cursorPos = cm.getCursor();
+            cm.replaceSelection('~');
+            cm.setCursor(cursorPos.line, cursorPos.ch + 1);
+            cm.focus();
+          },
+          className: "fa fa-subscript",
+          title: "Insert Subscript",
+        },
+        {
+          name: "superscript",
+          action: function customSuperscriptFunction(editor) {
+            var cm = editor.codemirror;
+            var cursorPos = cm.getCursor();
+            cm.replaceSelection('^');
+            cm.setCursor(cursorPos.line, cursorPos.ch + 1);
+            cm.focus();
+          },
+          className: "fa fa-superscript",
+          title: "Insert Superscript",
+        },
+        "|",
+        {
+          name: "male",
+          action: function customSpecialCharFunction(editor) {
+            var cm = editor.codemirror;
+            var cursorPos = cm.getCursor();
+            cm.replaceSelection('♂');
+            cm.setCursor(cursorPos.line, cursorPos.ch + 1);
+            cm.focus();
+          },
+          className: "fa fa-mars",
+          title: "Insert Male Symbol",
+        },
+        {
+          name: "female",
+          action: function customSpecialCharFunction(editor) {
+            var cm = editor.codemirror;
+            var cursorPos = cm.getCursor();
+            cm.replaceSelection('♀');
+            cm.setCursor(cursorPos.line, cursorPos.ch + 1);
+            cm.focus();
+          },
+          className: "fa fa-venus",
+          title: "Insert Female Symbol",
+        },
+        {
+          name: "plus-minus",
+          action: function customSpecialCharFunction(editor) {
+            var cm = editor.codemirror;
+            var cursorPos = cm.getCursor();
+            cm.replaceSelection('±');
+            cm.setCursor(cursorPos.line, cursorPos.ch + 1);
+            cm.focus();
+          },
+          className: "fa fa-plus-minus",
+          title: "Insert Plus-Minus Symbol",
+        },
+        {
+          name: "en-dash",
+          action: function customSpecialCharFunction(editor) {
+            var cm = editor.codemirror;
+            var cursorPos = cm.getCursor();
+            cm.replaceSelection('–');
+            cm.setCursor(cursorPos.line, cursorPos.ch + 1);
+            cm.focus();
+          },
+          className: "fa fa-minus",
+          title: "Insert En Dash",
+        },
+        {
+          name: "degree",
+          action: function customSpecialCharFunction(editor) {
+            var cm = editor.codemirror;
+            var cursorPos = cm.getCursor();
+            cm.replaceSelection('°');
+            cm.setCursor(cursorPos.line, cursorPos.ch + 1);
+            cm.focus();
+          },
+          className: "fa fa-circle",
+          title: "Insert Degree Symbol",
+        },
+        {
+          name: "multiplication",
+          action: function customSpecialCharFunction(editor) {
+            var cm = editor.codemirror;
+            var cursorPos = cm.getCursor();
+            cm.replaceSelection('×');
+            cm.setCursor(cursorPos.line, cursorPos.ch + 1);
+            cm.focus();
+          },
+          className: "fa fa-times",
+          title: "Insert Multiplication Symbol",
+        },
+        "preview", "side-by-side", "fullscreen"
+      ],
+      status: ["lines", "words", "cursor"],
+      previewRender: function(plainText) {
+        var md = window.markdownit()
+                    .use(window.markdownitSub)
+                    .use(window.markdownitSup);
+        return md.render(plainText);
+      }
+    });
+
+    // Store the SimpleMDE instance on the textarea element
+    textarea.simplemdeInstance = simplemde;
+
+    // Adjust the CodeMirror instance
+    var cm = simplemde.codemirror;
+
+    // Function to adjust height based on content
+    function adjustHeight() {
+      if (simplemde.isSideBySideActive()) {
+        return; // Skip height adjustment when in side-by-side mode
+      }
+      var contentHeight = cm.getScrollerElement().querySelector('.CodeMirror-sizer').scrollHeight;
+      var padding = 10; // Add some padding to ensure no clipping
+      var newHeight = contentHeight + padding;
+      var wrapperElement = cm.getWrapperElement();
+      var scrollerElement = cm.getScrollerElement();
+      
+      wrapperElement.style.height = newHeight + 'px';
+      scrollerElement.style.maxHeight = newHeight + 'px';
+      scrollerElement.style.height = newHeight + 'px';
+      
+      debug('===============================');
+      debug('wrapperElement.style.height:', wrapperElement.style.height);
+      debug('scrollerElement.style.maxHeight:', scrollerElement.style.maxHeight);
+      debug('scrollerElement.style.height:', scrollerElement.style.height);
+    }
+
+    // Initial height setting based on content
+    if (simplemde.value().trim() === "") {
+      // Set initial height to 4 rows when empty
+      var initialHeight = '100px'; // 100px corresponds to 4 rows
+      var wrapperElement = cm.getWrapperElement();
+      var scrollerElement = cm.getScrollerElement();
+      
+      wrapperElement.style.height = initialHeight;
+      scrollerElement.style.maxHeight = initialHeight;
+      scrollerElement.style.height = initialHeight;
+      
+      debug('===============================');
+      debug('Initial empty editor height settings');
+      debug('wrapperElement.style.height:', wrapperElement.style.height);
+      debug('scrollerElement.style.maxHeight:', scrollerElement.style.maxHeight);
+      debug('scrollerElement.style.height:', scrollerElement.style.height);
+    } else {
+      // Adjust height based on content
+      adjustHeight();
+    }
+
+    // Adjust height on content change
+    cm.on('change', adjustHeight);
+
+    // Adjust height when exiting side-by-side mode
+    cm.on('modeChange', function() {
+      if (!simplemde.isSideBySideActive()) {
+        setTimeout(adjustHeight, 0);
+      }
+    });
+
+    debug('SimpleMDE initialized for', textarea.id, ':', simplemde);
+  }
   // Add an event listener for the custom event
   document.addEventListener('simpleMDELoaded', function() {
     debug('SimpleMDE is loaded');
+    const observer = new MutationObserver(function(mutations) {
+
+    })
     document.querySelectorAll('textarea.editor-textarea').forEach(function(textarea) {
-      debug('Initializing SimpleMDE for', textarea.id);
-      textarea.style.display = 'block'; // Show the textarea
-
-      // Check if SimpleMDE instance already exists and destroy it
-      if (textarea.simplemdeInstance) {
-        textarea.simplemdeInstance.toTextArea();
-        textarea.simplemdeInstance = null;
-      }
-
-      // Initialize SimpleMDE
-      var simplemde = new SimpleMDE({
-        element: textarea,
-        spellChecker: false,
-        forceSync: true,
-        toolbar: [
-          "bold", "italic", "heading", "|",
-          "quote", "code", "link", "image", "table", "|",
-          {
-            name: "subscript",
-            action: function customSubscriptFunction(editor) {
-              var cm = editor.codemirror;
-              var cursorPos = cm.getCursor();
-              cm.replaceSelection('~');
-              cm.setCursor(cursorPos.line, cursorPos.ch + 1);
-              cm.focus();
-            },
-            className: "fa fa-subscript",
-            title: "Insert Subscript",
-          },
-          {
-            name: "superscript",
-            action: function customSuperscriptFunction(editor) {
-              var cm = editor.codemirror;
-              var cursorPos = cm.getCursor();
-              cm.replaceSelection('^');
-              cm.setCursor(cursorPos.line, cursorPos.ch + 1);
-              cm.focus();
-            },
-            className: "fa fa-superscript",
-            title: "Insert Superscript",
-          },
-          "|",
-          {
-            name: "male",
-            action: function customSpecialCharFunction(editor) {
-              var cm = editor.codemirror;
-              var cursorPos = cm.getCursor();
-              cm.replaceSelection('♂');
-              cm.setCursor(cursorPos.line, cursorPos.ch + 1);
-              cm.focus();
-            },
-            className: "fa fa-mars",
-            title: "Insert Male Symbol",
-          },
-          {
-            name: "female",
-            action: function customSpecialCharFunction(editor) {
-              var cm = editor.codemirror;
-              var cursorPos = cm.getCursor();
-              cm.replaceSelection('♀');
-              cm.setCursor(cursorPos.line, cursorPos.ch + 1);
-              cm.focus();
-            },
-            className: "fa fa-venus",
-            title: "Insert Female Symbol",
-          },
-          {
-            name: "plus-minus",
-            action: function customSpecialCharFunction(editor) {
-              var cm = editor.codemirror;
-              var cursorPos = cm.getCursor();
-              cm.replaceSelection('±');
-              cm.setCursor(cursorPos.line, cursorPos.ch + 1);
-              cm.focus();
-            },
-            className: "fa fa-plus-minus",
-            title: "Insert Plus-Minus Symbol",
-          },
-          {
-            name: "en-dash",
-            action: function customSpecialCharFunction(editor) {
-              var cm = editor.codemirror;
-              var cursorPos = cm.getCursor();
-              cm.replaceSelection('–');
-              cm.setCursor(cursorPos.line, cursorPos.ch + 1);
-              cm.focus();
-            },
-            className: "fa fa-minus",
-            title: "Insert En Dash",
-          },
-          {
-            name: "degree",
-            action: function customSpecialCharFunction(editor) {
-              var cm = editor.codemirror;
-              var cursorPos = cm.getCursor();
-              cm.replaceSelection('°');
-              cm.setCursor(cursorPos.line, cursorPos.ch + 1);
-              cm.focus();
-            },
-            className: "fa fa-circle",
-            title: "Insert Degree Symbol",
-          },
-          {
-            name: "multiplication",
-            action: function customSpecialCharFunction(editor) {
-              var cm = editor.codemirror;
-              var cursorPos = cm.getCursor();
-              cm.replaceSelection('×');
-              cm.setCursor(cursorPos.line, cursorPos.ch + 1);
-              cm.focus();
-            },
-            className: "fa fa-times",
-            title: "Insert Multiplication Symbol",
-          },
-          "preview", "side-by-side", "fullscreen"
-        ],
-        status: ["lines", "words", "cursor"],
-        previewRender: function(plainText) {
-          var md = window.markdownit()
-                      .use(window.markdownitSub)
-                      .use(window.markdownitSup);
-          return md.render(plainText);
-        }
-      });
-
-      // Store the SimpleMDE instance on the textarea element
-      textarea.simplemdeInstance = simplemde;
-
-      // Adjust the CodeMirror instance
-      var cm = simplemde.codemirror;
-
-      // Function to adjust height based on content
-      function adjustHeight() {
-        if (simplemde.isSideBySideActive()) {
-          return; // Skip height adjustment when in side-by-side mode
-        }
-        var contentHeight = cm.getScrollerElement().querySelector('.CodeMirror-sizer').scrollHeight;
-        var padding = 10; // Add some padding to ensure no clipping
-        var newHeight = contentHeight + padding;
-        var wrapperElement = cm.getWrapperElement();
-        var scrollerElement = cm.getScrollerElement();
-        
-        wrapperElement.style.height = newHeight + 'px';
-        scrollerElement.style.maxHeight = newHeight + 'px';
-        scrollerElement.style.height = newHeight + 'px';
-        
-        debug('===============================');
-        debug('wrapperElement.style.height:', wrapperElement.style.height);
-        debug('scrollerElement.style.maxHeight:', scrollerElement.style.maxHeight);
-        debug('scrollerElement.style.height:', scrollerElement.style.height);
-      }
-
-      // Initial height setting based on content
-      if (simplemde.value().trim() === "") {
-        // Set initial height to 4 rows when empty
-        var initialHeight = '100px'; // 100px corresponds to 4 rows
-        var wrapperElement = cm.getWrapperElement();
-        var scrollerElement = cm.getScrollerElement();
-        
-        wrapperElement.style.height = initialHeight;
-        scrollerElement.style.maxHeight = initialHeight;
-        scrollerElement.style.height = initialHeight;
-        
-        debug('===============================');
-        debug('Initial empty editor height settings');
-        debug('wrapperElement.style.height:', wrapperElement.style.height);
-        debug('scrollerElement.style.maxHeight:', scrollerElement.style.maxHeight);
-        debug('scrollerElement.style.height:', scrollerElement.style.height);
-      } else {
-        // Adjust height based on content
-        adjustHeight();
-      }
-
-      // Adjust height on content change
-      cm.on('change', adjustHeight);
-
-      // Adjust height when exiting side-by-side mode
-      cm.on('modeChange', function() {
-        if (!simplemde.isSideBySideActive()) {
-          setTimeout(adjustHeight, 0);
-        }
-      });
-
-      debug('SimpleMDE initialized for', textarea.id, ':', simplemde);
+      renderEditor(textarea);
     });
-  });
-
-  document.addEventListener('ajax:success', function(event) {
-    var response = event.detail[0];
-    debug(response);  // Ensure response contains the expected data
-
-    var displayHtml = response.display_html || 'default_value';  // Replace 'default_value' with an appropriate fallback
-    var profileItemId = response.profile_item_id;
-    alert("==== profileItemId: "+profileItemId)
-    if (!displayHtml) {
-      console.error('displayHtml is undefined!');
-      return;  // Exit if displayHtml is not set
-    }
-
-    if(response.created) {
-      alert('created');
-      var annotationSection = document.querySelector(`#add_annotation_${parameterize(displayHtml)}`);
-      if (annotationSection) {
-        var url = annotationSection.getAttribute('data-url'); // Retrieve the URL from data attribute
-  
-        $.ajax({
-          url: url,
-          method: 'GET',
-          data: {
-            instance_id: response.instance_id,
-            display_html: response.display_html,
-            profile_item_id: profileItemId,
-            authenticity_token: '<%= form_authenticity_token %>'  // Include authenticity token
-          },
-          success: function(data) {
-            annotationSection.innerHTML = data;  // Replace content with the partial
-          },
-          error: function() {
-            console.error('Failed to load Add Annotation partial.');
-          }
-        });
-      } else {
-        console.error('Annotation section not found for displayHtml:', displayHtml);
-      }
-      
-      var referenceSection = document.querySelector(`#add_reference_${parameterize(displayHtml)}`);
-      if (referenceSection) {
-        var url = referenceSection.getAttribute('data-url'); // Retrieve the URL from data attribute
-  
-        $.ajax({
-          url: url,
-          method: 'GET',
-          data: {
-            instance_id: response.instance_id,
-            display_html: response.display_html,
-            profile_item_id: profileItemId,
-            authenticity_token: '<%= form_authenticity_token %>'  // Include authenticity token
-          },
-          success: function(data) {
-            referenceSection.innerHTML = data;  // Replace content with the partial
-            // Ensure that the JavaScript embedded in the loaded partial runs
-            var scriptTags = referenceSection.querySelectorAll('script');
-            scriptTags.forEach(function(scriptTag) {
-              eval(scriptTag.innerHTML); // Execute the JavaScript within the script tag
-            });
-          },
-          error: function() {
-            console.error('Failed to load Add Reference partial.');
-          }
-        });
-      } else {
-        console.error('Reference section not found for displayHtml:', displayHtml);
-      }
-    }
-
-    if(response.created || response.updated) {
-      var messageDiv = document.createElement('div');
-      messageDiv.className = 'notice';
-      messageDiv.innerText = response.message;
-      var messageContainer = document.getElementById('message_' + parameterize(displayHtml));
-      messageContainer.innerHTML = ''; // Clear existing messages
-      messageContainer.appendChild(messageDiv);
-    }
-
-    if (response.annotation_created || response.annotation_updated) {
-      var profileItemId = response.profile_item_id; // Use profile_item_id
-      var messageDiv = document.createElement('div');
-      messageDiv.className = 'notice';
-      messageDiv.innerText = response.message;
-      
-      // Use profile_item_id to find the correct message container
-      var messageContainer = document.getElementById('annotation_message_' + profileItemId);
-      
-      if (messageContainer) {
-        messageContainer.innerHTML = ''; // Clear existing messages
-        messageContainer.appendChild(messageDiv);
-      } else {
-        console.error('Annotation message container not found for profile_item_id: ' + profileItemId);
-      }
-    }
-    
-  });
-
-
-  document.addEventListener('ajax:error', function(event) {
-    var response = event.detail[0];
-    var displayHtml = response.display_html;
-    var messageDiv = document.createElement('div');
-    messageDiv.className = 'alert';
-    messageDiv.innerText = response.error;
-    var messageContainer = document.getElementById('message_' + parameterize(displayHtml));
-    messageContainer.innerHTML = '';
-    messageContainer.appendChild(messageDiv);
-
-    if(response.annotation_error) {
-      var messageDiv = document.createElement('div');
-      messageDiv.className = 'notice';
-      messageDiv.innerText = response.message;
-      var messageContainer = document.getElementById('annotation_message_' + parameterize(displayHtml));
-      messageContainer.innerHTML = ''; // Clear existing messages
-      messageContainer.appendChild(messageDiv);
-    }
-
-
-
   });
 </script>

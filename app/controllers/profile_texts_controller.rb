@@ -17,7 +17,7 @@
 #   limitations under the License.
 #
 class ProfileTextsController < ApplicationController
-  before_action :set_profile_text, only: %i[show edit update destroy]
+  before_action :set_profile_text, :find_profile_item, only: %i[show edit update destroy]
 
   # GET /profile_texts/1
   # GET /profile_texts/1.json
@@ -41,10 +41,14 @@ class ProfileTextsController < ApplicationController
     
     product_item_config = Profile::ProductItemConfig.find(permitted_profile_item_params[:product_item_config_id])
     @profile_item = Profile::ProfileItem.find_or_create_by(permitted_profile_item_params)
+    
+    raise("Profile text already exists") unless @profile_item.new_record?
+
     @profile_item.tap do |pi|
       pi.created_by = current_user.username
       pi.updated_by = current_user.username
     end
+
     @profile_text = @profile_item.build_profile_text(
       value: permitted_profile_text_params[:value],
       value_md: permitted_profile_text_params[:value],
@@ -67,7 +71,6 @@ class ProfileTextsController < ApplicationController
   # PATCH/PUT /profile_texts/1
   # PATCH/PUT /profile_texts/1.json
   def update
-    debugger
     @message = "No change"
     really_update if changed?
   end
@@ -85,6 +88,10 @@ class ProfileTextsController < ApplicationController
 
   private
 
+  def find_profile_item
+    @profile_item = Profile::ProfileItem.find(params[:profile_item][:id])
+  end
+
   # Use callbacks to share common setup or constraints between actions.
   def set_profile_text
     @profile_text = Profile::ProfileText.find(params[:id])
@@ -100,7 +107,7 @@ class ProfileTextsController < ApplicationController
   end
 
   def really_update
-    if @profile_text.update(profile_text_params)
+    if @profile_text.update(profile_text_params.merge(updated_by: current_user.username))
       @message = "Updated"
       render :update
     else
