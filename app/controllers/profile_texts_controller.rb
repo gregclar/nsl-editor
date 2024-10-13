@@ -27,10 +27,6 @@ class ProfileTextsController < ApplicationController
   # POST /profile_texts
   # POST /profile_texts.json
   def create
-    permitted_profile_text_params = params.require(:profile_text).permit(:value)
-    permitted_profile_item_params = params.require(:profile_item).permit(:id, :instance_id, :product_item_config_id, :profile_object_rdf_id)
-
-    product_item_config = Profile::ProductItemConfig.find(permitted_profile_item_params[:product_item_config_id])
     @profile_item = Profile::ProfileItem.find_or_create_by(permitted_profile_item_params)
 
     raise("Profile text already exists") unless @profile_item.new_record?
@@ -58,7 +54,6 @@ class ProfileTextsController < ApplicationController
     render "create_failed", status: :unprocessable_entity
   end
 
-
   # PATCH/PUT /profile_texts/1
   # PATCH/PUT /profile_texts/1.json
   def update
@@ -79,26 +74,28 @@ class ProfileTextsController < ApplicationController
 
   private
 
+  def permitted_profile_text_params
+    params.require(:profile_text).permit(:value)
+  end
+
+  def permitted_profile_item_params
+    params.require(:profile_item).permit(:id, :instance_id, :product_item_config_id, :profile_object_rdf_id)
+  end
+
   def find_profile_item
     @profile_item = Profile::ProfileItem.find(params[:profile_item][:id])
   end
 
-  # Use callbacks to share common setup or constraints between actions.
   def set_profile_text
     @profile_text = Profile::ProfileText.find(params[:id])
   end
 
-  # only allow the white list through.
-  def profile_text_params
-    params.require(:profile_text).permit(:value)
-  end
-
   def changed?
-    @profile_text.value != profile_text_params[:value]
+    @profile_text.value != permitted_profile_text_params[:value]
   end
 
   def really_update
-    if @profile_text.update(profile_text_params.merge(updated_by: current_user.username))
+    if @profile_text.update(permitted_profile_text_params.merge(updated_by: current_user.username))
       @message = "Updated"
       render :update
     else

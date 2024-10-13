@@ -33,7 +33,7 @@ module Profile
       has_one :product_item_config, through: :profile_item
 
       validates :value, presence: true
-      validates :profile_item_id, uniqueness: true
+      validates :profile_item_id, uniqueness: { message: "Profile item annotation must be unique per profile item" }
     end
   end
 

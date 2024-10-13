@@ -32,7 +32,7 @@ class ProfileItemReferencesController < ApplicationController
       render :create
     end
   rescue StandardError => e
-    @message = e.to_s
+    @message = e.record.errors.full_messages.to_sentence
     render "create_failed", status: :unprocessable_entity
   end
 
@@ -44,7 +44,7 @@ class ProfileItemReferencesController < ApplicationController
   private
 
   def set_profile_item_reference
-    @profile_item_reference = Profile::ProfileItemReference.find(params[:id])
+    @profile_item_reference = Profile::ProfileItemReference.find_by(profile_item_id: params[:profile_item_id], reference_id: params[:reference_id])
   end
 
   def changed?
