@@ -31,7 +31,7 @@ RUN wget https://www.openssl.org/source/openssl-3.0.10.tar.gz \
 WORKDIR /app
 
 # Copy the Gemfile and Gemfile.lock
-COPY Gemfile Gemfile.lock ./
+COPY ../Gemfile ../Gemfile.lock ./
 
 RUN mkdir vpn
 COPY vpn/ibis-openvpn.ovpn ./vpn/ibis-openvpn.ovpn

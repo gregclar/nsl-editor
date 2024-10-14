@@ -12,7 +12,7 @@ services:
     stdin_open: true # docker run -i
     tty: true
     volumes:
-      - ./vpn:/vpn # Assuming your VPN config file is in a folder called 'vpn'
+      - ../.vpn:/vpn # Assuming your VPN config file is in a folder called 'vpn'
     command: '-f ./vpn/${OPENVPN_CONFIG_FILE}'
     networks:
       - vpn_network
@@ -56,7 +56,7 @@ services:
   app_dev: &app_dev
     build:
       context: .
-      dockerfile: Dockerfile.dev
+      dockerfile: ./.docker-dev/Dockerfile.dev
     ports:
       - "3000:3000"
     volumes:
