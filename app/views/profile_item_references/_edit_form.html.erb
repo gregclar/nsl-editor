@@ -3,10 +3,11 @@
   <p style="margin-bottom: 0">
     <label>Reference:</label>
     <%= profile_item_reference.reference.try(:title).to_s %>
+    <%= link_to "Delete", "#", class: "btn btn-warning"%>
   </p>
   <div id="edit_reference_<%= profile_item_reference.profile_item_id_reference_id %>">
     <% field_id = "#{profile_item.id}-#{profile_item_reference.profile_item_id_reference_id}" %>
-    <%= form_with model: profile_item_reference, url: profile_item_references_path(profile_item_id: profile_item_reference.profile_item_id, reference_id: profile_item_reference.reference_id), method: :put, remote: true, html: { data: { type: :json, form_type: 'reference_item_form' } } do |f| %>
+    <%= form_with model: profile_item_reference, url: save_profile_item_references_path(profile_item_id: profile_item_reference.profile_item_id, reference_id: profile_item_reference.reference_id), method: :patch, remote: true, html: { data: { type: :json, form_type: 'reference_item_form' } } do |f| %>
       <label style="display: flex;">Annotation:</label>
       <%= text_field_tag "profile_item_reference[annotation]",
           profile_item_reference.annotation,
