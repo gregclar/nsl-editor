@@ -58,7 +58,6 @@ group :development do
   gem "awesome_print"
   gem "web-console", ">= 3.3.0"
   gem "byebug"
-  gem "rails-erd"
   gem "annotaterb"
 end
 
