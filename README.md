@@ -1,6 +1,6 @@
 # Editor README
 ---
-This is the names and taxonomy Editor for the NSL project, sometimes called the "NSL Editor". 
+This is the names and taxonomy Editor for the NSL project, sometimes called the "NSL Editor".
 
 ## Brief History of Versions
 
@@ -15,9 +15,9 @@ The original Rails 4.x app repository is now archived.  One unfortunate side-eff
 
 
 ## NSL
-NSL is the National Species List project of the IBIS team based at the Australian National Botanic Gardens (ANBG) site.  
+NSL is the National Species List project of the IBIS team based at the Australian National Botanic Gardens (ANBG) site.
 
-The Editor works with and relies on services provides by the NSL Services and the NSL Mapper apps.  
+The Editor works with and relies on services provides by the NSL Services and the NSL Mapper apps.
 
 It uses the NSL data structures.
 
@@ -53,9 +53,9 @@ Presumes: you have a copy of an NSL database
 Preparation - run:  rails db:schema:dump to produce db/structure.sql
 Preparation - edit: db/structure.sql to remove min/max constraints on nsl_global_seq
 
-Create a test database, load the sql structure, run tests: 
+Create a test database, load the sql structure, run tests:
     createdb -O nsldev ned_test
-    RAILS_ENV=test rake db:structure:load 
+    RAILS_ENV=test rake db:structure:load
     bundle exec rails:test
 
 ## Services and Mapper
@@ -88,7 +88,7 @@ rails s
 Pre-requisites:
 - Acquire the following:
     - vpn config
-    - database.yml and editor-config.rb files 
+    - database.yml and editor-config.rb files
 
 ### 🐳 Setup with Docker
 
@@ -104,16 +104,16 @@ All of these live in the root directory of the `editor`
 Run
 ```bash
 # build the containers
-docker-compose build
+docker-compose -f docker-compose.dev.yml build
 
-# run the postgres db container 
+# run the postgres db container
 # create the necessary database
 # and restore the db dump from this container
 # e.g psql -U user -d database
-docker-compose run db_dev bash
+docker-compose -f docker-compose.dev.yml run db_dev bash
 
 # run the containers
-docker-compose up -d
+docker-compose -f docker-compose.dev.yml up -d
 ```
 ### 💪🏻 Non-Docker
 Pre-requisite

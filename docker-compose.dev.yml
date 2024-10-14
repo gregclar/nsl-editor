@@ -56,7 +56,7 @@ services:
   app_dev: &app_dev
     build:
       context: .
-      dockerfile: ./.docker-dev/Dockerfile.dev
+      dockerfile: Dockerfile.dev
     ports:
       - "3000:3000"
     volumes:
