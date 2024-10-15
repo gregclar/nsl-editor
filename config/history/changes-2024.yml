@@ -4,6 +4,8 @@
   :description: |-
     Flora Profile: First major merge of initial work by Dean and Gerda
 - :date: 03-Oct-2024
+  :release: true
+- :date: 03-Oct-2024
   :jira_id: '5215'
   :description: |-
     Loader Name: Fix problem with synonym parents being lost during update
