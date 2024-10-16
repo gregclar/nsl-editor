@@ -175,7 +175,7 @@
   
 
   <% if @tabs_to_offer.include?('tab_foa_profile') %>
-    <% if can? :all, :foa_profile %>
+    <% if can? :manage, :foa_profile %>
       <% if Rails.configuration.try('foa_profile_aware') %>
         <%= render partial: 'instances/tabs/tab', locals: {first: false,
                                         last: true,

@@ -61,10 +61,11 @@ class Ability
   end
 
   def foa_auth
-    can :all, Profile::ProfileText
-    can :all, Profile::ProfileItemAnnotation
-    can :all, Profile::ProfileItemReference
-    can :all, :foa_profile
+    can :manage, :profile_item
+    can :manage, Profile::ProfileText
+    can :manage, Profile::ProfileItemAnnotation
+    can :manage, Profile::ProfileItemReference
+    can :manage, :foa_profile
   end
 
   def basic_auth_1
