@@ -99,8 +99,17 @@
       <% if search_result.isonym? %>
         <span class="review loader-name isonym">isonym</span>
       <% end %>
-      <% if search_result.reviewer_comments? %>
-        <span class="reviewer-comment-tag"><%= pluralize(search_result.reviewer_comments.size, 'reviewer comment') %></span>
+      <% if search_result.accepted? || search_result.excluded? %>
+        <% if search_result.narrow_direct_reviewer_comments? %>
+          <span class="reviewer-comment-tag"><%= pluralize(search_result.narrow_direct_reviewer_comments.size, 'review comment') %></span>
+        <% end %>
+        <% if search_result.reviewer_comments? %>
+          <span class="total-reviewer-comment-tag"><%= pluralize(search_result.reviewer_comments.size, 'total comment') %></span>
+        <% end %>
+      <% else %>
+        <% if search_result.reviewer_comments? %>
+          <span class="reviewer-comment-tag"><%= pluralize(search_result.reviewer_comments.size, 'review comment') %></span>
+        <% end %>
       <% end %>
       <% if search_result.compiler_comments? %>
         <span class="compiler-comment-tag"><%= pluralize(search_result.compiler_comments.size, 'compiler comment') %></span>
