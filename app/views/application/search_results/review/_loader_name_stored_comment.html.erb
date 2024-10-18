@@ -21,7 +21,7 @@
          <span class="review-loader-name taxonomy-comment"><%= @stored_comment.html_safe %></span>
     </a>
     <% if @stored_result.reviewer_comments?('concept-note') %>
-      <span class="reviewer-comment-tag"><%= pluralize(@stored_result.reviewer_comments('concept-note').size, 'reviewer comment') %></span>
+      <span class="reviewer-comment-tag"><%= pluralize(@stored_result.reviewer_comments('concept-note').size, 'review comment') %></span>
     <% end %>
     <% if @stored_result.compiler_comments?('concept-note') %>
       <span class="compiler-comment-tag"><%= pluralize(@stored_result.compiler_comments('concept-note').size, 'compiler comment') %></span>

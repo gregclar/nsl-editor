@@ -37,7 +37,7 @@ Developed against a Postgresql database, designed to by run as a low-privilege C
 
 ## Authentication
 
-User authentication/authorisation is via LDAP/Active Directory - originall LDAP, more recently AD.
+User authentication/authorisation is via LDAP/Active Directory - originally LDAP, more recently AD.
 
 ## Database creation
 
@@ -49,14 +49,28 @@ As above, this app doesn't carry the information necessary to create the databas
 
 ## How to run the test suite
 
-Presumes: you have a copy of an NSL database
-Preparation - run:  rails db:schema:dump to produce db/structure.sql
-Preparation - edit: db/structure.sql to remove min/max constraints on nsl_global_seq
+We use simple Rails testing with fixtures.  We mock calls out to the Services app for testing.
 
-Create a test database, load the sql structure, run tests:
-    createdb -O nsldev ned_test
-    RAILS_ENV=test rake db:structure:load
-    bundle exec rails:test
+### Grab the schema
+
+We use a `structure.sql` file extracted from a copy of an active NSL database.  When the database structure changes we need to refresh `structure.sql`.
+
+   1. Set up access to an active NSL database or a local copy of such a database with the latest schema changes.
+   2. Run `SCHEMA_FORMAT='sql' rake db:schema:dump` on command line
+   3. Edit the resulting `structure.sql` file - modify the `create sequence public.nsl_global_seq ...` statement by
+      a) setting the `start with` value to 1, and
+      b) removing the `minvalue` and `maxvalue` constraints.  
+
+      This sequence is set in very particular ways in the various active NSL databases, but we need it simple, predictable, and unconstrained for our test fixtures.
+
+### Run tests
+
+Create a test database, load the sql structure, run tests - e.g.:
+
+      createdb -O nsldev ned_test
+      RAILS_ENV=test rake db:structure:load
+      bundle exec rails:test
+
 
 ## Services and Mapper
 
