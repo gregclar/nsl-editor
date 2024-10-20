@@ -61,10 +61,8 @@ class Ability
   end
 
   def foa_auth
-    can :manage, :profile_item
-    can :manage, Profile::ProfileText
-    can :manage, Profile::ProfileItemAnnotation
-    can :manage, Profile::ProfileItemReference
+    # can :manage, :all   # NOTES: This is not working. It breaks everything.
+    can "profile_items", :all
     can :manage, :foa_profile
   end
 
