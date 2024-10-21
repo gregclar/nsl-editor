@@ -1,3 +1,7 @@
+- :date: 22-Oct-2024
+  :jira_id: '5213'
+  :description: |-
+    Loader Review: Improve family search including new <code>family-list:</code> directive
 - :date: 17-Oct-2024
   :jira_id: '5212'
   :description: |-
