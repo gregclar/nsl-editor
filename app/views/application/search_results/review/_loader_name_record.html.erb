@@ -1,3 +1,9 @@
+<%# There is complex logic here.
+    The taxonomic note and distribution data from top-level records
+    has to appear on separate lines _after_ any synonymy.
+    Family headings also have to appear whenever a taxon from an unannounced family
+    is about to be displayed. %>
+<% @previous_previous_record_type = @previous_record_type %>
 
 <% if @previous_record_type.blank? then %>
    <% @previous_record_type = search_result.record_type %>
@@ -30,23 +36,26 @@
 <% end %>
 
 
-
 <% if @previous_family.blank? then
      @previous_family = search_result.family 
      @show_family = true
+     @add_white_space_around_family = false
    elsif @previous_family != search_result.family
      @previous_family = search_result.family 
      @show_family = true
+     @add_white_space_before_family = @previous_previous_record_type != 'heading'
    else
      @show_family = false
    end
 %>
 
 <% if @show_family %>
+  <% if @add_white_space_before_family %>
   <tr class="spacer"><td colspan="4">&nbsp;</span></td></tr>
   <tr class="spacer"><td colspan="4">&nbsp;</span></td></tr>
   <tr class="spacer"><td colspan="4">&nbsp;</span></td></tr>
   <tr class="spacer"><td colspan="4">&nbsp;</span></td></tr>
+<% end %>
   <tr id="family-of-review-result-<%= search_result.id %>"
       class="review-result review family takes-focus show-details" tabindex="<%= increment_tab_index(100) %>"
       data-edit-url="<%= loader_name_path(id: search_result[:id],tab: 'active_tab_goes_here') %>"
