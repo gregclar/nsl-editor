@@ -1,4 +1,8 @@
 - :date: 22-Oct-2024
+  :jira_id: '5216'
+  :description: |-
+    Loader Review: Allow for comments on family records and show when a family entry is merely a heading in query results
+- :date: 22-Oct-2024
   :jira_id: '5213'
   :description: |-
     Loader Review: Improve family search including new <code>family-list:</code> directive

@@ -49,15 +49,21 @@
    end
 %>
 
-<% if @show_family %>
+<%# final search_result is a flushing record %>
+<% if @show_family && !search_result[:flushing] %>
   <% if @add_white_space_before_family %>
   <tr class="spacer"><td colspan="4">&nbsp;</span></td></tr>
   <tr class="spacer"><td colspan="4">&nbsp;</span></td></tr>
   <tr class="spacer"><td colspan="4">&nbsp;</span></td></tr>
   <tr class="spacer"><td colspan="4">&nbsp;</span></td></tr>
 <% end %>
+  <% if search_result.rank == 'family' %><%# is it a real record or not? %>
+    <% show_details_class = 'review-result' %>
+  <% else %>
+    <% show_details_class = '' %>
+  <% end %>
   <tr id="family-of-review-result-<%= search_result.id %>"
-      class="review-result review family takes-focus show-details" tabindex="<%= increment_tab_index(100) %>"
+      class="<%= show_details_class %> review family takes-focus show-details" tabindex="<%= increment_tab_index(100) %>"
       data-edit-url="<%= loader_name_path(id: search_result[:id],tab: 'active_tab_goes_here') %>"
       data-tab-url="<%= loader_name_review_tab_path(id: search_result[:id],tab: 'active_tab_goes_here') %>"
       data-record-id="<%= search_result.id %>"
@@ -67,12 +73,21 @@
       tabindex="<%= increment_tab_index %>" 
     >
       <a class="review-show-details-link navigation-link takes-focus show-details" title='title' tabindex="<%= increment_tab_index(100) %>">
+      <% if search_result.rank == 'family' %><%# is it a real record or not? %>
         <span class="review loader-name family"><%= "#{search_result.family}" %> </span>
+      <% else %>
+        <span class="review loader-name family"><%= "[#{search_result.family}]" %> </span>
+      <% end %>
 
         <% unless search_result.higher_rank_comment.blank? %>
           <span class="review loader-name remark-to-reviewers"><%= search_result.higher_rank_comment %></span>
         <% end %>
       </a>
+      <% if search_result.rank == 'family' %><%# is it a real record or not? %>
+        <% if search_result.reviewer_comments? %>
+          <span class="reviewer-comment-tag"><%= pluralize(search_result.reviewer_comments.size, 'review comment') %></span>
+        <% end %>
+      <% end %>
     </td>
   </tr>
 <% end %>
