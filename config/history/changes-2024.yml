@@ -1,4 +1,8 @@
 - :date: 22-Oct-2024
+  :jira_id: '5211'
+  :description: |-
+    Loader Review: Flag <code>has-review-comment:</code> and <code>no-distribution:</code> search directives as taking no argument (i.e. no text after the colon).
+- :date: 22-Oct-2024
   :jira_id: '5214'
   :description: |-
     Loader Review: Render html tags as html styling in <code>remark_to_reviewers</code> and <code>higher_rank_comment</code> fields - don't just ignore them

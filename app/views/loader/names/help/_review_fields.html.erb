@@ -4,7 +4,7 @@
   <tr><th>Field</th><th>Description</th></tr>
   <% [
     {field_name: 'has-review-comment:',
-     descr: "Search for loader names that have been commented on. (Full context returned.)"},
+     descr: "Search for loader names that have been commented on. Takes no argument. Records returned in context of synonymy.  "},
     {field_name: 'review-comment:',
      descr: "Search for loader names that have a comment matching a given string. (Full context returned.)"},
     {field_name: 'has-review-comment-by:',
@@ -16,7 +16,7 @@
     {field_name: 'distribution-not:',
      descr: "Search for loader names that have a distribution without a given string. (Full context returned.)"},
     {field_name: 'no-distribution:',
-     descr: "Search for loader names that have no distribution string. (Full context returned.)"},
+     descr: "Search for loader names that have no distribution string. Takes no argument. (Full context returned.)"},
     {field_name: 'family:',
      descr: "Return all the names in matching families. Takes one argument and handles wildcards - so you can get multiple families. e.g. <code>family: b*</code>"},
     {field_name: 'family-list:',
