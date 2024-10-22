@@ -1,3 +1,7 @@
+- :date: 23-Oct-2024
+  :jira_id: '5212'
+  :description: |-
+    Loader Review: Remove mention of <code>family-id:</code> query from <code>loader_name</code> query examples in review mode
 - :date: 22-Oct-2024
   :jira_id: '5230'
   :description: |-
