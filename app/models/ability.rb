@@ -62,7 +62,10 @@ class Ability
 
   def foa_auth
     # can :manage, :all   # NOTES: This is not working. It breaks everything.
-    can "profile_items", :all
+    can "profile_items",            :all
+    can "profile_item_annotations", :all
+    can "profile_item_references",  :all
+    can "profile_texts",            :all
     can :manage, :foa_profile
   end
 
@@ -96,9 +99,6 @@ class Ability
   end
 
   def edit_auth
-    can "profile_item_annotations", :all
-    can "profile_item_references", :all
-    can "profile_texts",           :all
     can "authors",            :all
     can "comments",           :all
     can "instances",          :all
