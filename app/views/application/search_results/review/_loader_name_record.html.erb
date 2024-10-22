@@ -126,7 +126,7 @@
       <% if search_result.narrow_direct_reviewer_comments? %>
         <span class="reviewer-comment-tag"><%= pluralize(search_result.narrow_direct_reviewer_comments.size, 'reviewer comment') %></span>
       <% end %>
-      <% if search_result.compiler_comments? %>
+      <% if search_result.direct_compiler_comments? %>
         <span class="compiler-comment-tag"><%= pluralize(search_result.direct_compiler_comments.size, 'compiler comment') %></span>
       <% end %>
       <% if search_result.accepted? || search_result.excluded? %>
