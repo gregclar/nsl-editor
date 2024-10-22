@@ -1,4 +1,8 @@
 - :date: 22-Oct-2024
+  :jira_id: '5214'
+  :description: |-
+    Loader Review: Render html tags as html styling in <code>remark_to_reviewers</code> and <code>higher_rank_comment</code> fields - don't just ignore them
+- :date: 22-Oct-2024
   :jira_id: '5216'
   :description: |-
     Loader Review: Allow for comments on family records and show when a family entry is merely a heading in query results
