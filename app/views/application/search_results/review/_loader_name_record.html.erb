@@ -139,10 +139,10 @@
         <span class="compiler-comment-tag"><%= pluralize(search_result.compiler_comments.size, 'compiler comment') %></span>
       <% end %>
       <% unless search_result.remark_to_reviewers.blank? %>
-        <span class="review loader-name remark-to-reviewers"><%= search_result.remark_to_reviewers %></span>
+        <span class="review loader-name remark-to-reviewers"><%= search_result.remark_to_reviewers.html_safe %></span>
       <% end %>
       <% unless search_result.higher_rank_comment.blank? %>
-        <span class="review loader-name remark-to-reviewers"><%= search_result.higher_rank_comment %></span>
+        <span class="review loader-name remark-to-reviewers"><%= search_result.higher_rank_comment.html_safe %></span>
       <% end %>
     </a>
   </td>
