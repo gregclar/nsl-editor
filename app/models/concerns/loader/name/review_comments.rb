@@ -44,6 +44,10 @@ module Loader::Name::ReviewComments
       .select { |comment| comment.context == context || context == "any" }
   end
 
+  def direct_compiler_comments?(context = "any")
+    direct_compiler_comments(context).size > 0
+  end
+
   def children_compiler_comments(context = "any")
     children.map do |child| 
       child.name_review_comments
