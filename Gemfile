@@ -8,9 +8,9 @@ ruby "3.3.5"
 
 # Bundle edge Rails instead: gem "rails", github: "rails/rails"
 if next?
-  gem 'rails', '~> 7.1.3.4'
+  gem 'rails', '~> 7.1.4.1'
 else
-  gem "rails", "~> 7.1.3.4"
+  gem "rails", "~> 7.1.4.1"
 end
 
 # The original asset pipeline for Rails [https://github.com/rails/sprockets-rails]

@@ -1,7 +1,7 @@
 - :date: 24-Oct-2024
   :jira_id: '5232'
   :description: |-
-    Upgrade to Ruby 3.3.5
+    Upgrade to Ruby 3.3.5, Rails 7.1.4.1.
 - :date: 23-Oct-2024
   :jira_id: ''
   :description: |-
