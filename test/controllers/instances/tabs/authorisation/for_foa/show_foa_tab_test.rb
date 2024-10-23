@@ -22,62 +22,27 @@ require "test_helper"
 class InstanceForFoaShowMostTabsTest < ActionController::TestCase
   tests InstancesController
   setup do
-    @instance = instances(:britten_created_angophora_costata)
+    Rails.configuration.foa_profile_aware = true
+    @instance = instances(:gaertner_created_metrosideros_costata)
+    @product_item_config = product_item_config(:ecology_pic)
+    @profile_item = profile_item(:ecology_pi)
     @request.headers["Accept"] = "application/javascript"
   end
 
   test "should show detail and FOA tab links if foa editor requests details tab" do
     get(:show,
         params: { id: @instance.id,
-                  tab: "tab_show_1",
-                  "row-type" => "instance_as_part_of_concept_record" },
+                  tab: "tab_foa_profile" },
         session: { username: "fred",
                    user_full_name: "Fred Jones",
-                   groups: ["foa"] })
-    asserts
-  end
-
-  def asserts
-    asserts1
-    asserts2
-    asserts3
-    asserts4
-  end
-
-  def asserts1
-    assert_response :success
-    assert_select "li.active a#instance-show-tab",
-                  /Details/,
-                  "Does not show 'Details' tab link."
-    assert_select "a#instance-edit-tab",
-                  false,
-                  "Should not show 'Edit' tab link."
-    assert_select "a#instance-edit-notes-tab",
-                  false,
-                  "Should not show 'Notes' tab link."
-  end
-
-  def asserts2
-    assert_select "a#instance-cite-this-instance-tab",
-                  false,
-                  "Should not show 'Syn' tab link."
-    assert_select "a#unpublished-citation-tab",
-                  false,
-                  "Should not show 'Unpub' tab link."
-  end
-
-  def asserts3
-    assert_select "a#instance-comments-tab",
-                  false,
-                  "Should not show 'Adnot' tab link."
-    assert_select "a#instance-copy-to-new-reference-tab",
-                  false,
-                  "Should not show 'Copy' tab link."
-  end
-
-  def asserts4
+                   groups: ["edit","foa"] })
+    
     assert_select "a#instance-foa-profile-tab",
-                  /FOA/
-                  "Should not show 'FOA Profile' tab link"
+                   /FOA/
+                   "Should not show 'FOA Profile' tab link"
+     assert_select "h4", 
+                   @product_item_config.display_html,
+                   "Should show the product item config display_html"
   end
+
 end

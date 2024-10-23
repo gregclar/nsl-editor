@@ -1,18 +1,18 @@
 _fixture:
-  model_class: Profile::ProfileText
+  model_class: Profile::ProfileItemAnnotation
 
-one_pt:
-  value: 'Some text'
-  value_md: 'Some text md'
+one_pia:
   created_by: tester
   created_at: <%= Time.now %>
   updated_by: tester
   updated_at: <%= Time.now %>
+  profile_item: ecology_pi
+  value: "annotation 1"
 
-two_pt:
-  value: 'Another piece of text'
-  value_md: 'Another piece of text md'
+two_pia:
   created_by: tester
   created_at: <%= Time.now %>
   updated_by: tester
   updated_at: <%= Time.now %>
+  profile_item: ecology_pi_ref
+  value: "annotation 1"
