@@ -4,13 +4,13 @@ end
 source "https://rubygems.org"
 git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 
-ruby "3.3.3"
+ruby "3.3.5"
 
 # Bundle edge Rails instead: gem "rails", github: "rails/rails"
 if next?
-  gem 'rails', '~> 7.1.3.4'
+  gem 'rails', '~> 7.1.4.1'
 else
-  gem "rails", "~> 7.1.3.4"
+  gem "rails", "~> 7.1.4.1"
 end
 
 # The original asset pipeline for Rails [https://github.com/rails/sprockets-rails]
@@ -115,4 +115,6 @@ group :development do
 end
 
 gem 'next_rails'
+gem 'logger' # previously logger was loaded from the standard library, but will no longer be part of the default gems starting from Ruby 3.5.0.
+gem 'ostruct' # previously ostruct was loaded from the standard library, but will no longer be part of the default gems starting from Ruby 3.5.0.
 
