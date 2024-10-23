@@ -1,3 +1,39 @@
+- :date: 24-Oct-2024
+  :jira_id: '5232'
+  :description: |-
+    Upgrade to Ruby 3.3.5, Rails 7.1.4.1 and update other gems with later versions available.
+- :date: 23-Oct-2024
+  :jira_id: ''
+  :description: |-
+    Loader Review: Walk-through fixes
+- :date: 23-Oct-2024
+  :jira_id: '5212'
+  :description: |-
+    Loader Review: Remove mention of <code>family-id:</code> query from <code>loader_name</code> query examples in review mode
+- :date: 22-Oct-2024
+  :jira_id: '5230'
+  :description: |-
+    Loader Review: Further improvements to comment counts and a further adjustment
+- :date: 22-Oct-2024
+  :jira_id: '5211'
+  :description: |-
+    Loader Review: Flag <code>has-review-comment:</code> and <code>no-distribution:</code> search directives as taking no argument (i.e. no text after the colon).
+- :date: 22-Oct-2024
+  :jira_id: '5214'
+  :description: |-
+    Loader Review: Render html tags as html styling in <code>remark_to_reviewers</code> and <code>higher_rank_comment</code> fields - don't just ignore them
+- :date: 22-Oct-2024
+  :jira_id: '5216'
+  :description: |-
+    Loader Review: Allow for comments on family records and show when a family entry is merely a heading in query results
+- :date: 22-Oct-2024
+  :jira_id: '5213'
+  :description: |-
+    Loader Review: Improve family search including new <code>family-list:</code> directive
+- :date: 17-Oct-2024
+  :jira_id: '5212'
+  :description: |-
+    Loader Review: Remove loader name query help entry for family-id query in review mode
 - :date: 17-Oct-2024
   :jira_id: '5210'
   :description: |-

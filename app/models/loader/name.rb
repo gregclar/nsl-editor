@@ -156,17 +156,6 @@ class Loader::Name < ActiveRecord::Base
     !parent_id.blank?
   end
 
-  def compiler_comments(context = "any")
-    name_review_comments
-      .includes(batch_reviewer: [:batch_review_role])
-      .select { |comment| comment.reviewer.role.name == Loader::Batch::Review::Role::COMPILER }
-      .select { |comment| comment.context == context || context == "any" }
-  end
-
-  def compiler_comments?(context = "any")
-    compiler_comments(context).size > 0
-  end
-
   def self.record_to_flush_results
     r = OpenStruct.new
     r.record_type = "accepted"
