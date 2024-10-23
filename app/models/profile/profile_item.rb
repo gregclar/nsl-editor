@@ -46,6 +46,7 @@ module Profile
     class ProfileItem < ApplicationRecord
       self.table_name = "profile_item"
 
+      belongs_to :instance
       belongs_to :product_item_config, class_name: 'Profile::ProductItemConfig', foreign_key: 'product_item_config_id'
       belongs_to :profile_text, class_name: 'Profile::ProfileText', foreign_key: 'profile_text_id', dependent: :destroy
       belongs_to :profile_object_type,

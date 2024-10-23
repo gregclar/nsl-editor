@@ -1,0 +1,16 @@
+_fixture:
+  model_class: Profile::ProfileText
+
+one_pt:
+  value: 'Some text'
+  created_by: tester
+  created_at: <%= Time.now %>
+  updated_by: tester
+  updated_at: <%= Time.now %>
+
+two_pt:
+  value: 'Another piece of text'
+  created_by: tester
+  created_at: <%= Time.now %>
+  updated_by: tester
+  updated_at: <%= Time.now %>

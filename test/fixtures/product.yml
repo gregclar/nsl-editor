@@ -1,10 +1,8 @@
+_fixture:
+  model_class: Profile::Product
+  
 foa:
-  id: 1
-  lock_version: 0
   description_html: "foa description"
-  internal_notes:
-  is_available: true
-  is_current: true
   name: "FOA"
   reference_id: simple (Reference)
   namespace_id: apni (Namespace)
