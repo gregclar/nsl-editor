@@ -68,7 +68,7 @@ We use a `structure.sql` file extracted from a copy of an active NSL database.  
 Create a test database, load the sql structure, run tests - e.g.:
 
       createdb -O nsldev ned_test
-      RAILS_ENV=test rake db:structure:load
+      RAILS_ENV=test rake db:schema:load
       bundle exec rails:test
 
 
