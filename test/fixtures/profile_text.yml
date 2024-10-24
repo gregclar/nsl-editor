@@ -16,3 +16,11 @@ two_pt:
   created_at: <%= Time.now %>
   updated_by: tester
   updated_at: <%= Time.now %>
+
+three_pt:
+  value: 'Another piece of text'
+  value_md: 'Another piece of text md'
+  created_by: tester
+  created_at: <%= Time.now %>
+  updated_by: tester
+  updated_at: <%= Time.now %>

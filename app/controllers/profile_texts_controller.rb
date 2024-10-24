@@ -17,12 +17,7 @@
 #   limitations under the License.
 #
 class ProfileTextsController < ApplicationController
-  before_action :set_profile_text, :find_profile_item, only: %i[update destroy]
-
-  # GET /profile_texts/new
-  def new
-    @profile_text = Profile::ProfileText.new
-  end
+  before_action :set_profile_text, :find_profile_item, only: %i[update]
 
   # POST /profile_texts
   # POST /profile_texts.json
@@ -59,17 +54,6 @@ class ProfileTextsController < ApplicationController
   def update
     @message = "No change"
     really_update if changed?
-  end
-
-  # DELETE /profile_texts/1
-  # DELETE /profile_texts/1.json
-  def destroy
-    if @profile_text.destroy
-      render :destroy
-    else
-      @message = "Could not delete that record."
-      render "update_failed", status: :unprocessable_entity
-    end
   end
 
   private

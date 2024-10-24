@@ -1,29 +1,20 @@
-# app/models/profile/profile_item_annotation.rb
-# == Schema Information
+# frozen_string_literal: true
+
+#   Copyright 2015 Australian National Botanic Gardens
 #
-# Table name: profile_item_annotation(An annotation made on a profile item.)
+#   This file is part of the NSL Editor.
 #
-#  id(A system wide unique identifier allocated to each profile annotation record.)                   :bigint           not null, primary key
-#  api_date(The date when a system user, script, jira or services task last changed this record.)     :timestamptz
-#  api_name(The name of a system user, script, jira or services task which last changed this record.) :string(50)
-#  created_by(The user id of the person who created this data)                                        :string(50)       not null
-#  lock_version(A system field to manage row level locking.)                                          :integer          default(0), not null
-#  source_id_string(The identifier from the source system that this profile text was imported from.)  :string(100)
-#  source_system(The source system that this profile text was imported from.)                         :text
-#  updated_by(The user id of the person who last updated this data)                                   :string(50)       not null
-#  value(The annotation statement.)                                                                   :text             not null
-#  created_at(The date and time this data was created.)                                               :timestamptz      not null
-#  updated_at(The date and time this data was updated.)                                               :timestamptz      not null
-#  profile_item_id(The profile item about which this annotation is made.)                             :bigint           not null
-#  source_id(The key at the source system imported on migration)                                      :bigint
+#   Licensed under the Apache License, Version 2.0 (the "License");
+#   you may not use this file except in compliance with the License.
+#   You may obtain a copy of the License at
 #
-# Indexes
+#   http://www.apache.org/licenses/LICENSE-2.0
 #
-#  profile_item_annotation_item_i  (profile_item_id)
-#
-# Foreign Keys
-#
-#  profile_item_annotation_profile_item_id_fkey  (profile_item_id => profile_item.id)
+#   Unless required by applicable law or agreed to in writing, software
+#   distributed under the License is distributed on an "AS IS" BASIS,
+#   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+#   See the License for the specific language governing permissions and
+#   limitations under the License.
 #
 require "test_helper"
 

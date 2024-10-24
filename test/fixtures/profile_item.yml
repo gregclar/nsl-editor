@@ -20,7 +20,7 @@ notes_pi:
   updated_by: tester
   updated_at: <%= Time.now %>
   product_item_config: ecology_pic
-  profile_text: one_pt
+  profile_text: two_pt
   statement_type: "fact"
 
 ecology_pi_ref:
@@ -31,5 +31,5 @@ ecology_pi_ref:
   instance: britten_created_angophora_costata
   product_item_config: ecology_pic
   profile_object_rdf_id: "text"
-  profile_text: two_pt
+  profile_text: three_pt
   statement_type: "fact"
