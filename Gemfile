@@ -70,6 +70,7 @@ group :test do
   gem "minitest-reporters"
   # NoMethodError: assert_template has been extracted to a gem. To continue using it, add:
   gem "rails-controller-testing"
+  gem "minitest-stub_any_instance"
 end
 
 group :development, :test do
