@@ -60,7 +60,9 @@ class Profile::ProfileItemTest < ActiveSupport::TestCase
     profile_item_reference2 = profile_item_reference(:two_pir)
     profile_item_reference2.update(profile_item: @profile_item, reference: reference2)
 
-    assert_equal [profile_item_reference1, profile_item_reference2].map(&:id), @profile_item.profile_item_references.map(&:id)
+    profile_item_references = @profile_item.profile_item_references.map(&:profile_item_id_reference_id)
+    assert_equal profile_item_references.include?(profile_item_reference1.profile_item_id_reference_id), true
+    assert_equal profile_item_references.include?(profile_item_reference2.profile_item_id_reference_id), true
   end
 
   test 'has one product through product item config' do

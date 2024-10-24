@@ -130,7 +130,7 @@ class ProfileItemReferencesControllerTest < ActionController::TestCase
           }, session: @session, xhr: true
     assert_response :success
     assert_equal "Deleted profile item reference.", assigns(:message)
-    assert_tempate :destroy
+    assert_template :destroy
   end
 
   test "should handle error when destroy fails" do
