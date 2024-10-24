@@ -99,6 +99,11 @@ rails s
 
 ## Development
 
+Current stack:
+- Ruby version 3.3.5
+- Rails version 7.1.4.1
+- Postgresql version 15.7
+
 Pre-requisites:
 - Acquire the following:
     - vpn config
