@@ -68,7 +68,7 @@ We use a `structure.sql` file extracted from a copy of an active NSL database.  
 Create a test database, load the sql structure, run tests - e.g.:
 
       createdb -O nsldev ned_test
-      RAILS_ENV=test rake db:structure:load
+      RAILS_ENV=test rake db:schema:load
       bundle exec rails:test
 
 
@@ -98,6 +98,11 @@ cd [app home]
 rails s
 
 ## Development
+
+Current stack:
+- Ruby version 3.3.5
+- Rails version 7.1.4.1
+- Postgresql version 15.7
 
 Pre-requisites:
 - Acquire the following:

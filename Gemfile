@@ -57,7 +57,6 @@ group :development do
   # Access an interactive console on exception pages or by calling 'console' anywhere in the code.
   gem "awesome_print"
   gem "web-console", ">= 3.3.0"
-  gem "byebug"
   gem "annotaterb"
 end
 
@@ -71,9 +70,11 @@ group :test do
   gem "minitest-reporters"
   # NoMethodError: assert_template has been extracted to a gem. To continue using it, add:
   gem "rails-controller-testing"
+  gem "minitest-stub_any_instance"
 end
 
 group :development, :test do
+  gem "byebug"
   gem "pry-rails"
   # gem "pry-rescue" # breaks test env. on Mac M1
   gem "webmock"

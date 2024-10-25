@@ -182,6 +182,7 @@ GEM
       builder
       minitest (>= 5.0)
       ruby-progressbar
+    minitest-stub_any_instance (1.0.3)
     msgpack (1.7.3)
     msgpack (1.7.3-java)
     mutex_m (0.2.0)
@@ -412,6 +413,7 @@ DEPENDENCIES
   minitest
   minitest-rails
   minitest-reporters
+  minitest-stub_any_instance
   net-ldap
   next_rails
   nokogiri (>= 1.13.4)
