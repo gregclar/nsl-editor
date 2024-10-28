@@ -1,3 +1,8 @@
+- :date: 29-Oct-2024
+  :jira_id: '29'
+  :jira_project: FLOR
+  :description: |-
+    Flora of Australia Profile: Improved foa query in the instances tabs
 - :date: 28-Oct-2024
   :jira_id: '28'
   :jira_project: FLOR
