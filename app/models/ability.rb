@@ -66,7 +66,9 @@ class Ability
     can "profile_item_annotations", :all
     can "profile_item_references",  :all
     can "profile_texts",            :all
-    can :manage, :foa_profile
+    can :manage,                    :foa_profile
+    can "instances",                "tab_foa_profile"
+    can "references",               "typeahead_on_citation"
   end
 
   def basic_auth_1
