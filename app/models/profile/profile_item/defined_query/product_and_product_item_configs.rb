@@ -5,6 +5,7 @@ class Profile::ProfileItem::DefinedQuery::ProductAndProductItemConfigs
 
   def initialize(instance)
     @product = Profile::Product.find_by(name: "FOA")
+    @product_configs_and_profile_items = []
     @instance = instance
   end
 
@@ -15,8 +16,11 @@ class Profile::ProfileItem::DefinedQuery::ProductAndProductItemConfigs
 
   def run_query
     debug("run_query")
-    [] unless Rails.configuration.try('foa_profile_aware')
-    @product_configs_and_profile_items = find_or_initialize_profile_items
+    
+    if Rails.configuration.try('foa_profile_aware')
+      @product_configs_and_profile_items = find_or_initialize_profile_items
+    end
+
     [product_configs_and_profile_items, product]
   end
 
