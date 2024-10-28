@@ -2,7 +2,8 @@
   :jira_id: '28'
   :jira_project: FLOR
   :description: |-
-    Flora of Australia Profile: Updated foa editor permissions
+    Flora of Australia Profile: Updated permissions for the foa editor
+- :date: 28-Oct-2024
   :jira_id: '5238'
   :description: |-
     Loader: Stop focus jump in Edit tab
