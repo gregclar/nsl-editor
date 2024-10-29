@@ -1,3 +1,9 @@
+<% if @product_configs_and_profile_items.blank? %>
+  <div>
+    <div id="message_no_product_configs" class="message">There are no product or product configs setup yet.</div>
+  </div>
+<% end %>
+
 <% @product_configs_and_profile_items.each do |config_items| %>
   <% product_item_config, profile_item = config_items.values_at(:product_item_config, :profile_item) %>
   <div>

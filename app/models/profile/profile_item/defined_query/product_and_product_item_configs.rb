@@ -30,6 +30,9 @@ class Profile::ProfileItem::DefinedQuery::ProductAndProductItemConfigs
     # TODO: Optimise this method!!
     # We may not even need this if we first create the profile item
     # before adding profile texts, references, and annotations.
+    
+    return [] unless product
+    return [] unless instance
 
     # Fetch all product item configs with display_html and associated ProfileItems
     product_item_configs = Profile::ProductItemConfig
@@ -39,8 +42,8 @@ class Profile::ProfileItem::DefinedQuery::ProductAndProductItemConfigs
 
     # Fetch existing profile items for quick lookup
     existing_profile_items = Profile::ProfileItem
-      .where(product_item_config_id: product_item_configs.pluck(:id), instance_id: instance.id)
-      .index_by(&:product_item_config_id) # Create a hash for O(1) lookup
+        .where(product_item_config_id: product_item_configs.pluck(:id), instance_id: instance.id)
+        .index_by(&:product_item_config_id) 
 
     # Map the product item configs to their associated profile items
     product_item_configs.map do |product_item_config|

@@ -49,6 +49,19 @@ class ProductAndProductItemConfigsTest < ActiveSupport::TestCase
     end
   end
 
+  test "#run_query to return an empty profile itme when instance is nil" do
+    result = Profile::ProfileItem::DefinedQuery::ProductAndProductItemConfigs.new(nil).run_query
+    assert_equal result.first, []
+    assert_equal result.last, @product
+  end
+
+  test "#run_query to return an empty profile itme when product is nil" do
+    @product.update(name: "not foa")
+    result = Profile::ProfileItem::DefinedQuery::ProductAndProductItemConfigs.new(@instance).run_query
+    assert_equal result.first, []
+    assert_equal result.last, nil
+  end
+
   test "#run_query with feature flag off" do
     Rails.configuration.foa_profile_aware = false
 

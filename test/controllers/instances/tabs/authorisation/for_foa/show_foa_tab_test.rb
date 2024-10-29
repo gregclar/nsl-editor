@@ -42,6 +42,8 @@ class InstanceForFoaShowMostTabsTest < ActionController::TestCase
     asserts3
     asserts4
     asserts5
+    asserts6
+    asserts7
   end
 
   def asserts1
@@ -88,6 +90,29 @@ class InstanceForFoaShowMostTabsTest < ActionController::TestCase
     assert_select "a#instance-copy-to-new-reference-tab",
                   false,
                   "Should not show 'Copy' tab link."
+  end
+
+  def asserts6
+    @product = @profile_item.product
+    @product.update(name: "not foa")
+    assert_response :success
+    assert_select "a#instance-foa-profile-tab",
+                   /FOA/
+                   "Should not show 'FOA Profile' tab link"
+    assert_select "#message_no_product_configs",
+                   "There are no product or product configs setup yet.",
+                   "Should show a message"
+  end
+
+  def asserts7
+    Instance.delete_all
+    assert_response :success
+    assert_select "a#instance-foa-profile-tab",
+                   /FOA/
+                   "Should not show 'FOA Profile' tab link"
+    assert_select "#message_no_product_configs",
+                   "There are no product or product configs setup yet.",
+                   "Should show a message"
   end
 
 
