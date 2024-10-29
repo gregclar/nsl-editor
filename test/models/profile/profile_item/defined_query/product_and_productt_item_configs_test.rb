@@ -59,7 +59,7 @@ class ProductAndProductItemConfigsTest < ActiveSupport::TestCase
     @product.update(name: "not foa")
     result = Profile::ProfileItem::DefinedQuery::ProductAndProductItemConfigs.new(@instance).run_query
     assert_equal result.first, []
-    assert_equal result.last, nil
+    assert_nil result.last
   end
 
   test "#run_query with feature flag off" do
