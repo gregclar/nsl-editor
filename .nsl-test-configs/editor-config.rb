@@ -2,7 +2,6 @@
 external_services_host = "http://localhost:9093/nsl/services"
 internal_services_host = 'http://localhost:9090/nsl/services'
 #Environment
-Rails.configuration.config_file_tag = 'apni development'
 Rails.configuration.action_controller.relative_url_root = "/nsl/editor"
 Rails.configuration.environment = 'test'
 Rails.configuration.draft_instances = 'true'
