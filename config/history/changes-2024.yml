@@ -1,4 +1,8 @@
 - :date: 30-Oct-2024
+  :jira_id: '5235'
+  :description: |-
+    Loader: Links in <code>remark_to_reviewers</code> are no longer highlighted with a red background
+- :date: 30-Oct-2024
   :jira_id: '5236'
   :description: |-
     Login: Restrict login to users in the specific login group for each environment (test/prod) and dataset (apni/moss/etc)
