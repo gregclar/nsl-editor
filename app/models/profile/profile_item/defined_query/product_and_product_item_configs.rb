@@ -38,7 +38,8 @@ class Profile::ProfileItem::DefinedQuery::ProductAndProductItemConfigs
     product_item_configs = Profile::ProductItemConfig
       .where.not(display_html: nil)
       .where(product_id: product.id)
-      .includes(:profile_items) # Eager load associated profile items
+      .includes(:profile_items)
+      .order(:sort_order)
 
     # Fetch existing profile items for quick lookup
     existing_profile_items = Profile::ProfileItem
