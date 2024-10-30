@@ -19,7 +19,7 @@ jobs:
           - 5432:5432
         env:
           POSTGRES_USER: nsl
-          POSTGRES_PASSWORD: ${{ secrets.POSTGRES_PASSWORD }}
+          POSTGRES_PASSWORD: testpassword
           POSTGRES_DB: test_db
         options: >-
           --health-cmd="pg_isready -U nsl"
@@ -28,13 +28,13 @@ jobs:
           --health-retries=5
           
     env:
-      DATABASE_URL: postgres://nsl:${{ secrets.POSTGRES_PASSWORD }}@localhost:5432/test_db
+      DATABASE_URL: postgres://nsl:testpassword@localhost:5432/test_db
       RAILS_ENV: test
       EDITOR_CONFIGDB_FILE: ".nsl-test-configs/database.yml"
       EDITOR_CONFIG_FILE: ".nsl-test-configs/editor-config.rb"
       DB: test_db
       DB_USER: nsl
-      DB_PASS: ${{ secrets.POSTGRES_PASSWORD }}
+      DB_PASS: testpassword
 
     steps:
     - name: Checkout code
