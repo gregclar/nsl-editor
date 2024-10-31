@@ -33,8 +33,51 @@
         22
       ],
       "note": ""
+    },
+    {
+      "warning_type": "Cross-Site Scripting",
+      "warning_code": 2,
+      "fingerprint": "bcc836b34f35b5ccf4147fcc4d2745fb84870806a142bdee257be75f66ab7cc8",
+      "check_name": "CrossSiteScripting",
+      "message": "Unescaped model attribute",
+      "file": "app/views/application/search_results/review/_loader_name_record.html.erb",
+      "line": 144,
+      "link": "https://brakemanscanner.org/docs/warning_types/cross_site_scripting",
+      "code": "Loader::Name.record_to_flush_results.remark_to_reviewers.gsub(/<a/, \"<a class='remark-to-reviewers'\").sub(/(>)([^><]*$)/, \"\\\\1<span class=\\\"remark-to-reviewers\\\">\\\\2</span>\")",
+      "render_path": [
+        {
+          "type": "template",
+          "name": "search/review/_container",
+          "line": 10,
+          "file": "app/views/search/review/_container.html.erb",
+          "rendered": {
+            "name": "search/review/_results",
+            "file": "app/views/search/review/_results.html.erb"
+          }
+        },
+        {
+          "type": "template",
+          "name": "search/review/_results",
+          "line": 36,
+          "file": "app/views/search/review/_results.html.erb",
+          "rendered": {
+            "name": "application/search_results/review/_loader_name_record",
+            "file": "app/views/application/search_results/review/_loader_name_record.html.erb"
+          }
+        }
+      ],
+      "location": {
+        "type": "template",
+        "template": "application/search_results/review/_loader_name_record"
+      },
+      "user_input": null,
+      "confidence": "Medium",
+      "cwe_id": [
+        79
+      ],
+      "note": ""
     }
   ],
-  "updated": "2024-10-30 23:11:01 +0000",
+  "updated": "2024-10-31 22:05:20 +0000",
   "brakeman_version": "6.2.2"
 }
