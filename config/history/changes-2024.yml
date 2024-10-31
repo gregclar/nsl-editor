@@ -1,3 +1,7 @@
+- :date: 31-Oct-2024
+  :jira_id: '5235'
+  :description: |-
+    Loader: Text and links in <code>remark_to_reviewers</code> are now (imperfectly) highlighted with a yellow background
 - :date: 30-Oct-2024
   :jira_id: '5235'
   :description: |-
