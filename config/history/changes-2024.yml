@@ -1,3 +1,7 @@
+- :date: 1-Nov-2024
+  :jira_id: '5242'
+  :description: |-
+    Instance delete: Check FK in all classifcation trees, not just in the accepted tree, before offering a delete button
 - :date: 31-Oct-2024
   :jira_id: '5235'
   :description: |-

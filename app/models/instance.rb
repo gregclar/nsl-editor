@@ -613,6 +613,7 @@ class Instance < ActiveRecord::Base
       reverse_of_this_is_cited_by.blank? &&
       comments.blank? &&
       !in_apc? &&
+      !in_any_tree? &&
       children.empty? &&
       not_linked_to_loader_name_matches?
   end
