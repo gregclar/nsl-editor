@@ -44,6 +44,7 @@ class InstanceForFoaShowMostTabsTest < ActionController::TestCase
     asserts5
     asserts6
     asserts7
+    asserts8
   end
 
   def asserts1
@@ -115,5 +116,24 @@ class InstanceForFoaShowMostTabsTest < ActionController::TestCase
                    "Should show a message"
   end
 
+  def asserts8
+    Rails.configuration.foa_profile_dropdown_ui = true
+    assert_select "select#item_type",
+                   true
+                   "Should show a dropdown of the available product item configs when flag is on"
+
+    assert_select "h4",
+      false,
+      "Should not display profile items immediately"
+
+    Rails.configuration.foa_profile_dropdown_ui = false
+    assert_select "select#item_type",
+                  false
+                  "Should not show a dropdown of the available product item configs when flag is off"
+
+    assert_select "h4",
+      @product_item_config.display_html,
+      "Should show the product item config display_html"
+  end
 
 end

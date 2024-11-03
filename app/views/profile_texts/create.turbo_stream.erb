@@ -1,3 +1,15 @@
+<% if Rails.configuration.try('foa_profile_dropdown_ui') %>
+  <%= turbo_stream.replace "product-item-config-dropdown-container" do %>
+    <% product_configs_and_profile_items, product = Profile::ProfileItem::DefinedQuery::ProductAndProductItemConfigs.new(@profile_item.instance).run_query %>
+    <%= render partial: "profile_items/product_item_config_dropdown", 
+      locals: {
+        product_configs_and_profile_items: product_configs_and_profile_items, 
+        selected_product_item_config_id: @profile_item.product_item_config_id
+      } 
+    %>
+  <% end %>
+<% end %>
+
 <%= turbo_stream.replace "message_#{@profile_item.product_item_config.display_html.parameterize}" do %>
   <div id="message_<%= @profile_item.product_item_config.display_html.parameterize %>" class="message-container">
     <%= @message %>

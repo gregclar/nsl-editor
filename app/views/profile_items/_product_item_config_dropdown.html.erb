@@ -1,0 +1,31 @@
+<div id="product-item-config-dropdown-container" class="form-group" style="padding: 20px 0;">
+  <label for="product_item_config_id">Choose an item type to add or edit:</label>
+  <%= select_tag :item_type,
+                options_for_select(
+                  product_configs_and_profile_items.collect do |ci| 
+                    product_item_config, profile_item = ci.values_at(:product_item_config, :profile_item)
+                    label = profile_item.persisted? ? "- Existing (Edit)" : ""
+                    ["#{product_item_config.display_html} #{label}",product_item_config.id]
+                  end,
+                  selected: selected_product_item_config_id
+                ),
+                include_blank: true,
+                class: "form-control inline-block width-15em",
+                title: "Choose an item type",
+                onChange: "displayProfileItemForm(this);",
+                tabindex: increment_tab_index 
+  %>
+
+  <script>
+    function displayProfileItemForm(e) {
+      allContainers = document.querySelectorAll('div.product-item-config-container');
+      allContainers.forEach(function(container) {
+        container.classList.add("hidden");
+      });
+      container = document.querySelector('div.product-item-config-container-id-'+e.value);
+      container.classList.remove("hidden");
+      textarea = document.querySelector('div.product-item-config-container-id-'+e.value+' .editor-textarea');
+      renderEditor(textarea);
+    }
+  </script>
+</div>
