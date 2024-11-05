@@ -552,6 +552,10 @@ Rails.application.routes.draw do
   match "name_review_comments/:id", as: "delete_name_review_comment", to: "loader/name/review/comments#destroy",
                                     via: :delete
 
+  match "name_review_vote", as: "create_name_review_vote", to: "loader/name/review/votes#create", via: :post
+  match "name_review_vote/:id", as: "delete_name_review_vote", to: "loader/name/review/votes#destroy", via: :delete
+
+
   match "switch_on_review_mode", as: "switch_on_review_mode", to: "loader/batch/review/mode#switch_on", via: :post
   match "switch_off_review_mode", as: "switch_off_review_mode", to: "loader/batch/review/mode#switch_off", via: :post
 

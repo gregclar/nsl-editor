@@ -35,6 +35,8 @@ class Loader::Batch::Review < ActiveRecord::Base
 
   attr_accessor :give_me_focus, :message
 
+  #scope :in_progress, -> { where(in_progress: true) }
+
   def fresh?
     created_at > 1.hour.ago
   end
@@ -60,6 +62,10 @@ class Loader::Batch::Review < ActiveRecord::Base
     else
       "No change"
     end
+  end
+
+  def name_in_context
+    "#{batch.name} #{name}"
   end
 
   private
