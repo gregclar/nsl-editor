@@ -4,7 +4,7 @@ create table loader.name_review_vote (
   batch_review_id bigint not null,
   org_id bigint not null,
   batch_reviewer_id bigint not null,
-  vote boolean not null default false,
+  vote boolean not null default true,
   lock_version bigint not null default 0,
   created_at timestamp with time zone not null default now(),
   created_by character varying(50)    not null default user,
