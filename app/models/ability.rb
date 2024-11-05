@@ -166,9 +166,11 @@ class Ability
 
   def reviewer_auth
     can "loader/name/review/comments", :all
+    can "loader/name/review/votes",    :all
     can "loader/batch/review/mode",    "switch_on"
     can "loader/names",                "show"
     can "loader/names",                "tab_details"
     can "loader/names",                "tab_comment"
+    can "loader/names",                "tab_vote"
   end
 end

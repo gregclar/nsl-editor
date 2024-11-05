@@ -1,4 +1,8 @@
-- :date: 1-Nov-2024
+- :date: 05-Nov-2024
+  :jira_id: '5234'
+  :description: |-
+    APC Workflow: Voting - first cut, which is basic voting at name level
+- :date: 01-Nov-2024
   :jira_id: '5242'
   :description: |-
     Instance delete: Check FK in all classifcation trees, not just in the accepted tree, before offering a delete button
