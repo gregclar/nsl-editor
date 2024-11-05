@@ -34,6 +34,9 @@ class Loader::Name::Review::Vote < ActiveRecord::Base
   alias_method :reviewer, :batch_reviewer
 
   validates :vote, inclusion: { in: [ true, false ] }
+  validates :loader_name_id,
+            uniqueness: {scope: [:org_id, :batch_review_id],
+                         message: "already voted on for this organisation in this review"}
 
   attr_accessor :give_me_focus, :message
 
