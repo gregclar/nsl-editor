@@ -50,9 +50,8 @@ class ProductAndProductItemConfigsTest < ActiveSupport::TestCase
   end
 
   test "#run_query with feature flag on and with product_item_config_id param" do
-    param = {product_item_config_id: product_item_config.id}
-    result = Profile::ProfileItem::DefinedQuery::ProductAndProductItemConfigs.new(@instance, param).run_query
-    product_configs_and_profile_items, product = @query.run_query
+    param = {product_item_config_id: @product_item_config.id}
+    product_configs_and_profile_items, product = Profile::ProfileItem::DefinedQuery::ProductAndProductItemConfigs.new(@instance, param).run_query
 
     assert_equal 1, product_configs_and_profile_items.size
     assert_equal @product, product

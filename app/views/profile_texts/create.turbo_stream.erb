@@ -4,7 +4,8 @@
     <%= render partial: "profile_items/product_item_config_dropdown", 
       locals: {
         product_configs_and_profile_items: product_configs_and_profile_items, 
-        selected_product_item_config_id: @profile_item.product_item_config_id
+        selected_product_item_config_id: @profile_item.product_item_config_id,
+        instance: @profile_item.instance
       } 
     %>
   <% end %>

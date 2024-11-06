@@ -7,13 +7,24 @@
 
   <div id="simplemde-container">
     <%= text_area_tag "profile_text[value]", profile_item.profile_text.try(:value).to_s, 
-      class: "form-control editor-textarea custom-height",
+      class: "form-control editor-textarea-version2 custom-height",
       title: "Enter verbatim name",
       rows: 4,
       tabindex: 1112,
       id: "editor_#{product_item_config.display_html.parameterize}#{profile_text.id}",
       required: true
     %>
+
+    <script>
+      document.addEventListener('simpleMDELoaded', function() {
+        debug('SimpleMDE is loaded');
+        const observer = new MutationObserver(function(mutations) {
+
+        })
+        textarea = document.getElementById("editor_<%= product_item_config.display_html.parameterize %><%= profile_text.id%>");
+        if(textarea) { renderEditor(textarea);}
+      });
+    </script>
   </div>
   
   <%= submit_tag 'Save', style: 'background-color: #5a5a5a; color: white; border: none; padding: 5px 10px; cursor: pointer; border-radius: 4px; float: right;' %>

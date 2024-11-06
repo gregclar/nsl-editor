@@ -54,7 +54,6 @@ class Profile::ProfileItem::DefinedQuery::ProductAndProductItemConfigs
         .order(sort_order: "ASC")
 
     product_item_configs = product_item_configs.where(id: @params[:product_item_config_id]) if @params[:product_item_config_id]
-
     product_item_configs
   end
 

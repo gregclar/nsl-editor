@@ -7,7 +7,8 @@
     <%= render partial: "profile_items/product_item_config_dropdown", 
       locals: {
         product_configs_and_profile_items: product_configs_and_profile_items, 
-        selected_product_item_config_id: nil
+        selected_product_item_config_id: nil,
+        instance: profile_item.instance
       } 
     %>
     <script>

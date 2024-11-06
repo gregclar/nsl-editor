@@ -32,9 +32,19 @@ class ProfileItemsController < ApplicationController
     render "destroy_failed", status: :unprocessable_entity
   end
 
+  def index
+    @instance = Instance.find_by!(id: permitted_profile_item_params[:instance_id])
+    @product_configs_and_profile_items, _product = Profile::ProfileItem::DefinedQuery::ProductAndProductItemConfigs.new(@instance, permitted_profile_item_params).run_query
+  end
+
   private
 
   def set_profile_item
     @profile_item = Profile::ProfileItem.find(params[:id])
   end
+
+  def permitted_profile_item_params
+    params.permit(:instance_id, :product_item_config_id)
+  end
+
 end
