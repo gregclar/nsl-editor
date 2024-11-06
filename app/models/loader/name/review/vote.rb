@@ -79,11 +79,11 @@ class Loader::Name::Review::Vote < ActiveRecord::Base
     end
   end
 
-  def vote_as_yes_no
+  def vote_as_agree_disagree
     if vote 
-      'Agreed'
+      'Agree'
     else
-      'Not agreed'
+      'Disagree'
     end
   end
 end
