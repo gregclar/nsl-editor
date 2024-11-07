@@ -17,7 +17,7 @@
 #   limitations under the License.
 #
 Rails.application.routes.draw do
-  resources :profile_items, only: %i[destroy]
+  resources :profile_items, only: %i[destroy index]
   resources :profile_texts, only: %i[create update]
   resources :profile_item_annotations, only: %i[create update]
   resources :profile_item_references, only: %i[create]

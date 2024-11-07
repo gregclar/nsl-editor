@@ -54,4 +54,9 @@ class ProfileItemsControllerTest < ActionController::TestCase
       assert_template :destroy_failed
     end
   end
+
+  test "#index to set instance variables" do
+    get :index, params: { instance_id: @profile_item.instance_id }, session: @session, xhr: true
+    assert_equal @profile_item.instance, assigns(:instance)
+  end
 end

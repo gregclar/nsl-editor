@@ -49,6 +49,20 @@ class ProductAndProductItemConfigsTest < ActiveSupport::TestCase
     end
   end
 
+  test "#run_query with feature flag on and with product_item_config_id param" do
+    param = {product_item_config_id: @product_item_config.id}
+    product_configs_and_profile_items, product = Profile::ProfileItem::DefinedQuery::ProductAndProductItemConfigs.new(@instance, param).run_query
+
+    assert_equal 1, product_configs_and_profile_items.size
+    assert_equal @product, product
+
+    product_configs_and_profile_items.each do |item|
+      assert_kind_of Profile::ProductItemConfig, item[:product_item_config]
+      assert_kind_of Profile::ProfileItem, item[:profile_item]
+      assert_equal @instance.id, item[:profile_item].instance_id
+    end
+  end
+
   test "#run_query to return an empty profile itme when instance is nil" do
     result = Profile::ProfileItem::DefinedQuery::ProductAndProductItemConfigs.new(nil).run_query
     assert_equal result.first, []
