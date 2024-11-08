@@ -1,88 +1,130 @@
 module Loader::Name::ReviewComments
   extend ActiveSupport::Concern
 
-  def has_name_review_comments?
-    name_review_comments.size > 0
-  end
 
-  def direct_reviewer_comments?(context = "any")
-    narrow_direct_reviewer_comments.size > 0
-  end
+  # Narrow direct comments - i.e. for specific, real records
+  # like accepted, excluded, and synonym records
 
-  def direct_reviewer_comments(context = "any")
-    name_review_comments
-      .includes(batch_reviewer: [:batch_review_role])
-      .select { |comment| comment.reviewer.role.name == Loader::Batch::Review::Role::NAME_REVIEWER }
-      .select { |comment| comment.context == context || context == "any" }
+  def narrow_direct_reviewer_comments
+    real_record_comments(Loader::Batch::Review::Role::NAME_REVIEWER)
   end
-
-  def children_reviewer_comments(context = "any")
-    children.map do |child| 
-      child.name_review_comments
-      .includes(batch_reviewer: [:batch_review_role])
-      .select { |comment| comment.reviewer.role.name == Loader::Batch::Review::Role::NAME_REVIEWER }
-      .select { |comment| comment.context == context || context == "any" }
-    end.flatten
-  end
-
+  
   def narrow_direct_reviewer_comments?
     narrow_direct_reviewer_comments.size > 0
   end
 
-  # just comments for this record - excluding concept-note or distribution comments for accepted/excluded records
-  def narrow_direct_reviewer_comments
+  def narrow_direct_compiler_comments
+    real_record_comments(Loader::Batch::Review::Role::COMPILER)
+  end
+
+  def narrow_direct_compiler_comments?
+    narrow_direct_compiler_comments.size > 0
+  end
+
+  def real_record_comments(role)
     name_review_comments
       .includes(batch_reviewer: [:batch_review_role])
-      .select { |comment| comment.reviewer.role.name == Loader::Batch::Review::Role::NAME_REVIEWER }
+      .select { |comment| comment.reviewer.role.name == role }
       .select { |comment| comment.context == record_type }
   end
 
-  def direct_compiler_comments(context = "any")
-    name_review_comments
+
+
+  # All comments - needed for totals
+
+  def reviewer_comments
+    [narrow_direct_reviewer_comments,
+     concept_note_reviewer_comments,
+     distribution_reviewer_comments,
+     children_reviewer_comments].flatten
+  end
+
+  def reviewer_comments?
+    reviewer_comments.size > 0
+  end
+
+  def compiler_comments
+    [narrow_direct_compiler_comments, 
+     concept_note_compiler_comments,
+     distribution_compiler_comments,
+     children_compiler_comments].flatten
+  end
+
+  def compiler_comments?
+    compiler_comments.size > 0
+  end
+
+
+
+  # Special total for all comments
+
+  def total_compiler_and_reviewer_comments
+    [reviewer_comments, compiler_comments].flatten
+  end
+
+  def compiler_or_reviewer_comments?(context = "any")
+    total_compiler_and_reviewer_comments.size > 0
+  end
+
+
+
+  # Comments on children
+
+  def children_reviewer_comments
+    children.map do |child| 
+      child.name_review_comments
       .includes(batch_reviewer: [:batch_review_role])
-      .select { |comment| comment.reviewer.role.name == Loader::Batch::Review::Role::COMPILER }
-      .select { |comment| comment.context == context || context == "any" }
+      .select { |comment| comment.reviewer.role.name == Loader::Batch::Review::Role::NAME_REVIEWER }
+    end.flatten
   end
 
-  def direct_compiler_comments?(context = "any")
-    direct_compiler_comments(context).size > 0
-  end
-
-  def children_compiler_comments(context = "any")
+  def children_compiler_comments
     children.map do |child| 
       child.name_review_comments
       .includes(batch_reviewer: [:batch_review_role])
       .select { |comment| comment.reviewer.role.name == Loader::Batch::Review::Role::COMPILER }
-      .select { |comment| comment.context == context || context == "any" }
     end.flatten
   end
 
-  def reviewer_comments(context = "any")
-    [direct_reviewer_comments(context), 
-     children_reviewer_comments(context)].flatten
+
+  # Comments on pretend records
+  
+  def concept_note_reviewer_comments
+    pretend_record_comments(Loader::Batch::Review::Role::NAME_REVIEWER, 'concept-note')
   end
 
-  def reviewer_comments?(context = "any")
-    reviewer_comments(context).size > 0
+  def concept_note_reviewer_comments?
+    concept_note_reviewer_comments.size > 0
   end
 
-
-  def compiler_comments(context = "any")
-    [direct_compiler_comments(context), 
-     children_compiler_comments(context)].flatten
+  def distribution_reviewer_comments
+    pretend_record_comments(Loader::Batch::Review::Role::NAME_REVIEWER, 'distribution')
   end
 
-  def compiler_comments?(context = "any")
-    compiler_comments(context).size > 0
+  def distribution_reviewer_comments?
+    distribution_reviewer_comments.size > 0
   end
 
-  def compiler_and_reviewer_comments(context = "any")
-    [reviewer_comments(context),
-     compiler_comments(context)].flatten
+  def concept_note_compiler_comments
+    pretend_record_comments(Loader::Batch::Review::Role::COMPILER, 'concept-note')
   end
 
-  def compiler_and_reviewer_comments?(context = "any")
-    compiler_and_reviewer_comments(context).size > 0
+  def concept_note_compiler_comments?
+    concept_note_compiler_comments.size > 0
+  end
+
+  def distribution_compiler_comments
+    pretend_record_comments(Loader::Batch::Review::Role::COMPILER, 'distribution')
+  end
+
+  def distribution_compiler_comments?
+    distribution_compiler_comments.size > 0
+  end
+
+  def pretend_record_comments(role, context)
+    name_review_comments
+      .includes(batch_reviewer: [:batch_review_role])
+      .select { |comment| comment.reviewer.role.name == role }
+      .select { |comment| comment.context == context }
   end
 end
-

@@ -1,8 +1,12 @@
+- :date: 08-Nov-2024
+  :jira_id: '5230'
+  :description: |-
+    Loader: Re-work and correct comment counts for reviewers
 - :date: 07-Nov-2024
   :jira_id: '30'
   :jira_project: FLOR
   :description: |-
-    Add a dropdown to the FOA profile editor
+    APC Workflow: Add a dropdown to the FOA profile editor
 - :date: 05-Nov-2024
   :jira_id: '5234'
   :description: |-

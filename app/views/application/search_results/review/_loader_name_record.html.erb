@@ -1,3 +1,8 @@
+<% Rails.logger.debug("loader name record; record_type: #{search_result.record_type}") %>
+<% Rails.logger.debug("loader name record; record_type: #{search_result.record_type}") %>
+<% Rails.logger.debug("loader name record; record_type: #{search_result.record_type}") %>
+<% Rails.logger.debug("loader name record; record_type: #{search_result.record_type}") %>
+<% Rails.logger.debug("loader name record; record_type: #{search_result.record_type}") %>
 <%# There is complex logic here.
     The taxonomic note and distribution data from top-level records
     has to appear on separate lines _after_ any synonymy.
@@ -123,15 +128,22 @@
       <% if search_result.isonym? %>
         <span class="review loader-name isonym">isonym</span>
       <% end %>
-      <% if search_result.narrow_direct_reviewer_comments? %>
-        <span class="reviewer-comment-tag"><%= pluralize(search_result.narrow_direct_reviewer_comments.size, 'reviewer comment') %></span>
+
+
+
+      <% unless search_result[:flushing] %>
+        <% if search_result.narrow_direct_reviewer_comments? %>
+          <span class="reviewer-comment-tag"><%= pluralize(search_result.narrow_direct_reviewer_comments.size, 'reviewer comment') %></span>
+        <% end %>
+        <% if search_result.narrow_direct_compiler_comments? %>
+          <%= search_result.id %>
+          <span class="compiler-comment-tag"><%= pluralize(search_result.narrow_direct_compiler_comments.size, 'compiler comment') %></span>
+        <% end %>
       <% end %>
-      <% if search_result.direct_compiler_comments? %>
-        <span class="compiler-comment-tag"><%= pluralize(search_result.direct_compiler_comments.size, 'compiler comment') %></span>
-      <% end %>
+
       <% if search_result.accepted? || search_result.excluded? %>
-        <% if search_result.compiler_and_reviewer_comments? %>
-          <span class="total-reviewer-comment-tag"><%= pluralize(search_result.compiler_and_reviewer_comments.size, 'total comment') %></span>
+        <% if search_result.compiler_or_reviewer_comments? %>
+          <span class="total-reviewer-comment-tag"><%= pluralize(search_result.total_compiler_and_reviewer_comments.size, 'total comment') %></span>
         <% end %>
       <% end %>
       <% unless search_result.remark_to_reviewers.blank? %>
