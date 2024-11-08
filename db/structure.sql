@@ -1738,6 +1738,7 @@ CREATE SEQUENCE public.nsl_global_seq
     INCREMENT BY 1
     CACHE 1;
 
+CREATE SEQUENCE loader.nsl_global_seq;
 
 SET default_tablespace = '';
 
