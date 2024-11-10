@@ -1,3 +1,7 @@
+- :date: 11-Nov-2024
+  :jira_id: '5230'
+  :description: |-
+    Loader: Remove rogue IDs appearing with compiler comments
 - :date: 08-Nov-2024
   :jira_id: '5230'
   :description: |-
