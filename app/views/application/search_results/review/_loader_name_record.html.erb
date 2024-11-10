@@ -136,7 +136,6 @@
           <span class="reviewer-comment-tag"><%= pluralize(search_result.narrow_direct_reviewer_comments.size, 'reviewer comment') %></span>
         <% end %>
         <% if search_result.narrow_direct_compiler_comments? %>
-          <%= search_result.id %>
           <span class="compiler-comment-tag"><%= pluralize(search_result.narrow_direct_compiler_comments.size, 'compiler comment') %></span>
         <% end %>
       <% end %>
