@@ -1,0 +1,9 @@
+  
+review_one:
+  name: "Review One"
+  loader_batch_id: :batch_one
+  in_progress: false
+  created_by: tester
+  updated_by: tester
+  created_at: <%= Time.now %>
+  updated_at: <%= Time.now %>

@@ -7230,7 +7230,7 @@ CREATE TABLE hep.tree_version_element (
 
 CREATE TABLE loader.batch_review (
     id bigint DEFAULT nextval('public.nsl_global_seq'::regclass) NOT NULL,
-    loader_batch_id bigint NOT NULL,
+    loader_batch_id bigint,
     name character varying(200) NOT NULL,
     in_progress boolean DEFAULT false NOT NULL,
     lock_version bigint DEFAULT 0 NOT NULL,
@@ -7264,7 +7264,7 @@ CREATE TABLE loader.batch_review_comment (
 
 CREATE TABLE loader.batch_review_period (
     id bigint DEFAULT nextval('public.nsl_global_seq'::regclass) NOT NULL,
-    batch_review_id bigint NOT NULL,
+    batch_review_id bigint,
     name character varying(200) NOT NULL,
     start_date date NOT NULL,
     end_date date,
@@ -7297,10 +7297,10 @@ CREATE TABLE loader.batch_review_role (
 
 CREATE TABLE loader.batch_reviewer (
     id bigint DEFAULT nextval('public.nsl_global_seq'::regclass) NOT NULL,
-    user_id bigint NOT NULL,
-    org_id bigint NOT NULL,
-    batch_review_role_id bigint NOT NULL,
-    batch_review_period_id bigint NOT NULL,
+    user_id bigint,
+    org_id bigint,
+    batch_review_role_id bigint,
+    batch_review_period_id bigint,
     active boolean DEFAULT true NOT NULL,
     lock_version bigint DEFAULT 0 NOT NULL,
     created_at timestamp with time zone DEFAULT now() NOT NULL,

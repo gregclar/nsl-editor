@@ -1,0 +1,14 @@
+DEFAULTS: &DEFAULTS
+  created_at: <%= Time.now %>
+  updated_at: <%= Time.now %>
+  created_by: tester
+  updated_by: tester
+
+reviewer_1:
+  <<: *DEFAULTS
+  user_id: rev1
+  org_id: state_herb_1
+  batch_review_role_id: name_reviewer
+  batch_review_period_id: review_period_1
+  active: true
+
