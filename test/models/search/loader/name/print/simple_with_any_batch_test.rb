@@ -1,3 +1,4 @@
+
 # frozen_string_literal: true
 
 #   Copyright 2015 Australian National Botanic Gardens
@@ -21,18 +22,18 @@ require "test_helper"
 load "test/models/search/users.rb"
 
 # Single Search model test.
-class SearchLoaderNameSimpleWithAnyBatchTest < ActiveSupport::TestCase
-  test "search loader name with any-batch" do
+class SearchLoaderNameAndPrintSimpleWithAnyBatchTest < ActiveSupport::TestCase
+  test "search loader name with any-batch print" do
     params = ActiveSupport::HashWithIndifferentAccess.new(query_target:
                                                           "loader_names",
                                                           query_string:
-                                                          "* any-batch:",
+                                                          "* any-batch: print:",
                                                           current_user:
                                                           build_edit_user)
     search = Search::Base.new(params)
-    assert search.executed_query.results.is_a?(ActiveRecord::Relation),
-           "Results should be an ActiveRecord::Relation."
-    assert_equal 1,
+    assert search.executed_query.results.is_a?(Array),
+      "Results should be an Array."
+    assert_equal 3,
                  search.executed_query.results.size,
                  "Exactly 1 result is expected."
   end

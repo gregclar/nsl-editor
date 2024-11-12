@@ -109,6 +109,8 @@ class Search::ParsedRequest
     "bulk processing log" => "BulkProcessingLog",
   }.freeze
 
+  TARGET_MODEL_SUPPORTS_PRINT_DIRECTIVE = %w[Loader::Name]
+
   DEFAULT_QUERY_DIRECTIVES = {
     "author" => "name-or-abbrev:",
     "instance" => "name:",
@@ -223,6 +225,7 @@ class Search::ParsedRequest
     unused_qs_tokens = parse_offset(unused_qs_tokens)
     unused_qs_tokens = preprocess_target(unused_qs_tokens)
     unused_qs_tokens = parse_target(unused_qs_tokens)
+    check_print_is_allowed
     unused_qs_tokens = parse_common_and_cultivar(unused_qs_tokens)
     unused_qs_tokens = inflate_show_instances_abbrevs(unused_qs_tokens)
     unused_qs_tokens = parse_show_instances(unused_qs_tokens)
@@ -261,11 +264,26 @@ class Search::ParsedRequest
   def parse_print_or_display(tokens)
     @print = false
     if tokens.include?("print:")
+      confirm_valid_print_directive(tokens)
       @print = true
       tokens.delete_if { |x| x.match(/print:/) }
     end
     @display = !@print
     tokens
+  end
+
+  def confirm_valid_print_directive(tokens)
+    force_max_one_print_directive(tokens)
+    raise 'Error: the print: directive has an argument, please remove the argument' if print_directive_has_arg?(tokens)
+  end
+
+  def force_max_one_print_directive(tokens)
+    raise 'Error: more than one print directive - please review and try again' if tokens.count('print:') > 1
+  end
+
+  def print_directive_has_arg?(tokens)
+    return false if tokens.last == 'print:'
+    tokens[tokens.index("print:")+1].match(/:\z/).blank?
   end
 
   def default_to_display_not_print
@@ -458,6 +476,14 @@ class Search::ParsedRequest
 
     end
     tokens
+  end
+
+  def check_print_is_allowed
+    return unless @print
+
+    unless TARGET_MODEL_SUPPORTS_PRINT_DIRECTIVE.include?(@target_model)
+      raise "Error: #{@target_table.capitalize} doesn't support the print directive"
+    end
   end
 
   def parse_common_and_cultivar(tokens)
