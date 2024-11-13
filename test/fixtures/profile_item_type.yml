@@ -20,3 +20,13 @@ habitat_pit:
   updated_at: <%= Time.now %>
   profile_object_type: profile_text_pot
   rdf_id: "text2"
+
+ecology_pit_ref:
+  name: "Ecology Ref"
+  sort_order: 0
+  created_by: tester
+  updated_by: tester
+  created_at: <%= Time.now %>
+  updated_at: <%= Time.now %>
+  profile_object_type: profile_reference_list_pot
+  rdf_id: "reference"

@@ -34,7 +34,8 @@ class ProfileItemsController < ApplicationController
 
   def index
     @instance = Instance.find_by!(id: permitted_profile_item_params[:instance_id])
-    @product_configs_and_profile_items, _product = Profile::ProfileItem::DefinedQuery::ProductAndProductItemConfigs.new(@instance, permitted_profile_item_params).run_query
+    @product_configs_and_profile_items, _product = Profile::ProfileItem::DefinedQuery::ProductAndProductItemConfigs
+      .new(@instance, permitted_profile_item_params).run_query
   end
 
   private
