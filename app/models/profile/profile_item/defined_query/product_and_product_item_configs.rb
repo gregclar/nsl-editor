@@ -49,7 +49,9 @@ class Profile::ProfileItem::DefinedQuery::ProductAndProductItemConfigs
     product_item_configs =
       Profile::ProductItemConfig
         .where(product_id: @product.id)
-        .includes(:profile_items)
+        .joins("left join profile_item_type AS pit ON pit.id = product_item_config.profile_item_type_id")
+        .joins("inner join profile_object_type As pot ON pot.id = pit.profile_object_type_id")
+        .where("pot.rdf_id = ?", @params[:rdf_id] || "text")
         .where.not(display_html: nil)
         .order(sort_order: "ASC")
 

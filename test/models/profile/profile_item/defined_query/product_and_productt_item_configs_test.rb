@@ -52,7 +52,6 @@ class ProductAndProductItemConfigsTest < ActiveSupport::TestCase
   test "#run_query with feature flag on and with product_item_config_id param" do
     param = {product_item_config_id: @product_item_config.id}
     product_configs_and_profile_items, product = Profile::ProfileItem::DefinedQuery::ProductAndProductItemConfigs.new(@instance, param).run_query
-
     assert_equal 1, product_configs_and_profile_items.size
     assert_equal @product, product
 
@@ -83,5 +82,15 @@ class ProductAndProductItemConfigsTest < ActiveSupport::TestCase
 
     assert_empty result.first
     assert_equal @product, result.last
+  end
+
+  test "#run_query with rdf_id=reference params" do
+    profile_item = profile_item(:ecology_pi_ref)
+    product_configs_and_profile_items, product = Profile::ProfileItem::DefinedQuery::ProductAndProductItemConfigs.new(@instance, {rdf_id: "reference"}).run_query
+
+    assert_equal 1, product_configs_and_profile_items.size
+
+    profile_item_type = product_configs_and_profile_items.first[:product_item_config].profile_item_type
+    assert_equal profile_item_type.rdf_id, "reference"
   end
 end
