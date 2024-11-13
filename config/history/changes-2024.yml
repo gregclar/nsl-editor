@@ -1,3 +1,8 @@
+- :date: 13-Nov-2024
+  :jira_id: '30'
+  :jira_project: FLOR
+  :description: |-
+    APC Workflow: Only Product Item Config of object type text should be displayed for now
 - :date: 12-Nov-2024
   :jira_id: '5248'
   :description: |-
