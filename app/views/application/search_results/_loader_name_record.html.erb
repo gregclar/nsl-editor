@@ -26,22 +26,25 @@
     <% end %>
 
     <% unless search_result.remark_to_reviewers.blank? %>
+        <%# style text and link as well as we can %>
       <span class="review loader-name remark-to-reviewers">
-    <%= search_result.remark_to_reviewers %>
+          <%= sanitize(search_result.remark_to_reviewers
+            .gsub(/<a/, "<a class='remark-to-reviewers'")
+            .sub(/(>)([^><]*$)/,'\1<span class="remark-to-reviewers">\2</span>')) %>
       </span>
     <% end %>
 
     <% unless search_result.notes.blank? %>
       <% case search_result.record_type %>
       <% when 'in-batch-note' %>
-        <span class="fat in-batch-note" title="In-Batch Note"><%= search_result.notes %></span>
+        <span class="fat in-batch-note" title="In-Batch Note"><%= sanitize(search_result.notes) %></span>
       <% when 'in-batch-compiler-note' %>
-        <span class="fat in-batch-compiler-note" title="In-Batch Compiler Note"><%= search_result.notes %></span>
+        <span class="fat in-batch-compiler-note" title="In-Batch Compiler Note"><%= sanitize(search_result.notes) %></span>
       <% else %>
-        <span class="fat compiler-note" title="Compiler Note"><%= search_result.notes %></span>
+        <span class="fat compiler-note" title="Compiler Note"><%= sanitize(search_result.notes) %></span>
+        <script>blah</script>xx
       <% end %>
     <% end %>
   </td>
   <td class="takes-focus width-5-percent filler">&nbsp;</td>
 </tr>
-
