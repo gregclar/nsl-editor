@@ -59,7 +59,8 @@ class Search::ParsedRequest
               :original_query_target_for_display,
               :print,
               :display,
-              :show_loader_name_comments
+              :show_loader_name_comments,
+              :show_profile
 
   DEFAULT_LIST_LIMIT = 100
   SIMPLE_QUERY_TARGETS = {
@@ -233,6 +234,7 @@ class Search::ParsedRequest
     unused_qs_tokens = inflate_show_review_comments_abbrevs(unused_qs_tokens)
     unused_qs_tokens = parse_show_review_comments(unused_qs_tokens)
     unused_qs_tokens = parse_view(unused_qs_tokens)
+    unused_qs_tokens = prase_show_profile(unused_qs_tokens)
     @where_arguments = unused_qs_tokens.join(" ")
   end
 
@@ -491,6 +493,16 @@ class Search::ParsedRequest
     @include_common_and_cultivar_session = \
       @params["include_common_and_cultivar_session"] ||
       @params["query_common_and_cultivar"] == "t"
+    tokens
+  end
+
+  def prase_show_profile(tokens)
+    if tokens.include?("show-profile:")
+      @show_profile = true
+      tokens.delete_if { |x| x.match(/show-profile:/) }
+    else
+      @show_profile = false
+    end
     tokens
   end
 
