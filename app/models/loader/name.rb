@@ -80,6 +80,8 @@ class Loader::Name < ActiveRecord::Base
   has_many :loader_name_matches, class_name: "Loader::Name::Match", foreign_key: "loader_name_id"
   alias_method :preferred_matches, :loader_name_matches
 
+  has_many :name_review_votes, class_name: "Loader::Name::Review::Vote", foreign_key: "loader_name_id"
+
   attr_accessor :give_me_focus, :message
 
   # before_create :set_defaults # rails 6 this was not being called before the validations
