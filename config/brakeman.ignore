@@ -41,7 +41,7 @@
       "check_name": "CrossSiteScripting",
       "message": "Unescaped model attribute",
       "file": "app/views/application/search_results/review/_loader_name_record.html.erb",
-      "line": 144,
+      "line": 154,
       "link": "https://brakemanscanner.org/docs/warning_types/cross_site_scripting",
       "code": "Loader::Name.record_to_flush_results.remark_to_reviewers.gsub(/<a/, \"<a class='remark-to-reviewers'\").sub(/(>)([^><]*$)/, \"\\\\1<span class=\\\"remark-to-reviewers\\\">\\\\2</span>\")",
       "render_path": [
@@ -80,18 +80,18 @@
     {
       "warning_type": "Cross-Site Scripting",
       "warning_code": 2,
-      "fingerprint": "f46d28c5c93f420c14c65b9e1c53c5e957d0a38b63346e73417ce8429a9774a8",
+      "fingerprint": "ee741808a32d8272a917c7797fd51b691ca06c289dd404dc59b4b34f8da10e9f",
       "check_name": "CrossSiteScripting",
       "message": "Unescaped model attribute",
-      "file": "app/views/loader/names/review/tabs/main/votes/_show.html.erb",
+      "file": "app/views/loader/names/review/tabs/main/votes/votable/vote/_edit.html.erb",
       "line": 10,
       "link": "https://brakemanscanner.org/docs/warning_types/cross_site_scripting",
-      "code": "created_by_whom_and_when(Loader::Name::Review::Vote.where(:loader_name_id => @loader_name.id).where(:batch_review_id => Loader::Batch::Review.where(:loader_batch_id => @loader_name.batch.id).where(:in_progress => true).first.id).where(:org => Org.orgs_reviewer_can_vote_on_behalf_of(@current_user.username).first.id).first)",
+      "code": "created_by_whom_and_when(Loader::Name::Review::Vote.where(:loader_name_id => @loader_name.id).where(:batch_review_id => Loader::Batch::Review.where(:loader_batch_id => @loader_name.batch.id).where(:allow_voting => true).first.id).where(:org => Org.orgs_reviewer_can_vote_on_behalf_of(@current_user.username).first.id).first)",
       "render_path": [
         {
           "type": "template",
           "name": "loader/names/review/tabs/main/_tab_vote",
-          "line": 6,
+          "line": 5,
           "file": "app/views/loader/names/review/tabs/main/_tab_vote.html.erb",
           "rendered": {
             "name": "loader/names/review/tabs/main/votes/_votable",
@@ -101,39 +101,39 @@
         {
           "type": "template",
           "name": "loader/names/review/tabs/main/votes/_votable",
-          "line": 11,
+          "line": 13,
           "file": "app/views/loader/names/review/tabs/main/votes/_votable.html.erb",
           "rendered": {
-            "name": "loader/names/review/tabs/main/votes/_one_review_in_progress",
-            "file": "app/views/loader/names/review/tabs/main/votes/_one_review_in_progress.html.erb"
+            "name": "loader/names/review/tabs/main/votes/votable/_voting_in_progress",
+            "file": "app/views/loader/names/review/tabs/main/votes/votable/_voting_in_progress.html.erb"
           }
         },
         {
           "type": "template",
-          "name": "loader/names/review/tabs/main/votes/_one_review_in_progress",
+          "name": "loader/names/review/tabs/main/votes/votable/_voting_in_progress",
           "line": 19,
-          "file": "app/views/loader/names/review/tabs/main/votes/_one_review_in_progress.html.erb",
+          "file": "app/views/loader/names/review/tabs/main/votes/votable/_voting_in_progress.html.erb",
           "rendered": {
-            "name": "loader/names/review/tabs/main/votes/_can_vote_on_behalf_one_org",
-            "file": "app/views/loader/names/review/tabs/main/votes/_can_vote_on_behalf_one_org.html.erb"
+            "name": "loader/names/review/tabs/main/votes/votable/_can_vote",
+            "file": "app/views/loader/names/review/tabs/main/votes/votable/_can_vote.html.erb"
           }
         },
         {
           "type": "template",
-          "name": "loader/names/review/tabs/main/votes/_can_vote_on_behalf_one_org",
+          "name": "loader/names/review/tabs/main/votes/votable/_can_vote",
           "line": 26,
-          "file": "app/views/loader/names/review/tabs/main/votes/_can_vote_on_behalf_one_org.html.erb",
+          "file": "app/views/loader/names/review/tabs/main/votes/votable/_can_vote.html.erb",
           "rendered": {
-            "name": "loader/names/review/tabs/main/votes/_show",
-            "file": "app/views/loader/names/review/tabs/main/votes/_show.html.erb"
+            "name": "loader/names/review/tabs/main/votes/votable/vote/_edit",
+            "file": "app/views/loader/names/review/tabs/main/votes/votable/vote/_edit.html.erb"
           }
         }
       ],
       "location": {
         "type": "template",
-        "template": "loader/names/review/tabs/main/votes/_show"
+        "template": "loader/names/review/tabs/main/votes/votable/vote/_edit"
       },
-      "user_input": "Loader::Name::Review::Vote.where(:loader_name_id => @loader_name.id).where(:batch_review_id => Loader::Batch::Review.where(:loader_batch_id => @loader_name.batch.id).where(:in_progress => true).first.id)",
+      "user_input": "Loader::Name::Review::Vote.where(:loader_name_id => @loader_name.id).where(:batch_review_id => Loader::Batch::Review.where(:loader_batch_id => @loader_name.batch.id).where(:allow_voting => true).first.id)",
       "confidence": "Weak",
       "cwe_id": [
         79
@@ -141,6 +141,6 @@
       "note": ""
     }
   ],
-  "updated": "2024-11-05 16:33:57 +1100",
+  "updated": "2024-11-22 15:58:30 +1100",
   "brakeman_version": "6.2.2"
 }
