@@ -48,7 +48,7 @@ class Search::OnInstance::ListQuery
   private
 
   def include_profiles(prepared_query)
-    return [] unless @parsed_request.show_profile
+    return [] unless @parsed_request.show_profiles
     prepared_query.joins(:profile_items)
   end
 end

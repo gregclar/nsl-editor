@@ -17,7 +17,14 @@
       required: true
     %>
 
-    <% if Rails.configuration.try('foa_profile_dropdown_ui') %>
+    <% if local_assigns[:from_search_results] %>
+      <%= javascript_tag do %>
+        document.addEventListener('simpleMDELoaded', function() {
+          textarea = document.getElementById("editor_<%=product_item_config.display_html.parameterize %><%= profile_text.id %>");
+          renderEditor(textarea)
+        })
+      <% end %>
+    <% elsif Rails.configuration.try('foa_profile_dropdown_ui') %>
       <%= javascript_tag do %>
         textarea = document.getElementById("editor_<%=product_item_config.display_html.parameterize %><%= profile_text.id %>");
         renderEditor(textarea)
