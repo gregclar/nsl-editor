@@ -68,5 +68,9 @@ module Profile
               dependent: :destroy
 
       validates :statement_type, presence: true
+
+      def fresh?
+        created_at > 1.hour.ago
+      end
     end
   end

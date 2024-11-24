@@ -1,6 +1,6 @@
 <% if can?("profile_items", :index) %>
   <tr id="search-result-<%= search_result.id %>" 
-    class="search-result"
+    class="search-result show-details <%= 'fresh' if search_result.fresh? %>"
     data-get-url="<%= instance_tab_path(id: search_result.instance_id, tab: 'tab_foa_profile') %>"
     data-edit-url="<%= instance_tab_path(id: search_result.instance_id, tab: 'tab_foa_profile') %>"
     data-base-url="<%= instance_tab_path(id: search_result.instance_id, tab: 'tab_foa_profile') %>"
