@@ -1,26 +1,29 @@
-<tr id="search-result-<%= search_result.id %>" 
-  class="search-result"
-  data-get-url="<%= instance_tab_path(id: search_result.instance_id, tab: 'tab_foa_profile') %>"
-  data-edit-url="<%= instance_tab_path(id: search_result.instance_id, tab: 'tab_foa_profile') %>"
-  data-base-url="<%= instance_tab_path(id: search_result.instance_id, tab: 'tab_foa_profile') %>"
-  data-tab-url="<%= instance_tab_path(id: search_result.instance_id, tab: 'tab_foa_profile') %>"
-  data-record-id="<%= search_result.id %>"
-  data-record-type="name"
-  data-product-item-config-id="<%= search_result.product_item_config.id%>"
-  tabindex="<%= increment_tab_index(100) %>" 
-    >
-  <td class="takes-focus nsl-tiny-icon-container width-1-percent"><%= record_icon('instance') %></td>
-  <td class="text takes-focus main-content min-width-40-percent max-width-70-percent width-60-percent <%= ' give-me-focus' if give_me_focus %>">
-    
-    <a 
-      id="<%= search_result.id %>"
-      class="show-details-link indent-level-2"
-      title="Name record. Select to show details."
-      tabindex="<%= increment_tab_index %>"> 
-      <%= search_result.profile_text.value %>
-      <%= "[#{search_result.product_item_config.try(:display_html)}]" %>
-    </a>
+<% if can?("profile_items", :index) %>
+  <tr id="search-result-<%= search_result.id %>" 
+    class="search-result"
+    data-get-url="<%= instance_tab_path(id: search_result.instance_id, tab: 'tab_foa_profile') %>"
+    data-edit-url="<%= instance_tab_path(id: search_result.instance_id, tab: 'tab_foa_profile') %>"
+    data-base-url="<%= instance_tab_path(id: search_result.instance_id, tab: 'tab_foa_profile') %>"
+    data-tab-url="<%= instance_tab_path(id: search_result.instance_id, tab: 'tab_foa_profile') %>"
+    data-record-id="<%= search_result.id %>"
+    data-record-type="name"
+    data-product-item-config-id="<%= search_result.product_item_config.id%>"
+    tabindex="<%= increment_tab_index(100) %>" 
+      >
+    <td class="takes-focus nsl-tiny-icon-container width-1-percent"><%= record_icon('instance') %></td>
+    <td class="text takes-focus main-content min-width-40-percent max-width-70-percent width-60-percent <%= ' give-me-focus' if give_me_focus %>">
+      
+      <a 
+        id="<%= search_result.id %>"
+        class="show-details-link indent-level-2"
+        title="Name record. Select to show details."
+        tabindex="<%= increment_tab_index %>"> 
+        profile item: 
+        <%= truncate(search_result.profile_text.try(:value), length: 100) %>
+        <strong><%= "[#{search_result.product_item_config.try(:display_html)}]" %></strong>
+      </a>
 
-  </td>
-  <td class="takes-focus width-5-percent filler">&nbsp;</td>
-</tr>
+    </td>
+    <td class="takes-focus width-5-percent filler">&nbsp;</td>
+  </tr>
+<% end %>
