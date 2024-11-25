@@ -1,3 +1,8 @@
+- :date: 25-Nov-2024
+  :jira_id: '32'
+  :jira_project: FLOR
+  :description: |-
+    Profile Item: Added a <code>show-profiles:</code> directive into the instance search
 - :date: 22-Nov-2024
   :jira_id: '5254'
   :description: |-
