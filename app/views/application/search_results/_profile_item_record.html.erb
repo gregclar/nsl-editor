@@ -1,12 +1,9 @@
 <% if can?("profile_items", :index) %>
   <tr id="search-result-<%= search_result.id %>" 
     class="search-result show-details <%= 'fresh' if search_result.fresh? %>"
-    data-get-url="<%= instance_tab_path(id: search_result.instance_id, tab: 'tab_foa_profile') %>"
-    data-edit-url="<%= instance_tab_path(id: search_result.instance_id, tab: 'tab_foa_profile') %>"
-    data-base-url="<%= instance_tab_path(id: search_result.instance_id, tab: 'tab_foa_profile') %>"
-    data-tab-url="<%= instance_tab_path(id: search_result.instance_id, tab: 'tab_foa_profile') %>"
-    data-record-id="<%= search_result.id %>"
-    data-record-type="name"
+    data-edit-url="<%= profile_item_path(search_result.id) %>"
+    data-tab-url="<%= profile_item_tab_path(id: search_result.id, tab: 'active_tab_goes_here') %>"
+    data-record-type="profile_item"
     data-product-item-config-id="<%= search_result.product_item_config.id%>"
     tabindex="<%= increment_tab_index(100) %>" 
       >
@@ -16,11 +13,11 @@
       <a 
         id="<%= search_result.id %>"
         class="show-details-link indent-level-2"
-        title="Name record. Select to show details."
+        title="Profile item record. Select to show details."
         tabindex="<%= increment_tab_index %>"> 
         profile item: 
         <%= truncate(search_result.profile_text.try(:value), length: 100) %>
-        <strong><%= "[#{search_result.product_item_config.try(:display_html)}]" %></strong>
+        <strong><%= "[#{search_result.product_item_config.display_html.presence || search_result.product_item_config.profile_item_type.name.presence}]" %></strong>
       </a>
 
     </td>

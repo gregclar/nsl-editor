@@ -17,6 +17,8 @@
 #   limitations under the License.
 #
 class ProfileTextsController < ApplicationController
+  include ApplicationHelper
+  
   before_action :set_profile_text, :find_profile_item, only: %i[update]
 
   # POST /profile_texts
@@ -32,8 +34,8 @@ class ProfileTextsController < ApplicationController
     end
 
     @profile_text = @profile_item.build_profile_text(
-      value: permitted_profile_text_params[:value],
-      value_md: permitted_profile_text_params[:value],
+      value: markdown_to_html(permitted_profile_text_params[:value_md]),
+      value_md: permitted_profile_text_params[:value_md],
       created_by: current_user.username,
       updated_by: current_user.username
     )
@@ -59,7 +61,7 @@ class ProfileTextsController < ApplicationController
   private
 
   def permitted_profile_text_params
-    params.require(:profile_text).permit(:value)
+    params.require(:profile_text).permit(:value, :value_md)
   end
 
   def permitted_profile_item_params
@@ -75,7 +77,7 @@ class ProfileTextsController < ApplicationController
   end
 
   def changed?
-    @profile_text.value != permitted_profile_text_params[:value]
+    @profile_text.value_md != permitted_profile_text_params[:value_md]
   end
 
   def really_update
