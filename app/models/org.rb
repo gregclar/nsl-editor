@@ -17,6 +17,26 @@
 #   limitations under the License.
 #
 # Loader Org entity
+# == Schema Information
+#
+# Table name: org
+#
+#  id           :bigint           not null, primary key
+#  abbrev       :string(30)       not null
+#  created_by   :string(50)       not null
+#  deprecated   :boolean          default(FALSE), not null
+#  lock_version :bigint           default(0), not null
+#  name         :string(100)      not null
+#  no_org       :boolean          default(FALSE), not null
+#  updated_by   :string(50)       not null
+#  created_at   :timestamptz      not null
+#  updated_at   :timestamptz      not null
+#
+# Indexes
+#
+#  org_abbrev_key  (abbrev) UNIQUE
+#  org_name_key    (name) UNIQUE
+#
 class Org < ActiveRecord::Base
   strip_attributes
   self.table_name = "org"
