@@ -12,7 +12,7 @@
         <%= render partial: 'search/standard/results' unless @search.executed_query.blank? || @search.executed_query.results.blank? %>
       <% end %>
       <tr><td class="width-100-percent">
-          <%= parse_markdown("
+          <%= markdown_to_html("
   
 
 #### The NSL Editor
@@ -32,7 +32,7 @@ The taxonomic information is organised within:
                    ") %>
         <%= image_tag 'synonymy-model-lego-style.svg' %>
 
-        <%= parse_markdown("
+        <%= markdown_to_html("
 Names have an **author** or **authors**, as do references.
         ") %>
 

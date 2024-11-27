@@ -80,6 +80,13 @@ import "typeaheads_for_name_parent";
 import "typeaheads_for_name_sanctioning_author";
 import "typeaheads_for_name_second_parent";
 import "typeaheads_for_name_workspace_parent_name";
+
+import "markdown_it_sub_min";
+import "markdown_it_sup_min";
+import "markdown_it_min";
+import "simplemde_min";
+import "simple_mde_wysiwyg";
+
 import Rails from '@rails/ujs';
 
 Rails.start();

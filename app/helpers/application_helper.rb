@@ -3,7 +3,7 @@ module ApplicationHelper
     !(params[:query_on].nil? || params[:query_on].match(/\Aname\z/i))
   end
 
-  def parse_markdown(markdown)
+  def markdown_to_html(markdown)
     Kramdown::Document.new(markdown).to_html.html_safe
   end
 
