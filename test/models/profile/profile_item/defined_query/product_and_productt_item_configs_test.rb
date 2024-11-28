@@ -91,6 +91,6 @@ class ProductAndProductItemConfigsTest < ActiveSupport::TestCase
     assert_equal 1, product_configs_and_profile_items.size
 
     profile_item_type = product_configs_and_profile_items.first[:product_item_config].profile_item_type
-    assert_equal profile_item_type.rdf_id, "reference"
+    assert_equal profile_item_type.rdf_id, "ecology.reference"
   end
 end

@@ -34,7 +34,7 @@ class ProfileTextsController < ApplicationController
     end
 
     @profile_text = @profile_item.build_profile_text(
-      value: markdown_to_html(permitted_profile_text_params[:value_md]),
+      value: markdown_to_html(permitted_profile_text_params[:value_md].to_s),
       value_md: permitted_profile_text_params[:value_md],
       created_by: current_user.username,
       updated_by: current_user.username
@@ -42,7 +42,7 @@ class ProfileTextsController < ApplicationController
 
     if @profile_text.persisted?
       raise("Profile text already exists")
-    elsif @profile_item.save! && @profile_text.save!
+    elsif @profile_text.save! && @profile_item.save!
       @message = "Saved"
       render :create
     end

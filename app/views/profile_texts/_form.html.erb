@@ -4,7 +4,7 @@
   <%= hidden_field_tag "profile_item[id]", profile_item.id %>
   <%= hidden_field_tag "profile_item[instance_id]", instance_id %>
   <%= hidden_field_tag "profile_item[product_item_config_id]", product_item_config.id %>
-  <%= hidden_field_tag "profile_item[profile_object_rdf_id]", product_item_config.profile_item_type.rdf_id %>
+  <%= hidden_field_tag "profile_item[profile_object_rdf_id]", product_item_config.profile_item_type.profile_object_type.rdf_id %>
   <%= hidden_field_tag "id", profile_text.id %>
 
   <div id="simplemde-container">
