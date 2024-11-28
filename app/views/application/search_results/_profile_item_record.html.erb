@@ -9,14 +9,14 @@
       >
     <td class="takes-focus nsl-tiny-icon-container width-1-percent"><%= record_icon('instance') %></td>
     <td class="text takes-focus main-content min-width-40-percent max-width-70-percent width-60-percent <%= ' give-me-focus' if give_me_focus %>">
-      
+      <% profile_text_content = search_result.profile_text.try(:value_md).presence || search_result.profile_text.try(:value).presence || ""%>
       <a 
         id="<%= search_result.id %>"
         class="show-details-link indent-level-2"
         title="Profile item record. Select to show details."
         tabindex="<%= increment_tab_index %>"> 
         profile item: 
-        <%= truncate(search_result.profile_text.try(:value), length: 100) %>
+        <%= truncate(profile_text_content, length: 100) %>
         <strong><%= "[#{search_result.product_item_config.display_html.presence || search_result.product_item_config.profile_item_type.name.presence}]" %></strong>
       </a>
 
