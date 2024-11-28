@@ -12,6 +12,11 @@ module ApplicationHelper
     <div class='text-for-link'>#{text}</div>".html_safe
   end
 
+  def user_profile_tab_name
+    # NOTES: Set this session in the user table once we have the column added
+    session[:product_profile] || "FOA"
+  end
+
   def increment_tab_index(increment = 1)
     @tab_index ||= 1
     @tab_index += increment
