@@ -20,14 +20,14 @@
   <% end %>
 <% end %>
 
-<%= turbo_stream.replace "message_#{@product_item_config.display_html.parameterize}" do %>
-  <div id="message_<%= @product_item_config.display_html.parameterize %>" class="message-container">
+<%= turbo_stream.replace "message_#{@product_item_config.id}" do %>
+  <div id="message_<%= @product_item_config.id %>" class="message-container">
     <%= @message %>
   </div>
 <% end %>
 
-<%= turbo_stream.replace "profile_text_form_#{@product_item_config.display_html.parameterize}" do %>
-  <div id="profile_text_form_<%= @product_item_config.display_html.parameterize %>" style="overflow: hidden; margin-bottom: 10px;">
+<%= turbo_stream.replace "profile_text_form_#{@product_item_config.id}" do %>
+  <div id="profile_text_form_<%= @product_item_config.id %>" style="overflow: hidden; margin-bottom: 10px;">
     <%= render partial: "profile_texts/form",
       locals: {
         profile_text: profile_text,
@@ -41,24 +41,24 @@
   </div>
 
   <script>
-    renderEditor(document.getElementById("editor_<%= @product_item_config.display_html.parameterize %><%= profile_item.id%>"));
+    renderEditor(document.getElementById("editor_<%= @product_item_config.id %><%= profile_item.id%>"));
   </script>
 <% end %>
 
-<%= turbo_stream.replace "profile_item_references_#{@product_item_config.display_html.parameterize}" do %>
-  <div id="profile_item_references_<%= @product_item_config.display_html.parameterize %>">
+<%= turbo_stream.replace "profile_item_references_#{@product_item_config.id}" do %>
+  <div id="profile_item_references_<%= @product_item_config.id %>">
   </div>
 <% end %>
 
-<%= turbo_stream.replace "add_reference_#{@product_item_config.display_html.parameterize}" do %>
-  <div id="add_reference_<%= @product_item_config.display_html.parameterize %>">
+<%= turbo_stream.replace "add_reference_#{@product_item_config.id}" do %>
+  <div id="add_reference_<%= @product_item_config.id %>">
   </div>
 <% end %>
 
-<%= turbo_stream.replace "add_annotation_form#{@product_item_config.display_html.parameterize}" do %>
-  <div id="add_annotation_form<%= @product_item_config.display_html.parameterize %>"></div>
+<%= turbo_stream.replace "add_annotation_form#{@product_item_config.id}" do %>
+  <div id="add_annotation_form<%= @product_item_config.id %>"></div>
 <% end %>
 
-<%= turbo_stream.replace "profile_item_actions_#{@product_item_config.display_html.parameterize}" do %>
-  <div id="profile_item_actions_<%= @product_item_config.display_html.parameterize %>"></div>
+<%= turbo_stream.replace "profile_item_actions_#{@product_item_config.id}" do %>
+  <div id="profile_item_actions_<%= @product_item_config.id %>"></div>
 <% end %>

@@ -59,7 +59,8 @@ class Search::ParsedRequest
               :original_query_target_for_display,
               :print,
               :display,
-              :show_loader_name_comments
+              :show_loader_name_comments,
+              :show_profiles
 
   DEFAULT_LIST_LIMIT = 100
   SIMPLE_QUERY_TARGETS = {
@@ -125,6 +126,7 @@ class Search::ParsedRequest
     "users" => "name:",
     "org" => "name_or_abbrev:",
     "bulk processing log" => "log-entry:",
+    "profile item" => "show-profiles:"
   }.freeze
 
   DEFAULT_ORDER_COLUMNS = {
@@ -233,6 +235,7 @@ class Search::ParsedRequest
     unused_qs_tokens = inflate_show_review_comments_abbrevs(unused_qs_tokens)
     unused_qs_tokens = parse_show_review_comments(unused_qs_tokens)
     unused_qs_tokens = parse_view(unused_qs_tokens)
+    unused_qs_tokens = parse_show_profiles(unused_qs_tokens)
     @where_arguments = unused_qs_tokens.join(" ")
   end
 
@@ -491,6 +494,15 @@ class Search::ParsedRequest
     @include_common_and_cultivar_session = \
       @params["include_common_and_cultivar_session"] ||
       @params["query_common_and_cultivar"] == "t"
+    tokens
+  end
+
+  def parse_show_profiles(tokens)
+    if tokens.include?("show-profiles:")
+      @show_profiles = true
+    else
+      @show_profiles = false
+    end
     tokens
   end
 

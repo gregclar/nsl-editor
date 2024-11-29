@@ -32,6 +32,7 @@ class InstancesController < ApplicationController
     @tab_index = (params[:tabIndex] || "1").to_i
     @tabs_to_offer = tabs_to_offer
     @row_type = params["row-type"]
+    @selected_product_item_config_id = params[:product_item_config_id]
     # Really only need to do this if the "classification" tab is chosen.
     unless @working_draft.blank?
       @tree_version_element = @working_draft.name_in_version(@instance.name)

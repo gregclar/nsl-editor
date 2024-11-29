@@ -18,6 +18,16 @@
 #
 Rails.application.routes.draw do
   resources :profile_items, only: %i[destroy index]
+  match "profile_items/:id",
+        as: "profile_items_show",
+        to: "profile_items#show",
+        via: :get, defaults: { tab: "tab_show_1" }
+  match "profile_items/:id/tab/:tab",
+        as: "profile_item_tab",
+        to: "profile_items#tab",
+        via: :get,
+        defaults: { tab: "tab_show_1" }
+
   resources :profile_texts, only: %i[create update]
   resources :profile_item_annotations, only: %i[create update]
   resources :profile_item_references, only: %i[create]
