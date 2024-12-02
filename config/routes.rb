@@ -84,11 +84,6 @@ Rails.application.routes.draw do
         to: "instances#typeahead_for_name_showing_references_to_update_instance",
         via: :get
 
-#   match "instances/create_foa",
-#         as: "create_foa",
-#         to: "instances#create_foa",
-#         via: :post
-
   match "instances/create_cited_by",
         as: "create_cited_by", to: "instances#create_cited_by", via: :post
   match "instances/create_cites_and_cited_by",

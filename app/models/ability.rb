@@ -57,17 +57,17 @@ class Ability
     reviewer_auth     if user.reviewer?
     batch_loader_auth if user.batch_loader?
     loader_2_tab_auth if user.loader_2_tab_loader?
-    foa_auth          if user.foa?
+    profile_v2_auth   if user.profile_v2?
   end
 
-  def foa_auth
+  def profile_v2_auth
     # can :manage, :all   # NOTES: This is not working. It breaks everything.
     can "profile_items",            :all
     can "profile_item_annotations", :all
     can "profile_item_references",  :all
     can "profile_texts",            :all
-    can :manage,                    :foa_profile
-    can "instances",                "tab_foa_profile"
+    can :manage,                    :profile_v2
+    can "instances",                "tab_profile_v2"
     can "references",               "typeahead_on_citation"
   end
 

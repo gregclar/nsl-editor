@@ -25,7 +25,7 @@ class User < ActiveType::Object
   validates :full_name, presence: true
   validates :groups, presence: true
 
-  def foa?
+  def profile_v2?
     groups.include?('foa')
   end
   

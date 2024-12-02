@@ -206,7 +206,7 @@ class InstancesController < ApplicationController
 
   def find_instance
     @instance = Instance.find(params[:id])
-    if params[:tab] == "tab_foa_profile"
+    if params[:tab] == "tab_profile_v2"
       @product_configs_and_profile_items, @product = Profile::ProfileItem::DefinedQuery::ProductAndProductItemConfigs.new(@instance).run_query
     end
   rescue ActiveRecord::RecordNotFound
@@ -253,7 +253,7 @@ class InstancesController < ApplicationController
       offer << "tab_classification"
       offer << "tab_profile_details" if @instance.profile?
       offer << "tab_edit_profile" if @instance.profile? && @instance.show_apc?
-      offer << "tab_foa_profile"
+      offer << "tab_profile_v2"
     end
     offer << "tab_comments"
     offer << "tab_copy_to_new_reference" if offer_tab_copy_to_new_ref?

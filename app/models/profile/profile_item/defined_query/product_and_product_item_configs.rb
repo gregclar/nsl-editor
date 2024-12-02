@@ -17,8 +17,7 @@ class Profile::ProfileItem::DefinedQuery::ProductAndProductItemConfigs
 
   def run_query
     debug("run_query")
-    
-    if foa_profile_aware?
+    if profile_v2_aware?
       @product_configs_and_profile_items = find_or_initialize_profile_items
     end
 
@@ -31,8 +30,8 @@ class Profile::ProfileItem::DefinedQuery::ProductAndProductItemConfigs
     Profile::Product.find_by(name: name)
   end
 
-  def foa_profile_aware?
-    Rails.configuration.try('foa_profile_aware')
+  def profile_v2_aware?
+    Rails.configuration.try('profile_v2_aware')
   end
 
   def find_or_initialize_profile_items
