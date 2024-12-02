@@ -26,7 +26,7 @@ class ProductAndProductItemConfigsTest < ActiveSupport::TestCase
     @product_item_config = @profile_item.product_item_config
     @product_item_config2 = product_item_config(:habitat_pic)
 
-    Rails.configuration.foa_profile_aware = true
+    Rails.configuration.profile_v2_aware = true
 
     @query = Profile::ProfileItem::DefinedQuery::ProductAndProductItemConfigs.new(@instance)
   end
@@ -76,7 +76,7 @@ class ProductAndProductItemConfigsTest < ActiveSupport::TestCase
   end
 
   test "#run_query with feature flag off" do
-    Rails.configuration.foa_profile_aware = false
+    Rails.configuration.profile_v2_aware = false
 
     result = @query.run_query
 

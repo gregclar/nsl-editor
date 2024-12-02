@@ -1,5 +1,5 @@
 
-function setUpInstanceReferenceFoa(profileItemId) {
+function setUpInstanceReferenceProfileV2(profileItemId) {
     const divId = 'instance-reference-typeahead-'+profileItemId;
     if ($('#' + divId).length === 0) {
         console.warn('Element with ID ' + divId + ' does not exist.');
@@ -23,7 +23,7 @@ function setUpInstanceReferenceFoa(profileItemId) {
 }
 
 
-window.setUpInstanceReferenceFoa = setUpInstanceReferenceFoa 
+window.setUpInstanceReferenceProfileV2 = setUpInstanceReferenceProfileV2 
 
 // constructs the suggestion engine
 window.referenceByCitation = new Bloodhound({

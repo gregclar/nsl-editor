@@ -1,4 +1,4 @@
-<% text_area_class = Rails.configuration.try('foa_profile_dropdown_ui') ? "editor-textarea-version2" : "editor-textarea" %>
+<% text_area_class = Rails.configuration.try('profile_v2_dropdown_ui') ? "editor-textarea-version2" : "editor-textarea" %>
 
 <%= form_with(model: profile_text, url: url, method: method, remote: true, html: { data: {type: 'json', form_type: 'profile_text_form' } }) do |f| %>
   <%= hidden_field_tag "profile_item[id]", profile_item.id %>
@@ -18,18 +18,9 @@
       required: true
     %>
 
-    <% if Rails.configuration.try('foa_profile_dropdown_ui') %>
-      <%= javascript_tag do %>
-        textarea = document.getElementById("editor_<%=product_item_config.id %><%= profile_text.id %>");
-        renderEditor(textarea)
-      <% end %>
-    <% else %>
-      <%= javascript_tag do %>
-        document.addEventListener('simpleMDELoaded', function() {
-          textarea = document.getElementById("editor_<%=product_item_config.id %><%= profile_text.id %>");
-          renderEditor(textarea)
-        })
-      <% end %>
+    <%= javascript_tag do %>
+      textarea = document.getElementById("editor_<%=product_item_config.id %><%= profile_text.id %>");
+      renderEditor(textarea)
     <% end %>
   </div>
   
