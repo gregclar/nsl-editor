@@ -69,6 +69,8 @@ module Profile
 
       validates :statement_type, presence: true
 
+      default_scope { includes(:product_item_config).order("product_item_config.sort_order ASC") }
+
       def fresh?
         created_at > 1.hour.ago
       end
