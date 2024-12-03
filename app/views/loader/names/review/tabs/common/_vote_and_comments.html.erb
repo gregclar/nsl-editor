@@ -7,10 +7,19 @@
 <% @loader_name.batch.reviews.each do |review| %>
   <%= render partial: 'detail_line', locals: {label: 'Review', info: review.name} %>
   <% if ['accepted','excluded'].include? params[:component] %>
+
     <%= render partial: 'detail_line', 
                locals: { label: 'Votes', 
-                         info:  @loader_name.summary_of_votes_for_review(review) } %>
+                         info:  @loader_name.frequencies_of_votes_for_review(review) } %>
+
+    <% @loader_name.summary_of_votes_for_review(review).each do |entry| %>
+       <%= render partial: 'detail_line', 
+                  locals: { label: entry[:org_abbrev],
+                            info:  "<span class=vote-#{entry[:vote]}>#{entry[:vote]}</span>"} %>
+    <% end %>
   <% end %>
+
+  <%= divider %>
 
   <% review.periods.each do |period| %>
     <%= render partial: 'detail_line', 

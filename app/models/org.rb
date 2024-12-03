@@ -43,6 +43,7 @@ class Org < ActiveRecord::Base
   self.primary_key = "id"
   self.sequence_name = "nsl_global_seq"
   has_many :batch_reviewers, class_name: "Loader::Batch::Reviewer", foreign_key: "org_id"
+  has_many :org_batch_review_voters, class_name: "Org::Batch::ReviewVoter", foreign_key: "org_id"
 
   attr_accessor :give_me_focus, :message
 
@@ -69,9 +70,19 @@ class Org < ActiveRecord::Base
     end
   end
 
-  def self.orgs_reviewer_can_vote_on_behalf_of(username)
-    self.joins(batch_reviewers: :user_table)
-        .where(["users.name = ?",username])
-        .distinct
+  def self.xorgs_reviewer_can_vote_on_behalf_of_in_a_review(username, review)
+    Org.joins(batch_reviewers: [:user_table, :batch_review_period])
+       .where('users.name': username)
+      .where('batch_review_period.batch_review_id': review.id)
+  end
+
+  def self.yorgs_reviewer_can_vote_on_behalf_of_in_a_review(reviewer)
+    Org.joins(batch_reviewers: [:user_table, :batch_review_period])
+       .where('users.name': username)
+      .where('batch_review_period.batch_review_id': review.id)
+  end
+
+  def can_vote_in_review(review)
+    review.org_batch_review_voters.pluck(:org_id).include?(self.id)
   end
 end

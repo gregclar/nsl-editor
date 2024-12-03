@@ -8,7 +8,7 @@ params component: <%= params[:component] %>
         batch_reviewer_id: period.reviewer_id(@current_user.username),
         loader_name_id: @loader_name.id,
         context:  "#{params[:component].gsub(/ /,'-')}",
-        review_period_id: period.id)
+        batch_review_period_id: period.id)
  %>
 
 <%= render partial: 'loader/name/review/comments/form',

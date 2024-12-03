@@ -1,4 +1,8 @@
 - :date: 03-Dec-2024
+  :jira_id: '5260'
+  :description: |-
+    Batch Review Voting: Set up structure for allowing organisations to vote in a Batch Review
+- :date: 03-Dec-2024
   :jira_id: '32'
   :jira_project: FLOR
   :description: |-

@@ -1,33 +1,29 @@
 
 
-
-Batch: <%= batch.name %> <br>
-Review: <%= review.name %> <br
-Loader name: <%= @loader_name.full_name %> <br>
-Organisation: <%= org.name %> <br>
+<!-- _can_vote.html.erb -->
+<%= render partial: 'detail_line', locals: {info: reviewer.user.name, label: 'user'} %>
+<%= render partial: 'detail_line', locals: {info: batch.name, label: 'batch'} %>
+<%= render partial: 'detail_line', locals: {info: review.name, label: 'review'} %>
+<%= render partial: 'detail_line', locals: {info: org.name, label: 'organisation'} %>
+<%= render partial: 'detail_line', locals: {info: @loader_name.full_name, label: 'name'} %>
 
 <%= divider %>
 
 <% votes = Loader::Name::Review::Vote.where(loader_name_id: @loader_name.id) 
-                                    .where(batch_review_id: review.id)
-                                    .where(org: org.id) %>
-
+                                     .where(org_id: org.id)
+                                     .where(batch_review_id: review.id)
+%>
 
 <% if votes.blank? %>
   <%= render partial: 'loader/names/review/tabs/main/votes/votable/vote/form',
              locals: {batch: batch,
                       review: review,
-                      org: org,
-                      batch_reviewer: batch_reviewer} %>
-
-<% elsif votes.size > 1 %>
-  More than one vote recorded for this name in this review by your organisation.  
+                      org: org} %>
 <% else %>
   <%= render partial: 'loader/names/review/tabs/main/votes/votable/vote/edit',
              locals: {batch: batch,
                       review: review,
                       org: org,
-                      batch_reviewer: batch_reviewer,
                       vote: votes.first} %>
 <% end %>
 

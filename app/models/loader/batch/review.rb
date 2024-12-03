@@ -33,6 +33,8 @@ class Loader::Batch::Review < ActiveRecord::Base
   has_many :review_periods, class_name: "Loader::Batch::Review::Period", foreign_key: "batch_review_id"
   alias_method :periods, :review_periods
 
+  has_many :org_batch_review_voters, class_name: "Org::Batch::ReviewVoter", foreign_key: "batch_review_id"
+
   attr_accessor :give_me_focus, :message
 
   def fresh?
