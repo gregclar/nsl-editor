@@ -1,3 +1,8 @@
+- :date: 03-Dec-2024
+  :jira_id: '32'
+  :jira_project: FLOR
+  :description: |-
+    FOA Profile: Display the dropdown ui feature flag in the admin configuration page
 - :date: 29-Nov-2024
   :jira_id: '32'
   :jira_project: FLOR
