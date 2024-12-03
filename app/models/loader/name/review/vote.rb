@@ -20,23 +20,18 @@
 class Loader::Name::Review::Vote < ActiveRecord::Base
   strip_attributes
   self.table_name = "name_review_vote"
-  self.primary_key = "id"
+  self.primary_key = [:org_id, :batch_review_id, :loader_name_id]
   self.sequence_name = "nsl_global_seq"
 
   belongs_to :loader_name, class_name: "Loader::Name",
                            foreign_key: "loader_name_id"
-  belongs_to :batch_review, class_name: "Loader::Batch::Review",
-                                   foreign_key: "batch_review_id"
-  belongs_to :batch_reviewer, class_name: "Loader::Batch::Reviewer",
-                              foreign_key: "batch_reviewer_id"
-  belongs_to :org
 
-  alias_method :reviewer, :batch_reviewer
+  belongs_to :org_batch_review_voter, class_name: "Org::Batch::ReviewVoter", query_constraints: [:org_id, :batch_review_id]
 
   validates :vote, inclusion: { in: [ true, false ] }
-  validates :loader_name_id,
-            uniqueness: {scope: [:org_id, :batch_review_id],
-                         message: "already voted on for this organisation in this review"}
+  #validates :loader_name_id,
+            #uniqueness: {scope: [:org_id, :batch_review_id],
+                         #message: "already voted on for this organisation in this review"}
 
   attr_accessor :give_me_focus, :message
 

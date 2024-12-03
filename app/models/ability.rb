@@ -157,6 +157,7 @@ class Ability
     can "loader/batch/review/periods", :all
     can "loader/batch/bulk",           :all
     can "loader/batch/job_lock",       :all
+    can "org/batch/review_voters",      :all
     can "menu",                        "batch"
   end
 

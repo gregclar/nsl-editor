@@ -43,7 +43,7 @@ class Loader::Batch::Review::Period < ActiveRecord::Base
   has_many :batch_reviewers, class_name: "Loader::Batch::Reviewer", foreign_key: "batch_review_period_id"
   alias_method :reviewers, :batch_reviewers
 
-  has_many :name_review_comments, class_name: "Loader::Name::Review::Comment", foreign_key: "review_period_id"
+  has_many :name_review_comments, class_name: "Loader::Name::Review::Comment", foreign_key: "batch_review_period_id"
   alias_method :comments, :name_review_comments # deprecate - confusing with batch comments
   alias_method :name_comments, :name_review_comments
 

@@ -7,4 +7,4 @@
 <br>
 <%= divider %>
 <%= render partial: 'detail_line', locals: {label: 'ID', info: vote.id} %>
-<%= created_by_whom_and_when(vote).html_safe %>
+<%= sanitize(created_by_whom_and_when(vote)) %>

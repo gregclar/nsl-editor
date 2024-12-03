@@ -1,27 +1,30 @@
 
-<%# needs to be a check that user can vote in THIS review %>
 
-<% orgs = Org.orgs_reviewer_can_vote_on_behalf_of(@current_user.username) %>
-
-<% if orgs.blank? %>
-  You don't represent an organisation that can vote in the review.
-<% elsif orgs.size > 1 %>
-  You represent more than one organisation that can vote in the review.
+Voting is in progress for review <%= review.name %> <br>
+<% reviewers = Loader::Batch::Reviewer.username_to_reviewers_for_review(@current_user.username, review) %>
+<% if reviewers.blank?  %>
+   You are not registered for this review.
 <% else %>
-  <% org = orgs.first %>
-  <% batch_reviewers = Loader::Batch::Reviewer.batch_reviewers_for_org_username_batch_review(org, @current_user.username, review) %>
-
-  <% if batch_reviewers.blank? %>
-    You aren't an eligible reviewer for <%= org.name %>
-  <% elsif batch_reviewers.size > 1 %>
-    You are an eligible reviewer more than once for <%= org.name %>
+  <% orgs_represented = reviewers.map {|reviewer| reviewer.org}.uniq{|org| org} %>
+  <% if orgs_represented.blank? %>
+    You don't represent any organisations in this review
+  <% elsif orgs_represented.size > 1 %>
+    You represent more than one organisation for this review.  That's unexpected.
   <% else %>
-    <%= render partial: 'loader/names/review/tabs/main/votes/votable/can_vote',
-        locals: {batch: @loader_name.batch,
-                 review: review,
-                 org: org,
-                 batch_reviewer: batch_reviewers.first} %>
-  <% end %>
-<% end %>
 
+    <% if orgs_represented.first.can_vote_in_review(review) %>
+      You can vote on behalf of <%= orgs_represented.first.name %> in this review.
+      <%= divider %>
+      <%= render partial: 'loader/names/review/tabs/main/votes/votable/can_vote',
+                 locals: {batch: @loader_name.batch,
+                          review: review,
+                          org: orgs_represented.first,
+                          reviewer: reviewers.first} %>
+    <% else %>
+      The organisation you represent, <%= orgs_represented.first.name %>, cannot vote in this review.
+    <% end %>
+
+  <% end %>
+
+<% end %>
 

@@ -30,7 +30,11 @@ class Loader::Batch::Reviewer < ActiveRecord::Base
   belongs_to :org
   belongs_to :batch_review_role, class_name: "Loader::Batch::Review::Role"
   alias_method :role, :batch_review_role
-  has_many :name_review_comments, class_name: "Loader::Name::Review::Comment", foreign_key: "batch_reviewer_id"
+  has_many :name_review_comments, class_name: "Loader::Name::Review::Comment", foreign_key: "batch_reviewer_id" do
+    def by_review_period(batch_review_period_id)
+      where(batch_review_period_id: batch_review_period_id)
+    end
+  end
 
   validates :user_id, presence: true
   validates :org_id, presence: true
@@ -92,4 +96,11 @@ class Loader::Batch::Reviewer < ActiveRecord::Base
         .where(["batch_review.loader_batch_id = ?", batch_review.loader_batch_id])
         .distinct
   end
+
+  def self.username_to_reviewers_for_review(username, review)
+    Loader::Batch::Reviewer.joins([:user_table, :batch_review_period])
+                           .where('users.name': username)
+                           .where('batch_review_period.batch_review_id': review.id)
+  end
+
 end

@@ -1,17 +1,17 @@
 
-<% voting_allowed_records =  Loader::Batch::Review.where( loader_batch_id: @loader_name.batch.id )
+<% reviews_with_voting_in_progress =  Loader::Batch::Review.where( loader_batch_id: @loader_name.batch.id )
                                        .where( allow_voting: true) %>
 
 
-<% if voting_allowed_records.blank? %>
-  <%= render partial: 'loader/names/review/tabs/main/votes/votable/no_voting_in_progress',
-    locals: {batch: @loader_name.batch,
-             review: voting_allowed_records.first} %>
-<% elsif voting_allowed_records.size > 1 %>
+<% if reviews_with_voting_in_progress.blank? %>
+  No voting in progress for any reviews of the batch for this record<br>
+<% elsif reviews_with_voting_in_progress.size > 1 %>
   There is more than one review with voting in progress for <%= @loader_name.batch.name %>.
+  <br>
+  This is unexpected.
 <% else %>
   <%= render partial: 'loader/names/review/tabs/main/votes/votable/voting_in_progress',
     locals: {batch: @loader_name.batch,
-             review: voting_allowed_records.first} %>
+             review: reviews_with_voting_in_progress.first} %>
 <% end %>
 

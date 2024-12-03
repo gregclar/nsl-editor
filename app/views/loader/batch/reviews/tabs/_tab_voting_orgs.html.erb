@@ -1,0 +1,31 @@
+<% increment_tab_index(0) -%>
+Current orgs entitled to vote:
+<%= @batch_review.org_batch_review_voters.size %>
+<% @batch_review.org_batch_review_voters.each do |obrv| %>
+  <br><%= obrv.org.name %>
+  <% confirm_delete_link = link_to("Remove",
+                                   delete_org_batch_review_voter_path(obrv.batch_review_id, obrv.org_id),
+                                   id: "confirm-delete-org-batch-review-voter-#{obrv.id}-link",
+                                   class: "btn btn-danger",
+                                   tabindex: increment_tab_index,
+                                   title: "Confirm the delete.",
+                                   remote: true,
+                                   method: :delete)
+  -%>
+    <%# if reviewer.name_review_comments.size == 0 %>
+      <%= confirm_delete_link %>
+    <%# else %>
+<% end %>
+
+<%= divider %>
+<h5>Register an Organisation to Vote in this Review</h5>
+<%= render partial: 'loader/batch/reviews/forms/register_org', locals: {batch_review: @batch_review} %>
+
+
+
+<div id="search-result-details-info-message-container" class="message-container"></div>
+<div id="search-result-details-error-message-container" class="message-container"></div>
+
+
+
+

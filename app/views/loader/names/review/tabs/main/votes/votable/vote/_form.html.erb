@@ -3,7 +3,6 @@
 <% name_review_vote.loader_name_id = @loader_name.id %>
 <% name_review_vote.batch_review_id = review.id %>
 <% name_review_vote.org_id = org.id %>
-<% name_review_vote.batch_reviewer_id = batch_reviewer.id %>
 
 <%= form_with model: name_review_vote, url: 'name_review_vote', data: { turbo: false }, local: false, method: :post do |form| %>
       <%= form.hidden_field :loader_name_id %>
