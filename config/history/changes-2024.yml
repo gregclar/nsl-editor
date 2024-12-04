@@ -1,3 +1,8 @@
+- :date: 04-Dec-2024
+  :jira_id: '32'
+  :jira_project: FLOR
+  :description: |-
+    FOA Profile: Sort the profile items by their product item config's sort order.
 - :date: 03-Dec-2024
   :jira_id: '5260'
   :description: |-
