@@ -2,7 +2,7 @@
   :jira_id: '32'
   :jira_project: FLOR
   :description: |-
-    FOA Profile: Sort the profile items by their product item config's sort order and other ui cleanups.
+    FOA Profile (APNI Test only): Sort the profile items by their product item config's sort order and other ui cleanups.
 - :date: 03-Dec-2024
   :jira_id: '5260'
   :description: |-
@@ -11,12 +11,12 @@
   :jira_id: '32'
   :jira_project: FLOR
   :description: |-
-    FOA Profile: Display the dropdown ui feature flag in the admin configuration page
+    FOA Profile (APNI Test only): Display the dropdown ui feature flag in the admin configuration page
 - :date: 29-Nov-2024
   :jira_id: '32'
   :jira_project: FLOR
   :description: |-
-    FOA Profile: This is a large set of changes covering profile item query, search, display items, etc.
+    FOA Profile (APNI Test only): This is a large set of changes covering profile item query, search, display items, etc.
 - :date: 22-Nov-2024
   :jira_id: '5254'
   :description: |-
@@ -33,7 +33,7 @@
   :jira_id: '30'
   :jira_project: FLOR
   :description: |-
-    FOA Profile: Only Product Item Config of object type text should be displayed for now
+    FOA Profile (APNI Test only): Only Product Item Config of object type text should be displayed for now
 - :date: 12-Nov-2024
   :jira_id: '5248'
   :description: |-
@@ -52,7 +52,7 @@
   :jira_id: '30'
   :jira_project: FLOR
   :description: |-
-    FOA Profile: Add a dropdown to the FOA profile editor
+    FOA Profile (APNI Test only): Add a dropdown to the FOA profile editor
 - :date: 05-Nov-2024
   :jira_id: '5234'
   :description: |-
@@ -81,12 +81,12 @@
   :jira_id: '29'
   :jira_project: FLOR
   :description: |-
-    Flora of Australia Profile: Improved foa query in the instances tabs
+    FOA Profile (APNI Test only): Improved foa query in the instances tabs
 - :date: 28-Oct-2024
   :jira_id: '28'
   :jira_project: FLOR
   :description: |-
-    Flora of Australia Profile: Updated permissions for the foa editor
+    FOA Profile (APNI Test only): Updated permissions for the foa editor
 - :date: 28-Oct-2024
   :jira_id: '5238'
   :description: |-
@@ -95,7 +95,7 @@
   :jira_id: '25'
   :jira_project: FLOR
   :description: |-
-    Flora of Australia Profile: Basic editing features
+    FOA Profile (APNI Test only): Basic editing features
 - :date: 24-Oct-2024
   :jira_id: '5232'
   :description: |-
@@ -140,7 +140,7 @@
   :jira_project: FLOR
   :jira_id: '25'
   :description: |-
-    Flora Profile: First major merge of initial work by Dean and Gerda
+    FOA Profile (APNI Test only): First major merge of initial work by Dean and Gerda
 - :date: 03-Oct-2024
   :release: true
 - :date: 03-Oct-2024
