@@ -34,6 +34,7 @@ class Loader::Batch::Review < ActiveRecord::Base
   alias_method :periods, :review_periods
 
   has_many :org_batch_review_voters, class_name: "Org::Batch::ReviewVoter", foreign_key: "batch_review_id"
+  has_many :batch_review_voters, class_name: "Loader::Batch::Review::VoterView", foreign_key: "batch_review_id"
 
   attr_accessor :give_me_focus, :message
 

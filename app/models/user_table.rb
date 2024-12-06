@@ -45,7 +45,7 @@ class UserTable < ActiveRecord::Base
   self.primary_key = "id"
   self.sequence_name = "nsl_global_seq"
 
-  attr_accessor :give_me_focus, :message
+  has_many :batch_reviewers, class_name: "Loader::Batch::Reviewer", foreign_key: :user_id
 
   # Note, the PK for the users table is the id column.
   # That appears as user_id as a foreign key.

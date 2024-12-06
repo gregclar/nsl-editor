@@ -30,6 +30,7 @@ class Org::Batch::ReviewVoter < ActiveRecord::Base
 
   has_many :name_review_comments, class_name: "Loader::Name::Review::Comment", foreign_key: "org_batch_review_id"
   has_many :loader_name_review_votes, class_name: "Loader::Name::Review::Vote", query_constraints: [:org_id, :batch_review_id]
+  alias_attribute :name_review_votes, :loader_name_review_votes
 
   validates :org_id, uniqueness: { scope: :batch_review_id,
     message: "cannot be registered twice for the same batch review" }

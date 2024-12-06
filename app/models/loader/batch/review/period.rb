@@ -38,7 +38,7 @@ class Loader::Batch::Review::Period < ActiveRecord::Base
   belongs_to :batch_review,
              class_name: "Loader::Batch::Review",
              foreign_key: "batch_review_id"
-  alias_method :review, :batch_review
+  alias_attribute :review, :batch_review
 
   has_many :batch_reviewers, class_name: "Loader::Batch::Reviewer", foreign_key: "batch_review_period_id"
   alias_method :reviewers, :batch_reviewers
