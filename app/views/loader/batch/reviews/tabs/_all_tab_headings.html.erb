@@ -36,6 +36,18 @@
   <%= render partial: 'loader/batch/reviews/tabs/tab',
              locals: {first: false,
                       last: true,
+                      this_tab: 'tab_reviewers', 
+                      link_text: 'Reviewers', 
+                      link_id: 'loader-batch-review-periods-reviewers-tab', 
+                      link_title: 'Edit the period',
+                      tab_index: @tab_index,
+                      prev_tab: '.search-result.review-periods-edit-tab', 
+                      next_tab: '.search-result.review-periods-details-tab' }
+  %> 
+
+  <%= render partial: 'loader/batch/reviews/tabs/tab',
+             locals: {first: false,
+                      last: true,
                       this_tab: 'tab_voting_orgs', 
                       link_text: 'Voting Orgs', 
                       link_id: 'loader-batch-review-voting-orgs-tab', 

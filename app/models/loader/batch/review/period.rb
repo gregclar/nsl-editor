@@ -38,10 +38,7 @@ class Loader::Batch::Review::Period < ActiveRecord::Base
   belongs_to :batch_review,
              class_name: "Loader::Batch::Review",
              foreign_key: "batch_review_id"
-  alias_attribute :review, :batch_review
-
-  has_many :batch_reviewers, class_name: "Loader::Batch::Reviewer", foreign_key: "batch_review_period_id"
-  alias_method :reviewers, :batch_reviewers
+  alias_method :review, :batch_review
 
   has_many :name_review_comments, class_name: "Loader::Name::Review::Comment", foreign_key: "batch_review_period_id"
   alias_method :comments, :name_review_comments # deprecate - confusing with batch comments
@@ -72,7 +69,7 @@ class Loader::Batch::Review::Period < ActiveRecord::Base
   end
 
   def allow_delete?
-    !(reviewers.exists? || name_comments.exists?)
+    !name_comments.exists?
   end
 
   def update_if_changed(params, username)
@@ -248,8 +245,8 @@ class Loader::Batch::Review::Period < ActiveRecord::Base
   private
 
   def abort_if_review_periods
-    return unless reviewers.exists? || name_comments.exists?
+    return unless name_comments.exists?
 
-    throw "Cannot delete period because it has reviewers or comments"
+    throw "Cannot delete period because it has comments"
   end
 end

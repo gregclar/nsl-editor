@@ -30,11 +30,12 @@ class Loader::Batch::Review < ActiveRecord::Base
 
   belongs_to :loader_batch, class_name: "Loader::Batch", foreign_key: "loader_batch_id"
   alias_method :batch, :loader_batch
-  has_many :review_periods, class_name: "Loader::Batch::Review::Period", foreign_key: "batch_review_id"
-  alias_method :periods, :review_periods
 
-  has_many :org_batch_review_voters, class_name: "Org::Batch::ReviewVoter", foreign_key: "batch_review_id"
-  has_many :batch_review_voters, class_name: "Loader::Batch::Review::VoterView", foreign_key: "batch_review_id"
+  has_many :batch_review_periods, class_name: "Loader::Batch::Review::Period", foreign_key: "batch_review_id"
+  alias_method :periods, :batch_review_periods
+  alias_method :review_periods, :batch_review_periods
+  has_many :batch_reviewers, class_name: "Loader::Batch::Reviewer", foreign_key: "batch_review_id"
+  alias_method :reviewers, :batch_reviewers
 
   attr_accessor :give_me_focus, :message
 
