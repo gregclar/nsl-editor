@@ -6,7 +6,9 @@
         title: 'Search for the name with its instances',
         class: 'name') %>
 <br><br>
-<%= markdown_to_html(@profile_item.profile_text.value_md.to_s) %>
+<div class="from-markdown">
+  <%= markdown_to_html(@profile_item.profile_text.value_md.to_s) %>
+</div>
 
 <% if @profile_item.profile_item_references.present? %>
   <p>
