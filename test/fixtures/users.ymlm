@@ -13,3 +13,9 @@ user_one:
  name: uone
  given_name: user
  family_name: One
+
+reviewer_one:
+ <<: *DEFAULTS
+ name: rev1
+ given_name: Reviewer
+ family_name: One

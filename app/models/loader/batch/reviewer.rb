@@ -23,8 +23,7 @@ class Loader::Batch::Reviewer < ActiveRecord::Base
   self.primary_key = "id"
   self.sequence_name = "nsl_global_seq"
 
-  belongs_to :batch_review_period, class_name: "Loader::Batch::Review::Period", foreign_key: "batch_review_period_id"
-  alias_method :period, :batch_review_period
+  belongs_to :batch_review, class_name: "Loader::Batch::Review", foreign_key: "batch_review_id"
   belongs_to :user_table, class_name: "UserTable", foreign_key: "user_id"
   alias_method :user, :user_table
   belongs_to :org
@@ -35,12 +34,13 @@ class Loader::Batch::Reviewer < ActiveRecord::Base
       where(batch_review_period_id: batch_review_period_id)
     end
   end
+  has_many :name_review_votes, class_name: "Loader::Name::Review::Vote", foreign_key: "batch_reviewer_id"
 
   validates :user_id, presence: true
   validates :org_id, presence: true
   validates :batch_review_role_id, presence: true
-  validates :batch_review_period_id, presence: true
-  validates :user_id, uniqueness: { scope: :batch_review_period_id,
+  validates :batch_review_id, presence: true
+  validates :user_id, uniqueness: { scope: :batch_review_id,
                                     message: "should only be added once per review period" }
   attr_accessor :give_me_focus, :message
 
@@ -98,9 +98,9 @@ class Loader::Batch::Reviewer < ActiveRecord::Base
   end
 
   def self.username_to_reviewers_for_review(username, review)
-    Loader::Batch::Reviewer.joins([:user_table, :batch_review_period])
+    Loader::Batch::Reviewer.joins([:user_table, :batch_review])
                            .where('users.name': username)
-                           .where('batch_review_period.batch_review_id': review.id)
+                           .where('batch_review.id': review.id)
   end
 
 end

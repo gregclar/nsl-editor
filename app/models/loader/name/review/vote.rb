@@ -26,8 +26,6 @@ class Loader::Name::Review::Vote < ActiveRecord::Base
   belongs_to :loader_name, class_name: "Loader::Name",
                            foreign_key: "loader_name_id"
 
-  belongs_to :org_batch_review_voter, class_name: "Org::Batch::ReviewVoter", query_constraints: [:org_id, :batch_review_id]
-
   validates :vote, inclusion: { in: [ true, false ] }
   #validates :loader_name_id,
             #uniqueness: {scope: [:org_id, :batch_review_id],
