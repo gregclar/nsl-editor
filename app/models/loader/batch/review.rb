@@ -34,6 +34,7 @@ class Loader::Batch::Review < ActiveRecord::Base
   has_many :batch_review_periods, class_name: "Loader::Batch::Review::Period", foreign_key: "batch_review_id"
   alias_method :periods, :batch_review_periods
   alias_method :review_periods, :batch_review_periods
+
   has_many :batch_reviewers, class_name: "Loader::Batch::Reviewer", foreign_key: "batch_review_id"
   alias_method :reviewers, :batch_reviewers
 
@@ -73,6 +74,14 @@ class Loader::Batch::Review < ActiveRecord::Base
 
   def allow_voting_to_words
     allow_voting ? 'allowed' : 'not allowed'
+  end
+
+  def reviewer?(username)
+    reviewers.select { |r| r.user.name.downcase == username.downcase }.size > 0
+  end
+
+  def reviewer_id(username)
+    reviewers.select { |r| r.user.name.downcase == username.downcase }.first.id
   end
 
   private

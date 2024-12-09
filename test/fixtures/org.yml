@@ -10,4 +10,4 @@ state_herb_1:
  name: $LABEL 
  abbrev: sh1
  deprecated: false
- no_org: false
+ not_a_real_org: false

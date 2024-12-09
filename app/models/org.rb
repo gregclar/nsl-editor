@@ -43,7 +43,6 @@ class Org < ActiveRecord::Base
   self.primary_key = "id"
   self.sequence_name = "nsl_global_seq"
   has_many :batch_reviewers, class_name: "Loader::Batch::Reviewer", foreign_key: "org_id"
-  has_many :org_batch_review_voters, class_name: "Org::Batch::ReviewVoter", foreign_key: "org_id"
 
   attr_accessor :give_me_focus, :message
 
@@ -83,6 +82,10 @@ class Org < ActiveRecord::Base
   end
 
   def can_vote_in_review(review)
-    review.org_batch_review_voters.pluck(:org_id).include?(self.id)
+    batch_reviewers.where(batch_review_id: review.id)
+  end
+
+  def user_as_reviewer_for_review(username, review)
+    can_vote_in_review(review).where(user_id: UserTable.where(name: 'gbentham')).first
   end
 end

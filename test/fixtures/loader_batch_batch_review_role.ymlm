@@ -1,14 +1,18 @@
+_fixture:
+  model_class: Loader::Batch::Review::Role
+
 DEFAULTS: &DEFAULTS
   created_at: <%= Time.now %>
   updated_at: <%= Time.now %>
   created_by: tester
   updated_by: tester
 
-reviewer_1:
+
+name_reviewer:
   <<: *DEFAULTS
-  user_id: rev1
-  org_id: state_herb_1
-  batch_review_id: review_1
-  batch_review_role_id: name_reviewer
-  active: true
+  name: name reviewer
+
+compiler:
+  <<: *DEFAULTS
+  name: compiler
 

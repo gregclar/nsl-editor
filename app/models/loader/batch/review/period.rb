@@ -230,14 +230,6 @@ class Loader::Batch::Review::Period < ActiveRecord::Base
       (end_date.blank? || end_date > Time.now)
   end
 
-  def reviewer?(username)
-    reviewers.select { |r| r.user.name.downcase == username.downcase }.size > 0
-  end
-
-  def reviewer_id(username)
-    reviewers.select { |r| r.user.name.downcase == username.downcase }.first.id
-  end
-
   def finite?
     end_date.present?
   end

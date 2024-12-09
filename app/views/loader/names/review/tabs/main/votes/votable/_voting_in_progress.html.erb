@@ -11,7 +11,6 @@ Voting is in progress for review <%= review.name %> <br>
   <% elsif orgs_represented.size > 1 %>
     You represent more than one organisation for this review.  That's unexpected.
   <% else %>
-
     <% if orgs_represented.first.can_vote_in_review(review) %>
       You can vote on behalf of <%= orgs_represented.first.name %> in this review.
       <%= divider %>

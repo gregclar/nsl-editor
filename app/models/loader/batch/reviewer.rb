@@ -98,9 +98,9 @@ class Loader::Batch::Reviewer < ActiveRecord::Base
   end
 
   def self.username_to_reviewers_for_review(username, review)
-    Loader::Batch::Reviewer.joins([:user_table, :batch_review_period])
+    Loader::Batch::Reviewer.joins([:user_table, :batch_review])
                            .where('users.name': username)
-                           .where('batch_review_period.batch_review_id': review.id)
+                           .where('batch_review.id': review.id)
   end
 
 end
