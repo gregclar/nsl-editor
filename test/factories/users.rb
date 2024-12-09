@@ -20,27 +20,27 @@ FactoryBot.define do
     groups { ['APC'] }
   end
 
-  trait :qa? do
+  trait :qa do
     groups { ['QA'] }
   end
 
-  trait :treebuilder? do
+  trait :treebuilder do
     groups { ['treebuilder'] }
   end
 
-  trait :reviewer? do
+  trait :reviewer do
     groups { ['taxonomic-review'] }
   end
 
-  trait :compiler? do
+  trait :compiler do
     groups { ['treebuilder'] }
   end
 
-  trait :batch_loader? do
+  trait :batch_loader do
     groups { ['batch-loader'] }
   end
 
-  trait :loader_2_tab_loader? do
+  trait :loader_2_tab_loader do
     groups { ['loader-2-tab"'] }
   end
 end
