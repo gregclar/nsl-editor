@@ -33,8 +33,10 @@ class Loader::Batch::Reviewer < ActiveRecord::Base
     def by_review_period(batch_review_period_id)
       where(batch_review_period_id: batch_review_period_id)
     end
+    def by_review(batch_review_id)
+      where(['batch_review_period_id in (select id from batch_review_period brp where brp.batch_review_id = ?)', batch_review_id])
+    end
   end
-  has_many :name_review_votes, class_name: "Loader::Name::Review::Vote", foreign_key: "batch_reviewer_id"
 
   validates :user_id, presence: true
   validates :org_id, presence: true

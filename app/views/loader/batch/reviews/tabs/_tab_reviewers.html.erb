@@ -18,7 +18,7 @@
     <li/><%= reviewer.role.name %>
 
 
-    <% if reviewer.name_review_comments.by_review_period(@batch_review.id).size == 0 %>
+    <% if reviewer.name_review_comments.by_review(@batch_review.id).size == 0 %>
 
             <%= link_to("Delete...",
                         '#',
@@ -57,11 +57,11 @@
 
     <% else %>
       <li/>
-         <%= link_to(pluralize(reviewer.name_review_comments.by_review_period(@batch_review.id).size, 'comment'),
+         <%= link_to(pluralize(reviewer.name_review_comments.by_review(@batch_review.id).size, 'comment'),
                          search_path(query_target: 'loader names', 
-                                     query_string: "batch-id: #{@batch_review.batch_review.batch.id} has-review-comment-by:#{reviewer.user_table.name}"),
+                                     query_string: "batch-id: #{@batch_review.batch.id} has-review-comment-by:#{reviewer.user_table.name}"),
                          class: 'blue',
-                         title: "Query loader names in this batch with comments by this user") %>
+                         title: "Query loader names in this batch with comments by this user") %> (need a way to actually see the comments)
     <% end %>
   </ul>
   </div>
