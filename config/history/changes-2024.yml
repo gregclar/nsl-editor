@@ -1,7 +1,7 @@
 - :date: 10-Dec-2024
   :jira_id: '5260'
   :description: |-
-    Loader: Adjust database structures for comments/voting after design re-think - biggest change is attaching reviewers directly to batch reviews rather than to review periods.
+    Voting: Adjust database structures for comments/voting after design re-think - biggest change is attaching reviewers directly to batch reviews rather than to review periods.
 - :date: 04-Dec-2024
   :jira_id: '32'
   :jira_project: FLOR
