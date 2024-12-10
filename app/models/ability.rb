@@ -62,7 +62,7 @@ class Ability
   end
 
   def profile_v2_viewer
-    can "profile_items", :read, :index
+    can "profile_items", :read
     can "profile_items", "undefined"
     can "profile_items", "tab_show_1"
   end
