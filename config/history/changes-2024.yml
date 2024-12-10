@@ -1,3 +1,8 @@
+- :date: 11-Dec-2024
+  :jira_id: '31'
+  :jira_project: FLOR
+  :description: |-
+    FOA Profile (APNI Test only): Use foa-context-group to grant viewing access to foa
 - :date: 09-Dec-2024
   :jira_id: '5260'
   :description: |-
