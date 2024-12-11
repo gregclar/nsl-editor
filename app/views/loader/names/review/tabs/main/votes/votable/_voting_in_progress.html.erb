@@ -4,23 +4,26 @@ Voting is in progress for review <%= review.name %> <br>
 <% reviewers = Loader::Batch::Reviewer.username_to_reviewers_for_review(@current_user.username, review) %>
 <% if reviewers.blank?  %>
    You are not registered for this review.
+ <% elsif reviewers.size > 1 %>
+   You could be more than one reviewer for this review.  That's not expected.
 <% else %>
-  <% orgs_represented = reviewers.map {|reviewer| reviewer.org}.uniq{|org| org} %>
-  <% if orgs_represented.blank? %>
-    You don't represent any organisations in this review
-  <% elsif orgs_represented.size > 1 %>
-    You represent more than one organisation for this review.  That's unexpected.
+  <% this_reviewer = reviewers.first %>
+  <% org_represented = this_reviewer.org %>
+  <% if org_represented.blank? %>
+    You don't represent any organisation in this review
   <% else %>
-    <% if orgs_represented.first.can_vote_in_review(review) %>
-      You can vote on behalf of <%= orgs_represented.first.name %> in this review.
+    <% this_reviewers_org = org_represented %>
+    You represent <b><%= this_reviewers_org.name %></b><br>
+    <% if this_reviewers_org.can_vote? %>
+      <%= this_reviewers_org.name %> is a voting organisation
       <%= divider %>
       <%= render partial: 'loader/names/review/tabs/main/votes/votable/can_vote',
                  locals: {batch: @loader_name.batch,
                           review: review,
-                          org: orgs_represented.first,
+                          org: this_reviewers_org,
                           reviewer: reviewers.first} %>
     <% else %>
-      The organisation you represent, <%= orgs_represented.first.name %>, cannot vote in this review.
+      <%= this_reviewers_org.abbrev %> isn't a voting organistion. No voting for you.
     <% end %>
 
   <% end %>

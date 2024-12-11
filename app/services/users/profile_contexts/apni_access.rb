@@ -12,10 +12,6 @@ class Users::ProfileContexts::ApniAccess < Users::ProfileContexts::BaseAccess
   end
 
   def instance_editor?
-    false
-  end
-
-  def super_editor?
-    true
+    user.groups.include?('v2-profile-instance-edit')
   end
 end

@@ -16,8 +16,4 @@ class Users::ProfileContexts::FoaAccess < Users::ProfileContexts::BaseAccess
   def instance_editor?
     user.groups.include?('v2-profile-instance-edit')
   end
-
-  def super_editor?
-    user.groups.include?('foa')
-  end
 end

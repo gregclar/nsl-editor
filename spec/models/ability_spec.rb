@@ -2,7 +2,7 @@ require 'rails_helper'
 
 RSpec.describe Ability, type: :model do
   describe "#profile_v2_viewer" do
-    let(:user) { FactoryBot.create(:user, :profile_v2_context) }
+    let(:user) { FactoryBot.create(:user) }
 
     subject { described_class.new(user) }
 

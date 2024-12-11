@@ -45,7 +45,6 @@ class Loader::Name::Review::VotesController < ApplicationController
                                                     :loader_name_id,
                                                     :batch_review_id,
                                                     :org_id,
-                                                    :batch_reviewer_id,
                                                     :vote
                                                     )
   end

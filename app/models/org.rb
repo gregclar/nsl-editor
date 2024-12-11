@@ -43,6 +43,7 @@ class Org < ActiveRecord::Base
   self.primary_key = "id"
   self.sequence_name = "nsl_global_seq"
   has_many :batch_reviewers, class_name: "Loader::Batch::Reviewer", foreign_key: "org_id"
+  has_many :name_review_votes, class_name: "Loader::Name::Review::Vote", foreign_key: "org_id"
 
   attr_accessor :give_me_focus, :message
 

@@ -1,3 +1,6 @@
+drop table loader.name_review_vote;
+
+
 create table loader.name_review_vote (
   loader_name_id bigint not null,
   batch_review_id bigint not null,

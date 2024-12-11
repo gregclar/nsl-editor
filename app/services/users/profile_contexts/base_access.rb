@@ -5,6 +5,7 @@ class Users::ProfileContexts::BaseAccess
   def initialize(user)
     @user = user
     @product = "unknown"
+    @logger = Rails.logger
   end
 
   def viewer?
@@ -19,7 +20,16 @@ class Users::ProfileContexts::BaseAccess
     false
   end
 
-  def super_editor?
+  def method_missing(method_name, *args, &block)
+    if respond_to_missing?(method_name)
+      super
+    else
+      @logger.warn("Undefined method `#{method_name}` called on #{self.class.name}")
+      nil
+    end
+  end
+
+  def respond_to_missing?(method_name, include_private = false)
     false
   end
 end
