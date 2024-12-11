@@ -5,17 +5,6 @@ RSpec.describe Ability, type: :model do
     let(:user) { FactoryBot.create(:user, :profile_v2_context) }
 
     subject { described_class.new(user) }
-    
-    describe "#profile_v2_viewer" do
-      context "for user with profile_v2_context" do
-        it "grants read access to profile items" do
-          allow(user).to receive(:profile_v2_context?).and_return(true)
-          expect(subject.can?("profile_items", :read)).to eq true
-          expect(subject.can?("profile_items", "undefined")).to eq true
-          expect(subject.can?("profile_items", "tab_show_1")).to eq true
-        end
-      end
-    end
 
     describe "#profile_v2_auth" do
       context "for user with profile_v2" do

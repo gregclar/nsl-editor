@@ -25,6 +25,11 @@ class User < ActiveType::Object
   validates :full_name, presence: true
   validates :groups, presence: true
 
+  PROFILE_CONTEXTS = {
+    foa:     ::Users::ProfileContexts::FoaAccess,
+    default: ::Users::ProfileContexts::BaseAccess
+  }
+
   #
   # Profile V2 
   #
@@ -32,12 +37,9 @@ class User < ActiveType::Object
     groups.include?('foa')
   end
 
-  def edit_profile_v2_instance?
-    groups.include?('v2-profile-instance-edit')
-  end
-
-  def profile_v2_context?
-    groups.include?('foa-context-group')
+  def profile_v2_context
+    @profile_v2_context ||= PROFILE_CONTEXTS[:foa].new(self) if groups.include?('foa-context-group')
+    @profile_v2_context ||= PROFILE_CONTEXTS[:default].new(self)
   end
 
   #

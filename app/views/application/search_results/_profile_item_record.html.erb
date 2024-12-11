@@ -1,4 +1,4 @@
-<% if can?("profile_items", :read) %>
+<% if @current_user.profile_v2_context.viewer? %>
   <tr id="search-result-<%= search_result.id %>" 
     class="search-result show-details <%= 'fresh' if search_result.fresh? %>"
     data-record-type="profile_items"

@@ -41,11 +41,6 @@ class SignIn < ActiveType::Object
     @ldap.generic_active_directory_user
   end
 
-  def product_in_context
-   return "FOA" if groups.include?('foa-context-group')
-   return "APNI"
- end
-
   def make_invalid
     errors.add(:credentials, "not authorised.")
   end

@@ -3,8 +3,10 @@ class Profile::ProfileItem::DefinedQuery::ProductAndProductItemConfigs
               :instance,
               :product_configs_and_profile_items
 
-  def initialize(instance, params = {})
-    @product = find_product_by_name("FOA")
+  def initialize(user, instance, params = {})
+    @user = user
+    @profile_context = user.profile_v2_context
+    @product = find_product_by_name(@profile_context.product)
     @product_configs_and_profile_items = []
     @instance = instance
     @params = params
