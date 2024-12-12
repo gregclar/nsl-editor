@@ -175,7 +175,7 @@
   
 
   <% if @tabs_to_offer.include?('tab_profile_v2') %>
-    <% if can? :manage, :profile_v2 %>
+    <% if @current_user.profile_v2_context.editor? %>
       <% if Rails.configuration.try('profile_v2_aware') %>
         <%= render partial: 'instances/tabs/tab', locals: {first: false,
                                         last: true,

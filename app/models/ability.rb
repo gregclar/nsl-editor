@@ -60,6 +60,7 @@ class Ability
     profile_v2_auth   if user.profile_v2?
   end
 
+
   def profile_v2_auth
     # can :manage, :all   # NOTES: This is not working. It breaks everything.
     can "profile_items",            :all

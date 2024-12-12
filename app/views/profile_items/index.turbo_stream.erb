@@ -1,4 +1,4 @@
-<% all_items, _product = Profile::ProfileItem::DefinedQuery::ProductAndProductItemConfigs.new(@instance).run_query %>
+<% all_items, _product = Profile::ProfileItem::DefinedQuery::ProductAndProductItemConfigs.new(@current_user, @instance).run_query %>
 <%= turbo_stream.replace "product-item-config-dropdown-container" do %>
   <%= render partial: "profile_items/product_item_config_dropdown", locals: {
       product_configs_and_profile_items: all_items,

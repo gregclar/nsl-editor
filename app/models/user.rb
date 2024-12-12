@@ -25,10 +25,28 @@ class User < ActiveType::Object
   validates :full_name, presence: true
   validates :groups, presence: true
 
+  PROFILE_CONTEXTS = {
+    foa:     ::Users::ProfileContexts::FoaAccess,
+    apni:    ::Users::ProfileContexts::ApniAccess,
+    default: ::Users::ProfileContexts::BaseAccess
+  }
+
+  #
+  # Profile V2 
+  #
   def profile_v2?
-    groups.include?('foa')
+    groups.include?('foa') || groups.include?('apni')
   end
-  
+
+  def profile_v2_context
+    @profile_v2_context ||= PROFILE_CONTEXTS[:foa].new(self) if groups.include?('foa')
+    @profile_v2_context ||= PROFILE_CONTEXTS[:apni].new(self) if groups.include?('apni')
+    @profile_v2_context ||= PROFILE_CONTEXTS[:default].new(self)
+  end
+
+  #
+  # Edit
+  #
   def edit?
     groups.include?("edit")
   end

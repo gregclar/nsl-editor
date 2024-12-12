@@ -13,8 +13,7 @@ module ApplicationHelper
   end
 
   def user_profile_tab_name
-    # NOTES: Set this session in the user table once we have the column added
-    session[:product_profile] || "FOA"
+    @current_user.profile_v2_context.product
   end
 
   def increment_tab_index(increment = 1)

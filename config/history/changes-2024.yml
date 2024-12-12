@@ -1,3 +1,8 @@
+- :date: 11-Dec-2024
+  :jira_id: '31'
+  :jira_project: FLOR
+  :description: |-
+    FOA Profile (APNI Test only): Use context-group to display/hide profile tabs based on the user context group
 - :date: 10-Dec-2024
   :jira_id: '5260'
   :description: |-

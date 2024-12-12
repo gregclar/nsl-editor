@@ -70,7 +70,6 @@ class SessionsController < ApplicationController
   end
 
   def set_up_session
-    session[:product_profile] = "FOA" # NOTES: Update this once we have the attribute available from ldap
     session[:username] = sign_in_params[:username]
     session[:groups] = @sign_in.groups
     session[:user_full_name] = @sign_in.user_full_name
