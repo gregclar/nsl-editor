@@ -81,6 +81,7 @@ class Loader::Name < ActiveRecord::Base
   alias_method :preferred_matches, :loader_name_matches
 
   has_many :name_review_votes, class_name: "Loader::Name::Review::Vote", foreign_key: "loader_name_id"
+  alias_method :votes, :name_review_votes
 
   attr_accessor :give_me_focus, :message
 
@@ -435,7 +436,7 @@ class Loader::Name < ActiveRecord::Base
     loader_name
   end
 
-  def record_type_as_context
+  def xrecord_type_as_context
     case record_type
     when "misapplied" then "synonymy"
     when "synonym" then "synonymy"

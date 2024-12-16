@@ -43,7 +43,7 @@ class Loader::Batch::Reviewer < ActiveRecord::Base
   validates :batch_review_role_id, presence: true
   validates :batch_review_id, presence: true
   validates :user_id, uniqueness: { scope: :batch_review_id,
-                                    message: "should only be added once per review period" }
+                                    message: "should only be added once per review" }
   attr_accessor :give_me_focus, :message
 
   def fresh?

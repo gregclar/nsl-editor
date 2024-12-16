@@ -227,7 +227,7 @@ a:hover.blue           { color: blue; }
 }
 
 .vote-disagree {
-  color: red;
+  color: firebrick;
 }
 /*
 .synonym-taxon {
