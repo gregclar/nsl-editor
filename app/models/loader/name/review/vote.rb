@@ -71,10 +71,28 @@ class Loader::Name::Review::Vote < ActiveRecord::Base
   end
 
   def vote_as_agree_disagree
-    if vote 
-      'Agree'
-    else
-      'Disagree'
+    vote ? 'agree' : 'disagree'
+  end
+
+  # Sample params:
+  # params: "loader_name_id"=>"51739066", 
+  #         "batch_review_id"=>"51785034",
+  #         "org_id"=>"51614642",
+  #         "vote"=>"true"}
+  def self.in_bulk(params, username)
+    loader_name = Loader::Name.find(params[:loader_name_id])
+    batch_review = Loader::Batch::Review.find(params[:batch_review_id])
+    throw "No bulk vote for this type of record" unless loader_name.record_type = 'heading' && loader_name.family?
+    created = 0
+    Loader::Name.where(family: loader_name.family)
+                .where(loader_batch_id: batch_review.loader_batch.id)
+                .where("record_type in ('accepted','excluded')").each do | member |
+      unless member.votes.where(batch_review_id: params[:batch_review_id]).where(org_id: params[:org_id]).present?
+        params[:created_by] = params[:updated_by] = username
+        vote = member.name_review_votes.create(params)
+        created += 1
+      end
     end
+    created 
   end
 end

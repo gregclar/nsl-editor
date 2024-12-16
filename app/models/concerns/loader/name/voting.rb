@@ -2,7 +2,7 @@ module Loader::Name::Voting
   extend ActiveSupport::Concern
 
   def votable?
-    ['accepted','excluded'].include?(record_type)
+    ['accepted','excluded','heading'].include?(record_type)
   end
 
   def summary_of_votes_for_review(review)

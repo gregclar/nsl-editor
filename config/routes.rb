@@ -563,6 +563,7 @@ Rails.application.routes.draw do
   match "name_review_vote", as: "create_name_review_vote", to: "loader/name/review/votes#create", via: :post
   match "name_review_vote/:loader_name_id/:batch_review_id/:org_id", as: "delete_name_review_vote", to: "loader/name/review/votes#destroy", via: :delete
 
+  match "name_review_vote_in_bulk", as: "create_name_review_vote_in_bulk", to: "loader/name/review/vote/in_bulk#create", via: :post
 
   match "switch_on_review_mode", as: "switch_on_review_mode", to: "loader/batch/review/mode#switch_on", via: :post
   match "switch_off_review_mode", as: "switch_off_review_mode", to: "loader/batch/review/mode#switch_off", via: :post

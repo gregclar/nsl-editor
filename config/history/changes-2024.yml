@@ -1,3 +1,7 @@
+- :date: 16-Dec-2024
+  :jira_id: '5268'
+  :description: |-
+    Batch Review Voting: Add bulk voting for families via family rank heading records, phase 1; also early version of displaying votes on LHS records
 - :date: 11-Dec-2024
   :jira_id: '31'
   :jira_project: FLOR
