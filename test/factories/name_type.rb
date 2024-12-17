@@ -5,7 +5,8 @@ FactoryBot.define do
     cultivar { true }
     formula { true }
     hybrid { false }
-    sequence(:name) {|n| "Sample Name #{n}" }
+    #sequence(:name) {|n| "Sample Name #{n}" }
+    name { "phrase name" }
     scientific { false }
     sort_order { 1 }
     rdf_id { "Sample Rdf" }
