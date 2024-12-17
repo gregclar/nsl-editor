@@ -43,4 +43,40 @@ RSpec.describe Users::ProfileContexts::Base, type: :service do
       expect(subject.unknown_method).to eq nil
     end
   end
+
+  describe "#copy_instance_tab" do
+    context "for invalid arguments" do
+      it "raises an error" do
+        expect{subject.copy_instance_tab}.to raise_error(ArgumentError)
+      end
+    end
+
+    context "for valid arguments" do
+      let(:instance) { FactoryBot.create(:instance) }
+
+      context "when standalone instance" do
+        before { allow(instance).to receive(:standalone?).and_return(true) }
+
+        context "and row_type is instance_as_part_of_concept_record" do
+          let(:row_type) { "instance_as_part_of_concept_record" }
+          it "returns tab_copy_to_new_reference" do
+            expect(subject.copy_instance_tab(instance, row_type)).to eq "tab_copy_to_new_reference"
+          end
+        end
+
+        context "when row_type is not defined" do
+          it "returns nil" do
+            expect(subject.copy_instance_tab(instance)).to eq nil
+          end
+        end
+      end
+
+      context "for other instance type" do
+        before { allow(instance).to receive(:standalone?).and_return(false) }
+        it "returns nil" do
+          expect(subject.copy_instance_tab(instance)).to eq nil
+        end
+      end
+    end
+  end
 end

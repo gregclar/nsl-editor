@@ -76,19 +76,22 @@ RSpec.describe Users::ProfileContexts::Foa, type: :service do
       end
     end
 
-    # context "with valid arguments" do
-    #   let(:instance) { create(:instance) }
-    #   context "when instance is draft" do
-    #     allow_any_instance_of(Instance).to receive(:draft).and_return(true)
-
-    #     it "returns nil" do
-    #       expect(subject.copy_instance_tab(instance))
-    #     end
-    #   end
+    context "with valid arguments" do
+      let(:instance) { FactoryBot.create(:instance) }
+      context "when instance is draft" do
+        it "returns nil" do
+          allow(instance).to receive(:draft).and_return(true)
+          expect(subject.copy_instance_tab(instance)).to eq nil
+        end
+      end
       
-    #   context "when instance is not draft" do
-    #   end
-    # end
+      context "when instance is not draft" do
+        it "returns tab_copy_to_new_profile_v2" do
+          allow(instance).to receive(:draft).and_return(false)
+          expect(subject.copy_instance_tab(instance)).to eq "tab_copy_to_new_profile_v2"
+        end
+      end
+    end
   end
   
 end

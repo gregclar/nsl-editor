@@ -91,21 +91,17 @@ RSpec.configure do |config|
   # as the one that triggered the failure.
   Kernel.srand config.seed
 =end
+
+  # Include the DatabaseCleaner gem
   config.before(:suite) do
-    DatabaseCleaner.clean_with :truncation
+    # Use the appropriate database strategy
+    DatabaseCleaner.strategy = :transaction
+    DatabaseCleaner.clean_with(:truncation)
   end
 
-  config.before(:each) do
-    DatabaseCleaner.strategy = :deletion
-    DatabaseCleaner.start
-  end
-
-  config.before(:each, no_transaction: true) do
-    DatabaseCleaner.strategy = :truncation
-    DatabaseCleaner.start
-  end
-
-  config.after(:each) do
-    DatabaseCleaner.clean
+  config.around(:each) do |example|
+    DatabaseCleaner.cleaning do
+      example.run
+    end
   end
 end

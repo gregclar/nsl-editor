@@ -16,7 +16,7 @@ FactoryBot.define do
     takes_rank { true }
 
     transient do
-      valid_names { ["phrase name", "cultivar", "other"] }
+      valid_names { ["phrase name"] }
     end
     sequence(:name) { |n| valid_names[n % valid_names.length] }
    # initialize_with { NameCategory.find_or_create_by(name: name) }
