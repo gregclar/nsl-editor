@@ -7,6 +7,7 @@ FactoryBot.define do
     updated_by { "Sample Updated by" }
     api_name { "Sample Api name" }
     api_date { Time.current }
+    display_html { "Etymology"}
 
     association :profile_item_type
     association :product
