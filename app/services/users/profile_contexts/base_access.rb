@@ -1,25 +1,39 @@
 class Users::ProfileContexts::BaseAccess
+
+  PRODUCTS = {
+    foa: "FOA",
+    apni: "APNI"
+  }.freeze
   
   attr_reader :user, :product
 
   def initialize(user)
     @user = user
-    @product = "unknown"
+    @product = nil
     @logger = Rails.logger
   end
 
-  def viewer?
+  def profile_view_allowed?
     false
   end
 
-  def editor?
+  def profile_edit_allowed?
     false
   end
 
-  def instance_editor?
+  def instance_edit_allowed?
     false
   end
 
+  #
+  # Tabs
+  #
+  def copy_instance_tab(instance, row_type=nil)
+    "tab_copy_to_new_reference" if instance.standalone? && row_type == "instance_as_part_of_concept_record"
+  end
+  #
+  # Method missing checks
+  #
   def method_missing(method_name, *args, &block)
     if respond_to_missing?(method_name)
       super

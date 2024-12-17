@@ -125,6 +125,22 @@ class InstancesController < ApplicationController
     handle_other_errors(e, "instances/copy_standalone/error")
   end
 
+  def copy_for_profile_v2
+    current_instance = Instance::AsCopier.find(params[:id])
+    current_instance.multiple_primary_override =
+      instance_params[:multiple_primary_override] == "1"
+    current_instance.duplicate_instance_override =
+      instance_params[:duplicate_instance_override] == "1"
+    current_instance = Instance::AsCopier.find(params[:id])
+    @instance = current_instance.copy_with_product_reference(
+      instance_params, current_user.username
+    )
+    @message = "Instance was copied"
+    render "instances/copy_standalone/success"
+  rescue StandardError => e
+    handle_other_errors(e, "instances/copy_standalone/error")
+  end
+
   def handle_not_unique
     @message = "Error: duplicate record"
     render "create_error", status: :unprocessable_entity
@@ -256,7 +272,7 @@ class InstancesController < ApplicationController
       offer << "tab_profile_v2"
     end
     offer << "tab_comments"
-    offer << "tab_copy_to_new_reference" if offer_tab_copy_to_new_ref?
+    offer << @current_user.profile_v2_context.copy_instance_tab(@instance, params["row-type"])
     if Rails.configuration.try('batch_loader_aware') &&
           can?('loader/names', 'update') &&
           offer_loader_tab?
