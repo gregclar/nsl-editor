@@ -1,15 +1,10 @@
-class Users::ProfileContexts::BaseAccess
-
-  PRODUCTS = {
-    foa: "FOA",
-    apni: "APNI"
-  }.freeze
+class Users::ProfileContexts::Base
   
   attr_reader :user, :product
 
   def initialize(user)
     @user = user
-    @product = nil
+    @product = "unknown"
     @logger = Rails.logger
   end
 

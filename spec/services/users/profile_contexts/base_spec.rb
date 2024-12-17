@@ -1,4 +1,6 @@
-RSpec.describe Users::ProfileContexts::BaseAccess, type: :model do
+require "rails_helper"
+
+RSpec.describe Users::ProfileContexts::Base, type: :service do
   let(:groups) { ["non-profile-product"] }
   let(:user) { FactoryBot.create(:user, groups: groups)}
 
@@ -18,21 +20,21 @@ RSpec.describe Users::ProfileContexts::BaseAccess, type: :model do
     end
   end
 
-  describe "#viewer?" do
+  describe "#profile_view_allowed?" do
     it "returns true" do
-      expect(subject.viewer?).to eq false
+      expect(subject.profile_view_allowed?).to eq false
     end
   end
 
-  describe "#editor?" do
+  describe "#profile_edit_allowed?" do
     it "returns false" do
-      expect(subject.editor?).to eq false
+      expect(subject.profile_edit_allowed?).to eq false
     end
   end
 
-  describe "#instance_editor?" do
+  describe "#instance_edit_allowed?" do
     it "returns false" do
-      expect(subject.instance_editor?).to eq false
+      expect(subject.instance_edit_allowed?).to eq false
     end
   end
 
