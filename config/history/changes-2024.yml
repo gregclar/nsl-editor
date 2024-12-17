@@ -1,3 +1,7 @@
+- :date: 18-Dec-2024
+  :jira_id: '5271'
+  :description: |-
+    Upgrade Rails to 7.1.5.1 and upgrade assorted other libraries - for security, no changes in behaviour expected
 - :date: 16-Dec-2024
   :jira_id: '5268'
   :description: |-
