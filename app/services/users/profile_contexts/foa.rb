@@ -1,8 +1,8 @@
-class Users::ProfileContexts::FoaAccess < Users::ProfileContexts::BaseAccess
+class Users::ProfileContexts::Foa < Users::ProfileContexts::Base
 
   def initialize(user)
     super
-    @product = Users::ProfileContexts::BaseAccess::PRODUCTS[:foa]
+    @product = "FOA"
   end
 
   def profile_view_allowed?
@@ -10,7 +10,7 @@ class Users::ProfileContexts::FoaAccess < Users::ProfileContexts::BaseAccess
   end
   
   def profile_edit_allowed?
-    user.groups.include?('v2-profile-edit')
+    instance_edit_allowed?
   end
 
   def instance_edit_allowed?

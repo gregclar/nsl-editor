@@ -1,11 +1,9 @@
-class Users::ProfileContexts::ApniAccess < Users::ProfileContexts::BaseAccess
+class Users::ProfileContexts::Apni < Users::ProfileContexts::Base
   
   def initialize(user)
     super
-    @product = Users::ProfileContexts::BaseAccess::PRODUCTS[:apni]
+    @product = "APNI"
   end
-
-  # Add custom methods
 
   def profile_view_allowed?
     true
