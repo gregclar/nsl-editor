@@ -1,4 +1,8 @@
 - :date: 18-Dec-2024
+  :jira_id: '5246'
+  :description: |-
+    Batch Review voting: search directives for reviewers and compilers to find loader name records with or without votes of any or a specific value by organisation
+- :date: 18-Dec-2024
   :jira_id: '5271'
   :description: |-
     Upgrade Rails to 7.1.5.1 and upgrade assorted other libraries - for security, no changes in behaviour expected
