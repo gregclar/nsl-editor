@@ -1,8 +1,9 @@
 class Users::ProfileContext
 
   PROFILE_CONTEXTS = {
-    apni: Users::ProfileContexts::Apni,
-    foa:  Users::ProfileContexts::Foa,
+    apni:    Users::ProfileContexts::Apni,
+    foa:     Users::ProfileContexts::Foa,
+    default: Users::ProfileContexts::Base,
   }.freeze
 
   private_constant :PROFILE_CONTEXTS
@@ -19,6 +20,8 @@ class Users::ProfileContext
   attr_reader :user
 
   def get_user_context
+    return PROFILE_CONTEXTS[:default].new(user) unless Rails.configuration.try('profile_v2_aware')
+
     if user.groups.include?('foa') || user.groups.include?('foa-context-group')
       PROFILE_CONTEXTS[:foa].new(user)
     else
