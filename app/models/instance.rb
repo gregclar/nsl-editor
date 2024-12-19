@@ -86,7 +86,7 @@ class Instance < ActiveRecord::Base
   attr_accessor :expanded_instance_type, :display_as, :relationship_flag,
                 :give_me_focus,
                 :show_primary_instance_type, :data_fix_in_process,
-                :consider_apc,
+                :consider_taxo,
                 :concept_warning_bypassed,
                 :multiple_primary_override,
                 :duplicate_instance_override
@@ -667,7 +667,7 @@ class Instance < ActiveRecord::Base
       reverse_of_this_cites.blank? &&
       reverse_of_this_is_cited_by.blank? &&
       comments.blank? &&
-      !in_apc? &&
+      !in_taxo? &&
       !in_any_tree? &&
       children.empty? &&
       not_linked_to_loader_name_matches?
@@ -834,12 +834,12 @@ class Instance < ActiveRecord::Base
     (reference.present? ? reference.citation_html : "") +
       (page.present? ? ": #{page}" : "") +
       (show_primary_instance_type && instance_type&.primary_instance? ? " [#{instance_type.name}]" : "") +
-      (consider_apc && show_apc? ? ": #{accepted_taxonomy_widget}" : "") +
+      (consider_taxo && show_taxo? ? ": #{accepted_taxonomy_widget}" : "") +
       (draft? ? "<span class='highlight'>[DRAFT]</span>" : "")
   end
 
   def accepted_taxonomy_widget
-    '<span class="apc-container no-decoration">' +
+    '<span class="taxo-icon-container no-decoration">' +
       (name.excluded_concept? ? "<i class='fa fa-ban apc' aria-hidden='true'></i><span class='apc small strong' title='Excluded from APC'>APC</span>" : "") +
       (name.excluded_concept? ? "" : "<i class='fa fa-check apc' aria-hidden='true'></i><span class='apc small strong' title='In APC'>APC</span>") +
       "</span>"

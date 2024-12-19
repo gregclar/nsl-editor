@@ -314,33 +314,6 @@ class NameRank < ActiveRecord::Base
     find_by(name: FAMILY)
   end
 
-  def self.xprint_parent_divisions
-    NameRank.all.each do |name_rank|
-      if name_rank.below_species?
-        puts "#{name_rank.name} is below species"
-      else
-        puts name_rank.name
-      end
-    end
-    ""
-  end
-
-  def self.xprint_parents
-    NameRank.all.each do |name_rank|
-      printf("%20s:  %s\n", name_rank.name, name_rank.parent.try("name"))
-    end
-    ""
-  end
-
-  def self.xprint_takes_parent
-    NameRank.all.each do |name_rank|
-      printf("%20s:  %s\n",
-             name_rank.name,
-             name_rank.parent.takes_parent? ? "takes parent" : "no parent")
-    end
-    ""
-  end
-
   def takes_parent?
     unranked? || parent.real_parent?
   end

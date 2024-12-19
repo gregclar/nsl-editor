@@ -56,11 +56,6 @@ class User < ActiveType::Object
     groups.include?("admin")
   end
 
-  # TODO: remove this - NSL-2007
-  def apc?
-    groups.include?("APC")
-  end
-
   def qa?
     groups.include?("QA")
   end
