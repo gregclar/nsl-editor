@@ -39,6 +39,7 @@ class User < ActiveType::Object
   end
 
   def profile_v2_context
+    @profile_v2_context ||= PROFILE_CONTEXTS[:default].new(self) unless Rails.configuration.try('profile_v2_aware')
     @profile_v2_context ||= PROFILE_CONTEXTS[:foa].new(self) if groups.include?('foa')
     @profile_v2_context ||= PROFILE_CONTEXTS[:apni].new(self) if groups.include?('apni')
     @profile_v2_context ||= PROFILE_CONTEXTS[:default].new(self)
