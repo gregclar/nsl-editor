@@ -99,10 +99,6 @@ RSpec.describe User, type: :model do
     include_context "#group_check?", :admin?, "admin"
   end
 
-  describe "#apc?" do
-    include_context "#group_check?", :apc?, "APC"
-  end
-
   describe "#qa?" do
     include_context "#group_check?", :qa?, "QA"
   end
