@@ -49,9 +49,6 @@ class Ability
     edit_auth         if user.edit?
     qa_auth           if user.qa?
 
-    # TODO: remove this - NSL-2007
-    apc_auth          if user.apc?
-
     admin_auth        if user.admin?
     treebuilder_auth  if user.treebuilder?
     reviewer_auth     if user.reviewer?
@@ -125,11 +122,6 @@ class Ability
     can "tree_versions",             :all
     can "users",                       :all
     can "orgs",                        :all
-  end
-
-  # TODO: remove this - NSL-2007
-  def apc_auth
-    can "apc",                "place"
   end
 
   def treebuilder_auth

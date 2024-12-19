@@ -1,3 +1,7 @@
+- :date: 20-Dec-2024
+  :jira_id: '5272'
+  :description: |-
+    Minor code cleanup and one bug fix - no changed behaviour except the accepted taxonomy abbreviation will now appear correctly for excluded names
 - :date: 19-Dec-2024
   :jira_id: '31'
   :jira_project: FLOR

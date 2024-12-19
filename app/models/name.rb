@@ -113,8 +113,6 @@ class Name < ApplicationRecord
 
   attr_accessor :display_as,
                 :give_me_focus,
-                :apc_instance_is_an_excluded_name,
-                :apc_declared_bt,
                 :change_category_name_to
 
   belongs_to :name_type, optional: false
