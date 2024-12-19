@@ -19,5 +19,14 @@ FactoryBot.define do
     association :name
     association :reference
     association :instance_type
+
+    trait :synonym_instance do
+      uncited { false }
+      valid_record { false }
+      after(:create) do |instance|
+        instance_type = create(:instance_type, primary_instance: false)
+        instance.instance_type_id = instance_type.id
+      end
+    end
   end
 end
