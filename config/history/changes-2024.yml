@@ -1,3 +1,8 @@
+- :date: 19-Dec-2024
+  :jira_id: '31'
+  :jira_project: FLOR
+  :description: |-
+    FOA Profile (APNI Test only): Fixup instance's "details" tab not showing up for moss due to missing profile_item table
 - :date: 18-Dec-2024
   :jira_id: '5271'
   :description: |-
