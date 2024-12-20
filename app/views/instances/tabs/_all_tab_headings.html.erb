@@ -60,6 +60,20 @@
     <% end %>
   <% end %>
 
+  <% if @tabs_to_offer.include?('tab_synonymy_for_profile_v2') %>
+    <% if can? 'instances', 'create' %>
+      <%= render partial: 'instances/tabs/tab', locals: {first: false,
+                                          last: false,
+                                          this_tab: 'tab_synonymy_for_profile_v2',
+                                          link_text: "Syn".html_safe,
+                                          link_id: 'instance-cite-this-instance-for-profile-v2-tab',
+                                          link_title: 'Synonym',
+                                          tab_index: increment_tab_index,
+                                          prev_tab: '',
+                                          next_tab: ''} %>
+    <% end %>
+  <% end %>
+
   <% if @tabs_to_offer.include?('tab_unpublished_citation') %>
     <% if can? 'instances', 'create' %>
       <%= render partial: 'instances/tabs/tab', locals: {first: false,
