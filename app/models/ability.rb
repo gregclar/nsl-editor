@@ -73,6 +73,7 @@ class Ability
     can "instances",                "tab_copy_to_new_profile_v2"
     can "instances",                "copy_for_profile_v2"
     can "instances",                "tab_details"
+    can "names/typeaheads/for_unpub_cit", "index"
   end
 
   def basic_auth_1
