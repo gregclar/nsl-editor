@@ -10,4 +10,9 @@
 - :date: 09-Jan-2025
   :jira_id: '5289'
   :description: |-
-    Remove Batch Review Voting Orgs tab
+    Batch Review: Remove Batch Review Voting Orgs tab
+- :date: 09-Jan-2025
+  :jira_id: '5290'
+  :description: |-
+    Batch Review Voting: Remove square box beside Loader Name records with no vote recorded - it is not a checkbox
+
