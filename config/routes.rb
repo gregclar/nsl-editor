@@ -34,7 +34,12 @@ Rails.application.routes.draw do
   match "profile_item_references/:profile_item_id/:reference_id", as: "save_profile_item_references", to: "profile_item_references#update", via: :put
   match "profile_item_references/:profile_item_id/:reference_id", as: "delete_profile_item_references", to: "profile_item_references#destroy", via: :delete
 
-  resources :batches
+  resources :de_duplicates
+  match "de-duplicate",
+        as: "de_duplicates_index",
+        to: "de_duplicates#index",
+        via: :get
+
   match "/feedback", as: "feedback", to: "feedback#index", via: :get
   match "/ping", as: "ping_service", to: "services#ping", via: :get
   match "/version", as: "version_service", to: "services#version", via: :get
@@ -367,11 +372,6 @@ Rails.application.routes.draw do
   match "search/reports",
         as: "search_reports",
         to: "search#reports",
-        via: :get
-
-  match "batch",
-        as: "batch_index",
-        to: "batches#index",
         via: :get
 
   match "password",
