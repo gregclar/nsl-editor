@@ -114,14 +114,14 @@ class Ability
   end
 
   def qa_auth
-    can "batches",                   :all
+    can "de_duplicates",              :all
     can "tree_versions",             :all
     can "tree_version_elements",     :all
     can "tree_elements",             :all
     can "mode",                      :all # suspect this is no longer used
     can "tree_versions",             :all
-    can "users",                       :all
-    can "orgs",                        :all
+    can "users",                     :all
+    can "orgs",                      :all
   end
 
   def treebuilder_auth

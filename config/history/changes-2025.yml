@@ -3,3 +3,7 @@
   :jira_id: '5275'
   :description: |-
     History: Set up Changes 2025 page &#127881; 
+- :date: 09-Jan-2025
+  :jira_id: '5281'
+  :description: |-
+    Rename "batches" feature to "de-duplicate" to avoid confusion with loader batches
