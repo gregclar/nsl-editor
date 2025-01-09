@@ -7,3 +7,7 @@
   :jira_id: '5281'
   :description: |-
     Rename "batches" feature to "de-duplicate" to avoid confusion with loader batches
+- :date: 09-Jan-2025
+  :jira_id: '5289'
+  :description: |-
+    Remove Batch Review Voting Orgs tab
