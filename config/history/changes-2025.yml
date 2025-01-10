@@ -1,18 +1,22 @@
 
-- :date: 06-Jan-2025
-  :jira_id: '5275'
+- :date: 10-Jan-2025
+  :jira_id: '5291'
   :description: |-
-    History: Set up Changes 2025 page &#127881; 
+    Batch Review: Review and improve the start_date/end_date entry interface for batch review periods
 - :date: 09-Jan-2025
-  :jira_id: '5281'
+  :jira_id: '5290'
   :description: |-
-    Rename "batches" feature to "de-duplicate" to avoid confusion with loader batches
+    Batch Review Voting: Remove square box beside Loader Name records with no vote recorded - it is not a checkbox
 - :date: 09-Jan-2025
   :jira_id: '5289'
   :description: |-
     Batch Review: Remove Batch Review Voting Orgs tab
 - :date: 09-Jan-2025
-  :jira_id: '5290'
+  :jira_id: '5281'
   :description: |-
-    Batch Review Voting: Remove square box beside Loader Name records with no vote recorded - it is not a checkbox
+    Rename "batches" feature to "de-duplicate" to avoid confusion with loader batches
+- :date: 06-Jan-2025
+  :jira_id: '5275'
+  :description: |-
+    History: Set up Changes 2025 page &#127881; 
 
