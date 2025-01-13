@@ -57,4 +57,20 @@ RSpec.describe Users::ProfileContexts::Apni, type: :service do
       expect(subject.unknown_method).to eq nil
     end
   end
+
+  describe "#synonymy_tab" do
+    let(:instance) { FactoryBot.create(:instance) }
+
+    context "for invalid arguments" do
+      it "raises an error" do
+        expect{subject.synonymy_tab}.to raise_error(ArgumentError)
+      end
+    end
+
+    context "when standalone instance" do
+      it "returns tab_synonymy" do
+        expect(subject.synonymy_tab(instance)).to eq "tab_synonymy"
+      end
+    end
+  end
 end

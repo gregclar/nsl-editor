@@ -93,5 +93,41 @@ RSpec.describe Users::ProfileContexts::Foa, type: :service do
       end
     end
   end
+
+  describe "#synonymy_tab" do
+    let(:instance) { FactoryBot.create(:instance) }
+
+    context "for invalid arguments" do
+      it "raises an error" do
+        expect{subject.synonymy_tab}.to raise_error(ArgumentError)
+      end
+    end
+
+    context "when instance is a secondary reference" do
+      before { allow(instance).to receive(:secondary_reference?).and_return(true) }
+
+      context "and is a draft instance" do
+        before { allow(instance).to receive(:draft).and_return(true) }
+        it "returns tab_synonymy" do
+          expect(subject.synonymy_tab(instance)).to eq "tab_synonymy_for_profile_v2"
+        end
+      end
+  
+      context "and is a non-draft instance" do
+        before { allow(instance).to receive(:draft).and_return(false) }
+        it "returns tab_synonymy" do
+          expect(subject.synonymy_tab(instance)).to eq nil
+        end
+      end
+    end
+
+    context "when instance is not a secondary reference" do
+      before { allow(instance).to receive(:secondary_reference?).and_return(false) }
+      it "returns tab_synonymy" do
+        expect(subject.synonymy_tab(instance)).to eq nil
+      end
+    end
+    
+  end
   
 end
