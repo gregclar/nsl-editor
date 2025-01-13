@@ -26,7 +26,7 @@ class Loader::Batch::Reviewer < ActiveRecord::Base
   belongs_to :batch_review, class_name: "Loader::Batch::Review", foreign_key: "batch_review_id"
   belongs_to :user_table, class_name: "UserTable", foreign_key: "user_id"
   alias_method :user, :user_table
-  belongs_to :org
+  belongs_to :org, optional: true
   belongs_to :batch_review_role, class_name: "Loader::Batch::Review::Role"
   alias_method :role, :batch_review_role
   has_many :name_review_comments, class_name: "Loader::Name::Review::Comment", foreign_key: "batch_reviewer_id" do
@@ -39,7 +39,6 @@ class Loader::Batch::Reviewer < ActiveRecord::Base
   end
 
   validates :user_id, presence: true
-  validates :org_id, presence: true
   validates :batch_review_role_id, presence: true
   validates :batch_review_id, presence: true
   validates :user_id, uniqueness: { scope: :batch_review_id,
@@ -75,7 +74,6 @@ class Loader::Batch::Reviewer < ActiveRecord::Base
 
   def save_with_username(username)
     self.created_by = self.updated_by = username
-    # set_defaults
     save
   end
 

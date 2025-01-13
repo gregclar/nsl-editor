@@ -57,6 +57,7 @@ class Loader::Batch::Review::PeriodsController < ApplicationController
 
   # POST /review_periods
   def create
+    trap_invalid_dates_from_gui
     @batch_review_period = ::Loader::Batch::Review::Period.create(review_period_params,
                                                                   current_user.username)
     render "create"
@@ -72,7 +73,7 @@ class Loader::Batch::Review::PeriodsController < ApplicationController
                                                 current_user.username)
     render "update"
   rescue StandardError => e
-    logger.error("Loader::Batch::Review.update:rescuing exception #{e}")
+    logger.error("Loader::Batch::Review::Periods.update:rescuing exception #{e}")
     @error = e.to_s
     render "update_error", status: :unprocessable_entity
   end
@@ -108,5 +109,17 @@ class Loader::Batch::Review::PeriodsController < ApplicationController
 
   def set_tab_index
     @tab_index = (params[:tabIndex] || "1").to_i
+  end
+
+  def trap_invalid_dates_from_gui
+    year = review_period_params["start_date(1i)"]
+    month = "%02d" % review_period_params["start_date(2i)"]
+    day = "%02d" % review_period_params["start_date(3i)"]
+    date_s = "#{year}-#{month}-#{day}"
+    Date.parse(date_s)
+  rescue Date::Error => e
+    message = "Invalid start date: #{date_s}"
+    logger.error(e.to_s)
+    raise message
   end
 end

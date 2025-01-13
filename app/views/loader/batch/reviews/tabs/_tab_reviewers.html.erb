@@ -10,11 +10,15 @@
                   title: "Query this user") %>,&nbsp; 
   <ul>
     <li/>
+    <% if reviewer.org.present? %>
          <%= link_to(reviewer.org.name, 
                          search_path(query_target: 'orgs', 
                                      query_string: "#{reviewer.org.abbrev}"),
                          class: 'blue',
                          title: "Query this organisation") %>,&nbsp; 
+    <% else %>
+      (Not affiliated with any registered organisation.)
+    <% end %>
     <li/><%= reviewer.role.name %>
 
 
