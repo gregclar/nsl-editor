@@ -61,7 +61,7 @@ RSpec.describe Instance::AsCopier, type: :model do
           excluded_attributes = [
             "id", "created_at", "created_by", "updated_at", "instance_type_id",
             "lock_version", "reference_id", "source_id_string", "source_system",
-            "page", "updated_at", "updated_by"
+            "page_qualifier", "page", "updated_at", "updated_by"
           ]
           expect(copied_instance.attributes.except(*excluded_attributes)).to eq(subject.attributes.except(*excluded_attributes))
           expect(copied_instance.class).to eq Instance::AsCopier
