@@ -1,4 +1,7 @@
-
+- :date: 13-Jan-2025
+  :jira_id: '5292'
+  :description: |-
+    Batch Reviewers: Make it optional for a batch reviewer to belong to a registered organisation
 - :date: 10-Jan-2025
   :jira_id: '5291'
   :description: |-
