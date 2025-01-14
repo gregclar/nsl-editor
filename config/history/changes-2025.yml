@@ -1,3 +1,8 @@
+- :date: 14-Jan-2025
+  :jira_id: '33'
+  :jira_project: FLOR
+  :description: |-
+    FOA Profile (APNI Test only): Allow profile v2 context user to create a synonymy of a draft AND secondary reference instance
 - :date: 13-Jan-2025
   :jira_id: '31'
   :jira_project: FLOR
