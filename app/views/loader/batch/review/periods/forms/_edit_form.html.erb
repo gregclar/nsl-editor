@@ -24,7 +24,8 @@
                          {order: [:day, :month, :year],
                           use_short_month: true,
                           start_year: [@review_period&.end_date&.year||Date.today.year, Date.today.year].min,
-                          end_year: Date.today.year + 1},
+                          end_year: Date.today.year + 1,
+                          include_blank: true},
                          {title: 'End date for the period of review',
                           tabindex: increment_tab_index}  %>
     <br>
