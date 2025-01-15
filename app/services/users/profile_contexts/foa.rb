@@ -8,7 +8,7 @@ class Users::ProfileContexts::Foa < Users::ProfileContexts::Base
   def profile_view_allowed?
     true
   end
-  
+
   def profile_edit_allowed?
     instance_edit_allowed?
   end
@@ -30,6 +30,10 @@ class Users::ProfileContexts::Foa < Users::ProfileContexts::Base
 
   def unpublished_citation_tab(instance)
     "tab_unpublished_citation_for_profile_v2" if instance.draft
+  end
+
+  def synonymy_tab(instance)
+    "tab_synonymy_for_profile_v2" if instance.draft && instance.secondary_reference?
   end
 
 end

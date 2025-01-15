@@ -1,0 +1,43 @@
+- :date: 15-Jan-2025
+  :jira_id: '33'
+  :jira_project: FLOR
+  :description: |-
+    FOA Profile (APNI Test only): Allow profile v2 context user to create a synonymy of a draft AND secondary reference instance
+- :date: 15-Jan-2025
+  :jira_id: '5298'
+  :description: |-
+    Batch Review: The Batch Reviewer create form should offer only users not already added as Reviewers
+- :date: 15-Jan-2025
+  :jira_id: '5291'
+  :description: |-
+    Batch Review: Further corrections and improvements to start_date/end_date entry for batch review periods
+- :date: 13-Jan-2025
+  :jira_id: '31'
+  :jira_project: FLOR
+  :description: |-
+    FOA Profile (APNI Test only): Allow profile v2 context user to copy an instance
+- :date: 13-Jan-2025
+  :jira_id: '5292'
+  :description: |-
+    Batch Reviewers: Make it optional for a batch reviewer to belong to a registered organisation
+- :date: 10-Jan-2025
+  :jira_id: '5291'
+  :description: |-
+    Batch Review: Review and improve the start_date/end_date entry interface for batch review periods
+- :date: 09-Jan-2025
+  :jira_id: '5290'
+  :description: |-
+    Batch Review Voting: Remove square box beside Loader Name records with no vote recorded - it is not a checkbox
+- :date: 09-Jan-2025
+  :jira_id: '5289'
+  :description: |-
+    Batch Review: Remove Batch Review Voting Orgs tab
+- :date: 09-Jan-2025
+  :jira_id: '5281'
+  :description: |-
+    Rename "batches" feature to "de-duplicate" to avoid confusion with loader batches
+- :date: 06-Jan-2025
+  :jira_id: '5275'
+  :description: |-
+    History: Set up Changes 2025 page &#127881;
+

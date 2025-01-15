@@ -72,6 +72,10 @@ class InstanceType < ActiveRecord::Base
     unsourced
   end
 
+  def secondary_instance?
+    secondary_instance
+  end
+
   def self.info_or_help_links
     head = %(<li><a tabindex="-1" href="#" class="append-to-query-field" )
     tail = %(</a></li>)

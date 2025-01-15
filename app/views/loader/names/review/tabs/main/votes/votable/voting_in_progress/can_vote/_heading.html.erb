@@ -39,7 +39,7 @@
       <% agree_or_not = member.votes.where(["org_id = ?", org.id]).try('first').try('vote_as_agree_disagree') %> 
       <% member_vote = member.votes.where(["org_id = ?", org.id]).try('first') %> 
       <% if agree_or_not.blank? %>
-        <%= sanitize("<i class='fa-regular fa-square'></i>") %>
+        &nbsp; &nbsp;
       <% elsif member_vote.vote == true %>
         <%= sanitize("<i class='fa fa-check vote-#{agree_or_not}'></i>") %>
       <% else %>

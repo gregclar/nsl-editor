@@ -49,9 +49,6 @@ class Ability
     edit_auth         if user.edit?
     qa_auth           if user.qa?
 
-    # TODO: remove this - NSL-2007
-    apc_auth          if user.apc?
-
     admin_auth        if user.admin?
     treebuilder_auth  if user.treebuilder?
     reviewer_auth     if user.reviewer?
@@ -71,9 +68,15 @@ class Ability
     can "instances",                "tab_profile_v2"
     can "references",               "typeahead_on_citation"
     can "instances",                "tab_copy_to_new_profile_v2"
+    can "instances",                "tab_unpublished_citation_for_profile_v2"
     can "instances",                "copy_for_profile_v2"
     can "instances",                "tab_details"
     can "names/typeaheads/for_unpub_cit", "index"
+    can "instances",                "create_cited_by"
+    can "instances",                "create_cites_and_cited_by"
+    can "instances",                "create"
+    can "instances",                "tab_synonymy_for_profile_v2"
+    can "instances",                "typeahead_for_synonymy"
   end
 
   def basic_auth_1
@@ -121,19 +124,14 @@ class Ability
   end
 
   def qa_auth
-    can "batches",                   :all
+    can "de_duplicates",              :all
     can "tree_versions",             :all
     can "tree_version_elements",     :all
     can "tree_elements",             :all
     can "mode",                      :all # suspect this is no longer used
     can "tree_versions",             :all
-    can "users",                       :all
-    can "orgs",                        :all
-  end
-
-  # TODO: remove this - NSL-2007
-  def apc_auth
-    can "apc",                "place"
+    can "users",                     :all
+    can "orgs",                      :all
   end
 
   def treebuilder_auth
@@ -162,7 +160,6 @@ class Ability
     can "loader/batch/review/periods", :all
     can "loader/batch/bulk",           :all
     can "loader/batch/job_lock",       :all
-    can "org/batch/review_voters",      :all
     can "menu",                        "batch"
   end
 

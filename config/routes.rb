@@ -34,7 +34,12 @@ Rails.application.routes.draw do
   match "profile_item_references/:profile_item_id/:reference_id", as: "save_profile_item_references", to: "profile_item_references#update", via: :put
   match "profile_item_references/:profile_item_id/:reference_id", as: "delete_profile_item_references", to: "profile_item_references#destroy", via: :delete
 
-  resources :batches
+  resources :de_duplicates
+  match "de-duplicate",
+        as: "de_duplicates_index",
+        to: "de_duplicates#index",
+        via: :get
+
   match "/feedback", as: "feedback", to: "feedback#index", via: :get
   match "/ping", as: "ping_service", to: "services#ping", via: :get
   match "/version", as: "version_service", to: "services#version", via: :get
@@ -272,7 +277,7 @@ Rails.application.routes.draw do
         to: "help#instance_types", as: "instance_types", via: :get
   match "help/typeaheads", to: "help#typeaheads", as: "typeaheads", via: :get
   match "history/:year(/show_status/:show_status)", to: "history#for_year", as: "history_for_year", via: :get,
-                                                    year: /202[01234]|201[5-9]/, defaults: { show_status: "false" }
+                                                    year: /202[012345]|201[5-9]/, defaults: { show_status: "false" }
 
   match "/set_include_common_and_cultivar",
         to: "search#set_include_common_and_cultivar",
@@ -369,11 +374,6 @@ Rails.application.routes.draw do
   match "search/reports",
         as: "search_reports",
         to: "search#reports",
-        via: :get
-
-  match "batch",
-        as: "batch_index",
-        to: "batches#index",
         via: :get
 
   match "password",
@@ -535,9 +535,6 @@ Rails.application.routes.draw do
   match "batch_review_periods/:id/tab/:tab", as: "review_period_tab", to: "loader/batch/review/periods#tab", via: :get
   match "batch_review_periods/:id", as: "update_review_period", to: "loader/batch/review/periods#update", via: :patch
   match "/batch_review_periods/:id", as: "delete_review_period", to: "loader/batch/review/periods#destroy", via: :delete
-
-  match "org_batch_review_voters", as: "create_org_batch_review_voter", to: "org/batch/review_voters#create", via: :post
-  match "org_batch_review_voters/:batch_review_id/:org_id", as: "delete_org_batch_review_voter", to: "org/batch/review_voters#destroy", via: :delete
 
   match "users", as: "user", to: "users#show", via: :get
   match "users/:id/tab/:tab", as: "user_tab", to: "users#tab", via: :get

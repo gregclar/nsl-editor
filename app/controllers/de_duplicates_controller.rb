@@ -17,7 +17,8 @@
 #   limitations under the License.
 #
 #
-class BatchesController < ApplicationController
+# Bulk de-duplication
+class DeDuplicatesController < ApplicationController
   def index
   end
 end

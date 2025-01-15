@@ -2,9 +2,8 @@ _fixture:
   model_class: Loader::Batch::Review
 
 review_one:
-  id: 1
   name: "Review One"
-  loader_batch_id: 1
+  loader_batch: batch_one
   allow_voting: false
   created_by: tester
   updated_by: tester

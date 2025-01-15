@@ -98,6 +98,7 @@ class Instance::AsCopier < Instance
       new_reference_id = new_reference_id_string.to_i
       new.reference_id = new_reference_id
       new.instance_type_id = new_instance_type_id
+      new.page_qualifier = new.page = nil
       new.draft = new_is_draft
       new.created_by = new.updated_by = as_username
       new.source_system = new.source_id = new.source_id_string = nil
