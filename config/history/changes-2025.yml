@@ -3,6 +3,11 @@
   :description: |-
     Batch Review: Further corrections and improvements to start_date/end_date entry for batch review periods 
 - :date: 13-Jan-2025
+  :jira_id: '31'
+  :jira_project: FLOR
+  :description: |-
+    FOA Profile (APNI Test only): Allow profile v2 context user to copy an instance
+- :date: 13-Jan-2025
   :jira_id: '5292'
   :description: |-
     Batch Reviewers: Make it optional for a batch reviewer to belong to a registered organisation
