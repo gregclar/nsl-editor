@@ -81,4 +81,8 @@ class UserTable < ActiveRecord::Base
   def full_name
     "#{given_name} #{family_name}"
   end
+
+  def self.users_not_already_reviewers(batch_review)
+    self.all.order(:name) - batch_review.batch_reviewers.collect {|reviewer| reviewer.user_table}
+  end
 end

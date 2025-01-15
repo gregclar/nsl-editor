@@ -4,6 +4,10 @@
   :description: |-
     FOA Profile (APNI Test only): Allow profile v2 context user to create a synonymy of a draft AND secondary reference instance
 - :date: 15-Jan-2025
+  :jira_id: '5298'
+  :description: |-
+    Batch Review: The Batch Reviewer create form should offer only users not already added as Reviewers
+- :date: 15-Jan-2025
   :jira_id: '5291'
   :description: |-
     Batch Review: Further corrections and improvements to start_date/end_date entry for batch review periods
