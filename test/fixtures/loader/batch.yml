@@ -2,9 +2,8 @@ _fixture:
   model_class: Loader::Batch
   
 batch_one:
-  id: 1
   name: "Batch One"
-  description: A first batch
+  description: A first batch xxx
   use_sort_key_for_ordering: true
   created_by: tester
   updated_by: tester
