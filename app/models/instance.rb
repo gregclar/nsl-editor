@@ -598,6 +598,10 @@ class Instance < ActiveRecord::Base
     cited_by_id.nil? && cites_id.nil?
   end
 
+  def secondary_reference?
+    instance_type.secondary_instance?
+  end
+
   def synonymy?
     relationship? && cites_id.present?
   end

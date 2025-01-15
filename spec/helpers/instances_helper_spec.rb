@@ -19,9 +19,9 @@ RSpec.describe InstancesHelper, type: :helper do
       end
     end
 
-    context "passing an uknown tab" do
+    context "passing an unknown tab" do
       it "returns tab_empty" do
-        expect(helper.tab_for_instance_record("uknown_tab")).to eq "tab_empty"
+        expect(helper.tab_for_instance_record("unknown_tab")).to eq "tab_empty"
       end
     end
   end
@@ -59,9 +59,9 @@ RSpec.describe InstancesHelper, type: :helper do
       end
     end
 
-    context "passing an uknown tab" do
+    context "passing an unknown tab" do
       it "returns tab_empty" do
-        expect(helper.tab_for_instance_record("uknown_tab")).to eq "tab_empty"
+        expect(helper.tab_for_instance_record("unknown_tab")).to eq "tab_empty"
         expect(helper.tab_for_instance_record("tab_batch_loader_2")).to eq "tab_empty"
       end
     end
@@ -76,8 +76,8 @@ RSpec.describe InstancesHelper, type: :helper do
 
     context "passing a known tab" do
       it "returns the tab" do
-        %w[tab_synonymy 
-          tab_synonymy_for_profile_v2 
+        %w[tab_synonymy
+          tab_synonymy_for_profile_v2
           tab_create_unpublished_citation].each do |tab|
           expect(helper.tab_for_citing_instance_in_name_search(tab)).to eq tab
         end
@@ -85,7 +85,7 @@ RSpec.describe InstancesHelper, type: :helper do
 
       it "returns tab_copy_to_new_reference_na for tab_copy_to_new_reference tab" do
         expect(helper.tab_for_citing_instance_in_name_search("tab_copy_to_new_reference")).to eq "tab_copy_to_new_reference_na"
-      end 
+      end
     end
   end
 end
