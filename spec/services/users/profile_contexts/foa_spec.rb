@@ -39,7 +39,7 @@ RSpec.describe Users::ProfileContexts::Foa, type: :service do
         expect(subject.profile_edit_allowed?).to eq true
       end
     end
-    
+
     context "for non v2-profile-instance-edit group" do
       it "returns false" do
         allow(subject).to receive(:instance_edit_allowed?).and_return(false)
@@ -55,7 +55,7 @@ RSpec.describe Users::ProfileContexts::Foa, type: :service do
         expect(subject.instance_edit_allowed?).to eq true
       end
     end
-    
+
     context "for non v2-profile-instance-edit group" do
       it "returns false" do
         expect(subject.instance_edit_allowed?).to eq false
@@ -84,7 +84,7 @@ RSpec.describe Users::ProfileContexts::Foa, type: :service do
           expect(subject.copy_instance_tab(instance)).to eq nil
         end
       end
-      
+
       context "when instance is not draft" do
         it "returns tab_copy_to_new_profile_v2" do
           allow(instance).to receive(:draft).and_return(false)
@@ -104,7 +104,7 @@ RSpec.describe Users::ProfileContexts::Foa, type: :service do
     end
 
     context "when instance is a secondary reference" do
-      before { allow(instance).to receive(:secondary_reference?).and_return(true) }
+      before { allow(instance.instance_type).to receive(:secondary_instance?).and_return(true) }
 
       context "and is a draft instance" do
         before { allow(instance).to receive(:draft).and_return(true) }
@@ -112,7 +112,7 @@ RSpec.describe Users::ProfileContexts::Foa, type: :service do
           expect(subject.synonymy_tab(instance)).to eq "tab_synonymy_for_profile_v2"
         end
       end
-  
+
       context "and is a non-draft instance" do
         before { allow(instance).to receive(:draft).and_return(false) }
         it "returns tab_synonymy" do
@@ -122,12 +122,12 @@ RSpec.describe Users::ProfileContexts::Foa, type: :service do
     end
 
     context "when instance is not a secondary reference" do
-      before { allow(instance).to receive(:secondary_reference?).and_return(false) }
+      before { allow(instance.instance_type).to receive(:secondary_instance?).and_return(false) }
       it "returns tab_synonymy" do
         expect(subject.synonymy_tab(instance)).to eq nil
       end
     end
-    
+
   end
-  
+
 end

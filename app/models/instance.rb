@@ -598,10 +598,6 @@ class Instance < ActiveRecord::Base
     cited_by_id.nil? && cites_id.nil?
   end
 
-  def secondary_reference?
-    instance_type.try(:rdf_id) == "secondary-reference"
-  end
-
   def synonymy?
     relationship? && cites_id.present?
   end

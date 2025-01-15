@@ -29,7 +29,7 @@ class Users::ProfileContexts::Foa < Users::ProfileContexts::Base
   end
 
   def synonymy_tab(instance)
-    "tab_synonymy_for_profile_v2" if instance.draft && instance.secondary_reference?
+    "tab_synonymy_for_profile_v2" if instance.draft && instance.instance_type.secondary_instance?
   end
 
 end
