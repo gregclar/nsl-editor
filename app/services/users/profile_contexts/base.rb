@@ -26,6 +26,10 @@ class Users::ProfileContexts::Base
   def copy_instance_tab(instance, row_type=nil)
     "tab_copy_to_new_reference" if instance.standalone? && row_type == "instance_as_part_of_concept_record"
   end
+  
+  def synonymy_tab(_instance)
+    "tab_synonymy"
+  end
   #
   # Method missing checks
   #

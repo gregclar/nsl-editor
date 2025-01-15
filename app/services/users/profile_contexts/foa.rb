@@ -8,7 +8,7 @@ class Users::ProfileContexts::Foa < Users::ProfileContexts::Base
   def profile_view_allowed?
     true
   end
-  
+
   def profile_edit_allowed?
     instance_edit_allowed?
   end
@@ -27,4 +27,9 @@ class Users::ProfileContexts::Foa < Users::ProfileContexts::Base
   def copy_instance_tab(instance, row_type=nil)
     "tab_copy_to_new_profile_v2" unless instance.draft
   end
+
+  def synonymy_tab(instance)
+    "tab_synonymy_for_profile_v2" if instance.draft && instance.secondary_reference?
+  end
+
 end
