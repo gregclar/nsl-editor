@@ -115,7 +115,7 @@ RSpec.describe Users::ProfileContexts::Foa, type: :service do
 
       context "and is a non-draft instance" do
         before { allow(instance).to receive(:draft).and_return(false) }
-        it "returns tab_synonymy" do
+        it "returns nil" do
           expect(subject.synonymy_tab(instance)).to eq nil
         end
       end
@@ -123,7 +123,7 @@ RSpec.describe Users::ProfileContexts::Foa, type: :service do
 
     context "when instance is not a secondary reference" do
       before { allow(instance).to receive(:secondary_reference?).and_return(false) }
-      it "returns tab_synonymy" do
+      it "returns nil" do
         expect(subject.synonymy_tab(instance)).to eq nil
       end
     end
