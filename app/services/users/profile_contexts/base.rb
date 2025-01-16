@@ -29,6 +29,7 @@ class Users::ProfileContexts::Base
 
   def unpublished_citation_tab(_instance)
     "tab_unpublished_citation"
+  end
 
   def synonymy_tab(_instance)
     "tab_synonymy"

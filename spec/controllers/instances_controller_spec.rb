@@ -1,0 +1,71 @@
+# spec/controllers/instances_controller_spec.rb
+require 'rails_helper'
+
+RSpec.describe InstancesController, type: :controller do
+  describe '#tabs_to_offer' do
+    let(:user) { FactoryBot.create(:user) }
+    let(:instance) { FactoryBot.create(:instance) }
+    let(:profile_v2_context) { double('ProfileV2Context') }
+
+    before do
+      allow_any_instance_of(User).to receive(:profile_v2_context).and_return(profile_v2_context)
+      allow(controller).to receive(:params).and_return({})
+      allow(controller).to receive(:can?).and_return(true)
+      controller.instance_variable_set(:@current_user, user)
+    end
+
+    context 'when instance is standalone' do
+      before do
+        allow(instance).to receive(:standalone?).and_return(true)
+        allow(profile_v2_context).to receive(:unpublished_citation_tab).and_return('tab_unpublished_citation')
+        allow(profile_v2_context).to receive(:synonymy_tab).and_return('tab_synonymy')
+        allow(profile_v2_context).to receive(:copy_instance_tab).and_return('tab_copy_instance')
+        controller.instance_variable_set(:@instance, instance)
+      end
+
+      it 'includes specific tabs for standalone instances' do
+        expect(controller.send(:tabs_to_offer)).to include('tab_unpublished_citation', 'tab_synonymy', 'tab_classification', 'tab_profile_v2')
+      end
+
+      context 'when instance has a profile' do
+        before do
+          allow(instance).to receive(:profile?).and_return(true)
+          allow(instance).to receive(:show_taxo?).and_return(true)
+        end
+
+        it 'includes profile related tabs' do
+          expect(controller.send(:tabs_to_offer)).to include('tab_profile_details', 'tab_edit_profile')
+        end
+      end
+    end
+
+    context 'when batch loader is aware and user has permissions' do
+      before do
+        allow(instance).to receive(:standalone?).and_return(true)
+        allow(profile_v2_context).to receive(:copy_instance_tab).and_return(nil)
+        allow(profile_v2_context).to receive(:unpublished_citation_tab).and_return(nil)
+        allow(profile_v2_context).to receive(:synonymy_tab).and_return(nil)
+        allow(controller).to receive(:can?).with('loader/names', 'update').and_return(true)
+        allow(controller).to receive(:offer_loader_tab?).and_return(true)
+        allow(Rails.configuration).to receive(:try).with('batch_loader_aware').and_return(true)
+        controller.instance_variable_set(:@instance, instance)
+      end
+
+      it 'includes batch loader tabs' do
+        expect(controller.send(:tabs_to_offer)).to include('tab_batch_loader', 'tab_batch_loader_2')
+      end
+    end
+
+    context 'when instance is not standalone' do
+      before do
+        allow(instance).to receive(:standalone?).and_return(false)
+        allow(profile_v2_context).to receive(:copy_instance_tab).and_return('tab_copy_instance')
+        controller.instance_variable_set(:@instance, instance)
+      end
+
+      it 'does not include standalone specific tabs' do
+        expect(controller.send(:tabs_to_offer)).not_to include('tab_unpublished_citation', 'tab_synonymy', 'tab_classification', 'tab_profile_v2')
+      end
+    end
+  end
+end

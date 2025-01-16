@@ -29,7 +29,7 @@ class Users::ProfileContexts::Foa < Users::ProfileContexts::Base
   end
 
   def unpublished_citation_tab(instance)
-    "tab_unpublished_citation_for_profile_v2" if instance.draft
+    "tab_unpublished_citation_for_profile_v2" if instance.draft && instance.secondary_reference?
   end
 
   def synonymy_tab(instance)

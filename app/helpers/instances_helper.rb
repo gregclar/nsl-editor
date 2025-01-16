@@ -83,7 +83,7 @@ module InstancesHelper
   end
 
   def tab_for_instance_record(tab)
-    if %w[tab_synonymy tab_synonymy_for_profile_v2 tab_unpublished_citation tab_classification \
+    if %w[tab_synonymy tab_synonymy_for_profile_v2 tab_unpublished_citation tab_unpublished_citation_for_profile_v2 tab_classification \
           tab_copy_to_new_reference].include?(tab)
       tab
     else
@@ -93,7 +93,7 @@ module InstancesHelper
 
   # standalone
   def tab_for_iapo_concept_record(tab)
-    if %w[tab_synonymy tab_synonymy_for_profile_v2 tab_unpublished_citation tab_classification
+    if %w[tab_synonymy tab_synonymy_for_profile_v2 tab_unpublished_citation tab_unpublished_citation_for_profile_v2 tab_classification
           tab_copy_to_new_reference tab_batch_loader_2].include?(tab) && @tabs_to_offer.include?(tab)
       tab
     else
@@ -102,7 +102,7 @@ module InstancesHelper
   end
 
   def tab_for_citing_instance_in_name_search(tab)
-    if %w[tab_synonymy tab_synonymy_for_profile_v2 tab_create_unpublished_citation].include?(tab)
+    if %w[tab_synonymy tab_synonymy_for_profile_v2 tab_create_unpublished_citation tab_unpublished_citation_for_profile_v2].include?(tab)
       tab
     elsif tab == "tab_copy_to_new_reference"
       "tab_copy_to_new_reference_na"

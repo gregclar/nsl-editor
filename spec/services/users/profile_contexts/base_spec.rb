@@ -95,4 +95,20 @@ RSpec.describe Users::ProfileContexts::Base, type: :service do
       end
     end
   end
+
+  describe "#unpublished_citation_tab" do
+    let(:instance) { FactoryBot.create(:instance) }
+
+    context "for invalid arguments" do
+      it "raises an error" do
+        expect{subject.unpublished_citation_tab}.to raise_error(ArgumentError)
+      end
+    end
+
+    context "for valid argument" do
+      it "returns tab_unpublished_citation" do
+        expect(subject.unpublished_citation_tab(instance)).to eq "tab_unpublished_citation"
+      end
+    end
+  end
 end
