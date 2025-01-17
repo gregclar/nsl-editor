@@ -71,6 +71,7 @@ class Ability
     can "instances",                "tab_unpublished_citation_for_profile_v2"
     can "instances",                "copy_for_profile_v2"
     can "instances",                "tab_details"
+    can "names/typeaheads/for_unpub_cit", "index"
     can "instances",                "create_cited_by"
     can "instances",                "create_cites_and_cited_by"
     can "instances",                "create"

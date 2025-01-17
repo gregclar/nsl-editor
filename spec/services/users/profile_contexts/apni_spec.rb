@@ -44,7 +44,7 @@ RSpec.describe Users::ProfileContexts::Apni, type: :service do
   #       expect(subject.instance_editor?).to eq true
   #     end
   #   end
-    
+
   #   context "for non v2-profile-instance-edit group" do
   #     it "returns false" do
   #       expect(subject.instance_editor?).to eq false
@@ -70,6 +70,22 @@ RSpec.describe Users::ProfileContexts::Apni, type: :service do
     context "when standalone instance" do
       it "returns tab_synonymy" do
         expect(subject.synonymy_tab(instance)).to eq "tab_synonymy"
+      end
+    end
+  end
+
+  describe "#unpublished_citation_tab" do
+    let(:instance) { FactoryBot.create(:instance) }
+
+    context "for invalid arguments" do
+      it "raises an error" do
+        expect{subject.unpublished_citation_tab}.to raise_error(ArgumentError)
+      end
+    end
+
+    context "when standalone instance" do
+      it "returns tab_synonymy" do
+        expect(subject.unpublished_citation_tab(instance)).to eq "tab_unpublished_citation"
       end
     end
   end

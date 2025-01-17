@@ -12,7 +12,9 @@ RSpec.describe InstancesHelper, type: :helper do
       it "returns the tab" do
         %w[tab_synonymy
         tab_synonymy_for_profile_v2
-        tab_unpublished_citation tab_classification
+        tab_unpublished_citation
+        tab_unpublished_citation_for_profile_v2
+        tab_classification
         tab_copy_to_new_reference].each do |tab|
           expect(helper.tab_for_instance_record(tab)).to eq tab
         end
@@ -42,6 +44,7 @@ RSpec.describe InstancesHelper, type: :helper do
         %w[tab_synonymy
           tab_synonymy_for_profile_v2
           tab_unpublished_citation
+          tab_unpublished_citation_for_profile_v2
           tab_classification
           tab_copy_to_new_reference
           tab_batch_loader_2]
@@ -51,6 +54,7 @@ RSpec.describe InstancesHelper, type: :helper do
         %w[tab_synonymy
           tab_synonymy_for_profile_v2
           tab_unpublished_citation
+          tab_unpublished_citation_for_profile_v2
           tab_classification
           tab_copy_to_new_reference
           tab_batch_loader_2].each do |tab|
@@ -78,7 +82,8 @@ RSpec.describe InstancesHelper, type: :helper do
       it "returns the tab" do
         %w[tab_synonymy
           tab_synonymy_for_profile_v2
-          tab_create_unpublished_citation].each do |tab|
+          tab_create_unpublished_citation
+          tab_unpublished_citation_for_profile_v2].each do |tab|
           expect(helper.tab_for_citing_instance_in_name_search(tab)).to eq tab
         end
       end

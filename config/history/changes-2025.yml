@@ -1,8 +1,13 @@
+- :date: 17-Jan-2025
+  :jira_id: '34'
+  :jira_project: FLOR
+  :description: |-
+    FOA Profile (APNI Test only): Allow profile v2 context user to create an unpublish instance of a draft AND secondary reference instance (standalone)
 - :date: 15-Jan-2025
   :jira_id: '33'
   :jira_project: FLOR
   :description: |-
-    FOA Profile (APNI Test only): Allow profile v2 context user to create a synonymy of a draft AND secondary reference instance
+    FOA Profile (APNI Test only): Allow profile v2 context user to create a synonymy of a draft AND secondary reference instance (standalone)
 - :date: 15-Jan-2025
   :jira_id: '5298'
   :description: |-

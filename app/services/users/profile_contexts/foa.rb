@@ -28,6 +28,10 @@ class Users::ProfileContexts::Foa < Users::ProfileContexts::Base
     "tab_copy_to_new_profile_v2" unless instance.draft
   end
 
+  def unpublished_citation_tab(instance)
+    "tab_unpublished_citation_for_profile_v2" if instance.draft && instance.secondary_reference?
+  end
+
   def synonymy_tab(instance)
     "tab_synonymy_for_profile_v2" if instance.draft && instance.secondary_reference?
   end

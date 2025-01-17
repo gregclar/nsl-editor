@@ -88,6 +88,20 @@
     <% end %>
   <% end %>
 
+  <% if @tabs_to_offer.include?('tab_unpublished_citation_for_profile_v2') %>
+    <% if can? 'instances', 'tab_unpublished_citation_for_profile_v2' %>
+      <%= render partial: 'instances/tabs/tab', locals: {first: false,
+                                          last: false,
+                                          this_tab: 'tab_unpublished_citation_for_profile_v2',
+                                          link_text: "Unpub".html_safe,
+                                          link_id: 'unpublished-citation-for-profile-v2-tab',
+                                          link_title: 'Unpublished citation',
+                                          tab_index: increment_tab_index,
+                                          prev_tab: '',
+                                          next_tab: ''} %>
+    <% end %>
+  <% end %>
+
   <% if @tabs_to_offer.include?('tab_classification') %>
       <% if can? 'classification', 'place' %>
           <%= render partial: 'instances/tabs/tab', locals: {first: false,
