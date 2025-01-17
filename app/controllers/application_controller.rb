@@ -80,7 +80,7 @@ class ApplicationController < ActionController::Base
   end
 
   def continue_user_session
-    @current_user = User.new(username: session[:username],
+    @current_user = SessionUser.new(username: session[:username],
                              full_name: session[:user_full_name],
                              groups: session[:groups])
     logger.info("User is known: #{@current_user.username}")

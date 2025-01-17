@@ -1,4 +1,8 @@
 - :date: 17-Jan-2025
+  :jira_id: '5305'
+  :description: |-
+    Code infrastructure: Rename the User model to SessionUser - technical change that should have no affect on functions
+- :date: 17-Jan-2025
   :jira_id: '34'
   :jira_project: FLOR
   :description: |-
