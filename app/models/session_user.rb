@@ -18,7 +18,7 @@
 #
 
 # User model.
-class User < ActiveType::Object
+class SessionUser < ActiveType::Object
   attr_accessor :username, :full_name, :groups
 
   validates :username, presence: true

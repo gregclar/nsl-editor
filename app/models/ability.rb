@@ -43,7 +43,7 @@ class Ability
   # We could theoretically relax authentication and have these
   # authorization checks prevent non-editors changing data.
   def initialize(user)
-    user ||= User.new(groups: [])
+    user ||= SessionUser.new(groups: [])
     basic_auth_1
     basic_auth_2
     edit_auth         if user.edit?

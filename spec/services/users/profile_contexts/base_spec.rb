@@ -2,9 +2,9 @@ require "rails_helper"
 
 RSpec.describe Users::ProfileContexts::Base, type: :service do
   let(:groups) { ["non-profile-product"] }
-  let(:user) { FactoryBot.create(:user, groups: groups)}
+  let(:session_user) { FactoryBot.create(:session_user, groups: groups)}
 
-  subject { described_class.new(user) }
+  subject { described_class.new(session_user) }
 
   describe ".initialize" do
     it "has a logger instance variable" do
@@ -16,7 +16,7 @@ RSpec.describe Users::ProfileContexts::Base, type: :service do
     end
 
     it "has a user" do
-      expect(subject.user).to eq user
+      expect(subject.user).to eq session_user
     end
   end
 
