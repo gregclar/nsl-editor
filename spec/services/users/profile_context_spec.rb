@@ -2,19 +2,19 @@ require "rails_helper"
 
 RSpec.describe Users::ProfileContext, type: :service do
   let(:groups) { ["foa"] }
-  let(:user) { FactoryBot.create(:user, groups: groups) }
+  let(:session_user) { FactoryBot.create(:session_user, groups: groups) }
 
-  subject { described_class.new(user) }
+  subject { described_class.new(session_user) }
 
   describe ".initialize" do
 
     before {allow(Rails.configuration).to receive(:try).with('profile_v2_aware').and_return(true) }
 
     it "instantiates a user" do
-      expect(subject.instance_variable_get(:@user)).to eq(user)
+      expect(subject.instance_variable_get(:@user)).to eq(session_user)
     end
 
-    context "for when a user group is given" do
+    context "for when a session_user group is given" do
       context "when profile_v2_aware is disabled" do
         before {allow(Rails.configuration).to receive(:try).with('profile_v2_aware').and_return(false) }
         it "instantiates the default context" do

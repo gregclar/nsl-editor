@@ -2,13 +2,13 @@ require 'rails_helper'
 
 RSpec.describe Ability, type: :model do
   describe "#profile_v2_viewer" do
-    let(:user) { FactoryBot.create(:user) }
+    let(:session_user) { FactoryBot.create(:session_user) }
 
-    subject { described_class.new(user) }
+    subject { described_class.new(session_user) }
 
     describe "#profile_v2_auth" do
-      context "for user with profile_v2" do
-        before { allow(user).to receive(:profile_v2?).and_return(true) }
+      context "for session_user with profile_v2" do
+        before { allow(session_user).to receive(:profile_v2?).and_return(true) }
         it "grants all access to profile_items" do
           expect(subject.can?("profile_items", :all)).to eq true
           expect(subject.can?(:manage, :profile_v2)).to eq true
