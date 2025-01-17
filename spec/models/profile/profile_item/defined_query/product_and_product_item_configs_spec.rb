@@ -1,19 +1,19 @@
 require 'rails_helper'
 
 RSpec.describe Profile::ProfileItem::DefinedQuery::ProductAndProductItemConfigs, type: :model do
-  let(:user) { FactoryBot.create(:user) }
+  let(:session_user) { FactoryBot.create(:session_user) }
   let(:instance) { FactoryBot.create(:instance) }
   let(:params) { {} }
 
-  subject { described_class.new(user, instance, params)}
+  subject { described_class.new(session_user, instance, params)}
 
   describe ".initialize" do
     it { should respond_to(:product) }
     it { should respond_to(:instance) }
     it { should respond_to(:product_configs_and_profile_items) }
 
-    it "has instance variable user" do
-      expect(subject.instance_variable_get(:@user)).to eq user
+    it "has instance variable session_user" do
+      expect(subject.instance_variable_get(:@user)).to eq session_user
     end
 
     it "has instance variable profile_context" do
@@ -36,7 +36,7 @@ RSpec.describe Profile::ProfileItem::DefinedQuery::ProductAndProductItemConfigs,
   end
 
   describe "#run_query" do
-    subject {described_class.new(user, instance, params).run_query}
+    subject {described_class.new(session_user, instance, params).run_query}
 
     context "when profile_v2_aware config is enabled" do
       context "when there is no product" do
@@ -53,7 +53,7 @@ RSpec.describe Profile::ProfileItem::DefinedQuery::ProductAndProductItemConfigs,
       end
 
       context "when there is a product" do
-        let(:user) { FactoryBot.create(:user, :foa) }
+        let(:session_user) { FactoryBot.create(:session_user, :foa) }
         let!(:product) { FactoryBot.create(:product, name: "FOA") }
         context "and the product is not attached to a product_item_config" do
           it "returns an empty array of product_configs_and_profile_items and product" do
@@ -93,9 +93,9 @@ RSpec.describe Profile::ProfileItem::DefinedQuery::ProductAndProductItemConfigs,
       end
 
       context "when there is a product" do
-        let!(:user) { FactoryBot.create(:user, :foa) }
+        let!(:session_user) { FactoryBot.create(:session_user, :foa) }
         let!(:product) { FactoryBot.create(:product, name: "FOA") }
-        
+
         context "and the product is not attached to a product_item_config" do
           it "returns an empty array of product_configs_and_profile_items and product" do
             expect(subject).to eq([[],nil])

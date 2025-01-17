@@ -3,25 +3,25 @@
 require 'rails_helper'
 
 shared_context "#group_check?" do |method_name, group|
-  subject { user.send(method_name) }
-  
+  subject { session_user.send(method_name) }
+
   context "when group includes #{group}" do
-    let(:user) { FactoryBot.create(:user, groups: [group]) }
+    let(:session_user) { FactoryBot.create(:session_user, groups: [group]) }
     it "returns true" do
       expect(subject).to eq(true)
     end
   end
 
   context "when group does not include #{method_name.to_s.downcase}" do
-    let(:user) { FactoryBot.create(:user, groups: ["something"]) }
+    let(:session_user) { FactoryBot.create(:session_user, groups: ["something"]) }
     it "returns false" do
       expect(subject).to eq(false)
     end
   end
 end
 
-RSpec.describe User, type: :model do
-  
+RSpec.describe SessionUser, type: :model do
+
   describe ".validations" do
     let(:params) { {username: nil, full_name: nil, groups: nil} }
 
@@ -44,43 +44,43 @@ RSpec.describe User, type: :model do
   end
 
   describe ".accessors" do
-    let(:user) { FactoryBot.create(:user, :admin, username: "test", full_name: "test user") }
+    let(:session_user) { FactoryBot.create(:session_user, :admin, username: "test", full_name: "test user") }
 
     it "can access the username" do
-      expect(user.username).to eq "test"
+      expect(session_user.username).to eq "test"
     end
-    
+
     it "can access the full_name" do
-      expect(user.full_name).to eq "test user"
+      expect(session_user.full_name).to eq "test user"
     end
-    
+
     it "can access the groups" do
-      expect(user.groups).to eq ["admin"]
+      expect(session_user.groups).to eq ["admin"]
     end
   end
 
   describe "#profile_v2_context" do
-    let(:user) { FactoryBot.create(:user) }
-    
-    subject { user.profile_v2_context }
+    let(:session_user) { FactoryBot.create(:session_user) }
+
+    subject { session_user.profile_v2_context }
 
     context "for foa group" do
       it "return the foa profile context" do
-        allow_any_instance_of(User).to receive(:groups).and_return('foa')
+        allow_any_instance_of(SessionUser).to receive(:groups).and_return('foa')
         expect(subject.class).to eq Users::ProfileContexts::Foa
       end
     end
 
     context "for apni group" do
       it "return the foa profile context" do
-        allow_any_instance_of(User).to receive(:groups).and_return('apni')
+        allow_any_instance_of(SessionUser).to receive(:groups).and_return('apni')
         expect(subject.class).to eq Users::ProfileContexts::Apni
       end
     end
 
     context "for non-profile group" do
       it "return the foa profile context" do
-        allow_any_instance_of(User).to receive(:groups).and_return('other-product')
+        allow_any_instance_of(SessionUser).to receive(:groups).and_return('other-product')
         expect(subject.class).to eq Users::ProfileContexts::Apni
       end
     end

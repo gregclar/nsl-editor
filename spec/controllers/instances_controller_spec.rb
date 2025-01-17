@@ -3,12 +3,12 @@ require 'rails_helper'
 
 RSpec.describe InstancesController, type: :controller do
   describe '#tabs_to_offer' do
-    let(:user) { FactoryBot.create(:user) }
+    let(:user) { FactoryBot.create(:session_user) }
     let(:instance) { FactoryBot.create(:instance) }
     let(:profile_v2_context) { double('ProfileV2Context') }
 
     before do
-      allow_any_instance_of(User).to receive(:profile_v2_context).and_return(profile_v2_context)
+      allow_any_instance_of(SessionUser).to receive(:profile_v2_context).and_return(profile_v2_context)
       allow(controller).to receive(:params).and_return({})
       allow(controller).to receive(:can?).and_return(true)
       controller.instance_variable_set(:@current_user, user)
