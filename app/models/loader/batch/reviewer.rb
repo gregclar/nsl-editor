@@ -24,8 +24,7 @@ class Loader::Batch::Reviewer < ActiveRecord::Base
   self.sequence_name = "nsl_global_seq"
 
   belongs_to :batch_review, class_name: "Loader::Batch::Review", foreign_key: "batch_review_id"
-  belongs_to :user_table, class_name: "UserTable", foreign_key: "user_id"
-  alias_method :user, :user_table
+  belongs_to :user, foreign_key: "user_id"
   belongs_to :org, optional: true
   belongs_to :batch_review_role, class_name: "Loader::Batch::Review::Role"
   alias_method :role, :batch_review_role
@@ -90,7 +89,7 @@ class Loader::Batch::Reviewer < ActiveRecord::Base
 
   def self.batch_reviewers_for_org_username_batch_review(org, username, batch_review)
     self.where(org_id: org.id)
-        .joins(:user_table)
+        .joins(:user)
         .where(["users.name = ?", username])
         .joins(batch_review_period: :batch_review)
         .where(["batch_review.loader_batch_id = ?", batch_review.loader_batch_id])
@@ -98,7 +97,7 @@ class Loader::Batch::Reviewer < ActiveRecord::Base
   end
 
   def self.username_to_reviewers_for_review(username, review)
-    Loader::Batch::Reviewer.joins([:user_table, :batch_review])
+    Loader::Batch::Reviewer.joins([:user, :batch_review])
                            .where('users.name': username)
                            .where('batch_review.id': review.id)
   end

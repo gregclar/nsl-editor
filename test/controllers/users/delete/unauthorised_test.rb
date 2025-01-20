@@ -16,10 +16,21 @@
 #   See the License for the specific language governing permissions and
 #   limitations under the License.
 #
-class Search::UserTable::FieldRule
-  RULES = {
-    "id:" => { where_clause: " id = ? " },
-    "name:" => { where_clause: " lower(name) like ? " },
-    "given:" => { where_clause: " lower(given_name) like ? " },
-  }.freeze
+require "test_helper"
+
+# Single controller test.
+class UserCreateUnauthorisedTest < ActionController::TestCase
+  tests UsersController
+
+  test "delete user simple" do
+    @request.headers["Accept"] = "application/javascript"
+    assert_difference("User.count", 0, 'User should not be deleted') do
+      post(:destroy,
+           params: { id: users(:user_two)},
+           session: { username: "fred",
+                      user_full_name: "Fred Jones",
+                      groups: ["edit"] })
+    end
+    assert_response(:forbidden, 'Non-admin users should not delete a user')
+  end
 end

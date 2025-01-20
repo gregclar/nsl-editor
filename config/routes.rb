@@ -536,7 +536,15 @@ Rails.application.routes.draw do
   match "batch_review_periods/:id", as: "update_review_period", to: "loader/batch/review/periods#update", via: :patch
   match "/batch_review_periods/:id", as: "delete_review_period", to: "loader/batch/review/periods#destroy", via: :delete
 
-  match "users", as: "user", to: "users#show", via: :get
+  match "users/new_row", as: "user_new_row", to: "users#new_row", via: :get
+  match "users/new/:random_id", as: "new_user_with_random_id", to: "users#new", via: :get
+
+  #match "/users(.:format)", as: "user_create", to: "users#create", via: :post
+  resources :users, only: %i[new create update destroy]
+  # user_tables POST        /user_tables(.:format)      user_tables#create
+  # new_user_table GET      /user_tables/new(.:format)  user_tables#new
+
+  match "users", as: "user_show", to: "users#show", via: :get
   match "users/:id/tab/:tab", as: "user_tab", to: "users#tab", via: :get
 
   match "orgs", as: "org", to: "orgs#show", via: :get

@@ -17,7 +17,7 @@
 #   limitations under the License.
 #
 
-# User model.
+# SessionUser model - not an active record.
 class SessionUser < ActiveType::Object
   attr_accessor :username, :full_name, :groups
 

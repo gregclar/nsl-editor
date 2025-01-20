@@ -130,7 +130,6 @@ class Ability
     can "tree_elements",             :all
     can "mode",                      :all # suspect this is no longer used
     can "tree_versions",             :all
-    can "users",                     :all
     can "orgs",                      :all
   end
 
@@ -148,6 +147,7 @@ class Ability
   def admin_auth
     can "admin",              :all
     can "menu",               "admin"
+    can "users",              :all
   end
 
   def batch_loader_auth

@@ -16,8 +16,22 @@
 #   See the License for the specific language governing permissions and
 #   limitations under the License.
 #
-class Search::UserTable::FieldAbbrev
-  ABBREVS = {
-    "userid:" => "name:",
-  }.freeze
+require "test_helper"
+
+# Single controller test.
+class UserCreateSimpleTest < ActionController::TestCase
+  tests UsersController
+
+  test "create user simple" do
+    @request.headers["Accept"] = "application/javascript"
+    assert_difference("User.count") do
+      post(:create,
+           params: { user: { "name" => "auser",
+                             "given_name" => "a",
+                             "family_name" => "user"} },
+           session: { username: "fred",
+                      user_full_name: "Fred Jones",
+                      groups: ["admin"] })
+    end
+  end
 end
