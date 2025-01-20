@@ -19,3 +19,9 @@ reviewer_one:
  name: rev1
  given_name: Reviewer
  family_name: One
+
+user_two:
+ <<: *DEFAULTS
+ name: utwo
+ given_name: user
+ family_name: Two

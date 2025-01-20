@@ -105,7 +105,7 @@ class Search::ParsedRequest
     "batch review" => "Loader::Batch::Review",
     "batch reviewer" => "Loader::Batch::Reviewer",
     "batch review period" => "Loader::Batch::Review::Period",
-    "users" => "UserTable",
+    "users" => "User",
     "org" => "Org",
     "bulk processing log" => "BulkProcessingLog",
   }.freeze

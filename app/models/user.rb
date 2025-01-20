@@ -18,9 +18,7 @@
 #
 # Loader Usertable entity
 #
-# Called UserTable to distinguish from the pre-existing user model which is
-# used for authenticatio/authorisation.  This model is for the users table
-# created during work on the batch loader and batch review subsystem.
+# This model is for the users table created during work on the batch loader and batch review subsystem.
 # == Schema Information
 #
 # Table name: users
@@ -39,9 +37,8 @@
 #
 #  users_name_key  (name) UNIQUE
 #
-class UserTable < ActiveRecord::Base
+class User < ActiveRecord::Base
   strip_attributes
-  self.table_name = "users"
   self.primary_key = "id"
   self.sequence_name = "nsl_global_seq"
 
@@ -53,6 +50,18 @@ class UserTable < ActiveRecord::Base
   # confusion with the FK user_id or with the PK id.
   def userid
     name
+  end
+
+  def self.create(params, username)
+    user = User.new(params)
+    raise user.errors.full_messages.first.to_s unless user.save_with_username(username)
+
+    user
+  end
+
+  def save_with_username(username)
+    self.created_by = self.updated_by = username
+    save
   end
 
   def fresh?
@@ -69,6 +78,8 @@ class UserTable < ActiveRecord::Base
 
   def update_if_changed(params, username)
     self.name = params[:name]
+    self.given_name = params[:given_name]
+    self.family_name = params[:family_name]
     if changed?
       self.updated_by = username
       save!
@@ -83,6 +94,10 @@ class UserTable < ActiveRecord::Base
   end
 
   def self.users_not_already_reviewers(batch_review)
-    self.all.order(:name) - batch_review.batch_reviewers.collect {|reviewer| reviewer.user_table}
+    self.all.order(:name) - batch_review.batch_reviewers.collect {|reviewer| reviewer.user}
+  end
+
+  def can_be_deleted?
+    batch_reviewers.size.zero?
   end
 end
