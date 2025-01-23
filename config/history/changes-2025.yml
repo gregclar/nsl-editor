@@ -1,3 +1,8 @@
+- :date: 24-Jan-2025
+  :jira_id: '23'
+  :jira_project: FLOR
+  :description: |-
+    FOA Profile (APNI Test only): Fixup the 500 error issue for when the app has no access to the database when adding a profile item reference.
 - :date: 20-Jan-2025
   :jira_id: '5304'
   :description: |-
