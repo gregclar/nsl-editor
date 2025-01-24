@@ -30,8 +30,9 @@ class ProfileItemReferencesController < ApplicationController
       @message = "Saved"
       render :create
     end
+
   rescue StandardError => e
-    @message = e.record.errors.full_messages.to_sentence
+    @message = "Error creating profile item reference: #{e.message}"
     render "create_failed", status: :unprocessable_entity
   end
 
