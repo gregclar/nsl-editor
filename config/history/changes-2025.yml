@@ -1,4 +1,8 @@
 - :date: 24-Jan-2025
+  :jira_id: '5310'
+  :description: |-
+    Improve the screen explanation when you cannot delete an instance due to tree entanglement
+- :date: 24-Jan-2025
   :jira_id: '23'
   :jira_project: FLOR
   :description: |-
