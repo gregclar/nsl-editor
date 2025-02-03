@@ -1,3 +1,8 @@
+- :date: 03-Feb-2025
+  :jira_id: '23'
+  :jira_project: FLOR
+  :description: |-
+    FOA Profile (APNI Test only): Display the reference using the reference.citation_html in the foa editor
 - :date: 24-Jan-2025
   :jira_id: '5310'
   :description: |-
