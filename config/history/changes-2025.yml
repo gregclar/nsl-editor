@@ -1,3 +1,8 @@
+- :date: 05-Feb-2025
+  :jira_id: '39'
+  :jira_project: FLOR
+  :description: |-
+    FOA Profile (APNI Test only): Fix some UI spacing issues in the foa editor
 - :date: 03-Feb-2025
   :jira_id: '23'
   :jira_project: FLOR
