@@ -16,4 +16,28 @@ RSpec.describe InstanceType, type: :model do
       end
     end
   end
+
+  describe ".synonym_options" do
+    let!(:instance_type1) { FactoryBot.create(:instance_type, name: 'Type A', relationship: true, deprecated: false, unsourced: false) }
+    let!(:instance_type2) { FactoryBot.create(:instance_type, name: 'Type B', relationship: true, deprecated: false, unsourced: false) }
+    let!(:instance_type3) { FactoryBot.create(:instance_type, name: 'Type C', relationship: true, deprecated: true, unsourced: false) }
+    let!(:instance_type4) { FactoryBot.create(:instance_type, name: 'Type D', relationship: true, deprecated: false, unsourced: true) }
+    let!(:instance_type5) { FactoryBot.create(:instance_type, name: 'Type E', relationship: false, deprecated: false, unsourced: false) }
+
+    it 'returns only instance types with relationship true, not deprecated, and not unsourced' do
+      result = InstanceType.synonym_options
+      expect(result).to contain_exactly(
+        [instance_type1.name, instance_type1.id],
+        [instance_type2.name, instance_type2.id]
+      )
+    end
+
+    it 'returns the instance types sorted by name' do
+      result = InstanceType.synonym_options
+      expect(result).to eq([
+        [instance_type1.name, instance_type1.id],
+        [instance_type2.name, instance_type2.id]
+      ].sort_by(&:first))
+    end
+  end
 end
