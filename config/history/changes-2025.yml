@@ -2,7 +2,7 @@
   :jira_id: '5323'
   :jira_project: NSL
   :description: |-
-    Update the instance_type query for the Synonymy to use relationship boolean rathern than citing
+    Update the instance_type query for the Synonymy and Unpub to use relationship=true
 - :date: 05-Feb-2025
   :jira_id: '39'
   :jira_project: FLOR
