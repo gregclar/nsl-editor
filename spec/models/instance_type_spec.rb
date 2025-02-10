@@ -40,4 +40,28 @@ RSpec.describe InstanceType, type: :model do
       ].sort_by(&:first))
     end
   end
+
+  describe '.unpublished_citation_options' do
+    let!(:instance_type1) { FactoryBot.create(:instance_type, name: 'Type A', relationship: true, unsourced: true, deprecated: false) }
+    let!(:instance_type2) { FactoryBot.create(:instance_type, name: 'Type B', relationship: true, unsourced: true, deprecated: false) }
+    let!(:instance_type3) { FactoryBot.create(:instance_type, name: 'Type C', relationship: true, unsourced: true, deprecated: true) }
+    let!(:instance_type4) { FactoryBot.create(:instance_type, name: 'Type D', relationship: true, unsourced: false, deprecated: false) }
+    let!(:instance_type5) { FactoryBot.create(:instance_type, name: 'Type E', relationship: false, unsourced: true, deprecated: false) }
+
+    it 'returns only instance types with relationship true, unsourced true, and not deprecated' do
+      result = InstanceType.unpublished_citation_options
+      expect(result).to contain_exactly(
+        [instance_type1.name, instance_type1.id],
+        [instance_type2.name, instance_type2.id]
+      )
+    end
+
+    it 'returns the instance types sorted by name' do
+      result = InstanceType.unpublished_citation_options
+      expect(result).to eq([
+        [instance_type1.name, instance_type1.id],
+        [instance_type2.name, instance_type2.id]
+      ].sort_by(&:first))
+    end
+  end
 end

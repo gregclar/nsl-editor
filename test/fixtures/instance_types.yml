@@ -239,6 +239,7 @@ nomenclatural_synonym:
 orthographic_variant:
   <<: *DEFAULTS
   name: orthographic variant
+  relationship: true
   citing: true
   unsourced: true
 
