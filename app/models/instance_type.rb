@@ -93,7 +93,7 @@ class InstanceType < ActiveRecord::Base
 
   # For new records: just the standard set.
   def self.synonym_options
-    where("citing").where.not("deprecated")
+    where("relationship").where.not("deprecated")
                    .where.not("unsourced")
                    .sort_by(&:name)
                    .collect { |i| [i.name, i.id] }
