@@ -43,6 +43,7 @@ class User < ActiveRecord::Base
   self.sequence_name = "nsl_global_seq"
 
   has_many :batch_reviewers, class_name: "Loader::Batch::Reviewer", foreign_key: :user_id
+  has_many :product_roles, class_name: "User::ProductRole"
 
   # Note, the PK for the users table is the id column.
   # That appears as user_id as a foreign key.
