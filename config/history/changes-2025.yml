@@ -1,3 +1,8 @@
+- :date: 14-Feb-2025
+  :jira_id: '41'
+  :jira_project: FLOR
+  :description: |-
+    FOA Profile (APNI Test only): Add a New Instance tab in the Name panel for Foa context users
 - :date: 13-Feb-2025
   :jira_id: ''
   :description: |-
