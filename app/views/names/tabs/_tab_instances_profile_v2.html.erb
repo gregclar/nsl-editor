@@ -31,10 +31,7 @@
     <h6>&mdash; <%= @instance.instance_type.name %></h6>
     <%= f.hidden_field :instance_type_id, value: @instance.instance_type_id %>
     <%= f.hidden_field :name_id %>
-
-    <% if Rails.configuration.try("draft_instances")  %>
-      <%= f.hidden_field :draft, value: true %>
-    <% end %>
+    <%= f.hidden_field :draft, value: true %>
 
     <br>
     <%= f.submit id: "save-new-instance-btn", class: 'btn-primary', title: "Save changes", tabindex: increment_tab_index %>
