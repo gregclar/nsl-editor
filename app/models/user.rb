@@ -45,6 +45,18 @@ class User < ActiveRecord::Base
   has_many :batch_reviewers, class_name: "Loader::Batch::Reviewer", foreign_key: :user_id
   has_many :product_roles, class_name: "User::ProductRole"
 
+  before_create :set_audit_fields
+  before_update :set_updated_by
+
+  def set_audit_fields
+    self.created_by = self.updated_by = @current_user&.username||'unknown'
+  end
+
+  def set_updated_by
+    self.updated_by = @current_user&.username||'unknown'
+  end
+
+
   # Note, the PK for the users table is the id column.
   # That appears as user_id as a foreign key.
   # The user's login id is in the column name - called that to avoid

@@ -18,20 +18,26 @@
 #
 require "test_helper"
 
-# Single controller test.
-class UserCreateSimpleTest < ActionController::TestCase
-  tests UsersController
+# Test User can sign in.
+class NewSessionUnknownUserCreatesUserRecordTest < ActionController::TestCase
+  tests SearchController
 
-  test "create user simple" do
-    @request.headers["Accept"] = "application/javascript"
+  def setup
+    @unknown_user_name = "fjones"
+    @unknown_user_full_name = "Fred Jones"
+  end
+
+  test "new session for unknown user creates user record" do
     assert_difference("User.count") do
-      post(:create,
-           params: { user: { "name" => "auser",
-                             "given_name" => "a",
-                             "family_name" => "user"} },
-           session: { username: "uone",
-                      user_full_name: "auser One",
-                      groups: ["admin"] })
+      get(:search,
+          params: {},
+          session: { username: @unknown_user_name,
+                     user_full_name: @unknown_user_full_name,
+                     groups: [:login] })
+      assert_response :success
     end
+    assert assigns(:current_registered_user), "Current registered user should be assigned"
+    reg_user = assigns(:current_registered_user)
+    assert reg_user.name == @unknown_user_name, "Registered user not set correctly"
   end
 end

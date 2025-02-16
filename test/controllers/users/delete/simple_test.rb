@@ -27,8 +27,8 @@ class UserDeleteSimpleTest < ActionController::TestCase
     assert_difference("User.count", -1, 'Should have deleted 1 user') do
       post(:destroy,
            params: { id: users(:user_two)},
-           session: { username: "fred",
-                      user_full_name: "Fred Jones",
+           session: { username: "uone",
+                      user_full_name: "auser One",
                       groups: ["admin"] })
     end
   end

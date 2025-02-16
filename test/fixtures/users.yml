@@ -11,7 +11,7 @@ DEFAULTS: &DEFAULTS
 user_one:
  <<: *DEFAULTS
  name: uone
- given_name: user
+ given_name: userx
  family_name: One
 
 reviewer_one:
@@ -23,5 +23,5 @@ reviewer_one:
 user_two:
  <<: *DEFAULTS
  name: utwo
- given_name: user
+ given_name: userx
  family_name: Two
