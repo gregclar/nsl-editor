@@ -1,8 +1,25 @@
+- :date: 17-Feb-2025
+  :jira_id: ''
+  :description: |-
+    Code cleanup: adding annotations to the models, factories, and fixtures
+- :date: 14-Feb-2025
+  :jira_id: '41'
+  :jira_project: FLOR
+  :description: |-
+    FOA Profile (APNI Test only): Add a New Instance tab in the Name panel for Foa context users
+- :date: 13-Feb-2025
+  :jira_id: ''
+  :description: |-
+    Patch update for the rack gem to 3.1.10
+- :date: 12-Feb-2025
+  :jira_id: ''
+  :description: |-
+    Security upgrade for the net-imap gem to 0.5.6 to address CVE-2022-22963
 - :date: 10-Feb-2025
   :jira_id: '5323'
   :jira_project: NSL
   :description: |-
-    Update the instance_type query for the Synonymy to use relationship boolean rathern than citing
+    Update the instance_type query for the Synonymy and Unpub to use relationship=true
 - :date: 05-Feb-2025
   :jira_id: '39'
   :jira_project: FLOR

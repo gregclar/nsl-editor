@@ -101,9 +101,10 @@ class InstanceType < ActiveRecord::Base
 
   # For new records: just the standard set.
   def self.unpublished_citation_options
-    where("unsourced").where.not("deprecated")
-                      .sort_by(&:name)
-                      .collect { |i| [i.name, i.id] }
+    where("relationship").where("unsourced")
+      .where.not("deprecated")
+      .sort_by(&:name)
+      .collect { |i| [i.name, i.id] }
   end
 
   # For existing records.

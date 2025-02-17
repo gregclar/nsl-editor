@@ -28,12 +28,19 @@ class InstanceTypeSynonymOptionsTest < ActiveSupport::TestCase
     @expected = [
       "alternative name",
       "basionym",
+      "doubtful misapplied",
       "doubtful pro parte misapplied",
       "doubtful pro parte taxonomic synonym",
       "doubtful taxonomic synonym",
+      "isonym",
+      "misapplied",
       "nomenclatural synonym",
+      "pro parte misapplied",
+      "pro parte taxonomic synonym",
       "pro parte nomenclatural synonym",
-      "taxonomic synonym"
+      "replaced synonym",
+      "taxonomic synonym",
+      "trade name"
     ]
   end
 
