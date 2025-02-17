@@ -1,5 +1,5 @@
 FactoryBot.define do
-  factory :product, class: "Product" do
+  factory :profile_product, class: "Profile::Product" do
     name { "Sample Name" }
     is_current { true }
     is_available { true }
