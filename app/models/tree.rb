@@ -59,6 +59,8 @@ class Tree < ActiveRecord::Base
   has_many :tree_versions,
            foreign_key: "tree_id"
 
+  has_many :products
+
   scope :accepted,
         (lambda do
           where(name: ShardConfig.classification_tree_key)

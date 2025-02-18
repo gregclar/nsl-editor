@@ -34,6 +34,11 @@
     <% end %>
 
     <li role="presentation" class="divider"></li>
+      <li role="presentation">
+        <%= @current_registered_user.user_name %>
+      </li>
+    
+    <li role="presentation" class="divider"></li>
 
 <% if Rails.configuration.try(:batch_loader_aware) %>
   <% if can? 'loader/batch/review/mode', 'switch_on' %>

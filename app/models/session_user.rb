@@ -70,4 +70,17 @@ class SessionUser < ActiveType::Object
   def loader_2_tab_loader?
     groups.include?("loader-2-tab")
   end
+
+  # find_or_create_by would be preferred method but 
+  # I couldn't get that to work
+  def registered_user
+    registered_user = User.find_by(user_name: username)
+    return registered_user unless registered_user.blank?
+
+    User.new(user_name: username,
+             family_name: full_name.split(' ').last||'unknown',
+             given_name: full_name.split(' ').first||'unknown').save!
+    
+    User.find_by(user_name: username)
+  end
 end

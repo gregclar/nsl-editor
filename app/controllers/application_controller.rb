@@ -83,6 +83,7 @@ class ApplicationController < ActionController::Base
     @current_user = SessionUser.new(username: session[:username],
                              full_name: session[:user_full_name],
                              groups: session[:groups])
+    @current_registered_user = @current_user.registered_user
     logger.info("User is known: #{@current_user.username}")
     set_working_draft_session
   end

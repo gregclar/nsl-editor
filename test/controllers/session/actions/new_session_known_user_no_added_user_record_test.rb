@@ -18,21 +18,25 @@
 #
 require "test_helper"
 
-# Single controller test.
-class UserCreateUnauthorisedTest < ActionController::TestCase
-  tests UsersController
+# Test User can sign in.
+class NewSessionKnownUserNoNewUserRecordTest < ActionController::TestCase
+  tests SearchController
 
-  test "create user unauthorised" do
-    @request.headers["Accept"] = "application/javascript"
+  def setup
+    @known_user = users(:user_one)
+  end
+
+  test "new session for known user does not create user record" do
     assert_no_difference("User.count") do
-    post(:create,
-         params: { user: { "user_name" => "auser",
-                           "given_name" => "a",
-                           "family_name" => "user"} },
-         session: { username: "uone",
-                    user_full_name: "auser One",
-                    groups: ["edit"] })
+      get(:search,
+          params: {},
+          session: { username: @known_user.user_name,
+                     user_full_name: "#{@known_user.given_name} #{@known_user.family_name}",
+                     groups: [:login] })
+      assert_response :success
     end
-    #assert_response(:forbidden, 'Non-admin users should not create a user')
+    assert assigns(:current_registered_user), "Current registered user should be assigned"
+    reg_user = assigns(:current_registered_user)
+    assert reg_user.user_name == @known_user.user_name, "Registered user not set correctly"
   end
 end

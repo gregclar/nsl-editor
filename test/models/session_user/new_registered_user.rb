@@ -18,19 +18,10 @@
 #
 require "test_helper"
 
-# Single controller test.
-class UserCreateUnauthorisedTest < ActionController::TestCase
-  tests UsersController
+# Single name model test.
+class NewRegisteredUserTest < ActiveSupport::TestCase
 
-  test "delete user simple" do
-    @request.headers["Accept"] = "application/javascript"
-    assert_difference("User.count", 0, 'User should not be deleted') do
-      post(:destroy,
-           params: { id: users(:user_two)},
-           session: { username: "uone",
-                      user_full_name: "auser One",
-                      groups: ["edit"] })
-    end
-    assert_response(:forbidden, 'Non-admin users should not delete a user')
+  test "new_registered_user" do
+    new_user = SessionUser.new(username: 'nuser', full_name: 'new user', groups: 'login')
   end
 end
