@@ -1,6 +1,6 @@
 FactoryBot.define do
   factory :user do
-    name { "Sample Name" }
+    user_name { "Sample Name" }
     given_name { "Sample Given name" }
     family_name { "Sample Family name" }
     lock_version { 1 }
