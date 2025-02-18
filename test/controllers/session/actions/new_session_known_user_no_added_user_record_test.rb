@@ -30,13 +30,13 @@ class NewSessionKnownUserNoNewUserRecordTest < ActionController::TestCase
     assert_no_difference("User.count") do
       get(:search,
           params: {},
-          session: { username: @known_user.name,
+          session: { username: @known_user.user_name,
                      user_full_name: "#{@known_user.given_name} #{@known_user.family_name}",
                      groups: [:login] })
       assert_response :success
     end
     assert assigns(:current_registered_user), "Current registered user should be assigned"
     reg_user = assigns(:current_registered_user)
-    assert reg_user.name == @known_user.name, "Registered user not set correctly"
+    assert reg_user.user_name == @known_user.user_name, "Registered user not set correctly"
   end
 end

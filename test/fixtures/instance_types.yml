@@ -21,6 +21,40 @@
 #   1   instance_type: doubtful_pro_parte_synonym
 #   1   instance_type: doubtful_nomenclatural_synonym
 
+# == Schema Information
+#
+# Table name: instance_type
+#
+#  id                 :bigint           not null, primary key
+#  alignment          :boolean          default(FALSE), not null
+#  bidirectional      :boolean          default(FALSE), not null
+#  citing             :boolean          default(FALSE), not null
+#  deprecated         :boolean          default(FALSE), not null
+#  description_html   :text
+#  doubtful           :boolean          default(FALSE), not null
+#  has_label          :string(255)      default("not set"), not null
+#  lock_version       :bigint           default(0), not null
+#  misapplied         :boolean          default(FALSE), not null
+#  name               :string(255)      not null
+#  nomenclatural      :boolean          default(FALSE), not null
+#  of_label           :string(255)      default("not set"), not null
+#  primary_instance   :boolean          default(FALSE), not null
+#  pro_parte          :boolean          default(FALSE), not null
+#  protologue         :boolean          default(FALSE), not null
+#  relationship       :boolean          default(FALSE), not null
+#  secondary_instance :boolean          default(FALSE), not null
+#  sort_order         :integer          default(0), not null
+#  standalone         :boolean          default(FALSE), not null
+#  synonym            :boolean          default(FALSE), not null
+#  taxonomic          :boolean          default(FALSE), not null
+#  unsourced          :boolean          default(FALSE), not null
+#  rdf_id             :string(50)
+#
+# Indexes
+#
+#  instance_type_rdfid           (rdf_id)
+#  uk_j5337m9qdlirvd49v4h11t1lk  (name) UNIQUE
+#
 DEFAULTS: &DEFAULTS
   alignment: false
   bidirectional: false
@@ -127,11 +161,13 @@ misapplied:
   <<: *DEFAULTS
   name: "misapplied"
   citing: true
+  relationship: true
   misapplied: true
 
 doubtful_misapplied:
   <<: *DEFAULTS
   name: "doubtful misapplied"
+  relationship: true
   citing: true
   misapplied: true
   sort_order: 8
@@ -213,6 +249,7 @@ invalid_publication:
 isonym:
   <<: *DEFAULTS
   name: "isonym"
+  relationship: true
   citing: true
 
 nom_et_stat_nov:
@@ -239,6 +276,7 @@ nomenclatural_synonym:
 orthographic_variant:
   <<: *DEFAULTS
   name: orthographic variant
+  relationship: true
   citing: true
   unsourced: true
 
@@ -247,6 +285,7 @@ pro_parte_misapplied:
   name: "pro parte misapplied"
   citing: true
   misapplied: true
+  relationship: true
   sort_order: 7
 
 pro_parte_nomenclatural_synonym:
@@ -274,12 +313,14 @@ pro_parte_taxonomic_synonym:
   name: "pro parte taxonomic synonym"
   citing: true
   taxonomic: true
+  relationship: true
   sort_order: 3
 
 replaced_synonym:
   <<: *DEFAULTS
   name: replaced synonym
   citing: true
+  relationship: true
   sort_order: 1
 
 secondary_reference:
@@ -312,6 +353,7 @@ taxonomic_synonym:
 trade_name:
   <<: *DEFAULTS
   name: "trade name"
+  relationship: true
   citing: true
 
 vernacular_name:

@@ -26,7 +26,7 @@ class UserCreateUnauthorisedTest < ActionController::TestCase
     @request.headers["Accept"] = "application/javascript"
     assert_no_difference("User.count") do
     post(:create,
-         params: { user: { "name" => "auser",
+         params: { user: { "user_name" => "auser",
                            "given_name" => "a",
                            "family_name" => "user"} },
          session: { username: "uone",

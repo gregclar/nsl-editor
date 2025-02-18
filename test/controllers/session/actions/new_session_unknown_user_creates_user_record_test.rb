@@ -38,6 +38,6 @@ class NewSessionUnknownUserCreatesUserRecordTest < ActionController::TestCase
     end
     assert assigns(:current_registered_user), "Current registered user should be assigned"
     reg_user = assigns(:current_registered_user)
-    assert reg_user.name == @unknown_user_name, "Registered user not set correctly"
+    assert reg_user.user_name == @unknown_user_name, "Registered user not set correctly"
   end
 end

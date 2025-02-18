@@ -68,6 +68,7 @@ end
 group :development, :test do
   gem "byebug"
   gem "pry-rails"
+  gem 'capybara'
   # gem "pry-rescue" # breaks test env. on Mac M1
   gem "webmock"
   # gem "schema_plus"

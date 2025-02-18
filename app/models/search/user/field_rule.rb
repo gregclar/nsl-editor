@@ -19,7 +19,8 @@
 class Search::User::FieldRule
   RULES = {
     "id:" => { where_clause: " id = ? " },
-    "name:" => { where_clause: " lower(name) like ? " },
+    "user-name:" => { where_clause: " lower(user_name) like ? " },
     "given:" => { where_clause: " lower(given_name) like ? " },
+    "family:" => { where_clause: " lower(family_name) like ? " },
   }.freeze
 end
