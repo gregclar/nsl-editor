@@ -10,18 +10,18 @@ DEFAULTS: &DEFAULTS
 
 user_one:
  <<: *DEFAULTS
- name: uone
- given_name: user
+ user_name: uone
+ given_name: userx
  family_name: One
 
 reviewer_one:
  <<: *DEFAULTS
- name: rev1
+ user_name: rev1
  given_name: Reviewer
  family_name: One
 
 user_two:
  <<: *DEFAULTS
- name: utwo
- given_name: user
+ user_name: utwo
+ given_name: userx
  family_name: Two

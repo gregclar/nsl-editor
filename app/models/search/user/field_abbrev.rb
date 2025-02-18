@@ -18,6 +18,6 @@
 #
 class Search::User::FieldAbbrev
   ABBREVS = {
-    "userid:" => "name:",
+    "userid:" => "user-name:",
   }.freeze
 end

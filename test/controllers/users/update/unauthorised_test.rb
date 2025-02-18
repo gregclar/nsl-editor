@@ -27,7 +27,7 @@ class UserDeleteUnauthorisedTest < ActionController::TestCase
     user= users(:user_two)
     patch(:update,
           params: {  id: user.id,
-                     "user"=>{"name"=>"updated_name",
+                     "user"=>{"user_name"=>"updated_name",
                               "given_name"=>"updated_given_name",
                               "family_name"=>"updated_family_name"},
                               "commit"=>"Save"},
@@ -36,7 +36,7 @@ class UserDeleteUnauthorisedTest < ActionController::TestCase
                       groups: ["edit"] })
     assert_response(:forbidden)
     unchanged = User.find(user.id)
-    assert_match(unchanged.name, user.name)
+    assert_match(unchanged.user_name, user.user_name)
     assert_match(unchanged.given_name, user.given_name)
     assert_match(unchanged.family_name, user.family_name)
   end

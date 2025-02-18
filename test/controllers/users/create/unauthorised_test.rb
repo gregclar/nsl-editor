@@ -25,7 +25,7 @@ class UserCreateUnauthorisedTest < ActionController::TestCase
   test "create user unauthorised" do
     @request.headers["Accept"] = "application/javascript"
     post(:create,
-         params: { user: { "name" => "auser",
+         params: { user: { "user_name" => "auser",
                            "given_name" => "a",
                            "family_name" => "user"} },
          session: { username: "fred",
