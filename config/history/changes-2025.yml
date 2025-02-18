@@ -1,4 +1,8 @@
 - :date: 18-Feb-2025
+  :jira_id: '5339'
+  :description: |-
+    Loader: Remove stray characters in view output
+- :date: 18-Feb-2025
   :jira_id: '5341'
   :description: |-
     Loader: Fix error handler to avoid <code>uninitialized constant</code> message for parenting error
