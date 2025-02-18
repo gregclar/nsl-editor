@@ -32,13 +32,13 @@ class Loader::Name::MakeOneInstance::MakeOneSynonymyInstance
     if synonym_already_attached?
       record_synonym_already_there
       entry = "#{Constants::DECLINED_INSTANCE} -: synonym already in place for "
-      entry += "#{@loader_name.simple_name} ##{@loader_name.id}"
+r     entry += "#{@loader_name.simple_name} ##{@loader_name.id}"
       log_to_table(entry)
       return {declines: 1, declines_reasons: {synonym_already_in_place: 1}}
     end
     create_relationship_instance
   rescue StandardError => e
-    entry = "#{Constants::ERROR_INSTANCE} - for #{@loader_name.simple_name} "
+    entry = "#{Constants::FAILED_INSTANCE} - for #{@loader_name.simple_name} "
     entry += "##{@loader_name.id} - error in create: #{e}"
     log_to_table(entry)
     {errors: 1, errors_reasons: {"#{e.to_s}": 1}}
