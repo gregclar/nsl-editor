@@ -57,10 +57,10 @@ class UsersController < ApplicationController
   def create
     @user = User.create(user_params, current_user.username)
     render "create"
-  # rescue StandardError => e
-    # logger.error("UserController.create:rescuing exception #{e}")
-    # @error = e.to_s
-    # render "create_error", status: :unprocessable_entity
+  rescue StandardError => e
+    logger.error("UserController.create:rescuing exception #{e}")
+    @error = e.to_s
+    render "create_error", status: :unprocessable_entity
   end
 
   # POST /users
@@ -87,7 +87,7 @@ class UsersController < ApplicationController
   end
 
   def user_params
-    params.require(:user).permit(:id, :name, :given_name, :family_name)
+    params.require(:user).permit(:id, :user_name, :given_name, :family_name)
   end
 
   def set_tab

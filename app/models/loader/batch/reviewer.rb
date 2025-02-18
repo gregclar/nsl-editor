@@ -57,7 +57,7 @@ class Loader::Batch::Reviewer < ActiveRecord::Base
   end
 
   def name
-    user.name
+    user.user_name
   end
 
   def full_name

@@ -22,15 +22,19 @@ require "test_helper"
 class UserCreateSimpleTest < ActionController::TestCase
   tests UsersController
 
+  def setup
+    @known_user = users(:user_one)
+  end
+
   test "create user simple" do
     @request.headers["Accept"] = "application/javascript"
     assert_difference("User.count") do
       post(:create,
-           params: { user: { "name" => "auser",
+           params: { user: { "user_name" => "auser",
                              "given_name" => "a",
                              "family_name" => "user"} },
-           session: { username: "fred",
-                      user_full_name: "Fred Jones",
+           session: { username: @known_user.user_name,
+                      user_full_name: "#{@known_user.given_name} #{@known_user.family_name}",
                       groups: ["admin"] })
     end
   end

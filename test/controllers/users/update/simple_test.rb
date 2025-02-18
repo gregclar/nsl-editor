@@ -27,7 +27,7 @@ class UserUpdateSimpleTest < ActionController::TestCase
     user= users(:user_two)
     patch(:update,
           params: {  id: user.id,
-                     "user"=>{"name"=>"updated_name",
+                     "user"=>{"user_name"=>"updated_name",
                               "given_name"=>"updated_given_name",
                               "family_name"=>"updated_family_name"},
                               "commit"=>"Save"},
@@ -36,7 +36,7 @@ class UserUpdateSimpleTest < ActionController::TestCase
                       groups: ["admin"] })
     assert_response(:success)
     changed = User.find(user.id)
-    assert_match(changed.name, "updated_name")
+    assert_match(changed.user_name, "updated_name")
     assert_match(changed.given_name, "updated_given_name")
     assert_match(changed.family_name, "updated_family_name")
   end

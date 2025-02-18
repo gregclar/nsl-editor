@@ -1,3 +1,7 @@
+- :date: 18-Feb-2025
+  :jira_id: '5331'
+  :description: |-
+    Rename User name to user_name and same on screen label
 - :date: 17-Feb-2025
   :jira_id: ''
   :description: |-

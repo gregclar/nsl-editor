@@ -28,14 +28,14 @@
 #  family_name  :string(60)       not null
 #  given_name   :string(60)
 #  lock_version :bigint           default(0), not null
-#  name         :string(30)       not null
+#  user_name    :citext           not null
 #  updated_by   :string(50)       not null
 #  created_at   :timestamptz      not null
 #  updated_at   :timestamptz      not null
 #
 # Indexes
 #
-#  users_name_key  (name) UNIQUE
+#  users_name_key  (user_name) UNIQUE
 #
 class User < ActiveRecord::Base
   strip_attributes
@@ -46,10 +46,10 @@ class User < ActiveRecord::Base
 
   # Note, the PK for the users table is the id column.
   # That appears as user_id as a foreign key.
-  # The user's login id is in the column name - called that to avoid
+  # The user's login id is in the column called user_name - called that to avoid
   # confusion with the FK user_id or with the PK id.
   def userid
-    name
+    user_name
   end
 
   def self.create(params, username)
@@ -77,7 +77,7 @@ class User < ActiveRecord::Base
   end
 
   def update_if_changed(params, username)
-    self.name = params[:name]
+    self.user_name = params[:user_name]
     self.given_name = params[:given_name]
     self.family_name = params[:family_name]
     if changed?
@@ -94,7 +94,7 @@ class User < ActiveRecord::Base
   end
 
   def self.users_not_already_reviewers(batch_review)
-    self.all.order(:name) - batch_review.batch_reviewers.collect {|reviewer| reviewer.user}
+    self.all.order(:user_name) - batch_review.batch_reviewers.collect {|reviewer| reviewer.user}
   end
 
   def can_be_deleted?
