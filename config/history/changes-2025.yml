@@ -1,4 +1,8 @@
 - :date: 18-Feb-2025
+  :jira_id: '5341'
+  :description: |-
+    Loader: Fix error handler to avoid <code>uninitialized constant</code> message for parenting error
+- :date: 18-Feb-2025
   :jira_id: '5331'
   :description: |-
     Rename User name to user_name and same on screen label
