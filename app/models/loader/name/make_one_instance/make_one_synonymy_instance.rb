@@ -32,7 +32,7 @@ class Loader::Name::MakeOneInstance::MakeOneSynonymyInstance
     if synonym_already_attached?
       record_synonym_already_there
       entry = "#{Constants::DECLINED_INSTANCE} -: synonym already in place for "
-r     entry += "#{@loader_name.simple_name} ##{@loader_name.id}"
+      entry += "#{@loader_name.simple_name} ##{@loader_name.id}"
       log_to_table(entry)
       return {declines: 1, declines_reasons: {synonym_already_in_place: 1}}
     end
