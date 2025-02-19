@@ -1,27 +1,27 @@
-<% if @current_user.present? %>                  
+<% if @current_user.present? %>
 
 <li class="dropdown">
-  <a href="#" 
-     id="user-dropdown-menu-link" 
-     tabindex="4" 
-     class="dropdown-toggle <%= 'active' if params[:controller].match(/session/) %>" 
+  <a href="#"
+     id="user-dropdown-menu-link"
+     tabindex="4"
+     class="dropdown-toggle <%= 'active' if params[:controller].match(/session/) %>"
      title="Select this to see your account options."
      data-toggle="dropdown">
     <%= editor_icon('user') %>&nbsp;<%= @current_user.full_name %> <span class="caret"></span></a>
   <ul id="user-dropdown-menu" class="dropdown-menu" role="menu">
     <% if @current_user.groups.present? && @current_user.groups.size > 0 %>
       <li class="dropdown-submenu">
-        <a tabindex="-1" 
+        <a tabindex="-1"
            href="#"
            title="Your security groups">
           <%= pluralize(@current_user.groups.size,'Group') %></a>
           <ul class="dropdown-menu">
           <% @current_user.groups.each do |group| %>
-            <% case group 
-               when 'edit'  then icon_name = 'edit' 
-               when 'admin' then icon_name = 'sliders' 
-               else icon_name = 'circle-o' 
-               end 
+            <% case group
+               when 'edit'  then icon_name = 'edit'
+               when 'admin' then icon_name = 'sliders'
+               else icon_name = 'circle-o'
+               end
              %>
              <li role="presentation">
                <a title="A security group you belong to">
@@ -32,12 +32,14 @@
           </ul>
       </li>
     <% end %>
-
-    <li role="presentation" class="divider"></li>
-      <li role="presentation">
-        <%= @current_registered_user.user_name %>
+    <% if @current_registered_user.present? %>
+      <li role="presentation" class="divider"></li>
+      <li class="dropdown-submenu">
+        <a tabindex="-1" href="#" title="#{@current_registered_user.user_name}">
+          <%= @current_registered_user.user_name %>
+        </a>
       </li>
-    
+    <% end %>
     <li role="presentation" class="divider"></li>
 
 <% if Rails.configuration.try(:batch_loader_aware) %>

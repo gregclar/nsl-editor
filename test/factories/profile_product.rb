@@ -29,7 +29,7 @@
 #  product_tree_id_fkey       (tree_id => tree.id)
 #
 FactoryBot.define do
-  factory :product do
+  factory :profile_product, class: "Profile::Product" do
     name { "Sample Name" }
     is_current { true }
     is_available { true }
