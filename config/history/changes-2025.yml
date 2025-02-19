@@ -1,4 +1,9 @@
 - :date: 19-Feb-2025
+  :jira_id: '40'
+  :jira_project: FLOR
+  :description: |-
+    FOA Project: Early work on setting up users and their roles
+- :date: 19-Feb-2025
   :jira_id: ''
   :description: |-
     Ruby gem patch: Revert the nokogiri upgrade because it fails to build on Jenkins
