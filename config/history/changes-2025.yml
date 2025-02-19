@@ -1,4 +1,8 @@
 - :date: 19-Feb-2025
+  :jira_id: ''
+  :description: |-
+    Ruby gem patch: Revert the nokogiri upgrade because it fails to build on Jenkins
+- :date: 19-Feb-2025
   :jira_id: '5341'
   :description: |-
     Loader: Fix typo from yesterday
