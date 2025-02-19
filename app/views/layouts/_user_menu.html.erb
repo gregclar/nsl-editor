@@ -38,14 +38,6 @@
         <a tabindex="-1" href="#" title="#{@current_registered_user.user_name}">
           <%= @current_registered_user.user_name %>
         </a>
-        <ul class="dropdown-menu">
-          <% @current_registered_user.product_roles.includes(:role_type).each do |product_role| %>
-            <li role="presentation">
-              <a title="A product role you have">
-                <%= "#{editor_icon('circle-o')} #{product_role.role_type.name}".html_safe %>
-              </a>
-          <% end %>
-        </ul>
       </li>
     <% end %>
     <li role="presentation" class="divider"></li>
