@@ -17,6 +17,12 @@ class Loader::Name::MakeOneInstance::MakeOneSynonymyInstance
       log_to_table(entry)
       return {declines: 1, declines_reasons: {relationship_instance_already_noted: 1}}
     end
+    if @loader_name.parent.blank?
+      entry = "#{Constants::DECLINED_INSTANCE} -: synonym has no parent"
+      entry += " #{@loader_name.simple_name} ##{@loader_name.id}"
+      log_to_table(entry)
+      return {declines: 1, declines_reasons: {synonym_has_no_parent: 1}}
+    end
     if @loader_name.parent.preferred_match.blank?
       entry = "#{Constants::DECLINED_INSTANCE} -: parent has no preferred match"
       entry += " #{@loader_name.simple_name} ##{@loader_name.id}"
