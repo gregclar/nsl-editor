@@ -1,4 +1,8 @@
 - :date: 20-Feb-2025
+  :jira_id: '5341'
+  :description: |-
+    Loader: Trap and decline processing when synonym has no parent record
+- :date: 20-Feb-2025
   :jira_id: '43'
   :jira_project: FLOR
   :description: |-
