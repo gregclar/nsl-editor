@@ -1,3 +1,8 @@
+- :date: 20-Feb-2025
+  :jira_id: '40'
+  :jira_project: FLOR
+  :description: |-
+    FOA Project: Adding back the user's product roles in the menu
 - :date: 19-Feb-2025
   :jira_id: '40'
   :jira_project: FLOR
@@ -14,7 +19,7 @@
 - :date: 19-Feb-2025
   :jira_id: ''
   :description: |-
-    Ruby gem patch: Dependabot upgrade Nokogiri 
+    Ruby gem patch: Dependabot upgrade Nokogiri
 - :date: 19-Feb-2025
   :jira_id: ''
   :description: |-
