@@ -124,7 +124,9 @@
                 >Bulk processing logs</a>
             </li>
             <li role="separator" class="divider"></li>
+          <% end %>
 
+           <% if can? 'users', 'select' %>
             <li><a id="search-target-item-user" 
                    href="#" 
                    title="Search Users" 
@@ -132,7 +134,9 @@
                    data-examples="user-search-examples"
                 >Users</a>
             </li>
+          <% end %>
 
+          <% if Rails.configuration.try(:batch_loader_aware) %>
             <li><a id="search-target-item-org" 
                    href="#" 
                    title="Search Organisations" 

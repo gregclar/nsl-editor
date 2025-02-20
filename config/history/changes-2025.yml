@@ -1,4 +1,9 @@
 - :date: 20-Feb-2025
+  :jira_id: '43'
+  :jira_project: FLOR
+  :description: |-
+    FOA Project: Make the Users table search target available outside the batch aware context to users authorised to see user data
+- :date: 20-Feb-2025
   :jira_id: '40'
   :jira_project: FLOR
   :description: |-
