@@ -39,7 +39,7 @@ RSpec.describe "layouts/_user_menu.html.erb", type: :view do
         it "displays the registered user's product roles" do
           render
           expect(rendered).to have_selector("a", text: registered_user.user_name)
-          expect(rendered).to have_selector("a", text: role_type.name)
+          expect(rendered).to have_selector("a", text: "#{product.name} #{role_type.name}")
         end
       end
       context "when registered user does not have product roles" do
