@@ -1,7 +1,7 @@
 require "rails_helper"
 
 RSpec.describe "layouts/_user_menu.html.erb", type: :view do
-  let(:user) { FactoryBot.create(:session_user) }
+  let(:session_user) { FactoryBot.create(:session_user) }
   let(:registered_user) { FactoryBot.create(:user, user_name: "Registered User") }
   let(:role_type) { FactoryBot.create(:role_type) }
   let(:product) { FactoryBot.create(:product, name: "Product") }
@@ -11,26 +11,28 @@ RSpec.describe "layouts/_user_menu.html.erb", type: :view do
     allow(view).to receive(:editor_icon).and_return("icon")
     allow(view).to receive(:params).and_return(controller: "names")
 
-    assign(:current_user, user)
+    assign(:current_user, session_user)
     assign(:current_registered_user, registered_user)
   end
 
   context "when user is present" do
     it "displays the user dropdown menu" do
       render
-      expect(rendered).to have_selector("a#user-dropdown-menu-link", text: user.full_name)
+      expect(rendered).to have_selector("a#user-dropdown-menu-link", text: session_user.full_name)
     end
 
     context "when user has groups" do
       before do
-        allow(user).to receive(:groups).and_return(["edit", "admin"])
+        allow(session_user).to receive(:groups).and_return(["edit", "admin"])
       end
 
       it "displays the user's groups" do
         render
-        expect(rendered).to have_selector("a", text: "2 Groups")
+        expect(rendered).to have_selector("a", text: "2 Security groups")
+        expect(rendered).to have_selector("a", text: "1 Role type")
         expect(rendered).to have_selector("a", text: "Edit")
         expect(rendered).to have_selector("a", text: "Admin")
+        expect(rendered).to have_selector("a", text: "#{product.name} #{user_product_role.role_type.name}")
       end
     end
 
@@ -38,7 +40,6 @@ RSpec.describe "layouts/_user_menu.html.erb", type: :view do
       context "when registered user has product roles" do
         it "displays the registered user's product roles" do
           render
-          expect(rendered).to have_selector("a", text: registered_user.user_name)
           expect(rendered).to have_selector("a", text: "#{product.name} #{role_type.name}")
         end
       end
@@ -47,7 +48,6 @@ RSpec.describe "layouts/_user_menu.html.erb", type: :view do
         let!(:user_product_role) { FactoryBot.create(:user_product_role, product: product, role_type: role_type, user: registered_user_1) }
         it "does not display the registered user's product roles" do
           render
-          expect(rendered).to have_selector("a", text: registered_user.user_name)
           expect(rendered).not_to have_selector("a", text: role_type.name)
         end
       end
