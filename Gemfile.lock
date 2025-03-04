@@ -358,6 +358,8 @@ GEM
     sassc (2.4.0)
       ffi (~> 1.9)
     securerandom (0.4.1)
+    shoulda-matchers (6.4.0)
+      activesupport (>= 5.2.0)
     simple_calendar (3.0.4)
       rails (>= 6.1)
     simplecov (0.22.0)
@@ -478,6 +480,7 @@ DEPENDENCIES
   rails-ujs
   rest-client
   rspec-rails
+  shoulda-matchers
   simple_calendar
   simplecov
   sprockets-rails
