@@ -1,3 +1,8 @@
+- :date: 05-Mar-2025
+  :jira_id: '42'
+  :jira_project: FLOR
+  :description: |-
+    Refactored the registered user method and added a way to identify a user role
 - :date: 04-Mar-2025
   :jira_id: '42'
   :jira_project: FLOR
