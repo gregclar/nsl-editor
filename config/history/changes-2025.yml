@@ -1,4 +1,8 @@
 - :date: 07-Mar-2025
+  :jira_id: '5330'
+  :description: |-
+    Loader Batch Review Voting: Tidy up the Reviewers Vote tab
+- :date: 07-Mar-2025
   :jira_id: '5329'
   :description: |-
     Loader: Batch Review search results now include the Batch name; revert recent nokogiri patch upgrade
