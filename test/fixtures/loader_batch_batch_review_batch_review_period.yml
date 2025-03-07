@@ -4,7 +4,7 @@ _fixture:
 
 review_period_one:
   name: "Review Period One"
-  batch_review: review_one
+  batch_review: review_one_on_batch_one
   start_date: <%= Date.current.last_week %>
   end_date: <%= Date.current.next_month %>
   created_by: fixture
@@ -14,7 +14,7 @@ review_period_one:
 
 review_period_two_no_end_date:
   name: "Review Period Two No End Date"
-  batch_review: review_one
+  batch_review: review_one_on_batch_one
   start_date: <%= Date.current.last_year %>
   created_by: fixture
   updated_by: fixture

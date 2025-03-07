@@ -1,3 +1,7 @@
+- :date: 07-Mar-2025
+  :jira_id: '5329'
+  :description: |-
+    Loader: Batch Review search results now include the Batch name; revert recent nokogiri patch upgrade
 - :date: 06-Mar-2025
   :jira_id: 
   :description: |-
