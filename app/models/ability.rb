@@ -54,7 +54,7 @@ class Ability
     reviewer_auth     if user.reviewer?
     batch_loader_auth if user.batch_loader?
     loader_2_tab_auth if user.loader_2_tab_loader?
-    profile_v2_auth   if user.profile_v2?
+    #profile_v2_auth   if user.profile_v2?
 
     draft_profile_editor if user.with_role?('draft-profile-editor')
     profile_editor if user.with_role?('profile-editor')
