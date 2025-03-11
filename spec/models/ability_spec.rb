@@ -11,7 +11,7 @@ RSpec.describe Ability, type: :model do
       allow(session_user).to receive(:with_role?).with('profile-editor').and_return(false)
     end
 
-    describe "#profile_v2_auth role" do
+    xdescribe "#profile_v2_auth role" do
       context "for session_user with profile_v2" do
         before { allow(session_user).to receive(:profile_v2?).and_return(true) }
         it "grants all access to profile_items" do

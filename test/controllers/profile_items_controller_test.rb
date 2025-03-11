@@ -19,10 +19,11 @@
 require "test_helper"
 
 class ProfileItemsControllerTest < ActionController::TestCase
-  
+
   def setup
     @profile_item = profile_item(:ecology_pi)
-    @session = { username: "fred", user_full_name: "Fred Jones", groups: ["edit", "foa"] }
+    @user_product_role = user_product_roles(:user_one_foa_draft_profile_editor)
+    @session = { username: "uone", user_full_name: "Fred Jones", groups: ["edit", "foa"] }
   end
 
   test "should destroy profile item and set message" do

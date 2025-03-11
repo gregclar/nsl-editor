@@ -22,6 +22,7 @@ class ProfileItemReferencesControllerTest < ActionController::TestCase
   def setup
     @profile_item = profile_item(:ecology_pi)
     @reference = references(:section_with_heyland_author_different_from_parent)
+    @user_product_role = user_product_roles(:user_one_foa_draft_profile_editor)
     @valid_params = {
       profile_item_reference: {
         reference_id: @reference.id,
@@ -29,7 +30,7 @@ class ProfileItemReferencesControllerTest < ActionController::TestCase
         profile_item_id: @profile_item.id
       }
     }
-    @session = { username: "fred", user_full_name: "Fred Jones", groups: ["edit", "foa"] }
+    @session = { username: "uone", user_full_name: "Fred Jones", groups: ["edit", "foa"] }
   end
 
   test "should create profile item reference successfully" do

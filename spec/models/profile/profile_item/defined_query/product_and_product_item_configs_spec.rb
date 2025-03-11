@@ -2,6 +2,7 @@ require 'rails_helper'
 
 RSpec.describe Profile::ProfileItem::DefinedQuery::ProductAndProductItemConfigs, type: :model do
   let(:session_user) { FactoryBot.create(:session_user) }
+  let!(:user) { FactoryBot.create(:user, user_name: session_user.username) }
   let(:instance) { FactoryBot.create(:instance) }
   let(:params) { {} }
 
@@ -13,7 +14,11 @@ RSpec.describe Profile::ProfileItem::DefinedQuery::ProductAndProductItemConfigs,
     it { should respond_to(:product_configs_and_profile_items) }
 
     it "has instance variable session_user" do
-      expect(subject.instance_variable_get(:@user)).to eq session_user
+      expect(subject.instance_variable_get(:@session_user)).to eq session_user
+    end
+
+    it "has instance variable user" do
+      expect(subject.instance_variable_get(:@user)).to eq user
     end
 
     it "has instance variable profile_context" do
@@ -72,6 +77,16 @@ RSpec.describe Profile::ProfileItem::DefinedQuery::ProductAndProductItemConfigs,
 
             expect(subject).to eq(result)
           end
+        end
+      end
+
+      context "when a user has a FOA product role" do
+        let(:product) { FactoryBot.create(:product, name: "FOA") }
+        let!(:role_type) { FactoryBot.create(:role_type) }
+        let!(:user_draft_profile_editor) { FactoryBot.create(:user_product_role, role_type:, user:, product:)}
+
+        it "returns the product attached to the role" do
+          expect(subject[1].id).to eq product.id
         end
       end
     end
