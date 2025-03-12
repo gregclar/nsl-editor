@@ -46,9 +46,9 @@ class Ability
     user ||= SessionUser.new(groups: [])
     basic_auth_1
     basic_auth_2
+
     edit_auth         if user.edit?
     qa_auth           if user.qa?
-
     admin_auth        if user.admin?
     treebuilder_auth  if user.treebuilder?
     reviewer_auth     if user.reviewer?
@@ -56,12 +56,20 @@ class Ability
     loader_2_tab_auth if user.loader_2_tab_loader?
     #profile_v2_auth   if user.profile_v2?
 
-    draft_profile_editor if user.with_role?('draft-profile-editor')
+    # NOTES: Broader permissions come first
     profile_editor if user.with_role?('profile-editor')
+    draft_profile_editor if user.with_role?('draft-profile-editor')
   end
 
   def draft_profile_editor
     can :manage, :profile_v2
+    can :manage_profile, Instance do |instance|
+      instance.draft?
+    end
+    can [:create, :read], Author
+    can :update, Author do |author|
+      author.references.blank? && author.names.blank?
+    end
     can :create, Profile::ProfileItem
     can :manage, Profile::ProfileItem do |profile_item|
       profile_item.is_draft?
@@ -75,18 +83,26 @@ class Ability
     can :manage, Profile::ProfileItemAnnotation do |profile_item_annotation|
       profile_item_annotation.profile_item.is_draft?
     end
+    can :create, Reference
+    can :update, Reference do |reference|
+      !reference.instances?
+    end
     can "authors", :all
     can "instances", ["tab_details", "tab_profile_v2"]
     can "menu", "new"
     can "profile_items", :all
     can "profile_item_annotations", :all
     can "profile_item_references", :all
-    can "references", :all
-
-    can [:create, :read], Author
-
-    cannot "authors", ["update", "destroy"]
-    cannot "references", ["edit", "update", "copy", "destroy"]
+    can "references", [
+      "new_row",
+      "new",
+      "typeahead_on_citation_for_parent",
+      "typeahead_on_citation",
+      "create",
+      "tab_edit_1",
+      "tab_edit_2",
+      "tab_edit_3"
+    ]
   end
 
   def profile_editor
@@ -102,7 +118,6 @@ class Ability
     can "instances", "tab_details"
     can "instances", "tab_profile_v2"
   end
-
 
   def profile_v2_auth
     # can :manage, :all   # NOTES: This is not working. It breaks everything.
@@ -159,6 +174,8 @@ class Ability
   end
 
   def edit_auth
+    can :manage,              Author
+    can :manage,              Reference
     can "authors",            :all
     can "comments",           :all
     can "instances",          :all
