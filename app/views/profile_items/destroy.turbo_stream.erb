@@ -21,6 +21,7 @@
 <% end %>
 
 <%= turbo_stream.replace "message_#{@product_item_config.id}" do %>
+  <div id="common-error-message-container" class="error-container"></div>
   <div id="message_<%= @product_item_config.id %>" class="message-container">
     <%= @message %>
   </div>

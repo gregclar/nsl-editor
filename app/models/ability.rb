@@ -46,37 +46,102 @@ class Ability
     user ||= SessionUser.new(groups: [])
     basic_auth_1
     basic_auth_2
+
     edit_auth         if user.edit?
     qa_auth           if user.qa?
-
     admin_auth        if user.admin?
     treebuilder_auth  if user.treebuilder?
     reviewer_auth     if user.reviewer?
     batch_loader_auth if user.batch_loader?
     loader_2_tab_auth if user.loader_2_tab_loader?
-    profile_v2_auth   if user.profile_v2?
+    #profile_v2_auth   if user.profile_v2?
+
+    # NOTES: Broader permissions come first
+    profile_editor if user.with_role?('profile-editor')
+    draft_profile_editor if user.with_role?('draft-profile-editor')
   end
 
+  def draft_profile_editor
+    can :manage, :profile_v2
+    can :manage_profile, Instance do |instance|
+      instance.draft?
+    end
+    can [:create, :read], Author
+    can :update, Author do |author|
+      author.references.blank? && author.names.blank?
+    end
+    can :create, Profile::ProfileItem
+    can :manage, Profile::ProfileItem do |profile_item|
+      profile_item.is_draft?
+    end
+    can :manage, Profile::ProfileItemReference do |profile_item_reference|
+      profile_item_reference.profile_item.is_draft?
+    end
+    can :manage, Profile::ProfileText do |profile_text|
+      profile_text.profile_item.is_draft?
+    end
+    can :manage, Profile::ProfileItemAnnotation do |profile_item_annotation|
+      profile_item_annotation.profile_item.is_draft?
+    end
+    can :create, Reference
+    can :update, Reference do |reference|
+      !reference.instances?
+    end
+    can "authors", :all
+    can "instances", ["tab_details", "tab_profile_v2"]
+    can "menu", "new"
+    can "profile_items", :all
+    can "profile_item_annotations", :all
+    can "profile_item_references", :all
+    can "references", [
+      "new_row",
+      "new",
+      "typeahead_on_citation_for_parent",
+      "typeahead_on_citation",
+      "create",
+      "tab_edit_1",
+      "tab_edit_2",
+      "tab_edit_3"
+    ]
+  end
+
+  def profile_editor
+    can :manage, :profile_v2
+    can :manage, Profile::ProfileItem
+    can :manage, Profile::ProfileItemReference
+    can :manage, Profile::ProfileText
+    can :manage, Profile::ProfileItemAnnotation
+    can "references", "typeahead_on_citation"
+    can "profile_items", :all
+    can "profile_item_annotations", :all
+    can "profile_item_references", :all
+    can "instances", "tab_details"
+    can "instances", "tab_profile_v2"
+  end
 
   def profile_v2_auth
     # can :manage, :all   # NOTES: This is not working. It breaks everything.
-    can "profile_items",            :all
+    can :manage, :profile_v2
+    can :manage, Profile::ProfileItem
+    can :manage, Profile::ProfileItemReference
+    can :manage, Profile::ProfileText
+    can :manage, Profile::ProfileItemAnnotation
+    can "profile_items", :all
     can "profile_item_annotations", :all
-    can "profile_item_references",  :all
-    can "profile_texts",            :all
-    can :manage,                    :profile_v2
-    can "instances",                "tab_profile_v2"
-    can "references",               "typeahead_on_citation"
-    can "instances",                "tab_copy_to_new_profile_v2"
-    can "instances",                "tab_unpublished_citation_for_profile_v2"
-    can "instances",                "copy_for_profile_v2"
-    can "instances",                "tab_details"
+    can "profile_item_references", :all
+    can "profile_texts", :all
+    can "instances", "tab_profile_v2"
+    can "references", "typeahead_on_citation"
+    can "instances", "tab_copy_to_new_profile_v2"
+    can "instances", "tab_unpublished_citation_for_profile_v2"
+    can "instances", "copy_for_profile_v2"
+    can "instances", "tab_details"
     can "names/typeaheads/for_unpub_cit", "index"
-    can "instances",                "create_cited_by"
-    can "instances",                "create_cites_and_cited_by"
-    can "instances",                "create"
-    can "instances",                "tab_synonymy_for_profile_v2"
-    can "instances",                "typeahead_for_synonymy"
+    can "instances", "create_cited_by"
+    can "instances", "create_cites_and_cited_by"
+    can "instances", "create"
+    can "instances", "tab_synonymy_for_profile_v2"
+    can "instances", "typeahead_for_synonymy"
   end
 
   def basic_auth_1
@@ -109,6 +174,8 @@ class Ability
   end
 
   def edit_auth
+    can :manage,              Author
+    can :manage,              Reference
     can "authors",            :all
     can "comments",           :all
     can "instances",          :all
