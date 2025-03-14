@@ -1,3 +1,7 @@
+- :date: 14-Mar-2025
+  :jira_id: '5340'
+  :description: |-
+    Loader Name: Fix loss of <code>limit:</code> directive when placed after default batch name
 - :date: 12-Mar-2025
   :jira_id: '47'
   :jira_project: FLOR
