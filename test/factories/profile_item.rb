@@ -45,7 +45,7 @@ FactoryBot.define do
   factory :profile_item, class: "Profile::ProfileItem" do
     instance_id { 1 }
     product_item_config_id { 1 }
-    profile_object_rdf_id { "Sample Profile object rdf" }
+    sequence(:profile_object_rdf_id) {|n| "Sample Profile object rdf #{n}" }
     is_draft { true }
     published_date { Time.current }
     end_date { Time.current }
