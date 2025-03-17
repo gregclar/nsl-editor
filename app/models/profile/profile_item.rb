@@ -43,36 +43,46 @@
 #  profile_item_tree_element_id_fkey         (tree_element_id => tree_element.id)
 #
 module Profile
-    class ProfileItem < ApplicationRecord
-      self.table_name = "profile_item"
+  class ProfileItem < ApplicationRecord
+    self.table_name = "profile_item"
 
-      belongs_to :instance
-      belongs_to :product_item_config, class_name: 'Profile::ProductItemConfig', foreign_key: 'product_item_config_id'
-      belongs_to :profile_text, class_name: 'Profile::ProfileText', foreign_key: 'profile_text_id', dependent: :destroy
-      belongs_to :profile_object_type,
-                class_name: 'Profile::ProfileObjectType',
-                primary_key: 'rdf_id',
-                foreign_key: 'profile_object_rdf_id',
-                optional: true
+    belongs_to :instance
+    belongs_to :product_item_config, class_name: 'Profile::ProductItemConfig', foreign_key: 'product_item_config_id'
+    belongs_to :profile_text, class_name: 'Profile::ProfileText', foreign_key: 'profile_text_id', dependent: :destroy
+    belongs_to :profile_object_type,
+              class_name: 'Profile::ProfileObjectType',
+              primary_key: 'rdf_id',
+              foreign_key: 'profile_object_rdf_id',
+              optional: true
 
-      has_many :profile_item_references,
-              class_name: 'Profile::ProfileItemReference',
-              foreign_key: 'profile_item_id',
-              dependent: :destroy
+    has_many :profile_item_references,
+            class_name: 'Profile::ProfileItemReference',
+            foreign_key: 'profile_item_id',
+            dependent: :destroy
 
-      has_one :product, through: :product_item_config
-      has_one :profile_item_type, through: :profile_object_type, class_name: 'Profile::ProfileItemType'
-      has_one :profile_item_annotation,
-              class_name: 'Profile::ProfileItemAnnotation',
-              foreign_key: 'profile_item_id',
-              dependent: :destroy
+    has_one :product, through: :product_item_config
+    has_one :profile_item_type, through: :profile_object_type, class_name: 'Profile::ProfileItemType'
+    has_one :profile_item_annotation,
+            class_name: 'Profile::ProfileItemAnnotation',
+            foreign_key: 'profile_item_id',
+            dependent: :destroy
 
-      validates :statement_type, presence: true
+    validates :statement_type, presence: true
 
-      default_scope { includes(:product_item_config).order("product_item_config.sort_order ASC") }
+    before_destroy :validate_source_profile_item_id
 
-      def fresh?
-        created_at > 1.hour.ago
+    default_scope { includes(:product_item_config).order("product_item_config.sort_order ASC") }
+
+    def fresh?
+      created_at > 1.hour.ago
+    end
+
+    def validate_source_profile_item_id
+      cited_by_count = Profile::ProfileItem.where(source_profile_item_id: self.id).count
+      if cited_by_count > 0
+        errors.add(:base, "Cannot delete profile item as it has been cited by #{cited_by_count} other items")
+        throw(:abort)
       end
     end
   end
+end
