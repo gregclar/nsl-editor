@@ -90,7 +90,10 @@ class ProfileTextsController < ApplicationController
   end
 
   def really_update
-    if @profile_text.update(permitted_profile_text_params.merge(updated_by: current_user.username))
+    if @profile_text.update(permitted_profile_text_params.merge(
+      value: markdown_to_html(permitted_profile_text_params[:value_md].to_s),
+      updated_by: current_user.username
+    ))
       @message = "Updated"
       render :update
     else
