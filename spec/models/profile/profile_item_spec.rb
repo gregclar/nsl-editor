@@ -1,39 +1,37 @@
 require 'rails_helper'
 
 RSpec.describe Profile::ProfileItem, type: :model do
-  describe 'before_destroy callback: validate_source_profile_item_id' do
-    let!(:profile_item) { FactoryBot.create(:profile_item) }
 
-    context 'when the profile item is not cited by other items' do
-      it 'allows the profile item to be destroyed' do
-        expect { profile_item.destroy }.to change(Profile::ProfileItem, :count).by(-1)
+  describe "associations" do
+    it { is_expected.to belong_to(:instance) }
+    it { is_expected.to belong_to(:product_item_config).class_name('Profile::ProductItemConfig').with_foreign_key('product_item_config_id') }
+    it { is_expected.to belong_to(:profile_text).class_name('Profile::ProfileText').with_foreign_key('profile_text_id').dependent(:destroy) }
+    it { is_expected.to belong_to(:profile_object_type).class_name('Profile::ProfileObjectType').with_primary_key('rdf_id').with_foreign_key('profile_object_rdf_id').optional }
+    it { is_expected.to have_many(:profile_item_references).class_name('Profile::ProfileItemReference').with_foreign_key('profile_item_id').dependent(:destroy) }
+    it { is_expected.to have_one(:product).through(:product_item_config) }
+    it { is_expected.to have_one(:profile_item_annotation).class_name('Profile::ProfileItemAnnotation').with_foreign_key('profile_item_id').dependent(:destroy) }
+    it { is_expected.to have_many(:sourced_in_profile_items).class_name('Profile::ProfileItem').with_foreign_key('source_profile_item_id') }
+  end
+
+  describe "#allow_delete?" do
+    let(:profile_item) { FactoryBot.create(:profile_item) }
+
+    context "when there are no sourced_in_profile_items" do
+      it "returns true" do
+        expect(profile_item.allow_delete?).to be true
       end
     end
 
-    context 'when the profile item is cited by other items' do
+    context "when there are sourced_in_profile_items" do
       before do
         allow_any_instance_of(Name).to receive(:name_type_must_match_category).and_return(true)
         FactoryBot.create(:profile_item, source_profile_item_id: profile_item.id, profile_object_rdf_id: profile_item.profile_object_rdf_id, product_item_config: profile_item.product_item_config)
       end
 
-      it 'does not allow the profile item to be destroyed' do
-        expect { profile_item.destroy }.not_to change(Profile::ProfileItem, :count)
-        expect(profile_item.errors[:base]).to include("Cannot delete profile item as it has been cited by 1 other item")
-      end
-    end
-
-    context 'when the profile item is cited by multiple items' do
-      before do
-        allow_any_instance_of(Name).to receive(:name_type_must_match_category).and_return(true)
-      end
-
-      it 'does not allow the profile item to be destroyed and shows the correct error message' do
-        other_profile_item_1 = FactoryBot.create(:profile_item, source_profile_item_id: profile_item.id, profile_object_rdf_id: profile_item.profile_object_rdf_id, product_item_config: profile_item.product_item_config)
-        other_profile_item_2 = FactoryBot.create(:profile_item, source_profile_item_id: profile_item.id, profile_object_rdf_id: profile_item.profile_object_rdf_id, product_item_config: profile_item.product_item_config)
-
-        expect { profile_item.destroy }.not_to change(Profile::ProfileItem, :count)
-        expect(profile_item.errors[:base]).to include("Cannot delete profile item as it has been cited by 2 other items")
+      it "returns false" do
+        expect(profile_item.allow_delete?).to be false
       end
     end
   end
+
 end

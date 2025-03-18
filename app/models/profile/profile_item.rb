@@ -73,20 +73,14 @@ module Profile
 
     validates :statement_type, presence: true
 
-    before_destroy :validate_source_profile_item_id
-
     default_scope { includes(:product_item_config).order("product_item_config.sort_order ASC") }
 
     def fresh?
       created_at > 1.hour.ago
     end
 
-    def validate_source_profile_item_id
-      cited_by_count = self.sourced_in_profile_items.count
-      if cited_by_count > 0
-        errors.add(:base, "Cannot delete profile item as it has been cited by #{ActionController::Base.helpers.pluralize(cited_by_count, 'other item')}")
-        throw(:abort)
-      end
+    def allow_delete?
+      self.sourced_in_profile_items.blank?
     end
   end
 end
