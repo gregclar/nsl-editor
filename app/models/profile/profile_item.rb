@@ -67,6 +67,10 @@ module Profile
             foreign_key: 'profile_item_id',
             dependent: :destroy
 
+    has_many :sourced_in_profile_items,
+            class_name: 'Profile::ProfileItem',
+            foreign_key: 'source_profile_item_id'
+
     validates :statement_type, presence: true
 
     before_destroy :validate_source_profile_item_id
@@ -78,9 +82,9 @@ module Profile
     end
 
     def validate_source_profile_item_id
-      cited_by_count = Profile::ProfileItem.where(source_profile_item_id: self.id).count
+      cited_by_count = self.sourced_in_profile_items.count
       if cited_by_count > 0
-        errors.add(:base, "Cannot delete profile item as it has been cited by #{cited_by_count} other items")
+        errors.add(:base, "Cannot delete profile item as it has been cited by #{ActionController::Base.helpers.pluralize(cited_by_count, 'other item')}")
         throw(:abort)
       end
     end

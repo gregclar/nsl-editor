@@ -18,7 +18,7 @@ RSpec.describe Profile::ProfileItem, type: :model do
 
       it 'does not allow the profile item to be destroyed' do
         expect { profile_item.destroy }.not_to change(Profile::ProfileItem, :count)
-        expect(profile_item.errors[:base]).to include("Cannot delete profile item as it has been cited by 1 other items")
+        expect(profile_item.errors[:base]).to include("Cannot delete profile item as it has been cited by 1 other item")
       end
     end
 
