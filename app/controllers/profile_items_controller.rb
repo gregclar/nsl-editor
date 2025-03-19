@@ -39,10 +39,10 @@ class ProfileItemsController < ApplicationController
   def destroy
     @product_item_config = @profile_item.product_item_config
     @instance_id = @profile_item.instance_id
-    if @profile_item.destroy!
+    if @profile_item.destroy
       @message = "Deleted profile item."
     else
-      raise("Not saved")
+      raise("Not saved: #{@profile_item.errors.full_messages.to_sentence}")
     end
   rescue StandardError => e
     @message = "Error deleting profile item: #{e.message}"

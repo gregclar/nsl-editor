@@ -1,3 +1,8 @@
+- :date: 18-Mar-2025
+  :jira_id: '51'
+  :jira_project: FLOR
+  :description: |-
+    Foa Project: Better error message when a draft-profile-editor user tries to delete a profile item that has been linked to another profile item
 - :date: 17-Mar-2025
   :jira_id: '47'
   :jira_project: FLOR
