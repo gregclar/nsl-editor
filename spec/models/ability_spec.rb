@@ -8,37 +8,8 @@ RSpec.describe Ability, type: :model do
 
     before do
       allow(session_user).to receive(:with_role?).with('draft-profile-editor').and_return(false)
+      allow(session_user).to receive(:with_role?).with('draft-editor').and_return(false)
       allow(session_user).to receive(:with_role?).with('profile-editor').and_return(false)
-    end
-
-    xdescribe "#profile_v2_auth role" do
-      context "for session_user with profile_v2" do
-        before { allow(session_user).to receive(:profile_v2?).and_return(true) }
-        it "grants all access to profile_items" do
-          expect(subject.can?("profile_items", :all)).to eq true
-          expect(subject.can?(:manage, :profile_v2)).to eq true
-        end
-
-        it "grants all access to profile_item_annotations" do
-          expect(subject.can?("profile_item_annotations", :all)).to eq true
-        end
-
-        it "grants acces to profile v2 tab of instance" do
-          expect(subject.can?("instances", "tab_profile_v2")).to eq true
-        end
-
-        it "grants acces to profile_texts" do
-          expect(subject.can?("profile_texts", :all)).to eq true
-        end
-
-        it "grants acces to profile_item_references" do
-          expect(subject.can?("profile_item_references", :all)).to eq true
-        end
-
-        it "grants acces to typeahead citation of a reference" do
-          expect(subject.can?("references", "typeahead_on_citation")).to eq true
-        end
-      end
     end
 
     describe "#draft_profile_editor role" do
@@ -197,6 +168,24 @@ RSpec.describe Ability, type: :model do
         expect(subject.can?("menu", "new")).to eq true
       end
 
+    end
+
+    describe "#draft_editor role" do
+      before do
+        allow(session_user).to receive(:with_role?).with('draft-editor').and_return(true)
+      end
+
+      it 'can copy_as_draft_secondary_reference a published instance' do
+        expect(subject.can?(:copy_as_draft_secondary_reference, Instance)).to eq true
+      end
+
+      it 'can access instances tab_copy_to_new_profile_v2' do
+        expect(subject.can?("instances", "tab_copy_to_new_profile_v2")).to eq true
+      end
+
+      it 'can access instances copy_for_profile_v2' do
+        expect(subject.can?("instances", "copy_for_profile_v2")).to eq true
+      end
     end
 
     describe "#profile_editor role" do
