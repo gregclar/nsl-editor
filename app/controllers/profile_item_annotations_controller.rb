@@ -45,6 +45,7 @@ class ProfileItemAnnotationsController < ApplicationController
 
   def update
     @message = "No change"
+    @profile_item = @profile_item_annotation.profile_item
     really_update if changed?
   end
 
@@ -63,7 +64,11 @@ class ProfileItemAnnotationsController < ApplicationController
   end
 
   def really_update
-    if @profile_item_annotation.update(permitted_params.merge(updated_by: current_user.username))
+    if permitted_params[:value].blank?
+      @profile_item_annotation.destroy!
+      @message = "Deleted"
+      render :delete
+    elsif @profile_item_annotation.update(permitted_params.merge(updated_by: current_user.username))
       @message = "Updated"
       render :update
     else
