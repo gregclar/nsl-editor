@@ -54,9 +54,10 @@ class Ability
     reviewer_auth     if user.reviewer?
     batch_loader_auth if user.batch_loader?
     loader_2_tab_auth if user.loader_2_tab_loader?
-    #profile_v2_auth   if user.profile_v2?
 
+    #profile_v2_auth   if user.profile_v2?
     # NOTES: Broader permissions come first
+    draft_editor if user.with_role?('draft-editor')
     profile_editor if user.with_role?('profile-editor')
     draft_profile_editor if user.with_role?('draft-profile-editor')
   end
@@ -104,6 +105,15 @@ class Ability
       "tab_edit_3",
       "update"
     ]
+  end
+
+  def draft_editor
+    can [:update, :destroy], Instance do |instance|
+      instance.draft?
+    end
+    can :copy_as_draft_secondary_reference, Instance
+    can "instances", "tab_copy_to_new_profile_v2"
+    can "instances", "copy_for_profile_v2"
   end
 
   def profile_editor
