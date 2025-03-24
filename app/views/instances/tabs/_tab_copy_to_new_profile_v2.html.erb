@@ -27,7 +27,7 @@ The copied instance will remain attached to:
              method: :post) do |f| %>
 
   <br>
-  The copied instance will be attached to the <%= @current_user.profile_v2_context.product %> product reference:<br>
+  The copied instance will be attached to the <%= @current_registered_user.available_product_from_roles&.name %> product reference:<br>
   <h6>&mdash; <%= product_reference.citation %></h6>
   <br>
   <label for="instance_type_id">Instance type:</label>
