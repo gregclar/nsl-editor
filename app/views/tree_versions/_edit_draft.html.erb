@@ -2,9 +2,9 @@
   <% if @working_draft %>
     <div id="edit-draft-tree-form-container" class="new-record-form-container">
 
-      <h4>Edit Draft Tree</h4>
+      <h4>Edit Draft Taxonomy</h4>
 
-      <form action="<%= trees_update_draft_path %>" data-remote="true" method="post">
+      <form action="<%= tree_versions_update_draft_path %>" data-remote="true" method="post">
         <input type="hidden" id="version_id" name="version_id" value="<%= @working_draft.id %>"/>
         <div class="form-group">
 
@@ -24,11 +24,9 @@
 
         <div>
           &nbsp;
-          <button id="tree-form-cancel" type="button" class="btn btn-default left">Cancel <i
-          class="fa fa-hand-o-left"></i></button>
+          <button id="tree-form-cancel" type="button" class="btn btn-default left">Cancel</button>
           <button id="edit-draft-submit" type="submit"
-                  class="btn btn-primary right"
-                  onclick="$(this).find('i.fa').addClass('fa-spin')">Save <i class="fa fa-refresh"></i></button>
+                  class="btn btn-primary right">Save</button>
         </div>
       </form>
     </div>

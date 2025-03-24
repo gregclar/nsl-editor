@@ -1,30 +1,30 @@
 <div class="focus-details unsaved-record">
   <div id="new-draft-tree-form-container" class="new-record-form-container">
 
-    <h4>New Draft Tree</h4>
+    <h4>New Draft Taxonomy</h4>
     <div>
-      <form action="<%= trees_create_draft_path %>" data-remote="true" method="post">
+      <form action="<%= tree_versions_create_draft_path %>" data-remote="true" method="post">
         <div class="form-group">
           <label>Tree
             <%= select_tag("tree_id",
-                           options_from_collection_for_select(Tree.all, 'id', 'name'),
+                           options_from_collection_for_select(Tree.all.where('is_read_only = false'), 'id', 'name'),
                            {class: 'form-control give-me-focus',
                             required: true,
                             autofocus: true,
-                            title: "Choose a tree",
+                            title: "Choose a non-read-only tree",
                             tabindex: increment_tab_index}) %>
           </label>
 
-          <label>Name this draft
-            <input class="form-control" id="draft_name" name="draft_name" type="text"
+          <label>Name this draft<span class="red">*</span>
+            <input class="form-control" id="draft_name" name="draft_name" type="text" required
                    placeholder="e.g. November 2022" title="Enter a name for this draft, e.g. minor edits"/>
           </label>
         </div>
 
         <div class="form-group">
-          <label for="draft_log">Description / work log</label>
+          <label for="draft_log">Description / work log</label><span class="red">*</span>
           <textarea class="form-control"
-                    title="Description of work to carry out"
+                    title="Description of work to carry out" required
                     id="draft_log" name="draft_log" rows="10"></textarea>
         </div>
 
@@ -43,9 +43,9 @@
                   onclick="$(this).find('i.fa').addClass('fa-spin')">Save <i class="fa fa-refresh"></i></button>
         </div>
       </form>
-    </div>
+    <br/>
     <div id="create-draft-message-container" class="message-container"></div>
     <div id="create-draft-error-message-container" class="message-container error"></div>
-
+    </div>
   </div>
 </div>

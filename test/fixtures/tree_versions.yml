@@ -40,3 +40,14 @@ draft_version:
   published_at: 2016-01-12 13:00:00.000000
   published_by: 'import'
   tree: APC
+
+ron_draft_version:
+  created_at: 2024-01-12 13:00:00.000000
+  created_by: gclarke
+  draft_name: RON Draft
+  log_entry: RON Draft
+  previous_version_id: 
+  published: false
+  published_at: 2024-01-12 13:00:00.000000
+  published_by: 
+  tree: RON
