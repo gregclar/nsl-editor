@@ -2,9 +2,9 @@
   <% if @working_draft %>
     <div id="edit-draft-tree-form-container" class="new-record-form-container">
 
-      <h4>Publish Draft Tree</h4>
+      <h4>Publish Draft Taxonomy</h4>
       <div>
-        <form action="<%= trees_publish_path %>" data-remote="true" method="post">
+        <form action="<%= tree_versions_publish_path %>" data-remote="true" method="post">
           <input type="hidden" id="version_id" name="version_id" value="<%= @working_draft.id %>"/>
           <div class="form-group">
             <%= @working_draft.tree.name %> <%= @working_draft.draft_name %>
@@ -33,10 +33,10 @@
           </div>
         </form>
       </div>
+    </div>
       <div>
         <div id="publish-draft-message-container" class="message-container"></div>
         <div id="publish-draft-error-message-container" class="message-container error"></div>
       </div>
-    </div>
   <% end %>
 </div>

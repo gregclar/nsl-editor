@@ -1,4 +1,8 @@
 - :date: 24-Mar-2025
+  :jira_id: '5164'
+  :description: |-
+    Taxonomy: Honour <code>tree.is_read_only</code> by preventing tree operations when boolean is set true
+- :date: 24-Mar-2025
   :jira_id: '52'
   :jira_project: FLOR
   :description: |-

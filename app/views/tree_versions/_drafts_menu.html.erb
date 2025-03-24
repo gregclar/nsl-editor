@@ -17,7 +17,7 @@
                       toggle_current_workspace_path(id: menu_item.draft_id),
                       { remote: true,
                         method: "post",
-                        title: menu_item.log_entry }) %>
+                        title: menu_item.log_entry || menu_item.draft_name }) %>
       <% else %>
           <%= "#{menu_item.name} (No draft)".html_safe %>
       <% end %>

@@ -326,34 +326,34 @@ Rails.application.routes.draw do
         to: "trees#update_excluded",
         via: :post
 
-  match "trees/new_draft",
-        as: "trees_new_draft",
-        to: "trees#new_draft",
+  match "tree_versions/new_draft",
+        as: "tree_versions_new_draft",
+        to: "tree_versions#new_draft",
         via: :get
 
-  match "trees/create_draft",
-        as: "trees_create_draft",
-        to: "trees#create_draft",
+  match "tree_versions/create_draft",
+        as: "tree_versions_create_draft",
+        to: "tree_versions#create_draft",
         via: :post
 
-  match "trees/edit_draft",
-        as: "trees_edit_draft",
-        to: "trees#edit_draft",
+  match "tree_verions/edit_draft",
+        as: "tree_versions_edit_draft",
+        to: "tree_versions#edit_draft",
         via: :get
 
-  match "trees/update_draft",
-        as: "trees_update_draft",
-        to: "trees#update_draft",
+  match "tree_versions/update_draft",
+        as: "tree_versions_update_draft",
+        to: "tree_versions#update_draft",
         via: :post
 
-  match "trees/publish_draft",
-        as: "trees_publish_draft",
-        to: "trees#publish_draft",
+  match "tree_versions/form_to_publish",
+        as: "tree_versions_form_to_publish",
+        to: "tree_versions#form_to_publish",
         via: :get
 
-  match "trees/publish",
-        as: "trees_publish",
-        to: "trees#publish_version",
+  match "tree_versions/publish",
+        as: "tree_versions_publish",
+        to: "tree_versions#publish",
         via: :post
 
   match "trees/reports",
