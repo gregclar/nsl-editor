@@ -260,7 +260,7 @@ class InstancesController < ApplicationController
     end
     offer << "tab_comments"
     offer << "tab_copy_to_new_reference" if @instance.standalone? && params["row-type"] == "instance_as_part_of_concept_record"
-    offer << "tab_copy_to_new_profile_v2" unless @instance.draft?
+    offer << "tab_copy_to_new_profile_v2" if @instance.copy_with_product_reference_allowed?
     if Rails.configuration.try('batch_loader_aware') &&
           can?('loader/names', 'update') &&
           offer_loader_tab?

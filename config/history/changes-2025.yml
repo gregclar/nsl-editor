@@ -1,4 +1,9 @@
 - :date: 25-Mar-2025
+  :jira_id: '31'
+  :jira_project: FLOR
+  :description: |-
+    Foa Project draft-editor permissions: Only display instance copy tab for standalone and non-draft instances and display error message.
+- :date: 25-Mar-2025
   :jira_id:
   :description: |-
     Build: Remove scripted changing of active_record timezome from :localhost to :utc - just leave production AR TZ as :utc
@@ -7,7 +12,7 @@
   :description: |-
     Taxonomy: Honour <code>tree.is_read_only</code> by preventing tree operations when boolean is set true
 - :date: 24-Mar-2025
-  :jira_id: '52'
+  :jira_id: '31'
   :jira_project: FLOR
   :description: |-
     Foa Project: draft-editor permissions for copying an instance as draft secondary ref instance for a product (FOA)
