@@ -92,5 +92,29 @@ RSpec.describe InstancesHelper, type: :helper do
         expect(helper.tab_for_citing_instance_in_name_search("tab_copy_to_new_reference")).to eq "tab_copy_to_new_reference_na"
       end
     end
+
+    context "when the tab is in the copy-related tabs" do
+      it "returns 'tab_copy_to_new_reference_na' for 'tab_copy_to_new_reference'" do
+        expect(helper.tab_for_citing_instance_in_name_search("tab_copy_to_new_reference")).to eq("tab_copy_to_new_reference_na")
+      end
+
+      it "returns 'tab_copy_to_new_reference_na' for 'tab_copy_to_new_profile_v2'" do
+        expect(helper.tab_for_citing_instance_in_name_search("tab_copy_to_new_profile_v2")).to eq("tab_copy_to_new_reference_na")
+      end
+    end
+
+    context "when the tab is not recognized" do
+      it "returns 'tab_empty' for an unrecognized tab" do
+        expect(helper.tab_for_citing_instance_in_name_search("tab_unknown")).to eq("tab_empty")
+      end
+
+      it "returns 'tab_empty' for a nil tab" do
+        expect(helper.tab_for_citing_instance_in_name_search(nil)).to eq("tab_empty")
+      end
+
+      it "returns 'tab_empty' for an empty string tab" do
+        expect(helper.tab_for_citing_instance_in_name_search("")).to eq("tab_empty")
+      end
+    end
   end
 end

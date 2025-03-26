@@ -538,10 +538,6 @@ class Instance < ActiveRecord::Base
     standalone? && reverse_of_this_is_cited_by.blank?
   end
 
-  def copy_with_product_reference_allowed?
-    standalone? && !draft?
-  end
-
   def relationship_ref_must_match_cited_by_instance_ref
     return unless relationship? &&
                   !(reference.id == this_is_cited_by.reference.id)
