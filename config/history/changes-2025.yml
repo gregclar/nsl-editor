@@ -1,3 +1,7 @@
+- :date: 26-Mar-2025
+  :jira_id: '5088'
+  :description: |-
+    Loader Search Targets: change order of target options to relect use
 - :date: 25-Mar-2025
   :jira_id: '31'
   :jira_project: FLOR
