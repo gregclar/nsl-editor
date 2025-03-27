@@ -1,3 +1,8 @@
+- :date: 27-Mar-2025
+  :jira_id: '31'
+  :jira_project: FLOR
+  :description: |-
+    Foa Project draft-editor permissions: Only offer copy tab when row-type params is instance_as_part_of_concept_record
 - :date: 26-Mar-2025
   :jira_id: '5088'
   :description: |-

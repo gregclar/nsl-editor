@@ -104,7 +104,7 @@ module InstancesHelper
   def tab_for_citing_instance_in_name_search(tab)
     if %w[tab_synonymy tab_synonymy_for_profile_v2 tab_create_unpublished_citation tab_unpublished_citation_for_profile_v2].include?(tab)
       tab
-    elsif tab == "tab_copy_to_new_reference"
+    elsif %w[tab_copy_to_new_reference tab_copy_to_new_profile_v2].include?(tab)
       "tab_copy_to_new_reference_na"
     else
       "tab_empty"

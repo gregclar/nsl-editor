@@ -37,6 +37,28 @@ RSpec.describe InstancesController, type: :controller do
           expect(controller.send(:tabs_to_offer)).to include('tab_profile_details', 'tab_edit_profile')
         end
       end
+
+      context "and the row-type params is 'instance_as_part_of_concept_record'" do
+        before do
+          allow(controller).to receive(:params).and_return({ "row-type" => "instance_as_part_of_concept_record" })
+        end
+
+        it "includes 'tab_copy_to_new_reference'" do
+          tabs = controller.send(:tabs_to_offer)
+          expect(tabs).to include("tab_copy_to_new_reference")
+        end
+
+        context "when the instance is non-draft" do
+          before do
+            allow(instance).to receive(:draft?).and_return(false)
+          end
+
+          it "includes 'tab_copy_to_new_profile_v2'" do
+            tabs = controller.send(:tabs_to_offer)
+            expect(tabs).to include("tab_copy_to_new_profile_v2")
+          end
+        end
+      end
     end
 
     context 'when batch loader is aware and user has permissions' do
