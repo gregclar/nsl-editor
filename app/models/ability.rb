@@ -57,7 +57,7 @@ class Ability
 
     #profile_v2_auth   if user.profile_v2?
     # NOTES: Broader permissions come first
-    draft_editor if user.with_role?('draft-editor')
+    draft_editor(user) if user.with_role?('draft-editor')
     profile_editor if user.with_role?('profile-editor')
     draft_profile_editor if user.with_role?('draft-profile-editor')
   end
@@ -107,13 +107,19 @@ class Ability
     ]
   end
 
-  def draft_editor
+  def draft_editor(user)
     can [:update, :destroy], Instance do |instance|
       instance.draft?
     end
     can :copy_as_draft_secondary_reference, Instance
+    can :synonymy_as_draft_secondary_reference, Instance do |instance|
+      instance.draft? && user.product_from_roles.present? && instance.reference.products.pluck(:name).any?(user.product_from_roles.name)
+    end
     can "instances", "tab_copy_to_new_profile_v2"
     can "instances", "copy_for_profile_v2"
+    can "instances", "tab_synonymy_for_profile_v2"
+    can "instances", "typeahead_for_synonymy"
+    can "instances", "create_cites_and_cited_by"
   end
 
   def profile_editor
@@ -187,6 +193,7 @@ class Ability
   def edit_auth
     can :manage,              Author
     can :manage,              Reference
+    can :create,              Instance
     can "authors",            :all
     can "comments",           :all
     can "instances",          :all

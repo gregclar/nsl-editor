@@ -1,4 +1,9 @@
 - :date: 27-Mar-2025
+  :jira_id: '33'
+  :jira_project: FLOR
+  :description: |-
+    Foa Project draft-editor permissions: Show syn tab for draft and secondary reference instance
+- :date: 27-Mar-2025
   :jira_id: '31'
   :jira_project: FLOR
   :description: |-

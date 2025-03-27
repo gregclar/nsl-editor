@@ -47,7 +47,7 @@
   <% end %>
 
   <% if @tabs_to_offer.include?('tab_synonymy') %>
-    <% if can? 'instances', 'create' %>
+    <% if can? :create, Instance %>
       <%= render partial: 'instances/tabs/tab', locals: {first: false,
                                           last: false,
                                           this_tab: 'tab_synonymy',
@@ -61,7 +61,7 @@
   <% end %>
 
   <% if @tabs_to_offer.include?('tab_synonymy_for_profile_v2') %>
-    <% if can? 'instances', 'create' %>
+    <% if can? :synonymy_as_draft_secondary_reference, @instance %>
       <%= render partial: 'instances/tabs/tab', locals: {first: false,
                                           last: false,
                                           this_tab: 'tab_synonymy_for_profile_v2',

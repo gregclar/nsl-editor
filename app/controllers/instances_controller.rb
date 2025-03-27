@@ -252,7 +252,8 @@ class InstancesController < ApplicationController
 
     if @instance.standalone?
       offer << @current_user.profile_v2_context.unpublished_citation_tab(@instance)
-      offer << @current_user.profile_v2_context.synonymy_tab(@instance)
+      offer << "tab_synonymy"
+      offer << "tab_synonymy_for_profile_v2" if @instance.draft? && @instance.secondary_reference?
       offer << "tab_classification"
       offer << "tab_profile_details" if @instance.profile?
       offer << "tab_edit_profile" if @instance.profile? && @instance.show_taxo?

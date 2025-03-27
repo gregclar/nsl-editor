@@ -17,14 +17,31 @@ RSpec.describe InstancesController, type: :controller do
     context 'when instance is standalone' do
       before do
         allow(instance).to receive(:standalone?).and_return(true)
+        allow(instance).to receive(:standalone?).and_return(true)
+        allow(instance).to receive(:profile?).and_return(true)
+        allow(instance).to receive(:show_taxo?).and_return(true)
         allow(profile_v2_context).to receive(:unpublished_citation_tab).and_return('tab_unpublished_citation')
-        allow(profile_v2_context).to receive(:synonymy_tab).and_return('tab_synonymy')
-        allow(profile_v2_context).to receive(:copy_instance_tab).and_return('tab_copy_instance')
         controller.instance_variable_set(:@instance, instance)
       end
 
       it 'includes specific tabs for standalone instances' do
-        expect(controller.send(:tabs_to_offer)).to include('tab_unpublished_citation', 'tab_synonymy', 'tab_classification', 'tab_profile_v2')
+        tabs = controller.send(:tabs_to_offer)
+        expect(tabs).to include("tab_show_1", "tab_edit", "tab_edit_notes")
+        expect(tabs).to include("tab_unpublished_citation", "tab_synonymy", "tab_classification")
+        expect(tabs).to include("tab_profile_details", "tab_edit_profile", "tab_profile_v2", "tab_comments", "tab_synonymy")
+      end
+
+      it "includes 'tab_copy_to_new_reference' when row-type is 'instance_as_part_of_concept_record'" do
+        allow(controller).to receive(:params).and_return({ "row-type" => "instance_as_part_of_concept_record" })
+        tabs = controller.send(:tabs_to_offer)
+        expect(tabs).to include("tab_copy_to_new_reference")
+      end
+
+      it "includes 'tab_synonymy_for_profile_v2' when instance is draft and secondary reference instance" do
+        allow(instance).to receive(:draft?).and_return(true)
+        allow(instance).to receive(:secondary_reference?).and_return(true)
+        tabs = controller.send(:tabs_to_offer)
+        expect(tabs).to include("tab_synonymy_for_profile_v2")
       end
 
       context 'when instance has a profile' do
@@ -81,12 +98,12 @@ RSpec.describe InstancesController, type: :controller do
     context 'when instance is not standalone' do
       before do
         allow(instance).to receive(:standalone?).and_return(false)
-        allow(profile_v2_context).to receive(:copy_instance_tab).and_return('tab_copy_instance')
         controller.instance_variable_set(:@instance, instance)
       end
 
-      it 'does not include standalone specific tabs' do
-        expect(controller.send(:tabs_to_offer)).not_to include('tab_unpublished_citation', 'tab_synonymy', 'tab_classification', 'tab_profile_v2')
+      it "does not include tabs specific to standalone instances" do
+        tabs = controller.send(:tabs_to_offer)
+        expect(tabs).not_to include("tab_synonymy", "tab_synonymy_for_profile_v2", "tab_classification", "tab_profile_details", "tab_edit_profile", "tab_profile_v2")
       end
     end
   end
