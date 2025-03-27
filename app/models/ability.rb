@@ -193,7 +193,7 @@ class Ability
   def edit_auth
     can :manage,              Author
     can :manage,              Reference
-    can :manage,              Instance
+    can :create,              Instance
     can "authors",            :all
     can "comments",           :all
     can "instances",          :all

@@ -285,8 +285,8 @@ RSpec.describe Ability, type: :model do
         expect(subject.can?(:manage, Reference)).to eq true
       end
 
-      it "allows managing Instance" do
-        expect(subject.can?(:manage, Instance)).to eq true
+      it "allows create Instance" do
+        expect(subject.can?(:create, Instance)).to eq true
       end
     end
 
