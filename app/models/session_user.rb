@@ -42,6 +42,10 @@ class SessionUser < ActiveType::Object
     @profile_v2_context ||= ::Users::ProfileContext.new(self).context
   end
 
+  def product_from_roles
+    user&.available_product_from_roles
+  end
+
   #
   # Edit
   #
