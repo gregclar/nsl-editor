@@ -89,7 +89,7 @@
   <% end %>
 
   <% if @tabs_to_offer.include?('tab_unpublished_citation_for_profile_v2') %>
-    <% if can? 'instances', 'tab_unpublished_citation_for_profile_v2' %>
+    <% if can? :copy_as_draft_secondary_reference, @instance %>
       <%= render partial: 'instances/tabs/tab', locals: {first: false,
                                           last: false,
                                           this_tab: 'tab_unpublished_citation_for_profile_v2',

@@ -187,6 +187,18 @@ RSpec.describe Ability, type: :model do
       expect(subject.can?("instances", "copy_for_profile_v2")).to eq true
     end
 
+    it 'can access instances create_cited_by' do
+      expect(subject.can?("instances", "create_cited_by")).to eq true
+    end
+
+    it 'can access instances tab_unpublished_citation_for_profile_v2' do
+      expect(subject.can?("instances", "tab_unpublished_citation_for_profile_v2")).to eq true
+    end
+
+    it 'can access names/typeaheads/for_unpub_cit index' do
+      expect(subject.can?("names/typeaheads/for_unpub_cit", "index")).to eq true
+    end
+
     it "allows copying as draft secondary reference" do
       instance = FactoryBot.create(:instance, draft: false)
       expect(subject.can?(:copy_as_draft_secondary_reference, instance)).to eq true
