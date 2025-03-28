@@ -1,4 +1,9 @@
 - :date: 28-Mar-2025
+  :jira_id: '34'
+  :jira_project: FLOR
+  :description: |-
+    Foa Project draft-editor permissions: Show unpub tab for draft and secondary reference instance
+- :date: 28-Mar-2025
   :jira_id: '5368'
   :description: |-
     Author: Check field lengths before saving to database

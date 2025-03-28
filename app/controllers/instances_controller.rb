@@ -251,7 +251,8 @@ class InstancesController < ApplicationController
     offer = %w[tab_show_1 tab_edit tab_edit_notes]
 
     if @instance.standalone?
-      offer << @current_user.profile_v2_context.unpublished_citation_tab(@instance)
+      offer << "tab_unpublished_citation"
+      offer << "tab_unpublished_citation_for_profile_v2" if @instance.draft? && @instance.secondary_reference?
       offer << "tab_synonymy"
       offer << "tab_synonymy_for_profile_v2" if @instance.draft? && @instance.secondary_reference?
       offer << "tab_classification"
