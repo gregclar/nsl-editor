@@ -19,7 +19,6 @@
 #
 class Role < ActiveRecord::Base
   strip_attributes
-  self.table_name = "role"
   self.primary_key = "id"
   self.sequence_name = "nsl_global_seq"
   has_many :user_product_roles, class_name: "User::ProductRole", foreign_key: "role_id"

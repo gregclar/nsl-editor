@@ -7153,13 +7153,13 @@ COMMENT ON COLUMN public.product_item_config.api_date IS 'The date when a system
 
 
 --
--- Name: role; Type: TABLE; Schema: public; Owner: -
+-- Name: roles; Type: TABLE; Schema: public; Owner: -
 --
 
-CREATE TABLE public.role (
+CREATE TABLE public.roles (
     id bigint DEFAULT nextval('public.nsl_global_seq'::regclass) NOT NULL,
     name character varying(50) NOT NULL check(name = lower(name)),
-    description text DEFAULT 'Please describe this product role type'::text NOT NULL,
+    description text DEFAULT 'Please describe this role'::text NOT NULL,
     deprecated boolean DEFAULT false NOT NULL,
     lock_version bigint DEFAULT 0 NOT NULL,
     created_at timestamp with time zone DEFAULT now() NOT NULL,
@@ -8145,20 +8145,20 @@ CREATE TABLE public.user_product_role (
 CREATE VIEW public.user_product_role_v AS
  SELECT users.user_name,
     product.name AS product,
-    role.name AS role,
+    roles.name AS role,
     ref.citation AS reference,
     tree.name AS tree,
     (product.is_name_index)::text AS is_name_index,
     users.id AS user_id,
     product.id AS product_id,
-    role.id AS role_id
+    roles.id AS role_id
    FROM (((((public.user_product_role upr
      JOIN public.users ON ((upr.user_id = users.id)))
      JOIN public.product ON ((upr.product_id = product.id)))
-     JOIN public.role ON ((upr.role_id = role.id)))
+     JOIN public.roles ON ((upr.role_id = roles.id)))
      LEFT JOIN public.reference ref ON ((product.reference_id = ref.id)))
      LEFT JOIN public.tree ON ((product.tree_id = tree.id)))
-  ORDER BY users.user_name, product.name, role.name;
+  ORDER BY users.user_name, product.name, roles.name;
 
 
 --
@@ -8726,11 +8726,11 @@ ALTER TABLE ONLY public.product
 
 
 --
--- Name: role role_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+-- Name: roles role_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY public.role
-    ADD CONSTRAINT role_pkey PRIMARY KEY (id);
+ALTER TABLE ONLY public.roles
+    ADD CONSTRAINT roles_pkey PRIMARY KEY (id);
 
 
 --
@@ -8798,11 +8798,11 @@ ALTER TABLE ONLY public.profile_text
 
 
 --
--- Name: role role_unique_name; Type: CONSTRAINT; Schema: public; Owner: -
+-- Name: roles roles_unique_name; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY public.role
-    ADD CONSTRAINT role_unique_name UNIQUE (name);
+ALTER TABLE ONLY public.roles
+    ADD CONSTRAINT roles_unique_name UNIQUE (name);
 
 
 --
@@ -11008,11 +11008,11 @@ ALTER TABLE ONLY public.user_product_role
 
 
 --
--- Name: user_product_role upr_role_fk; Type: FK CONSTRAINT; Schema: public; Owner: -
+-- Name: user_product_role upr_roles_fk; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.user_product_role
-    ADD CONSTRAINT upr_role_fk FOREIGN KEY (role_id) REFERENCES public.role(id);
+    ADD CONSTRAINT upr_roles_fk FOREIGN KEY (role_id) REFERENCES public.roles(id);
 
 
 --
