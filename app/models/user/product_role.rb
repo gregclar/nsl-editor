@@ -26,20 +26,20 @@
 #  created_at           :timestamptz      not null
 #  updated_at           :timestamptz      not null
 #  product_id           :bigint           not null, primary key
-#  product_role_type_id :bigint           not null, primary key
+#  role_id              :bigint           not null, primary key
 #  user_id              :bigint           not null, primary key
 #
 # Foreign Keys
 #
 #  upr_product_fk            (product_id => product.id)
-#  upr_product_role_type_fk  (product_role_type_id => product_role_type.id)
+#  upr_role_fk               (role_id => role.id)
 #  upr_users_fk              (user_id => users.id)
 #
 class User::ProductRole < ActiveRecord::Base
   strip_attributes
   self.table_name = "user_product_role"
-  self.primary_key = %i[user_id product_id product_role_type_id]
+  self.primary_key = %i[user_id product_id role_id]
   belongs_to :user
   belongs_to :product
-  belongs_to :role_type, class_name: "Product::RoleType", foreign_key: "product_role_type_id"
+  belongs_to :role
 end

@@ -45,6 +45,7 @@
 module Profile
   class ProfileItem < ApplicationRecord
     self.table_name = "profile_item"
+    self.primary_key = "id"
 
     belongs_to :instance
     belongs_to :product_item_config, class_name: 'Profile::ProductItemConfig', foreign_key: 'product_item_config_id'

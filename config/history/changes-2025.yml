@@ -1,3 +1,8 @@
+- :date: 31-Mar-2025
+  :jira_id: '56'
+  :jira_project: FLOR
+  :description: |-
+    Foa Project: Rename table <code>product_role_type</code> to <code>role</code>
 - :date: 28-Mar-2025
   :jira_id: '5368'
   :description: |-
