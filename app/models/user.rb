@@ -49,8 +49,8 @@ class User < ActiveRecord::Base
   before_create :set_audit_fields
   before_update :set_updated_by
 
-  def is?(requested_role_type_name)
-    product_roles.joins(:role_type).select("product_role_type.name").pluck(:name).include?(requested_role_type_name)
+  def is?(requested_role_name)
+    product_roles.joins(:role).select("role.name").pluck(:name).include?(requested_role_name)
   end
 
   def available_product_from_roles
@@ -59,8 +59,8 @@ class User < ActiveRecord::Base
 
     if role
       self.product_roles
-        .joins(:role_type)
-        .find_by(product_role_type: {name: role})
+        .joins(:role)
+        .find_by(role: {name: role})
         .product
     end
   end
