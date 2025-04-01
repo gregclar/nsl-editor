@@ -75,7 +75,7 @@
   <% end %>
 
   <% if @tabs_to_offer.include?('tab_unpublished_citation') %>
-    <% if can? 'instances', 'create' %>
+    <% if can? :create, @instance %>
       <%= render partial: 'instances/tabs/tab', locals: {first: false,
                                           last: false,
                                           this_tab: 'tab_unpublished_citation',
