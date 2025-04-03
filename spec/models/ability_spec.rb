@@ -216,11 +216,18 @@ RSpec.describe Ability, type: :model do
       end
 
       context "when instance product reference is the same as the user's product" do
-        it "allows synonymy as draft secondary reference" do
+        before do
           product = FactoryBot.create(:product)
           allow(instance).to receive_message_chain(:reference, :products).and_return([product])
           allow(session_user).to receive(:product_from_roles).and_return(product)
+        end
+
+        it "allows synonymy as draft secondary reference" do
           expect(subject.can?(:synonymy_as_draft_secondary_reference, instance)).to eq true
+        end
+
+        it "allows editing the instance" do
+          expect(subject.can?(:edit, instance)).to eq true
         end
       end
 

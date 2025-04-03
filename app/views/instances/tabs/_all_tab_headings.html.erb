@@ -19,7 +19,7 @@
   <% end %>
 
   <% if @tabs_to_offer.include?('tab_edit') %>
-    <% if can? 'instances', 'edit' %>
+    <% if can? :edit, @instance %>
       <%= render partial: 'instances/tabs/tab', locals: {first: false,
                                         last: false,
                                         this_tab: 'tab_edit',
