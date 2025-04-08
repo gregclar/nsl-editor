@@ -6,7 +6,8 @@ RSpec.describe "names/tabs/_tab_instances_profile_v2.html.erb", type: :view do
   let(:name) { FactoryBot.create(:name) }
   let(:instance) { FactoryBot.create(:instance, name: name) }
   let(:product) { FactoryBot.create(:product, name: "FOA") }
-  let(:reference) { FactoryBot.create(:reference) }
+  let!(:language) { FactoryBot.create(:language, iso6391code: "en", iso6393code: "eng") }
+  let!(:reference) { FactoryBot.create(:reference, language: language) }
   let!(:instance_type) { FactoryBot.create(:instance_type, name: "secondary reference") }
 
   before do

@@ -107,13 +107,11 @@ class Ability
   end
 
   def draft_editor(user)
-    can [:update, :destroy], Instance do |instance|
-      instance.draft?
-    end
     can :create_with_product_reference, Instance
     can :copy_as_draft_secondary_reference, Instance
     can [
-      :edit,
+      :destroy,
+      :manage_draft_secondary_reference,
       :synonymy_as_draft_secondary_reference,
       :unpublished_citation_as_draft_secondary_reference
     ], Instance do |instance|
@@ -121,6 +119,7 @@ class Ability
     end
     can "instances", "create"
     can "instances", "tab_edit"
+    can "instances", "tab_edit_profile_v2"
     can "instances", "update"
     can "instances", "destroy"
     can "instances", "tab_copy_to_new_profile_v2"
