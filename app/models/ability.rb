@@ -239,6 +239,7 @@ class Ability
     can "admin",              :all
     can "menu",               "admin"
     can "users",              :all
+    can "user/product_roles",         :all
   end
 
   def batch_loader_auth

@@ -42,4 +42,53 @@ class User::ProductRole < ActiveRecord::Base
   belongs_to :user
   belongs_to :product
   belongs_to :role
+  validates :user_id, :role_id, :product_id, presence: true
+  validates :user_id, uniqueness: { scope: [:role_id, :product_id],
+    message: "cannot have the same role twice for the same product" }
+
+  def self.create(params, username)
+    upr = User::ProductRole.new(params)
+    raise upr.errors.full_messages.first.to_s unless upr.save_with_username(username)
+
+    upr
+  end
+
+  def save_with_username(username)
+    self.created_by = self.updated_by = username
+    save
+  end
+
+  def display_text
+    "#{product.name} #{role.name} role for #{user.user_name}"
+  end
+
+  def available_roles
+    Role.all - user.roles
+  end
+
+  def all_product_role_combinations
+    Enumerator.product(Product.all.map{|p| p.name}, Role.all.map{|r| r.name}).to_a
+  end
+
+  def user_current_product_role_combinations
+    user.product_roles.map {|upr| [upr.product.name,upr.role.name]}
+  end
+
+  def user_available_product_role_combinations
+    all_product_role_combinations - user_current_product_role_combinations
+  end
+
+  def user_available_prc_for_product
+    user_available_product_role_combinations.select {|item| item.first == product.name}
+  end
+
+  def role_names_available
+    user_available_prc_for_product.map {|pr| pr.last}
+  end
+
+  def roles_available
+    role_names = role_names_available
+    all_roles = Role.all.where('not deprecated').order('name')
+    all_roles.select {|role| role_names.include?(role.name) }
+  end
 end

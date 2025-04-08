@@ -1,0 +1,43 @@
+<div id='choose_product_form', class=''>
+<% user_product_role = User::ProductRole.new %>
+<% user_product_role.user_id = @user.id %>
+<%= divider %>
+
+<%= form_for(user_product_role, as: 'user_product_role', role: 'form'
+    ) do |form| %>
+<div class="form-group">
+  <label for="products">Product</label>
+  <br>
+  <%= form.select(:product_id, Product.all.map { |product| [product.name, product.id] },
+                  {include_blank: true,
+                   required: true},
+                  {title: "Choose a product",
+                   onchange: "this.form.requestSubmit();",
+                   class: "form-control give-me-focus"}) %>
+</div>
+    <%= form.hidden_field(:user_id) %>
+    <%= form.hidden_field(:role_id) %>
+
+    <div class="form-group align-right">
+      <% if user_product_role.new_record? %>
+        <%#= link_to 'Cancel', '/cancel-new-form', class: "btn btn-primary cancel-new-record-link", 
+                                                  title: "Cancel new user product role", 
+                                                  tabindex: increment_tab_index,
+                                                  data: {element_id: "xxxnew-user-#{params[:random_id]}"} %>
+      <% end %>
+
+<% end %>
+</div>
+<div id="search-result-details-info-message-container" class="message-container"></div>
+<div id="search-result-details-error-message-container" class="message-container"></div>
+
+<% if @take_focus %>
+  <script>
+    $(document).ready(function () {
+      focusOnField('product_id');
+    })
+  </script>
+<% end %>
+
+
+
