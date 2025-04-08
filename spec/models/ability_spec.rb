@@ -207,14 +207,6 @@ RSpec.describe Ability, type: :model do
     context "when the instance is a draft" do
       let(:instance) { FactoryBot.create(:instance, draft: true) }
 
-      it "allows updating the instance" do
-        expect(subject.can?(:update, instance)).to eq true
-      end
-
-      it "allows destroying the instance" do
-        expect(subject.can?(:destroy, instance)).to eq true
-      end
-
       context "when instance product reference is the same as the user's product" do
         before do
           product = FactoryBot.create(:product)
@@ -222,16 +214,20 @@ RSpec.describe Ability, type: :model do
           allow(session_user).to receive(:product_from_roles).and_return(product)
         end
 
-        it "allows synonymy as draft secondary reference" do
-          expect(subject.can?(:synonymy_as_draft_secondary_reference, instance)).to eq true
+        it "allows destroying the instance" do
+          expect(subject.can?(:destroy, instance)).to eq true
         end
 
-        it "allows editing the instance" do
-          expect(subject.can?(:edit, instance)).to eq true
+        it "allows synonymy as draft secondary reference" do
+          expect(subject.can?(:synonymy_as_draft_secondary_reference, instance)).to eq true
         end
       end
 
       context "when instance product reference is not the same as the user's product" do
+        it "does not allows destroying the instance" do
+          expect(subject.can?(:destroy, instance)).to eq false
+        end
+
         it "does not allow synonymy as draft secondary reference" do
           allow(instance).to receive(:reference).and_return(FactoryBot.create(:reference))
           allow(session_user).to receive(:product_from_roles).and_return(FactoryBot.create(:product))
