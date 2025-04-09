@@ -8123,13 +8123,28 @@ CREATE VIEW public.tree_join_v AS
 
 
 --
+-- Name: product_role; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.product_role (
+    id bigint DEFAULT nextval('public.nsl_global_seq'::regclass) NOT NULL,
+    product_id bigint NOT NULL,
+    role_id bigint NOT NULL,
+    lock_version bigint DEFAULT 0 NOT NULL,
+    created_at timestamp with time zone DEFAULT now() NOT NULL,
+    created_by character varying(50) DEFAULT USER NOT NULL,
+    updated_at timestamp with time zone DEFAULT now() NOT NULL,
+    updated_by character varying(50) DEFAULT USER NOT NULL
+);
+
+
+--
 -- Name: user_product_role; Type: TABLE; Schema: public; Owner: -
 --
 
 CREATE TABLE public.user_product_role (
     user_id bigint NOT NULL,
-    product_id bigint NOT NULL,
-    role_id bigint NOT NULL,
+    product_role_id bigint NOT NULL,
     lock_version bigint DEFAULT 0 NOT NULL,
     created_at timestamp with time zone DEFAULT now() NOT NULL,
     created_by character varying(50) DEFAULT USER NOT NULL,
@@ -8152,10 +8167,11 @@ CREATE VIEW public.user_product_role_v AS
     users.id AS user_id,
     product.id AS product_id,
     roles.id AS role_id
-   FROM (((((public.user_product_role upr
+   FROM ((((((public.user_product_role upr
      JOIN public.users ON ((upr.user_id = users.id)))
-     JOIN public.product ON ((upr.product_id = product.id)))
-     JOIN public.roles ON ((upr.role_id = roles.id)))
+     JOIN public.product_role pr ON ((upr.product_role_id = pr.id)))
+     JOIN public.product ON ((pr.product_id = product.id)))
+     JOIN public.roles ON ((pr.role_id = roles.id)))
      LEFT JOIN public.reference ref ON ((product.reference_id = ref.id)))
      LEFT JOIN public.tree ON ((product.tree_id = tree.id)))
   ORDER BY users.user_name, product.name, roles.name;
@@ -9066,7 +9082,7 @@ ALTER TABLE ONLY public.id_mapper
 --
 
 ALTER TABLE ONLY public.user_product_role
-    ADD CONSTRAINT user_product_role_pkey PRIMARY KEY (user_id, product_id, role_id);
+    ADD CONSTRAINT user_product_role_pkey PRIMARY KEY (user_id, product_role_id);
 
 
 --
@@ -11004,15 +11020,18 @@ ALTER TABLE ONLY public.tree_element
 --
 
 ALTER TABLE ONLY public.user_product_role
-    ADD CONSTRAINT upr_product_fk FOREIGN KEY (product_id) REFERENCES public.product(id);
+    ADD CONSTRAINT upr_product_role_fk FOREIGN KEY (product_role_id) REFERENCES public.product_role(id);
 
 
 --
--- Name: user_product_role upr_roles_fk; Type: FK CONSTRAINT; Schema: public; Owner: -
+-- Name: product_role upr_roles_fk; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY public.user_product_role
-    ADD CONSTRAINT upr_roles_fk FOREIGN KEY (role_id) REFERENCES public.roles(id);
+ALTER TABLE ONLY public.product_role
+    ADD CONSTRAINT pr_roles_fk FOREIGN KEY (role_id) REFERENCES public.roles(id);
+
+ALTER TABLE ONLY public.product_role
+    ADD CONSTRAINT pr_product_fk FOREIGN KEY (product_id) REFERENCES public.product(id);
 
 
 --
