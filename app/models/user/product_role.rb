@@ -20,18 +20,18 @@
 #
 # Table name: user_product_role
 #
-#  user_id              :bigint           not null, primary key
-#  product_role_id      :bigint           not null, primary key
-#  lock_version         :bigint           default(0), not null
-#  created_by           :string(50)       not null
-#  updated_by           :string(50)       not null
-#  created_at           :timestamptz      not null
-#  updated_at           :timestamptz      not null
+#  created_by      :string(50)       not null
+#  lock_version    :bigint           default(0), not null
+#  updated_by      :string(50)       not null
+#  created_at      :timestamptz      not null
+#  updated_at      :timestamptz      not null
+#  product_role_id :bigint           not null
+#  user_id         :bigint           not null, primary key
 #
 # Foreign Keys
 #
-#  upr_product_role_fk       (product_role_id => product_role.id)
-#  upr_users_fk              (user_id => users.id)
+#  upr_product_role_fk  (product_role_id => product_role.id)
+#  upr_users_fk         (user_id => users.id)
 #
 class User::ProductRole < ActiveRecord::Base
   strip_attributes

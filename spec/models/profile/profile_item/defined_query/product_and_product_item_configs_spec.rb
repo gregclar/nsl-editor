@@ -83,7 +83,8 @@ RSpec.describe Profile::ProfileItem::DefinedQuery::ProductAndProductItemConfigs,
       context "when a user has a FOA product role" do
         let(:product) { FactoryBot.create(:product, name: "FOA") }
         let!(:role) { FactoryBot.create(:role) }
-        let!(:user_draft_profile_editor) { FactoryBot.create(:user_product_role, role:, user:, product:)}
+        let!(:product_role) { FactoryBot.create(:product_role, product:, role:) }
+        let!(:user_draft_profile_editor) { FactoryBot.create(:user_product_role, product_role:, user:) }
 
         it "returns the product attached to the role" do
           expect(subject[1].id).to eq product.id
