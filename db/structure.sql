@@ -11028,6 +11028,9 @@ ALTER TABLE ONLY public.user_product_role
 --
 
 ALTER TABLE ONLY public.product_role
+    ADD CONSTRAINT pr_unique_product_role UNIQUE (product_id, role_id);
+
+ALTER TABLE ONLY public.product_role
     ADD CONSTRAINT pr_roles_fk FOREIGN KEY (role_id) REFERENCES public.roles(id);
 
 ALTER TABLE ONLY public.product_role
