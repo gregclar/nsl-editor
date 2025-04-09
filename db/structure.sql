@@ -39,7 +39,7 @@ CREATE EXTENSION IF NOT EXISTS ltree WITH SCHEMA public;
 -- Name: accepted_status(bigint); Type: FUNCTION; Schema: public; Owner: -
 --
 
-CREATE FUNCTION public.accepted_status(nameid bigint) RETURNS text
+CREATE FUNCTION public.xaccepted_status(nameid bigint) RETURNS text
     LANGUAGE sql
     AS $$
 select coalesce(excluded_status(nameId), inc_status(nameId), 'unplaced');
@@ -11014,6 +11014,9 @@ ALTER TABLE ONLY public.profile_item_type
 ALTER TABLE ONLY public.tree_element
     ADD CONSTRAINT tree_element_first_tree_version_id_fkey FOREIGN KEY (first_tree_version_id) REFERENCES public.tree_version(id);
 
+
+ALTER TABLE ONLY public.product_role
+    ADD CONSTRAINT product_role_pkey PRIMARY KEY (id);
 
 --
 -- Name: user_product_role upr_product_fk; Type: FK CONSTRAINT; Schema: public; Owner: -
