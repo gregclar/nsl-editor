@@ -1,4 +1,9 @@
 - :date: 09-Apr-2025
+  :jira_id: '72'
+  :jira_project: FLOR
+  :description: |-
+    Foa Project permissions: add a <code>Product_Role</code> table and re-arrange the associations between <code>Users</code>, <code>Roles</code>, and <code>User_Product_Role</code> 
+- :date: 09-Apr-2025
   :jira_id: '69'
   :jira_project: FLOR
   :description: |-
