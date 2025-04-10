@@ -14,16 +14,17 @@ RSpec.describe Instance::AsCopier, type: :model do
       let(:params) { {} }
       let(:username) { "username" }
 
-      let(:reference) { FactoryBot.create(:reference) }
+      let!(:language) { FactoryBot.create(:language, iso6391code: "en", iso6393code: "eng") }
+      let!(:reference) { FactoryBot.create(:reference, language: language) }
       let(:name_category) { FactoryBot.create(:name_category, name: "other") }
       let(:name_type) { FactoryBot.create(:name_type, cultivar: false, name_category: name_category) }
       let(:name) { FactoryBot.create(:name, name_type: name_type) }
-      
+
       let(:instance_type) { FactoryBot.create(:instance_type, primary_instance: false)}
       let(:instance) { FactoryBot.create(:instance, reference: reference, instance_type_id: instance_type.id) }
-      
+
       let(:instance_citation) { FactoryBot.create(:instance, :synonym_instance, name: name, reference: reference) }
-      
+
       context "with invalid parameters" do
         it "raises an error for blank reference_id" do
           expect{subject.copy_with_product_reference(params, username)}.to raise_error(RuntimeError, "Need a reference")
