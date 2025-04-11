@@ -43,7 +43,8 @@ class User < ActiveRecord::Base
   self.sequence_name = "nsl_global_seq"
 
   has_many :batch_reviewers, class_name: "Loader::Batch::Reviewer", foreign_key: :user_id
-  has_many :product_roles, class_name: "User::ProductRole", foreign_key: :user_id
+  has_many :user_product_roles, class_name: "User::ProductRole", foreign_key: :user_id
+  has_many :product_roles, through: :user_product_roles
   has_many :products, through: :product_roles
   has_many :roles, through: :product_roles
 
@@ -51,19 +52,21 @@ class User < ActiveRecord::Base
   before_update :set_updated_by
 
   def is?(requested_role_name)
-    product_roles.joins(:role).select("role.name").pluck(:name).include?(requested_role_name)
+    roles.where(name: requested_role_name).any?
   end
 
   def available_product_from_roles
-    role = "draft-profile-editor" if self.is?("draft-profile-editor")
-    role ||= "draft-editor" if self.is?("draft-editor")
-
-    if role
-      self.product_roles
-        .joins(:role)
-        .find_by(role: {name: role})
-        .product
-    end
+    # NOTES: This field allows us to identify
+    # which specific product this user is related to.
+    # Currently, we're making an assumption that there will
+    # be just one product associated with these roles.
+    # We are currently using this method for the profile items
+    roles_to_check = ['draft-editor','draft-profile-editor']
+    product_roles
+      .joins(:role)
+      .where(roles: { name: roles_to_check })
+      .includes(:product)
+      .first&.product
   end
 
   def set_audit_fields

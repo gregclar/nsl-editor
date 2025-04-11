@@ -248,7 +248,7 @@ class InstancesController < ApplicationController
 
   # Different types of instances require different sets of tabs.
   def tabs_to_offer
-    offer = %w[tab_show_1 tab_edit tab_edit_notes]
+    offer = %w[tab_show_1 tab_edit tab_edit_profile_v2 tab_edit_notes]
 
     if @instance.standalone?
       offer << "tab_unpublished_citation"
