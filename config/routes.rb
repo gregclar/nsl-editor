@@ -549,7 +549,7 @@ Rails.application.routes.draw do
 
   match "choose/product/for/role/:id", as: "choose_product_for_role", to: "user/product_roles#choose_product_for_role", via: :get
   match "user_product_roles", as: "user_product_roles", to: "user/product_roles#create", via: :post
-  match "user_product_roles/:user_id/:product_id/:role_id", as: "user_product_roles_delete", to: "user/product_roles#destroy", via: :delete
+  match "user_product_roles/:user_id/:product_role_id", as: "user_product_roles_delete", to: "user/product_roles#destroy", via: :delete
 
   # resources :user_product_roles, only: %i[create destroy]
   # user_product_roles POST                  /user_product_roles(.:format)                                                                     user_product_roles#create

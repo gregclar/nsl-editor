@@ -29,30 +29,19 @@ class User::ProductRolesController < ApplicationController
 
   # POST 
   def create
-    if user_product_role_params[:role_id].blank? then 
-      @upr = User::ProductRole.new(user_product_role_params)
-      render :new_with_roles
-    else
-      @upr = User::ProductRole.create(user_product_role_params, current_user.username)
-    end
+    @upr = User::ProductRole.create(user_product_role_params, current_user.username)
   rescue StandardError => e
     @error = e.to_s
     logger.error("User::ProductRolesController#create:rescuing exception #{@error}")
     render "create_error", status: :unprocessable_entity
   end
 
-  # POST /users
-  # def update
-    # @message = @user.update_if_changed(user_params, current_user.username)
-    # render "update"
-  # rescue => e
-    # logger.error("Review.update:rescuing exception #{e}")
-    # @error = e.to_s
-    # render "update_error", status: :unprocessable_entity
-  # end
-# 
   def destroy
     @upr.destroy
+  rescue StandardError => e
+    @error = e.to_s
+    logger.error("User::ProductRolesController#destroy:rescuing exception #{@error}")
+    render "destroy_error", status: :unprocessable_entity
   end
 
   def choose_product_for_role
@@ -61,13 +50,10 @@ class User::ProductRolesController < ApplicationController
   private
 
   def find_upr
-    @upr = User::ProductRole.find([params[:user_id], params[:product_id], params[:role_id]])
-  # rescue ActiveRecord::RecordNotFound
-    # flash[:alert] = "We could not find the user record."
-    # redirect_to user_path
+    @upr = User::ProductRole.find([params[:user_id], params[:product_role_id]])
   end
 
   def user_product_role_params
-    params.require(:user_product_role).permit(:user_id, :role_id, :product_id)
+    params.require(:user_product_role).permit(:user_id, :product_role_id)
   end
 end
