@@ -117,6 +117,11 @@ class Ability
     ], Instance do |instance|
       instance.draft? && instance.reference.products.pluck(:name).any?(user.product_from_roles&.name.to_s)
     end
+    can :edit, Instance do |instance|
+      instance.relationship? &&
+      instance.this_is_cited_by.draft? &&
+      instance.this_is_cited_by.reference.products.pluck(:name).any?(user.product_from_roles&.name.to_s)
+    end
     can "instances", "create"
     can "instances", "tab_edit"
     can "instances", "tab_edit_profile_v2"
