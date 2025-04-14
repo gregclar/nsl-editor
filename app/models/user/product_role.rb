@@ -36,7 +36,28 @@
 class User::ProductRole < ActiveRecord::Base
   strip_attributes
   self.table_name = "user_product_role"
-  self.primary_key = %i[user_id product_id role_id]
+  self.primary_key = %i[user_id product_role_id]
+  validates :user_id, :product_role_id, presence: true
+  validates :user_id, uniqueness: { scope: [:product_role_id],
+    message: "already has that product role" }
   belongs_to :user
   belongs_to :product_role, class_name: "Product::Role"
+  has_one :product, through: :product_role
+  has_one :role, through: :product_role
+
+  def self.create(params, username)
+    upr = User::ProductRole.new(params)
+    raise upr.errors.full_messages.first.to_s unless upr.save_with_username(username)
+
+    upr
+  end
+
+  def save_with_username(username)
+    self.created_by = self.updated_by = username
+    save
+  end
+
+  def name
+    "#{product.name} #{role.name} role for #{user.user_name}"
+  end
 end

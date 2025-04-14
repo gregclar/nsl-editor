@@ -22,5 +22,8 @@ class Search::User::FieldRule
     "user-name:" => { where_clause: " lower(user_name) like ? " },
     "given:" => { where_clause: " lower(given_name) like ? " },
     "family:" => { where_clause: " lower(family_name) like ? " },
+    "role:" => { where_clause: " id in (select user_id from user_product_role_v where role = lower(?))" },
+    "product:" => { where_clause: " id in (select user_id from user_product_role_v where product = upper(?))" },
+    "product-role:" => { where_clause: " id in (select user_id from user_product_role_v where lower(product)||' '||role = lower(?))" },
   }.freeze
 end

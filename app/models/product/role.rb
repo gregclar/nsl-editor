@@ -46,4 +46,8 @@ class Product::Role < ActiveRecord::Base
   belongs_to :role, class_name: "::Role"
   belongs_to :product
   has_many :user_product_role, class_name: "User::ProductRole"
+
+  def name
+    "#{product.name} #{role.name}"
+  end
 end

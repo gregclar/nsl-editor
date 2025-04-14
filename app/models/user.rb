@@ -134,4 +134,9 @@ class User < ActiveRecord::Base
   def can_be_deleted?
     batch_reviewers.size.zero?
   end
+
+  def grantable_product_roles_for_select
+    (Product::Role.all - product_roles).sort {|x,y| x.name <=> y.name}
+                                       .map {|pr| [pr.name, pr.id]}
+  end
 end
