@@ -57,7 +57,7 @@ class User::ProductRole < ActiveRecord::Base
     save
   end
 
-  def display_text
+  def name
     "#{product.name} #{role.name} role for #{user.user_name}"
   end
 end
