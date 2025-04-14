@@ -13,6 +13,8 @@
   :jira_project: FLOR
   :description: |-
     Foa Project draft-editor permissions: Don't offer the delete button when the instance has profile items
+- :date: 14-Apr-2025
+  :release: true
 - :date: 09-Apr-2025
   :jira_id: '72'
   :jira_project: FLOR
