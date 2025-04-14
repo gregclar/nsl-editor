@@ -22,7 +22,7 @@
                         prev_tab: '.search-result.user-details-tab', 
                         next_tab: '.search-result.user-roles-tab' } %> 
   <% end %>
-  <% if can? 'users', 'update' %>
+  <% if can? 'user/product_roles', 'update' %>
     <%= render partial: 'users/tabs/tab',
                locals: {first: false,
                         last: true,
