@@ -1,4 +1,9 @@
 - :date: 14-Apr-2025
+  :jira_id: '54'
+  :jira_project: FLOR
+  :description: |-
+    New Roles Mechanism: Admin editing interface for giving users roles
+- :date: 14-Apr-2025
   :jira_id: '68'
   :jira_project: FLOR
   :description: |-
