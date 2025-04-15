@@ -1,3 +1,8 @@
+- :date: 15-Apr-2025
+  :jira_id: '70'
+  :jira_project: FLOR
+  :description: |-
+    Foa Project draft-editor permissions: Allow editing of a relationship instance
 - :date: 14-Apr-2025
   :jira_id: '54'
   :jira_project: FLOR

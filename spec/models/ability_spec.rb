@@ -204,6 +204,38 @@ RSpec.describe Ability, type: :model do
       expect(subject.can?(:copy_as_draft_secondary_reference, instance)).to eq true
     end
 
+    context "for a relationship instance" do
+      let(:instance) { FactoryBot.create(:instance, draft: true) }
+
+      let(:name_category) { FactoryBot.create(:name_category, name: "cultivar") }
+      let(:name_type) { FactoryBot.create(:name_type, name: "cultivar", name_category: name_category) }
+      let(:name) { FactoryBot.create(:name, name_type: name_type) }
+      let(:relationship_instance) { FactoryBot.create(:instance, draft: false, name: name) }
+
+      before do
+        product = FactoryBot.create(:product)
+        allow(instance).to receive_message_chain(:reference, :products).and_return([product])
+        allow(session_user).to receive(:product_from_roles).and_return(product)
+        allow(relationship_instance).to receive(:relationship?).and_return(true)
+        allow(relationship_instance).to receive(:this_is_cited_by).and_return(instance)
+      end
+
+      it "can edit the relationship instance" do
+        expect(subject.can?(:edit, relationship_instance)).to eq true
+      end
+
+      it "cannot edit the relationship instance if not cited by a draft instance" do
+        allow(instance).to receive(:draft?).and_return(false)
+        expect(subject.can?(:edit, relationship_instance)).to eq false
+      end
+
+      it "cannot edit the relationship instance if it's cited by an instance with different product" do
+        other_product = FactoryBot.create(:product, name: "other_product")
+        allow(instance).to receive_message_chain(:reference, :products).and_return([other_product])
+        expect(subject.can?(:edit, relationship_instance)).to eq false
+      end
+    end
+
     context "when the instance is a draft" do
       let(:instance) { FactoryBot.create(:instance, draft: true) }
 
