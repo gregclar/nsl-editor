@@ -15,7 +15,7 @@
   <tr>
     <td class="width-20-percent">
       <a href="javascript:void(0)" class="searchable-field width-100-percent"
-         data-search-directive="<%= val[:field] %>" 
+         data-search-directive="<%= val[:field_name] %>"
          title='Add "<%= val[:field_name] %>" field to search.'>
         <span class="blue"><%= val[:field_name] %></span>
       </a>
@@ -29,3 +29,75 @@
   </tr>
   <% end %>
 </table>
+<p>* Supports search for empty fields.</p>
+<br/>
+
+<h5>Assertions</h5>
+<table class="table table-striped">
+  <% [
+      {field_name: 'is-a-duplicate:', description: "marked as a duplicate"},
+      {field_name: 'is-not-a-duplicate:', description: "not marked as a duplicate"},
+      {field_name: 'has-abbrev:', description: "has an abbreviation"},
+      {field_name: 'has-no-abbrev:', description: "has no abbreviation"},
+      {field_name: 'has-name:', description: "has a name"},
+      {field_name: 'has-no-name:', description: "has no name"},
+      ].each do |val| %>
+  <tr>
+    <td class="width-20-percent">
+      <a href="javascript:void(0)" class="searchable-field width-100-percent"
+         data-search-directive="<%= val[:field_name] %>"
+         title='Add "<%= val[:field_name] %>" field to search.'>
+          <span class="blue"><%= val[:field_name] %></span>
+        </a>
+    </td>
+    <td><%= val[:description].html_safe %></td>
+  </tr>
+  <% end %>
+</table>
+
+<h5>Authoring Assertions</h5>
+<table class="table table-striped">
+  <% [
+      {field_name: 'has-authored-name:', description: "is linked to a name as the author"},
+      {field_name: 'has-base-authored-name:', description: "is linked to a name as the base author"},
+      {field_name: 'has-ex-authored-name:', description: "is linked to a name as the ex-author"},
+      {field_name: 'has-ex-base-authored-name:', description: "is linked to a name as the ex-base author"},
+      {field_name: 'has-sanctioned-name:', description: "is linked to a name as the sanctioning author"},
+      {field_name: 'has-any-authored-name:', description: "is linked to a name as any type of author"},
+      ].each do |val| %>
+  <tr>
+    <td class="width-20-percent">
+      <a href="javascript:void(0)" class="searchable-field width-100-percent"
+         data-search-directive="<%= val[:field_name] %>"
+         title='Add "<%= val[:field_name] %>" field to search.'>
+          <span class="blue"><%= val[:field_name] %></span>
+        </a>
+    </td>
+    <td><%= val[:description].html_safe %></td>
+  </tr>
+  <% end %>
+</table>
+
+<h5>Quality Checks</h5>
+<table class="table table-striped">
+  <% [
+      {field_name: 'missed-diacritics:', description: "name or abbrev has diacritics not handled by the unaccent function"},
+      ].each do |val| %>
+  <tr>
+    <td class="width-20-percent">
+        <a href="javascript:void(0)" class="searchable-field width-100-percent"
+           data-search-directive="<%= val[:field_name] %>"
+           title='Add "<%= val[:field_name] %>" field to search.'>
+          <span class="blue"><%= val[:field_name] %></span>
+        </a>
+    </td>
+    <td><%= val[:description].html_safe %></td>
+  </tr>
+  <% end %>
+</table>
+
+
+<%= render partial: 'comments/advanced_search/help' %>
+<%= render partial: 'help/id_search_help' %>
+<%= render partial: 'help/case_and_wildcards_search' %>
+
