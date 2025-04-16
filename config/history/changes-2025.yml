@@ -1,4 +1,8 @@
 - :date: 15-Apr-2025
+  :jira_id: '5386'
+  :description: |-
+    Author abbreviation: Allow for up to 150 characters
+- :date: 15-Apr-2025
   :jira_id: '54'
   :jira_project: FLOR
   :description: |-
