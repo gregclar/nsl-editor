@@ -88,6 +88,53 @@ RSpec.describe Instance::AsCopier, type: :model do
           expect(copied_citation.bhl_url).to eq instance_citation.bhl_url
           expect(copied_citation.created_by).to eq "username"
         end
+
+        context "when copy_profile_items? is true" do
+          let(:profile_item) { FactoryBot.create(:profile_item, instance: instance) }
+          before do
+            allow(subject).to receive(:copy_profile_items).and_return(true)
+            allow(subject).to receive(:profile_items).and_return([profile_item])
+            allow_any_instance_of(Profile::ProfileItem).to receive(:fact?).and_return(true)
+          end
+
+          it "copies the profile items" do
+            copied_instance = subject.copy_with_product_reference(params, username)
+            copied_profile_item = copied_instance.profile_items.first
+            expect(copied_profile_item.source_profile_item_id).to eq profile_item.id
+            expect(copied_profile_item.product_item_config_id).to eq profile_item.product_item_config_id
+            expect(copied_profile_item.is_draft).to be true
+            expect(copied_profile_item.statement_type).to eq "link"
+            expect(copied_profile_item.source_id).to be_nil
+            expect(copied_profile_item.source_id_string).to be_nil
+            expect(copied_profile_item.source_system).to be_nil
+          end
+
+          context "when profile item is not a fact" do
+            before do
+              allow_any_instance_of(Profile::ProfileItem).to receive(:fact?).and_return(false)
+            end
+
+            it "sets the copied profile item's source_profile_item_id to nil" do
+              copied_instance = subject.copy_with_product_reference(params, username)
+              copied_profile_item = copied_instance.profile_items.first
+              expect(copied_profile_item.source_profile_item_id).to eq nil
+            end
+          end
+        end
+
+        context "when copy_profile_items? is false" do
+          let(:profile_item) { FactoryBot.create(:profile_item, instance: instance) }
+
+          before do
+            allow(subject).to receive(:copy_profile_items).and_return(false)
+            allow(subject).to receive(:profile_items).and_return([profile_item])
+          end
+
+          it "does not copy the profile items" do
+            copied_instance = subject.copy_with_product_reference(params, username)
+            expect(copied_instance.profile_items).to be_empty
+          end
+        end
       end
     end
   end

@@ -105,6 +105,8 @@ class Instance < ActiveRecord::Base
 
   has_many :tree_join_v
 
+  attr_accessor :copy_profile_items
+
   def self.to_csv
     attributes = %w[id]
     headings = ["Instance ID", "Name ID", "Full Name", "Reference ID",
