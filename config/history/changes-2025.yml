@@ -1,4 +1,8 @@
 - :date: 17-Apr-2025
+  :jira_id: '5376'
+  :description: |-
+    Show unaffiliated users in batch stack listing
+- :date: 17-Apr-2025
   :jira_id: '53'
   :jira_project: FLOR
   :description: |-
