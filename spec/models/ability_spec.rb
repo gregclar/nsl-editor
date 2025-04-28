@@ -164,6 +164,10 @@ RSpec.describe Ability, type: :model do
       expect(subject.can?("instances", "tab_profile_v2")).to eq true
     end
 
+    it 'can access instances typeahead_for_product_item_config' do
+      expect(subject.can?("instances", "typeahead_for_product_item_config")).to eq true
+    end
+
     it 'can access menu new' do
       expect(subject.can?("menu", "new")).to eq true
     end

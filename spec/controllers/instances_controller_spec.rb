@@ -101,4 +101,33 @@ RSpec.describe InstancesController, type: :controller do
       end
     end
   end
+
+  describe "GET #typeahead_for_product_item_config" do
+    let(:session_user) { FactoryBot.create(:session_user, groups: ['login']) }
+    let(:user) { FactoryBot.create(:user) }
+    let(:instance) { FactoryBot.create(:instance) }
+    let(:mock_typeahead_service) { double("Instance::AsTypeahead::ForProductItemConfig") }
+    let(:mock_instances) { [instance] }
+    let!(:profile_item) { instance_double("Profile::ProfileItem", id: 1, product_item_config_id: "1") }
+    let(:params) { { instance_id: instance.id, term: "test", product_item_config_id: profile_item.product_item_config_id} }
+
+    subject { get :typeahead_for_product_item_config, params: params }
+
+    before do
+      emulate_user_login(session_user)
+
+      allow(Instance::AsTypeahead::ForProductItemConfig).to receive(:new)
+        .with(product_item_config_id: params[:product_item_config_id], term: params[:term])
+        .and_return(mock_typeahead_service)
+
+      allow(mock_typeahead_service).to receive(:instances).and_return(mock_instances)
+      allow(controller).to receive(:can?).with("instances", "typeahead_for_product_item_config").and_return(true)
+      allow(controller).to receive(:authorise).and_return(true)
+    end
+
+    it "returns a successful response" do
+      subject
+      expect(response).to have_http_status(:success)
+    end
+  end
 end
