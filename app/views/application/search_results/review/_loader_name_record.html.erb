@@ -1,8 +1,4 @@
 <% Rails.logger.debug("loader name record; record_type: #{search_result.record_type}") %>
-<% Rails.logger.debug("loader name record; record_type: #{search_result.record_type}") %>
-<% Rails.logger.debug("loader name record; record_type: #{search_result.record_type}") %>
-<% Rails.logger.debug("loader name record; record_type: #{search_result.record_type}") %>
-<% Rails.logger.debug("loader name record; record_type: #{search_result.record_type}") %>
 <%# There is complex logic here.
     The taxonomic note and distribution data from top-level records
     has to appear on separate lines _after_ any synonymy.
@@ -80,6 +76,15 @@
       <a class="review-show-details-link navigation-link takes-focus show-details" title='title' tabindex="<%= increment_tab_index(100) %>">
       <% if search_result.rank == 'family' %><%# is it a real record or not? %>
         <span class="review loader-name family"><%= "#{search_result.family}" %> </span>
+        <% unless search_result.remark_to_reviewers.blank? %>
+          <%# style text and link as well as we can %>
+          <span class="review loader-name remark-to-reviewers">
+            <%= search_result.remark_to_reviewers
+              .gsub(/<a/, "<a class='remark-to-reviewers'")
+              .sub(/(>)([^><]*$)/,'\1<span class="remark-to-reviewers">\2</span>')
+              .html_safe %>
+          </span>
+        <% end %>
       <% else %>
         <span class="review loader-name family"><%= "[#{search_result.family}]" %> </span>
       <% end %>

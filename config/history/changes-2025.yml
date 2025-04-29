@@ -1,3 +1,7 @@
+- :date: 29-Apr-2025
+  :jira_id: '5193'
+  :description: |-
+    Loader Name: Allow header records to have a <code>remark_to_reviewer</code> value and display it
 - :date: 17-Apr-2025
   :jira_id: '5376'
   :description: |-
