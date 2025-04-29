@@ -18,6 +18,8 @@ Heading entry
 <%= render partial: 'detail_line', locals: {info: @loader_name.family, label: 'Family'} %>
 <%= render partial: 'detail_line', locals: {info: @loader_name.sort_key, label: 'Value for sorting'} %>
 <%= render partial: 'detail_line', locals: {info: @loader_name.rank, label: 'Rank'} %>
+<%= render partial: 'detail_line', locals: {info: @loader_name.notes, label: 'Notes'} %>
+<%= render partial: 'detail_line', locals: {info: @loader_name.remark_to_reviewers, label: 'Remark to Reviewers'} %>
 <br>
 
 <h5>Metadata</h5>
