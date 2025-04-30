@@ -63,6 +63,13 @@
   <% else %>
     <% show_details_class = '' %>
   <% end %>
+
+
+  <% if search_result.rank == 'family' %><%# is it a real record or not? %>
+    <%= row_of_formatted_text(search_result.formatted_text_above).html_safe %>
+  <% end %>
+
+
   <tr id="family-of-review-result-<%= search_result.id %>"
       class="<%= show_details_class %> review family takes-focus show-details" tabindex="<%= increment_tab_index(100) %>"
       data-edit-url="<%= loader_name_path(id: search_result[:id],tab: 'active_tab_goes_here') %>"
@@ -73,11 +80,10 @@
   <td class="takes-focus" colspan="2"
       tabindex="<%= increment_tab_index %>" 
     >
-      <a class="review-show-details-link navigation-link takes-focus show-details" title='title' tabindex="<%= increment_tab_index(100) %>">
       <% if search_result.rank == 'family' %><%# is it a real record or not? %>
+      <a class="review-show-details-link navigation-link takes-focus show-details" title='title' tabindex="<%= increment_tab_index(100) %>">
         <span class="review loader-name family"><%= "#{search_result.family}" %> </span>
         <% unless search_result.remark_to_reviewers.blank? %>
-          <%# style text and link as well as we can %>
           <span class="review loader-name remark-to-reviewers">
             <%= search_result.remark_to_reviewers
               .gsub(/<a/, "<a class='remark-to-reviewers'")
@@ -100,9 +106,17 @@
       <% end %>
     </td>
   </tr>
+
+  <% if search_result.rank == 'family' %><%# is it a real record or not? %>
+    <%= row_of_formatted_text(search_result.formatted_text_below).html_safe %>
+  <% end %>
+
 <% end %>
 
 <% unless @show_family && search_result.rank == 'family' %>
+
+  <%= indented_row_of_formatted_text(search_result.formatted_text_above,'<tr><td colspan="9">&nbsp;</td></tr>').html_safe %>
+
 <tr id="review-result-<%= search_result.id %>" 
   class="review-result show-details <%= 'fresh' if search_result.fresh? %>"  
   data-get-url=""
@@ -165,6 +179,7 @@
     </a>
   </td>
 </tr>
+  <%= indented_row_of_formatted_text(search_result.formatted_text_below).html_safe %>
 
 <% end %>
 

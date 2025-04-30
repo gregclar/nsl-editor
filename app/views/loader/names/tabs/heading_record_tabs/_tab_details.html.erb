@@ -20,7 +20,26 @@ Heading entry
 <%= render partial: 'detail_line', locals: {info: @loader_name.rank, label: 'Rank'} %>
 <%= render partial: 'detail_line', locals: {info: @loader_name.notes, label: 'Notes'} %>
 <%= render partial: 'detail_line', locals: {info: @loader_name.remark_to_reviewers, label: 'Remark to Reviewers'} %>
-<br>
+
+<% unless @loader_name.formatted_text_above.blank? %>
+  <%= render partial: 'detail_line',
+    locals: {info: "",
+             label: 'formatted text above'} %>
+  <div class="bgyellow black width-100-percent">
+  <%= @loader_name.formatted_text_above.html_safe %>
+  </div>
+<% end %>
+
+<% unless @loader_name.formatted_text_below.blank? %>
+  <%= render partial: 'detail_line',
+    locals: {info: "",
+             label: 'formatted text below'} %>
+  <div class="bgyellow black width-100-percent">
+  <%= @loader_name.formatted_text_below.html_safe %>
+  </div>
+<% end %>
+
+<%= divider %>
 
 <h5>Metadata</h5>
 <%= render partial: 'detail_line', locals: {info: @loader_name.id, label: 'ID'} %>
