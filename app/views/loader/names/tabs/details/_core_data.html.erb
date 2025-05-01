@@ -60,7 +60,7 @@
     locals: {info: "",
              label: 'formatted text above'} %>
   <div class="bgyellow black width-100-percent">
-  <%= @loader_name.formatted_text_above.html_safe %>
+  <%= sanitize(@loader_name.formatted_text_above) %>
   </div>
 <% end %>
 
@@ -69,7 +69,7 @@
     locals: {info: "",
              label: 'formatted text below'} %>
   <div class="bgyellow black width-100-percent">
-  <%= @loader_name.formatted_text_below.html_safe %>
+  <%= sanitize(@loader_name.formatted_text_below) %>
   </div>
 <% end %>
 

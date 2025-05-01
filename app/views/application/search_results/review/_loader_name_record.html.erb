@@ -66,7 +66,9 @@
 
 
   <% if search_result.rank == 'family' %><%# is it a real record or not? %>
-    <%= row_of_formatted_text(search_result.formatted_text_above).html_safe %>
+    <% unless search_result.formatted_text_above.blank? %>
+      <tr><td colspan="9"><span class="review loader-name remark-to-reviewers"><%= sanitize(search_result.formatted_text_above) %></span></td></tr>
+    <% end %>
   <% end %>
 
 
@@ -94,10 +96,6 @@
       <% else %>
         <span class="review loader-name family"><%= "[#{search_result.family}]" %> </span>
       <% end %>
-
-        <% unless search_result.higher_rank_comment.blank? %>
-          <span class="review loader-name remark-to-reviewers"><%= search_result.higher_rank_comment %></span>
-        <% end %>
       </a>
       <% if search_result.rank == 'family' %><%# is it a real record or not? %>
         <% if search_result.reviewer_comments? %>
@@ -107,15 +105,27 @@
     </td>
   </tr>
 
+    <% unless search_result.higher_rank_comment.blank? %>
+      <tr>
+        <td colspan="9"><span class="review loader-name remark-to-reviewers"><%= sanitize(search_result.higher_rank_comment) %></span></td>
+      </tr>
+    <% end %>
+
   <% if search_result.rank == 'family' %><%# is it a real record or not? %>
-    <%= row_of_formatted_text(search_result.formatted_text_below).html_safe %>
+    <% unless search_result.formatted_text_below.blank? %>
+      <tr><td colspan="9"><span class="review loader-name remark-to-reviewers"><%= sanitize(search_result.formatted_text_below) %></span></td></tr>
+    <% end %>
   <% end %>
 
 <% end %>
 
 <% unless @show_family && search_result.rank == 'family' %>
-
-  <%= indented_row_of_formatted_text(search_result.formatted_text_above,'<tr><td colspan="9">&nbsp;</td></tr>').html_safe %>
+    <% unless search_result.formatted_text_above.blank? %>
+      <tr>
+        <td class="width-1-percent">>&nbsp;</td>
+        <td colspan="9"><span class="review loader-name remark-to-reviewers"><%= sanitize(search_result.formatted_text_above) %></span></td>
+      </tr>
+    <% end %>
 
 <tr id="review-result-<%= search_result.id %>" 
   class="review-result show-details <%= 'fresh' if search_result.fresh? %>"  
@@ -173,13 +183,22 @@
             .html_safe %>
         </span>
       <% end %>
-      <% unless search_result.higher_rank_comment.blank? %>
-        <span class="review loader-name remark-to-reviewers"><%= h(search_result.higher_rank_comment.html_safe) %></span>
-      <% end %>
     </a>
   </td>
 </tr>
-  <%= indented_row_of_formatted_text(search_result.formatted_text_below).html_safe %>
+    <% unless search_result.higher_rank_comment.blank? %>
+      <tr>
+        <td class="width-1-percent">>&nbsp;</td>
+        <td colspan="9"><span class="review loader-name remark-to-reviewers"><%= sanitize(search_result.higher_rank_comment) %></span></td>
+      </tr>
+    <% end %>
+
+    <% unless search_result.formatted_text_below.blank? %>
+      <tr>
+        <td class="width-1-percent">>&nbsp;</td>
+        <td colspan="9"><span class="review loader-name remark-to-reviewers"><%= sanitize(search_result.formatted_text_below) %></span></td>
+      </tr>
+    <% end %>
 
 <% end %>
 
