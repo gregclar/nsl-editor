@@ -1,3 +1,7 @@
+- :date: 01-May-2025
+  :jira_id: '5193'
+  :description: |-
+    Loader Name: Add <code>formatted_text_above</code> and <code>formatted_text_below</code> fields and allow editing and display
 - :date: 29-Apr-2025
   :jira_id: '5193'
   :description: |-
