@@ -105,6 +105,12 @@ class Instance < ActiveRecord::Base
 
   has_many :tree_join_v
 
+  scope :product_item_config_id, -> (product_item_config_id) {
+    joins(:product_item_configs)
+      .where(product_item_configs: {id: product_item_config_id})
+      .distinct
+  }
+
   attr_accessor :copy_profile_items
 
   def self.to_csv

@@ -88,7 +88,11 @@ class Ability
       reference.instances.blank?
     end
     can "authors", :all
-    can "instances", ["tab_details", "tab_profile_v2"]
+    can "instances", [
+      "tab_details",
+      "tab_profile_v2",
+      "typeahead_for_product_item_config"
+    ]
     can "menu", "new"
     can "profile_items", :all
     can "profile_item_annotations", :all

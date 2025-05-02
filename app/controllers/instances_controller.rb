@@ -197,6 +197,14 @@ class InstancesController < ApplicationController
     render json: instances.results
   end
 
+  def typeahead_for_product_item_config
+    typeahead = Instance::AsTypeahead::ForProductItemConfig.new(
+      product_item_config_id: params[:product_item_config_id],
+      term: params[:term]
+    )
+    render json: typeahead.instances
+  end
+
   # Expect instance id - of the instance user is updating.
   # Synonym Edit tab.
   def typeahead_for_name_showing_references_to_update_instance
