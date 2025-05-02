@@ -3,7 +3,9 @@
     The taxonomic note and distribution data from top-level records
     has to appear on separate lines _after_ any synonymy.
     Family headings also have to appear whenever a taxon from an unannounced family
-    is about to be displayed. %>
+    is about to be displayed.
+    Displaying notes and formatted text in the right places is also a bit complicated.
+  %>
 <% @previous_previous_record_type = @previous_record_type %>
 
 <% if @previous_record_type.blank? then %>
@@ -94,7 +96,9 @@
           </span>
         <% end %>
       <% else %>
-        <span class="review loader-name family"><%= "[#{search_result.family}]" %> </span>
+        <% unless search_result.record_type == 'in-batch-note' %>
+          <span class="review loader-name family"><%= "[#{search_result.family}]" %> </span>
+        <% end %>
       <% end %>
       </a>
       <% if search_result.rank == 'family' %><%# is it a real record or not? %>
@@ -119,7 +123,13 @@
 
 <% end %>
 
-<% unless @show_family && search_result.rank == 'family' %>
+<% if search_result.record_type == 'in-batch-note' %>
+  <tr><td colspan="9">
+  <%= sanitize(search_result.notes) %>
+  </td></tr>
+<% end %>
+
+<% unless (@show_family && search_result.rank == 'family') || search_result.record_type == 'in-batch-note' %>
     <% unless search_result.formatted_text_above.blank? %>
       <tr>
         <td class="width-1-percent">>&nbsp;</td>
@@ -157,7 +167,6 @@
       <% if search_result.isonym? %>
         <span class="review loader-name isonym">isonym</span>
       <% end %>
-
 
 
       <% unless search_result[:flushing] %>
