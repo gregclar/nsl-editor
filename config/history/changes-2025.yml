@@ -1,18 +1,12 @@
 - :date: 02-May-2025
-<<<<<<< HEAD
   :jira_id: '5193'
   :description: |-
     Loader Name: Adjust <code>in-batch-note.notes</code> review display to suit reference lists
-=======
+- :date: 02-May-2025
   :jira_id: '55'
   :jira_project: FLOR
   :description: |-
     Foa Project: Add a way to link a published profile item
->>>>>>> upstream/main
-- :date: 01-May-2025
-  :jira_id: '5193'
-  :description: |-
-    Loader Name: Add <code>formatted_text_above</code> and <code>formatted_text_below</code> fields and allow editing and display
 - :date: 29-Apr-2025
   :jira_id: '5193'
   :description: |-
