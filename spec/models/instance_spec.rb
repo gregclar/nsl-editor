@@ -1,11 +1,35 @@
 require 'rails_helper'
 
 RSpec.describe Instance, type: :model do
-  let(:instance) { FactoryBot.create(:instance) }
+  let(:instance) { create(:instance) }
+
+  describe ".product_item_config_id" do
+    let(:name) { create(:name, name_type: instance.name.name_type) }
+    let(:product_item_instance) { create(:instance, name:) }
+    let(:product_item_config) { create(:product_item_config) }
+    let!(:profile_item) { create(:profile_item, instance_id: product_item_instance.id, product_item_config: product_item_config) }
+
+    subject { described_class.product_item_config_id(product_item_config.id) }
+
+    it "returns instances associated with the given product_item_config_id" do
+      expect(subject).to include(product_item_instance)
+    end
+
+    it "does not return instances associated with other product_item_config_id" do
+      product_item_config2 = create(:product_item_config, profile_item_type: product_item_config.profile_item_type)
+      create(:profile_item, instance: instance, product_item_config: product_item_config2)
+      expect(subject).not_to include(instance)
+    end
+
+    it "returns distinct instances" do
+      create(:profile_item, instance: product_item_instance, product_item_config: product_item_config)
+      expect(subject.count).to eq(1)
+    end
+  end
 
   describe "#delete_as_user" do
-    let(:instance_type) { FactoryBot.create(:instance_type, secondary_instance: false)}
-    let(:instance) { FactoryBot.create(:instance, instance_type: instance_type) }
+    let(:instance_type) { create(:instance_type, secondary_instance: false)}
+    let(:instance) { create(:instance, instance_type: instance_type) }
     let(:username) { "test_user" }
 
     context "when deletion is successful" do
@@ -37,17 +61,17 @@ RSpec.describe Instance, type: :model do
   end
 
   describe "#secondary_reference?" do
-    let(:instance) { FactoryBot.create(:instance, instance_type: instance_type) }
+    let(:instance) { create(:instance, instance_type: instance_type) }
 
     context "when instance type is not a secondary instance" do
-      let(:instance_type) { FactoryBot.create(:instance_type, secondary_instance: false)}
+      let(:instance_type) { create(:instance_type, secondary_instance: false)}
       it "returns false" do
         expect(instance.secondary_reference?).to eq false
       end
     end
 
     context "when instance type is a secondary instance" do
-      let(:instance_type) { FactoryBot.create(:instance_type, secondary_instance: true)}
+      let(:instance_type) { create(:instance_type, secondary_instance: true)}
       it "returns true" do
         expect(instance.secondary_reference?).to eq true
       end

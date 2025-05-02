@@ -17,7 +17,9 @@
 #   limitations under the License.
 #
 Rails.application.routes.draw do
-  resources :profile_items, only: %i[destroy index]
+  namespace :profile_items do
+    resources :links
+  end
   match "profile_items/:id",
         as: "profile_items_show",
         to: "profile_items#show",
@@ -31,6 +33,12 @@ Rails.application.routes.draw do
   resources :profile_texts, only: %i[create update]
   resources :profile_item_annotations, only: %i[create update]
   resources :profile_item_references, only: %i[create]
+  resources :profile_items, only: %i[destroy index] do
+    member do
+      get :details
+    end
+  end
+
   match "profile_item_references/:profile_item_id/:reference_id", as: "save_profile_item_references", to: "profile_item_references#update", via: :put
   match "profile_item_references/:profile_item_id/:reference_id", as: "delete_profile_item_references", to: "profile_item_references#destroy", via: :delete
 
@@ -82,6 +90,11 @@ Rails.application.routes.draw do
   match "instances/for_synonymy",
         as: "typeahead_for_synonymy",
         to: "instances#typeahead_for_synonymy",
+        via: :get
+
+  match "instances/for_product_item_config",
+        as: "typeahead_for_product_item_config",
+        to: "instances#typeahead_for_product_item_config",
         via: :get
 
   match "instances/for_name_showing_reference_to_update_instance",
