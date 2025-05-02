@@ -1,3 +1,7 @@
+- :date: 02-May-2025
+  :jira_id: '5193'
+  :description: |-
+    Loader Name: Adjust <code>in-batch-note.notes</code> review display to suit reference lists
 - :date: 01-May-2025
   :jira_id: '5193'
   :description: |-
