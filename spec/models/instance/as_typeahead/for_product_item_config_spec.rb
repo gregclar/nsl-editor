@@ -23,6 +23,11 @@ RSpec.describe Instance::AsTypeahead::ForProductItemConfig, type: :model do
           expect(result.instances).not_to be_empty
         end
 
+        it 'returns instances matching the full name' do
+          result = described_class.new(product_item_config_id: profile_item.product_item_config_id, term: instance.name.full_name)
+          expect(result.instances).not_to be_empty
+        end
+
         it "returns a correct array format" do
           result = described_class.new(product_item_config_id: profile_item.product_item_config_id, term: term)
           expect(result.instances).to all(include(:value, :id, :profile_item_id))
