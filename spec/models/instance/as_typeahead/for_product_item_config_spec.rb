@@ -28,6 +28,13 @@ RSpec.describe Instance::AsTypeahead::ForProductItemConfig, type: :model do
           expect(result.instances).not_to be_empty
         end
 
+        it 'returns instance matching the full name with foreign characters' do
+          name = instance.name
+          name.update(full_name: 'Céllerius')
+          result = described_class.new(product_item_config_id: profile_item.product_item_config_id, term: 'cellerius')
+          expect(result.instances).not_to be_empty
+        end
+
         it "returns a correct array format" do
           result = described_class.new(product_item_config_id: profile_item.product_item_config_id, term: term)
           expect(result.instances).to all(include(:value, :id, :profile_item_id))

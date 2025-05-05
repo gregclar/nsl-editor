@@ -45,7 +45,8 @@ class Instance::AsTypeahead::ForProductItemConfig
       WHERE pic.id = ?
       AND i.draft = false
       AND pi.is_draft = false AND pi.statement_type = 'fact'
-      AND (lower(r.citation) like lower('%'||?||'%') or lower(name.full_name) like lower('%'||?||'%')) order by r.iso_publication_date"
+      AND (lower(r.citation) like lower('%'||?||'%') or lower(f_unaccent(name.full_name)) like lower('%'||?||'%')) order by r.iso_publication_date"
+
   end
 
   def display_value(i)
