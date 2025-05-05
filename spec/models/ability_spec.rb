@@ -44,6 +44,7 @@ RSpec.describe Ability, type: :model do
       author = FactoryBot.create(:author)
       allow(author).to receive(:referenced_in_any_instance?).and_return(false)
       allow(author).to receive(:no_other_authored_names?).and_return(true)
+      allow(author).to receive_message_chain(:names, :blank?).and_return(true)
       expect(subject.can?(:update, author)).to eq true
     end
 
@@ -51,14 +52,22 @@ RSpec.describe Ability, type: :model do
       author = FactoryBot.create(:author)
       allow(author).to receive(:referenced_in_any_instance?).and_return(false)
       allow(author).to receive(:no_other_authored_names?).and_return(false)
+      allow(author).to receive_message_chain(:names, :blank?).and_return(true)
       expect(subject.can?(:update, author)).to eq false
 
       allow(author).to receive(:referenced_in_any_instance?).and_return(true)
       allow(author).to receive(:no_other_authored_names?).and_return(true)
+      allow(author).to receive_message_chain(:names, :blank?).and_return(true)
       expect(subject.can?(:update, author)).to eq false
 
       allow(author).to receive(:referenced_in_any_instance?).and_return(true)
       allow(author).to receive(:no_other_authored_names?).and_return(false)
+      allow(author).to receive_message_chain(:names, :blank?).and_return(true)
+      expect(subject.can?(:update, author)).to eq false
+
+      allow(author).to receive(:referenced_in_any_instance?).and_return(true)
+      allow(author).to receive(:no_other_authored_names?).and_return(true)
+      allow(author).to receive_message_chain(:names, :blank?).and_return(false)
       expect(subject.can?(:update, author)).to eq false
     end
 

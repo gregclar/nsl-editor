@@ -68,7 +68,7 @@ class Ability
     end
     can [:create, :read], Author
     can :update, Author do |author|
-      !author.referenced_in_any_instance? && author.no_other_authored_names?
+      !author.referenced_in_any_instance? && author.no_other_authored_names? && author.names.blank?
     end
     can :manage, Profile::ProfileItem do |profile_item|
       profile_item.is_draft?
