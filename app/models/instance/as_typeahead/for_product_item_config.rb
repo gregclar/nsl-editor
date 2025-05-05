@@ -23,12 +23,14 @@ class Instance::AsTypeahead::ForProductItemConfig
     @instances = []
     return if product_item_config_id.blank?
 
-    @instances = Instance.find_by_sql(
-      [sql_string,
+    @instances = Instance.find_by_sql([
+      sql_string,
       product_item_config_id.to_i,
-       ActiveRecord::Base::sanitize_sql(term)]).collect do |i|
-         { value: display_value(i), id: i.id, profile_item_id: i.pid}
-       end
+      ActiveRecord::Base::sanitize_sql(term),
+      ActiveRecord::Base::sanitize_sql(term)]
+    ).collect do |i|
+      { value: display_value(i), id: i.id, profile_item_id: i.pid}
+    end
   end
 
   private
@@ -43,7 +45,7 @@ class Instance::AsTypeahead::ForProductItemConfig
       WHERE pic.id = ?
       AND i.draft = false
       AND pi.is_draft = false AND pi.statement_type = 'fact'
-      AND lower(r.citation) like lower('%'||?||'%') order by r.iso_publication_date"
+      AND (lower(r.citation) like lower('%'||?||'%') or lower(name.full_name) like lower('%'||?||'%')) order by r.iso_publication_date"
   end
 
   def display_value(i)

@@ -1,3 +1,8 @@
+- :date: 05-May-2025
+  :jira_id: '55'
+  :jira_project: FLOR
+  :description: |-
+    Foa Project: Support for link profile item's typeahead to search for name's full name and UI fix for draft item.
 - :date: 02-May-2025
   :jira_id: '5193'
   :description: |-
