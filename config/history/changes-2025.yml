@@ -1,3 +1,7 @@
+- :date: 06-May-2025
+  :jira_id: '5193'
+  :description: |-
+    Loader Name: Adjust print-ready output for reviewers to show formatted notes and text; introduce print-with-comments directive
 - :date: 05-May-2025
   :jira_id: '49'
   :jira_project: FLOR

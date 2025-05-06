@@ -4906,7 +4906,9 @@ CREATE TABLE loader.loader_name (
     simple_name_as_loaded text NOT NULL,
     created_manually boolean DEFAULT false NOT NULL,
     sort_key text,
-    loaded_from_instance_id bigint
+    loaded_from_instance_id bigint,
+    formatted_text_above text,
+    formatted_text_below text
 );
 
 
