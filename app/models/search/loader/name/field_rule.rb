@@ -342,6 +342,7 @@ class Search::Loader::Name::FieldRule
     "syn:" => { where_clause: "record_type = 'synonym'"},
     "misapplied:" => { where_clause: "record_type = 'misapplied'"},
     "not-misapplied:" => { where_clause: "record_type != 'misapplied'"},
+    "in-batch-note:" => { where_clause: "record_type = 'in-batch-note'"},
     "is-hybrid:" => { where_clause: "hybrid_flag = 'hybrid'"},
     "is-intergrade:" => { where_clause: "hybrid_flag = 'intergrade'"},
     "is-mso-normal:" => { where_clause: "hybrid_flag = 'MsoNormal'"},
