@@ -1,4 +1,9 @@
 - :date: 05-May-2025
+  :jira_id: '49'
+  :jira_project: FLOR
+  :description: |-
+    Foa Project: Don't allow draft profile editor to edit an author with authored names
+- :date: 05-May-2025
   :jira_id: '55'
   :jira_project: FLOR
   :description: |-
