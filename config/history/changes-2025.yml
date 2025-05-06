@@ -1,4 +1,8 @@
 - :date: 06-May-2025
+  :jira_id: '5406'
+  :description: |-
+    Loader Name: Switch order of full and simple names on loader name details tab
+- :date: 06-May-2025
   :jira_id: ''
   :description: |-
     Bullet gem - added a bullet gem for development to identify N+1 queries.

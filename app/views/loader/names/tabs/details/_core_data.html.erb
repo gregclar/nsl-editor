@@ -24,9 +24,9 @@
 
 
 <%= render partial: 'detail_line', locals: {info: @loader_name.subfamily, label: 'subfamily'} unless @loader_name.subfamily.blank?  %>
+<%= render partial: 'detail_line', locals: {info: @loader_name.full_name, label: 'full name aka taxon full'} unless @loader_name.full_name.blank? %>
 <%= render partial: 'detail_line', locals: {info: @loader_name.simple_name, label: 'simple name aka taxon'} unless @loader_name.simple_name.blank? %>
 <%= render partial: 'detail_line', locals: {info: @loader_name.simple_name_as_loaded, label: 'simple name as loaded'} unless @loader_name.simple_name_as_loaded.blank? || @loader_name.simple_name == @loader_name.simple_name_as_loaded %>
-<%= render partial: 'detail_line', locals: {info: @loader_name.full_name, label: 'full name aka taxon full'} unless @loader_name.full_name.blank? %>
 
 <%= render partial: 'detail_line', locals: {info: @loader_name.name_status, label: 'name_status'} unless @loader_name.name_status.blank? %>
 <%= render partial: 'detail_line', locals: {info: @loader_name.name_comment, label: 'name_comment'} unless @loader_name.name_comment.blank? %>
