@@ -793,43 +793,108 @@ having count(*) > 2
   "any-batch:" => { where_clause: "1=1",
                     takes_no_arg: true},
   "org-voted-yes:" => {
-      where_clause: " record_type in ('accepted','excluded')
-        and exists ( select null 
+      where_clause: "(  ( record_type in ('accepted','excluded')
+         and (exists ( select null
                            from name_review_vote
                                 join org
-                                on name_review_vote.org_id = org.id 
-                                and lower(org.abbrev) like ? 
+                                on name_review_vote.org_id = org.id
+                                and lower(org.abbrev) like lower(?)
                           where loader_name.id = name_review_vote.loader_name_id
-                            and name_review_vote.vote = true)"
+                            and name_review_vote.vote = true)
+             ) 
+       )
+       OR
+       ( record_type in ('heading')
+         and exists ( select null
+                        from name_review_vote
+                             join org
+                             on name_review_vote.org_id = org.id
+                             and lower(org.abbrev) like lower(?)
+                             join loader_name inner_loader_name
+                             on name_review_vote.loader_name_id = inner_loader_name.id
+                       where loader_name.family = inner_loader_name.family
+                         and loader_name.loader_batch_id = inner_loader_name.loader_batch_id
+                         and name_review_vote.vote = true
+                       )
+       )
+                      )"
        },
   "org-voted-no:" => {
-      where_clause: " record_type in ('accepted','excluded')
-        and exists ( select null 
+      where_clause: "(  ( record_type in ('accepted','excluded')
+         and (exists ( select null
                            from name_review_vote
                                 join org
-                                on name_review_vote.org_id = org.id 
-                                and lower(org.abbrev) like ? 
+                                on name_review_vote.org_id = org.id
+                                and lower(org.abbrev) like lower(?)
                           where loader_name.id = name_review_vote.loader_name_id
-                            and name_review_vote.vote = false)"
+                            and name_review_vote.vote = false)
+             ) 
+       )
+       OR
+       ( record_type in ('heading')
+         and exists ( select null
+                        from name_review_vote
+                             join org
+                             on name_review_vote.org_id = org.id
+                             and lower(org.abbrev) like lower(?)
+                             join loader_name inner_loader_name
+                             on name_review_vote.loader_name_id = inner_loader_name.id
+                       where loader_name.family = inner_loader_name.family
+                         and loader_name.loader_batch_id = inner_loader_name.loader_batch_id
+                         and name_review_vote.vote = false
+                       )
+       )
+                      )"
        },
   "org-voted:" => {
-      where_clause: " record_type in ('accepted','excluded')
-        and exists ( select null 
+      where_clause: "(  ( record_type in ('accepted','excluded')
+         and (exists ( select null
                            from name_review_vote
                                 join org
-                                on name_review_vote.org_id = org.id 
-                                and lower(org.abbrev) like ? 
-                          where loader_name.id = name_review_vote.loader_name_id)"
+                                on name_review_vote.org_id = org.id
+                                and lower(org.abbrev) like lower(?)
+                          where loader_name.id = name_review_vote.loader_name_id)
+             ) 
+       )
+       OR
+       ( record_type in ('heading')
+         and exists ( select null
+                        from name_review_vote
+                             join org
+                             on name_review_vote.org_id = org.id
+                             and lower(org.abbrev) like lower(?)
+                             join loader_name inner_loader_name
+                             on name_review_vote.loader_name_id = inner_loader_name.id
+                       where loader_name.family = inner_loader_name.family
+                         and loader_name.loader_batch_id = inner_loader_name.loader_batch_id
+                       )
+       )
+                      )"
        },
   "org-not-voted:" => {
-      where_clause: " record_type in ('accepted','excluded')
-        and exists (select null from org valid_org where lower(valid_org.abbrev) like lower(?))
-        and not exists ( select null 
+      where_clause: "(  ( record_type in ('accepted','excluded')
+         and (not exists ( select null
                            from name_review_vote
                                 join org
-                                on name_review_vote.org_id = org.id 
+                                on name_review_vote.org_id = org.id
                                 and lower(org.abbrev) like lower(?)
-                          where loader_name.id = name_review_vote.loader_name_id)"
+                          where loader_name.id = name_review_vote.loader_name_id)
+             ) 
+       )
+       OR
+       ( record_type in ('heading')
+         and not exists ( select null
+                        from name_review_vote
+                             join org
+                             on name_review_vote.org_id = org.id
+                             and lower(org.abbrev) like lower(?)
+                             join loader_name inner_loader_name
+                             on name_review_vote.loader_name_id = inner_loader_name.id
+                       where loader_name.family = inner_loader_name.family
+                         and loader_name.loader_batch_id = inner_loader_name.loader_batch_id
+                       )
+       )
+                      )"
        },
   "no-family-heading:" => { 
       where_clause: "id in (
