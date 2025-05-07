@@ -130,4 +130,56 @@ RSpec.describe InstancesController, type: :controller do
       expect(response).to have_http_status(:success)
     end
   end
+
+  describe "POST #copy_for_profile_v2" do
+    let(:session_user) { FactoryBot.create(:session_user, groups: ['login']) }
+    let(:instance) { FactoryBot.create(:instance) }
+    let(:mocked_instance) { instance_double("Instance", id: 1) }
+    let(:params) do
+      {
+        id: instance.id,
+        instance: {
+          copy_profile_items: "1",
+          multiple_primary_override: "0",
+          duplicate_instance_override: "1"
+        }
+      }
+    end
+
+    before do
+      emulate_user_login(session_user)
+      allow(controller).to receive(:can?).with("instances", "copy_for_profile_v2").and_return(true)
+      allow(controller).to receive(:authorise).and_return(true)
+      allow_any_instance_of(Instance::AsCopier).to receive(:copy_with_product_reference).and_return(mocked_instance)
+    end
+
+    context 'when the copy is successful' do
+      it 'copies the instance with product reference' do
+        post :copy_for_profile_v2, params: params, xhr: true
+        expect(assigns(:instance)).to eq(mocked_instance)
+      end
+
+      it 'sets the success message' do
+        post :copy_for_profile_v2, params: params, xhr: true
+        expect(assigns(:message)).to eq("Instance was copied")
+      end
+
+      it 'renders the success template' do
+        post :copy_for_profile_v2, params: params, xhr: true
+        expect(response).to render_template("instances/copy_standalone/success")
+      end
+    end
+
+    context 'when an error occurs' do
+      before do
+        allow_any_instance_of(Instance::AsCopier).to receive(:copy_with_product_reference).and_raise(StandardError, "Something went wrong")
+      end
+
+      it 'handles the error and renders the error template' do
+        post :copy_for_profile_v2, params: params, xhr: true
+        expect(assigns(:message)).to eq(["Something went wrong"])
+        expect(response).to render_template("instances/copy_standalone/error")
+      end
+    end
+  end
 end
