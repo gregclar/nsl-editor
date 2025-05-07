@@ -1,4 +1,8 @@
 - :date: 07-May-2025
+  :jira_id: '5394'
+  :description: |-
+    Loader Name: Show full context in vote query results
+- :date: 07-May-2025
   :jira_id: '5428'
   :description: |-
     Loader Name: Suppress display of dummy family headers for synonyms/misapplications
