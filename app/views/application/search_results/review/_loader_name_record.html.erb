@@ -43,7 +43,7 @@
      @previous_family = search_result.family 
      @show_family = true
      @add_white_space_around_family = false
-   elsif @previous_family != search_result.family && %w(accepted excluded).include?(search_result.record_type)
+   elsif @previous_family != search_result.family && %w(accepted excluded heading).include?(search_result.record_type)
      @previous_family = search_result.family 
      @show_family = true
      @add_white_space_before_family = @previous_previous_record_type != 'heading'
