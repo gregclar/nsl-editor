@@ -1,4 +1,8 @@
-- :date: 06-May-2025
+- :date: 07-May-2025
+  :jira_id: '5395'
+  :description: |-
+    Loader Name: Show real family headers in vote query results
+- :date: 07-May-2025
   :jira_id: '5406'
   :description: |-
     Loader Name: Switch order of full and simple names on loader name details tab
