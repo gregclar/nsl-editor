@@ -1,4 +1,8 @@
 - :date: 07-May-2025
+  :jira_id: '5406'
+  :description: |-
+    Loader Name: Switch order of full and simple names on loader name details tab for heading records too
+- :date: 07-May-2025
   :jira_id: '53'
   :jira_project: FLOR
   :description: |-
