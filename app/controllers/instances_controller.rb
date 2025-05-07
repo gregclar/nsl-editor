@@ -239,7 +239,8 @@ class InstancesController < ApplicationController
                                      :duplicate_instance_override,
                                      :draft,
                                      :parent_id,
-                                     :instance_id)
+                                     :instance_id,
+                                     :copy_profile_items)
   end
 
   def instance_name_params
@@ -362,6 +363,7 @@ class InstancesController < ApplicationController
 
   def find_instance_for_copy
     @current_instance_for_copy = Instance::AsCopier.find(params[:id])
+    @current_instance_for_copy.copy_profile_items = instance_params[:copy_profile_items] == "1"
     @current_instance_for_copy.multiple_primary_override = instance_params[:multiple_primary_override] == "1"
     @current_instance_for_copy.duplicate_instance_override = instance_params[:duplicate_instance_override] == "1"
   end
