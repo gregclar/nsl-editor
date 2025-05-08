@@ -1,3 +1,7 @@
+- :date: 08-May-2025
+  :jira_id: '5428'
+  :description: |-
+    Loader Name: Tweak the suppression of family headings to make sure real headings are shown
 - :date: 07-May-2025
   :jira_id: '5394'
   :description: |-
@@ -5,7 +9,7 @@
 - :date: 07-May-2025
   :jira_id: '5428'
   :description: |-
-    Loader Name: Suppress display of dummy family headers for synonyms/misapplications
+    Loader Name: Suppress family headings in output when a synonym/misapp belongs to a different family
 - :date: 07-May-2025
   :jira_id: '5406'
   :description: |-
