@@ -106,6 +106,7 @@ RSpec.describe Instance::AsCopier, type: :model do
             expect(copied_profile_item.statement_type).to eq "link"
             expect(copied_profile_item.source_id).to be_nil
             expect(copied_profile_item.source_id_string).to be_nil
+            expect(copied_profile_item.tree_element_id).to be_nil
             expect(copied_profile_item.source_system).to be_nil
           end
 
