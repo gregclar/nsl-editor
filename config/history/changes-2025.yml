@@ -1,4 +1,9 @@
 - :date: 08-May-2025
+  :jira_id: '53'
+  :jira_project: FLOR
+  :description: |-
+    Foa Project: Avoid profile_instance_constraint when copying profile item by setting the tree_element_id to nil
+- :date: 08-May-2025
   :jira_id: '5428'
   :description: |-
     Loader Name: Tweak the suppression of family headings to make sure real headings are shown
