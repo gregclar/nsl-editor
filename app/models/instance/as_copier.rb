@@ -127,6 +127,7 @@ class Instance::AsCopier < Instance
           new_profile_item.source_id = nil
           new_profile_item.source_id_string = nil
           new_profile_item.source_system = nil
+          new_profile_item.tree_element_id = nil
           new_profile_item.save!
         end
       end
