@@ -1,3 +1,7 @@
+- :date: 09-May-2025
+  :jira_id: '5395'
+  :description: |-
+    Loader Review: Revise and improve SQL for <code>org-not-voted:</code> directive
 - :date: 08-May-2025
   :jira_id: '53'
   :jira_project: FLOR
