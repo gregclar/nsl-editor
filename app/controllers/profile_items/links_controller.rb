@@ -23,6 +23,20 @@ module ProfileItems
     end
 
     def update
+      @instance = Instance.find(params[:instance_id])
+      result = ProfileItems::Links::UpdateService.call(
+        instance: @instance,
+        profile_item: @source_profile_item
+        user: current_registered_user,
+        params: params
+      )
+
+      @profile_item = result.profile_item
+
+      if result.errors.any?
+        @message = "Error deleting profile item: #{result.errors.full_messages.to_sentence}"
+        render "update_field"
+      end
     end
 
     private
