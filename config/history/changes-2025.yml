@@ -1,3 +1,7 @@
+- :date: 12-May-2025
+  :jira_id: '5398'
+  :description: |-
+    Reference Search: Switch dictionary from 'english' to 'simple' and silently remove wildcards from user-supplied search terms
 - :date: 09-May-2025
   :jira_id: '5395'
   :description: |-
