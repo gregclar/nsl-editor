@@ -2,7 +2,7 @@
 <%= turbo_stream.replace "product-item-config-dropdown-container" do %>
   <%= render partial: "profile_items/product_item_config_dropdown", locals: {
       product_configs_and_profile_items: all_items,
-      selected_product_item_config_id: params[:product_item_config_id],
+      selected_product_item_config_id: params[:product_item_config_id] || @profile_item&.product_item_config_id,
       instance: @instance
     }
   %>
@@ -145,7 +145,14 @@
             </p>
           <% end %>
 
+          <div id="profile_item_actions_edit_<%= product_item_config.id %>">
+            <%= render partial: "profile_items/edit_widgets", locals: {profile_item: profile_item} %>
+          </div>
+
+          <hr/>
+
           <div id="profile_item_actions_<%= product_item_config.id %>">
+
             <% if profile_item.allow_delete?%>
               <%= render partial: "profile_items/delete_widgets", locals: {profile_item: profile_item} %>
             <% else %>
