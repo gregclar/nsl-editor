@@ -29,7 +29,7 @@ RSpec.describe ProfileItems::Links::UpdateService, type: :service do
   let!(:user) { create(:user) }
   let(:params) { {} }
 
-  let(:service) { described_class.new(instance: instance, user: user, profile_item: profile_item, params: params) }
+  let(:service) { described_class.new(user: user, profile_item: profile_item, params: params) }
 
   describe '#execute' do
     context 'when the profile item is a draft' do
