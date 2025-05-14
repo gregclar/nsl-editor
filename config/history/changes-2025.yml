@@ -1,3 +1,8 @@
+- :date: 14-May-2025
+  :jira_id: '74'
+  :jira_project: FLOR
+  :description: |-
+    Foa Project: Allow draft-profile-editor to edit a linked profile item
 - :date: 12-May-2025
   :jira_id: '5398'
   :description: |-
