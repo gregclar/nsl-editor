@@ -1,4 +1,4 @@
-# frozen_string_literal: true
+#efrozen_string_literal: true
 
 #   Copyright 2015 Australian National Botanic Gardens
 #
@@ -39,5 +39,7 @@ class NewSessionUnknownUserCreatesUserRecordTest < ActionController::TestCase
     assert assigns(:current_registered_user), "Current registered user should be assigned"
     reg_user = assigns(:current_registered_user)
     assert reg_user.user_name == @unknown_user_name, "Registered user not set correctly"
+    assert reg_user.created_by == 'self as new user', "Registered user created_by not set correctly"
+    assert reg_user.updated_by == 'self as new user', "Registered user updated_by not set correctly"
   end
 end
