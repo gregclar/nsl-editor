@@ -70,7 +70,7 @@ class User < ActiveRecord::Base
   end
 
   def set_audit_fields
-    self.created_by = self.updated_by = @current_user&.username||'unknown'
+    self.created_by = self.updated_by = @current_user&.username||'self as new user'
   end
 
   def set_updated_by
