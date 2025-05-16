@@ -1,5 +1,9 @@
+- :date: 16-May-2025
+  :jira_id: '5432'
+  :description: |-
+    Loader: Remove stray "&gt;" in review output for some note and text fields
 - :date: 15-May-2025
-  :jira_id: ''
+  :jira_id: '5432'
   :description: |-
     Loader: Remove some metadata boilerplate from comment tab; when user first logs in, give their users record better audit details.
 - :date: 14-May-2025
