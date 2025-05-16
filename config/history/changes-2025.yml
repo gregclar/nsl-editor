@@ -1,4 +1,8 @@
 - :date: 16-May-2025
+  :jira_id: '5433'
+  :description: |-
+    Loader: Make in-batch note appear below distribution entry of previous accepted record
+- :date: 16-May-2025
   :jira_id: '5432'
   :description: |-
     Loader: Remove stray "&gt;" in review output for some note and text fields
