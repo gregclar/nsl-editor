@@ -18,7 +18,7 @@
    <% end %>
 <% else %>
    <% @previous_record_type = search_result.record_type %>
-   <% if %w(accepted included in-batch-note).include?(search_result.record_type) then %>
+   <% if %w(accepted excluded in-batch-note).include?(search_result.record_type) then %>
      <%= render partial: 'application/search_results/review/loader_name_stored_comment', locals: {search_result: search_result, give_me_focus: give_me_focus} %>
      <%= render partial: 'application/search_results/review/loader_name_stored_distribution', locals: {search_result: search_result, give_me_focus: give_me_focus} %>
      <% @stored_distribution = search_result.distribution %>

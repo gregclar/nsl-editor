@@ -1,3 +1,7 @@
+- :date: 20-May-2025
+  :jira_id: '5440'
+  :description: |-
+    Loader Review: Fix comment/distribution wrongly appearing under an excluded name
 - :date: 16-May-2025
   :jira_id: '74'
   :jira_project: FLOR
