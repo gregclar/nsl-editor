@@ -4,7 +4,7 @@
   <div id="message_<%= product_item_config.id %>" class="message-container"></div> <!-- Message container -->
 </div>
 
-<div style="padding: 10px;margin: 5px 0 30px 0px;background-color: white;border: 1px solid #afafaf;">
+<div id="edit-tab-profile-item" style="padding: 10px;margin: 5px 0 30px 0px;background-color: white;border: 1px solid #afafaf;">
   <% if profile_item.fact? %>
     <!-- Profile Text Form -->
     <% profile_text = profile_item.profile_text || Profile::ProfileText.new %>
@@ -67,49 +67,51 @@
       </div>
     </div>
   <% else %>
-    <h4>
-      <%= product_item_config.display_html %>
-      <span stype="font-size: 12px"> - [LINKED]</span>
-    </h4>
-    <div class="from-markdown", style="padding: 10px;margin: 5px 0 20px 0px;background-color: white;border: 1px solid #afafaf;">
-      <%= markdown_to_html(profile_item.profile_text.value_md.to_s) %>
+    <div id="linked-profile-item-container">
+      <h4>
+        <%= product_item_config.display_html %>
+        <span stype="font-size: 12px"> - [LINKED]</span>
+      </h4>
+      <div class="from-markdown", style="padding: 10px;margin: 5px 0 20px 0px;background-color: white;border: 1px solid #afafaf;">
+        <%= markdown_to_html(profile_item.profile_text.value_md.to_s) %>
+      </div>
+
+      <% if profile_item.profile_item_references.present? %>
+        <p>
+          <strong>References</strong>
+          <% profile_item.profile_item_references.each do |pir| %>
+            <%= link_to("#{pir.reference.citation}#{display_pages(pir.reference.pages)}" || '[No citation found.]',
+              search_path(query_string: %Q(id:#{pir.reference.id}), query_target: 'reference'),
+              id: 'tab-heading',
+              title: "Query this reference.",
+              tabindex: increment_tab_index )
+            %>
+            <span class="pull-right"><%= mapper_link('reference', pir.reference.id)%></span>
+            <p><%= pir.annotation %></p>
+          <% end %>
+        </p>
+      <% end %>
+
+      <% if profile_item.profile_item_annotation.present? %>
+        <p>
+          <br>
+          <strong>Annotations</strong>
+          <br>
+          <%= profile_item.profile_item_annotation.value %>
+        </p>
+      <% end %>
+
+      <div id="profile_item_actions_edit_<%= product_item_config.id %>">
+        <%= render partial: "profile_items/edit_widgets", locals: {profile_item: profile_item} %>
+      </div>
+
+      <hr/>
     </div>
-
-    <% if profile_item.profile_item_references.present? %>
-      <p>
-        <strong>References</strong>
-        <% profile_item.profile_item_references.each do |pir| %>
-          <%= link_to("#{pir.reference.citation}#{display_pages(pir.reference.pages)}" || '[No citation found.]',
-            search_path(query_string: %Q(id:#{pir.reference.id}), query_target: 'reference'),
-            id: 'tab-heading',
-            title: "Query this reference.",
-            tabindex: increment_tab_index )
-          %>
-          <span class="pull-right"><%= mapper_link('reference', pir.reference.id)%></span>
-          <p><%= pir.annotation %></p>
-        <% end %>
-      </p>
-    <% end %>
-
-    <% if profile_item.profile_item_annotation.present? %>
-      <p>
-        <br>
-        <strong>Annotations</strong>
-        <br>
-        <%= profile_item.profile_item_annotation.value %>
-      </p>
-    <% end %>
-
-    <div id="profile_item_actions_edit_<%= product_item_config.id %>">
-      <%= render partial: "profile_items/edit_widgets", locals: {profile_item: profile_item} %>
-    </div>
-
-    <hr/>
   <% end %>
 
   <div id="profile_item_actions_<%= product_item_config.id %>">
     <% if profile_item.allow_delete? %>
-      <%= render partial: "profile_items/delete_widgets", locals: {profile_item: profile_item} %>
+      <%= render partial: "profile_items/delete_widgets", locals: {profile_item: profile_item, non_turbo: true} %>
     <% else %>
       <%= render partial: 'profile_items/no_delete_reasons', locals: {profile_item: profile_item} %>
     <% end %>
