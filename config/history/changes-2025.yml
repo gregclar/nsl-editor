@@ -1,3 +1,7 @@
+- :date: 21-May-2025
+  :jira_id: ''
+  :description: |-
+    Loader Review: Fix problem in has-review-comment-by: search directive
 - :date: 20-May-2025
   :jira_id: '5440'
   :description: |-

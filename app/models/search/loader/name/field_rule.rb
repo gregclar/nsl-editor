@@ -143,7 +143,7 @@ class Search::Loader::Name::FieldRule
           join users u
             on br.user_id = u.id
      where nrc.loader_name_id = loader_name.id
-       and lower(u.name)      = ?)
+       and lower(u.user_name)      = ?)
      or exists (
         select null
           from name_review_comment pnrc
@@ -152,7 +152,7 @@ class Search::Loader::Name::FieldRule
           join users u
             on br.user_id = u.id
      where pnrc.loader_name_id = loader_name.parent_id
-       and lower(u.name)      = ?)
+       and lower(u.user_name)      = ?)
      or exists (
         select null
           from name_review_comment cnrc
@@ -161,7 +161,7 @@ class Search::Loader::Name::FieldRule
           join users u
             on br.user_id = u.id
      where cnrc.loader_name_id in (select id from loader_name child where loader_name.id = child.parent_id)
-       and lower(u.name)      = ?)
+       and lower(u.user_name)      = ?)
      or exists (
         select null
           from name_review_comment snrc
@@ -170,7 +170,7 @@ class Search::Loader::Name::FieldRule
           join users u
             on br.user_id = u.id
      where snrc.loader_name_id in (select id from loader_name sibling where loader_name.parent_id = sibling.parent_id)
-       and lower(u.name)      = ?)
+       and lower(u.user_name)      = ?)
       "},
 
     "review-comment:" =>
