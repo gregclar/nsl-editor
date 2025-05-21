@@ -1,4 +1,9 @@
 - :date: 21-May-2025
+  :jira_id: '74'
+  :jira_project: FLOR
+  :description: |-
+    Foa Project: Fixup few issues in the profile item UI (ie edit, delete from search results)
+- :date: 21-May-2025
   :jira_id: '53'
   :jira_project: FLOR
   :description: |-
