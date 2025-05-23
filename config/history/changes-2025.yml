@@ -1,4 +1,8 @@
-- :date: 21-May-2025
+- :date: 23-May-2025
+  :jira_id: '5435'
+  :description: |-
+    Loader Review: Allow reviewer comments on in-batch-notes
+- :date: 22-May-2025
   :jira_id: '5445'
   :description: |-
     Users: save and query user logins in lower case regardless of how users enter them for login
