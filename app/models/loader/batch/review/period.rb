@@ -199,8 +199,7 @@ class Loader::Batch::Review::Period < ActiveRecord::Base
   end
 
   def active?
-    start_date <= Date.today &&
-      (end_date.blank? || end_date >= Date.today)
+    !future? && !past?
   end
 
   def finite?

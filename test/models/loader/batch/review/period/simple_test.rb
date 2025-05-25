@@ -14,11 +14,11 @@ class BatchReviewPeriodSimpleTest < ActiveSupport::TestCase
     assert !loader_batch_batch_review_batch_review_period(:review_period_starts_today).blank?
     assert loader_batch_batch_review_batch_review_period(:review_period_starts_today).active?,
                'Period that starts today should be active'
-    assert !names(:the_regnum).blank?
-               'Past period should be inactive'
     assert_not loader_batch_batch_review_batch_review_period(:review_period_past_yesterday).active?,
                'Past period should be inactive'
     assert_not loader_batch_batch_review_batch_review_period(:review_period_future_tomorrow).active?,
                'Future period should be inactive'
+    assert loader_batch_batch_review_batch_review_period(:review_period_two_no_end_date).active?,
+               'Review period with no end date should be active'
   end
 end
