@@ -190,12 +190,24 @@ class Loader::Batch::Review::Period < ActiveRecord::Base
     "active" if active?
   end
 
+  # Comparison needs to be TZ neutral
+  # We get PG to convert the date stored in db to the Rails TZ
   def future?
-    start_date > Date.today
+    col = "timezone('#{Time.zone.name}', start_date) start_date"
+    start_date_local = Loader::Batch::Review::Period.where(id: self.id).select(col).first[:start_date]
+
+    start_date_local > Date.today
   end
 
+  # Comparison needs to be TZ neutral
+  # We get PG to convert the date stored in db to the Rails TZ
   def past?
-    end_date.present? && end_date < Date.today
+    return false unless end_date.present?
+
+    col = "timezone('#{Time.zone.name}', end_date) end_date"
+    end_date_local = Loader::Batch::Review::Period.where(id: self.id).select(col).first[:end_date]
+
+    end_date_local < Date.today
   end
 
   def active?
