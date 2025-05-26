@@ -89,6 +89,7 @@ class Author < ActiveRecord::Base
            foreign_key: "duplicate_of_id",
            dependent: :restrict_with_error
   has_many :comments
+  #
 
   scope :lower_abbrev_equals,
         ->(string) { where("lower(abbrev) = lower(?) ", string) }
