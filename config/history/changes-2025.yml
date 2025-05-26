@@ -11,7 +11,7 @@
   :description: |-
     Users: save and query user logins in lower case regardless of how users enter them for login
 - :date: 21-May-2025
-  :jira_id: ''
+  :jira_id: '5441'
   :description: |-
     Loader Review: Revise <code>org-not-voted:</code> search directive SQL
 - :date: 21-May-2025
