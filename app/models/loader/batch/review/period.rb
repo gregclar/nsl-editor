@@ -205,13 +205,12 @@ class Loader::Batch::Review::Period < ActiveRecord::Base
     puts "period: #{period_name}"
     puts "start_date_local: #{start_date_local}"
     puts "Date.today:  #{Date.today}"
-    puts "Time.zone.now:  #{Time.zone.now}"
-    puts "Time.zone.now.to_date:  #{Time.zone.now.to_date}"
+    puts "Time.zone.today:  #{Time.zone.today}"
     puts "start_date_local > Date.today: #{start_date_local > Date.today}"
     puts "future?: #{start_date_local > Date.today}"
     puts "=========================================="
 
-    start_date_local > Time.zone.now.to_date
+    start_date_local > Time.zone.today
   end
 
   # Comparison needs to be TZ neutral
@@ -230,13 +229,12 @@ class Loader::Batch::Review::Period < ActiveRecord::Base
     puts "period_name: #{period_name}"
     puts "end_date_local: #{end_date_local}"
     puts "Date.today:  #{Date.today}"
-    puts "Time.zone.now:  #{Time.zone.now}"
-    puts "Time.zone.now.to_date:  #{Time.zone.now.to_date}"
+    puts "Time.zone.today:  #{Time.zone.today}"
     puts "end_date_local < Date.today: #{end_date_local < Date.today}"
     puts "past?: #{end_date_local < Date.today}"
     puts "=========================================="
 
-    end_date_local < Time.zone.now.to_date
+    end_date_local < Time.zone.today
   end
 
   def active?
