@@ -17,19 +17,18 @@
 #   limitations under the License.
 #
 require "test_helper"
-load "models/search/users.rb"
+load "test/models/search/users.rb"
 
-# Single Search model test.
-class SearchOnAuthorAssertionDuplicateIsNotATest < ActiveSupport::TestCase
-  test "is not a duplicate" do
-    search = Search::Base.new(
-      ActiveSupport::HashWithIndifferentAccess.new(query_string:
-                                                   "is-not-a-duplicate:",
-                                                   query_target: "Author",
-                                                   current_user:
-                                                   build_edit_user)
-    )
-    assert !search.executed_query.results.empty?,
-           "Should find non-duplicate authors."
+# Single Search model test for Reference target.
+class SearchOnReferenceHasNoChildrenSimpleTest < ActiveSupport::TestCase
+  test "search has no children simple" do
+    params =  ActiveSupport::HashWithIndifferentAccess
+              .new(query_target: "reference",
+                   query_string: "has-no-children:",
+                   current_user: build_edit_user)
+    search = Search::Base.new(params)
+    assert search.executed_query.results.is_a?(ActiveRecord::Relation),
+           "Results should be an ActiveRecord::Relation."
+    assert !search.executed_query.results.empty?, "Results expected."
   end
 end
