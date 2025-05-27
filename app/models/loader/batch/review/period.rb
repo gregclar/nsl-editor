@@ -199,9 +199,15 @@ class Loader::Batch::Review::Period < ActiveRecord::Base
 
     start_date_local = Loader::Batch::Review::Period.where(id: self.id).first[:start_date]
     period_name = Loader::Batch::Review::Period.where(id: self.id).first[:name]
+
+    puts "------------------------------------------"
+    puts "future?"
     puts "period: #{period_name}"
     puts "start_date_local: #{start_date_local}"
     puts "Date.today:  #{Date.today}"
+    puts "start_date_local > Date.today: #{start_date_local > Date.today}"
+    puts "future?: #{start_date_local > Date.today}"
+    puts "=========================================="
 
     start_date_local > Date.today
   end
@@ -216,9 +222,16 @@ class Loader::Batch::Review::Period < ActiveRecord::Base
 
     end_date_local = Loader::Batch::Review::Period.where(id: self.id).first[:end_date]
     period_name = Loader::Batch::Review::Period.where(id: self.id).first[:name]
+
+
+    puts "------------------------------------------"
+    puts "past?"
     puts "period_name: #{period_name}"
     puts "end_date_local: #{end_date_local}"
     puts "Date.today:  #{Date.today}"
+    puts "end_date_local < Date.today: #{end_date_local < Date.today}"
+    puts "past?: #{end_date_local < Date.today}"
+    puts "=========================================="
 
     end_date_local < Date.today
   end
