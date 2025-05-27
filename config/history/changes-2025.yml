@@ -1,4 +1,9 @@
 - :date: 28-May-2025
+  :jira_id: '75'
+  :jira_project: FLOR
+  :description: |-
+    Foa Project: Profile editor permissions and view template code cleanups
+- :date: 28-May-2025
   :jira_id: '5442'
   :description: |-
     Loader Review Period: Really fix data comparisons in cloud deployments (use Time.zone.today instead of Date.today)

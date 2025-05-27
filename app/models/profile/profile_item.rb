@@ -78,6 +78,10 @@ module Profile
     validates :statement_type, presence: true
 
     default_scope { includes(:product_item_config).order("product_item_config.sort_order ASC") }
+    scope :by_product, ->(product) do
+      joins(:product_item_config)
+      .where(product_item_config: { product_id: product.id })
+    end
 
     after_destroy :conditionally_destroy_profile_text
 
@@ -93,6 +97,10 @@ module Profile
 
     def fact?
       statement_type == "fact"
+    end
+
+    def published?
+      !is_draft? && tree_element_id != nil && !instance.draft?
     end
 
     private

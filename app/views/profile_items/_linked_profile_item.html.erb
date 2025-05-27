@@ -6,11 +6,11 @@
 <div class="from-markdown", style="padding: 10px;margin: 5px 0 20px 0px;background-color: white;border: 1px solid #afafaf;">
   <%= markdown_to_html(profile_item.profile_text.value_md.to_s) %>
 </div>
-
-<% if profile_item.profile_item_references.present? %>
+<% source_profile_item = profile_item.source_profile_item %>
+<% if source_profile_item.profile_item_references.present? %>
   <p>
     <strong>References</strong>
-    <% profile_item.profile_item_references.each do |pir| %>
+    <% source_profile_item.profile_item_references.each do |pir| %>
       <%= link_to("#{pir.reference.citation}#{display_pages(pir.reference.pages)}" || '[No citation found.]',
         search_path(query_string: %Q(id:#{pir.reference.id}), query_target: 'reference'),
         id: 'tab-heading',
@@ -32,14 +32,25 @@
   </p>
 <% end %>
 
-<div id="profile_item_actions_edit_<%= product_item_config.id %>">
-  <%= render partial: "profile_items/edit_widgets", locals: {profile_item: profile_item} %>
-</div>
-
+<% if profile_item.is_draft? %>
+  <div id="profile_item_actions_edit_<%= product_item_config.id %>">
+    <%= render partial: "profile_items/edit_widgets", locals: {profile_item: profile_item} %>
+  </div>
+<% else %>
+  <div>
+    This is a published item. You can only edit the source profile text of this linked item in
+    <% source_profile_item = profile_item.source_profile_item %>
+    <%= link_to(
+      "here",
+      search_path(query_string: "id: #{source_profile_item.instance_id} show-profiles: ", focus_id: source_profile_item.id, query_target: 'instance'),
+      class: 'blue',
+      title: profile_item.product_item_config.try(:display_html)) || '' %>.
+  </div>
+<% end %>
 <hr/>
 
 <div id="profile_item_actions_<%= product_item_config.id %>">
-  <% if profile_item.allow_delete?%>
+  <% if profile_item.allow_delete? %>
     <%= render partial: "profile_items/delete_widgets", locals: {profile_item: profile_item} %>
   <% else %>
     <%= render partial: 'profile_items/no_delete_reasons', locals: {profile_item: profile_item} %>
