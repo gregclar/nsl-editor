@@ -1,7 +1,7 @@
 - :date: 27-May-2025
-  :jira_id: '5442'
+  :jira_id: '5446'
   :description: |-
-    Loader Review Period: no change to re-run PR tests
+    Search directives: Report error to user when search directives requiring an argument are submitted without one
 - :date: 23-May-2025
   :jira_id: '5442'
   :description: |-
