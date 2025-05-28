@@ -191,26 +191,8 @@ class Loader::Batch::Review::Period < ActiveRecord::Base
   end
 
   # Comparison needs to be TZ neutral
-  # We get PG to convert the date stored in db to the Rails TZ
   def future?
-    #col = "timezone('#{Time.zone.name}', start_date) start_date"
-    #col = "timezone('Australia/Sydney', start_date) start_date"
-    #start_date_local = Loader::Batch::Review::Period.where(id: self.id).select(col).first[:start_date]
-
-    start_date_local = Loader::Batch::Review::Period.where(id: self.id).first[:start_date]
-    period_name = Loader::Batch::Review::Period.where(id: self.id).first[:name]
-
-    puts "------------------------------------------"
-    puts "future?"
-    puts "period: #{period_name}"
-    puts "start_date_local: #{start_date_local}"
-    puts "Date.today:  #{Date.today}"
-    puts "Time.zone.today:  #{Time.zone.today}"
-    puts "start_date_local > Date.today: #{start_date_local > Date.today}"
-    puts "future?: #{start_date_local > Date.today}"
-    puts "=========================================="
-
-    start_date_local > Time.zone.today
+    start_date > Time.zone.today
   end
 
   # Comparison needs to be TZ neutral
@@ -218,23 +200,7 @@ class Loader::Batch::Review::Period < ActiveRecord::Base
   def past?
     return false unless end_date.present?
 
-    #col = "timezone('Australia/Sydney', end_date) end_date"
-    #end_date_local = Loader::Batch::Review::Period.where(id: self.id).select(col).first[:end_date]
-
-    end_date_local = Loader::Batch::Review::Period.where(id: self.id).first[:end_date]
-    period_name = Loader::Batch::Review::Period.where(id: self.id).first[:name]
-
-    puts "------------------------------------------"
-    puts "past?"
-    puts "period_name: #{period_name}"
-    puts "end_date_local: #{end_date_local}"
-    puts "Date.today:  #{Date.today}"
-    puts "Time.zone.today:  #{Time.zone.today}"
-    puts "end_date_local < Date.today: #{end_date_local < Date.today}"
-    puts "past?: #{end_date_local < Date.today}"
-    puts "=========================================="
-
-    end_date_local < Time.zone.today
+    end_date < Time.zone.today
   end
 
   def active?
