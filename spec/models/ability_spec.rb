@@ -311,8 +311,15 @@ RSpec.describe Ability, type: :model do
       expect(subject.can?(:manage, Profile::ProfileItem)).to eq true
     end
 
-    it 'can manage Profile::ProfileItemReference' do
-      expect(subject.can?(:manage, Profile::ProfileItemReference)).to eq true
+    it "can manage published Profile::ProfileItem" do
+      profile_item = create(:profile_item)
+      allow(profile_item).to receive(:published?).and_return(true)
+      expect(subject.can?(:manage, profile_item)).to eq true
+    end
+
+    it "cannot manage draft Profile::ProfileItem" do
+      profile_item = create(:profile_item, is_draft: true)
+      expect(subject.can?(:manage, profile_item)).to eq false
     end
 
     it 'can manage Profile::ProfileText' do
@@ -345,6 +352,22 @@ RSpec.describe Ability, type: :model do
 
     it 'can access instances tab_profile_v2' do
       expect(subject.can?("instances", "tab_profile_v2")).to eq true
+    end
+
+    it "can manage_profile on instance if not draft and has profile items for product" do
+      instance = create(:instance, draft: false)
+      allow(instance).to receive_message_chain(:profile_items, :by_product).and_return([double("Product")])
+      expect(subject.can?(:manage_profile, instance)).to eq true
+    end
+
+    it "cannot manage_profile on draft Instance" do
+      instance = double(draft?: true)
+      expect(subject.can?(:manage_profile, instance)).to eq false
+    end
+
+    it "cannot :manage_profile on Instance with no profile items for product" do
+      instance = double(draft?: false, profile_items: double('profile_items', by_product: []))
+      expect(subject.can?(:manage_profile, instance)).to eq false
     end
   end
 

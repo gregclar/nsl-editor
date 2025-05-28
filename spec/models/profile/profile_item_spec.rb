@@ -21,6 +21,31 @@ RSpec.describe Profile::ProfileItem, type: :model do
     end
   end
 
+  describe '.by_product' do
+    context "for a given" do
+      let!(:product) { create(:profile_product) }
+      let!(:product_item_config) { create(:product_item_config, product: product) }
+      let!(:item_for_product) { create(:profile_item, product_item_config: product_item_config) }
+
+      it 'returns only profile items for the given product' do
+        results = described_class.by_product(product)
+        expect(results).to include(item_for_product)
+      end
+    end
+
+    context "for other product" do
+      let!(:product) { create(:profile_product) }
+      let!(:product_item_config) { create(:product_item_config) }
+      let!(:item_for_product) { create(:profile_item, product_item_config: product_item_config) }
+
+      it 'returns only profile items for the given product' do
+        results = described_class.by_product(product)
+        expect(results).not_to include(item_for_product)
+      end
+    end
+
+  end
+
   describe "#allow_delete?" do
     let(:profile_item) { create(:profile_item) }
 
