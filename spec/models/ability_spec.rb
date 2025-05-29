@@ -299,6 +299,8 @@ RSpec.describe Ability, type: :model do
   end
 
   describe "#profile_editor role" do
+    let(:product) { create(:product)}
+
     before do
       allow(session_user).to receive(:with_role?).with('profile-editor').and_return(true)
     end
@@ -311,9 +313,11 @@ RSpec.describe Ability, type: :model do
       expect(subject.can?(:manage, Profile::ProfileItem)).to eq true
     end
 
-    it "can manage published Profile::ProfileItem" do
+    it "can manage published Profile::ProfileItem under a user's product" do
       profile_item = create(:profile_item)
       allow(profile_item).to receive(:published?).and_return(true)
+      allow(session_user).to receive(:product_from_roles).and_return(product)
+      allow(profile_item).to receive(:product_item_config).and_return(double("ProductItemConfig", product_id: product.id))
       expect(subject.can?(:manage, profile_item)).to eq true
     end
 
