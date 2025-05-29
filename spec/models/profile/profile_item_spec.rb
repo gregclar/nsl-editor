@@ -87,6 +87,58 @@ RSpec.describe Profile::ProfileItem, type: :model do
     end
   end
 
+  describe "#published?" do
+    let!(:instance) { create(:instance, draft: false) }
+    let!(:profile_item) { create(:profile_item, instance:) }
+    let!(:tree_element) { create(:tree_element, instance:, name: instance.name) }
+
+    before do
+      profile_item.update(is_draft: false, tree_element_id: tree_element.id)
+      allow(profile_item).to receive(:tree_element).and_return(tree_element)
+    end
+
+    it "returns true" do
+      expect(profile_item.published?).to be true
+    end
+
+    it "returns false when is_draft is true" do
+      profile_item.update(is_draft: true)
+      expect(profile_item.published?).to be false
+    end
+
+    it "returns false when tree_element_id is nil" do
+      profile_item.update(tree_element_id: nil)
+      expect(profile_item.published?).to be false
+    end
+  end
+
+  describe "#under_this_product?" do
+    let!(:product) { create(:profile_product) }
+    let!(:profile_item) { create(:profile_item, product_item_config: create(:product_item_config, product: product)) }
+    let!(:tree_element) { create(:tree_element, instance: profile_item.instance, name: profile_item.instance.name) }
+
+    before do
+      profile_item.update(tree_element_id: tree_element.id)
+      allow(profile_item).to receive(:tree_element).and_return(tree_element)
+      allow(Product).to receive(:by_tree_element).with(tree_element).and_return(Product.where(id: product.id))
+    end
+
+    it "returns true when the item is under the specified product" do
+      expect(profile_item.under_this_product?(product)).to be true
+    end
+
+    it "returns false when the item is not under the specified product" do
+      other_product = create(:profile_product)
+      expect(profile_item.under_this_product?(other_product)).to be false
+    end
+
+    it "returns false when tree_element_id is nil" do
+      profile_item.update(tree_element_id: nil)
+      expect(profile_item.under_this_product?(product)).to be false
+    end
+  end
+
+
   describe "after_destroy callback" do
     let(:profile_text) { create(:profile_text) }
     let(:profile_item) { create(:profile_item, profile_text: profile_text, statement_type: statement_type) }
