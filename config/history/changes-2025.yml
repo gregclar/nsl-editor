@@ -1,3 +1,7 @@
+- :date: 29-May-2025
+  :jira_id: '5439'
+  :description: |-
+    Loader Review: Make in-batch compiler notes invisible to reviewers
 - :date: 28-May-2025
   :jira_id: '75'
   :jira_project: FLOR
