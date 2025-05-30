@@ -1,3 +1,8 @@
+- :date: 30-May-2025
+  :jira_id: '75'
+  :jira_project: FLOR
+  :description: |-
+    Foa Project: Identify profile item product by tree and fixup UI for editing linked profile item
 - :date: 29-May-2025
   :jira_id: '5439'
   :description: |-
