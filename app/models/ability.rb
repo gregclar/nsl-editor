@@ -145,13 +145,13 @@ class Ability
   def profile_editor(user)
     can :manage, :profile_v2
     can :manage, Profile::ProfileItem do |profile_item|
-      profile_item.published?
+      profile_item.product_item_config.product_id == user.product_from_roles&.id
     end
     can :manage, Profile::ProfileItemReference
     can :manage, Profile::ProfileText
     can :manage, Profile::ProfileItemAnnotation
     can :manage_profile, Instance do |instance|
-      !instance.draft? && instance.profile_items.by_product(user.product_from_roles).any?
+      instance.profile_items.by_product(user.product_from_roles).any?
     end
     can "references", "typeahead_on_citation"
     can "profile_items", :all
