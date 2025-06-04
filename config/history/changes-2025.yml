@@ -1,7 +1,7 @@
 - :date: 04-Jun-2025
   :jira_id: '5448'
   :description: |-
-    Loader Review: First accepted name not being displayed in Test
+    Loader Review: Fix first accepted name not being displayed in Test
 - :date: 30-May-2025
   :jira_id: '75'
   :jira_project: FLOR
