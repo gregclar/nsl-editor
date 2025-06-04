@@ -35,6 +35,8 @@ end
 <% when search_result.record_type == 'in-batch-compiler-note' %>
 <% when @show_family && !search_result[:flushing] %> <%# final search_result is a flushing record %>
   <%= render partial: "#{wd}/loader_name_record/show_family_and_not_flushing", locals: {search_result: search_result} %>
+  <%= render partial: "#{wd}/loader_name_record/ordinary_record",
+             locals: {search_result: search_result, give_me_focus: give_me_focus} %>
 <% when search_result.record_type == 'in-batch-note' %>
   <%= render partial: "#{wd}/loader_name_record/in_batch_note",
              locals: {search_result: search_result, give_me_focus: give_me_focus} %>
