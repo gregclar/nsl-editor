@@ -19,13 +19,13 @@
 require "test_helper"
 
 # Single Name typeahead test.
-class NameTAOnFullNameSuggsShldNotInclNamesWOInstTest < ActiveSupport::TestCase
+class NameTAOnFullNameSuggsShldInclNamesWOInstTest < ActiveSupport::TestCase
   test "name on full name suggestions shd not incl names without instances" do
     suggestions = Name::AsTypeahead::OnFullName
                   .new(term: "a name without instances")
                   .suggestions
     assert(suggestions.is_a?(Array), "suggestions should be an array")
-    assert(suggestions.empty?,
-           'suggestions for "a name without instances" should be empty')
+    assert_not(suggestions.empty?,
+           'suggestions for "a name without instances" should not be empty')
   end
 end
