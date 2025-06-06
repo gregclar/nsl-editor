@@ -1,3 +1,8 @@
+- :date: 11-June-2025
+  :jira_id: '76'
+  :jira_project: FLOR
+  :description: |-
+    Foa Project: Prompt message for there are unsaved changes in the profile item editor
 - :date: 11-Jun-2025
   :jira_id: '5450'
   :description: |-
