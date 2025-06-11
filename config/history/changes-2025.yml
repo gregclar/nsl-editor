@@ -1,4 +1,8 @@
 - :date: 11-Jun-2025
+  :jira_id: '5450'
+  :description: |-
+    Loader Review: Do not display heading record full names e.g. for Family heading records
+- :date: 11-Jun-2025
   :jira_id: '5453'
   :description: |-
     Created By and Updated By: Editor now does not downcase usernames when displaying them in metadata
