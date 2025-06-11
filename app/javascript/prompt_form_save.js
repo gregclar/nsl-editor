@@ -1,12 +1,7 @@
-$(window).on('beforeunload', function (e) {
-  if (window.hasUnsavedFormChanges && window.hasUnsavedFormChanges()) {
-    e.preventDefault();
-    return false;
-  }
-});
-
 let pendingHref = null;
+let noUnloadCheck = false;
 
+// --- Form State Helpers ---
 function getFormState(form) {
   const formData = new FormData(form);
   return JSON.stringify(Array.from(formData.entries()));
@@ -51,14 +46,47 @@ function showUnsavedChangesModal(onContinue, onBack, message) {
   }
 }
 
+// --- Global Unsaved Changes Check ---
+window.hasUnsavedFormChanges = function() {
+  return Array.from(document.querySelectorAll("form.prompt-form-save"))
+    .some(form => hasFormChanged(form));
+};
+
 window.renderFormPrompt = function() {
+  // Handle auto-submit dropdowns
+  document.querySelectorAll('select.auto-submit-on-change').forEach(select => {
+    select.dataset.prevValue = select.value;
+
+    select.addEventListener('change', function(event) {
+      const form = select.form;
+      if (window.enablePromptUnsavedChanges && window.hasUnsavedFormChanges && window.hasUnsavedFormChanges()) {
+        const doSubmit = () => form.requestSubmit();
+        const doCancel = () => { select.value = select.dataset.prevValue; };
+        event.preventDefault();
+        if (window.showUnsavedChangesModal) {
+          window.showUnsavedChangesModal(doSubmit, doCancel);
+        }
+        return false;
+      }
+      // No unsaved changes, submit as normal
+      form.requestSubmit ? form.requestSubmit() : form.submit();
+    });
+
+    // Update prevValue on successful submit
+    if (select.form) {
+      select.form.addEventListener("submit", function() {
+        select.dataset.prevValue = select.value;
+      });
+    }
+  });
+
   if (!window.enablePromptUnsavedChanges) {
-    debug('Prompt unsaved changes feature is disabled.');
+    if (typeof debug === "function") debug('Prompt unsaved changes feature is disabled.');
     return;
   }
 
-  const forms = document.querySelectorAll("form.prompt-form-save");
-  forms.forEach(form => {
+  // Track changes on all prompt-form-save forms
+  document.querySelectorAll("form.prompt-form-save").forEach(form => {
     setInitialFormState(form);
 
     ["input", "change"].forEach(evt =>
@@ -67,6 +95,7 @@ window.renderFormPrompt = function() {
       })
     );
 
+    // Prompt on submit if there are unsaved changes
     form.addEventListener("submit", function(event) {
       if (!hasFormChanged(form)) {
         resetFormChanged(form);
@@ -95,6 +124,7 @@ window.renderFormPrompt = function() {
     });
   });
 
+  // Tab navigation with unsaved changes prompt
   const modal = document.getElementById('unsaved-changes-modal');
   document.querySelectorAll('a.tab').forEach(tab => {
     tab.addEventListener('click', event => {
@@ -106,6 +136,7 @@ window.renderFormPrompt = function() {
     });
   });
 
+  // Modal continue/back for tab navigation
   const continueBtn = document.getElementById('unsaved-continue');
   const backBtn = document.getElementById('unsaved-back');
   if (continueBtn) {
@@ -126,7 +157,29 @@ window.renderFormPrompt = function() {
 };
 
 window.showUnsavedChangesModal = showUnsavedChangesModal;
-window.hasUnsavedFormChanges = function() {
-  return Array.from(document.querySelectorAll("form.prompt-form-save"))
-    .some(form => hasFormChanged(form));
-};
+
+$(window).on('beforeunload', function (e) {
+  if (window.enablePromptUnsavedChanges && !noUnloadCheck && window.hasUnsavedFormChanges && window.hasUnsavedFormChanges()) {
+    e.preventDefault();
+    return false;
+  }
+});
+
+$('body').on('click', 'a', function(event) {
+  const href = $(this).attr('href');
+  if (!href || href.startsWith('#') || $(this).hasClass('no-unsaved-check')) return;
+
+  if (window.enablePromptUnsavedChanges && window.hasUnsavedFormChanges && window.hasUnsavedFormChanges()) {
+    event.preventDefault();
+    const proceed = () => {
+      noUnloadCheck = true;
+      window.location.href = href;
+    };
+    if (window.showUnsavedChangesModal) {
+      window.showUnsavedChangesModal(proceed);
+    } else if (confirm("You have unsaved changes. Continue?")) {
+      proceed();
+    }
+    return false;
+  }
+});
