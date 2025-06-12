@@ -1,7 +1,12 @@
 - :date: 12-Jun-2025
   :jira_id: '5439'
   :description: |-
-    Loader Review: hide in-batch-compiler from reviewers - correct problem in re-factored display algorithm 
+    Loader Review: hide in-batch-compiler notes from reviewers - fix problem found testing re-factored display algorithm
+- :date: 11-June-2025
+  :jira_id: '76'
+  :jira_project: FLOR
+  :description: |-
+    Foa Project: Prompt message for there are unsaved changes in the profile item editor
 - :date: 11-Jun-2025
   :jira_id: '5450'
   :description: |-
