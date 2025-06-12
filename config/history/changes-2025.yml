@@ -1,3 +1,7 @@
+- :date: 12-Jun-2025
+  :jira_id: '5439'
+  :description: |-
+    Loader Review: hide in-batch-compiler notes from reviewers - fix problem found testing re-factored display algorithm
 - :date: 11-June-2025
   :jira_id: '76'
   :jira_project: FLOR
