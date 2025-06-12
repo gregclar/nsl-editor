@@ -1,7 +1,11 @@
 - :date: 12-Jun-2025
-  :jira_id: '5439'
+  :jira_id: '5457'
   :description: |-
-    Loader Review: hide in-batch-compiler notes from reviewers - fix problem found testing re-factored display algorithm
+    Batch Loader: remove boiler plate text "need a way to see the comments"
+- :date: 12-Jun-2025
+  :jira_id: '5435'
+  :description: |-
+    Loader Review: allow comments on in-batch-note records - fix problem found testing re-factored display algorithm
 - :date: 11-June-2025
   :jira_id: '76'
   :jira_project: FLOR
