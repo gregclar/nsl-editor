@@ -1,6 +1,26 @@
 let pendingHref = null;
 let noUnloadCheck = false;
 
+const observer = new MutationObserver(mutations => {
+  let nodeClass = "form";
+  if (!window.enableSiteWidePromptUnsavedChanges) { nodeClass = "form.prompt-form-save"; }
+  mutations.forEach(mutation => {
+    mutation.addedNodes.forEach(node => {
+      if (node.nodeType === 1 && node.matches && node.matches(nodeClass)) {
+        setInitialFormState(node);
+      }
+      // If forms are nested deeper:
+      if (node.nodeType === 1 && node.querySelectorAll) {
+        node.querySelectorAll(nodeClass).forEach(setInitialFormState);
+      }
+    });
+  });
+});
+
+if (window.enablePromptUnsavedChanges) {
+  observer.observe(document.body, { childList: true, subtree: true });
+}
+
 // --- Form State Helpers ---
 function getFormState(form) {
   const formData = new FormData(form);
@@ -12,6 +32,9 @@ function setInitialFormState(form) {
 }
 
 function hasFormChanged(form) {
+  if (getFormState(form) !== form.dataset.initialState) {
+    console.log("has form changed: ", form)
+  }
   return getFormState(form) !== form.dataset.initialState;
 }
 
@@ -45,11 +68,20 @@ function showUnsavedChangesModal(onContinue, onBack, message) {
     };
   }
 }
+function getPromptableForms() {
+  let forms;
+  if (window.enableSiteWidePromptUnsavedChanges && window.enablePromptUnsavedChanges) {
+    forms = Array.from(document.querySelectorAll("form"));
+  } else {
+    forms = Array.from(document.querySelectorAll("form.prompt-form-save"));
+  }
+  return forms.filter(form => form.id !== "search-form" && !form.querySelector('.auto-submit-on-change'));
 
+}
 // --- Global Unsaved Changes Check ---
 window.hasUnsavedFormChanges = function() {
-  return Array.from(document.querySelectorAll("form.prompt-form-save"))
-    .some(form => hasFormChanged(form));
+  const forms = getPromptableForms();
+  return Array.from(forms).some(form => hasFormChanged(form));
 };
 
 window.renderFormPrompt = function() {
@@ -86,7 +118,8 @@ window.renderFormPrompt = function() {
   }
 
   // Track changes on all prompt-form-save forms
-  document.querySelectorAll("form.prompt-form-save").forEach(form => {
+  const forms = getPromptableForms();
+  forms.forEach(form => {
     setInitialFormState(form);
 
     ["input", "change"].forEach(evt =>
