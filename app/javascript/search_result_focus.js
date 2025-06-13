@@ -58,7 +58,7 @@
   });
 
   promptFormUnsavedChanges = function(event, proceedCallback) {
-    if (window.enablePromptUnsavedChanges == true && (window.hasUnsavedFormChanges ? window.hasUnsavedFormChanges() : window.formChanged)) {
+    if (window.enablePromptUnsavedChanges && (window.hasUnsavedFormChanges ? window.hasUnsavedFormChanges() : window.formChanged)) {
       event.preventDefault();
       if (window.showUnsavedChangesModal) {
         window.showUnsavedChangesModal(proceedCallback);
