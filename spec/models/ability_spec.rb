@@ -330,6 +330,16 @@ RSpec.describe Ability, type: :model do
       expect(subject.can?(:manage, Profile::ProfileText)).to eq true
     end
 
+    it "can create_version Profile::ProfileItem if it is not draft" do
+      profile_item = create(:profile_item, is_draft: false)
+      expect(subject.can?(:create_version, profile_item)).to eq true
+    end
+
+    it "cannot create_version Profile::ProfileItem if it is a draft" do
+      profile_item = create(:profile_item, is_draft: true)
+      expect(subject.can?(:create_version, profile_item)).to eq false
+    end
+
     it 'can manage Profile::ProfileItemAnnotation' do
       expect(subject.can?(:manage, Profile::ProfileItemAnnotation)).to eq true
     end

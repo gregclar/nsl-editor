@@ -1,3 +1,8 @@
+- :date: 18-June-2025
+  :jira_id: '77'
+  :jira_project: FLOR
+  :description: |-
+    Foa Project: Backend service for creating new versioned profile items
 - :date: 12-June-2025
   :jira_id: '76'
   :jira_project: FLOR

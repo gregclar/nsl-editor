@@ -147,6 +147,9 @@ class Ability
     can :manage, Profile::ProfileItem do |profile_item|
       profile_item.product_item_config.product_id == user.product_from_roles&.id
     end
+    can :create_version, Profile::ProfileItem do |profile_item|
+      !profile_item.is_draft?
+    end
     can :manage, Profile::ProfileItemReference
     can :manage, Profile::ProfileText
     can :manage, Profile::ProfileItemAnnotation
