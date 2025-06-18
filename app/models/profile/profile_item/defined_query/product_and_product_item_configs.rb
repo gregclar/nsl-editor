@@ -35,7 +35,7 @@ class Profile::ProfileItem::DefinedQuery::ProductAndProductItemConfigs
   def find_product_by_name
     product_name = user.products.where(name: SUPPORTED_PRODUCTS).first&.name
 
-    Profile::Product.find_by(name: product_name)
+    Product.find_by(name: product_name)
   end
 
   def profile_v2_aware?
