@@ -23,7 +23,7 @@ RSpec.describe Profile::ProfileItem, type: :model do
 
   describe '.by_product' do
     context "for a given" do
-      let!(:product) { create(:profile_product) }
+      let!(:product) { create(:product) }
       let!(:product_item_config) { create(:product_item_config, product: product) }
       let!(:item_for_product) { create(:profile_item, product_item_config: product_item_config) }
 
@@ -34,7 +34,7 @@ RSpec.describe Profile::ProfileItem, type: :model do
     end
 
     context "for other product" do
-      let!(:product) { create(:profile_product) }
+      let!(:product) { create(:product) }
       let!(:product_item_config) { create(:product_item_config) }
       let!(:item_for_product) { create(:profile_item, product_item_config: product_item_config) }
 
@@ -113,7 +113,7 @@ RSpec.describe Profile::ProfileItem, type: :model do
   end
 
   describe "#under_this_product?" do
-    let!(:product) { create(:profile_product) }
+    let!(:product) { create(:product) }
     let!(:profile_item) { create(:profile_item, product_item_config: create(:product_item_config, product: product)) }
     let!(:tree_element) { create(:tree_element, instance: profile_item.instance, name: profile_item.instance.name) }
 
@@ -128,7 +128,7 @@ RSpec.describe Profile::ProfileItem, type: :model do
     end
 
     it "returns false when the item is not under the specified product" do
-      other_product = create(:profile_product)
+      other_product = create(:product)
       expect(profile_item.under_this_product?(other_product)).to be false
     end
 

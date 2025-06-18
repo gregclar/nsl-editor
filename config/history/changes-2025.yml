@@ -1,4 +1,9 @@
 - :date: 18-June-2025
+  :jira_id: '73'
+  :jira_project: FLOR
+  :description: |-
+    Foa Project: Unify the Product and Profile::Product models as a Product model
+- :date: 18-June-2025
   :jira_id: '77'
   :jira_project: FLOR
   :description: |-
