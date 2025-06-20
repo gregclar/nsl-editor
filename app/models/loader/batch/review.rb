@@ -53,7 +53,7 @@ class Loader::Batch::Review < ActiveRecord::Base
   end
 
   def active_periods
-    review_periods.all.select {|a| a.active?}
+    review_periods.active
   end
 
   def update_if_changed(params, username)
