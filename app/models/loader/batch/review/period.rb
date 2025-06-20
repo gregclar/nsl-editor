@@ -50,6 +50,11 @@ class Loader::Batch::Review::Period < ActiveRecord::Base
 
   attr_accessor :give_me_focus, :message
 
+  scope :active, -> { 
+    where("start_date <= ?", Time.zone.today)
+    .where("end_date IS NULL OR end_date >= ?", Time.zone.today)
+  }
+
   def loader_name_comments(loader_name_id, scope = "unrestricted")
     if scope == "unrestricted"
       return comments.order(:created_at).collect.select do |x|
