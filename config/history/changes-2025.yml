@@ -1,4 +1,8 @@
 - :date: 20-Jun-2025
+  :jira_id: '5468'
+  :description: |-
+    Batch Review: Keep commenting available until the end of the review period's closing day
+- :date: 20-Jun-2025
   :jira_id: '5462'
   :description: |-
     Batch Review: Remove ability for user to edit or delete their comments after review ends
