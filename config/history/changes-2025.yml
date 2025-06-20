@@ -1,3 +1,7 @@
+- :date: 20-Jun-2025
+  :jira_id: '5462'
+  :description: |-
+    Batch Review: Remove ability for user to edit or delete their comments after review ends
 - :date: 18-June-2025
   :jira_id: '73'
   :jira_project: FLOR
