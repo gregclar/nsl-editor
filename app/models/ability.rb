@@ -150,6 +150,9 @@ class Ability
     can :create_version, Profile::ProfileItem do |profile_item|
       !profile_item.is_draft?
     end
+    can :publish, Profile::ProfileItem do |profile_item|
+      profile_item.draft_version?
+    end
     can :manage, Profile::ProfileItemReference
     can :manage, Profile::ProfileText
     can :manage, Profile::ProfileItemAnnotation

@@ -38,7 +38,8 @@ class ProfileItems::Published::CreateNewVersionService < BaseService
   def any_draft_profile_items
     return unless instance
       .profile_items
-      .where(product_item_config_id: product_item_config.id, is_draft: true)
+      .drafts
+      .by_product_item_config(product_item_config)
       .exists?
 
     errors.add(:base, "There is still a draft profile item for this product item config")
@@ -48,7 +49,8 @@ class ProfileItems::Published::CreateNewVersionService < BaseService
     @new_profile_item = profile_item.dup
     new_profile_item.is_draft = true
     new_profile_item.published_date = nil
-    new_profile_item.current_user = user
+    new_profile_item.created_by = user.user_name
+    new_profile_item.updated_by = user.user_name
     new_profile_item.save
 
     return errors.merge!(new_profile_item.errors) if new_profile_item.errors.any?
