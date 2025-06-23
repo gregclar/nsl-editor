@@ -2,6 +2,11 @@
   :jira_id: '77'
   :jira_project: FLOR
   :description: |-
+    Foa Project: Chore - Address bullet gem's N+1 queries
+- :date: 23-June-2025
+  :jira_id: '77'
+  :jira_project: FLOR
+  :description: |-
     Foa Project: Implement new versioned copy of profile item
 - :date: 20-Jun-2025
   :jira_id: '5468'
