@@ -340,6 +340,18 @@ RSpec.describe Ability, type: :model do
       expect(subject.can?(:create_version, profile_item)).to eq false
     end
 
+    it "can publish Profile::ProfileItem if it is a draft version" do
+      profile_item = create(:profile_item, is_draft: true)
+      allow(profile_item).to receive(:draft_version?).and_return(true)
+      expect(subject.can?(:publish, profile_item)).to eq true
+    end
+
+    it "cannot publish Profile::ProfileItem if it is not a draft version" do
+      profile_item = create(:profile_item, is_draft: false)
+      allow(profile_item).to receive(:draft_version?).and_return(false)
+      expect(subject.can?(:publish, profile_item)).to eq false
+    end
+
     it 'can manage Profile::ProfileItemAnnotation' do
       expect(subject.can?(:manage, Profile::ProfileItemAnnotation)).to eq true
     end

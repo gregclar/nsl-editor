@@ -33,7 +33,8 @@ function setInitialFormState(form) {
 
 function hasFormChanged(form) {
   if (getFormState(form) !== form.dataset.initialState) {
-    console.log("has form changed: ", form)
+    console.log("has form changed: ", getFormState(form))
+    console.log("has form initial: ", form.dataset.initialState)
   }
   return getFormState(form) !== form.dataset.initialState;
 }
@@ -119,6 +120,8 @@ window.renderFormPrompt = function() {
 
   // Track changes on all prompt-form-save forms
   const forms = getPromptableForms();
+  // Use a WeakMap to track skipNextSubmit per form
+  const skipNextSubmitMap = new WeakMap();
   forms.forEach(form => {
     setInitialFormState(form);
 
@@ -128,9 +131,19 @@ window.renderFormPrompt = function() {
       })
     );
 
-    // Prompt on submit if there are unsaved changes
-    form.addEventListener("submit", function(event) {
-      if (!hasFormChanged(form)) {
+    // Remove any previous handler to avoid double-binding
+    if (form._promptFormSaveHandler) {
+      form.removeEventListener("submit", form._promptFormSaveHandler);
+    }
+
+    const handler = function(event) {
+      if (skipNextSubmitMap.get(form)) {
+        skipNextSubmitMap.set(form, false);
+        return; // Allow the submit to go through
+      }
+
+      const alwaysPrompt = form.classList.contains('always-prompt-before-action');
+      if (!alwaysPrompt && !hasFormChanged(form)) {
         resetFormChanged(form);
         return;
       }
@@ -140,8 +153,10 @@ window.renderFormPrompt = function() {
       const submitMsg = "Are you sure you want to submit? This action will save your changes.";
 
       const doSubmit = () => {
-        resetFormChanged(form);
-        form.requestSubmit ? form.requestSubmit() : form.submit();
+        skipNextSubmitMap.set(form, true);
+        form.requestSubmit ? form.requestSubmit(submitBtn) : form.submit();
+        if (modal) modal.style.display = 'none';
+        resetFormChanged(form)
       };
       const onCancel = () => {
         if (submitBtn) submitBtn.disabled = false;
@@ -154,7 +169,10 @@ window.renderFormPrompt = function() {
       } else {
         onCancel();
       }
-    });
+    };
+
+    form.addEventListener("submit", handler);
+    form._promptFormSaveHandler = handler;
   });
 
   // Tab navigation with unsaved changes prompt

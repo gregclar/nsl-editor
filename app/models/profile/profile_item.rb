@@ -72,9 +72,13 @@ module Profile
 
     default_scope { includes(:product_item_config).order("product_item_config.sort_order ASC") }
 
+    scope :drafts, -> { where(is_draft: true) }
     scope :by_product, ->(product) do
       joins(:product_item_config)
       .where(product_item_config: { product_id: product.id })
+    end
+    scope :by_product_item_config, ->(product_item_config) do
+      where(product_item_config_id: product_item_config.id)
     end
 
     after_destroy :conditionally_destroy_profile_text
@@ -99,6 +103,18 @@ module Profile
 
     def under_this_product?(product)
       self.product.id == product.id && tree_element_id != nil && ::Product.by_tree_element(tree_element).exists?(product.id)
+    end
+
+    def draft_version?
+      is_draft? && !instance.draft?
+    end
+
+    def publish!
+      return if published?
+
+      self.is_draft = false
+      self.published_date = Time.current
+      save!
     end
 
     private

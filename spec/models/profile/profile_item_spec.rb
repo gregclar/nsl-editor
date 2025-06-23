@@ -21,6 +21,38 @@ RSpec.describe Profile::ProfileItem, type: :model do
     end
   end
 
+  describe ".drafts" do
+    let(:instance) { create(:instance, draft: false) }
+    let!(:product_item_config) { create(:product_item_config) }
+    let(:draft_item) { create(:profile_item, product_item_config:, instance:, is_draft: true) }
+    let(:published_item) { create(:profile_item, product_item_config:, instance:, is_draft: false) }
+
+    subject { described_class.drafts }
+
+    it 'returns only draft profile items' do
+      expect(subject).to include(draft_item)
+    end
+
+    it "excludes non-draft profile items" do
+      expect(subject).not_to include(published_item)
+    end
+  end
+
+  describe ".by_product_item_config" do
+    let(:instance) { create(:instance) }
+    let!(:profile_item_type) { create(:profile_item_type) }
+    let!(:product_item_config1) { create(:product_item_config, profile_item_type:) }
+    let!(:product_item_config2) { create(:product_item_config, profile_item_type:) }
+    let!(:profile_item1) { create(:profile_item, product_item_config: product_item_config1, instance:) }
+    let!(:profile_item2) { create(:profile_item, product_item_config: product_item_config2, instance:) }
+
+    it 'returns only profile items for the given product item config' do
+      results = described_class.by_product_item_config(product_item_config1)
+      expect(results).to include(profile_item1)
+      expect(results).not_to include(profile_item2)
+    end
+  end
+
   describe '.by_product' do
     context "for a given" do
       let!(:product) { create(:product) }
@@ -138,6 +170,73 @@ RSpec.describe Profile::ProfileItem, type: :model do
     end
   end
 
+  describe "#draft_version?" do
+    let(:profile_item) { create(:profile_item, instance: instance, is_draft: true) }
+
+    subject { profile_item.draft_version? }
+
+    context "when instance is draft" do
+      let(:instance) { create(:instance, draft: true) }
+
+      context "and profile item is a draft" do
+        it "returns false" do
+          expect(subject).to be false
+        end
+      end
+
+      context "and profile item is not a draft" do
+        before { profile_item.update(is_draft: false) }
+        it "returns false" do
+          expect(subject).to be false
+        end
+      end
+    end
+
+    context "when instance is not draft" do
+      let(:instance) { create(:instance, draft: false) }
+
+      context "and profile item is a draft" do
+        it "returns true" do
+          expect(subject).to be true
+        end
+      end
+
+      context "and profile item is not a draft" do
+        before { profile_item.update(is_draft: false) }
+        it "returns false" do
+          expect(subject).to be false
+        end
+      end
+    end
+  end
+
+  describe "#publish!" do
+    let(:instance) { create(:instance, draft: false) }
+    let(:profile_item) { create(:profile_item, instance:, is_draft: true, published_date: nil ) }
+
+    subject { profile_item.publish! }
+
+    it "sets is_draft to false and updates the tree_element_id" do
+      expect { subject }.to change { profile_item.is_draft }.from(true).to(false)
+    end
+
+    it "returns true" do
+      expect(subject).to be true
+    end
+
+    it "updates the published_date" do
+      expect { subject }.to change { profile_item.published_date }.from(nil).to be_within(1.second).of(Time.current)
+    end
+
+    context "when already published" do
+      let(:profile_item) { create(:profile_item, is_draft: false, published_date: Time.current - 30.days ) }
+
+      it "does not change is_draft or published_date" do
+        expect { subject }.not_to change { profile_item.is_draft }
+        expect { subject }.not_to change { profile_item.published_date }
+      end
+    end
+  end
 
   describe "after_destroy callback" do
     let(:profile_text) { create(:profile_text) }
