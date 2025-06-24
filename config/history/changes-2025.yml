@@ -1,3 +1,8 @@
+- :date: 25-June-2025
+  :jira_id: '5472'
+  :jira_project: NSL
+  :description: |-
+    Don't allow a user to delete a reference that is used in a product
 - :date: 23-June-2025
   :jira_id: '77'
   :jira_project: FLOR
