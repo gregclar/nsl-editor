@@ -32,6 +32,37 @@ RSpec.describe ProfileItems::Published::CreateNewVersionService, type: :service 
         expect(new_draft.profile_item_references.first.reference_id).to eq(profile_item_reference.reference_id)
       end
 
+      it "sets the correct attributes on the the new profile item" do
+        subject.execute
+        new_draft = Profile::ProfileItem.where(is_draft: true).last
+        expect(new_draft.is_draft).to be true
+        expect(new_draft.published_date).to be_nil
+        expect(new_draft.created_by).to eq(user.user_name)
+        expect(new_draft.updated_by).to eq(user.user_name)
+        expect(new_draft.source_system).to be_nil
+        expect(new_draft.source_id).to be_nil
+        expect(new_draft.source_id_string).to be_nil
+      end
+
+      it "sets the correct attribues of the new profile text" do
+        subject.execute
+        new_draft = Profile::ProfileItem.where(is_draft: true).last
+        new_profile_text = new_draft.profile_text
+        expect(new_profile_text.created_by).to eq(user.user_name)
+        expect(new_profile_text.updated_by).to eq(user.user_name)
+        expect(new_profile_text.source_system).to be_nil
+        expect(new_profile_text.source_id).to be_nil
+      end
+
+      it "sets the correct attributes of the new profile item annotation" do
+        subject.execute
+        new_draft = Profile::ProfileItem.where(is_draft: true).last
+        new_profile_item_annotation = new_draft.profile_item_annotation
+        expect(new_profile_item_annotation.created_by).to eq(user.user_name)
+        expect(new_profile_item_annotation.updated_by).to eq(user.user_name)
+        expect(new_profile_item_annotation.profile_item_id).to eq(new_draft.id)
+      end
+
       context "when there are errors copying the profile item" do
         before do
           errors = ActiveModel::Errors.new(profile_item)
