@@ -41,6 +41,6 @@ tve_for_red_gum:
   taxon_link: "/node/apni/2895769"
   tree_element: red_gum_in_taxonomy
   tree_path: "/50692159"
-  tree_version: current_version
+  tree_version: apc_current_version
   updated_at: 2018-05-10 14:00:00.000000
   updated_by: import

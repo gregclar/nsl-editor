@@ -137,6 +137,7 @@ class TreesController < ApplicationController
 
   def update_comment
     logger.info "update comment #{update_comment_params[:element_link]} #{update_comment_params[:comment]}"
+    authorize! :update_comment, @working_draft
     tve = TreeVersionElement.find(update_comment_params[:element_link])
     profile_data = Tree::ProfileData.new(current_user, tve.tree_version, tve.tree_element.profile || {})
     profile_data.update_comment(update_comment_params[:comment])
@@ -147,7 +148,13 @@ class TreesController < ApplicationController
     render "update_comment"
   rescue RestClient::Unauthorized, RestClient::Forbidden, RestClient::ExceptionWithResponse => e
     @message = json_error(e)
-    render "update_comment_error"
+    render "update_comment_error", status: :bad_request
+  rescue CanCan::AccessDenied => e
+    @message = json_error(e)
+    render "update_comment_error", status: :forbidden
+  rescue => e
+    @message = e.to_s
+    render "update_comment_error", status: :bad_request
   end
 
   def update_distribution

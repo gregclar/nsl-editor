@@ -351,7 +351,7 @@ Rails.application.routes.draw do
         to: "tree_versions#create_draft",
         via: :post
 
-  match "tree_verions/edit_draft",
+  match "tree_versions/edit_draft",
         as: "tree_versions_edit_draft",
         to: "tree_versions#edit_draft",
         via: :get
