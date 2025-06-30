@@ -1,3 +1,8 @@
+- :date: 30-June-2025
+  :jira_id: '77'
+  :jira_project: FLOR
+  :description: |-
+    Foa Project: Address testing feedback - create version button should be available for link items as well
 - :date: 25-June-2025
   :jira_id: '5472'
   :jira_project: NSL
