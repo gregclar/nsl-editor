@@ -139,5 +139,49 @@ RSpec.describe ProfileItems::Published::CreateNewVersionService, type: :service 
         expect(subject.errors.full_messages).to include("There is still a draft profile item for this product item config")
       end
     end
+
+    context "when the profile item is a link" do
+      before do
+        profile_item.update(statement_type: "link")
+      end
+
+      it "converts the link profile item to a fact before creating a new version" do
+        expect(profile_item.fact?).to be false
+        subject.execute
+        profile_item.reload
+        expect(profile_item.fact?).to be true
+      end
+
+      context "when the link profile item is a draft" do
+        let(:profile_item) { create(:profile_item, instance: instance, product_item_config: product_item_config, is_draft: true, statement_type: "link") }
+
+        it "does not convert the link profile item to a fact and adds an error" do
+          subject.execute
+          expect(subject.errors.full_messages).to include("Profile item must be published before creating a new version")
+          expect(profile_item.fact?).to be false
+        end
+      end
+
+      context "when there are errors converting the link profile item to a fact" do
+        let(:errors) do
+          errors = ActiveModel::Errors.new(profile_item)
+          errors.add(:base, "An error")
+          errors
+        end
+
+        let(:mock_service) { instance_double(ProfileItems::Links::UpdateService, errors: errors) }
+
+        before do
+          allow(ProfileItems::Links::UpdateService).to receive(:call).and_return(mock_service)
+        end
+
+        it "does not create a new version and returns errors" do
+          subject.execute
+          expect(subject.errors.full_messages).to include("An error")
+          profile_item.reload
+          expect(profile_item.fact?).to be false
+        end
+      end
+    end
   end
 end

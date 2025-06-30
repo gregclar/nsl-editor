@@ -18,6 +18,7 @@ class ProfileItems::Published::CreateNewVersionService < BaseService
     return unless valid?
 
     ActiveRecord::Base.transaction do
+      convert_link_profile_item_to_fact unless profile_item.fact?
       copy_profile_item_as_draft
       copy_profile_text
       copy_profile_item_annotation
@@ -112,6 +113,23 @@ class ProfileItems::Published::CreateNewVersionService < BaseService
 
       errors.merge!(new_profile_item_reference.errors) if new_profile_item_reference.errors.any?
     end
+  end
+
+  def convert_link_profile_item_to_fact
+    profile_item.is_draft = true
+    profile_item.save
+    service = ProfileItems::Links::UpdateService.call(
+      user: user,
+      profile_item: profile_item,
+      params: params
+    )
+
+    return errors.merge!(service.errors) if service.errors.any?
+
+    @profile_item = service.profile_item
+    @profile_item.is_draft = false
+    @profile_item.save
+    return errors.merge!(@profile_item.errors) if @profile_item.errors.any?
   end
 
 end
