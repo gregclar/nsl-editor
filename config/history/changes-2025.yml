@@ -1,4 +1,9 @@
 - :date: 30-June-2025
+  :jira_id: ''
+  :jira_project: FLOR
+  :description: |-
+    Foa Project: Fixup copy tab not working for a profile editor which is caused by Profile::Product call.
+- :date: 30-June-2025
   :jira_id: '77'
   :jira_project: FLOR
   :description: |-
