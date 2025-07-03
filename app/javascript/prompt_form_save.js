@@ -44,6 +44,13 @@ function resetFormChanged(form) {
   setInitialFormState(form);
 }
 
+function resetAllFormsChanged() {
+  const forms = getPromptableForms();
+  forms.forEach(form => {
+    resetFormChanged(form);
+  });
+}
+
 function showUnsavedChangesModal(onContinue, onBack, message) {
   const modal = document.getElementById('unsaved-changes-modal');
   const continueBtn = document.getElementById('unsaved-continue');
@@ -218,13 +225,25 @@ $(window).on('beforeunload', function (e) {
 
 $('body').on('click', 'a', function(event) {
   const href = $(this).attr('href');
+  const isRemote = $(this).attr('data-remote') === 'true';
+
   if (!href || href.startsWith('#') || $(this).hasClass('no-unsaved-check')) return;
 
   if (window.enablePromptUnsavedChanges && window.hasUnsavedFormChanges && window.hasUnsavedFormChanges()) {
     event.preventDefault();
     const proceed = () => {
       noUnloadCheck = true;
-      window.location.href = href;
+      if (isRemote) {
+        // Perform AJAX call for remote links
+        $.ajax({
+          url: href,
+          type: $(this).attr('data-method') || 'GET',
+          dataType: 'script'
+        });
+        resetAllFormsChanged();
+      } else {
+        window.location.href = href;
+      }
     };
     if (window.showUnsavedChangesModal) {
       window.showUnsavedChangesModal(proceed);
