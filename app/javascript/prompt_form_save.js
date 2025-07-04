@@ -253,3 +253,29 @@ $('body').on('click', 'a', function(event) {
     return false;
   }
 });
+
+document.body.addEventListener('submit', function(event) {
+  const form = event.target;
+  if (!(form instanceof HTMLFormElement)) return;
+
+  // Only prompt if there are unsaved changes in *other* forms
+  if (window.enablePromptUnsavedChanges && window.hasUnsavedFormChanges && window.hasUnsavedFormChanges()) {
+    // Find all dirty forms except the one being submitted
+    const dirtyOtherForms = getPromptableForms().filter(f => f !== form && hasFormChanged(f));
+    if (dirtyOtherForms.length > 0) {
+      event.preventDefault();
+      const doSubmit = () => {
+        resetAllFormsChanged();
+        form.submit();
+      };
+      const doCancel = () => {};
+      if (window.showUnsavedChangesModal) {
+        window.showUnsavedChangesModal(doSubmit, doCancel);
+      } else if (confirm("You have unsaved changes in another form. Continue?")) {
+        doSubmit();
+      }
+      return false;
+    }
+  }
+  // Otherwise, allow normal logic (including per-form prompt)
+}, true);
