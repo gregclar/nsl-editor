@@ -58,17 +58,16 @@
   });
 
   promptFormUnsavedChanges = function(event, proceedCallback) {
-    if (window.enablePromptUnsavedChanges && (window.hasUnsavedFormChanges ? window.hasUnsavedFormChanges() : window.formChanged)) {
+    if (window.enablePromptUnsavedChanges && window.hasUnsavedFormChanges && window.hasUnsavedFormChanges()) {
       event.preventDefault();
       if (window.showUnsavedChangesModal) {
         window.showUnsavedChangesModal(proceedCallback);
       } else if (confirm("You have unsaved changes. Continue?")) {
-        window.formChanged = false;
         if(proceedCallback) proceedCallback();
       }
       return false;
     }
-   proceedCallback();
+    if(proceedCallback) proceedCallback();
   };
 
   optionalFocusOnPageLoad = function() {
