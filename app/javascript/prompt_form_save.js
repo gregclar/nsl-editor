@@ -109,7 +109,7 @@ window.hasUnsavedFormChanges = function() {
 };
 
 window.renderFormPrompt = function() {
-  // Handle auto-submit dropdowns
+  // ALWAYS handle auto-submit dropdowns for basic functionality
   document.querySelectorAll('select.auto-submit-on-change').forEach(select => {
     select.dataset.prevValue = select.value;
 
@@ -120,6 +120,8 @@ window.renderFormPrompt = function() {
 
     const handler = function(event) {
       const form = select.form;
+      
+      // Only check for unsaved changes if feature is enabled
       if (window.enablePromptUnsavedChanges && hasUnsavedChangesInOtherForms(form)) {
         const doSubmit = () => {
           // Mark this form as approved by auto-submit to prevent double prompting
@@ -139,7 +141,8 @@ window.renderFormPrompt = function() {
         }
         return false;
       }
-      // No unsaved changes, submit as normal
+      
+      // No unsaved changes OR feature disabled - submit normally
       try {
         form.requestSubmit ? form.requestSubmit() : form.submit();
       } catch (error) {
@@ -160,6 +163,7 @@ window.renderFormPrompt = function() {
     }
   });
 
+  // Early exit if unsaved changes feature is disabled
   if (!window.enablePromptUnsavedChanges) {
     if (typeof debug === "function") debug('Prompt unsaved changes feature is disabled.');
     return;
@@ -285,25 +289,55 @@ $(window).on('beforeunload', function (e) {
 
 // Clear approval flags on page unload to prevent memory leaks
 $(window).on('unload', function() {
-  // Note: WeakMap will be garbage collected anyway, but this is good practice
-  autoSubmitApprovedForms.clear?.();
+  // Only clear if the WeakMap was actually used (i.e., feature was enabled)
+  if (window.enablePromptUnsavedChanges && autoSubmitApprovedForms.clear) {
+    autoSubmitApprovedForms.clear();
+  }
 });
 
-$('body').on('click', 'a', function(event) {
-  const href = $(this).attr('href');
-  const isRemote = $(this).attr('data-remote') === 'true';
+// Handle all link clicks for unsaved changes prompt
+function handleLinkClick(event) {
+  // Early exit if feature is disabled - no processing whatsoever
+  if (!window.enablePromptUnsavedChanges) {
+    return;
+  }
 
-  if (!href || href.startsWith('#') || $(this).hasClass('no-unsaved-check')) return;
+  const link = event.target.closest('a');
+  if (!link) return;
+  
+  const href = link.getAttribute('href');
+  const isRemote = link.getAttribute('data-remote') === 'true';
 
-  if (window.enablePromptUnsavedChanges && window.hasUnsavedFormChanges && window.hasUnsavedFormChanges()) {
+  // Debug logging only when feature is enabled
+  if (typeof debug === "function") {
+    debug('Link clicked:', href, 'Remote:', isRemote, 'Classes:', link.className, 'ID:', link.id);
+  }
+
+  // Skip certain types of links
+  if (!href || href.startsWith('#') || link.classList.contains('no-unsaved-check') || link.classList.contains('dropdown-toggle')) {
+    if (typeof debug === "function") {
+      debug('Link skipped - href:', href, 'starts with #:', href?.startsWith('#'), 
+            'has no-unsaved-check:', link.classList.contains('no-unsaved-check'),
+            'is dropdown-toggle:', link.classList.contains('dropdown-toggle'));
+    }
+    return;
+  }
+
+  if (window.hasUnsavedFormChanges && window.hasUnsavedFormChanges()) {
     event.preventDefault();
+    event.stopPropagation();
+    
+    if (typeof debug === "function") {
+      debug('Showing unsaved changes prompt for link:', href);
+    }
+    
     const proceed = () => {
       noUnloadCheck = true;
       if (isRemote) {
         // Perform AJAX call for remote links
         $.ajax({
           url: href,
-          type: $(this).attr('data-method') || 'GET',
+          type: link.getAttribute('data-method') || 'GET',
           dataType: 'script',
           error: function(xhr, status, error) {
             console.error('Remote link failed:', error);
@@ -326,11 +360,25 @@ $('body').on('click', 'a', function(event) {
     }
     return false;
   }
-});
+}
+
+// Use native event listener with capture phase for better Bootstrap dropdown compatibility
+// This runs before Bootstrap's event handlers and provides more reliable event interception
+document.body.addEventListener('click', function(event) {
+  // Only process if the click target is or contains a link
+  if (event.target.tagName === 'A' || event.target.closest('a')) {
+    handleLinkClick(event);
+  }
+}, true); // Use capture phase to catch events before Bootstrap processes them
 
 document.body.addEventListener('submit', function(event) {
   const form = event.target;
   if (!(form instanceof HTMLFormElement)) return;
+
+  // Early exit if feature is disabled
+  if (!window.enablePromptUnsavedChanges) {
+    return;
+  }
 
   // Check if this form was already approved by auto-submit handler
   if (autoSubmitApprovedForms.has(form)) {
@@ -340,7 +388,7 @@ document.body.addEventListener('submit', function(event) {
   }
 
   // Only prompt if there are unsaved changes in *other* forms
-  if (window.enablePromptUnsavedChanges && hasUnsavedChangesInOtherForms(form)) {
+  if (hasUnsavedChangesInOtherForms(form)) {
     event.preventDefault();
     const doSubmit = () => {
       resetAllFormsChanged();
