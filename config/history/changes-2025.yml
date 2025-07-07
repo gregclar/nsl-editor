@@ -1,3 +1,18 @@
+- :date: 04-July-2025
+  :jira_id: '76'
+  :jira_project: FLOR
+  :description: |-
+    Foa Project: Fixup prompt for menu and search form submit when there are unsaved changes.
+- :date: 30-June-2025
+  :jira_id: ''
+  :jira_project: FLOR
+  :description: |-
+    Foa Project: Fixup copy tab not working for a profile editor which is caused by Profile::Product call.
+- :date: 30-June-2025
+  :jira_id: '77'
+  :jira_project: FLOR
+  :description: |-
+    Foa Project: Address testing feedback - create version button should be available for link items as well
 - :date: 25-June-2025
   :jira_id: '5472'
   :jira_project: NSL
