@@ -1,3 +1,7 @@
+- :date: 15-Jul-2025
+  :jira_id: '5505'
+  :description: |-
+    Unpublished citation: remove duplicate, un-used typeahead controller
 - :date: 08-Jul-2025
   :jira_id: '5502'
   :description: |-
