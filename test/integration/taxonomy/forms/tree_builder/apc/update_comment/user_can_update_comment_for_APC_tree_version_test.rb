@@ -31,7 +31,6 @@ class TaxFormsTreeBuilderAPCUserCanUpdateCommentOnAPCDraftTest < ActionControlle
   tests TreesController
 
   def setup
-    response_body = %Q({"payload":{"draftName":"blah","versionNumber":#{tree_versions(:apc_draft_version).id}}})
   stub_request(:post, "http://localhost:9090/nsl/services/api/treeElement/editElementProfile?apiKey=test-api-key&as=apc-tax-builder").
   with(
     body: /"taxonUri":"tree.123.789"/,
@@ -47,7 +46,8 @@ class TaxFormsTreeBuilderAPCUserCanUpdateCommentOnAPCDraftTest < ActionControlle
   end
 
 
-  test "APC tree publisher user can update comment on APC tree draft entry" do
+  # Note: create and delete go through the same code path as update
+  test "APC tree builder user can update comment on APC tree draft entry" do
     user = users(:apc_tax_builder)
     apc_draft = tree_versions(:apc_draft_version)
     tve = tree_version_elements(:tve_for_red_gum)

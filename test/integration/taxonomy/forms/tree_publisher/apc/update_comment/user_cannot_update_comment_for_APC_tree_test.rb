@@ -46,6 +46,8 @@ class TaxFormsTreePublisherAPCUserCannotUpdateCommentOnAPCDraftTest < ActionCont
                     draft: apc_draft,
                     groups: ["login"]})
     assert_response :forbidden, 'APC tree publisher should not be able to update comment on APC draft entry'
+    assert_match /Access Denied\! Please contact the admin for proper permissions/,
+      response.body, "Expecting Access Denied message"
   end
 end
 

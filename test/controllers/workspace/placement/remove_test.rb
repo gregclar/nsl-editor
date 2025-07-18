@@ -53,7 +53,7 @@ class TreePlacementRemoveTest < ActionController::TestCase
            session: { username: "fred",
                       user_full_name: "Fred Jones",
                       groups: %w[edit treebuilder],
-                      workspace: @workspace })
+                      draft: @workspace})
     assert_response :success
     assert_equal "remove_name_placement", @controller.action_name,
                  "Action should be 'remove_name_placement'"

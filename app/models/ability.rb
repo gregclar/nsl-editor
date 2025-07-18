@@ -277,7 +277,6 @@ class Ability
     can "trees/workspaces/current", "toggle"
     can "names/typeaheads/for_workspace_parent_name", :all
     can "menu", "tree"
-    #can "tree/elements",       :all
     can :edit, TreeVersion     # Added for transition to tree-publisher authorisations
     can :set_workspace, TreeVersion
     can 'tree_versions', 'form_to_publish' # display the publish draft form
@@ -288,6 +287,12 @@ class Ability
     can 'tree_versions', 'edit_draft' # call the action
     can :update_draft, Tree::DraftVersion
     can 'tree_versions', 'update_draft' # call the action
+    can "instances", "tab_classification"                 # includes showing Instance -> Tree tab content
+    can :place_name, :all                                 # includes showing Instance -> Tree tab
+    can "trees", "update_excluded"
+    can :update_excluded, :all
+    can :replace_placement, :all
+    can :remove_name_placement, :all
   end
 
   def admin_auth
@@ -325,15 +330,38 @@ class Ability
     can "loader/names",                             "tab_vote"
   end
 
+  # For tree-builder product roles - not the AD treebuilder group.
   def tree_builder_auth(session_user)
     can "menu", "tree"
     can "trees/workspaces/current", "toggle"
     can :toggle_draft, Tree, products: { product_roles: { user_product_roles: { user_id:session_user.user_id} }}
     can :set_workspace, TreeVersion, tree: {products: { product_roles: { user_product_roles: { user_id:session_user.user_id}}}}
-    can "classification",     "place"
-    can "update_comment", "tree"
+    can "classification", "place"
+    can "instances", "tab_classification"
+    # Note: update_comment also handles what looks to the user like insert and delete comment
     can "trees", "update_comment"
     can :update_comment, TreeVersion, tree: {products: { product_roles: { user_product_roles: { user_id:session_user.user_id}}}}
+    # Note: update_distribution also handles what looks to the user like insert and delete distribution
+    can "trees", "update_distribution"
+    can :update_distribution, TreeVersion, tree: {products: { product_roles: { user_product_roles: { user_id:session_user.user_id}}}}
+
+    can "names/typeaheads/for_workspace_parent_name", :all
+    can :names_typeahead_for_workspace_parent, TreeVersion, tree: {products: { product_roles: { user_product_roles: { user_id:session_user.user_id}}}}
+
+    can "trees", "update_tree_parent"
+    can :update_tree_parent, TreeVersion, tree: {products: { product_roles: { user_product_roles: { user_id:session_user.user_id}}}}
+
+    can "trees", "update_excluded"
+    can :update_excluded, TreeVersion, tree: {products: { product_roles: { user_product_roles: { user_id:session_user.user_id}}}}
+
+    can "trees", "replace_placement"
+    can :replace_placement, TreeVersion, tree: {products: { product_roles: { user_product_roles: { user_id:session_user.user_id}}}}
+
+    can "trees", "remove_name_placement"
+    can :remove_name_placement, TreeVersion, tree: {products: { product_roles: { user_product_roles: { user_id:session_user.user_id}}}}
+
+    can "trees", "place_name"
+    can :place_name, TreeVersion, tree: {products: { product_roles: { user_product_roles: { user_id:session_user.user_id}}}}
   end
 
   def tree_publisher_auth(session_user)
@@ -356,5 +384,6 @@ class Ability
     can 'tree_versions', 'create_draft' # display the new draft form
     can :set_workspace, TreeVersion, tree: {products: { product_roles: { user_product_roles: { user_id:session_user.user_id}}}}
     can :create_draft, Tree, products: { product_roles: { user_product_roles: { user_id:session_user.user_id} }}
+    can "instances", "tab_classification"
   end
 end

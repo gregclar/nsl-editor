@@ -30,22 +30,6 @@ require "test_helper"
 class TaxFormsTreePubAPCUserCannotCreateFoADraftTest < ActionController::TestCase
   tests TreeVersionsController
 
-  def setup
-    response_body = %Q({"payload":{"draftName":"blah","versionNumber":#{tree_versions(:apc_draft_version).id}}})
-    stub_request(:put, "http://localhost:9090/nsl/services/api/tree/createVersion?apiKey=test-api-key&as=apc-tax-publisher").
-  with(
-    body: "{\"treeId\":\"460813214\",\"fromVersionId\":null,\"draftName\":\"abcde name\",\"log\":\"abcde log\",\"defaultDraft\":null}",
-    headers: {
-	  'Accept'=>'application/json',
-	  'Accept-Encoding'=>'gzip;q=1.0,deflate;q=0.6,identity;q=0.3',
-	  'Content-Length'=>'106',
-	  'Content-Type'=>'application/json',
-	  'Host'=>'localhost:9090',
-	  'User-Agent'=>'rest-client/2.1.0 (darwin24 arm64) ruby/3.3.5p100'
-    }).
-  to_return(status: 200, body: response_body, headers: {})
-  end
-
   test "APC tree publisher user cannot create FoA draft" do
     user = users(:apc_tax_publisher)
     foa_tree = trees(:FOA)
@@ -57,5 +41,7 @@ class TaxFormsTreePubAPCUserCannotCreateFoADraftTest < ActionController::TestCas
                     user_full_name: user.full_name,
                     groups: ["login"]})
     assert_response :forbidden, "APC tree publisher should not be able to create FOA draft"
+    assert_match /Access Denied\! Please contact the admin for proper permissions/,
+      response.body, "Expecting Access Denied message"
   end
 end

@@ -113,7 +113,7 @@
   <% end %>
 
   <% if @tabs_to_offer.include?('tab_classification') %>
-      <% if can? 'classification', 'place' %>
+      <% if can? :place_name, @working_draft %>
           <%= render partial: 'instances/tabs/tab', locals: {first: false,
                                                              last: false,
                                                              this_tab: 'tab_classification',

@@ -42,5 +42,7 @@ class TaxFormsTreePubAPCUserCannotOpenFormToPublishFoADraftTest < ActionControll
                    groups: ["login"],
                    draft: foa_draft})
     assert_response :forbidden, "APC tree publisher should not be able to open form to publish FOA draft"
+    assert_match /Access Denied\! Please contact the admin for proper permissions/,
+      response.body, "Expecting Access Denied message"
   end
 end

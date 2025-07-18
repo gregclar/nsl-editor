@@ -27,35 +27,27 @@ require "test_helper"
 #
 # ActionController::InvalidCrossOriginRequest: Security warning: 
 #   an embedded <script> tag on another site requested protected JavaScript.
-class TaxFormsTreePubAPCUserCannotPublishFOADraftTest < ActionController::TestCase
-  tests TreeVersionsController
+class TaxFormsTreePublisherFOAUserCanUpdateExcludedForTaxonOnFOADraftTest < ActionController::TestCase
+  tests TreesController
 
-  def setup
-    stub_request(:put, "http://localhost:9090/nsl/services/api/treeVersion/publish?apiKey=test-api-key&as=apc-tax-publisher").
-  with(
-    body: "{\"versionId\":146236284,\"logEntry\":\"xyz\",\"nextDraftName\":\"zyz\"}",
-    headers: {
-	  'Accept'=>'application/json',
-	  'Accept-Encoding'=>'gzip;q=1.0,deflate;q=0.6,identity;q=0.3',
-	  'Content-Length'=>'62',
-	  'Content-Type'=>'application/json',
-	  'Host'=>'localhost:9090',
-	  'User-Agent'=>'rest-client/2.1.0 (darwin24 arm64) ruby/3.3.5p100'
-    }).
-  to_return(status: 200, body: "", headers: {})
-  end
-
-  test "APC tree publisher user cannot publish FOA draft" do
-    user = users(:apc_tax_publisher)
+  # r6editor Started POST "/nsl/editor/trees/update_excluded" for ::1 at 2025-07-17 09:44:34 +1000 (pid:642)
+  # r6editor Processing by TreesController#update_excluded as */* (pid:642)
+  # r6editor Parameters: {"excluded"=>"false", "taxonUri"=>"/tree/52410589/52410612"} (pid:642)
+  test "FOA tree publisher user cannot update excluded for taxon on FOA draft" do
+    user = users(:foa_tax_publisher)
     foa_draft = tree_versions(:foa_draft_version)
-    post(:publish,
-         params: {"version_id"=> foa_draft.id, "next_draft_name"=>'zyz', "draft_log"=>'xyz'},
+    tve = tree_version_elements(:tve_for_red_gum)
+    post(:update_excluded,
+         params: {"update_parent"=>{"taxonUri"=>tve.element_link,
+                                    "excluded"=>"false"}
+                 },
          format: :js,
          xhr: true,
          session: { username: user.user_name,
                     user_full_name: user.full_name,
-                    groups: ["login"],
-                    draft: foa_draft})
-    assert_response :forbidden, "Should not be allowed"
+                    draft: foa_draft,
+                    groups: ["login"]})
+    assert_response :forbidden, 'Should be forbidden'
+    assert_match 'Access Denied', response.body, "Expecting an access denied message"
   end
 end

@@ -33,13 +33,6 @@ class TaxFormsTreePubAPCUserCannotUpdateFOADraftTest < ActionController::TestCas
   test "APC tree publisher user cannot update FOA draft" do
     user = users(:apc_tax_publisher)
     foa_draft = tree_versions(:foa_draft_version)
-
-# Started POST "/nsl/editor/tree_versions/update_draft" for ::1 at 2025-06-24 15:31:48 +1000 (pid:15335)
-# 2025-06-24 15:31:48.199 [fyi] r6editor Processing by TreeVersionsController#update_draft as JS (pid:15335)
-# 2025-06-24 15:31:48.199 [fyi] r6editor Parameters: {"version_id"=>"51798490",
-    #                                                 "draft_name"=>"Australian Plant Census List 108",
-    #                                                 "draft_log"=>"Updates resulting from Australian Plant Census List 108, p.p. (Banksia)."} (pid:15335)
-    
     post(:update_draft,
          params: {"version_id"=> foa_draft.id, "draft_name"=>'zyz', "draft_log"=>'xyz'},
         format: :js,
@@ -49,5 +42,7 @@ class TaxFormsTreePubAPCUserCannotUpdateFOADraftTest < ActionController::TestCas
                    groups: ["login"],
                    draft: foa_draft})
     assert_response :forbidden, 'Should not be allowed'
+    assert_match /Access Denied\! Please contact the admin for proper permissions/,
+      response.body, "Expecting Access Denied message"
   end
 end

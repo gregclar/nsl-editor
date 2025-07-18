@@ -73,6 +73,8 @@ class TreesController < ApplicationController
   # Move an existing taxon (inc children) under a different parent
   def replace_placement
     logger.info("In replace placement!")
+    authorize! :replace_placement, @working_draft,
+      :message => "You are not authorized to replace a taxon in #{@working_draft.tree.name} draft"
     target = TreeVersionElement.find(move_name_params[:element_link])
     parent = TreeVersionElement.find(move_name_params[:parent_element_link])
 
@@ -92,6 +94,9 @@ class TreesController < ApplicationController
   rescue RestClient::Unauthorized, RestClient::Forbidden => e
     @message = json_error(e)
     render "move_placement_error"
+  rescue CanCan::AccessDenied => e
+    @message = json_error(e)
+    render "move_placement_error", status: :forbidden
   rescue RestClient::ExceptionWithResponse => e
     @message = json_error(e)
     render "move_placement_error"
@@ -99,6 +104,8 @@ class TreesController < ApplicationController
 
   # Place and instance on the draft tree version
   def place_name
+    authorize! :place_name, @working_draft,
+      :message => "You are not authorized to place names on any #{@working_draft.tree.name} draft"
     excluded = place_name_params[:excluded] ? true : false
     parent_element_link = place_name_params[:parent_name_typeahead_string].blank? ? nil : place_name_params[:parent_element_link]
     tree_version = TreeVersion.find(place_name_params[:version_id])
@@ -119,12 +126,17 @@ class TreesController < ApplicationController
   rescue RestClient::Unauthorized, RestClient::Forbidden => e
     @message = json_error(e)
     render "place_name_error"
+  rescue CanCan::AccessDenied => e
+    @message = json_error(e)
+    render "place_name_error", status: :forbidden
   rescue RestClient::ExceptionWithResponse => e
     @message = json_error(e)
     render "place_name_error"
   end
 
   def remove_name_placement
+    authorize! :remove_name_placement, @working_draft,
+      :message => "You are not authorized to remove names from #{@working_draft.tree.name} draft"
     target = TreeVersionElement.find(remove_name_placement_params[:taxon_uri])
     removement = Tree::Workspace::Removement.new(username: current_user.username,
                                                  target: target)
@@ -133,11 +145,18 @@ class TreesController < ApplicationController
     render "removed_placement"
   rescue RestClient::Unauthorized, RestClient::Forbidden => e
     @message = json_error(e)
+    render "remove_name_placement_error"
+  rescue CanCan::AccessDenied => e
+    @message = json_error(e)
+    render "remove_name_placement_error", status: :forbidden
+  rescue => e
+    @message = e.to_s
+    render "remove_name_placement_error", status: :bad_request
   end
 
   def update_comment
-    logger.info "update comment #{update_comment_params[:element_link]} #{update_comment_params[:comment]}"
-    authorize! :update_comment, @working_draft
+    authorize! :update_comment, @working_draft,
+      :message => "Not authorized to update or delete #{@working_draft.tree.name} draft taxon comment"
     tve = TreeVersionElement.find(update_comment_params[:element_link])
     profile_data = Tree::ProfileData.new(current_user, tve.tree_version, tve.tree_element.profile || {})
     profile_data.update_comment(update_comment_params[:comment])
@@ -158,7 +177,8 @@ class TreesController < ApplicationController
   end
 
   def update_distribution
-    logger.info "update distribution #{update_distribution_params[:element_link]} #{update_distribution_params[:dist]}"
+    authorize! :update_distribution, @working_draft,
+      :message => "Not authorized to update or delete #{@working_draft.tree.name} draft taxon distribution"
     tve = TreeVersionElement.find(update_distribution_params[:element_link])
     dist = update_distribution_params[:dist]
     profile_data = Tree::ProfileData.new(current_user, tve.tree_version, tve.tree_element.profile || {})
@@ -171,23 +191,41 @@ class TreesController < ApplicationController
   rescue RestClient::Unauthorized, RestClient::Forbidden, RestClient::ExceptionWithResponse => e
     @message = json_error(e)
     render "update_distribution_error"
+  rescue CanCan::AccessDenied => e
+    @message = json_error(e)
+    render "update_distribution_error", status: :forbidden
+  rescue => e
+    @message = e.to_s
+    render "update_distribution_error", status: :bad_request
   end
 
+  # Originally written in non-standard way, different even from the other methods here.
+  # Now under review - I'm not sure how well this ever worked and whether it is a workflow
+  # we need.
   def update_excluded
     logger.info "update excluded #{params[:taxonUri]} #{params[:excluded]}"
+    authorize! :update_excluded, @working_draft,
+      :message => "Not authorized to update #{@working_draft.tree.name} draft taxon excluded"
     Tree::Workspace::Excluded.new(username: current_user.username,
                                   element_link: params[:taxonUri],
                                   excluded: params[:excluded]).update
+    render "update_excluded", format: :js, layout: nil
   rescue RestClient::Unauthorized, RestClient::Forbidden, RestClient::ExceptionWithResponse => e
     @message = json_error(e)
-    render text: @message, status: 401
+    render "update_excluded_error", format: :js # error status breaks response flow
+  rescue CanCan::AccessDenied => e
+    @message = json_error(e)
+    render "update_excluded_error", format: :js # error status breaks response flow
+  rescue => e
+    @message = e.to_s
+    render "update_excluded_error", format: :js # error status breaks response flow
   end
 
   def update_tree_parent
-    logger.info "update parent #{update_parent_params[:element_link]} parent #{update_parent_params[:parent_element_link]}"
+    authorize! :update_tree_parent, @working_draft,
+      :message => "Not authorized to update or delete #{@working_draft.tree.name} draft taxon parent"
     target = TreeVersionElement.find(update_parent_params[:element_link])
     parent = TreeVersionElement.find(update_parent_params[:parent_element_link])
-
     reparent = Tree::Workspace::Reparent.new(username: current_user.username,
                                              target: target,
                                              parent: parent)
@@ -197,6 +235,12 @@ class TreesController < ApplicationController
   rescue RestClient::Unauthorized, RestClient::Forbidden, RestClient::ExceptionWithResponse => e
     @message = json_error(e)
     render "update_parent_error"
+  rescue CanCan::AccessDenied => e
+    @message = json_error(e)
+    render "update_parent_error", status: :forbidden
+  rescue => e
+    @message = e.to_s
+    render "update_parent_error", status: :bad_request
   end
 
   def show_cas
@@ -298,6 +342,8 @@ class TreesController < ApplicationController
                   :instance_id,
                   :comment,
                   :excluded,
+                  :parent_name_typeahead_string,
+                  :update,
                   distribution: [])
   end
 

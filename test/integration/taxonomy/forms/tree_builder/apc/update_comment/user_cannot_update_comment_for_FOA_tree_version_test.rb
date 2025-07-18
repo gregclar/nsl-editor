@@ -30,24 +30,7 @@ require "test_helper"
 class TaxFormsTreeBuilderAPCUserCannotUpdateCommentOnFOADraftTest < ActionController::TestCase
   tests TreesController
 
-  def setup
-    response_body = %Q({"payload":{"draftName":"blah","versionNumber":#{tree_versions(:apc_draft_version).id}}})
-  stub_request(:post, "http://localhost:9090/nsl/services/api/treeElement/editElementProfile?apiKey=test-api-key&as=apc-tax-builder").
-  with(
-    body: /"taxonUri":"tree.123.789"/,
-    headers: {
-	  'Accept'=>'application/json; charset=utf-8',
-	  'Accept-Encoding'=>'gzip;q=1.0,deflate;q=0.6,identity;q=0.3',
-	  'Content-Length'=>'144',
-	  'Content-Type'=>'application/json; charset=utf-8',
-	  'Host'=>'localhost:9090',
-	  'User-Agent'=>'rest-client/2.1.0 (darwin24 arm64) ruby/3.3.5p100'
-    }).
-  to_return(status: 200, body: "", headers: {})
-  end
-
-
-  test "APC tree publisher user cannot update comment on FOA draft entry" do
+  test "APC tree builder user cannot update comment on FOA draft entry" do
     user = users(:apc_tax_builder)
     foa_draft = tree_versions(:foa_draft_version)
     tve = tree_version_elements(:tve_for_red_gum)
@@ -63,6 +46,7 @@ class TaxFormsTreeBuilderAPCUserCannotUpdateCommentOnFOADraftTest < ActionContro
                     draft: foa_draft,
                     groups: ["login"]})
     assert_response :forbidden, 'APC tree builder should not be able to update comment on FoA draft entry'
+    assert_match 'Not authorized to update or delete FOA draft taxon comment', response.body, "Expecting Access Denied message"
   end
 end
 

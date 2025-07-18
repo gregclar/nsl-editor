@@ -69,7 +69,7 @@ class TreePlacementCreateTest < ActionController::TestCase
           session: { username: "fred",
                      user_full_name: "Fred Jones",
                      groups: %w[edit treebuilder],
-                     workspace: @workspace })
+                     draft: @workspace })
     assert_response :success
     assert_equal "place_name", @controller.action_name,
                  "Action should be 'place_name'"
