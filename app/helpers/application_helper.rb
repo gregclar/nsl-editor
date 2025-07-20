@@ -12,24 +12,6 @@ module ApplicationHelper
     <div class='text-for-link'>#{text}</div>".html_safe
   end
 
-  def user_profile_tab_name
-    current_registered_user.available_product_from_roles&.name
-  end
-
-  def user_profile_tab_names
-    current_registered_user.available_products_from_roles.map(&:name)
-  end
-
-  def increment_tab_index(increment = 1)
-    @tab_index ||= 1
-    @tab_index += increment
-  end
-
-  def tab_index(offset = 0)
-    tabi = @tab_index || 1
-    tabi + offset
-  end
-
   def treated_label(label, treatment = :description)
     case treatment
     when :description
@@ -126,7 +108,7 @@ module ApplicationHelper
       "#{ShardConfig.shard_group_name}"
     else
       "#{ShardConfig.shard_group_name}"
-    end + ":" + (params["query_target"] || "Editor").gsub("_", " ").titleize
+    end + ":" + (params["query_target"] || "Editor").tr("_", " ").titleize
   end
 
   def development?
@@ -144,5 +126,3 @@ class String
     tr("_", " ").upcase
   end
 end
-
-
