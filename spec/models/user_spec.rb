@@ -62,14 +62,16 @@ RSpec.describe User, type: :model do
     let!(:user_product_role2) { create(:user_product_role, user: user, product: product2, role: role2) }
     let!(:user_product_role3) { create(:user_product_role, user: user, product: product3, role: role3) }
 
-    it "returns all unique products for allowed roles" do
-      expect(user.available_products_from_roles).to match_array([product1, product2])
+    it "returns all unique products for all roles" do
+      expect(user.available_products_from_roles).to match_array([product1, product2, product3])
     end
 
-    it "does not include products for roles not in the allowed list" do
-      allowed_products = user.available_products_from_roles
-      expect(allowed_products).not_to include(nil)
-      expect(allowed_products).not_to include(product3) if user.product_roles.where(role: role3).exists?
+    it "returns unique products only" do
+      test_role = create(:role, name: "test-editor")
+      create(:user_product_role, user: user, product: product1, role: test_role)
+
+      expect(user.available_products_from_roles.count(product1)).to eq(1)
     end
+
   end
 end
