@@ -122,7 +122,8 @@
       debug(err);
     }
     debug(`starting url: ${url}`);
-    url = url + '?format=js&tabIndex=' + tabIndex;
+    const paramJoin = url.includes('?') ? '&' : '?';
+    url = url + `${paramJoin}format=js&tabIndex=${tabIndex}`;
     if (row_type != null) {
       url = url + '&row-type=' + row_type;
     }
