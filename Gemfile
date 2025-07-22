@@ -90,7 +90,7 @@ gem "sucker_punch"
 
 gem "exception_notification"
 gem "kramdown", ">= 2.3.0"
-gem "nokogiri", ">= 1.13.4"
+gem "nokogiri", ">= 1.18.9"
 gem "rack", ">= 2.2.3"
 gem "rest-client"
 gem "simple_calendar"
