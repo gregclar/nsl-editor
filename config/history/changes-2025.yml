@@ -1,5 +1,10 @@
 - :date: 22-July-2025
-  :jira_id: 
+  :jira_id: '82'
+  :jira_project: FLOR
+  :description: |-
+    Foa Project: Display the flag in admin configuration page for multi-product tabs
+- :date: 22-July-2025
+  :jira_id:
   :description: |-
     Security Patch: Nokogiri
 - :date: 21-July-2025
