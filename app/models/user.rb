@@ -60,13 +60,22 @@ class User < ActiveRecord::Base
     # which specific product this user is related to.
     # Currently, we're making an assumption that there will
     # be just one product associated with these roles.
-    # We are currently using this method for the profile items
-    roles_to_check = ['draft-editor','draft-profile-editor', 'profile-editor']
     product_roles
       .joins(:role)
-      .where(roles: { name: roles_to_check })
       .includes(:product)
       .first&.product
+  end
+
+  def available_products_from_roles
+    # Returns all products that this user has access to through their roles
+    # This method supports multi-product scenarios by returning all available products
+    # instead of just the first one
+    product_roles
+      .joins(:role)
+      .includes(:product)
+      .map(&:product)
+      .compact
+      .uniq
   end
 
   def set_audit_fields
