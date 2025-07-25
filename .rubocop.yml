@@ -24,6 +24,15 @@ AllCops:
 Rails/UniqueValidationWithoutIndex:
   Enabled: false
 
+Rails/RedundantForeignKey:
+  Enabled: false
+
+Rails/HasManyOrHasOneDependent:
+  Enabled: false
+
+Rails/InverseOf:
+  Enabled: false
+
 Style/TrailingCommaInArrayLiteral:
   Enabled: false
 
