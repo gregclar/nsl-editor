@@ -54,8 +54,8 @@ class Profile::ProfileItem::DefinedQuery::ProductAndProductItemConfigs
   end
 
   def fetch_product_item_configs
-    base_query
-      .then { |query| filter_by_config_id(query) }
+    query = base_query
+    filter_by_config_id(query)
   end
 
   def base_query
