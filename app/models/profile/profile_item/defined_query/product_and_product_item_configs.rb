@@ -33,7 +33,7 @@ class Profile::ProfileItem::DefinedQuery::ProductAndProductItemConfigs
   attr_reader :user, :params
 
   def find_product_by_name
-    return user.products.find_by(name: params[:product_name]) if params&.dig(:product_name).present?
+    return user.products.find_by(name: params[:product_name]) if params.dig(:product_name).present?
 
     supported_product = user.products.where(name: SUPPORTED_PRODUCTS).first&.name
     Product.find_by(name: supported_product) if supported_product
