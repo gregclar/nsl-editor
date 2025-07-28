@@ -71,6 +71,9 @@ Rails/SkipsModelValidations:
   Exclude:
     - spec/**/*
 
+Rails/I18nLocaleTexts:
+  Enabled: false
+
 Style/FrozenStringLiteralComment:
   Enabled: true
 
