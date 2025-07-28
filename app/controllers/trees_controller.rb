@@ -36,6 +36,8 @@ class TreesController < ApplicationController
   alias tab show
 
   def reports
+    authorize! :reports, @working_draft,
+      :message => "You are not authorized to report on #{@working_draft.tree.name} drafts"
     @diff_link = Tree::AsServices.diff_link(@working_draft.tree.current_tree_version_id, @working_draft.id)
     @diff_link_raw = Tree::AsServices.diff_link(@working_draft.tree.current_tree_version_id, @working_draft.id).gsub(
       "embed=true", "embed=false"
@@ -46,6 +48,9 @@ class TreesController < ApplicationController
     @val_link_raw = Tree::AsServices.val_link(@working_draft.id).gsub("embed=true", "embed=false")
     @val_syn_link = Tree::AsServices.val_syn_link(@working_draft.id)
     @val_syn_link_raw = Tree::AsServices.val_syn_link(@working_draft.id).gsub("embed=true", "embed=false")
+  rescue RestClient::Exception => e
+    @message = e.to_s
+    render "reports_error"
   end
 
   def update_synonymy
@@ -63,11 +68,17 @@ class TreesController < ApplicationController
     logger.info "Update synonymy by instance"
     Tree::AsServices.update_synonymy_by_instance(request.raw_post, current_user.username)
   rescue RestClient::Unauthorized, RestClient::Forbidden => e
+    Rails.logger.debug('RestClient::Unauthorized')
     @message = json_error(e)
     render "update_synonymy_error"
   rescue RestClient::Exception => e
+    Rails.logger.debug('RestClient::Exception')
     @message = json_error(e)
     render "update_synonymy_error"
+  rescue CanCan::AccessDenied => e
+    Rails.logger.debug('CanCan::AccessDenied')
+    @message = json_error(e)
+    render "update_synonymy_error", status: :forbidden
   end
 
   # Move an existing taxon (inc children) under a different parent
@@ -244,40 +255,76 @@ class TreesController < ApplicationController
   end
 
   def show_cas
+    authorize! :show_cas, @working_draft,
+      :message => "You are not authorized to use the synonymy report on #{@working_draft.tree.name} drafts"
     @val_syn_link = Tree::AsServices.val_syn_link(@working_draft.id)
   end
 
   # runs slowly...10 seconds maybe
   def run_cas
+    authorize! :run_cas, @working_draft,
+      :message => "You are not authorized to run the synonymy report on #{@working_draft.tree.name} drafts"
     url = Tree::AsServices.val_syn_link(@working_draft.id)
     @result = RestClient.get(url, { content_type: :html, accept: :html })
-  rescue StandardError => e
-    @message = e.to_s
+  rescue RestClient::Unauthorized, RestClient::Forbidden, RestClient::ExceptionWithResponse => e
+    @message = json_error(e)
     render "trees/reports/run_cas_error"
+  rescue CanCan::AccessDenied => e
+    @message = json_error(e)
+    render "trees/reports/run_cas_error", status: :forbidden
+  rescue => e
+    @message = e.to_s
+    render "trees/reports/run_cas_error", status: :bad_request 
   end
 
   def show_diff
+    authorize! :show_diff, @working_draft,
+      :message => "You are not authorized to use the differences report tab for #{@working_draft.tree.name} drafts"
     @val_syn_link = Tree::AsServices.val_syn_link(@working_draft.id)
   end
 
   # may run slowly
   def run_diff
+    authorize! :run_diff, @working_draft,
+      :message => "You are not authorized to run differences reports for #{@working_draft.tree.name} drafts"
     url = Tree::AsServices.diff_link(@working_draft.tree.current_tree_version_id, @working_draft.id)
     @result = RestClient.get(url, { content_type: :html, accept: :html })
     return unless @result.match(/Nothing to see here.*no changes, nothing, zip/)
 
     @result = @result.sub(%r{<h3>Nothing to see here.</h3> *<p>We have no changes, nothing, zip.</p>},
                           "<h4>No changes.</h4>")
+  rescue RestClient::Unauthorized, RestClient::Forbidden, RestClient::ExceptionWithResponse => e
+    @message = json_error(e)
+    render "trees/reports/run_diff_error"
+  rescue CanCan::AccessDenied => e
+    @message = json_error(e)
+    render "trees/reports/run_diff_error", status: :forbidden
+  rescue => e
+    @message = e.to_s
+    render "trees/reports/run_diff_error", status: :bad_request 
   end
 
   def show_valrep
+    authorize! :show_valrep, @working_draft,
+      :message => "You are not authorized to use the validation reports tab for #{@working_draft.tree.name} drafts"
     @val_link = Tree::AsServices.val_link(@working_draft.id)
   end
 
   # runs slowly...30 seconds maybe
   def run_valrep
+    authorize! :run_valrep, @working_draft,
+      :message => "You are not authorized to run validation reports for #{@working_draft.tree.name} drafts"
     url = Tree::AsServices.val_link(@working_draft.id)
     @result = RestClient.get(url, { content_type: :html, accept: :html })
+  rescue RestClient::Unauthorized, RestClient::Forbidden, RestClient::ExceptionWithResponse => e
+    @message = json_error(e)
+    render "trees/reports/run_valrep_error"
+  rescue CanCan::AccessDenied => e
+    @message = json_error(e)
+    render "trees/reports/run_valrep_error", status: :forbidden
+  rescue => e
+    @message = e.to_s
+    render "trees/reports/run_valrep_error", status: :bad_request 
   end
 
   private

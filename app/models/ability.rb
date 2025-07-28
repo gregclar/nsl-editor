@@ -362,6 +362,29 @@ class Ability
 
     can "trees", "place_name"
     can :place_name, TreeVersion, tree: {products: { product_roles: { user_product_roles: { user_id:session_user.user_id}}}}
+
+    can "trees", "reports"
+    can :reports, TreeVersion, tree: {products: { product_roles: { user_product_roles: { user_id:session_user.user_id}}}}
+
+    can "trees", "show_cas"
+    can :show_cas, TreeVersion, tree: {products: { product_roles: { user_product_roles: { user_id:session_user.user_id}}}}
+
+    can "trees", "run_cas"
+    can :run_cas, TreeVersion, tree: {products: { product_roles: { user_product_roles: { user_id:session_user.user_id}}}}
+
+    can "trees", "show_diff"
+    can :show_diff, TreeVersion, tree: {products: { product_roles: { user_product_roles: { user_id:session_user.user_id}}}}
+
+    can "trees", "run_diff"
+    can :run_diff, TreeVersion, tree: {products: { product_roles: { user_product_roles: { user_id:session_user.user_id}}}}
+
+    can "trees", "show_valrep"
+    can :show_valrep, TreeVersion, tree: {products: { product_roles: { user_product_roles: { user_id:session_user.user_id}}}}
+
+    can "trees", "run_valrep"
+    can :run_valrep, TreeVersion, tree: {products: { product_roles: { user_product_roles: { user_id:session_user.user_id}}}}
+
+    can "trees", "update_synonymy_by_instance"
   end
 
   def tree_publisher_auth(session_user)
