@@ -71,9 +71,9 @@ class User < ActiveRecord::Base
     # This method supports multi-product scenarios by returning all available products
     # instead of just the first one
     product_roles
-      .joins(:role)
+      .joins(:role, :product)
       .includes(:product)
-      .order("product.name ASC")
+      .order(Product.arel_table[:name].asc)
       .filter_map(&:product)
       .uniq
   end
