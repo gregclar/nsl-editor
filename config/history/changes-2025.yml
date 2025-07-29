@@ -1,3 +1,7 @@
+- :date: 29-July-2025
+  :jira_id: 
+  :description: |-
+    Check the batch_loader_aware flag on the Users detail tab before querying batch info
 - :date: 28-July-2025
   :jira_id: '82'
   :jira_project: FLOR
