@@ -31,7 +31,7 @@ class TaxFormsTreeBuilderAPCUserCanUpdateDistributionOnAPCDraftTest < ActionCont
   tests TreesController
 
   def setup
-    stub_request(:post, "http://localhost:9090/nsl/services/api/treeElement/editElementProfile?apiKey=test-api-key&as=apc-tax-builder").
+    stub_request(:post, /http:..localhost:909..nsl.services.api.treeElement.editElementProfile.apiKey=test-api-key&as=apc-tax-builder/).
   with(
     body: /APC Dist.*value.*NSW, Tas.*updated_by.*/,
     headers: {

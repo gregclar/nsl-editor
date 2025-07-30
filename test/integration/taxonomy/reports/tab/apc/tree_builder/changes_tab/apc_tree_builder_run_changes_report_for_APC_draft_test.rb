@@ -22,7 +22,7 @@ class APCTreeBuilderCanRunChangesReportForAPCDraftTest < ActionController::TestC
   tests TreesController
 
   def setup
-    stub_request(:get, "http://localhost:9090/treeVersion/diff?embed=true&v1=184594742&v2=146236284").
+    stub_request(:get, /http:..localhost:909..treeVersion.diff.embed=true.v1=184594742.v2.146236284/).
       with(
         headers: {
 	      'Accept'=>'text/html',

@@ -22,7 +22,7 @@ class APCTreeBuilderCanRunValidationReportForAPCDraftTest < ActionController::Te
   tests TreesController
 
   def setup
-    stub_request(:get, "http://localhost:9090/treeVersion/validate?embed=true&version=146236284").
+    stub_request(:get, /http:..localhost:909..treeVersion.validate.embed=true.version=146236284/).
     with(
       headers: {
 	    'Accept'=>'text/html',
