@@ -377,4 +377,9 @@
         <% end %>
       <% end %>
   <% end %>
+
+  <%# Fallback for users with no product roles but still have basic tab permissions %>
+  <% if @current_registered_user.available_products_from_roles.empty? %>
+    <%= render partial: "instances/tabs/all_default_tab_headings"%>
+  <% end %>
 </ul>
