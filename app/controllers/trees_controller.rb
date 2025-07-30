@@ -66,13 +66,19 @@ class TreesController < ApplicationController
 
   def update_synonymy_by_instance
     logger.info "Update synonymy by instance"
+    authorize! :update_synonymy_by_instance, @working_draft,
+      :message => "You are not authorized to update synonymy on #{@working_draft.tree.name} drafts"
     Tree::AsServices.update_synonymy_by_instance(request.raw_post, current_user.username)
   rescue RestClient::Unauthorized, RestClient::Forbidden => e
-    Rails.logger.debug('RestClient::Unauthorized')
+    Rails.logger.error('RestClient::Unauthorized')
     @message = json_error(e)
     render "update_synonymy_error"
   rescue RestClient::Exception => e
-    Rails.logger.debug('RestClient::Exception')
+    Rails.logger.error('RestClient::Exception')
+    Rails.logger.error(e.to_s)
+    Rails.logger.error(e.to_s)
+    Rails.logger.error(e.to_s)
+    Rails.logger.error(e.to_s)
     @message = json_error(e)
     render "update_synonymy_error"
   rescue CanCan::AccessDenied => e

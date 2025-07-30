@@ -330,6 +330,31 @@ class Ability
     can "loader/names",                             "tab_vote"
   end
 
+  def tree_publisher_auth(session_user)
+    can "menu", "tree"
+    can "trees/workspaces/current", "toggle"
+    can :toggle_draft, Tree, products: { product_roles: { user_product_roles: { user_id:session_user.user_id} }}
+    can 'tree_versions', 'edit_draft'
+    can :edit, Tree, products: { product_roles: { user_product_roles: { user_id:session_user.user_id} }}
+    can :edit, TreeVersion, tree: {products: { product_roles: { user_product_roles: { user_id:session_user.user_id}}}}
+
+    can 'tree_versions', 'update_draft' # display the update_draft form
+    can :update_draft, TreeVersion, tree: {products: { product_roles: { user_product_roles: { user_id:session_user.user_id}}}}
+    can :update_draft, Tree::DraftVersion, tree: {products: { product_roles: { user_product_roles: { user_id:session_user.user_id}}}}
+
+    can 'tree_versions', 'form_to_publish' # display the publish draft form
+    can 'tree_versions', 'publish' # call the action
+    can :publish, TreeVersion, tree: {products: { product_roles: { user_product_roles: { user_id:session_user.user_id}}}}
+
+    can 'tree_versions', 'new_draft' # display the new draft form
+    can 'tree_versions', 'create_draft' # display the new draft form
+    can :set_workspace, TreeVersion, tree: {products: { product_roles: { user_product_roles: { user_id:session_user.user_id}}}}
+    can :create_draft, Tree, products: { product_roles: { user_product_roles: { user_id:session_user.user_id} }}
+    can "instances", "tab_classification"
+
+    run_reports_on_a_draft_tree(session_user)
+  end
+
   # For tree-builder product roles - not the AD treebuilder group.
   def tree_builder_auth(session_user)
     can "menu", "tree"
@@ -363,6 +388,10 @@ class Ability
     can "trees", "place_name"
     can :place_name, TreeVersion, tree: {products: { product_roles: { user_product_roles: { user_id:session_user.user_id}}}}
 
+    run_reports_on_a_draft_tree(session_user)
+  end
+
+  def run_reports_on_a_draft_tree(session_user)
     can "trees", "reports"
     can :reports, TreeVersion, tree: {products: { product_roles: { user_product_roles: { user_id:session_user.user_id}}}}
 
@@ -385,28 +414,6 @@ class Ability
     can :run_valrep, TreeVersion, tree: {products: { product_roles: { user_product_roles: { user_id:session_user.user_id}}}}
 
     can "trees", "update_synonymy_by_instance"
-  end
-
-  def tree_publisher_auth(session_user)
-    can "menu", "tree"
-    can "trees/workspaces/current", "toggle"
-    can :toggle_draft, Tree, products: { product_roles: { user_product_roles: { user_id:session_user.user_id} }}
-    can 'tree_versions', 'edit_draft'
-    can :edit, Tree, products: { product_roles: { user_product_roles: { user_id:session_user.user_id} }}
-    can :edit, TreeVersion, tree: {products: { product_roles: { user_product_roles: { user_id:session_user.user_id}}}}
-
-    can 'tree_versions', 'update_draft' # display the update_draft form
-    can :update_draft, TreeVersion, tree: {products: { product_roles: { user_product_roles: { user_id:session_user.user_id}}}}
-    can :update_draft, Tree::DraftVersion, tree: {products: { product_roles: { user_product_roles: { user_id:session_user.user_id}}}}
-
-    can 'tree_versions', 'form_to_publish' # display the publish draft form
-    can 'tree_versions', 'publish' # call the action
-    can :publish, TreeVersion, tree: {products: { product_roles: { user_product_roles: { user_id:session_user.user_id}}}}
-
-    can 'tree_versions', 'new_draft' # display the new draft form
-    can 'tree_versions', 'create_draft' # display the new draft form
-    can :set_workspace, TreeVersion, tree: {products: { product_roles: { user_product_roles: { user_id:session_user.user_id}}}}
-    can :create_draft, Tree, products: { product_roles: { user_product_roles: { user_id:session_user.user_id} }}
-    can "instances", "tab_classification"
+    can :update_synonymy_by_instance, TreeVersion, tree: {products: { product_roles: { user_product_roles: { user_id:session_user.user_id}}}}
   end
 end
