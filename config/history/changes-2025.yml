@@ -1,3 +1,7 @@
+- :date: 30-July-2025
+  :jira_id:  '5429'
+  :description: |-
+    Set up permissions for tree ops by users with tree-builder and tree-publisher roles on specific trees
 - :date: 29-July-2025
   :jira_id: 
   :description: |-

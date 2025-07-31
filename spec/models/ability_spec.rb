@@ -8,6 +8,8 @@ RSpec.describe Ability, type: :model do
     allow(session_user).to receive(:with_role?).with('draft-profile-editor').and_return(false)
     allow(session_user).to receive(:with_role?).with('draft-editor').and_return(false)
     allow(session_user).to receive(:with_role?).with('profile-editor').and_return(false)
+    allow(session_user).to receive(:with_role?).with('tree-builder').and_return(false)
+    allow(session_user).to receive(:with_role?).with('tree-publisher').and_return(false)
   end
 
   subject { described_class.new(session_user) }

@@ -151,4 +151,12 @@ class User < ActiveRecord::Base
     (Product::Role.all - product_roles).sort_by(&:name)
       .map { |pr| [pr.name, pr.id] }
   end
+
+  def inspect
+    {id: id,
+     user_name: user_name,
+     given_name: given_name,
+     family_name: family_name 
+    } 
+  end
 end
