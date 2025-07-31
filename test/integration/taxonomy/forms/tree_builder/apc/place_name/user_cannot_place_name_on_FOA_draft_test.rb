@@ -30,20 +30,6 @@ require "test_helper"
 class TaxFormsTreeBuilderAPCUserCannotPlaceNameOnFOADraftTest < ActionController::TestCase
   tests TreesController
 
-  def setup
-    stub_request(:get, "http://localhost:9090/nsl/mapper/broker/preferredLink?idNumber=12345&nameSpace=anamespace&objectType=instance").
-  with(
-    headers: {
-	  'Accept'=>'application/json',
-	  'Accept-Encoding'=>'gzip;q=1.0,deflate;q=0.6,identity;q=0.3',
-	  'Content-Type'=>'application/json',
-	  'Host'=>'localhost:9090',
-	  'User-Agent'=>'rest-client/2.1.0 (darwin24 arm64) ruby/3.3.5p100'
-    }).
-    to_return(status: 200, body: "{replace: 'result...'}".to_json, headers: {})
-  end
-
-
   # r6editor Started POST "/nsl/editor/trees/513991/place_name" for ::1 at 2025-07-18 15:38:05 +1000 (pid:96312)
   # r6editor Processing by TreesController#place_name as JS (pid:96312)
   # r6editor Parameters: {"authenticity_token"=>"[FILTERED]",

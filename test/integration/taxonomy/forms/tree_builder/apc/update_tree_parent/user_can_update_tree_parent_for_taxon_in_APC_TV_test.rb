@@ -31,16 +31,16 @@ class TaxFormsTreeBuilderAPCUserCanUpdateTreeParentForTaxonOnAPCDraftTest < Acti
   tests TreesController
 
   def setup
-  stub_request(:put, "http://localhost:9090/nsl/services/api/treeElement/changeParentElement?apiKey=test-api-key&as=apc-tax-builder").
+  stub_request(:put, %r{http:..localhost:909..nsl.services.api.treeElement.changeParentElement.apiKey=test-api-key.as=apc-tax-builder}).
   with(
     body: "{\"currentElementUri\":\"tree/123/789\",\"newParentElementUri\":\"/tree/52410590/51363635\"}",
     headers: {
-	  'Accept'=>'application/json',
-	  'Accept-Encoding'=>'gzip;q=1.0,deflate;q=0.6,identity;q=0.3',
-	  'Content-Length'=>'84',
-	  'Content-Type'=>'application/json',
-	  'Host'=>'localhost:9090',
-	  'User-Agent'=>'rest-client/2.1.0 (darwin24 arm64) ruby/3.3.5p100'
+	  'Accept'=>/json/,
+    'Accept-Encoding'=>/.*/,
+    'Content-Length'=>/.*/,
+    'Content-Type'=>/json/,
+    'Host'=>/localhost:.*/,
+	  'User-Agent'=>/ruby/
     }).
     to_return(status: 200, body: {result: 'result...'}.to_json, headers: {})
   end

@@ -18,18 +18,19 @@
 #
 require "test_helper"
 
-class APCTreeBuilderCanRunChangesReportForAPCDraftTest < ActionController::TestCase
+class APCTreeBuilderRunChangesReportForAPCDraftTest < ActionController::TestCase
   tests TreesController
 
   def setup
-    stub_request(:get, /http:..localhost:909..treeVersion.diff.embed=true.v1=184594742.v2.146236284/).
+    #stub_request(:get, /http:..localhost:909..treeVersion.diff.embed=true.v1=184594742.v2.146236284/).
+    stub_request(:get, /http:..localhost:909..*treeVersion.diff.embed=true.v1=184594742.v2.146236284/).
       with(
         headers: {
-	      'Accept'=>'text/html',
-	      'Accept-Encoding'=>'gzip;q=1.0,deflate;q=0.6,identity;q=0.3',
-	      'Content-Type'=>'text/html',
-	      'Host'=>'localhost:9090',
-	      'User-Agent'=>'rest-client/2.1.0 (darwin24 arm64) ruby/3.3.5p100'
+	      'Accept'=>/text/,
+        'Accept-Encoding'=>/.*/,
+        'Content-Type'=>/text/,
+        'Host'=>/localhost:.*/,
+	      'User-Agent'=>/ruby/
         }).
       to_return(status: 200, body: "", headers: {})
   end

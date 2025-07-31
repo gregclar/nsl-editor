@@ -22,14 +22,14 @@ class APCTreePublisherUpdateSynByInstanceForFOADraftTest < ActionController::Tes
   tests TreesController
 
   def setup
-    stub_request(:post, "http://localhost:9090/tree-element/update-synonymy-by-instance?apiKey=test-api-key&as=apc-tax-publisher").
+    stub_request(:post, /http:..localhost:90...tree-element.update-synonymy-by-instance.apiKey=test-api-key.as=apc-tax-publisher/).
     with(
       headers: {
 	    'Accept'=>'application/json',
 	    'Accept-Encoding'=>'gzip;q=1.0,deflate;q=0.6,identity;q=0.3',
 	    'Content-Length'=>'0',
-	    'Host'=>'localhost:9090',
-	    'User-Agent'=>'rest-client/2.1.0 (darwin24 arm64) ruby/3.3.5p100'
+	    'Host'=>/localhost/,
+	    'User-Agent'=>/ruby/
       }).
     to_return(status: 200, body: "", headers: {})
   end

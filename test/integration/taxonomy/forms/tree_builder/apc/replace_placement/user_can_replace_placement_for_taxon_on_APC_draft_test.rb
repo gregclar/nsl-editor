@@ -31,16 +31,16 @@ class TaxFormsTreeBuilderAPCUserCanReplacePlacementOnAPCDraftTest < ActionContro
   tests TreesController
 
   def setup
-    stub_request(:get, "http://localhost:9090/nsl/mapper/broker/preferredLink?idNumber=12345&nameSpace=anamespace&objectType=instance").
-  with(
-    headers: {
-	  'Accept'=>'application/json',
-	  'Accept-Encoding'=>'gzip;q=1.0,deflate;q=0.6,identity;q=0.3',
-	  'Content-Type'=>'application/json',
-	  'Host'=>'localhost:9090',
-	  'User-Agent'=>'rest-client/2.1.0 (darwin24 arm64) ruby/3.3.5p100'
-    }).
-    to_return(status: 200, body: "{replace: 'result...'}".to_json, headers: {})
+    stub_request(:get, %r{http:..localhost:90...*broker.preferredLink.idNumber=12345.nameSpace=anamespace.objectType=instance}).
+    with(
+      headers: {
+       'Accept'=>/json/,
+       'Accept-Encoding'=>/.*/,
+       'Content-Type'=>/json/,
+       'Host'=>/localhost/,
+       'User-Agent'=>/ruby/
+       }).
+       to_return(status: 200, body: "{replace: 'result...'}".to_json, headers: {})
   end
 
 # r6editor Started PATCH "/nsl/editor/trees/612279/replace_placement" for ::1 at 2025-07-17 15:34:26 +1000 (pid:642)

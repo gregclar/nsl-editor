@@ -33,7 +33,7 @@ class TaxFormsTreePubAPCUserCanPublishAPCDraftTest < ActionController::TestCase
   def setup
     # sample response from dev
     response = %q({"action":"publish","status":{"enumType":"org.springframework.http.HttpStatus","name":"OK"},"ok":true,"payload":{"class":"au.org.biodiversity.nsl.TreeVersion","_links":{"permalinks":[{"link":"http://localhost:9094/tree/51798490","preferred":true,"resources":1}]},"audit":null,"versionNumber":51798490,"draftName":"Australian Plant Census List 103, p.p.","tree":{"class":"au.org.biodiversity.nsl.Tree","_links":{"permalinks":[{"link":"http://localhost:9094/tree/apni/APC","preferred":true,"resources":1}]},"audit":null,"name":"APC"},"firstOrderChildren":[{"displayHtml":"<data><scientific><name data-id='54717'><element>Plantae<\u002felement> <authors><author data-id='3882' title='Haeckel, Ernst Heinrich Philipp August'>Haeckel<\u002fauthor><\u002fauthors><\u002fname><\u002fscientific><name-status class=\"legitimate\">, legitimate<\u002fname-status> <citation><ref data-id='52462'><ref-section><author>Council of Heads of Australasian Herbaria<\u002fauthor> <year>(2012)<\u002fyear>, <par-title><i>Australian Plant Census<\u002fi><\u002fpar-title><\u002fref-section><\u002fref><\u002fcitation><\u002fdata>","elementLink":"http://localhost:9094/nsl-mapper/tree/51798490/51209397","nameLink":"http://localhost:9094/nsl-mapper/name/apni/54717","instanceLink":"http://localhost:9094/nsl-mapper/instance/apni/738442","excluded":false,"depth":1,"synonymsHtml":"<synonyms><\u002fsynonyms>"}]},"autocreate":true})
-    stub_request(:put, "http://localhost:9090/nsl/services/api/treeVersion/publish?apiKey=test-api-key&as=apc-tax-publisher").
+    stub_request(:put, /http:..localhost:90...nsl.services.api.treeVersion.publish.apiKey=test-api-key.as=apc-tax-publisher/).
   with(
     body: "{\"versionId\":146236284,\"logEntry\":\"xyz\",\"nextDraftName\":\"zyz\"}",
     headers: {
@@ -41,8 +41,8 @@ class TaxFormsTreePubAPCUserCanPublishAPCDraftTest < ActionController::TestCase
 	  'Accept-Encoding'=>'gzip;q=1.0,deflate;q=0.6,identity;q=0.3',
 	  'Content-Length'=>'62',
 	  'Content-Type'=>'application/json',
-	  'Host'=>'localhost:9090',
-	  'User-Agent'=>'rest-client/2.1.0 (darwin24 arm64) ruby/3.3.5p100'
+	  'Host'=>/localhost/,
+	  'User-Agent'=>/ruby/
     }).
   to_return(status: 200, body: response, headers: {})
 
