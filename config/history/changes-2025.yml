@@ -1,9 +1,14 @@
+- :date: 31-July-2025
+  :jira_id: '82'
+  :jira_project: FLOR
+  :description: |-
+    Foa Project: Add a fallbback for users with no product roles to show default tabs
 - :date: 30-July-2025
   :jira_id:  '5429'
   :description: |-
     Set up permissions for tree ops by users with tree-builder and tree-publisher roles on specific trees
 - :date: 29-July-2025
-  :jira_id: 
+  :jira_id:
   :description: |-
     Check the batch_loader_aware flag on the Users detail tab before querying batch info
 - :date: 28-July-2025
