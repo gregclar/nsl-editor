@@ -1,7 +1,7 @@
-- :date: 05-Aug-2025
-  :jira_id:  '5529'
+- :date: 06-Aug-2025
+  :jira_id:  '5530'
   :description: |-
-    Software: Upgrade Editor from Rails 7.1 to 7.2
+    Loader logs: Allow search directive <code>latest:</code> to be submitted without an argument
 - :date: 04-Aug-2025
   :jira_id:  '5163'
   :description: |-
