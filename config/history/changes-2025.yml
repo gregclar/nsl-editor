@@ -3,6 +3,11 @@
   :description: |-
     Loader logs: Allow search directive <code>latest:</code> to be submitted without an argument
 - :date: 04-Aug-2025
+  :jira_id: '82'
+  :jira_project: FLOR
+  :description: |-
+    Foa Project: Use specific js selector for multi-product tabs js driven click
+- :date: 04-Aug-2025
   :jira_id:  '5163'
   :description: |-
     CSV Output: link to CSV export of instance query results works again
