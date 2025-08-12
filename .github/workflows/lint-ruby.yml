@@ -1,6 +1,7 @@
 name: Ruby Linting
 on:
   merge_group:
+  workflow_dispatch:
   push:
     branches:
       - 'main'
