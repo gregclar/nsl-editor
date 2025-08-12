@@ -50,7 +50,7 @@ services:
       - "3000:3000"
     volumes:
       - .:/app
-      - gem_cache:/usr/local/bundle/gems
+      - gem_cache:/usr/local/bundle/gems # Cache gems to speed up builds, docker `volume rm nsl-editor_gem_cache` to clear cache when upgrading Ruby or gems
     stdin_open: true # docker run -i
     tty: true
     environment:
@@ -74,7 +74,6 @@ services:
 volumes:
   gem_cache:
   db_data_dev:
-
 
 networks:
   vpn_network:
