@@ -7,7 +7,8 @@ class ApplicationController < ActionController::Base
                 :authorise,
                 :set_view_mode,
                 :set_session_default_loader_batch_name
-  #  around_action :user_tagged_logging
+  # around_action :user_tagged_logging
+  # This is just an added comment to force-trigger the github workflow
 
   rescue_from ActionController::InvalidAuthenticityToken, with: :show_login_page
   rescue_from CanCan::AccessDenied do |ex|
