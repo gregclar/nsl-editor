@@ -1,4 +1,8 @@
 - :date: 14-Aug-2025
+  :jira_id:  '5538'
+  :description: |-
+    Security Patch: Upgrade Rails to 7.2.2.2
+- :date: 14-Aug-2025
   :jira_id:  ''
   :description: |-
     Add a workflow_dispatch trigger to Github workflow
