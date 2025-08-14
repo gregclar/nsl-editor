@@ -16,7 +16,7 @@
   :description: |-
     Batch: Loader Name queries <code>in-accepted-taxonomy</code> (renamed), <code>not-in-accepted-taxonomy</code> (added), <code>in-or-not-in-accepted-taxonomy</code> (added)
 - :date: 12-Aug-2025
-  :jira_id:  '5529'
+  :jira_id:  '5534'
   :description: |-
     Ruby: Upgrade docker image to ruby:3.4.5-bullseye
 - :date: 07-Aug-2025
