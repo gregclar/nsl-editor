@@ -1,4 +1,9 @@
 - :date: 14-Aug-2025
+  :jira_id: '82'
+  :jira_project: FLOR
+  :description: |-
+    Foa Project: Sort the user product roles in the user menu by product and role name
+- :date: 14-Aug-2025
   :jira_id:  '5527'
   :description: |-
     Batch: Loader Name queries <code>in-accepted-taxonomy</code> (renamed), <code>not-in-accepted-taxonomy</code> (added), <code>in-or-not-in-accepted-taxonomy</code> (added)
