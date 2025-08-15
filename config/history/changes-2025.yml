@@ -1,3 +1,7 @@
+- :date: 15-Aug-2025
+  :jira_id:  ''
+  :description: |-
+    Remove unnecessary libraries in Dockerfile.dev
 - :date: 14-Aug-2025
   :jira_id:  '5538'
   :description: |-
