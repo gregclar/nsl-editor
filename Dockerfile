@@ -1,3 +1,5 @@
+# NOTE: This is primarily for TeamCity use atm.
+#
 # Use the official Ruby image as a base image
 FROM ruby:3.4.5-bullseye
 
