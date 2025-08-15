@@ -1,4 +1,8 @@
 - :date: 15-Aug-2025
+  :jira_id:  '5192'
+  :description: |-
+    Batch Review: Handle "uncaught throw" error for unassigned reviewers hitting the Search button
+- :date: 15-Aug-2025
   :jira_id:  ''
   :description: |-
     Remove unnecessary libraries in Dockerfile.dev

@@ -59,6 +59,7 @@ class SearchController < ApplicationController
 
   def run_local_search
     return false unless params[:query_string].present?
+    raise 'Search needs a target. Do you have the right permissions?' unless params[:query_target].present?
 
     logger.debug("focus_id: #{params[:focus_id]}")
     @focus_id = params[:focus_id]
