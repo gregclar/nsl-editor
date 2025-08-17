@@ -1,0 +1,58 @@
+{
+  "author": {
+    "is_name_index": {
+      "tabs": ["new", "details", "edit", "comments"],
+      "show_product_name": false
+    },
+    "has_default_reference": {
+      "tabs": ["details", "edit"],
+      "show_product_name": true
+    },
+    "default": {
+      "tabs": ["details"],
+      "show_product_name": true
+    }
+  },
+  "reference": {
+    "is_name_index": {
+      "tabs": ["new", "details", "edit", "comments"],
+      "show_product_name": false
+    },
+    "has_default_reference": {
+      "tabs": ["new", "details", "edit"],
+      "show_product_name": true
+    },
+    "default": {
+      "tabs": ["details"],
+      "show_product_name": true
+    }
+  },
+  "name": {
+    "is_name_index": {
+      "tabs": ["new", "details", "edit", "instances", "copy", "delete"],
+      "show_product_name": false
+    },
+    "has_default_reference": {
+      "tabs": ["details", "edit"],
+      "show_product_name": true
+    },
+    "default": {
+      "tabs": ["details"],
+      "show_product_name": true
+    }
+  },
+  "instance": {
+    "is_name_index": {
+      "tabs": ["details", "edit", "comments", "classification"],
+      "show_product_name": false
+    },
+    "has_default_reference": {
+      "tabs": ["details", "edit"],
+      "show_product_name": true
+    },
+    "default": {
+      "tabs": ["details"],
+      "show_product_name": true
+    }
+  }
+}

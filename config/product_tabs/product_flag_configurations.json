@@ -1,0 +1,9 @@
+{
+  "is_name_index": [
+    "author",
+    "reference"
+  ],
+  "has_default_reference": [
+    "reference"
+  ]
+}
