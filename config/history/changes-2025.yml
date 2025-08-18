@@ -1,3 +1,7 @@
+- :date: 18-Aug-2025
+  :jira_id:  '5196'
+  :description: |-
+    Batch Review Example Queries: Set the query links up with search targets in the expected case (not all down-cased)
 - :date: 15-Aug-2025
   :jira_id:  '5192'
   :description: |-
