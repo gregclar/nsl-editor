@@ -35,4 +35,16 @@ module TabsHelper
     tabi = @tab_index || 1
     tabi + offset
   end
+
+  def product_tab_text(entity_type, tab_type, default_text)
+    options = product_tab_service.tab_options_for(entity_type, tab_type)
+    return default_text if options.nil?
+
+    tab_text = options.dig(:show_product_name) ? "#{options.dig(:product)&.name} #{default_text}" : default_text
+    tab_text.strip
+  end
+
+  def tab_available?(tabs_array, tab_name)
+    tabs_array.include?(tab_name)
+  end
 end

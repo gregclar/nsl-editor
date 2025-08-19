@@ -18,6 +18,18 @@ module ApplicationHelper
     Kramdown::Document.new(markdown).to_html.html_safe
   end
 
+  def tab_display_text(product, tab_type, custom_text = nil)
+    service = Products::ProductTabService.call(product)
+    base_text = custom_text || tab_type.humanize
+    service.show_product_name_for_model?(:instance) ? "#{product.name} #{base_text}" : base_text
+  end
+
+  def tab_link_id(product, tab_base, custom_suffix = nil)
+    service = Products::ProductTabService.call(product)
+    suffix = custom_suffix || "tab"
+    service.show_product_name_for_model?(:instance) ? "#{tab_base}-#{product.name.downcase}-#{suffix}" : "#{tab_base}-#{suffix}"
+  end
+
   def nav_link(text, icon_name)
     "<div class='icon-for-menu'>#{menu_icon(icon_name)}</div>
     <div class='text-for-link'>#{text}</div>".html_safe

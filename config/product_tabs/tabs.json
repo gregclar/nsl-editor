@@ -5,36 +5,60 @@
       "show_product_name": false
     },
     "has_default_reference": {
-      "tabs": ["details", "edit"],
-      "show_product_name": true
+      "tabs": ["details"],
+      "show_product_name": false
+    },
+    "manages_taxonomy": {
+      "tabs": ["details"],
+      "show_product_name": false
+    },
+    "manages_profile": {
+      "tabs": ["new", "details"],
+      "show_product_name": false
     },
     "default": {
       "tabs": ["details"],
-      "show_product_name": true
+      "show_product_name": false
     }
   },
   "reference": {
     "is_name_index": {
-      "tabs": ["new", "details", "edit", "comments"],
+      "tabs": ["new", "details", "edit_1", "edit_2", "edit_3", "comments", "new_instance", "copy"],
       "show_product_name": false
     },
     "has_default_reference": {
-      "tabs": ["new", "details", "edit"],
+      "tabs": ["details"],
       "show_product_name": true
+    },
+    "manages_taxonomy": {
+      "tabs": ["details"],
+      "show_product_name": false
+    },
+    "manages_profile": {
+      "tabs": ["new", "details", "edit_1", "edit_2", "edit_3"],
+      "show_product_name": false
     },
     "default": {
       "tabs": ["details"],
-      "show_product_name": true
+      "show_product_name": false
     }
   },
   "name": {
     "is_name_index": {
-      "tabs": ["new", "details", "edit", "instances", "copy", "delete"],
+      "tabs": ["new", "details", "edit", "new_instance", "copy", "more", "more_comment", "more_tag"],
       "show_product_name": false
     },
     "has_default_reference": {
-      "tabs": ["details", "edit"],
+      "tabs": ["details", "new_instance", "more", "more_tag"],
       "show_product_name": true
+    },
+    "manages_taxonomy": {
+      "tabs": ["details", "more", "more_tag"],
+      "show_product_name": false
+    },
+    "manages_profile": {
+      "tabs": ["details", "more", "more_tag"],
+      "show_product_name": false
     },
     "default": {
       "tabs": ["details"],
@@ -43,16 +67,46 @@
   },
   "instance": {
     "is_name_index": {
-      "tabs": ["details", "edit", "comments", "classification"],
+      "tabs": ["details", "edit", "syn", "unpub", "notes", "adnot", "copy", "loader"],
       "show_product_name": false
     },
     "has_default_reference": {
-      "tabs": ["details", "edit"],
+      "tabs": ["details", "edit", "syn", "unpub", "copy", "loader"],
+      "show_product_name": true
+    },
+    "manages_taxonomy": {
+      "tabs": ["details", "tree"],
+      "show_product_name": true
+    },
+    "manages_profile": {
+      "tabs": ["details", "profile"],
       "show_product_name": true
     },
     "default": {
       "tabs": ["details"],
+      "show_product_name": false
+    }
+  },
+  "profile": {
+    "is_name_index": {
+      "tabs": ["details"],
+      "show_product_name": false
+    },
+    "has_default_reference": {
+      "tabs": ["details"],
+      "show_product_name": false
+    },
+    "manages_taxonomy": {
+      "tabs": ["details"],
+      "show_product_name": false
+    },
+    "manages_profile": {
+      "tabs": ["details", "add", "edit", "delete"],
       "show_product_name": true
+    },
+    "default": {
+      "tabs": ["details"],
+      "show_product_name": false
     }
   }
 }

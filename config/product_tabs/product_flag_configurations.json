@@ -1,9 +1,30 @@
 {
   "is_name_index": [
     "author",
-    "reference"
+    "reference",
+    "name",
+    "instance",
+    "profile"
   ],
   "has_default_reference": [
-    "reference"
+    "author",
+    "reference",
+    "name",
+    "instance",
+    "profile"
+  ],
+  "manages_taxonomy": [
+    "author",
+    "reference",
+    "name",
+    "instance",
+    "profile"
+  ],
+  "manages_profile": [
+    "author",
+    "reference",
+    "name",
+    "instance",
+    "profile"
   ]
 }

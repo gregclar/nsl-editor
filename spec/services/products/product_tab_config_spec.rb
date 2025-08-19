@@ -14,7 +14,7 @@ RSpec.describe Products::ProductTabConfig do
 
         it "returns tabs for has_default_reference flag for author" do
           tabs = config.tabs_for(:author, ["has_default_reference"])
-          expect(tabs).to eq(["details", "edit"])
+          expect(tabs).to eq(["details"])
         end
 
         it "combines tabs from multiple flags for author" do
@@ -26,12 +26,12 @@ RSpec.describe Products::ProductTabConfig do
       context "for reference" do
         it "returns tabs for is_name_index flag for reference" do
           tabs = config.tabs_for(:reference, ["is_name_index"])
-          expect(tabs).to eq(["new", "details", "edit", "comments"])
+          expect(tabs).to eq(["new", "details", "edit_1", "edit_2", "edit_3", "comments", "new_instance", "copy"])
         end
 
         it "returns tabs for has_default_reference flag for reference" do
           tabs = config.tabs_for(:reference, ["has_default_reference"])
-          expect(tabs).to eq(["new", "details", "edit"])
+          expect(tabs).to eq(["details"])
         end
 
         it "returns unique tabs when flags overlap" do
@@ -41,31 +41,31 @@ RSpec.describe Products::ProductTabConfig do
 
         it "combines tabs from multiple flags for reference" do
           tabs = config.tabs_for(:reference, ["is_name_index", "has_default_reference"])
-          expect(tabs).to match_array(["new", "details", "edit", "comments"])
+          expect(tabs).to match_array(["comments", "copy", "details", "edit_1", "edit_2", "edit_3", "new", "new_instance"])
         end
       end
 
       context "for name" do
         it "returns tabs for is_name_index flag for name" do
           tabs = config.tabs_for(:name, ["is_name_index"])
-          expect(tabs).to eq(["new", "details", "edit", "instances", "copy", "delete"])
+          expect(tabs).to eq(["new", "details", "edit", "new_instance", "copy", "more", "more_comment", "more_tag"])
         end
 
         it "returns tabs for is_name_index flag for name" do
           tabs = config.tabs_for(:name, ["is_name_index"])
-          expect(tabs).to eq(["new", "details", "edit", "instances", "copy", "delete"])
+          expect(tabs).to eq(["new", "details", "edit", "new_instance", "copy", "more", "more_comment", "more_tag"])
         end
       end
 
       context "for instance" do
         it "returns tabs for is_name_index flag for instance" do
           tabs = config.tabs_for(:instance, ["is_name_index"])
-          expect(tabs).to eq(["details", "edit", "comments", "classification"])
+          expect(tabs).to eq(["details", "edit", "syn", "unpub", "notes", "adnot", "copy", "loader"])
         end
 
         it "returns tabs for has_default_reference flag for instance" do
           tabs = config.tabs_for(:instance, ["has_default_reference"])
-          expect(tabs).to eq(["details", "edit"])
+          expect(tabs).to eq(["details", "edit", "syn", "unpub", "copy", "loader"])
         end
       end
     end
@@ -126,17 +126,17 @@ RSpec.describe Products::ProductTabConfig do
   describe "#enabled_models_for_flags" do
     it "returns enabled models for is_name_index flag" do
       models = config.enabled_models_for_flags(["is_name_index"])
-      expect(models).to match_array(["author", "reference"])
+      expect(models).to match_array(["author", "instance", "name", "profile", "reference"])
     end
 
     it "returns enabled models for has_default_reference flag" do
       models = config.enabled_models_for_flags(["has_default_reference"])
-      expect(models).to eq(["reference"])
+      expect(models).to eq(["author", "reference", "name", "instance", "profile"])
     end
 
     it "combines models from multiple flags without duplicates" do
       models = config.enabled_models_for_flags(["is_name_index", "has_default_reference"])
-      expect(models).to match_array(["author", "reference"])
+      expect(models).to match_array(["author", "instance", "name", "profile", "reference"])
       expect(models.uniq).to eq(models)
     end
 
@@ -169,7 +169,6 @@ RSpec.describe Products::ProductTabConfig do
 
       it "returns false for name model" do
         result = config.show_product_name_for?(:name, ["is_name_index"])
-        result = config.show_product_name_for?(:name, ["is_name_index"])
         expect(result).to be false
       end
 
@@ -180,9 +179,9 @@ RSpec.describe Products::ProductTabConfig do
     end
 
     context "when has_default_reference flag is active" do
-      it "returns true for author model" do
+      it "returns false for author model" do
         result = config.show_product_name_for?(:author, ["has_default_reference"])
-        expect(result).to be true
+        expect(result).to be false
       end
 
       it "returns true for reference model" do
@@ -199,14 +198,14 @@ RSpec.describe Products::ProductTabConfig do
     end
 
     context "when no flags are active" do
-      it "returns true by default for author model" do
+      it "returns false by default for author model" do
         result = config.show_product_name_for?(:author, [])
-        expect(result).to be true
+        expect(result).to be false
       end
 
-      it "returns true by default for reference model" do
+      it "returns false by default for reference model" do
         result = config.show_product_name_for?(:reference, [])
-        expect(result).to be true
+        expect(result).to be false
       end
     end
 

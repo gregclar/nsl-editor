@@ -82,10 +82,5 @@ module Products
     rescue JSON::ParserError, Errno::ENOENT
       {}
     end
-
-    def reload_config!
-      @tabs_config = nil
-      @flag_config = nil
-    end
   end
 end

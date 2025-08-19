@@ -92,4 +92,64 @@ RSpec.describe ApplicationController, type: :controller do
       end
     end
   end
+
+  describe '#product_tab_service' do
+    let(:products) { [instance_double('Product')] }
+    let(:product_tab_service_instance) { instance_double('Products::ProductTabService') }
+
+    before do
+      allow(user).to receive(:available_products_from_roles).and_return(products)
+    end
+
+    context 'when called for the first time' do
+      it 'creates a new ProductTabService instance' do
+        expect(Products::ProductTabService).to receive(:call)
+          .with(products)
+          .and_return(product_tab_service_instance)
+
+        result = controller.send(:product_tab_service)
+        expect(result).to eq(product_tab_service_instance)
+      end
+
+      it 'memoizes the service instance' do
+        allow(Products::ProductTabService).to receive(:call)
+          .with(products)
+          .and_return(product_tab_service_instance)
+
+        first_result = controller.send(:product_tab_service)
+
+        expect(Products::ProductTabService).not_to receive(:call)
+        second_result = controller.send(:product_tab_service)
+
+        expect(first_result).to eq(second_result)
+        expect(first_result).to eq(product_tab_service_instance)
+      end
+    end
+
+    context 'when current_registered_user has no products' do
+      let(:products) { [] }
+
+      it 'passes empty array to ProductTabService' do
+        expect(Products::ProductTabService).to receive(:call)
+          .with([])
+          .and_return(product_tab_service_instance)
+
+        controller.send(:product_tab_service)
+      end
+    end
+
+    context 'when current_registered_user has multiple products' do
+      let(:product1) { instance_double('Product') }
+      let(:product2) { instance_double('Product') }
+      let(:products) { [product1, product2] }
+
+      it 'passes all products to ProductTabService' do
+        expect(Products::ProductTabService).to receive(:call)
+          .with([product1, product2])
+          .and_return(product_tab_service_instance)
+
+        controller.send(:product_tab_service)
+      end
+    end
+  end
 end

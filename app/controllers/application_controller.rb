@@ -25,11 +25,15 @@ class ApplicationController < ActionController::Base
     end
   end
 
-  helper_method :current_user, :current_registered_user
+  helper_method :current_user, :current_registered_user, :product_tab_service
 
   protected
 
   attr_reader :current_user, :current_registered_user
+
+  def product_tab_service
+    @product_tab_service ||= Products::ProductTabService.call(current_registered_user.available_products_from_roles)
+  end
 
   def show_login_page
     logger.error("Invalid Authenticity Token.")
