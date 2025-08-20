@@ -1,4 +1,9 @@
 - :date: 20-Aug-2025
+  :jira_id: '82'
+  :jira_project: FLOR
+  :description: |-
+    Foa Project: Implement initial (Author, Reference, Name) tabs logic for multi-product roles
+- :date: 20-Aug-2025
   :jira_id:  '5362'
   :description: |-
     Loader Batch Query: Add query <code>syn-matched-to-autonym:</code> for preferred matches that are autonyms
