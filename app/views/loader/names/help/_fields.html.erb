@@ -248,6 +248,8 @@
      description: "match fragment on the name status field (no wildcards added, but you can add them)"},
     {field_name: 'name-status-empty-string:',
      description: "loader name with an empty string in name status (these came about during early raw editing of loader name data when empty fields were mistakenly saved as empty strings)"},
+    {field_name: 'syn-matched-to-autonym:',
+     description: "loader name synonym with a preferred match to an autonym, implicit autonym, or explicit autonym (i.e. includes any instance type matching '%autonym%')"},
       ].each do |val| %>
   <tr>
     <td class="width-20-percent">
