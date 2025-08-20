@@ -1,3 +1,7 @@
+- :date: 21-Aug-2025
+  :jira_id:  '5554'
+  :description: |-
+    Loader Batch Review: Remove stray char from Review Details tab Comment display
 - :date: 20-Aug-2025
   :jira_id:  '5362'
   :description: |-
