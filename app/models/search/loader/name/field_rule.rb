@@ -1022,6 +1022,15 @@ group by loader_name.family, family.simple_name) subq
 where simple_name is null
  )
 )",
-  }
+  },
+"syn-matched-to-autonym:" => { where_clause: "record_type = 'synonym' 
+  and exists (select null
+                from loader_name_match
+                     join instance on loader_name_match.instance_id = instance.id
+                     join instance_type on instance.instance_type_id = instance_type.id
+               where loader_name.id = loader_name_match.loader_name_id
+                 and instance_type.name like '%autonym%'
+             )", 
+            takes_no_arg: true},
   }.freeze
 end
