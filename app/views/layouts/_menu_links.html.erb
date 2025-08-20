@@ -1,6 +1,12 @@
 
 <% if can? 'menu', 'new' %>
-  <li> <%= render partial: 'layouts/new_menu'   %> </li>
+  <li>
+    <% if Rails.configuration.try('multi_product_tabs_enabled') %>
+      <%= render partial: 'layouts/new_multi_product_menu'   %>
+    <% else %>
+      <%= render partial: 'layouts/new_menu'   %>
+    <% end %>
+  </li>
 <% end %>
 <% if can? 'menu', 'help' %>
   <li> <%= render partial: 'layouts/help_menu'  %> </li>

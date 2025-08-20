@@ -6850,6 +6850,8 @@ CREATE TABLE public.product (
     is_available boolean DEFAULT false NOT NULL,
     is_name_index boolean DEFAULT false NOT NULL,
     has_default_reference boolean DEFAULT false NOT NULL,
+    manages_taxonomy boolean DEFAULT false NOT NULL,
+    manages_profile boolean DEFAULT false NOT NULL,
     source_id bigint,
     source_system character varying(50),
     source_id_string character varying(100),
