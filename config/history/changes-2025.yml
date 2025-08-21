@@ -1,4 +1,8 @@
 - :date: 21-Aug-2025
+  :jira_id:  '5451'
+  :description: |-
+    Loader Batch: Genus name now consistently sorting before first child species in batch
+- :date: 21-Aug-2025
   :jira_id:  '5549'
   :description: |-
     Software Upgrade: Update many outdated gems/libraries
