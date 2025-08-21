@@ -28,7 +28,7 @@
     },
     "has_default_reference": {
       "tabs": ["details"],
-      "show_product_name": true
+      "show_product_name": false
     },
     "manages_taxonomy": {
       "tabs": ["details"],
@@ -62,7 +62,7 @@
     },
     "default": {
       "tabs": ["details"],
-      "show_product_name": true
+      "show_product_name": false
     }
   },
   "instance": {

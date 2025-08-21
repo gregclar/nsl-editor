@@ -37,6 +37,8 @@ module TabsHelper
   end
 
   def product_tab_text(entity_type, tab_type, default_text)
+    return default_text unless Rails.configuration.try('multi_product_tabs_enabled')
+
     options = product_tab_service.tab_options_for(entity_type, tab_type)
     return default_text if options.nil?
 
@@ -45,6 +47,8 @@ module TabsHelper
   end
 
   def tab_available?(tabs_array, tab_name)
+    return true unless Rails.configuration.try('multi_product_tabs_enabled')
+
     tabs_array.include?(tab_name)
   end
 end
