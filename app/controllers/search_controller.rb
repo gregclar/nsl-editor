@@ -6,10 +6,11 @@ class SearchController < ApplicationController
     handle_old
     run_local_search || run_empty_search
     respond_to do |format|
-      format.html
+      format.html do
+        render_html
+      end
       format.csv do
-        data = @search.executed_query.results.to_csv
-        send_data(encode_data_for_csv(data))
+        render_csv
       end
     end
   rescue ActiveRecord::StatementInvalid => e
@@ -137,6 +138,19 @@ class SearchController < ApplicationController
     end
     Rails.logger.info("apply_view_mode:    @view_mode: #{@view_mode}")
     Rails.logger.info("apply_view_mode:    @view: #{@view}")
+  end
+
+  def render_html
+    if @search.parsed_request&.print
+      render :printable, layout: "layouts/print"
+    else
+      render :search
+    end
+  end
+
+  def render_csv
+    data = @search.executed_query.results.to_csv
+    send_data(encode_data_for_csv(data))
   end
 
   def encode_data_for_csv(data)

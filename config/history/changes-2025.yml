@@ -1,4 +1,8 @@
 - :date: 21-Aug-2025
+  :jira_id:  '5163'
+  :description: |-
+    CSV Output: link to CSV export of instance query results works again without breaking the print: directive
+- :date: 21-Aug-2025
   :jira_id:  '5451'
   :description: |-
     Loader Batch: Genus name now consistently sorting before first child species in batch
