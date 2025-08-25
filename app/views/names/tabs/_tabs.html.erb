@@ -1,7 +1,4 @@
 <ul class="nav nav-tabs">
-  <% first_tab_of_each_type = Hash.new(true) %>
-  <% first_tab_of_each_type["tab_details"] = false %>
-
   <%
     tabs = product_tab_service.all_available_tabs["name"] || []
     tabs_array = tabs.collect{|tab| tab[:tab] }
