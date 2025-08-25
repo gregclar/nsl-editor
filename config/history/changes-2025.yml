@@ -1,3 +1,7 @@
+- :date: 25-Aug-2025
+  :jira_id:  '5364'
+  :description: |-
+    Batch Review Voting: Allow voting during active review periods - following the same rules as for comments
 - :date: 21-Aug-2025
   :jira_id:  '5163'
   :description: |-
