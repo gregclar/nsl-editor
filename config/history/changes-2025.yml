@@ -1,4 +1,9 @@
 - :date: 25-Aug-2025
+  :jira_id: '82'
+  :jira_project: FLOR
+  :description: |-
+    Foa Project: Fixup the product names in the tabs and refactor the view templates
+- :date: 25-Aug-2025
   :jira_id:  '5364'
   :description: |-
     Batch Review Voting: Allow voting during active review periods - following the same rules as for comments
