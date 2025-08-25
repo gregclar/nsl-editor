@@ -19,6 +19,7 @@ RSpec.describe TabsHelper, type: :helper do
     helper.define_singleton_method(:current_registered_user) { test_user }
     helper.define_singleton_method(:product_tab_service) { tab_service }
     helper.instance_variable_set(:@tab_index, nil)
+    allow(Rails.configuration).to receive(:multi_product_tabs_enabled).and_return(true)
   end
 
   describe "#user_profile_tab_name" do
@@ -132,5 +133,24 @@ RSpec.describe TabsHelper, type: :helper do
     it 'handles empty tabs array' do
       expect(helper.tab_available?([], 'edit')).to be false
     end
+
+    context "when feature flag is off" do
+      before do
+        allow(Rails.configuration).to receive(:multi_product_tabs_enabled).and_return(false)
+      end
+
+      it "returns true when tab is available" do
+        expect(helper.tab_available?(tabs_array, 'edit')).to be true
+      end
+
+      it "returns true when tab is not available" do
+        expect(helper.tab_available?(tabs_array, 'missing_tab')).to be true
+      end
+
+      it "handles empty tabs array" do
+        expect(helper.tab_available?([], 'edit')).to be true
+      end
+    end
   end
+
 end

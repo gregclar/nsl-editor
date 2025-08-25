@@ -6,6 +6,7 @@ RSpec.describe("names/tabs/_tabs.html.erb", type: :view) do
   let(:user) { create(:session_user) }
   let(:current_registered_user) { create(:user) }
   let(:name) { create(:name) }
+  let(:product_tab_service_mock) { instance_double(Products::ProductTabService, all_available_tabs: { "name" => [] }) }
 
   before do
     allow(view).to(receive(:can?).with("instances", "create").and_return(false))
@@ -14,7 +15,9 @@ RSpec.describe("names/tabs/_tabs.html.erb", type: :view) do
     allow(view).to(receive(:can?).with(:create_with_product_reference, Instance).and_return(false))
     allow(view).to(receive(:can?).with(:create, Instance).and_return(true))
     allow(view).to(receive(:increment_tab_index).and_return(1))
-
+    
+    mock_service = product_tab_service_mock
+    view.define_singleton_method(:product_tab_service) { mock_service }
     assign(:current_user, user)
     assign(:current_registered_user, current_registered_user)
     assign(:tab, "tab_show_1")

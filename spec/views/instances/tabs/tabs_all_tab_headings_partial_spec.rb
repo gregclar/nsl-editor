@@ -7,6 +7,7 @@ RSpec.describe("instances/tabs/_all_tab_headings.html.erb", type: :view) do
   let(:user) { FactoryBot.create(:user) }
   let(:instance) { FactoryBot.create(:instance) }
   let(:tabs_to_offer) { [] }
+  let(:product_tab_service_mock) { instance_double(Products::ProductTabService, all_available_tabs: { "instance" => [] }) }
 
   before do
     assign(:instance, instance)
@@ -14,6 +15,9 @@ RSpec.describe("instances/tabs/_all_tab_headings.html.erb", type: :view) do
     allow(view).to(receive(:can?).and_return(false))
     allow(view).to(receive(:increment_tab_index).and_return(1))
     allow(view).to(receive(:user_profile_tab_name).and_return("User"))
+
+    mock_service = product_tab_service_mock
+    view.define_singleton_method(:product_tab_service) { mock_service }
 
     assign(:current_user, session_user)
     assign(:current_registered_user, user)
@@ -90,9 +94,9 @@ RSpec.describe("instances/tabs/_all_tab_headings.html.erb", type: :view) do
       allow(Rails.configuration).to(receive(:profile_v2_aware).and_return(true))
     end
 
-    it "renders the 'User Profile' tab" do
+    it "renders the 'Profile' tab" do
       render
-      expect(rendered).to(have_selector("a#instance-profile-v2-tab", text: "User Profile"))
+      expect(rendered).to(have_selector("a#instance-profile-v2-tab", text: "Profile"))
     end
   end
 

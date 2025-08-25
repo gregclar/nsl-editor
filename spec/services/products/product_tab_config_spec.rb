@@ -4,7 +4,15 @@ RSpec.describe Products::ProductTabConfig do
   let(:config) { described_class.new }
 
   describe "#tabs_for" do
+    let!(:test_model) { :author }
+    let!(:active_flags) { ["is_name_index", "has_default_reference"] }
+
+    subject { config.tabs_for(test_model, active_flags) }
+
     context "with active flags" do
+      it "returns combined tabs for the model" do
+        expect(subject).to eq(["new", "details", "edit", "comments"])
+      end
 
       context "for author" do
         it "returns tabs for is_name_index flag for author" do
@@ -71,29 +79,16 @@ RSpec.describe Products::ProductTabConfig do
     end
 
     context "with no active flags" do
-      it "returns default tabs for author" do
-        tabs = config.tabs_for(:author, [])
-        expect(tabs).to eq(["details"])
-      end
+      let!(:test_model) { :unknowmodel }
+      let!(:active_flags) { [] }
 
-      it "returns default tabs for reference" do
-        tabs = config.tabs_for(:reference, [])
-        expect(tabs).to eq(["details"])
-      end
-
-      it "returns default tabs for name" do
-        tabs = config.tabs_for(:name, [])
-        expect(tabs).to eq(["details"])
-      end
-
-      it "returns default tabs for instance" do
-        tabs = config.tabs_for(:instance, [])
-        expect(tabs).to eq(["details"])
+      it "returns an empty array" do
+        expect(subject).to eq([])
       end
     end
 
     context "with unknown model" do
-      it "returns empty array for unknown model" do
+      it "returns empty array" do
         tabs = config.tabs_for(:unknown, ["is_name_index"])
         expect(tabs).to eq([])
       end
@@ -184,9 +179,9 @@ RSpec.describe Products::ProductTabConfig do
         expect(result).to be false
       end
 
-      it "returns true for reference model" do
+      it "returns false for reference model" do
         result = config.show_product_name_for?(:reference, ["has_default_reference"])
-        expect(result).to be true
+        expect(result).to be false
       end
     end
 

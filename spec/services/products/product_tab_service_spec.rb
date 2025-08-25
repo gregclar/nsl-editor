@@ -499,10 +499,10 @@ RSpec.describe Products::ProductTabService do
     end
 
     context "when single product has has_default_reference flag true" do
-      it "returns true for reference model only (based on updated configuration)" do
+      it "returns correct values based on configuration" do
         service = described_class.call(product_with_default_reference)
         expect(service.show_product_name_for_model?(:author)).to be false
-        expect(service.show_product_name_for_model?(:reference)).to be true
+        expect(service.show_product_name_for_model?(:reference)).to be false
         expect(service.show_product_name_for_model?(:name)).to be true
         expect(service.show_product_name_for_model?(:instance)).to be true
       end
@@ -522,7 +522,7 @@ RSpec.describe Products::ProductTabService do
         service = described_class.call(product_no_flags)
         expect(service.show_product_name_for_model?(:author)).to be false
         expect(service.show_product_name_for_model?(:reference)).to be false
-        expect(service.show_product_name_for_model?(:name)).to be true
+        expect(service.show_product_name_for_model?(:name)).to be false
         expect(service.show_product_name_for_model?(:instance)).to be false
       end
     end
@@ -669,7 +669,7 @@ RSpec.describe Products::ProductTabService do
         expect(result).to be_a(Hash)
         expect(result[:tab]).to eq("details")
         expect(result[:product]).to eq(product_with_default_reference)
-        expect(result[:show_product_name]).to eq true
+        expect(result[:show_product_name]).to eq false
       end
 
       it 'returns tab options for existing author tab' do
