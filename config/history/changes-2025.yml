@@ -1,3 +1,7 @@
+- :date: 27-Aug-2025
+  :jira_id:  '5405'
+  :description: |-
+    Batch Loader: Allow user to add synonymy to excluded name
 - :date: 26-Aug-2025
   :jira_id:  '5393'
   :description: |-
