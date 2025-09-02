@@ -28,12 +28,6 @@ RSpec.describe TabsHelper, type: :helper do
     end
   end
 
-  describe "#user_profile_tab_names" do
-    it "returns the names of all user's available products" do
-      expect(helper.user_profile_tab_names).to eq(%w[FOO BAR])
-    end
-  end
-
   describe "#increment_tab_index" do
     it "increments @tab_index by 1 by default" do
       expect(helper.increment_tab_index).to eq(2)
@@ -59,7 +53,7 @@ RSpec.describe TabsHelper, type: :helper do
   end
 
   describe '#product_tab_text' do
-    let(:tab_options) { { show_product_name: show_product_name, product: product1 } }
+    let(:tab_options) { { product: product1 } }
 
     before do
       allow(mock_product_tab_service).to receive(:tab_options_for)
@@ -67,8 +61,23 @@ RSpec.describe TabsHelper, type: :helper do
         .and_return(tab_options)
     end
 
-    context 'when show_product_name is true' do
-      let(:show_product_name) { true }
+    context 'when context has multiple products providing the same tab' do
+      before do
+        allow(helper).to receive(:context_has_multiple_products?).and_return(true)
+        allow(helper).to receive(:products_in_current_context).and_return([product1, product2])
+
+        # Mock both products providing the author/edit tab
+        author_service1 = instance_double(Products::ProductTabService)
+        author_service2 = instance_double(Products::ProductTabService)
+
+        allow(Products::ProductTabService).to receive(:call).with(product1).and_return(author_service1)
+        allow(Products::ProductTabService).to receive(:call).with(product2).and_return(author_service2)
+
+        allow(author_service1).to receive(:available_tabs_for).with(:author)
+          .and_return([{ tab: 'edit', product: product1 }])
+        allow(author_service2).to receive(:available_tabs_for).with(:author)
+          .and_return([{ tab: 'edit', product: product2 }])
+      end
 
       it 'returns product name with default text' do
         result = helper.product_tab_text(:author, 'edit', 'Edit')
@@ -76,8 +85,11 @@ RSpec.describe TabsHelper, type: :helper do
       end
     end
 
-    context 'when show_product_name is false' do
-      let(:show_product_name) { false }
+    context 'when context has only one product providing the tab' do
+      before do
+        allow(helper).to receive(:context_has_multiple_products?).and_return(false)
+        allow(helper).to receive(:products_in_current_context).and_return([product1])
+      end
 
       it 'returns only the default text' do
         result = helper.product_tab_text(:author, 'edit', 'Edit')
@@ -85,8 +97,10 @@ RSpec.describe TabsHelper, type: :helper do
       end
     end
 
-    context 'when show_product_name is nil' do
-      let(:show_product_name) { nil }
+    context 'when no current context' do
+      before do
+        allow(helper).to receive(:products_in_current_context).and_return([])
+      end
 
       it 'returns only the default text' do
         result = helper.product_tab_text(:author, 'edit', 'Edit')
@@ -95,8 +109,12 @@ RSpec.describe TabsHelper, type: :helper do
     end
 
     context 'when product is nil' do
-      let(:show_product_name) { true }
-      let(:tab_options) { { show_product_name: true, product: nil } }
+      let(:tab_options) { { product: nil } }
+
+      before do
+        allow(helper).to receive(:context_has_multiple_products?).and_return(true)
+        allow(helper).to receive(:products_in_current_context).and_return([product1, product2])
+      end
 
       it 'handles nil product gracefully' do
         result = helper.product_tab_text(:author, 'edit', 'Edit')
@@ -105,7 +123,6 @@ RSpec.describe TabsHelper, type: :helper do
     end
 
     context 'when tab_options_for returns nil' do
-      let(:show_product_name) { true }
       before do
         allow(mock_product_tab_service).to receive(:tab_options_for)
           .with(:author, 'edit')

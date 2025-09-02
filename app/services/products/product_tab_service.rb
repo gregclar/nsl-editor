@@ -1,31 +1,33 @@
-# service = Products::ProductTabService.call(products) # Now accepts array or single product
-#
-# Get active flags detected from all products
-# service.active_flags # => ['is_name_index', 'is_taxonomic']
-#
-# Get models enabled by active flags from all products
-# service.enabled_models # => [:author, :reference, :name]
-#
-# Get flag-specific tabs for a model (unified from all products with product names)
-# service.available_tabs_for(:author) # => [{ tab: :new, product: product1 }, { tab: :details, product: product2 }]
-#
-# Get all tabs for all enabled models with product names
-# service.all_available_tabs # => { author: [{ tab: :new, product: product1 }], reference: [...] }
-#
-# Get tabs per product mapping
-# service.tabs_per_product # => { product1 => { author: [:new, :edit], reference: [:details] }, ... }
+
 module Products
   class ProductTabService < BaseService
 
-    attr_reader :active_flags, :enabled_models
+    attr_reader :active_flags, :enabled_models, :context_id, :products
 
-    def initialize(products, config = ProductTabConfig.new)
+    def self.for_context(context_id, config = ProductTabConfig.new)
+      products = products_for_context(context_id)
+      call(products, config, context_id: context_id)
+    end
+
+    def self.products_for_context(context_id)
+      return [] unless context_id
+
+      ProductContext.where(context_id: context_id)
+        .includes(:product)
+        .map(&:product)
+        .compact
+    end
+
+    def initialize(products, config = ProductTabConfig.new, context_id: nil)
       @products = Array(products).compact
       @config = config
+      @context_id = context_id
       @active_flags = []
       @enabled_models = []
       @result = {}
       @product_tabs = {}
+
+      filter_products_by_context if @context_id
     end
 
     def execute
@@ -54,11 +56,6 @@ module Products
       @product_tabs
     end
 
-    def show_product_name_for_model?(model)
-      return false if model.nil?
-
-      @config.show_product_name_for?(model, @active_flags)
-    end
 
     private
 
@@ -90,14 +87,12 @@ module Products
 
         @products.each do |product|
           product_flags = determine_flags_for_product(product)
-          tabs = @config.tabs_for(model, product_flags)
-          show_product_name = @config.show_product_name_for?(model, @active_flags)
+          tabs = @config.tabs_for(model, product_flags).uniq
 
           tabs.each do |tab|
             @result[model] << {
               tab: tab,
-              product: product,
-              show_product_name: show_product_name
+              product: product
             }
           end
         end
@@ -128,6 +123,13 @@ module Products
       end
 
       flags
+    end
+
+    def filter_products_by_context
+      return unless @context_id
+
+      context_products = self.class.products_for_context(@context_id)
+      @products = @products.select { |product| context_products.include?(product) }
     end
   end
 end

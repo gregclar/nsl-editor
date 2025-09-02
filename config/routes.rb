@@ -17,6 +17,9 @@
 #   limitations under the License.
 #
 Rails.application.routes.draw do
+  namespace :product_contexts do
+    resources :set_context, only: [:create]
+  end
   namespace :profile_items do
     resources :links
     resources :versioned_copies, only: [:create]

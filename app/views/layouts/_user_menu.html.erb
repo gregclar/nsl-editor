@@ -7,7 +7,8 @@
      class="dropdown-toggle <%= 'active' if params[:controller].match(/session/) %>"
      title="Select this to see your account options."
      data-toggle="dropdown">
-    <%= editor_icon('user') %>&nbsp;<%= @current_user.full_name %> <span class="caret"></span></a>
+    <%= editor_icon('user') %>&nbsp;<%= @current_user.full_name %> <span class="caret"></span>
+  </a>
   <ul id="user-dropdown-menu" class="dropdown-menu" role="menu">
     <% if @current_user.groups.present? && @current_user.groups.size > 0 %>
       <li class="dropdown-submenu">
@@ -46,7 +47,12 @@
         </ul>
       </li>
     <% end %>
-    <li role="presentation" class="divider"></li>
+
+    <% if Rails.configuration.try('multi_product_tabs_enabled') %>
+      <%= render partial: 'layouts/context_menu' %>
+    <% end %>
+
+<li role="presentation" class="divider"></li>
 
 <% if Rails.configuration.try(:batch_loader_aware) %>
   <% if can? 'loader/batch/review/mode', 'switch_on' %>

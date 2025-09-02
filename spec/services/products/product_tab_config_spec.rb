@@ -73,7 +73,7 @@ RSpec.describe Products::ProductTabConfig do
 
         it "returns tabs for has_default_reference flag for instance" do
           tabs = config.tabs_for(:instance, ["has_default_reference"])
-          expect(tabs).to eq(["details", "edit", "syn", "unpub", "copy", "loader"])
+          expect(tabs).to eq(["details", "edit_profile", "syn_profile", "unpub_profile", "copy_profile", "loader"])
         end
       end
     end
@@ -150,67 +150,6 @@ RSpec.describe Products::ProductTabConfig do
     end
   end
 
-  describe '#show_product_name_for?' do
-    context "when is_name_index flag is active" do
-      it 'returns false for author model' do
-        result = config.show_product_name_for?(:author, ["is_name_index"])
-        expect(result).to be false
-      end
-
-      it "returns false for reference model" do
-        result = config.show_product_name_for?(:reference, ["is_name_index"])
-        expect(result).to be false
-      end
-
-      it "returns false for name model" do
-        result = config.show_product_name_for?(:name, ["is_name_index"])
-        expect(result).to be false
-      end
-
-      it "returns false for instance model" do
-        result = config.show_product_name_for?(:instance, ["is_name_index"])
-        expect(result).to be false
-      end
-    end
-
-    context "when has_default_reference flag is active" do
-      it "returns false for author model" do
-        result = config.show_product_name_for?(:author, ["has_default_reference"])
-        expect(result).to be false
-      end
-
-      it "returns false for reference model" do
-        result = config.show_product_name_for?(:reference, ["has_default_reference"])
-        expect(result).to be false
-      end
-    end
-
-    context "when multiple flags are active" do
-      it "handles precedence correctly" do
-        result = config.show_product_name_for?(:author, ["is_name_index", "has_default_reference"])
-        expect(result).to be false
-      end
-    end
-
-    context "when no flags are active" do
-      it "returns false by default for author model" do
-        result = config.show_product_name_for?(:author, [])
-        expect(result).to be false
-      end
-
-      it "returns false by default for reference model" do
-        result = config.show_product_name_for?(:reference, [])
-        expect(result).to be false
-      end
-    end
-
-    context "when unknown model is provided" do
-      it "returns true for unknown model" do
-        result = config.show_product_name_for?(:unknown_model, ["is_name_index"])
-        expect(result).to be true
-      end
-    end
-  end
 
   describe "#flag_config" do
     it 'returns a hash containing flag configurations' do

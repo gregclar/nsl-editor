@@ -50,24 +50,6 @@ module Products
       enabled_models.uniq
     end
 
-    def show_product_name_for?(model, active_flags)
-      model_config = tabs_config[model.to_s]
-      return true unless model_config
-
-      active_flags.each do |flag|
-        flag_config = model_config[flag.to_s]
-        if flag_config.is_a?(Hash) && flag_config.key?('show_product_name')
-          return flag_config['show_product_name']
-        end
-      end
-
-      default_config = model_config['default']
-      if default_config.is_a?(Hash) && default_config.key?('show_product_name')
-        return default_config['show_product_name']
-      end
-
-      true
-    end
 
     private
 

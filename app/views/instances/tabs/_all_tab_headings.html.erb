@@ -44,14 +44,14 @@
     %>
   <% end %>
 
-  <% if @tabs_to_offer.include?("tab_edit_profile_v2") && can?(:manage_draft_secondary_reference, @instance) && tab_available?(tabs_array, "profile") %>
+  <% if @tabs_to_offer.include?("tab_edit_profile_v2") && can?(:manage_draft_secondary_reference, @instance) && tab_available?(tabs_array, "edit_profile") %>
     <%= render(
       partial: "instances/tabs/tab",
       locals: {
         first: false,
         last: false,
         this_tab: "tab_edit_profile_v2",
-        link_text: product_tab_text(:instance, "edit", "Edit"),
+        link_text: product_tab_text(:instance, "edit_profile", "Edit"),
         link_id: "instance-edit-tab-profile-v2-tab",
         link_title: "Edit",
         tab_index: increment_tab_index,
@@ -99,7 +99,7 @@
     <% end %>
   <% end %>
 
-  <% if @tabs_to_offer.include?('tab_synonymy_for_profile_v2') && tab_available?(tabs_array, "syn") %>
+  <% if @tabs_to_offer.include?('tab_synonymy_for_profile_v2') && tab_available?(tabs_array, "syn_profile") %>
     <% if can?(:synonymy_as_draft_secondary_reference, @instance) %>
       <%= render(
         partial: "instances/tabs/tab",
@@ -107,7 +107,7 @@
           first: false,
           last: false,
           this_tab: "tab_synonymy_for_profile_v2",
-          link_text: product_tab_text(:instance, "syn", "Syn"),
+          link_text: product_tab_text(:instance, "syn_profile", "Syn"),
           link_id: "instance-cite-this-instance-for-profile-v2-tab",
           link_title: "Synonym",
           tab_index: increment_tab_index,
@@ -137,7 +137,7 @@
     <% end %>
   <% end %>
 
-  <% if @tabs_to_offer.include?('tab_unpublished_citation_for_profile_v2') && tab_available?(tabs_array, "unpub") %>
+  <% if @tabs_to_offer.include?('tab_unpublished_citation_for_profile_v2') && tab_available?(tabs_array, "unpub_profile") %>
     <% if can?(:unpublished_citation_as_draft_secondary_reference, @instance) %>
       <%= render(
         partial: "instances/tabs/tab",
@@ -145,7 +145,7 @@
           first: false,
           last: false,
           this_tab: "tab_unpublished_citation_for_profile_v2",
-          link_text: product_tab_text(:instance, "unpub", "Unpub"),
+          link_text: product_tab_text(:instance, "unpub_profile", "Unpub"),
           link_id: "unpublished-citation-for-profile-v2-tab",
           link_title: "Unpublished citation",
           tab_index: increment_tab_index,
@@ -213,7 +213,7 @@
     <% end %>
   <% end %>
 
-  <% if @tabs_to_offer.include?("tab_copy_to_new_profile_v2") && tab_available?(tabs_array, "copy") %>
+  <% if @tabs_to_offer.include?("tab_copy_to_new_profile_v2") && tab_available?(tabs_array, "copy_profile") %>
     <% if can?(:copy_as_draft_secondary_reference, Instance) && @current_registered_user.available_product_from_roles.present? %>
       <%= render(
         partial: "instances/tabs/tab",
@@ -221,7 +221,7 @@
           first: false,
           last: false,
           this_tab: "tab_copy_to_new_profile_v2",
-          link_text: product_tab_text(:instance, "copy", "Copy"),
+          link_text: product_tab_text(:instance, "copy_profile", "Copy"),
           link_id: "instance-copy-to-new-profile-v2-tab",
           link_title: "Copy the instance",
           tab_index: increment_tab_index,

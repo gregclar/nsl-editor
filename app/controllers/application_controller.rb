@@ -25,15 +25,37 @@ class ApplicationController < ActionController::Base
     end
   end
 
-  helper_method :current_user, :current_registered_user, :product_tab_service
+  helper_method :current_user,
+    :current_registered_user,
+    :product_tab_service,
+    :product_context_service,
+    :current_context_id
 
   protected
 
   attr_reader :current_user, :current_registered_user
 
   def product_tab_service
-    @product_tab_service ||= Products::ProductTabService.call(current_registered_user.available_products_from_roles)
+    @product_tab_service ||= begin
+      context_id = current_context_id
+      if context_id
+        Products::ProductTabService.for_context(context_id)
+      else
+        Products::ProductTabService.call(current_registered_user.available_products_from_roles)
+      end
+    end
   end
+
+  def current_context_id
+    session[:current_context_id]
+  end
+
+  def product_context_service
+    @product_context_service ||= Products::ProductContextService
+      .call(products: current_registered_user.available_products_from_roles)
+  end
+
+  private
 
   def show_login_page
     logger.error("Invalid Authenticity Token.")
