@@ -1139,7 +1139,7 @@ begin
     end if;
 
 end;
-    
+
 $$;
 
 
@@ -5053,8 +5053,8 @@ CREATE TABLE public.users (
     updated_by character varying(50) DEFAULT USER NOT NULL
 );
 
-alter table public.users 
-add constraint users_user_name_lowercase_ck 
+alter table public.users
+add constraint users_user_name_lowercase_ck
 check (user_name = lower(user_name));
 
 --
@@ -11059,11 +11059,37 @@ ALTER TABLE only public.author
 ADD CONSTRAINT abbrev_length_check
 CHECK (char_length(abbrev) <= 150);
 
---
--- PostgreSQL database dump complete
---
 
 SET search_path TO public,loader;
 
+-- public.product_context definition
+
+-- Drop table
+
+-- DROP TABLE public.product_context;
+
+CREATE TABLE public.product_context (
+	id int8 DEFAULT nextval('nsl_global_seq'::regclass) NOT NULL,
+	context_id int8 NOT NULL,
+	product_id int8 NOT NULL,
+	"name" text DEFAULT 'Name of the context'::text NOT NULL,
+	description text DEFAULT 'Please describe this product context'::text NOT NULL,
+	lock_version int8 DEFAULT 0 NOT NULL,
+	created_at timestamptz DEFAULT now() NOT NULL,
+	created_by varchar(50) DEFAULT USER NOT NULL,
+	updated_at timestamptz DEFAULT now() NOT NULL,
+	updated_by varchar(50) DEFAULT USER NOT NULL,
+	api_name varchar(50) NULL,
+	api_date timestamptz NULL,
+	CONSTRAINT product_context_pkey PRIMARY KEY (id)
+);
+CREATE UNIQUE INDEX pc_u_product_context ON public.product_context USING btree (context_id, product_id);
 
 
+-- public.product_context foreign keys
+
+ALTER TABLE public.product_context ADD CONSTRAINT pc_product_fk FOREIGN KEY (product_id) REFERENCES public.product(id);
+
+--
+-- PostgreSQL database dump complete
+--
