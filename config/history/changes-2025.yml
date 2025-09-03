@@ -1,3 +1,8 @@
+- :date: 03-Sep-2025
+  :jira_id: '112'
+  :jira_project: FLOR
+  :description: |-
+    Foa Project: Use product context to determine the tabs to display in the editor
 - :date: 27-Aug-2025
   :jira_id:  '5405'
   :description: |-
