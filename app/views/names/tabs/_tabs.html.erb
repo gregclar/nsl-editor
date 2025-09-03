@@ -36,14 +36,14 @@
     %>
   <% end %>
 
-  <% if can?(:create_with_product_reference, Instance) && tab_available?(tabs_array, "new_instance") %>
+  <% if can?(:create_with_product_reference, Instance) && tab_available?(tabs_array, "new_instance_profile") %>
     <%= render(
       partial: "names/tabs/tab",
       locals: {
         first: false,
         last: false,
         this_tab: "tab_instances_profile_v2",
-        link_text: product_tab_text(:name, "new_instance", "New instance"),
+        link_text: product_tab_text(:name, "new_instance_profile", "New instance"),
         link_id: "name-instances-profile-v2-tab",
         link_title: "Create an instance for the name.",
         tab_index: increment_tab_index,

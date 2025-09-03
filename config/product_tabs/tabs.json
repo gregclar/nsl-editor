@@ -1,112 +1,87 @@
 {
   "author": {
     "is_name_index": {
-      "tabs": ["new", "details", "edit", "comments"],
-      "show_product_name": false
+      "tabs": ["new", "details", "edit", "comments"]
     },
     "has_default_reference": {
-      "tabs": ["details"],
-      "show_product_name": false
+      "tabs": ["details"]
     },
     "manages_taxonomy": {
-      "tabs": ["details"],
-      "show_product_name": false
+      "tabs": ["details"]
     },
     "manages_profile": {
-      "tabs": ["new", "details"],
-      "show_product_name": false
+      "tabs": ["new", "details"]
     },
     "default": {
-      "tabs": ["details"],
-      "show_product_name": false
+      "tabs": ["details"]
     }
   },
   "reference": {
     "is_name_index": {
-      "tabs": ["new", "details", "edit_1", "edit_2", "edit_3", "comments", "new_instance", "copy"],
-      "show_product_name": false
+      "tabs": ["new", "details", "edit_1", "edit_2", "edit_3", "comments", "new_instance", "copy"]
     },
     "has_default_reference": {
-      "tabs": ["details"],
-      "show_product_name": false
+      "tabs": ["details"]
     },
     "manages_taxonomy": {
-      "tabs": ["details"],
-      "show_product_name": false
+      "tabs": ["details"]
     },
     "manages_profile": {
-      "tabs": ["new", "details", "edit_1", "edit_2", "edit_3"],
-      "show_product_name": false
+      "tabs": ["new", "details", "edit_1", "edit_2", "edit_3"]
     },
     "default": {
-      "tabs": ["details"],
-      "show_product_name": false
+      "tabs": ["details"]
     }
   },
   "name": {
     "is_name_index": {
-      "tabs": ["new", "details", "edit", "new_instance", "copy", "more", "more_comment", "more_tag"],
-      "show_product_name": false
+      "tabs": ["new", "details", "edit", "new_instance", "copy", "more", "more_comment", "more_tag"]
     },
     "has_default_reference": {
-      "tabs": ["details", "new_instance", "more", "more_tag"],
-      "show_product_name": true
+      "tabs": ["details", "new_instance", "more", "more_tag"]
     },
     "manages_taxonomy": {
-      "tabs": ["details", "more", "more_tag"],
-      "show_product_name": false
+      "tabs": ["details", "more", "more_tag"]
     },
     "manages_profile": {
-      "tabs": ["details", "more", "more_tag"],
-      "show_product_name": false
+      "tabs": ["details", "more", "new_instance_profile", "more_tag"]
     },
     "default": {
-      "tabs": ["details"],
-      "show_product_name": false
+      "tabs": ["details"]
     }
   },
   "instance": {
     "is_name_index": {
-      "tabs": ["details", "edit", "syn", "unpub", "notes", "adnot", "copy", "loader"],
-      "show_product_name": false
+      "tabs": ["details", "edit", "syn", "unpub", "notes", "adnot", "copy", "loader"]
     },
     "has_default_reference": {
-      "tabs": ["details", "edit", "syn", "unpub", "copy", "loader"],
-      "show_product_name": true
+      "tabs": ["details", "edit_profile", "syn_profile", "unpub_profile", "copy_profile", "loader"]
     },
     "manages_taxonomy": {
-      "tabs": ["details", "tree"],
-      "show_product_name": true
+      "tabs": ["details", "tree"]
     },
     "manages_profile": {
-      "tabs": ["details", "profile"],
-      "show_product_name": true
+      "tabs": ["details", "edit_profile", "syn_profile", "unpub_profile", "profile"]
     },
     "default": {
-      "tabs": ["details"],
-      "show_product_name": false
+      "tabs": ["details"]
     }
   },
   "profile": {
     "is_name_index": {
-      "tabs": ["details"],
-      "show_product_name": false
+      "tabs": ["details"]
     },
     "has_default_reference": {
-      "tabs": ["details"],
-      "show_product_name": false
+      "tabs": ["details"]
     },
     "manages_taxonomy": {
-      "tabs": ["details"],
-      "show_product_name": false
+      "tabs": ["details"]
     },
     "manages_profile": {
-      "tabs": ["details", "add", "edit", "delete"],
-      "show_product_name": true
+      "tabs": ["details", "add", "edit", "delete"]
     },
     "default": {
-      "tabs": ["details"],
-      "show_product_name": false
+      "tabs": ["details"]
     }
   }
 }

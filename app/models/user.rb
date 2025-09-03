@@ -72,7 +72,7 @@ class User < ActiveRecord::Base
     # instead of just the first one
     product_roles
       .joins(:role, :product)
-      .includes(:product)
+      .includes(:product, :user_product_roles)
       .order(Product.arel_table[:name].asc)
       .filter_map(&:product)
       .uniq
@@ -156,7 +156,7 @@ class User < ActiveRecord::Base
     {id: id,
      user_name: user_name,
      given_name: given_name,
-     family_name: family_name 
-    } 
+     family_name: family_name
+    }
   end
 end
