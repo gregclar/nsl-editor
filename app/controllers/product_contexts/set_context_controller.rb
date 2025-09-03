@@ -8,8 +8,7 @@ module ProductContexts
 
       if valid_context_for_user?(context_id)
         session[:current_context_id] != context_id.to_i ? set_context_session(context_id) : clear_context_session
-        context_name = context_name_for_id(context_id)
-        Rails.logger.info "Context switched to: #{context_name}"
+        Rails.logger.info "Context switched to: #{session[:current_context_name]}"
       else
         Rails.logger.warn "Attempted to switch to invalid context: #{context_id}"
       end
@@ -21,10 +20,12 @@ module ProductContexts
 
     def clear_context_session
       session.delete(:current_context_id)
+      session.delete(:current_context_name)
     end
 
     def set_context_session(context_id)
       session[:current_context_id] = context_id.to_i
+      session[:current_context_name] = context_name_for_id(context_id)
     end
 
     def permitted_params

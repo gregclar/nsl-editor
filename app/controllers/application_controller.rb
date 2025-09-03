@@ -29,7 +29,8 @@ class ApplicationController < ActionController::Base
     :current_registered_user,
     :product_tab_service,
     :product_context_service,
-    :current_context_id
+    :current_context_id,
+    :current_context_name
 
   protected
 
@@ -48,6 +49,12 @@ class ApplicationController < ActionController::Base
 
   def current_context_id
     session[:current_context_id]
+  end
+
+  def current_context_name
+    return "Select Context" unless current_context_id
+
+    session[:current_context_name] || "No Context Selected"
   end
 
   def product_context_service

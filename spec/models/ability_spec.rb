@@ -60,7 +60,7 @@ RSpec.describe Ability, type: :model do
     end
 
     it "allows setting product context" do
-      expect(subject.can?("product_contexts/set_context", :all)).to eq true
+      expect(subject.can?("product_contexts/set_context", "create")).to eq true
     end
   end
 

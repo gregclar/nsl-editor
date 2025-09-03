@@ -28,30 +28,4 @@ RSpec.describe ProductContextHelper, type: :helper do
       expect(helper.available_contexts_for_current_user).to eq([{name: product_context.name, context_id: product_context.context_id}])
     end
   end
-
-  describe "#current_context_name" do
-    it "returns the name of the current context" do
-      expect(helper.current_context_name).to eq("Selected Context - #{product_context.name}")
-    end
-
-    context "when no current context" do
-      before do
-        allow(helper).to receive(:current_context_id).and_return(nil)
-      end
-
-      it "returns 'No Context Selected'" do
-        expect(helper.current_context_name).to eq("No Context Selected")
-      end
-    end
-
-    context "for invalid context" do
-      before do
-        allow(helper).to receive(:current_context_id).and_return("some-invalid-id")
-      end
-
-      it "returns 'Invalid Context'" do
-        expect(helper.current_context_name).to eq("Invalid Context")
-      end
-    end
-  end
 end

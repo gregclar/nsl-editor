@@ -27,6 +27,11 @@ RSpec.describe ProductContexts::SetContextController, type: :controller do
       expect(session[:current_context_id]).to eq(context_id)
     end
 
+    it "sets the current context name in the session" do
+      post_create
+      expect(session[:current_context_name]).to eq("Test Context")
+    end
+
     it "redirects to the previous page when HTTP_REFERER is set" do
       request.env["HTTP_REFERER"] = "/previous_page"
       post_create
@@ -36,6 +41,21 @@ RSpec.describe ProductContexts::SetContextController, type: :controller do
     it "falls back to search page" do
       post_create
       expect(response).to redirect_to(search_path)
+    end
+
+    context "with the same context id" do
+      let!(:context_id) { 1 }
+
+      before do
+        session[:current_context_id] = context_id
+        session[:current_context_name] = context_name
+      end
+
+      it "clears the current context from the session" do
+        post_create
+        expect(session[:current_context_id]).to be_nil
+        expect(session[:current_context_name]).to be_nil
+      end
     end
 
     context "with invalid context" do

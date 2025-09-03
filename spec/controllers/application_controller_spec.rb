@@ -160,6 +160,29 @@ RSpec.describe ApplicationController, type: :controller do
     end
   end
 
+  describe "#current_context_name" do
+    it "returns the current context name from the session" do
+      session[:current_context_id] = 1
+      session[:current_context_name] = "Test Context"
+      expect(controller.send(:current_context_name)).to eq("Test Context")
+    end
+
+    context "when no context is selected" do
+      it "returns 'No Context Selected'" do
+        session[:current_context_id] = 1
+        session[:current_context_name] = nil
+        expect(controller.send(:current_context_name)).to eq("No Context Selected")
+      end
+    end
+
+    context "when current_context_id is nil" do
+      it "returns 'Select Context'" do
+        session[:current_context_id] = nil
+        expect(controller.send(:current_context_name)).to eq("Select Context")
+      end
+    end
+  end
+
   describe "#product_context_service" do
     it "returns a ProductContextService instance" do
       expect(controller.send(:product_context_service)).to be_a(Products::ProductContextService)
