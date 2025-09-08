@@ -1,3 +1,8 @@
+- :date: 09-Sep-2025
+  :jira_id: '112'
+  :jira_project: FLOR
+  :description: |-
+    Foa Project: Handle PG permission errors when querying product contexts
 - :date: 03-Sep-2025
   :jira_id: '112'
   :jira_project: FLOR
