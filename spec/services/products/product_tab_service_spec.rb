@@ -72,6 +72,18 @@ RSpec.describe Products::ProductTabService do
       products = described_class.products_for_context(nil)
       expect(products).to eq([])
     end
+
+    context "when there is a permission error" do
+      it "returns empty array and logs the error" do
+        allow(ProductContext).to receive(:where).with(context_id: context_1)
+          .and_raise(PG::InsufficientPrivilege.new("permission denied"))
+
+        expect(Rails.logger).to receive(:error).with(/Permission Error: permission denied/)
+
+        products = described_class.products_for_context(context_1)
+        expect(products).to eq([])
+      end
+    end
   end
 
   describe "#execute" do
