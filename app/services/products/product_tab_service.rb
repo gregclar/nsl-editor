@@ -16,6 +16,9 @@ module Products
         .includes(:product)
         .map(&:product)
         .compact
+    rescue PG::InsufficientPrivilege => e
+      Rails.logger.error("Permission Error: #{e.message}")
+      return []
     end
 
     def initialize(products, config = ProductTabConfig.new, context_id: nil)
