@@ -1,3 +1,7 @@
+- :date: 10-Sep-2025
+  :jira_id: '5429'
+  :description: |-
+    Tree permissions: Add permissions for treebuilder user on Taxonomy tab reports so they work in the transition period
 - :date: 09-Sep-2025
   :jira_id: '112'
   :jira_project: FLOR
