@@ -294,6 +294,14 @@ class Ability
     can :update_excluded, :all
     can :replace_placement, :all
     can :remove_name_placement, :all
+    can :reports, TreeVersion
+    can :show_cas, TreeVersion
+    can :show_diff, TreeVersion
+    can :show_valrep, TreeVersion
+    can :run_cas, TreeVersion
+    can :update_synonymy_by_instance, TreeVersion
+    can :run_diff, TreeVersion
+    can :run_valrep, TreeVersion
   end
 
   def admin_auth
