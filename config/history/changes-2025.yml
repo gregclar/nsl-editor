@@ -1,4 +1,9 @@
 - :date: 12-Sep-2025
+  :jira_id: '112'
+  :jira_project: FLOR
+  :description: |-
+    Foa Project: Don't render the new name option to foa users
+- :date: 12-Sep-2025
   :jira_id: '5429'
   :description: |-
     Tree permissions: Add permissions for treebuilder user to open parent typeahead - as before, for backwards compatibility during transition
