@@ -13,17 +13,21 @@ module Products
     end
 
     def available_contexts
-      @available_contexts ||= products.blank? ? [] : query_product_context.select { |ctx| (ctx[:products] & products).any? }
+      @available_contexts ||= products.blank? ? [] : sorted_product_contexts
     end
 
     private
+
+    def sorted_product_contexts
+      @sorted_product_contexts ||= query_product_context
+        .select { |ctx| (ctx[:products] & products).any? }
+    end
 
     def query_product_context
       ProductContext
         .includes(:product)
         .group_by(&:context_id)
         .transform_values { |contexts| contexts.map(&:product).map(&:name).join('/') }
-        .sort
         .to_h
         .map do |context_id, context_list|
         {
