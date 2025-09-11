@@ -27,5 +27,23 @@ RSpec.describe ProductContextHelper, type: :helper do
     it "returns the names of available contexts" do
       expect(helper.available_contexts_for_current_user).to eq([{name: product_context.name, context_id: product_context.context_id}])
     end
+
+    context "for multiple contexts" do
+      let!(:product_context_service) do
+        instance_double(
+          Products::ProductContextService,
+          available_contexts: [
+            {name: product_context.name, context_id: 3},
+            {name: product_context.name, context_id: 1},
+            {name: product_context.name, context_id: 2}
+          ]
+        )
+      end
+
+      it "sorts contexts by context_id" do
+        expect(helper.available_contexts_for_current_user.collect{|context| context[:context_id]}).to eq([1, 2, 3])
+      end
+    end
+
   end
 end

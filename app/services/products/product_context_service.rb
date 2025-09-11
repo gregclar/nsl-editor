@@ -13,13 +13,13 @@ module Products
     end
 
     def available_contexts
-      @available_contexts ||= products.blank? ? [] : sorted_product_contexts
+      @available_contexts ||= products.blank? ? [] : product_contexts
     end
 
     private
 
-    def sorted_product_contexts
-      @sorted_product_contexts ||= query_product_context
+    def product_contexts
+      @product_contexts ||= query_product_context
         .select { |ctx| (ctx[:products] & products).any? }
     end
 
