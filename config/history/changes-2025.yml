@@ -1,3 +1,7 @@
+- :date: 11-Sep-2025
+  :jira_id: '5564'
+  :description: |-
+    Batch Loader: Copying concept into batch from Loader 1 tab should now use primary instances for synonym matches
 - :date: 10-Sep-2025
   :jira_id: '5429'
   :description: |-
