@@ -435,7 +435,8 @@ class TreesController < ApplicationController
           .permit(:element_link,
                   :parent_element_link,
                   :update,
-                  :parent_name_typeahead_string)
+                  :parent_name_typeahead_string,
+                  :version_id)
   end
 
   def remove_name_placement_params

@@ -302,6 +302,9 @@ class Ability
     can :update_synonymy_by_instance, TreeVersion
     can :run_diff, TreeVersion
     can :run_valrep, TreeVersion
+    can :update_distribution, TreeVersion
+    can :update_comment, TreeVersion
+    can :update_tree_parent, TreeVersion
   end
 
   def admin_auth
