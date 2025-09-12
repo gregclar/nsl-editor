@@ -1,4 +1,8 @@
-- :date: 10-Sep-2025
+- :date: 12-Sep-2025
+  :jira_id: '5429'
+  :description: |-
+    Tree permissions: Add permissions for treebuilder user to open parent typeahead - as before, for backwards compatibility during transition
+- :date: 12-Sep-2025
   :jira_id: '5429'
   :description: |-
     Tree permissions: Add permissions for treebuilder user on Instance Tree tab actions so they work in the transition to product role permissions

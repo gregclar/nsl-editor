@@ -277,6 +277,7 @@ class Ability
     can "workspace_values",    :all
     can "trees/workspaces/current", "toggle"
     can "names/typeaheads/for_workspace_parent_name", :all
+    can :names_typeahead_for_workspace_parent, TreeVersion
     can "menu", "tree"
     can :edit, TreeVersion     # Added for transition to tree-publisher authorisations
     can :set_workspace, TreeVersion
