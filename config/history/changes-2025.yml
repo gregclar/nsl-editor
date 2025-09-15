@@ -1,4 +1,9 @@
 - :date: 15-Sep-2025
+  :jira_id: '112'
+  :jira_project: FLOR
+  :description: |-
+    Foa Project: Refresh tab access for users with product roles
+- :date: 15-Sep-2025
   :jira_id: '5449'
   :description: |-
      Batch Loader: Return Loader Name records in context for <code>id:</code> and <code>ids:</code> query directives
