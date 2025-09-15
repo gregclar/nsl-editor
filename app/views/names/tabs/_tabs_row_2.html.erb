@@ -37,19 +37,21 @@
       %>
     <% end %>
 
-    <%= render partial: "names/tabs/tab",
-      locals: {
-        first: false,
-        last: true,
-        this_tab: "tab_refresh",
-        link_text: "Refresh",
-        link_id: "name-refresh-tab",
-        link_title: "Refresh the constructed elements of the name or of its children.",
-        tab_index: increment_tab_index,
-        prev_tab: "",
-        next_tab: ""
-      }
-    %>
+    <% if tab_available?(tabs_array, "more_refresh")%>
+      <%= render partial: "names/tabs/tab",
+        locals: {
+          first: false,
+          last: true,
+          this_tab: "tab_refresh",
+          link_text: "Refresh",
+          link_id: "name-refresh-tab",
+          link_title: "Refresh the constructed elements of the name or of its children.",
+          tab_index: increment_tab_index,
+          prev_tab: "",
+          next_tab: ""
+        }
+      %>
+    <% end %>
   <% end %>
 
   <% if @name.duplicate? && can?("names", "update") %>
