@@ -102,11 +102,13 @@ class Search::Loader::Name::FieldRule
     "batch-name:" => { where_clause: "loader_batch_id in (select id from loader_batch where lower(name) like ?)  "},
     "default-batch:" => { where_clause: "loader_batch_id = (select id from loader_batch where lower(name) = ?)  "},
     "id:" => { multiple_values: true,
-               where_clause: "id = ? or parent_id = ? ",
-               multiple_values_where_clause: " id in (?)"},
-    "ids:" => { multiple_values: true,
-                where_clause: " id = ? or parent_id = ?",
-                multiple_values_where_clause: " id in (?)"},
+               where_clause: "id = ? or parent_id = ?
+                              or id = (select parent_id from loader_name my_parent where my_parent.id = ?) 
+                              or parent_id = (select parent_id from loader_name my_sibling where my_sibling.id = ?)",
+               multiple_values_where_clause: "id in (?) or parent_id in (?)
+                              or id in (select parent_id from loader_name my_parent where my_parent.id in (?)) 
+                              or parent_id in (select parent_id from loader_name my_sibling where my_sibling.id in (?))",
+               },
     "raw-id:" => { multiple_values: true,
                    where_clause: "raw_id = ? or parent_raw_id = ? ",
                    multiple_values_where_clause: " raw_id in (?) or parent_raw_id in (?)"},
