@@ -4,6 +4,7 @@ RSpec.describe TabsHelper, type: :helper do
   let(:product1) { instance_double(Product, name: "FOO") }
   let(:product2) { instance_double(Product, name: "BAR") }
   let!(:mock_product_tab_service) { instance_double(Products::ProductTabService) }
+  let!(:mock_product_context_service) { instance_double(Products::ProductContextService, available_contexts: [1, 2]) }
   let(:user) do
     instance_double(
       User,
@@ -15,9 +16,12 @@ RSpec.describe TabsHelper, type: :helper do
   before do
     allow(mock_product_tab_service).to receive(:tab_options_for).and_return({ show_product_name: true, product: product1 })
     tab_service = mock_product_tab_service
+    context_service = mock_product_context_service
     test_user = user
     helper.define_singleton_method(:current_registered_user) { test_user }
     helper.define_singleton_method(:product_tab_service) { tab_service }
+    helper.define_singleton_method(:product_context_service) { context_service }
+    helper.define_singleton_method(:current_context_id) { 1 }
     helper.instance_variable_set(:@tab_index, nil)
     allow(Rails.configuration).to receive(:multi_product_tabs_enabled).and_return(true)
   end
@@ -66,7 +70,6 @@ RSpec.describe TabsHelper, type: :helper do
         allow(helper).to receive(:context_has_multiple_products?).and_return(true)
         allow(helper).to receive(:products_in_current_context).and_return([product1, product2])
 
-        # Mock both products providing the author/edit tab
         author_service1 = instance_double(Products::ProductTabService)
         author_service2 = instance_double(Products::ProductTabService)
 
@@ -154,6 +157,28 @@ RSpec.describe TabsHelper, type: :helper do
     context "when feature flag is off" do
       before do
         allow(Rails.configuration).to receive(:multi_product_tabs_enabled).and_return(false)
+      end
+
+      it "returns true when tab is available" do
+        expect(helper.tab_available?(tabs_array, 'edit')).to be true
+      end
+
+      it "returns true when tab is not available" do
+        expect(helper.tab_available?(tabs_array, 'missing_tab')).to be true
+      end
+
+      it "handles empty tabs array" do
+        expect(helper.tab_available?([], 'edit')).to be true
+      end
+    end
+
+    context "when product contexts are empty" do
+      let!(:mocked_product_context_service) { instance_double(Products::ProductContextService, available_contexts: []) }
+
+      before do
+        product_context_service = mocked_product_context_service
+        helper.define_singleton_method(:product_context_service) { product_context_service }
+        allow(product_context_service).to receive(:available_contexts).and_return([])
       end
 
       it "returns true when tab is available" do

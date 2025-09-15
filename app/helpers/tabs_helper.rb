@@ -48,6 +48,7 @@ module TabsHelper
 
   def tab_available?(tabs_array, tab_name)
     return true unless Rails.configuration.try('multi_product_tabs_enabled')
+    return true if product_context_service.available_contexts.blank?
 
     tabs_array.include?(tab_name)
   end
