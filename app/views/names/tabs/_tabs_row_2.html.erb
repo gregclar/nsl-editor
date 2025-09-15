@@ -21,7 +21,7 @@
       %>
     <% end %>
 
-    <% if NameTag.all.count > 0 && tab_available?(tabs_array, "more_tag")%>
+    <% if NameTag.all.count > 0 && tab_available?(tabs_array, "more_tag") %>
       <%= render partial: "names/tabs/tab",
         locals: {
           first: false,
@@ -37,7 +37,7 @@
       %>
     <% end %>
 
-    <% if tab_available?(tabs_array, "more_refresh")%>
+    <% if tab_available?(tabs_array, "more_refresh") %>
       <%= render partial: "names/tabs/tab",
         locals: {
           first: false,
