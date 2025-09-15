@@ -1,4 +1,8 @@
 - :date: 15-Sep-2025
+  :jira_id: '5449'
+  :description: |-
+     Batch Loader: Return Loader Name records in context for <code>id:</code> and <code>ids:</code> query directives
+- :date: 15-Sep-2025
   :jira_id: '112'
   :jira_project: FLOR
   :description: |-
