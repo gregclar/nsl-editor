@@ -7,7 +7,10 @@
         <div class="form-group">
           <label>Tree
             <%= select_tag("tree_id",
-                           options_from_collection_for_select(Tree.accessible_by(current_ability, :create_draft).where('is_read_only = false'), 'id', 'name'),
+                           options_from_collection_for_select(Tree.accessible_by(current_ability, :create_draft)
+                                                             .where('is_read_only = false')
+                                                             .order('name'),
+                                                             'id', 'name'),
                            {class: 'form-control give-me-focus',
                             required: true,
                             autofocus: true,
