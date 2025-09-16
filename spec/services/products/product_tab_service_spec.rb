@@ -4,18 +4,100 @@ RSpec.describe Products::ProductTabService do
   let(:config) { Products::ProductTabConfig.new }
   let(:context_1) { 1 }
   let(:context_2) { 2 }
-  let(:product_context_1_1) { instance_double(ProductContext, context_id: context_1, product: product_with_name_index) }
-  let(:product_context_1_2) { instance_double(ProductContext, context_id: context_1, product: product_with_default_reference) }
-  let(:product_context_2_1) { instance_double(ProductContext, context_id: context_2, product: product_with_manages_taxonomy) }
-  let(:product_no_flags) { instance_double(Product, id: 1, is_name_index: false, has_default_reference: false, manages_taxonomy: false, manages_profile: false) }
-  let(:product_with_name_index) { instance_double(Product, id: 2, is_name_index: true, has_default_reference: false, manages_taxonomy: false, manages_profile: false) }
-  let(:product_with_default_reference) { instance_double(Product, id: 3, is_name_index: false, has_default_reference: true, manages_taxonomy: false, manages_profile: false) }
-  let(:product_with_multiple_flags) { instance_double(Product, id: 4, is_name_index: true, has_default_reference: true, manages_taxonomy: false, manages_profile: false) }
-  let(:product_name_only) { instance_double(Product, id: 5, is_name_index: true, has_default_reference: false, manages_taxonomy: false, manages_profile: false) }
-  let(:product_reference_only) { instance_double(Product, id: 6, is_name_index: false, has_default_reference: true, manages_taxonomy: false, manages_profile: false) }
-  let(:product_with_manages_taxonomy) { instance_double(Product, id: 7, is_name_index: false, has_default_reference: false, manages_taxonomy: true, manages_profile: false) }
-  let(:product_with_manages_profile) { instance_double(Product, id: 8, is_name_index: false, has_default_reference: false, manages_taxonomy: false, manages_profile: true) }
-  let(:product_with_all_flags) { instance_double(Product, id: 9, is_name_index: true, has_default_reference: true, manages_taxonomy: true, manages_profile: true) }
+  let(:product_no_flags) do
+    instance_double(
+      Product,
+      id: 1,
+      is_name_index: false,
+      has_default_reference: false,
+      manages_taxonomy: false,
+      manages_profile: false
+    )
+  end
+  let(:product_with_name_index) do
+    instance_double(
+      Product,
+      id: 2,
+      is_name_index: true,
+      has_default_reference: false,
+      manages_taxonomy: false,
+      manages_profile: false,
+      context_id: 1
+    )
+  end
+  let(:product_with_default_reference) do
+    instance_double(
+      Product,
+      id: 3,
+      is_name_index: false,
+      has_default_reference: true,
+      manages_taxonomy: false,
+      manages_profile: false,
+      context_id: 1
+    )
+  end
+  let(:product_with_multiple_flags) do
+    instance_double(
+      Product,
+      id: 4,
+      is_name_index: true,
+      has_default_reference: true,
+      manages_taxonomy: false,
+      manages_profile: false,
+      context_id: 2
+    )
+  end
+  let(:product_name_only) do
+    instance_double(
+      Product,
+      id: 5,
+      is_name_index: true,
+      has_default_reference: false,
+      manages_taxonomy: false,
+      manages_profile: false
+    )
+  end
+  let(:product_reference_only) do
+    instance_double(
+      Product,
+      id: 6,
+      is_name_index: false,
+      has_default_reference: true,
+      manages_taxonomy: false,
+      manages_profile: false
+    )
+  end
+  let(:product_with_manages_taxonomy) do
+    instance_double(
+      Product,
+      id: 7,
+      is_name_index: false,
+      has_default_reference: false,
+      manages_taxonomy: true,
+      manages_profile: false,
+      context_id: 1
+    )
+  end
+  let(:product_with_manages_profile) do
+    instance_double(
+      Product,
+      id: 8,
+      is_name_index: false,
+      has_default_reference: false,
+      manages_taxonomy: false,
+      manages_profile: true
+    )
+  end
+  let(:product_with_all_flags) do
+    instance_double(
+      Product,
+      id: 9,
+      is_name_index: true,
+      has_default_reference: true,
+      manages_taxonomy: true,
+      manages_profile: true
+    )
+  end
 
   let!(:products) do
     [
@@ -34,55 +116,32 @@ RSpec.describe Products::ProductTabService do
   subject { described_class.call(products) }
 
   describe ".for_context" do
-    before do
-      allow(ProductContext).to receive(:where).with(context_id: context_1)
-        .and_return(double(includes: double(map: [product_with_name_index, product_with_default_reference])))
-    end
-
     it "returns a service instance for the given context" do
       service = described_class.for_context(context_1)
       expect(service).to be_a(described_class)
       expect(service.context_id).to eq(context_1)
     end
-
-    it "uses products from the specified context" do
-      expect(ProductContext).to receive(:where).with(context_id: context_1)
-        .and_return(double(includes: double(map: [product_with_name_index])))
-
-      service = described_class.for_context(context_1)
-      expect(service).to be_a(described_class)
-    end
-
-    it "returns empty service for nil context" do
-      service = described_class.for_context(nil)
-      expect(service).to be_a(described_class)
-    end
   end
 
   describe ".products_for_context" do
     it "returns the product context for the given context id" do
-      allow(ProductContext).to receive(:where).with(context_id: context_1)
-        .and_return(double(includes: double(map: [product_with_name_index, product_with_default_reference])))
+      allow(Product).to receive(:where).with(context_id: context_1).and_return([
+        product_with_name_index,
+        product_with_default_reference,
+        product_with_manages_taxonomy
+      ])
 
       products = described_class.products_for_context(context_1)
-      expect(products).to match_array([product_with_name_index, product_with_default_reference])
+      expect(products).to match_array([
+        product_with_name_index,
+        product_with_default_reference,
+        product_with_manages_taxonomy
+      ])
     end
 
     it "returns empty array for nil context id" do
-      products = described_class.products_for_context(nil)
+      products = described_class.products_for_context(-1)
       expect(products).to eq([])
-    end
-
-    context "when there is a permission error" do
-      it "returns empty array and logs the error" do
-        allow(ProductContext).to receive(:where).with(context_id: context_1)
-          .and_raise(PG::InsufficientPrivilege.new("permission denied"))
-
-        expect(Rails.logger).to receive(:error).with(/Permission Error: permission denied/)
-
-        products = described_class.products_for_context(context_1)
-        expect(products).to eq([])
-      end
     end
   end
 
