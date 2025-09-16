@@ -1,3 +1,8 @@
+- :date: 16-Sep-2025
+  :jira_id: '119'
+  :jira_project: FLOR
+  :description: |-
+    Foa Project: Remove the use of product_context table and use product's product_context column instead
 - :date: 15-Sep-2025
   :jira_id: '5429'
   :description: |-
