@@ -140,7 +140,7 @@ class User < ActiveRecord::Base
   end
 
   def self.users_not_already_reviewers(batch_review)
-    all.order(:user_name) - batch_review.batch_reviewers.collect { |reviewer| reviewer.user }
+    all.order([:given_name, :family_name]) - batch_review.batch_reviewers.collect { |reviewer| reviewer.user }
   end
 
   def can_be_deleted?
