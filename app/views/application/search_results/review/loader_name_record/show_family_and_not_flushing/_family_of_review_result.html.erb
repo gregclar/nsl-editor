@@ -33,6 +33,9 @@
         <% if search_result.compiler_comments? %>
           <span class="compiler-comment-tag"><%= pluralize(search_result.compiler_comments.size, 'compiler comment') %></span>
         <% end %>
+        <% if search_result.compiler_or_reviewer_comments? %>
+          <span class="total-reviewer-comment-tag"><%= pluralize(search_result.total_compiler_and_reviewer_comments.size, 'total comment') %></span>
+        <% end %>
       <% end %>
     </td>
   </tr>

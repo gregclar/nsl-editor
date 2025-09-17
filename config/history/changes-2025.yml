@@ -1,3 +1,7 @@
+- :date: 18-Sep-2025
+  :jira_id: '5571'
+  :description: |-
+    Batch Review:  Also show total comment count for family header records
 - :date: 17-Sep-2025
   :jira_id: '5575'
   :description: |-
