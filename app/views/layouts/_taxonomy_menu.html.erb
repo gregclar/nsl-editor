@@ -41,7 +41,7 @@
       <% end %>
 
 
-      <% Tree.all.each do |tree| %>
+      <% Tree.all.order('name').each do |tree| %>
         <% if can?(:create_draft, tree) %>
         <li role="presentation" class="divider"></li>
         <li>
