@@ -1,4 +1,8 @@
 - :date: 17-Sep-2025
+  :jira_id: '5429'
+  :description: |-
+    Tree permission changes: Order "Create draft taxonomy" options by tree name
+- :date: 17-Sep-2025
   :jira_id: '5571'
   :description: |-
     Batch Review: Show comments on family header on screen and in print view
