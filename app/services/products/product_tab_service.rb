@@ -10,15 +10,7 @@ module Products
     end
 
     def self.products_for_context(context_id)
-      return [] unless context_id
-
-      ProductContext.where(context_id: context_id)
-        .includes(:product)
-        .map(&:product)
-        .compact
-    rescue PG::InsufficientPrivilege => e
-      Rails.logger.error("Permission Error: #{e.message}")
-      return []
+      Product.where(context_id: context_id)
     end
 
     def initialize(products, config = ProductTabConfig.new, context_id: nil)

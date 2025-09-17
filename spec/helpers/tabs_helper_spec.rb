@@ -1,8 +1,8 @@
 require "rails_helper"
 
 RSpec.describe TabsHelper, type: :helper do
-  let(:product1) { instance_double(Product, name: "FOO") }
-  let(:product2) { instance_double(Product, name: "BAR") }
+  let(:product1) { instance_double(Product, name: "FOO", context_id: 1) }
+  let(:product2) { instance_double(Product, name: "BAR", context_id: 2) }
   let!(:mock_product_tab_service) { instance_double(Products::ProductTabService) }
   let!(:mock_product_context_service) { instance_double(Products::ProductContextService, available_contexts: [1, 2]) }
   let(:user) do
@@ -67,9 +67,6 @@ RSpec.describe TabsHelper, type: :helper do
 
     context 'when context has multiple products providing the same tab' do
       before do
-        allow(helper).to receive(:context_has_multiple_products?).and_return(true)
-        allow(helper).to receive(:products_in_current_context).and_return([product1, product2])
-
         author_service1 = instance_double(Products::ProductTabService)
         author_service2 = instance_double(Products::ProductTabService)
 
@@ -84,16 +81,11 @@ RSpec.describe TabsHelper, type: :helper do
 
       it 'returns product name with default text' do
         result = helper.product_tab_text(:author, 'edit', 'Edit')
-        expect(result).to eq('FOO Edit')
+        expect(result).to eq('Edit')
       end
     end
 
     context 'when context has only one product providing the tab' do
-      before do
-        allow(helper).to receive(:context_has_multiple_products?).and_return(false)
-        allow(helper).to receive(:products_in_current_context).and_return([product1])
-      end
-
       it 'returns only the default text' do
         result = helper.product_tab_text(:author, 'edit', 'Edit')
         expect(result).to eq('Edit')
@@ -101,10 +93,6 @@ RSpec.describe TabsHelper, type: :helper do
     end
 
     context 'when no current context' do
-      before do
-        allow(helper).to receive(:products_in_current_context).and_return([])
-      end
-
       it 'returns only the default text' do
         result = helper.product_tab_text(:author, 'edit', 'Edit')
         expect(result).to eq('Edit')
@@ -113,11 +101,6 @@ RSpec.describe TabsHelper, type: :helper do
 
     context 'when product is nil' do
       let(:tab_options) { { product: nil } }
-
-      before do
-        allow(helper).to receive(:context_has_multiple_products?).and_return(true)
-        allow(helper).to receive(:products_in_current_context).and_return([product1, product2])
-      end
 
       it 'handles nil product gracefully' do
         result = helper.product_tab_text(:author, 'edit', 'Edit')

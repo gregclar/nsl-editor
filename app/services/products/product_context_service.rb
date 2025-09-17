@@ -24,10 +24,9 @@ module Products
     end
 
     def query_product_context
-      ProductContext
-        .includes(:product)
+      products
         .group_by(&:context_id)
-        .transform_values { |contexts| contexts.map(&:product).map(&:name).join('/') }
+        .transform_values { |p| p.map(&:name).join('/') }
         .to_h
         .map do |context_id, context_list|
         {
@@ -40,7 +39,7 @@ module Products
     end
 
     def products_for_context(context_id)
-      Product.for_context(context_id)
+      Product.where(context_id: context_id)
     end
   end
 end
