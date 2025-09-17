@@ -1,4 +1,8 @@
 - :date: 17-Sep-2025
+  :jira_id: '5575'
+  :description: |-
+    Batch Review:  Adding reviewers - sort offered list of reviewers by first name, family name not username
+- :date: 17-Sep-2025
   :jira_id: '5429'
   :description: |-
     Tree permission changes: Order "Create draft taxonomy" options by tree name
