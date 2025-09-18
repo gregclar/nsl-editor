@@ -39,7 +39,7 @@ module Products
     end
 
     def products_for_context(context_id)
-      Product.where(context_id: context_id)
+      Product.where(context_id: context_id).order(:context_sort_order)
     end
   end
 end

@@ -10,7 +10,7 @@ module Products
     end
 
     def self.products_for_context(context_id)
-      Product.where(context_id: context_id)
+      Product.where(context_id: context_id).order(context_sort_order: :asc)
     end
 
     def initialize(products, config = ProductTabConfig.new, context_id: nil)

@@ -73,7 +73,7 @@ class User < ActiveRecord::Base
     product_roles
       .joins(:role, :product)
       .includes(:product, :user_product_roles)
-      .order(Product.arel_table[:name].asc)
+      .order(Product.arel_table[:context_sort_order].asc, Product.arel_table[:name].asc)
       .filter_map(&:product)
       .uniq
   end
