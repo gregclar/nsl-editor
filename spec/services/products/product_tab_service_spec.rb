@@ -126,7 +126,7 @@ RSpec.describe Products::ProductTabService do
   describe ".products_for_context" do
     it "returns the product context for the given context id" do
       relation = instance_double(ActiveRecord::Relation)
-      allow(Product).to receive_message_chain(:where).with(context_id: context_1).and_return(relation)
+      allow(Product).to receive(:where).with(context_id: context_1).and_return(relation)
       allow(relation).to receive(:order).with(context_sort_order: :asc).and_return([
         product_with_name_index,
         product_with_default_reference,
