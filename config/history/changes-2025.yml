@@ -4,6 +4,8 @@
   :description: |-
     Foa Project: Sort the product context in the menu using the product's context_sort_order field
 - :date: 18-Sep-2025
+  :release: true
+- :date: 18-Sep-2025
   :jira_id: '5571'
   :description: |-
     Batch Review:  Also show total comment count for family header records
