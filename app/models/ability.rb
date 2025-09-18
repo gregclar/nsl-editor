@@ -159,9 +159,7 @@ class Ability
 
   def profile_editor(user)
     can :manage, :profile_v2
-    can :manage, Profile::ProfileItem do |profile_item|
-      profile_item.product_item_config.product_id == user.product_from_roles&.id
-    end
+    can :manage, Profile::ProfileItem, product: { product_roles: { user_product_roles: { user_id: user.user_id}}}
     can :create_version, Profile::ProfileItem do |profile_item|
       !profile_item.is_draft?
     end
@@ -171,9 +169,7 @@ class Ability
     can :manage, Profile::ProfileItemReference
     can :manage, Profile::ProfileText
     can :manage, Profile::ProfileItemAnnotation
-    can :manage_profile, Instance do |instance|
-      instance.profile_items.by_product(user.product_from_roles).any?
-    end
+    can :manage_profile, Instance, profile_items: { product_item_config: { product: { product_roles: { user_product_roles: { user_id: user.user_id}}}}}
     can "references", "typeahead_on_citation"
     can "profile_items", :all
     can "profile_item_annotations", :all

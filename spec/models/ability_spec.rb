@@ -10,6 +10,7 @@ RSpec.describe Ability, type: :model do
     allow(session_user).to receive(:with_role?).with('profile-editor').and_return(false)
     allow(session_user).to receive(:with_role?).with('tree-builder').and_return(false)
     allow(session_user).to receive(:with_role?).with('tree-publisher').and_return(false)
+    allow(session_user).to receive(:user_id).and_return(1)
   end
 
   subject { described_class.new(session_user) }
@@ -366,10 +367,18 @@ RSpec.describe Ability, type: :model do
     end
 
     it "can manage published Profile::ProfileItem under a user's product" do
-      profile_item = create(:profile_item)
+      user = create(:user, id: 1)
+
+      product_role = create(:product_role, product: product)
+      create(:user_product_role, user: user, product_role: product_role)
+
+      product_item_config = create(:product_item_config, product: product)
+
+      profile_item = create(:profile_item, product_item_config: product_item_config, is_draft: false)
+
       allow(profile_item).to receive(:published?).and_return(true)
       allow(session_user).to receive(:product_from_roles).and_return(product)
-      allow(profile_item).to receive(:product_item_config).and_return(double("ProductItemConfig", product_id: product.id))
+
       expect(subject.can?(:manage, profile_item)).to eq true
     end
 
@@ -433,8 +442,16 @@ RSpec.describe Ability, type: :model do
     end
 
     it "can manage_profile on instance if not draft and has profile items for product" do
+      user = create(:user, id: 1)
+      product_role = create(:product_role, product: product)
+
+      create(:user_product_role, user: user, product_role: product_role)
+
+      product_item_config = create(:product_item_config, product: product)
       instance = create(:instance, draft: false)
-      allow(instance).to receive_message_chain(:profile_items, :by_product).and_return([double("Product")])
+
+      create(:profile_item, instance: instance, product_item_config: product_item_config, is_draft: false)
+
       expect(subject.can?(:manage_profile, instance)).to eq true
     end
 
