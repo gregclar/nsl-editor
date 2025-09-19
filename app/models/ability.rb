@@ -157,9 +157,13 @@ class Ability
     can "names", "tab_instances_profile_v2"
   end
 
-  def profile_editor(user)
+  def profile_editor(session_user)
+    user_products = session_user.user&.products || []
+
     can :manage, :profile_v2
-    can :manage, Profile::ProfileItem, product: { product_roles: { user_product_roles: { user_id: user.user_id}}}
+    can :manage, Profile::ProfileItem do |profile_item|
+      profile_item.product && user_products.include?(profile_item.product)
+    end
     can :create_version, Profile::ProfileItem do |profile_item|
       !profile_item.is_draft?
     end
@@ -169,7 +173,9 @@ class Ability
     can :manage, Profile::ProfileItemReference
     can :manage, Profile::ProfileText
     can :manage, Profile::ProfileItemAnnotation
-    can :manage_profile, Instance, profile_items: { product_item_config: { product: { product_roles: { user_product_roles: { user_id: user.user_id}}}}}
+    can :manage_profile, Instance do |instance|
+      instance.profile_items.includes([:product]).any? { |item| item.product && user_products.include?(item.product) }
+    end
     can "references", "typeahead_on_citation"
     can "profile_items", :all
     can "profile_item_annotations", :all

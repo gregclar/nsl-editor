@@ -367,13 +367,12 @@ RSpec.describe Ability, type: :model do
     end
 
     it "can manage published Profile::ProfileItem under a user's product" do
-      user = create(:user, id: 1)
+      user = create(:user, id: 1, user_name: session_user.username)
 
       product_role = create(:product_role, product: product)
       create(:user_product_role, user: user, product_role: product_role)
 
       product_item_config = create(:product_item_config, product: product)
-
       profile_item = create(:profile_item, product_item_config: product_item_config, is_draft: false)
 
       allow(profile_item).to receive(:published?).and_return(true)
@@ -442,7 +441,8 @@ RSpec.describe Ability, type: :model do
     end
 
     it "can manage_profile on instance if not draft and has profile items for product" do
-      user = create(:user, id: 1)
+      # Create a user that matches the session_user's username for the user lookup to work
+      user = create(:user, id: 1, user_name: session_user.username)
       product_role = create(:product_role, product: product)
 
       create(:user_product_role, user: user, product_role: product_role)
