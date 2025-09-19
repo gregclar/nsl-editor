@@ -1,3 +1,8 @@
+- :date: 19-Sep-2025
+  :jira_id: '117'
+  :jira_project: FLOR
+  :description: |-
+    Foa Project: Fixup missing edit tab for profile item when foa context is selected
 - :date: 18-Sep-2025
   :jira_id: '119'
   :jira_project: FLOR
