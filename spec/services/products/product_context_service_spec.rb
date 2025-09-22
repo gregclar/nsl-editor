@@ -47,4 +47,38 @@ RSpec.describe Products::ProductContextService do
       end
     end
   end
+
+  describe "#product_with_context" do
+    subject(:service) { described_class.call(products: [product_1, product_2, product_3]) }
+
+    it "returns the correct product for a given context_id" do
+      result = service.product_with_context(1)
+      expect(result).to eq(product_1)
+    end
+
+    it "returns nil if context_id is nil" do
+      result = service.product_with_context(nil)
+      expect(result).to be_nil
+    end
+
+    it "returns nil if no products match the context_id" do
+      result = service.product_with_context(-1)
+      expect(result).to be_nil
+    end
+  end
+
+  describe "#available_contexts" do
+    subject(:service) { described_class.call(products: [product_1, product_2, product_3]) }
+
+    it "returns cached available contexts after first call" do
+      first_call = service.available_contexts
+      second_call = service.available_contexts
+      expect(first_call).to equal(second_call)
+    end
+
+    it "returns an empty array if products are blank" do
+      empty_service = described_class.new(products: [])
+      expect(empty_service.available_contexts).to eq([])
+    end
+  end
 end

@@ -1,3 +1,8 @@
+- :date: 22-Sep-2025
+  :jira_id: '116'
+  :jira_project: FLOR
+  :description: |-
+    Foa Project: Fixup foa copy tab with product context logic
 - :date: 19-Sep-2025
   :jira_id: '117'
   :jira_project: FLOR
