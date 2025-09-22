@@ -10,6 +10,7 @@ RSpec.describe Ability, type: :model do
     allow(session_user).to receive(:with_role?).with('profile-editor').and_return(false)
     allow(session_user).to receive(:with_role?).with('tree-builder').and_return(false)
     allow(session_user).to receive(:with_role?).with('tree-publisher').and_return(false)
+    allow(session_user).to receive(:with_role?).with('name-index-editor').and_return(false)
     allow(session_user).to receive(:user_id).and_return(1)
   end
 
@@ -534,6 +535,77 @@ RSpec.describe Ability, type: :model do
         expect(subject.can?("loader/batch/review/mode", "switch_off")).to eq true
       end
     end
+  end
+
+  describe "#name_index_editor role" do
+    before do
+      allow(session_user).to receive(:with_role?).with('name-index-editor').and_return(true)
+    end
+
+    context "when managing resources" do
+      it "allows managing Author" do
+        expect(subject.can?(:manage, Author)).to eq true
+      end
+
+      it "allows managing Reference" do
+        expect(subject.can?(:manage, Reference)).to eq true
+      end
+
+      it "allows create Instance" do
+        expect(subject.can?(:create, Instance)).to eq true
+      end
+    end
+
+    context "when accessing specific actions" do
+      it "allows all actions on authors" do
+        expect(subject.can?("authors", :all)).to eq true
+      end
+
+      it "allows all actions on comments" do
+        expect(subject.can?("comments", :all)).to eq true
+      end
+
+      it "allows all actions on instances" do
+        expect(subject.can?("instances", :all)).to eq true
+      end
+
+      it "allows copying standalone instances" do
+        expect(subject.can?("instances", "copy_standalone")).to eq true
+      end
+
+      it "allows all actions on instance notes" do
+        expect(subject.can?("instance_notes", :all)).to eq true
+      end
+
+      it "allows accessing the 'new' menu" do
+        expect(subject.can?("menu", "new")).to eq true
+      end
+
+      it "allows all actions on name tag names" do
+        expect(subject.can?("name_tag_names", :all)).to eq true
+      end
+
+      it "allows all actions on names" do
+        expect(subject.can?("names", :all)).to eq true
+      end
+
+      it "allows all actions on name deletions" do
+        expect(subject.can?("names_deletes", :all)).to eq true
+      end
+
+      it "allows all actions on references" do
+        expect(subject.can?("references", :all)).to eq true
+      end
+
+      it "allows all actions on unpublished citation typeaheads" do
+        expect(subject.can?("names/typeaheads/for_unpub_cit", :all)).to eq true
+      end
+
+      it "allows switching off batch review mode" do
+        expect(subject.can?("loader/batch/review/mode", "switch_off")).to eq true
+      end
+    end
+
   end
 end
 

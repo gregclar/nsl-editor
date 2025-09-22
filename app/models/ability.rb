@@ -62,6 +62,7 @@ class Ability
     draft_profile_editor if user.with_role?('draft-profile-editor')
     tree_builder_auth(user) if user.with_role?('tree-builder')
     tree_publisher_auth(user) if user.with_role?('tree-publisher')
+    edit_auth if user.with_role?('name-index-editor')
   end
 
   def user
