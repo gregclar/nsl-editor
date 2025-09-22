@@ -1,4 +1,8 @@
 - :date: 22-Sep-2025
+  :jira_id: '5550'
+  :description: |-
+    Add edit permission for name-index-editor role
+- :date: 22-Sep-2025
   :jira_id: '116'
   :jira_project: FLOR
   :description: |-
