@@ -1,3 +1,8 @@
+- :date: 23-Sep-2025
+  :jira_id: '115'
+  :jira_project: FLOR
+  :description: |-
+    Foa Project: Use product context to offer draft taxonomies in the menu
 - :date: 22-Sep-2025
   :jira_id: '5550'
   :description: |-
