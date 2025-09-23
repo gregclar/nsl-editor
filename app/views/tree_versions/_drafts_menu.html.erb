@@ -1,7 +1,8 @@
 <% if current_context_id && Rails.configuration.try(:multi_product_tabs_enabled) %>
   <%
-    product = Product.with_context_and_tree(current_context_id).first
-    draft_trees = Tree.menu_drafts.where(id: product&.tree_id)
+    draft_trees = Tree.menu_drafts.where(
+      id: Product.with_context_and_tree(current_context_id).select(:tree_id)
+    )
   %>
 <% else %>
   <% draft_trees = Tree.menu_drafts %>
