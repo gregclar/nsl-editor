@@ -21,11 +21,13 @@ module ProductContexts
     def clear_context_session
       session.delete(:current_context_id)
       session.delete(:current_context_name)
+      session.delete(:draft)
     end
 
     def set_context_session(context_id)
       session[:current_context_id] = context_id.to_i
       session[:current_context_name] = context_name_for_id(context_id)
+      session.delete(:draft)
     end
 
     def permitted_params
