@@ -1,4 +1,9 @@
 - :date: 24-Sep-2025
+  :jira_id: '115'
+  :jira_project: FLOR
+  :description: |-
+    Foa Project: Use product context when creating a draft taxonomy
+- :date: 24-Sep-2025
   :jira_id: '5429'
   :description: |-
     Tree permissions: Refer to the user_product_role_v instead of separate tables in the ability.rb file to avoid N+1 queries
