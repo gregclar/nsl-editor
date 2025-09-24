@@ -49,6 +49,10 @@ class TreeVersion < ActiveRecord::Base
            foreign_key: "tree_version_id",
            class_name: "TreeVersionElement"
 
+  has_many :user_product_role_vs,
+           through: :tree
+
+
   before_save :stop_if_read_only
 
   # Returns a TreeVersionElement for this TreeVersion which contains the name
