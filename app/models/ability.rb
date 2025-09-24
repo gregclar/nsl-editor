@@ -349,23 +349,22 @@ class Ability
   def tree_publisher_auth(session_user)
     can "menu", "tree"
     can "trees/workspaces/current", "toggle"
-    can :toggle_draft, Tree, products: { product_roles: { user_product_roles: { user_id:session_user.user_id} }}
+    can :toggle_draft, Tree, user_product_role_vs: { user_id:session_user.user_id }
     can 'tree_versions', 'edit_draft'
-    can :edit, Tree, products: { product_roles: { user_product_roles: { user_id:session_user.user_id} }}
-    can :edit, TreeVersion, tree: {products: { product_roles: { user_product_roles: { user_id:session_user.user_id}}}}
+    can :edit, TreeVersion, tree: {user_product_role_vs: { user_id:session_user.user_id }}
 
     can 'tree_versions', 'update_draft' # display the update_draft form
-    can :update_draft, TreeVersion, tree: {products: { product_roles: { user_product_roles: { user_id:session_user.user_id}}}}
-    can :update_draft, Tree::DraftVersion, tree: {products: { product_roles: { user_product_roles: { user_id:session_user.user_id}}}}
+    can :update_draft, TreeVersion, tree: {user_product_role_vs: { user_id:session_user.user_id }}
+    can :update_draft, Tree::DraftVersion, tree: {user_product_role_vs: { user_id:session_user.user_id }}
 
     can 'tree_versions', 'form_to_publish' # display the publish draft form
     can 'tree_versions', 'publish' # call the action
-    can :publish, TreeVersion, tree: {products: { product_roles: { user_product_roles: { user_id:session_user.user_id}}}}
+    can :publish, TreeVersion, tree: {user_product_role_vs: { user_id:session_user.user_id }}
 
     can 'tree_versions', 'new_draft' # display the new draft form
     can 'tree_versions', 'create_draft' # display the new draft form
-    can :set_workspace, TreeVersion, tree: {products: { product_roles: { user_product_roles: { user_id:session_user.user_id}}}}
-    can :create_draft, Tree, products: { product_roles: { user_product_roles: { user_id:session_user.user_id} }}
+    can :set_workspace, TreeVersion, tree: {user_product_role_vs: { user_id:session_user.user_id }}
+    can :create_draft, Tree, user_product_role_vs: { user_id:session_user.user_id }
     can "instances", "tab_classification"
 
     run_reports_on_a_draft_tree(session_user)
@@ -375,61 +374,63 @@ class Ability
   def tree_builder_auth(session_user)
     can "menu", "tree"
     can "trees/workspaces/current", "toggle"
-    can :toggle_draft, Tree, products: { product_roles: { user_product_roles: { user_id:session_user.user_id} }}
-    can :set_workspace, TreeVersion, tree: {products: { product_roles: { user_product_roles: { user_id:session_user.user_id}}}}
+    can :toggle_draft, Tree, user_product_role_vs: { user_id:session_user.user_id }
+    can :set_workspace, TreeVersion, tree: {user_product_role_vs: { user_id:session_user.user_id }}
+
     can "classification", "place"
     can "instances", "tab_classification"
     # Note: update_comment also handles what looks to the user like insert and delete comment
     can "trees", "update_comment"
-    can :update_comment, TreeVersion, tree: {products: { product_roles: { user_product_roles: { user_id:session_user.user_id}}}}
+    can :update_comment, TreeVersion, tree: {user_product_role_vs: { user_id:session_user.user_id }}
+
     # Note: update_distribution also handles what looks to the user like insert and delete distribution
     can "trees", "update_distribution"
-    can :update_distribution, TreeVersion, tree: {products: { product_roles: { user_product_roles: { user_id:session_user.user_id}}}}
+    can :update_distribution, TreeVersion, tree: {user_product_role_vs: { user_id:session_user.user_id }}
 
     can "names/typeaheads/for_workspace_parent_name", :all
-    can :names_typeahead_for_workspace_parent, TreeVersion, tree: {products: { product_roles: { user_product_roles: { user_id:session_user.user_id}}}}
+    can :names_typeahead_for_workspace_parent, TreeVersion, tree: {user_product_role_vs: { user_id:session_user.user_id }}
 
     can "trees", "update_tree_parent"
-    can :update_tree_parent, TreeVersion, tree: {products: { product_roles: { user_product_roles: { user_id:session_user.user_id}}}}
+    can :update_tree_parent, TreeVersion, tree: {user_product_role_vs: { user_id:session_user.user_id }}
 
     can "trees", "update_excluded"
-    can :update_excluded, TreeVersion, tree: {products: { product_roles: { user_product_roles: { user_id:session_user.user_id}}}}
+    can :update_excluded, TreeVersion, tree: {user_product_role_vs: { user_id:session_user.user_id }}
 
     can "trees", "replace_placement"
-    can :replace_placement, TreeVersion, tree: {products: { product_roles: { user_product_roles: { user_id:session_user.user_id}}}}
+    can :replace_placement, TreeVersion, tree: {user_product_role_vs: { user_id:session_user.user_id }}
 
     can "trees", "remove_name_placement"
-    can :remove_name_placement, TreeVersion, tree: {products: { product_roles: { user_product_roles: { user_id:session_user.user_id}}}}
+    can :remove_name_placement, TreeVersion, tree: {user_product_role_vs: { user_id:session_user.user_id }}
 
     can "trees", "place_name"
-    can :place_name, TreeVersion, tree: {products: { product_roles: { user_product_roles: { user_id:session_user.user_id}}}}
+    can :place_name, TreeVersion, tree: {user_product_role_vs: { user_id:session_user.user_id }}
 
     run_reports_on_a_draft_tree(session_user)
   end
 
   def run_reports_on_a_draft_tree(session_user)
     can "trees", "reports"
-    can :reports, TreeVersion, tree: {products: { product_roles: { user_product_roles: { user_id:session_user.user_id}}}}
+    can :reports, TreeVersion, tree: {user_product_role_vs: { user_id:session_user.user_id }}
 
     can "trees", "show_cas"
-    can :show_cas, TreeVersion, tree: {products: { product_roles: { user_product_roles: { user_id:session_user.user_id}}}}
+    can :show_cas, TreeVersion, tree: {user_product_role_vs: { user_id:session_user.user_id }}
 
     can "trees", "run_cas"
-    can :run_cas, TreeVersion, tree: {products: { product_roles: { user_product_roles: { user_id:session_user.user_id}}}}
+    can :run_cas, TreeVersion, tree: {user_product_role_vs: { user_id:session_user.user_id }}
 
     can "trees", "show_diff"
-    can :show_diff, TreeVersion, tree: {products: { product_roles: { user_product_roles: { user_id:session_user.user_id}}}}
+    can :show_diff, TreeVersion, tree: {user_product_role_vs: { user_id:session_user.user_id }}
 
     can "trees", "run_diff"
-    can :run_diff, TreeVersion, tree: {products: { product_roles: { user_product_roles: { user_id:session_user.user_id}}}}
+    can :run_diff, TreeVersion, tree: {user_product_role_vs: { user_id:session_user.user_id }}
 
     can "trees", "show_valrep"
-    can :show_valrep, TreeVersion, tree: {products: { product_roles: { user_product_roles: { user_id:session_user.user_id}}}}
+    can :show_valrep, TreeVersion, tree: {user_product_role_vs: { user_id:session_user.user_id }}
 
     can "trees", "run_valrep"
-    can :run_valrep, TreeVersion, tree: {products: { product_roles: { user_product_roles: { user_id:session_user.user_id}}}}
+    can :run_valrep, TreeVersion, tree: {user_product_role_vs: { user_id:session_user.user_id }}
 
     can "trees", "update_synonymy_by_instance"
-    can :update_synonymy_by_instance, TreeVersion, tree: {products: { product_roles: { user_product_roles: { user_id:session_user.user_id}}}}
+    can :update_synonymy_by_instance, TreeVersion, tree: {user_product_role_vs: { user_id:session_user.user_id }}
   end
 end

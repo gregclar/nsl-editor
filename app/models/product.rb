@@ -48,6 +48,7 @@ class Product < ApplicationRecord
   has_many :profile_items, through: :product_item_configs, class_name: 'Profiles::ProfileItem'
   has_many :product_roles, class_name: "Product::Role"
   has_many :user_product_roles, class_name: "User::ProductRole", through: :product_roles
+  has_many :user_product_role_vs
 
   validates :name, presence: true
 

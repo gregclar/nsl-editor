@@ -47,6 +47,7 @@ class User < ActiveRecord::Base
   has_many :product_roles, through: :user_product_roles
   has_many :products, through: :product_roles
   has_many :roles, through: :product_roles
+  has_many :user_product_role_vs
 
   before_create :set_audit_fields, :force_lower_case_user_name
   before_update :set_updated_by
