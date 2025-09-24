@@ -3,7 +3,7 @@
     <% if current_context_id && Rails.configuration.try(:multi_product_tabs_enabled) %>
       <%
         available_trees = Tree.accessible_by(current_ability, :create_draft)
-          .where(id: Product.with_context_and_tree(current_context_id).select(:tree_id))
+          .joins(:products).where(products: { context_id: current_context_id })
       %>
     <% else %>
       <%
