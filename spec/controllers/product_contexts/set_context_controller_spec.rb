@@ -32,6 +32,12 @@ RSpec.describe ProductContexts::SetContextController, type: :controller do
       expect(session[:current_context_name]).to eq("Test Context")
     end
 
+    it "clears any existing draft in the session" do
+      session[:draft] = { id: 123 }
+      post_create
+      expect(session[:draft]).to be_nil
+    end
+
     it "redirects to the previous page when HTTP_REFERER is set" do
       request.env["HTTP_REFERER"] = "/previous_page"
       post_create
@@ -55,6 +61,7 @@ RSpec.describe ProductContexts::SetContextController, type: :controller do
         post_create
         expect(session[:current_context_id]).to be_nil
         expect(session[:current_context_name]).to be_nil
+        expect(session[:draft]).to be_nil
       end
     end
 

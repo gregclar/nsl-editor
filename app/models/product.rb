@@ -59,4 +59,8 @@ class Product < ApplicationRecord
       .joins("INNER JOIN tree_element ON tree_element.id = tree_version_element.tree_element_id")
       .where("tree_element.id = ?", tree_element.id)
   end
+
+  scope :with_context_and_tree, ->(context_id) {
+    where(context_id: context_id).where.not(tree_id: nil)
+  }
 end
