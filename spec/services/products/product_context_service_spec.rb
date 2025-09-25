@@ -7,6 +7,8 @@ RSpec.describe Products::ProductContextService do
 
   subject(:service) { described_class.new(products: [product_1, product_2, product_3]) }
 
+  before { allow(Rails.configuration).to receive(:multi_product_tabs_enabled).and_return(true)}
+
   describe ".initialize" do
     it "sets products" do
       expect(service.products).to eq([product_1, product_2, product_3])
@@ -80,5 +82,17 @@ RSpec.describe Products::ProductContextService do
       empty_service = described_class.new(products: [])
       expect(empty_service.available_contexts).to eq([])
     end
+
+    context "when multi_product_tabs_enabled is false" do
+      before do
+        allow(Rails.configuration).to receive(:multi_product_tabs_enabled).and_return(false)
+      end
+
+      it "returns product contexts if products are present" do
+        expect(service.available_contexts).to eq([])
+        expect(service.available_contexts.length).to eq(0)
+      end
+    end
   end
+
 end

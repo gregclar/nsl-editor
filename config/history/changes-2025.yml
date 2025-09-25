@@ -1,3 +1,8 @@
+- :date: 25-Sep-2025
+  :jira_id: '115'
+  :jira_project: FLOR
+  :description: |-
+    Foa Project: Add a guard using the multi_product_tabs_enabled flag to the product context service
 - :date: 24-Sep-2025
   :jira_id: '115'
   :jira_project: FLOR
