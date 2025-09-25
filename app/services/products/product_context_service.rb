@@ -13,7 +13,11 @@ module Products
     end
 
     def available_contexts
-      @available_contexts ||= products.blank? ? [] : product_contexts
+      @available_contexts ||= if Rails.configuration.try(:multi_product_tabs_enabled)
+        products.blank? ? [] : product_contexts
+      else
+        []
+      end
     end
 
     def product_with_context(context_id)

@@ -124,6 +124,7 @@ RSpec.describe Products::ProductTabService do
   end
 
   describe ".products_for_context" do
+    before { allow(Rails.configuration).to receive(:multi_product_tabs_enabled).and_return(true) }
     it "returns the product context for the given context id" do
       relation = instance_double(ActiveRecord::Relation)
       allow(Product).to receive(:where).with(context_id: context_1).and_return(relation)
@@ -144,6 +145,14 @@ RSpec.describe Products::ProductTabService do
     it "returns empty array for nil context id" do
       products = described_class.products_for_context(-1)
       expect(products).to eq([])
+    end
+
+    context "when multi_product_tabs_enabled is false" do
+      before { allow(Rails.configuration).to receive(:multi_product_tabs_enabled).and_return(false) }
+
+      it "returns Product.none (empty array)" do
+        expect(described_class.products_for_context(context_1)).to eq([])
+      end
     end
   end
 
