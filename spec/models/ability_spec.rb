@@ -182,12 +182,11 @@ RSpec.describe Ability, type: :model do
     context 'when updating references' do
       let(:reference) { FactoryBot.create(:reference) }
       let(:product) { FactoryBot.create(:product) }
+      let(:profile_item_reference_query) { double('profile_item_reference_query') }
 
       it 'can update references with no instances and matching profile item reference' do
         allow(reference).to receive(:instances).and_return([])
 
-        # Mock the Profile::ProfileItemReference query
-        profile_item_reference_query = double('profile_item_reference_query')
         allow(Profile::ProfileItemReference).to receive(:where).with(reference_id: reference.id).and_return(profile_item_reference_query)
         allow(profile_item_reference_query).to receive(:joins).with(profile_item: :product_item_config).and_return(profile_item_reference_query)
         allow(profile_item_reference_query).to receive(:where).with("product_item_configs_profile_item.product_id = ?", product.id).and_return(profile_item_reference_query)
