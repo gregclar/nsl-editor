@@ -1,3 +1,8 @@
+- :date: 29-Sep-2025
+  :jira_id: '127'
+  :jira_project: FLOR
+  :description: |-
+    Foa Project: Refactor ability logic for name index editor and update reference tabs permissions
 - :date: 25-Sep-2025
   :jira_id: '115'
   :jira_project: FLOR
