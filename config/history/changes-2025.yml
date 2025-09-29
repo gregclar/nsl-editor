@@ -1,4 +1,8 @@
 - :date: 29-Sep-2025
+  :jira_id: '5586'
+  :description: |-
+    Batch Loader: Allow batch loaders to see reviewer comments and add their own comments
+- :date: 29-Sep-2025
   :jira_id: '127'
   :jira_project: FLOR
   :description: |-
