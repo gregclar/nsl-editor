@@ -525,9 +525,9 @@ having count(*) > 2
               from name_Type nt
             where name.name_type_id       = nt.id
        and nt.scientific))"},
-    "partly:" => { where_clause: "partly is not null",
+       "partly:" => { where_clause: "partly = 'p.p.' or publ_partly = 'p.p.' or synonym_type like 'pro parte%'",
                    takes_no_arg: true},
-    "not-partly:" => { where_clause: "partly is null",
+       "not-partly:" => { where_clause: "partly != 'p.p.' and publ_partly != 'p.p' and synonym_type not like 'pro parte%'",
                        takes_no_arg: true},
     "publ-partly:" => { where_clause: "publ_partly is not null",
                             takes_no_arg: true},

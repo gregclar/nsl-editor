@@ -11,6 +11,12 @@
                           query_string: "family: #{@loader_name.family}"),
                title:"Query the family",class:'blue')} %>
 <%= render partial: 'detail_line', locals: {label: 'Rank', info: "#{@loader_name.rank}"} %>
+<%= render partial: 'detail_line', locals: {label: 'Record Type', info: "#{@loader_name.record_type}"} %>
+<% if @loader_name.partly? %>
+  <%= render partial: 'detail_line', locals: {label: 'Synonym Type', info: "#{@loader_name.synonym_type}"} %>
+  <%= render partial: 'detail_line', locals: {label: 'Partly', info: "#{@loader_name.partly}"} %>
+  <%= render partial: 'detail_line', locals: {label: 'Publ Partly', info: "#{@loader_name.publ_partly}"} %>
+<% end %>
 <%= divider %>
 
 <%= render partial: 'loader/names/review/tabs/common/vote_and_comments', locals: {scope: 'unrestricted'} %>
