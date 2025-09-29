@@ -62,7 +62,7 @@ class Ability
     draft_profile_editor if user.with_role?('draft-profile-editor')
     tree_builder_auth(user) if user.with_role?('tree-builder')
     tree_publisher_auth(user) if user.with_role?('tree-publisher')
-    edit_auth if user.with_role?('name-index-editor')
+    name_index_editor(user) if user.with_role?('name-index-editor')
   end
 
   def user
@@ -100,8 +100,11 @@ class Ability
       profile_item_annotation.profile_item.is_draft?
     end
     can :create, Reference
-    can :update, Reference do |reference|
-      reference.instances.blank?
+    can :update, Reference do |reference, product_of_selected_context|
+      reference.instances.blank? &&
+      Profile::ProfileItemReference.where(reference_id: reference.id)
+        .joins(profile_item: :product_item_config)
+        .where("product_item_configs_profile_item.product_id = ?", product_of_selected_context.id).any?
     end
     can "authors", :all
     can "instances", [
@@ -210,6 +213,36 @@ class Ability
     can "instances", "typeahead_for_synonymy"
   end
 
+  def name_index_editor(user)
+    can :manage,              Author
+    can [:create, :read, :destroy], Reference
+    can :update, Reference do |reference, product_of_selected_context|
+      if product_of_selected_context.nil? || product_of_selected_context.reference_id.blank?
+        true
+      else
+        false
+      end
+    end
+    can [
+      :create,
+      :edit,
+      :update,
+      :destroy
+    ], Instance
+    can "authors",            :all
+    can "comments",           :all
+    can "instances",          :all
+    can "instances",          "copy_standalone"
+    can "instance_notes",     :all
+    can "menu",               "new"
+    can "name_tag_names",     :all
+    can "names",              :all
+    can "names_deletes",      :all
+    can "references",         :all
+    can "names/typeaheads/for_unpub_cit", :all
+    can "loader/batch/review/mode", "switch_off"
+  end
+
   def basic_auth_1
     can "application",        "set_include_common_cultivars"
     can "authors",            "tab_show_1"
@@ -241,7 +274,7 @@ class Ability
 
   def edit_auth
     can :manage,              Author
-    can :manage,              Reference
+    can :manage, Reference
     can [
       :create,
       :edit,

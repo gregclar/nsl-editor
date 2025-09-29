@@ -179,16 +179,45 @@ RSpec.describe Ability, type: :model do
       expect(subject.can?(:create, Reference)).to eq true
     end
 
-    it 'can update references with no instances' do
-      reference = FactoryBot.create(:reference)
-      allow(reference).to receive(:instances).and_return([])
-      expect(subject.can?(:update, reference)).to eq true
-    end
+    context 'when updating references' do
+      let(:reference) { FactoryBot.create(:reference) }
+      let(:product) { FactoryBot.create(:product) }
+      let(:profile_item_reference_query) { double('profile_item_reference_query') }
 
-    it 'cannot update references with instances' do
-      reference = FactoryBot.create(:reference)
-      allow(reference).to receive(:instances).and_return([FactoryBot.create(:instance)])
-      expect(subject.can?(:update, reference)).to eq false
+      it 'can update references with no instances and matching profile item reference' do
+        allow(reference).to receive(:instances).and_return([])
+
+        allow(Profile::ProfileItemReference).to receive(:where).with(reference_id: reference.id).and_return(profile_item_reference_query)
+        allow(profile_item_reference_query).to receive(:joins).with(profile_item: :product_item_config).and_return(profile_item_reference_query)
+        allow(profile_item_reference_query).to receive(:where).with("product_item_configs_profile_item.product_id = ?", product.id).and_return(profile_item_reference_query)
+        allow(profile_item_reference_query).to receive(:any?).and_return(true)
+
+        expect(subject.can?(:update, reference, product)).to eq true
+      end
+
+      it 'cannot update references with instances even if profile item reference exists' do
+        allow(reference).to receive(:instances).and_return([FactoryBot.create(:instance)])
+
+        profile_item_reference_query = double('profile_item_reference_query')
+        allow(Profile::ProfileItemReference).to receive(:where).with(reference_id: reference.id).and_return(profile_item_reference_query)
+        allow(profile_item_reference_query).to receive(:joins).with(profile_item: :product_item_config).and_return(profile_item_reference_query)
+        allow(profile_item_reference_query).to receive(:where).with("product_item_configs_profile_item.product_id = ?", product.id).and_return(profile_item_reference_query)
+        allow(profile_item_reference_query).to receive(:any?).and_return(true)
+
+        expect(subject.can?(:update, reference, product)).to eq false
+      end
+
+      it 'cannot update references when no matching profile item reference exists' do
+        allow(reference).to receive(:instances).and_return([])
+
+        profile_item_reference_query = double('profile_item_reference_query')
+        allow(Profile::ProfileItemReference).to receive(:where).with(reference_id: reference.id).and_return(profile_item_reference_query)
+        allow(profile_item_reference_query).to receive(:joins).with(profile_item: :product_item_config).and_return(profile_item_reference_query)
+        allow(profile_item_reference_query).to receive(:where).with("product_item_configs_profile_item.product_id = ?", product.id).and_return(profile_item_reference_query)
+        allow(profile_item_reference_query).to receive(:any?).and_return(false)
+
+        expect(subject.can?(:update, reference, product)).to eq false
+      end
     end
 
     it 'can access references actions' do
@@ -547,12 +576,39 @@ RSpec.describe Ability, type: :model do
         expect(subject.can?(:manage, Author)).to eq true
       end
 
-      it "allows managing Reference" do
-        expect(subject.can?(:manage, Reference)).to eq true
+      it "allows creating, reading, and destroying Reference" do
+        expect(subject.can?(:create, Reference)).to eq true
+        expect(subject.can?(:read, Reference)).to eq true
+        expect(subject.can?(:destroy, Reference)).to eq true
       end
 
-      it "allows create Instance" do
+      it "allows creating, editing, updating, and destroying Instance" do
         expect(subject.can?(:create, Instance)).to eq true
+        expect(subject.can?(:edit, Instance)).to eq true
+        expect(subject.can?(:update, Instance)).to eq true
+        expect(subject.can?(:destroy, Instance)).to eq true
+      end
+    end
+
+    context "when updating references" do
+      it "allows updating reference when product_of_selected_context is nil" do
+        reference = FactoryBot.create(:reference)
+        expect(subject.can?(:update, reference, nil)).to eq true
+      end
+
+      it "allows updating reference when product_of_selected_context has blank reference_id" do
+        reference = FactoryBot.create(:reference)
+        product_context = double('product_context', reference_id: nil)
+        expect(subject.can?(:update, reference, product_context)).to eq true
+
+        product_context = double('product_context', reference_id: '')
+        expect(subject.can?(:update, reference, product_context)).to eq true
+      end
+
+      it "does not allow updating reference when product_of_selected_context has reference_id" do
+        reference = FactoryBot.create(:reference)
+        product_context = double('product_context', reference_id: 123)
+        expect(subject.can?(:update, reference, product_context)).to eq false
       end
     end
 
