@@ -49,7 +49,7 @@
         <% all_trees = Tree.all %>
       <% end %>
 
-      <% all_trees.order('name').each do |tree| %>
+      <% all_trees.includes([:user_product_role_vs]).order('name').each do |tree| %>
         <% if can?(:create_draft, tree) %>
         <li role="presentation" class="divider"></li>
         <li>

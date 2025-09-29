@@ -362,6 +362,7 @@ class Ability
     can "loader/batch/bulk",           :all
     can "loader/batch/job_lock",       :all
     can "menu",                        "batch"
+    can "loader/name/review/comments", :all
   end
 
   def loader_2_tab_auth
