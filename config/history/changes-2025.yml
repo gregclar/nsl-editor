@@ -1,4 +1,8 @@
 - :date: 30-Sep-2025
+  :jira_id: '5590'
+  :description: |-
+    Batch Loader: Allow conversion from synonym to misapplication and vice versa
+- :date: 30-Sep-2025
   :jira_id: '5588'
   :description: |-
     Batch Load and Review: Show misapp and pro parte data on web and print outputs consistently
