@@ -12,7 +12,15 @@
   <%= "#{search_result.full_name}" %>
   <%= "<i>p.p.</i>".html_safe if search_result.partly? %>
 <% end %>
+
 </span>
+
+<% if search_result.try('parent').try('no_further_processing?') %>
+    <span class="flag exclude-from-further-processing" title='No further processing flag of parent set'>NFP via parent</span>
+<% elsif search_result.no_further_processing? %>
+    <span class="flag exclude-from-further-processing" title='No further processing flag set'>NFP</span>
+<% end %>
+
 
 <% if search_result.votable? %>
   <% search_result.name_review_votes.each do |vote| %>

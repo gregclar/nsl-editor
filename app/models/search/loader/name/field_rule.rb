@@ -579,7 +579,16 @@ having count(*) > 2
     "hybrid-flag:" => { where_clause: "hybrid_flag like ?"},
     "no-hybrid-flag:" => { where_clause: "hybrid_flag is null",
                            takes_no_arg: true},
-    "no-further-processing:" => { where_clause: " no_further_processing or exists (select null from loader_name kids where kids.parent_id = loader_name.id and kids.no_further_processing) or exists (select null from loader_name pa where pa.id = loader_name.parent_id and pa.no_further_processing)"},
+    "no-further-processing:" => { where_clause: " no_further_processing
+                                  or exists (select null
+                                               from loader_name kids
+                                              where kids.parent_id = loader_name.id
+                                                and kids.no_further_processing)
+                                  or exists (select null
+                                               from loader_name pa
+                                              where pa.id = loader_name.parent_id
+                                                and pa.no_further_processing)",
+                           takes_no_arg: true},
     "isonym:" => { where_clause: "isonym is not null"},
     "orth-var:" => { where_clause: "name_status like 'orth%'"},
     "name-status:" => { where_clause: "name_status like ?",
