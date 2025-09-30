@@ -1,4 +1,8 @@
 - :date: 30-Sep-2025
+  :jira_id: '5588'
+  :description: |-
+    Batch Load and Review: Fix doco for partly: and not-partly: searches, handle null values correctly in the queries
+- :date: 30-Sep-2025
   :jira_id: '5590'
   :description: |-
     Batch Loader: Allow conversion from synonym to misapplication and vice versa
