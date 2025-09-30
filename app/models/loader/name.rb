@@ -246,6 +246,12 @@ class Loader::Name < ActiveRecord::Base
     record_type == "synonym"
   end
 
+  def partly?
+    publ_partly == 'p.p.' ||
+      partly == 'p.p.' ||
+      synonym_type&.match(/pro parte/)
+  end
+
   def misapplied?
     record_type == "misapplied"
   end
