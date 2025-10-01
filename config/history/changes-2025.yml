@@ -1,4 +1,8 @@
 - :date: 01-Oct-2025
+  :jira_id: '5581'
+  :description: |-
+    Batch Loading: Allow user to choose batch on Instance Loader 2 tab
+- :date: 01-Oct-2025
   :jira_id: '5591'
   :description: |-
     Batch Review: Show NFP status of loader name records to batch reviewers
