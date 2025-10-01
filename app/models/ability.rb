@@ -56,13 +56,16 @@ class Ability
     batch_loader_auth if user.batch_loader?
     loader_2_tab_auth if user.loader_2_tab_loader?
 
+    not_name_index = user.product_from_context.nil? || !user.product_from_context&.is_name_index?
+    is_name_index  = user.product_from_context.nil? || user.product_from_context&.is_name_index?
+
     # NOTES: Broader permissions come first
-    draft_editor(user) if user.with_role?('draft-editor')
-    profile_editor(user) if user.with_role?('profile-editor')
-    draft_profile_editor if user.with_role?('draft-profile-editor')
+    draft_editor(user) if user.with_role?('draft-editor') && not_name_index
+    profile_editor(user) if user.with_role?('profile-editor') && not_name_index
+    draft_profile_editor if user.with_role?('draft-profile-editor') && not_name_index
     tree_builder_auth(user) if user.with_role?('tree-builder')
     tree_publisher_auth(user) if user.with_role?('tree-publisher')
-    name_index_editor(user) if user.with_role?('name-index-editor')
+    name_index_editor(user) if user.with_role?('name-index-editor') && is_name_index
   end
 
   def user
@@ -100,11 +103,11 @@ class Ability
       profile_item_annotation.profile_item.is_draft?
     end
     can :create, Reference
-    can :update, Reference do |reference, product_of_selected_context|
+    can :update, Reference do |reference|
       reference.instances.blank? &&
-      Profile::ProfileItemReference.where(reference_id: reference.id)
+      (user.product_from_context.nil? || Profile::ProfileItemReference.where(reference_id: reference.id)
         .joins(profile_item: :product_item_config)
-        .where("product_item_configs_profile_item.product_id = ?", product_of_selected_context.id).any?
+        .where("product_item_configs_profile_item.product_id = ?", user.product_from_context&.id).any?)
     end
     can "authors", :all
     can "instances", [
@@ -159,6 +162,7 @@ class Ability
     can "instances", "tab_unpublished_citation_for_profile_v2"
     can "names/typeaheads/for_unpub_cit", "index"
     can "names", "tab_instances_profile_v2"
+    can "references", "tab_new_instance"
   end
 
   def profile_editor(session_user)
@@ -216,19 +220,8 @@ class Ability
   def name_index_editor(user)
     can :manage,              Author
     can [:create, :read, :destroy], Reference
-    can :update, Reference do |reference, product_of_selected_context|
-      if product_of_selected_context.nil? || product_of_selected_context.reference_id.blank?
-        true
-      else
-        false
-      end
-    end
-    can [
-      :create,
-      :edit,
-      :update,
-      :destroy
-    ], Instance
+    can :update, Reference
+    can [:create, :edit, :update, :destroy], Instance
     can "authors",            :all
     can "comments",           :all
     can "instances",          :all

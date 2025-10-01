@@ -12,6 +12,7 @@ RSpec.describe Ability, type: :model do
     allow(session_user).to receive(:with_role?).with('tree-publisher').and_return(false)
     allow(session_user).to receive(:with_role?).with('name-index-editor').and_return(false)
     allow(session_user).to receive(:user_id).and_return(1)
+    allow(session_user).to receive(:product_from_context).and_return(nil)
   end
 
   subject { described_class.new(session_user) }
@@ -67,12 +68,36 @@ RSpec.describe Ability, type: :model do
   end
 
   describe "#draft_profile_editor role" do
+    let(:product) { FactoryBot.create(:product, is_name_index: false) }
+
     before do
       allow(session_user).to receive(:with_role?).with('draft-profile-editor').and_return(true)
+      allow(session_user).to receive(:product_from_context).and_return(product)
+      allow(product).to receive(:is_name_index?).and_return(false)
     end
 
     it 'can manage profile_v2' do
       expect(subject.can?(:manage, :profile_v2)).to eq true
+    end
+
+    context 'when product_from_context is nil' do
+      before do
+        allow(session_user).to receive(:product_from_context).and_return(nil)
+      end
+
+      it 'can still manage profile_v2' do
+        expect(subject.can?(:manage, :profile_v2)).to eq true
+      end
+    end
+
+    context 'when product is a name index' do
+      before do
+        allow(product).to receive(:is_name_index?).and_return(true)
+      end
+
+      it 'cannot manage profile_v2' do
+        expect(subject.can?(:manage, :profile_v2)).to eq false
+      end
     end
 
     it 'can manage draft instances' do
@@ -181,7 +206,6 @@ RSpec.describe Ability, type: :model do
 
     context 'when updating references' do
       let(:reference) { FactoryBot.create(:reference) }
-      let(:product) { FactoryBot.create(:product) }
       let(:profile_item_reference_query) { double('profile_item_reference_query') }
 
       it 'can update references with no instances and matching profile item reference' do
@@ -192,7 +216,7 @@ RSpec.describe Ability, type: :model do
         allow(profile_item_reference_query).to receive(:where).with("product_item_configs_profile_item.product_id = ?", product.id).and_return(profile_item_reference_query)
         allow(profile_item_reference_query).to receive(:any?).and_return(true)
 
-        expect(subject.can?(:update, reference, product)).to eq true
+        expect(subject.can?(:update, reference)).to eq true
       end
 
       it 'cannot update references with instances even if profile item reference exists' do
@@ -204,7 +228,7 @@ RSpec.describe Ability, type: :model do
         allow(profile_item_reference_query).to receive(:where).with("product_item_configs_profile_item.product_id = ?", product.id).and_return(profile_item_reference_query)
         allow(profile_item_reference_query).to receive(:any?).and_return(true)
 
-        expect(subject.can?(:update, reference, product)).to eq false
+        expect(subject.can?(:update, reference)).to eq false
       end
 
       it 'cannot update references when no matching profile item reference exists' do
@@ -216,7 +240,23 @@ RSpec.describe Ability, type: :model do
         allow(profile_item_reference_query).to receive(:where).with("product_item_configs_profile_item.product_id = ?", product.id).and_return(profile_item_reference_query)
         allow(profile_item_reference_query).to receive(:any?).and_return(false)
 
-        expect(subject.can?(:update, reference, product)).to eq false
+        expect(subject.can?(:update, reference)).to eq false
+      end
+
+      context 'when product_from_context is nil' do
+        before do
+          allow(session_user).to receive(:product_from_context).and_return(nil)
+        end
+
+        it 'can update references with no instances' do
+          allow(reference).to receive(:instances).and_return([])
+          expect(subject.can?(:update, reference)).to eq true
+        end
+
+        it 'cannot update references with instances' do
+          allow(reference).to receive(:instances).and_return([FactoryBot.create(:instance)])
+          expect(subject.can?(:update, reference)).to eq false
+        end
       end
     end
 
@@ -267,12 +307,36 @@ RSpec.describe Ability, type: :model do
   end
 
   describe "#draft_editor role" do
+    let(:product) { FactoryBot.create(:product, is_name_index: false) }
+
     before do
       allow(session_user).to receive(:with_role?).with('draft-editor').and_return(true)
+      allow(session_user).to receive(:product_from_context).and_return(product)
+      allow(product).to receive(:is_name_index?).and_return(false)
     end
 
     it 'can copy_as_draft_secondary_reference a published instance' do
       expect(subject.can?(:copy_as_draft_secondary_reference, Instance)).to eq true
+    end
+
+    context 'when product_from_context is nil' do
+      before do
+        allow(session_user).to receive(:product_from_context).and_return(nil)
+      end
+
+      it 'can still copy_as_draft_secondary_reference a published instance' do
+        expect(subject.can?(:copy_as_draft_secondary_reference, Instance)).to eq true
+      end
+    end
+
+    context 'when product is a name index' do
+      before do
+        allow(product).to receive(:is_name_index?).and_return(true)
+      end
+
+      it 'cannot copy_as_draft_secondary_reference' do
+        expect(subject.can?(:copy_as_draft_secondary_reference, Instance)).to eq false
+      end
     end
 
     it 'can access instances tab_copy_to_new_profile_v2' do
@@ -293,6 +357,10 @@ RSpec.describe Ability, type: :model do
 
     it 'can access names/typeaheads/for_unpub_cit index' do
       expect(subject.can?("names/typeaheads/for_unpub_cit", "index")).to eq true
+    end
+
+    it 'can access references tab_new_instance' do
+      expect(subject.can?("references", "tab_new_instance")).to eq true
     end
 
     it "allows copying as draft secondary reference" do
@@ -382,14 +450,36 @@ RSpec.describe Ability, type: :model do
   end
 
   describe "#profile_editor role" do
-    let(:product) { create(:product)}
+    let(:product) { create(:product, is_name_index: false)}
 
     before do
       allow(session_user).to receive(:with_role?).with('profile-editor').and_return(true)
+      allow(session_user).to receive(:product_from_context).and_return(product)
+      allow(product).to receive(:is_name_index?).and_return(false)
     end
 
     it 'can manage profile_v2' do
       expect(subject.can?(:manage, :profile_v2)).to eq true
+    end
+
+    context 'when product_from_context is nil' do
+      before do
+        allow(session_user).to receive(:product_from_context).and_return(nil)
+      end
+
+      it 'can still manage profile_v2' do
+        expect(subject.can?(:manage, :profile_v2)).to eq true
+      end
+    end
+
+    context 'when product is a name index' do
+      before do
+        allow(product).to receive(:is_name_index?).and_return(true)
+      end
+
+      it 'cannot manage profile_v2' do
+        expect(subject.can?(:manage, :profile_v2)).to eq false
+      end
     end
 
     it 'can manage Profile::ProfileItem' do
@@ -567,8 +657,12 @@ RSpec.describe Ability, type: :model do
   end
 
   describe "#name_index_editor role" do
+    let(:product) { FactoryBot.create(:product, is_name_index: true) }
+
     before do
       allow(session_user).to receive(:with_role?).with('name-index-editor').and_return(true)
+      allow(session_user).to receive(:product_from_context).and_return(product)
+      allow(product).to receive(:is_name_index?).and_return(true)
     end
 
     context "when managing resources" do
@@ -582,6 +676,11 @@ RSpec.describe Ability, type: :model do
         expect(subject.can?(:destroy, Reference)).to eq true
       end
 
+      it "allows updating Reference" do
+        reference = FactoryBot.create(:reference)
+        expect(subject.can?(:update, reference)).to eq true
+      end
+
       it "allows creating, editing, updating, and destroying Instance" do
         expect(subject.can?(:create, Instance)).to eq true
         expect(subject.can?(:edit, Instance)).to eq true
@@ -590,25 +689,33 @@ RSpec.describe Ability, type: :model do
       end
     end
 
-    context "when updating references" do
-      it "allows updating reference when product_of_selected_context is nil" do
-        reference = FactoryBot.create(:reference)
-        expect(subject.can?(:update, reference, nil)).to eq true
+    context 'when product_from_context is nil' do
+      before do
+        allow(session_user).to receive(:product_from_context).and_return(nil)
       end
 
-      it "allows updating reference when product_of_selected_context has blank reference_id" do
-        reference = FactoryBot.create(:reference)
-        product_context = double('product_context', reference_id: nil)
-        expect(subject.can?(:update, reference, product_context)).to eq true
-
-        product_context = double('product_context', reference_id: '')
-        expect(subject.can?(:update, reference, product_context)).to eq true
+      it 'can still manage Author' do
+        expect(subject.can?(:manage, Author)).to eq true
       end
 
-      it "does not allow updating reference when product_of_selected_context has reference_id" do
+      it 'can still update Reference' do
         reference = FactoryBot.create(:reference)
-        product_context = double('product_context', reference_id: 123)
-        expect(subject.can?(:update, reference, product_context)).to eq false
+        expect(subject.can?(:update, reference)).to eq true
+      end
+    end
+
+    context 'when product is not a name index' do
+      before do
+        allow(product).to receive(:is_name_index?).and_return(false)
+      end
+
+      it 'cannot manage Author' do
+        expect(subject.can?(:manage, Author)).to eq false
+      end
+
+      it 'cannot update Reference' do
+        reference = FactoryBot.create(:reference)
+        expect(subject.can?(:update, reference)).to eq false
       end
     end
 
