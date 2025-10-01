@@ -1,4 +1,8 @@
 - :date: 01-Oct-2025
+  :jira_id: '126'
+  :description: |-
+    Foa Project: Add current_product_from_context method to User model and use it in views and controllers
+- :date: 01-Oct-2025
   :jira_id: '5581'
   :description: |-
     Batch Loading: Allow user to choose batch on Instance Loader 2 tab
