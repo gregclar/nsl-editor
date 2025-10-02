@@ -1,6 +1,6 @@
 module Loader::Name::FlippedSynonym
   extend ActiveSupport::Concern
-    def create_flipped_synonym_for_instance(instance_id, current_user)
+    def create_flipped_synonym_for_instance(instance_id, synonym_type, current_user)
       logger.debug("instance id: #{instance_id}")
       instance = Instance.find(instance_id)
       seq_value = loader_batch.use_sort_key_for_ordering ? 0 : seq
@@ -8,7 +8,7 @@ module Loader::Name::FlippedSynonym
       synonym = ::Loader::Name.new(loader_batch_id: loader_batch_id,
                                record_type: 'synonym',
                                parent_id: self.id,
-                               synonym_type: instance.instance_type.name,
+                               synonym_type: synonym_type,
                                simple_name: instance.name.simple_name,
                                simple_name_as_loaded: instance.name.simple_name,
                                full_name: instance.name.full_name,
