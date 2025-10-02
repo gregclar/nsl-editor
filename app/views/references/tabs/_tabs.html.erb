@@ -20,7 +20,7 @@
     }
   %>
 
-  <% if can?(:update, @reference, product_context_service.product_with_context(current_context_id)) %>
+  <% if can?(:update, @reference) %>
     <% if tab_available?(tabs_array, "edit_1") %>
       <%= render partial: "references/tabs/tab",
         locals: {

@@ -21,9 +21,15 @@
 class SessionUser < ActiveType::Object
   attr_accessor :username, :full_name, :groups
 
+  attr_reader :product_from_context
+
   validates :username, presence: true
   validates :full_name, presence: true
   validates :groups, presence: true
+
+  def set_current_product_from_context(product)
+    @product_from_context = product
+  end
 
   def with_role?(requested_role_name)
     return unless user
@@ -98,7 +104,7 @@ class SessionUser < ActiveType::Object
   end
 
   def inspect
-    {username: @username, 
+    {username: @username,
      full_name: @full_name,
      groups: @groups,
      user: @user.inspect
