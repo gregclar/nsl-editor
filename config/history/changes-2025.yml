@@ -1,5 +1,10 @@
-- :date: 01-Oct-2025
+- :date: 02-Oct-2025
+  :jira_id: '5198'
+  :description: |-
+    Batch Loading: Set and use synonym type on Instance Loader 2 tab
+- :date: 02-Oct-2025
   :jira_id: '126'
+  :jira_project: FLOR
   :description: |-
     Foa Project: Add current_product_from_context method to User model and use it in views and controllers
 - :date: 01-Oct-2025
