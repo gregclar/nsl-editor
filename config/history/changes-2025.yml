@@ -1,3 +1,7 @@
+- :date: 03-Oct-2025
+  :jira_id: '5593'
+  :description: |-
+    Rails Upgrade: Upgrade to Rails 8.0.0 and update related dependencies
 - :date: 02-Oct-2025
   :jira_id: '5198'
   :description: |-
