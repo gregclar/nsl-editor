@@ -469,6 +469,6 @@ class Ability
   def selected_product(user)
     # NOTES: The selected product is either the one set in context or, if none set,
     # the first product from the user's roles.
-    @selected_product ||= user.product_from_context || user.product_from_roles
+    user.product_from_context || user.product_from_roles
   end
 end
