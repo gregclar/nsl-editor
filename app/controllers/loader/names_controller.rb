@@ -120,7 +120,7 @@ class Loader::NamesController < ApplicationController
   rescue StandardError => e
     logger.error("Loader::Names#update rescuing #{e}")
     @message = e.to_s
-    render "update_error", status: :unprocessable_entity
+    render "update_error", status: :unprocessable_content
   end
 
   # For a given loader_name record, add or remove a loader_name_match
@@ -131,7 +131,7 @@ class Loader::NamesController < ApplicationController
   rescue StandardError => e
     logger.error("Loader::Names#set_preferred_match rescuing #{e}")
     @message = e.to_s
-    render "set_preferred_match_error", status: :unprocessable_entity
+    render "set_preferred_match_error", status: :unprocessable_content
   end
 
   def update_matches
@@ -193,7 +193,7 @@ class Loader::NamesController < ApplicationController
   rescue StandardError => e
     logger.error("Controller:Loader::Names:create:rescuing exception #{e}")
     @error = e.to_s
-    render "create_error", status: :unprocessable_entity
+    render "create_error", status: :unprocessable_content
   end
 
   def destroy
@@ -201,7 +201,7 @@ class Loader::NamesController < ApplicationController
   rescue StandardError => e
     logger.error("Loader::NamesController#destroy rescuing #{e}")
     @message = e.to_s
-    render "destroy_error", status: :unprocessable_entity
+    render "destroy_error", status: :unprocessable_content
   end
 
   def create_heading
@@ -210,7 +210,7 @@ class Loader::NamesController < ApplicationController
   rescue StandardError => e
     logger.error("Loader::NamesController#create_heading rescuing #{e}")
     @message = e.to_s
-    render "create_heading_error", status: :unprocessable_entity
+    render "create_heading_error", status: :unprocessable_content
   end
   #############################################################################
   private

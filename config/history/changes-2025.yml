@@ -1,3 +1,7 @@
+- :date: 08-Oct-2025
+  :jira_id: '5595'
+  :description: |-
+    Security: Update rack gem to latest then replace deprecated <code>:unprocessable_entity</code> with <code>:unprocessable_content</code>
 - :date: 03-Oct-2025
   :jira_id: '128'
   :jira_project: FLOR
