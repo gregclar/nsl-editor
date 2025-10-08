@@ -44,7 +44,7 @@ class Loader::Name::Review::CommentsController < ApplicationController
   rescue => e
     logger.error("Loader::Name::Review::Comment.create:rescuing exception #{e}")
     @error = e.to_s
-    render "create_error", status: :unprocessable_entity
+    render "create_error", status: :unprocessable_content
   end
 
   def update
@@ -57,7 +57,7 @@ class Loader::Name::Review::CommentsController < ApplicationController
   rescue StandardError => e
     logger.error("Loader::Name::Review::Comment#update rescuing #{e}")
     @message = e.to_s
-    render "update_error", status: :unprocessable_entity
+    render "update_error", status: :unprocessable_content
   end
 
   def edit
@@ -83,7 +83,7 @@ class Loader::Name::Review::CommentsController < ApplicationController
   rescue StandardError => e
     logger.error("Loader::Name::Review::Comment#destroy rescuing #{e}")
     @message = e.to_s
-    render "destroy_error", status: :unprocessable_entity
+    render "destroy_error", status: :unprocessable_content
   end
 
   private
