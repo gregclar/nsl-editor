@@ -1,6 +1,10 @@
 - :date: 10-Oct-2025
   :jira_id: '5586'
   :description: |-
+    Batch Review: Fix edit form so it picks up the current comment context value
+- :date: 10-Oct-2025
+  :jira_id: '5586'
+  :description: |-
     Batch Review: Allow batch loaders to see reviewer comments and add their own comments - supplementary changes
 - :date: 08-Oct-2025
   :jira_id: '5595'
