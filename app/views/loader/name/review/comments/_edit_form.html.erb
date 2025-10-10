@@ -14,7 +14,7 @@
 
       <% if defined?(offer_context) && offer_context && @review_comment.loader_name.contexts.size > 1 %>
         Context<span class='red'>*</span>:<br>
-        <%= form.select :context, options_for_select(@review_comment.loader_name.contexts), {}, {title: 'context'} %>
+        <%= form.select :context, options_for_select(@review_comment.loader_name.contexts, @review_comment.context), {}, {title: 'context'} %>
         <br>
       <% else %>
         <%= form.hidden_field :context %>
