@@ -17,10 +17,9 @@
       <br>
       <div id="one-comment-<%= comment.id %>">
 
-         <%= render partial: 'loader/names/review/tabs/common/one_comment',
+         <%= render partial: 'loader/names/tabs/rev_comments/one_comment',
                     locals: {comment: comment,
                              context: 'accepted_record'} %>
-
       </div>
 
     <% end %>
@@ -48,7 +47,8 @@
 
 <%= render partial: 'loader/name/review/comments/form',
   locals: {name_review_comment: name_review_comment,
-           tab_focus: params[:component]} %>
+           tab_focus: params[:component],
+           offer_context: true} %>
 
 
   <%= divider %>
@@ -59,3 +59,4 @@
 
 <div id="search-result-details-info-message-container" class="message-container"></div>
 <div id="search-result-details-error-message-container" class="message-container error-container"></div>
+

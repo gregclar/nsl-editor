@@ -582,7 +582,7 @@ Rails.application.routes.draw do
   match "batch_reviewer/:id", as: "delete_batch_reviewer", to: "loader/batch/reviewers#destroy", via: :delete
 
   match "name_review_comments", as: "create_name_review_comment", to: "loader/name/review/comments#create", via: :post
-  match "name_review_comments/:id", as: "edit_name_review_comment", to: "loader/name/review/comments#edit", via: :get
+  match "name_review_comments/:id/:offer_context", as: "edit_name_review_comment", to: "loader/name/review/comments#edit", via: :get, defaults: {offer_context: 'no context'}
   match "name_review_comments/cancel/:id", as: "cancel_edit_name_review_comment",
                                            to: "loader/name/review/comments#cancel_edit", via: :get
   match "name_review_comments", as: "update_name_review_comment", to: "loader/name/review/comments#update", via: :patch
