@@ -33,6 +33,7 @@ class Loader::Name < ActiveRecord::Base
   include SeqGapMaker
   include ReviewComments
   include Voting
+  include ReviewCommentContext
   attr_accessor :add_sibling_synonyms
   attr_accessor :add_sourced_synonyms
 
