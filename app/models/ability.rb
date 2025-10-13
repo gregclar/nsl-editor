@@ -340,6 +340,7 @@ class Ability
     can :update_distribution, TreeVersion
     can :update_comment, TreeVersion
     can :update_tree_parent, TreeVersion
+    can "tree/elements", "update_profile"
   end
 
   def admin_auth
