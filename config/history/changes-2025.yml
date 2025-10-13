@@ -1,4 +1,8 @@
 - :date: 13-Oct-2025
+  :jira_id: '5375'
+  :description: |-
+    Batch Review: Make the target of the Reviewer Delete button clearer
+- :date: 13-Oct-2025
   :jira_id: '5429'
   :description: |-
     Tree Profile Edit: Add ability for treebuilder to edit existing profile
