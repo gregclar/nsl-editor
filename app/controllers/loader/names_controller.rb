@@ -241,14 +241,14 @@ class Loader::NamesController < ApplicationController
       end
 
       if params["form-task"] == "supplement-existing-concept"
-        main_supplement = @loader_name.create_flipped_synonym_for_instance(loader_name_params["loaded_from_instance_id"],
-                                                                           loader_name_params["synonym_type"], @current_user)
+        main_supplement = @loader_name.create_flipped_synonym_for_instance(loader_name_params, @current_user)
       end
       if loader_name_params["add_sibling_synonyms"] == 'true'
         siblings = @loader_name.create_sibling_synonyms_for_instance(loader_name_params["loaded_from_instance_id"], @current_user)
       end
       if loader_name_params["add_sourced_synonyms"] == 'true'
-        siblings = @loader_name.create_sourced_synonyms_for_instance(loader_name_params["loaded_from_instance_id"], @current_user)
+        siblings = @loader_name.create_sourced_synonyms_for_instance(loader_name_params[:loaded_from_instance_id],
+                                                                     loader_name_params[:remark_to_reviewers], @current_user)
       end
     end
   end
@@ -270,7 +270,7 @@ class Loader::NamesController < ApplicationController
                                         :original_text,
                                         :parent_typeahead,
                                         :formatted_text_above,
-                                        :formatted_text_below)
+                                        :formatted_text_below,)
   end
 
   def set_tab

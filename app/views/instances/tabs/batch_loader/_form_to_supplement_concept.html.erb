@@ -66,6 +66,12 @@
 
     <%= render partial: "loader/names/tabs/forms/synonym_type", locals: {f: form, loader_name: loader_name} %>
 
+    <div class="form-group">
+      <label for="synonym_type">Remark to reviewers</label>
+      <%= form.text_field(:remark_to_reviewers, class: 'form-control',
+                          title: "Remark to reviewers for the new records", tabindex: increment_tab_index) %>
+    </div>
+
     <%= divider %>
 
     <input type="hidden" name="form-task" value="supplement-existing-concept">

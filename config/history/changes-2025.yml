@@ -1,4 +1,8 @@
 - :date: 14-Oct-2025
+  :jira_id: '5199'
+  :description: |-
+    Batch Loader: Allow addition of a remark when adding names from Loader 2 tab
+- :date: 14-Oct-2025
   :jira_id: '5365'
   :description: |-
     Loader Name Search: Improve action of and help for family queries
