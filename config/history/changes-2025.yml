@@ -1,4 +1,8 @@
 - :date: 15-Oct-2025
+  :jira_id: '5581'
+  :description: |-
+    Batch Loader: Loader 2 tab - initialize the batch drop down with the current active batch
+- :date: 15-Oct-2025
   :jira_id: '5604'
   :description: |-
     Batch Loader: Use pro parte status for misapplication display details from the match record not from the loader name record

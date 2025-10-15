@@ -1,5 +1,6 @@
 
 <% loader_name = @instance.loader_name_for_accepted_excluded %>
+<% loader_name.loader_batch_id = session[:default_loader_batch_id] %>
 <% syn_for_copy = @instance.synonyms_for_copy_to_loader_name %>
 
 
@@ -62,6 +63,7 @@
             $("#loader-name-parent-typeahead").attr("data-loader-batch-id", batchId);
             setUpLoaderNameParentTypeahead();
         }
+        useSelectedBatch();
     </script>
 
     <%= render partial: "loader/names/tabs/forms/synonym_type", locals: {f: form, loader_name: loader_name} %>
