@@ -1,6 +1,5 @@
 
 <% loader_name = @instance.loader_name_for_accepted_excluded %>
-<% loader_name.loader_batch_id = session[:default_loader_batch_id] %>
 <% syn_for_copy = @instance.synonyms_for_copy_to_loader_name %>
 
 
@@ -24,9 +23,11 @@
         class: 'form-control',
         required: true,
         title: 'Must be within a batch',
-        onchange: "useSelectedBatch();",
+        onchange: "useSelectedBatch(); $('#loader_batch_id').prop('disabled', true);",
         tabindex: increment_tab_index %>
+      <p>Batch will lock once you select it - to change your batch click the Loader 2 tab heading to refresh.</p>
 
+    <br>
     <% if syn_for_copy.size > 0 %>
       <% loader_name.add_sourced_synonyms = true %>
       <div class="form-check">
@@ -48,7 +49,7 @@
              name="loader_name[parent_typeahead]"
              class="typeahead form-control"
              data-loader-name-id="<%= loader_name.id %>"
-             data-loader-batch-id="<%= loader_name.loader_batch_id %>"
+             data-loader-batch-id=$("#loader_batch_id").val()
              type="text" 
              tabindex="<%= increment_tab_index %>"
              title="Loader Name concept"
@@ -62,14 +63,14 @@
             batchId = $('#loader_batch_id').val();
             $("#loader-name-parent-typeahead").attr("data-loader-batch-id", batchId);
             setUpLoaderNameParentTypeahead();
+            loaderNameParentSuggestions.initialize();
         }
-        useSelectedBatch();
     </script>
 
     <%= render partial: "loader/names/tabs/forms/synonym_type", locals: {f: form, loader_name: loader_name} %>
 
     <div class="form-group">
-      <label for="synonym_type">Remark to reviewers</label>
+      <label for="remark_to_reviewers">Remark to reviewers</label>
       <%= form.text_field(:remark_to_reviewers, class: 'form-control',
                           title: "Remark to reviewers for the new records", tabindex: increment_tab_index) %>
     </div>
@@ -84,7 +85,4 @@
     <div id="search-result-details-info-message-container" class="message-container"></div>
     <div id="search-result-details-error-message-container" class="message-container"></div>
 <% end %>
-
-
-
 

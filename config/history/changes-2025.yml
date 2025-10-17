@@ -1,3 +1,7 @@
+- :date: 17-Oct-2025
+  :jira_id: '5581'
+  :description: |-
+    Batch Loader: Loader 2 tab - do not initialize the batch drop down with the current active batch - causes odd problems
 - :date: 15-Oct-2025
   :jira_id: '5581'
   :description: |-
