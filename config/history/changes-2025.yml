@@ -1,4 +1,8 @@
 - :date: 20-Oct-2025
+  :jira_id: '5199'
+  :description: |-
+    Loader Tab 2: Add explanatory wording under the <code>Remark to reviewer</code> field
+- :date: 20-Oct-2025
   :jira_id: '5375'
   :description: |-
     Batch Review: Tweak the wording of boilerplate saying Reviewers with comments cannot be removed from Review
