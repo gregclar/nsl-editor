@@ -183,7 +183,7 @@ class Loader::NamesController < ApplicationController
   # simple actions in the loader interface, but it's also handling
   # creates from over in apni data.
   def create
-    insist_on_a_batch
+    insist_on_a_batch unless params["form-task"] == "supplement-existing-concept"
     if loader_name_params["loaded_from_instance_id"].blank?
       @loader_name = Loader::Name.create(loader_name_params, current_user.username)
     else 

@@ -1,3 +1,7 @@
+- :date: 21-Oct-2025
+  :jira_id: '5199'
+  :description: |-
+    Loader Tab 2: Allow processing even if no default batch has been set
 - :date: 20-Oct-2025
   :jira_id: '5199'
   :description: |-
