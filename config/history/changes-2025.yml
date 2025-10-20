@@ -1,7 +1,7 @@
-- :date: 17-Oct-2025
+- :date: 20-Oct-2025
   :jira_id: '5375'
   :description: |-
-    Batch Review: Tweak wording for Reviewers with comments who therefore cannot be removed
+    Batch Review: Tweak the wording of boilerplate saying Reviewers with comments cannot be removed from Review
 - :date: 17-Oct-2025
   :jira_id: '5590'
   :description: |-
