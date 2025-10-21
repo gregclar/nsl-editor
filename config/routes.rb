@@ -487,6 +487,7 @@ Rails.application.routes.draw do
     match "names/new-row-here/:id", as: "name_new_row_here", to: "names#new_row_here", via: :get
     match "names/create_heading", via: :post
     resources :names, only: %i[create update destroy]
+    match "names/force_destroy/:id", as: "name_force_destroy", to: "names#force_destroy", via: :delete
     namespace :name do
       match "matches/create/:id", as: "matches_set", to: "matches#set", via: :patch
       match "matches/delete/all/:id", as: "matches_delete_all", to: "matches#delete_all", via: :delete

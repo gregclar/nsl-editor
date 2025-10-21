@@ -34,6 +34,7 @@ class Loader::Name < ActiveRecord::Base
   include ReviewComments
   include Voting
   include ReviewCommentContext
+  include ForceDelete
   attr_accessor :add_sibling_synonyms
   attr_accessor :add_sourced_synonyms
 

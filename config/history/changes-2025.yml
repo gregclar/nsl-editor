@@ -1,4 +1,8 @@
 - :date: 21-Oct-2025
+  :jira_id: '5200'
+  :description: |-
+    Batch Loader: Add Force Delete button as an easier way to delete loader name records with dependents 
+- :date: 21-Oct-2025
   :jira_id: '5199'
   :description: |-
     Loader Tab 2: Allow processing even if no default batch has been set
