@@ -20,6 +20,8 @@ class Loader::NamesController < ApplicationController
   include Loader::Names::ParentTypeahead
   before_action :find_loader_name,
                 only: %i[show destroy tab update set_preferred_match]
+  before_action :find_loader_name_including_matches,
+                only: %i[force_destroy]
 
   # Sets up RHS details panel on the search results page.
   # Displays a specified or default tab.
@@ -204,6 +206,15 @@ class Loader::NamesController < ApplicationController
     render "destroy_error", status: :unprocessable_content
   end
 
+  def force_destroy
+    @destroyed_ids = @loader_name.force_delete
+  rescue StandardError => e
+    logger.error("Loader::NamesController#force_destroy rescuing #{e}")
+    @message = e.to_s
+    render "destroy_error", status: :unprocessable_content
+  end
+
+
   def create_heading
     Loader::Name.create_family_heading(params) 
     @message = 'Created - the record will be available next time you query the family'
@@ -217,6 +228,13 @@ class Loader::NamesController < ApplicationController
 
   def find_loader_name
     @loader_name = Loader::Name.find(params[:id])
+  rescue ActiveRecord::RecordNotFound
+    flash[:alert] = "We could not find the loader name record."
+    redirect_to loader_names_path
+  end
+
+  def find_loader_name_including_matches
+    @loader_name = Loader::Name.includes([:loader_name_matches]).where(id: params[:id]).first
   rescue ActiveRecord::RecordNotFound
     flash[:alert] = "We could not find the loader name record."
     redirect_to loader_names_path
