@@ -247,6 +247,7 @@ class Search::Loader::Name::FieldRule
         multiple_values_where_clause: " lower(family) in (?)"},
     "family-list:" => {
         multiple_values: true,
+        takes_optional_arg: true,
         where_clause: "lower(family) like ? || '%'  and lower(rank) = 'family'",
         multiple_values_where_clause: " lower(family) in (?) and lower(rank) = 'family'"},
     "family-id:" => { where_clause: "(lower(family) like (select lower(simple_name) from loader_name where id = ?))" },
