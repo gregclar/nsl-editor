@@ -1,3 +1,8 @@
+- :date: 22-Oct-2025
+  :jira_id: '148'
+  :jira_project: FLOR
+  :description: |-
+    Foa Project: Enable tree workflow for trees with no tree.config value - first set of changes
 - :date: 21-Oct-2025
   :jira_id: '5200'
   :description: |-

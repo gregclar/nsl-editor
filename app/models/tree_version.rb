@@ -95,10 +95,14 @@ class TreeVersion < ActiveRecord::Base
   end
 
   def comment_key
+    return nil if tree.config.blank?
+
     tree.config["comment_key"]
   end
 
   def distribution_key
+    return nil if tree.config.blank?
+
     tree.config["distribution_key"]
   end
 
