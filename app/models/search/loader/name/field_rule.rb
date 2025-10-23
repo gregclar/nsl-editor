@@ -243,6 +243,7 @@ class Search::Loader::Name::FieldRule
     "simple-name-not-like:" => { where_clause: "(lower(simple_name) not like '%'||?||'%')" },
     "family-members:" => {
         multiple_values: true,
+        takes_optional_arg: true,
         where_clause: "lower(family) like ? || '%' ",
         multiple_values_where_clause: " lower(family) in (?)"},
     "family-list:" => {
