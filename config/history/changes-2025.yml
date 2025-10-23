@@ -1,11 +1,15 @@
 - :date: 24-Oct-2025
+  :jira_id: '5365'
+  :description: |-
+    Loader Name Search: Allow <code>family-members:</code>, <code>family:</code>, and <code>families:</code> to have zero arguments too
+- :date: 24-Oct-2025
   :jira_id: '5605'
   :description: |-
     Loader Name Search: Make the <code>batch-id:</code>, <code>batch-name:</code> and <code>any-batch:</code> directives case-insensitive
 - :date: 23-Oct-2025
   :jira_id: '5365'
   :description: |-
-    Loader Name Search: Improve action of and help for family queries - allow family-list: to have zero arguments too
+    Loader Name Search: Improve action of and help for family queries - allow <code>family-list:</code> to have zero arguments too
 - :date: 22-Oct-2025
   :jira_id: '148'
   :jira_project: FLOR
