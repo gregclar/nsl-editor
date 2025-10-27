@@ -1,4 +1,9 @@
 - :date: 27-Oct-2025
+  :jira_id: '149'
+  :jira_project: FLOR
+  :description: |-
+    Foa Project: Fixup the edit tab not showing for relationship instance when foa context is selected
+- :date: 27-Oct-2025
   :jira_id: '148'
   :jira_project: FLOR
   :description: |-
@@ -25,7 +30,7 @@
 - :date: 21-Oct-2025
   :jira_id: '5200'
   :description: |-
-    Batch Loader: Add Force Delete button as an easier way to delete loader name records with dependents 
+    Batch Loader: Add Force Delete button as an easier way to delete loader name records with dependents
 - :date: 21-Oct-2025
   :jira_id: '5199'
   :description: |-
