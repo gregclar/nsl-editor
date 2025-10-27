@@ -47,8 +47,7 @@ class Tree::DraftVersion < ActiveRecord::Base
   self.primary_key = "id"
   default_scope { where(published: false) }
 
-  belongs_to :tree,
-             class_name: "Tree"
+  belongs_to :tree, class_name: "Tree"
 
   has_many :tree_version_elements, foreign_key: "tree_version_id"
 
