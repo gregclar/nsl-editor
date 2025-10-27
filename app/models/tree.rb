@@ -93,4 +93,8 @@ class Tree < ActiveRecord::Base
   def distribution_key
     config["distribution_key"]
   end
+
+  def holds_profile_data?
+    config.present?
+  end
 end
