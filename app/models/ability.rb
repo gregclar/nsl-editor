@@ -141,7 +141,7 @@ class Ability
       :synonymy_as_draft_secondary_reference,
       :unpublished_citation_as_draft_secondary_reference
     ], Instance do |instance|
-      instance.draft? && instance.reference.products.pluck(:name).any?(selected_product(user)&.name.to_s)
+      (instance.draft? || instance.this_is_cited_by.draft?) && instance.reference.products.pluck(:name).any?(selected_product(user)&.name.to_s)
     end
     can :edit, Instance do |instance|
       instance.relationship? &&
