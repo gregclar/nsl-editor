@@ -8,6 +8,7 @@ RSpec.describe Ability, type: :model do
     allow(session_user).to receive(:with_role?).with('draft-profile-editor').and_return(false)
     allow(session_user).to receive(:with_role?).with('draft-editor').and_return(false)
     allow(session_user).to receive(:with_role?).with('profile-editor').and_return(false)
+    allow(session_user).to receive(:with_role?).with('profile-reference').and_return(false)
     allow(session_user).to receive(:with_role?).with('tree-builder').and_return(false)
     allow(session_user).to receive(:with_role?).with('tree-publisher').and_return(false)
     allow(session_user).to receive(:with_role?).with('name-index-editor').and_return(false)
@@ -304,6 +305,201 @@ RSpec.describe Ability, type: :model do
       expect(subject.can?("menu", "new")).to eq true
     end
 
+  end
+
+  describe "#profile_reference role" do
+    let(:product) { FactoryBot.create(:product, is_name_index: false) }
+
+    before do
+      allow(session_user).to receive(:with_role?).with('profile-reference').and_return(true)
+      allow(session_user).to receive(:product_from_context).and_return(product)
+      allow(product).to receive(:is_name_index?).and_return(false)
+    end
+
+    context 'when product_from_context is nil' do
+      before do
+        allow(session_user).to receive(:product_from_context).and_return(nil)
+      end
+
+      it 'can still create and read authors' do
+        expect(subject.can?(:create, Author)).to eq true
+        expect(subject.can?(:read, Author)).to eq true
+      end
+    end
+
+    context 'when product is a name index' do
+      before do
+        allow(product).to receive(:is_name_index?).and_return(true)
+      end
+
+      it 'cannot create authors' do
+        expect(subject.can?(:create, Author)).to eq false
+      end
+
+      it 'cannot create references' do
+        expect(subject.can?(:create, Reference)).to eq false
+      end
+    end
+
+    it 'can access authors' do
+      expect(subject.can?('authors', :all)).to eq true
+    end
+
+    it 'can create and read authors' do
+      expect(subject.can?(:create, Author)).to eq true
+      expect(subject.can?(:read, Author)).to eq true
+    end
+
+    it 'can update authors with specific conditions' do
+      author = FactoryBot.create(:author)
+      allow(author).to receive(:referenced_in_any_instance?).and_return(false)
+      allow(author).to receive(:no_other_authored_names?).and_return(true)
+      allow(author).to receive_message_chain(:names, :blank?).and_return(true)
+      expect(subject.can?(:update, author)).to eq true
+    end
+
+    it 'cannot update authors if conditions are not met' do
+      author = FactoryBot.create(:author)
+      allow(author).to receive(:referenced_in_any_instance?).and_return(false)
+      allow(author).to receive(:no_other_authored_names?).and_return(false)
+      allow(author).to receive_message_chain(:names, :blank?).and_return(true)
+      expect(subject.can?(:update, author)).to eq false
+
+      allow(author).to receive(:referenced_in_any_instance?).and_return(true)
+      allow(author).to receive(:no_other_authored_names?).and_return(true)
+      allow(author).to receive_message_chain(:names, :blank?).and_return(true)
+      expect(subject.can?(:update, author)).to eq false
+
+      allow(author).to receive(:referenced_in_any_instance?).and_return(true)
+      allow(author).to receive(:no_other_authored_names?).and_return(false)
+      allow(author).to receive_message_chain(:names, :blank?).and_return(true)
+      expect(subject.can?(:update, author)).to eq false
+
+      allow(author).to receive(:referenced_in_any_instance?).and_return(true)
+      allow(author).to receive(:no_other_authored_names?).and_return(true)
+      allow(author).to receive_message_chain(:names, :blank?).and_return(false)
+      expect(subject.can?(:update, author)).to eq false
+    end
+
+    it 'can create references' do
+      expect(subject.can?(:create, Reference)).to eq true
+    end
+
+    context 'when updating references' do
+      let(:reference) { FactoryBot.create(:reference) }
+      let(:profile_item_reference_query) { double('profile_item_reference_query') }
+
+      it 'can update references with no instances and matching profile item reference' do
+        allow(reference).to receive(:instances).and_return([])
+
+        allow(Profile::ProfileItemReference).to receive(:where).with(reference_id: reference.id).and_return(profile_item_reference_query)
+        allow(profile_item_reference_query).to receive(:joins).with(profile_item: :product_item_config).and_return(profile_item_reference_query)
+        allow(profile_item_reference_query).to receive(:where).with("product_item_configs_profile_item.product_id = ?", product.id).and_return(profile_item_reference_query)
+        allow(profile_item_reference_query).to receive(:any?).and_return(true)
+
+        expect(subject.can?(:update, reference)).to eq true
+      end
+
+      it 'cannot update references with instances even if profile item reference exists' do
+        allow(reference).to receive(:instances).and_return([FactoryBot.create(:instance)])
+
+        profile_item_reference_query = double('profile_item_reference_query')
+        allow(Profile::ProfileItemReference).to receive(:where).with(reference_id: reference.id).and_return(profile_item_reference_query)
+        allow(profile_item_reference_query).to receive(:joins).with(profile_item: :product_item_config).and_return(profile_item_reference_query)
+        allow(profile_item_reference_query).to receive(:where).with("product_item_configs_profile_item.product_id = ?", product.id).and_return(profile_item_reference_query)
+        allow(profile_item_reference_query).to receive(:any?).and_return(true)
+
+        expect(subject.can?(:update, reference)).to eq false
+      end
+
+      it 'cannot update references when no matching profile item reference exists' do
+        allow(reference).to receive(:instances).and_return([])
+
+        profile_item_reference_query = double('profile_item_reference_query')
+        allow(Profile::ProfileItemReference).to receive(:where).with(reference_id: reference.id).and_return(profile_item_reference_query)
+        allow(profile_item_reference_query).to receive(:joins).with(profile_item: :product_item_config).and_return(profile_item_reference_query)
+        allow(profile_item_reference_query).to receive(:where).with("product_item_configs_profile_item.product_id = ?", product.id).and_return(profile_item_reference_query)
+        allow(profile_item_reference_query).to receive(:any?).and_return(false)
+
+        expect(subject.can?(:update, reference)).to eq false
+      end
+
+      context 'when product_from_context is nil' do
+        before do
+          allow(session_user).to receive(:product_from_context).and_return(nil)
+        end
+
+        it 'can update references with no instances' do
+          allow(reference).to receive(:instances).and_return([])
+          expect(subject.can?(:update, reference)).to eq true
+        end
+
+        it 'cannot update references with instances' do
+          allow(reference).to receive(:instances).and_return([FactoryBot.create(:instance)])
+          expect(subject.can?(:update, reference)).to eq false
+        end
+      end
+    end
+
+    it 'can access references actions' do
+      expect(subject.can?("references", "new_row")).to eq true
+      expect(subject.can?("references", "new")).to eq true
+      expect(subject.can?("references", "typeahead_on_citation_for_parent")).to eq true
+      expect(subject.can?("references", "typeahead_on_citation")).to eq true
+      expect(subject.can?("references", "create")).to eq true
+      expect(subject.can?("references", "tab_edit_1")).to eq true
+      expect(subject.can?("references", "tab_edit_2")).to eq true
+      expect(subject.can?("references", "tab_edit_3")).to eq true
+      expect(subject.can?("references", "update")).to eq true
+    end
+
+    it 'can access menu new' do
+      expect(subject.can?("menu", "new")).to eq true
+    end
+
+    it 'cannot manage Profile::ProfileItem' do
+      profile_item = FactoryBot.create(:profile_item, is_draft: true)
+      expect(subject.can?(:manage, profile_item)).to eq false
+    end
+
+    it 'cannot manage Profile::ProfileItemReference' do
+      profile_item = FactoryBot.create(:profile_item, is_draft: true)
+      profile_item_reference = FactoryBot.create(:profile_item_reference, profile_item: profile_item)
+      expect(subject.can?(:manage, profile_item_reference)).to eq false
+    end
+
+    it 'cannot manage Profile::ProfileText' do
+      profile_item = FactoryBot.create(:profile_item, is_draft: true)
+      profile_text = FactoryBot.create(:profile_text, profile_item: profile_item)
+      expect(subject.can?(:manage, profile_text)).to eq false
+    end
+
+    it 'cannot manage Profile::ProfileItemAnnotation' do
+      profile_item = FactoryBot.create(:profile_item, is_draft: true)
+      profile_item_annotation = FactoryBot.create(:profile_item_annotation, profile_item: profile_item)
+      expect(subject.can?(:manage, profile_item_annotation)).to eq false
+    end
+
+    it 'cannot manage_profile on instances' do
+      instance = FactoryBot.create(:instance, draft: true)
+      expect(subject.can?(:manage_profile, instance)).to eq false
+    end
+
+    it 'cannot access profile_items' do
+      expect(subject.can?("profile_items", :all)).to eq false
+    end
+
+    it 'cannot access profile_item_annotations' do
+      expect(subject.can?("profile_item_annotations", :all)).to eq false
+    end
+
+    it 'cannot access profile_item_references' do
+      expect(subject.can?("profile_item_references", :all)).to eq false
+    end
+
+    it 'cannot access instances tab_profile_v2' do
+      expect(subject.can?("instances", "tab_profile_v2")).to eq false
+    end
   end
 
   describe "#draft_editor role" do
