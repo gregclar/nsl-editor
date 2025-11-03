@@ -1,3 +1,7 @@
+- :date: 04-Nov-2025
+  :jira_id: '5615'
+  :description: |-
+    Technical: remove the <code>exception_notifier</code> gem - no impact on users 
 - :date: 03-Nov-2025
   :jira_id: '1033'
   :description: |-
