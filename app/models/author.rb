@@ -57,11 +57,10 @@
 #  fk_6a4p11f1bt171w09oo06m0wag  (duplicate_of_id => author.id)
 #  fk_p0ysrub11cm08xnhrbrfrvudh  (namespace_id => namespace.id)
 #
-class Author < ActiveRecord::Base
+class Author < ApplicationRecord
   include AuditScopable
   include AuthorValidations
   include AuthorScopes
-  strip_attributes
   self.table_name = "author"
   self.primary_key = "id"
   self.sequence_name = "nsl_global_seq"

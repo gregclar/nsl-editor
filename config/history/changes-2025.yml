@@ -1,3 +1,7 @@
+- :date: 03-Nov-2025
+  :jira_id: '826'
+  :description: |-
+    Technical: Models that inherited from <code>ActiveRecord::Base</code> now inherit from <code>ApplicationRecord</code>, and it calls <code>strip_attributes</code>
 - :date: 30-Oct-2025
   :jira_id: '146'
   :jira_project: FLOR

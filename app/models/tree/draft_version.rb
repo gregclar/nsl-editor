@@ -42,7 +42,7 @@
 #
 #
 #  This model object is not used in a Rails way
-class Tree::DraftVersion < ActiveRecord::Base
+class Tree::DraftVersion < ApplicationRecord
   self.table_name = "tree_version"
   self.primary_key = "id"
   default_scope { where(published: false) }
