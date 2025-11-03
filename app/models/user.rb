@@ -37,8 +37,7 @@
 #
 #  users_name_key  (user_name) UNIQUE
 #
-class User < ActiveRecord::Base
-  strip_attributes
+class User < ApplicationRecord
   self.primary_key = "id"
   self.sequence_name = "nsl_global_seq"
 
