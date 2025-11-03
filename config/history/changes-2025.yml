@@ -1,4 +1,8 @@
 - :date: 03-Nov-2025
+  :jira_id: '1033'
+  :description: |-
+    Instance update: if you update an instance and try to remove the reference you now get an error message
+- :date: 03-Nov-2025
   :jira_id: '826'
   :description: |-
     Technical: Models that inherited from <code>ActiveRecord::Base</code> now inherit from <code>ApplicationRecord</code>, and it calls <code>strip_attributes</code>
