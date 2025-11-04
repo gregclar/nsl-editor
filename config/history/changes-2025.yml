@@ -1,7 +1,11 @@
 - :date: 04-Nov-2025
+  :jira_id: '1574'
+  :description: |-
+    Technical: Remove user_queries code and help_topics code - not used, no impact on users
+- :date: 04-Nov-2025
   :jira_id: '5615'
   :description: |-
-    Technical: remove the <code>exception_notifier</code> gem - no impact on users 
+    Technical: Remove the <code>exception_notifier</code> gem - no impact on users 
 - :date: 03-Nov-2025
   :jira_id: '1033'
   :description: |-
