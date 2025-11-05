@@ -1,3 +1,7 @@
+- :date: 06-Nov-2025
+  :jira_id: '1206'
+  :description: |-
+    Instances search result records: added colon between citation and page
 - :date: 04-Nov-2025
   :jira_id: '1574'
   :description: |-
