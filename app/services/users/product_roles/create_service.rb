@@ -42,6 +42,7 @@ class Users::ProductRoles::CreateService
 
   def set_default_context
     return if user.default_product_context_id.present?
+    return unless user_product_role
 
     product = user_product_role.product
     return unless product&.context_id
