@@ -23,15 +23,16 @@
 #
 # Table name: users
 #
-#  id           :bigint           not null, primary key
-#  created_by   :string(50)       not null
-#  family_name  :string(60)       not null
-#  given_name   :string(60)
-#  lock_version :bigint           default(0), not null
-#  updated_by   :string(50)       not null
-#  user_name    :string(30)       not null
-#  created_at   :timestamptz      not null
-#  updated_at   :timestamptz      not null
+#  id                         :bigint           not null, primary key
+#  created_by                 :string(50)       not null
+#  family_name                :string(60)       not null
+#  given_name                 :string(60)
+#  lock_version               :bigint           default(0), not null
+#  updated_by                 :string(50)       not null
+#  user_name                  :string(30)       not null
+#  created_at                 :timestamptz      not null
+#  updated_at                 :timestamptz      not null
+#  default_product_context_id :bigint
 #
 # Indexes
 #

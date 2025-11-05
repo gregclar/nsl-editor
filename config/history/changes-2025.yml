@@ -1,4 +1,9 @@
 - :date: 06-Nov-2025
+  :jira_id: '144'
+  :jira_project: FLOR
+  :description: |-
+    Foa Project: Service object to handle setting default product context for user when user product role is added
+- :date: 06-Nov-2025
   :jira_id: '1206'
   :description: |-
     Instances search result records: added colon between citation and page
@@ -9,7 +14,7 @@
 - :date: 04-Nov-2025
   :jira_id: '5615'
   :description: |-
-    Technical: Remove the <code>exception_notifier</code> gem - no impact on users 
+    Technical: Remove the <code>exception_notifier</code> gem - no impact on users
 - :date: 03-Nov-2025
   :jira_id: '1033'
   :description: |-
