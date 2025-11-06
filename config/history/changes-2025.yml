@@ -1,4 +1,8 @@
 - :date: 06-Nov-2025
+  :jira_id: '5618'
+  :description: |-
+    Technical: Upgrade Bootstrap dropdown.js to latest patch (it makes our dropdown menus work)
+- :date: 06-Nov-2025
   :jira_id: '144'
   :jira_project: FLOR
   :description: |-
