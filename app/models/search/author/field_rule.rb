@@ -64,9 +64,9 @@ from comment where comment.author_id = author.id)" },
                                comment where comment.author_id =
                                author.id and lower(comment.created_by)
                                like lower(?) ) " },
-    "full-name:" => { leading_wildcard: true,
+    "extra-information:" => { leading_wildcard: true,
                       trailing_wildcard: true,
-                      where_clause: "lower(full_name) like lower(?)" },
+                      where_clause: "lower(extra_information) like lower(?)" },
     "name:" => { tokenize: true,
                  where_clause:
                                " lower(f_unaccent(name))
@@ -86,8 +86,8 @@ from comment where comment.author_id = author.id)" },
     "name-exact:" => { where_clause: "lower(name) like lower(?)" },
     "abbrev-exact:" => { where_clause: "lower(abbrev) like lower(?)",
                          not_exists_clause: " abbrev is null"},
-    "full-name-exact:" => { where_clause: "lower(full_name) like lower(?)",
-                            not_exists_clause: " full_name is null"},
+    "extra-information-exact:" => { where_clause: "lower(extra_information) like lower(?)",
+                            not_exists_clause: " extra_information is null"},
     "comments-exact:" => { where_clause: " exists (select null from
                                comment where comment.author_id = author.id
                                and lower(comment.text) like lower(?) ) " },

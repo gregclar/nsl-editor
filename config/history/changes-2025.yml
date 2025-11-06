@@ -1,4 +1,8 @@
 - :date: 07-Nov-2025
+  :jira_id: '1054'
+  :description: |-
+    Author extra information: Switch from <code>full_name</code> to new <code>extra_information</code> field
+- :date: 07-Nov-2025
   :jira_id: '144'
   :jira_project: FLOR
   :description: |-
