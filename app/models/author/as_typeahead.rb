@@ -68,7 +68,8 @@ class Author::AsTypeahead < Author
       Author.lower_abbrev_like(term + "%") \
             .where("duplicate_of_id is null") \
             .order("abbrev").limit(SEARCH_LIMIT) \
-            .collect { |n| { value: n.abbrev.to_s, id: n.id.to_s } }
+            .collect { |n| { value: "#{n.abbrev} #{' | '+n.full_name unless n.full_name.blank?}",
+                             id: n.id.to_s } }
     end
   end
 
