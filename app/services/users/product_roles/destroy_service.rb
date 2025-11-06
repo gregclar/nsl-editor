@@ -1,11 +1,10 @@
-class Users::ProductRoles::DestroyService
-  include ActiveModel::Validations
-
+class Users::ProductRoles::DestroyService < BaseService
   attr_reader :user_product_role
 
   MAIN_CONTEXT_ID = 1
 
-  def initialize(user_product_role:)
+  def initialize(user_product_role:, params: {})
+    super(params)
     @user_product_role = user_product_role
   end
 

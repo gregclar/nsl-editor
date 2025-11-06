@@ -1,14 +1,13 @@
-class Users::ProductRoles::CreateService
-  include ActiveModel::Validations
-
+class Users::ProductRoles::CreateService < BaseService
   validate :user_exists, :product_role_exists
 
   attr_reader :user_product_role
 
-  def initialize(user_id:, product_role_id:, username:)
+  def initialize(user_id:, product_role_id:, username:, params: {})
+    super(params)
     @product_role_id = product_role_id
-    @user_id = user_id
     @username = username
+    @user_id = user_id
     @user = User.find_by(id: user_id)
   end
 
@@ -47,7 +46,7 @@ class Users::ProductRoles::CreateService
     product = user_product_role.product
     return unless product&.context_id
 
-    user.default_product_context_id ||= product.context_id
+    user.default_product_context_id = product.context_id
     errors.add(:base, user.errors.full_messages.join(", ")) unless user.save
   end
 end
