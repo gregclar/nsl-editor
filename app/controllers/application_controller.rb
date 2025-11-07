@@ -49,7 +49,7 @@ class ApplicationController < ActionController::Base
   end
 
   def current_context_id
-    session[:current_context_id]
+    session[:current_context_id] || current_registered_user.default_product_context_id
   end
 
   def current_product_from_context
@@ -60,7 +60,7 @@ class ApplicationController < ActionController::Base
   def current_context_name
     return "Select Context" unless current_context_id
 
-    session[:current_context_name] || "No Context Selected"
+    session[:current_context_name] || current_product_from_context&.name || "No Context Selected"
   end
 
   def product_context_service

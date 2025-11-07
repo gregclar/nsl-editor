@@ -157,7 +157,8 @@ class User < ApplicationRecord
     {id: id,
      user_name: user_name,
      given_name: given_name,
-     family_name: family_name
+     family_name: family_name,
+     default_product_context_id: default_product_context_id
     }
   end
 end
