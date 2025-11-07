@@ -1,7 +1,7 @@
 - :date: 07-Nov-2025
-  :jira_id: '1054'
+  :jira_id: '1084'
   :description: |-
-    Author extra information: Switch from <code>full_name</code> to new <code>extra_information</code> field
+    Author extra information: Switch from <code>full_name</code> to new <code>extra_information</code> field - updated query help too
 - :date: 07-Nov-2025
   :jira_id: '144'
   :jira_project: FLOR
