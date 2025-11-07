@@ -1185,7 +1185,8 @@ CREATE TABLE public.author (
     updated_at timestamp with time zone NOT NULL,
     updated_by character varying(255) NOT NULL,
     valid_record boolean DEFAULT false NOT NULL,
-    uri text
+    uri text,
+    extra_information character varying(255)
 );
 
 
