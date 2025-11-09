@@ -132,8 +132,42 @@ RSpec.describe ApplicationController, type: :controller do
       allow(user).to receive(:available_products_from_roles).and_return(products)
     end
 
-    context 'when called for the first time' do
-      it 'creates a new ProductTabService instance' do
+    context 'when current_context_id is present' do
+      before do
+        session[:current_context_id] = 42
+      end
+
+      it 'calls ProductTabService.for_context with the context_id' do
+        expect(Products::ProductTabService).to receive(:for_context)
+          .with(42)
+          .and_return(product_tab_service_instance)
+
+        result = controller.send(:product_tab_service)
+        expect(result).to eq(product_tab_service_instance)
+      end
+
+      it 'memoizes the service instance' do
+        allow(Products::ProductTabService).to receive(:for_context)
+          .with(42)
+          .and_return(product_tab_service_instance)
+
+        first_result = controller.send(:product_tab_service)
+
+        expect(Products::ProductTabService).not_to receive(:for_context)
+        second_result = controller.send(:product_tab_service)
+
+        expect(first_result).to eq(second_result)
+        expect(first_result).to eq(product_tab_service_instance)
+      end
+    end
+
+    context 'when current_context_id is nil' do
+      before do
+        session[:current_context_id] = nil
+        allow(user).to receive(:default_product_context_id).and_return(nil)
+      end
+
+      it 'creates a new ProductTabService instance with products' do
         expect(Products::ProductTabService).to receive(:call)
           .with(products)
           .and_return(product_tab_service_instance)
@@ -160,6 +194,11 @@ RSpec.describe ApplicationController, type: :controller do
     context 'when current_registered_user has no products' do
       let(:products) { [] }
 
+      before do
+        session[:current_context_id] = nil
+        allow(user).to receive(:default_product_context_id).and_return(nil)
+      end
+
       it 'passes empty array to ProductTabService' do
         expect(Products::ProductTabService).to receive(:call)
           .with([])
@@ -174,6 +213,11 @@ RSpec.describe ApplicationController, type: :controller do
       let(:product2) { instance_double('Product') }
       let(:products) { [product1, product2] }
 
+      before do
+        session[:current_context_id] = nil
+        allow(user).to receive(:default_product_context_id).and_return(nil)
+      end
+
       it 'passes all products to ProductTabService' do
         expect(Products::ProductTabService).to receive(:call)
           .with([product1, product2])
@@ -185,23 +229,79 @@ RSpec.describe ApplicationController, type: :controller do
   end
 
   describe "#current_context_id" do
-    it "returns the current context ID from the session" do
-      session[:current_context_id] = 42
-      expect(controller.send(:current_context_id)).to eq(42)
+    context "when session has current_context_id" do
+      it "returns the current context ID from the session" do
+        session[:current_context_id] = 42
+        expect(controller.send(:current_context_id)).to eq(42)
+      end
+
+      it "prioritizes session value over user default" do
+        session[:current_context_id] = 42
+        allow(user).to receive(:default_product_context_id).and_return(99)
+        expect(controller.send(:current_context_id)).to eq(42)
+      end
+    end
+
+    context "when session current_context_id is nil" do
+      it "returns the user's default_product_context_id" do
+        session[:current_context_id] = nil
+        allow(user).to receive(:default_product_context_id).and_return(99)
+        expect(controller.send(:current_context_id)).to eq(99)
+      end
+
+      it "returns nil when user has no default_product_context_id" do
+        session[:current_context_id] = nil
+        allow(user).to receive(:default_product_context_id).and_return(nil)
+        expect(controller.send(:current_context_id)).to be_nil
+      end
     end
   end
 
   describe "#current_context_name" do
-    it "returns the current context name from the session" do
-      session[:current_context_id] = 1
-      session[:current_context_name] = "Test Context"
-      expect(controller.send(:current_context_name)).to eq("Test Context")
+    context "when session has current_context_name" do
+      it "returns the current context name from the session" do
+        session[:current_context_id] = 1
+        session[:current_context_name] = "Test Context"
+        expect(controller.send(:current_context_name)).to eq("Test Context")
+      end
     end
 
-    context "when no context is selected" do
-      it "returns 'No Context Selected'" do
+    context "when session context_name is nil but product from context exists" do
+      let(:product) { instance_double('Product', name: 'APNI Context') }
+
+      before do
         session[:current_context_id] = 1
         session[:current_context_name] = nil
+        allow(controller).to receive(:current_product_from_context).and_return(product)
+      end
+
+      it "returns the product name from context" do
+        expect(controller.send(:current_context_name)).to eq("APNI Context")
+      end
+    end
+
+    context "when product from context exists but name is nil" do
+      let(:product) { instance_double('Product', name: nil) }
+
+      before do
+        session[:current_context_id] = 1
+        session[:current_context_name] = nil
+        allow(controller).to receive(:current_product_from_context).and_return(product)
+      end
+
+      it "falls back to 'No Context Selected'" do
+        expect(controller.send(:current_context_name)).to eq("No Context Selected")
+      end
+    end
+
+    context "when current_product_from_context is nil" do
+      before do
+        session[:current_context_id] = 1
+        session[:current_context_name] = nil
+        allow(controller).to receive(:current_product_from_context).and_return(nil)
+      end
+
+      it "returns 'No Context Selected'" do
         expect(controller.send(:current_context_name)).to eq("No Context Selected")
       end
     end

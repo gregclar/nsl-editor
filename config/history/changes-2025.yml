@@ -1,3 +1,8 @@
+- :date: 10-Nov-2025
+  :jira_id: '144'
+  :jira_project: FLOR
+  :description: |-
+    Foa Project: Integrate default context service objects into product role controller actions
 - :date: 07-Nov-2025
   :jira_id: '1084'
   :description: |-
