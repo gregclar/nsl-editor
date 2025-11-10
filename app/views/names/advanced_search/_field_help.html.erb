@@ -338,6 +338,7 @@
   <% [
       {field_name: 'possibly-malformed:', description: "search for names attached to a genus that don't start with the genus name - they might be malformed"},
       {field_name: 'bad-name-path:', description: "search for names that have a malformed name-path i.e. based on comparison with its parent's name-path"},
+      {field_name: 'has-basionym-but-no-base-author:', description: "search for names that have a basionym in synonymy but no base author entry"},
       ].each do |val| %>
   <tr>
     <td class="width-20-percent">
