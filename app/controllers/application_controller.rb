@@ -169,7 +169,12 @@ class ApplicationController < ActionController::Base
     return unless product
 
     current_registered_user.default_product_context_id = product.context_id
-    current_registered_user.save
+
+    unless current_registered_user.save
+      logger.error("Could not save default product context for user #{current_registered_user.user_name}")
+      logger.error("Error: #{current_registered_user.errors.full_messages.join(', ')}")
+      return
+    end
 
     session[:current_context_id] = product.context_id
     session[:current_context_name] = product.name

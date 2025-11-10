@@ -357,6 +357,10 @@ RSpec.describe ApplicationController, type: :controller do
   end
 
   describe "#set_default_product_context_if_missing" do
+    before do
+      allow(Rails.configuration).to receive(:multi_product_tabs_enabled).and_return(true)
+    end
+
     context "when user already has a default_product_context_id" do
       before do
         allow(user).to receive(:default_product_context_id).and_return(42)
@@ -413,6 +417,58 @@ RSpec.describe ApplicationController, type: :controller do
         end
       end
 
+      context "and save fails" do
+        let(:product1) { instance_double('Product', context_id: 100, name: 'APNI') }
+        let(:products) { [product1] }
+        let(:errors) { instance_double('ActiveModel::Errors') }
+
+        before do
+          allow(user).to receive(:available_products_from_roles).and_return(products)
+          allow(user).to receive(:default_product_context_id=)
+          allow(user).to receive(:save).and_return(false)
+          allow(user).to receive(:user_name).and_return('test_user')
+          allow(user).to receive(:errors).and_return(errors)
+          allow(errors).to receive(:full_messages).and_return(['Validation failed'])
+        end
+
+        it "logs error messages with username and validation errors" do
+          expect(Rails.logger).to receive(:error).with("Could not save default product context for user test_user")
+          expect(Rails.logger).to receive(:error).with("Error: Validation failed")
+
+          controller.send(:set_default_product_context_if_missing)
+        end
+
+        it "does not set session[:current_context_id]" do
+          allow(Rails.logger).to receive(:error)
+
+          controller.send(:set_default_product_context_if_missing)
+
+          expect(session[:current_context_id]).to be_nil
+        end
+
+        it "does not set session[:current_context_name]" do
+          allow(Rails.logger).to receive(:error)
+
+          controller.send(:set_default_product_context_if_missing)
+
+          expect(session[:current_context_name]).to be_nil
+        end
+
+        it "attempts to set user's default_product_context_id before saving" do
+          allow(Rails.logger).to receive(:error)
+          expect(user).to receive(:default_product_context_id=).with(100)
+
+          controller.send(:set_default_product_context_if_missing)
+        end
+
+        it "attempts to save the user" do
+          allow(Rails.logger).to receive(:error)
+          expect(user).to receive(:save).and_return(false)
+
+          controller.send(:set_default_product_context_if_missing)
+        end
+      end
+
       context "and has multiple available products" do
         let(:product1) { instance_double('Product', context_id: 100, name: 'APNI') }
         let(:product2) { instance_double('Product', context_id: 200, name: 'APC') }
@@ -464,6 +520,22 @@ RSpec.describe ApplicationController, type: :controller do
           expect(session[:current_context_id]).to be_nil
           expect(session[:current_context_name]).to be_nil
         end
+      end
+    end
+
+    context "when multi_product_tabs_enabled is false" do
+      before do
+        allow(Rails.configuration).to receive(:multi_product_tabs_enabled).and_return(false)
+      end
+
+      it "returns early without making changes" do
+        expect(user).not_to receive(:default_product_context_id=)
+        expect(user).not_to receive(:save)
+
+        controller.send(:set_default_product_context_if_missing)
+
+        expect(session[:current_context_id]).to be_nil
+        expect(session[:current_context_name]).to be_nil
       end
     end
   end
