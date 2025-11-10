@@ -1,4 +1,8 @@
 - :date: 10-Nov-2025
+  :jira_id: '535'
+  :description: |-
+    Reference search: Add directives for <code>source-system</code>, <code>source-id</code>, and <code>source-id-string</code>
+- :date: 10-Nov-2025
   :jira_id: '144'
   :jira_project: FLOR
   :description: |-
