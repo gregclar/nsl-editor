@@ -1,3 +1,7 @@
+- :date: 11-Nov-2025
+  :jira_id: '1315'
+  :description: |-
+    Name search: Add directive <code>has-basionym-but-no-base-author</code>
 - :date: 10-Nov-2025
   :jira_id: '535'
   :description: |-
