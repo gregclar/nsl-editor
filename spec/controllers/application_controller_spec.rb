@@ -51,6 +51,7 @@ RSpec.describe ApplicationController, type: :controller do
 
       it 'sets the current_user and current_registered_user' do
         allow(controller).to receive(:current_product_from_context).and_return(nil)
+        allow(controller).to receive(:set_default_product_context_if_missing)
 
         controller.send(:continue_user_session)
 
@@ -58,10 +59,18 @@ RSpec.describe ApplicationController, type: :controller do
         expect(controller.instance_variable_get(:@current_registered_user)).to eq(user)
       end
 
+      it 'calls set_default_product_context_if_missing' do
+        allow(controller).to receive(:current_product_from_context).and_return(nil)
+        expect(controller).to receive(:set_default_product_context_if_missing)
+
+        controller.send(:continue_user_session)
+      end
+
       context 'when current_product_from_context is present' do
         before do
           session[:current_context_id] = 1
           allow(product_context_service).to receive(:product_with_context).with(1).and_return(product)
+          allow(controller).to receive(:set_default_product_context_if_missing)
         end
 
         it 'calls set_current_product_from_context on current_user' do
@@ -74,6 +83,7 @@ RSpec.describe ApplicationController, type: :controller do
       context 'when current_product_from_context is nil' do
         before do
           session[:current_context_id] = nil
+          allow(controller).to receive(:set_default_product_context_if_missing)
         end
 
         it 'does not call set_current_product_from_context' do
@@ -342,6 +352,118 @@ RSpec.describe ApplicationController, type: :controller do
 
         result = controller.send(:current_product_from_context)
         expect(result).to eq(product)
+      end
+    end
+  end
+
+  describe "#set_default_product_context_if_missing" do
+    context "when user already has a default_product_context_id" do
+      before do
+        allow(user).to receive(:default_product_context_id).and_return(42)
+      end
+
+      it "returns early without making changes" do
+        expect(user).not_to receive(:default_product_context_id=)
+        expect(user).not_to receive(:save)
+
+        controller.send(:set_default_product_context_if_missing)
+
+        expect(session[:current_context_id]).to be_nil
+        expect(session[:current_context_name]).to be_nil
+      end
+    end
+
+    context "when user has no default context" do
+      before do
+        allow(user).to receive(:default_product_context_id).and_return(nil)
+      end
+
+      context "and has available products" do
+        let(:product1) { instance_double('Product', context_id: 100, name: 'APNI') }
+        let(:products) { [product1] }
+
+        before do
+          allow(user).to receive(:available_products_from_roles).and_return(products)
+          allow(user).to receive(:default_product_context_id=)
+          allow(user).to receive(:save).and_return(true)
+        end
+
+        it "sets user's default_product_context_id to first product's context_id" do
+          expect(user).to receive(:default_product_context_id=).with(100)
+
+          controller.send(:set_default_product_context_if_missing)
+        end
+
+        it "saves the user" do
+          expect(user).to receive(:save)
+
+          controller.send(:set_default_product_context_if_missing)
+        end
+
+        it "sets session[:current_context_id] to product's context_id" do
+          controller.send(:set_default_product_context_if_missing)
+
+          expect(session[:current_context_id]).to eq(100)
+        end
+
+        it "sets session[:current_context_name] to product's name" do
+          controller.send(:set_default_product_context_if_missing)
+
+          expect(session[:current_context_name]).to eq('APNI')
+        end
+      end
+
+      context "and has multiple available products" do
+        let(:product1) { instance_double('Product', context_id: 100, name: 'APNI') }
+        let(:product2) { instance_double('Product', context_id: 200, name: 'APC') }
+        let(:products) { [product1, product2] }
+
+        before do
+          allow(user).to receive(:available_products_from_roles).and_return(products)
+          allow(user).to receive(:default_product_context_id=)
+          allow(user).to receive(:save).and_return(true)
+        end
+
+        it "uses the first product" do
+          expect(user).to receive(:default_product_context_id=).with(100)
+
+          controller.send(:set_default_product_context_if_missing)
+
+          expect(session[:current_context_id]).to eq(100)
+          expect(session[:current_context_name]).to eq('APNI')
+        end
+      end
+
+      context "and has no available products (empty array)" do
+        before do
+          allow(user).to receive(:available_products_from_roles).and_return([])
+        end
+
+        it "returns early without making changes" do
+          expect(user).not_to receive(:default_product_context_id=)
+          expect(user).not_to receive(:save)
+
+          controller.send(:set_default_product_context_if_missing)
+
+          expect(session[:current_context_id]).to be_nil
+          expect(session[:current_context_name]).to be_nil
+        end
+      end
+
+      context "and available_products_from_roles returns nil" do
+        before do
+          allow(user).to receive(:available_products_from_roles).and_return(nil)
+        end
+
+        it "returns early without making changes" do
+          expect(user).not_to receive(:default_product_context_id=)
+          expect(user).not_to receive(:save)
+
+          controller.send(:set_default_product_context_if_missing)
+
+          expect(session[:current_context_id]).to be_nil
+          expect(session[:current_context_name]).to be_nil
+        end
       end
     end
   end
