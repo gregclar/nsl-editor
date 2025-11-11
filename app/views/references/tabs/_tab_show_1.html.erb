@@ -2,12 +2,18 @@
 
 <%= @reference.ref_type.name %> by
 <%= link_to("#{@reference.author.name} (#{@reference.ref_author_role.name}) #{search_icon_on_tab}".html_safe, search_path(query_string: "id:#{@reference.author_id}",query_target: 'author'),title: 'Search for the author(s)/editor(s)...',class: 'author') %>
-<br>
-<span title="Title"><%= @reference.title %></span>
-<br>
+<% if @reference.title.match(/^Not set$/) %>
+  <br>with no title set<br>
+<% else %>
+<div data-controller="clipboard">
+  <span data-clipboard-target="source" title="Title"><%= @reference.title %></span>
+  <button data-action="clipboard#copy" class="">
+      <i class="fas fa-copy"></i>
+  </button>
+</div>
+<% end %>
 <% if @reference.parent %>
   <%= render partial: "references/tabs/details/parent" %>
-  <br>
 <% end %>
 <% if @reference.published? %>
   <%= render partial: "references/tabs/details/publication_details" %>
@@ -146,5 +152,3 @@
 <% if @reference.source_system %>
   <br>Migrated from <%= "#{@reference.source_system.downcase} ##{@reference.source_id}" %>
 <% end %>
-
-
