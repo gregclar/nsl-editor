@@ -1,4 +1,8 @@
 - :date: 11-Nov-2025
+  :jira_id: '969'
+  :description: |-
+    Reference details: Add clipboard copy for title and/or parent title.
+- :date: 11-Nov-2025
   :jira_id: '5620'
   :description: |-
     Instance search: Add directives <code>ref-id</code> and <code>parent-ref-id</code>

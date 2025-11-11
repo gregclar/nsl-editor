@@ -1,14 +1,23 @@
+<div data-controller="clipboard">
+
 <% if @reference.ref_type.name == 'Part' %>
   in<br/>
   <%= link_to("#{@reference.parent.citation_html} #{search_icon_on_tab}".html_safe, 
                           search_path(query_string: "parent-id:#{@reference.parent_id}",query_target: "reference"),
                           title: 'Search for the containing reference',
                           tabindex: increment_tab_index,
+                          data: {clipboard_target: "source"},
                           class: 'ref') %>
 <% else %>
   <%= link_to("#{@reference.parent.title} #{search_icon_on_tab}".html_safe, 
                           search_path(query_string: "parent-id:#{@reference.parent_id}",query_target: "reference"),
                           title: 'Search for the containing reference',
                           tabindex: increment_tab_index,
+                          data: {clipboard_target: "source"},
                           class: 'ref') %>
 <% end %>
+
+  <button data-action="clipboard#copy" class="">
+      <i class="fas fa-copy"></i>
+  </button>
+</div>
