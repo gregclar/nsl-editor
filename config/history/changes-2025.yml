@@ -1,4 +1,8 @@
 - :date: 11-Nov-2025
+  :jira_id: '1841'
+  :description: |-
+    Author edit: Add formatting example under the name field
+- :date: 11-Nov-2025
   :jira_id: '969'
   :description: |-
     Reference details: Add clipboard copy for title and/or parent title.
