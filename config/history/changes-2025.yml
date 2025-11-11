@@ -1,3 +1,7 @@
+- :date: 12-Nov-2025
+  :jira_id: '475'
+  :description: |-
+    Synonymy: Names typeahead now sorts first by rank
 - :date: 11-Nov-2025
   :jira_id: '1841'
   :description: |-
