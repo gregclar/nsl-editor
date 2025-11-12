@@ -809,5 +809,30 @@ FROM
    and child.simple_name not like parent.simple_name || '%')"
 'parent-different-to-family:':
   :where_clause: 'name.id in (select id from name where parent_id != family_id)'
-
+'isonym-has-early-secondary:':
+  :takes_no_arg: true,
+  :where_clause: "name.id in (
+select instance.name_id
+  from instance
+  join instance_type itype
+    on instance.instance_type_id = itype.id
+  join reference r
+    on instance.reference_id = r.id
+ where instance.cites_id is null
+   and itype.name = 'secondary reference'
+   and r.iso_publication_date = (
+    select min(iso_publication_date)
+      from reference ir
+           join instance ii
+        on ir.id = ii.reference_id
+     where ii.name_id = instance.name_id
+       and ii.cites_id is null
+  )
+   and instance.name_id in (
+    select n.id
+      from name n
+      join name_status ns
+        on n.name_status_id = ns.id
+ where ns.name            = 'isonym'
+       ))"
 
