@@ -1,4 +1,8 @@
 - :date: 13-Nov-2025
+  :jira_id: '1619'
+  :description: |-
+    Instance display: Avoid displaying "legitimate" name status for misapplied cross-references
+- :date: 13-Nov-2025
   :jira_id: '535'
   :description: |-
     Source search: Fix typos, make query help consistent for Name and Reference, add <code>source-id-string</code> directive for Names
