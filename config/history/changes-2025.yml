@@ -1,4 +1,9 @@
 - :date: 12-Nov-2025
+  :jira_id: '157'
+  :jira_project: FLOR
+  :description: |-
+    Foa Project: Fixup retrieval of product with selected context in name tab
+- :date: 12-Nov-2025
   :jira_id: '1724'
   :description: |-
     Name search: Add directive <code>isonym-has-early-secondary</code>
