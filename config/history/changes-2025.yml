@@ -1,4 +1,8 @@
 - :date: 14-Nov-2025
+  :jira_id: '3377'
+  :description: |-
+    Author delete: Delete button not offered if any comments; list dependents when they prevent delete
+- :date: 14-Nov-2025
   :jira_id: '969'
   :description: |-
     Reference details: Remove trial clipboard copy feature from title and/or parent title.

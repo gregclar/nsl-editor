@@ -99,7 +99,6 @@ from comment where comment.author_id = author.id)" },
     "ids:" => { multiple_values: true,
                 where_clause: " id = ?",
                 multiple_values_where_clause: " id in (?)" },
-    "duplicate-of-id:" => { where_clause: "duplicate_of_id = ? " },
     "notes:" => { where_clause: " lower(notes) like lower(?) " },
     "missed-diacritics:" => { where_clause: " (exists (
     select null
@@ -113,5 +112,9 @@ from comment where comment.author_id = author.id)" },
     where ascii(x) not between 1 and 127
    and length(abbrev) > 0
        )) " },
+   "duplicate-of-id:" => { multiple_values: true,
+                           where_clause: " duplicate_of_id = ?",
+                           multiple_values_where_clause:
+                                " duplicate_of_id in (?)" },
   }.freeze
 end

@@ -174,7 +174,8 @@ class Author < ApplicationRecord
     references.size.zero? &&
       duplicates.size.zero? &&
       names.size.zero? &&
-      no_other_authored_names?
+      no_other_authored_names? &&
+      comments.size.zero?
   end
 
   def no_other_authored_names?
