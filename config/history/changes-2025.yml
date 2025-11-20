@@ -1,3 +1,7 @@
+- :date: 20-Nov-2025
+  :jira_id: '5625'
+  :description: |-
+    Loader Distribution error message: Re-worded to make clearer
 - :date: 19-Nov-2025
   :release: true
 - :date: 14-Nov-2025
