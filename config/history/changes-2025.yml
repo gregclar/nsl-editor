@@ -1,3 +1,7 @@
+- :date: 21-Nov-2025
+  :jira_id: '5623'
+  :description: |-
+    Loader Name: Add drop-down selection that also allows typing new values for family field of new accepted/excluded names
 - :date: 20-Nov-2025
   :jira_id: '5625'
   :description: |-
