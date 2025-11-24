@@ -6,13 +6,12 @@
         </span>
       <% else %>
         <% if Rails.configuration.try(:show_classification_from_tree) %>
-          <% name_tree_service = Instances::NameTreeQueryService.call(instance: instance) %>
-          <% in_taxon_key = name_tree_service.name_trees.pluck(:name).join(', ') %>
+          <% in_taxon_key = instance.in_published_trees.pluck(:name).join(', ') %>
         <% else %>
           <% in_taxon_key = ShardConfig.classification_tree_key %>
         <% end %>
 
-        <%= editor_icon('check','',class: '') if in_taxon_key.present?%>
+        <%= editor_icon('check','',class: '') if in_taxon_key.present? %>
         <span class='small strong' title="In taxonomy">
           <%= in_taxon_key %>
         </span>
