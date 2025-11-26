@@ -1,3 +1,8 @@
+- :date: 26-Nov-2025
+  :jira_id: '160'
+  :jira_project: FLOR
+  :description: |-
+    Foa Project: Update the ability permission for tree_builder_auth
 - :date: 24-Nov-2025
   :jira_id: '161'
   :jira_project: FLOR
