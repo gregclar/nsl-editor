@@ -1,7 +1,12 @@
+- :date: 28-Nov-2025
+  :jira_id: '161'
+  :jira_project: FLOR
+  :description: |-
+    Foa Project: Display the feature flag config in the admin configuration page
 - :date: 26-Nov-2025
   :jira_id: '5627'
   :description: |-
-    Author typeaheads in Name records: Fix bug from NSL-967 so now you can select author abbreviations that are shown with extra information 
+    Author typeaheads in Name records: Fix bug from NSL-967 so now you can select author abbreviations that are shown with extra information
 - :date: 26-Nov-2025
   :jira_id: '160'
   :jira_project: FLOR
