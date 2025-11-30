@@ -1,7 +1,7 @@
 - :date: 01-Dec-2025
   :jira_id: '5631'
   :description: |-
-    Loader Name: Fix bug in NSL-5623 - edit tab now works again
+    Loader Name: Fix bug in NSL-5623 - edit tab now works again and offers a list of families
 - :date: 28-Nov-2025
   :jira_id: '161'
   :jira_project: FLOR
