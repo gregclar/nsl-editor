@@ -50,7 +50,7 @@
     </div>
 
     <datalist id="families">
-      <% @current_families.each do | family | %>
+      <% @current_families&.each do | family | %>
       <option value="<%= family %>">
     <% end %>
       <option value="new family for this batch">
