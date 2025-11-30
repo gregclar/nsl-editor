@@ -28,6 +28,7 @@ class Loader::NamesController < ApplicationController
   def show
     set_tab
     set_tab_index
+    @current_families = current_families if @tab == 'edit'
     @take_focus = params[:take_focus] == "true"
     new_comment if params[:tab] == "tab_review"
     if @view_mode == ::ViewMode::REVIEW
