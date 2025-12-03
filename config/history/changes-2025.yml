@@ -2,6 +2,8 @@
   :jira_id: '5628'
   :description: |-
     Update tab classification rendering and update permissions message
+- :date: 03-Dec-2025
+  :release: true
 - :date: 01-Dec-2025
   :jira_id: '5631'
   :description: |-
