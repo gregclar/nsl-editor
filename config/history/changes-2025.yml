@@ -1,3 +1,7 @@
+- :date: 04-Dec-2025
+  :jira_id: '5632'
+  :description: |-
+    Loader: Fix <code>no-family-heading:</code> query
 - :date: 01-Dec-2025
   :jira_id: '5628'
   :description: |-
