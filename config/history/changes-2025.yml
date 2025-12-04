@@ -1,4 +1,8 @@
 - :date: 04-Dec-2025
+  :jira_id: '5633'
+  :description: |-
+    Loader: Don't offer to create family headers for names in synonymy
+- :date: 04-Dec-2025
   :jira_id: '5632'
   :description: |-
     Loader: Fix <code>no-family-heading:</code> query
