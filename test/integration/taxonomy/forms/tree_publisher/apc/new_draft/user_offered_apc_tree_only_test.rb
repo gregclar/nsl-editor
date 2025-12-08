@@ -37,7 +37,7 @@ class TaxFormsTreePubAPCNewDraftUserOferedAPCTreeOnlyTest < ActionController::Te
   test "APC tree publisher user offered apc tree only" do
     user = users(:apc_tax_publisher)
     get(:new_draft,
-        params: {},
+        params: {tree_id: trees(:APC)},
         format: :js,
         xhr: true,
         session: { username: user.user_name,
@@ -45,10 +45,7 @@ class TaxFormsTreePubAPCNewDraftUserOferedAPCTreeOnlyTest < ActionController::Te
                    groups: ["login"]})
     assert_response :success, "This test assumes the new draft form will open for apc_tax_publisher"
     assert_dom 'form', true, 'Should be a form element'
-    assert_dom 'select', true, 'Should be a select element'
-    assert_dom "select:match('id', ?)", /tree_id/, true, 'Should be a tree_id select element'
-    assert_dom 'option', 1, 'Should be one option element'
-    assert_match(/<option value=[\\]*"#{trees(:APC).id}[\\]*".APC.*option>/, response.body, 'Should be an APC tree option')
+    assert_dom "input:match('id', ?)", /tree_id/, true, 'Should be a tree_id input element'
     assert_no_match(/FOA/i, response.body, 'Should be no FOA option')
   end
 end
