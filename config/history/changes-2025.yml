@@ -1,3 +1,7 @@
+- :date: 08-Dec-2025
+  :jira_id: '5609'
+  :description: |-
+    Taxonomy: Limit each Taxonomy Tree to at most one draft Tree Version per database
 - :date: 04-Dec-2025
   :jira_id: '5633'
   :description: |-

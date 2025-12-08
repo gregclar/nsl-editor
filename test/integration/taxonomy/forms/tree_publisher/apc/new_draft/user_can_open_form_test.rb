@@ -33,7 +33,7 @@ class TaxFormsTreePubAPCNewDraftUserCanOpenFormTest < ActionController::TestCase
   test "APC tree publisher user can open new draft form" do
     user = users(:apc_tax_publisher)
     get(:new_draft,
-        params: {},
+        params: {tree_id: trees(:APC)},
         format: :js,
         xhr: true,
         session: { username: user.user_name,

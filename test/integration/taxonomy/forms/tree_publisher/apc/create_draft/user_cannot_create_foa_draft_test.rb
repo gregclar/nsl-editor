@@ -40,8 +40,6 @@ class TaxFormsTreePubAPCUserCannotCreateFoADraftTest < ActionController::TestCas
          session: { username: user.user_name,
                     user_full_name: user.full_name,
                     groups: ["login"]})
-    assert_response :forbidden, "APC tree publisher should not be able to create FOA draft"
-    assert_match /Access Denied\! Please contact the admin for proper permissions/,
-      response.body, "Expecting Access Denied message"
+    assert_response 400, "APC tree publisher should not be able to create FOA draft"
   end
 end

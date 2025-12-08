@@ -33,7 +33,7 @@ class TaxFormsTreePubFOANewDraftUserCanOpenFormTest < ActionController::TestCase
   test "FOA tree publisher user can open new draft form" do
     user = users(:foa_tax_publisher)
     get(:new_draft,
-        params: {},
+        params: {tree_id: trees(:FOA)},
         format: :js,
         xhr: true,
         session: { username: user.user_name,
