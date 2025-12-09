@@ -50,7 +50,7 @@
     %>
   <% end %>
 
-  <% if can?(:create, @author) && tab_available?(tabs_array, 'comments') %>
+  <% if can?(:create, @author) && tab_available?(tabs_array, 'copy') %>
     <%= render partial: 'tab',
       locals: {
         first: false,
