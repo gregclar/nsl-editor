@@ -1,3 +1,7 @@
+- :date: 10-Dec-2025
+  :jira_id: '3047'
+  :description: |-
+    Reference: Add boilerplate advice about not entering pub date when type is 'Part'
 - :date: 09-Dec-2025
   :jira_id: '3451'
   :description: |-
