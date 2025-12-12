@@ -1,9 +1,137 @@
 <% increment_tab_index %>
-<br>
 
 <div>
-<h5>Name Resource</h5>
+  <h5>Name Resource</h5>
 
+  <div id="name-resource-list-container">
+    <!-- Example resource item - will be replaced with dynamic data -->
+    <div class="resource-list-item" style="margin-bottom: 10px; padding: 10px; border: 1px solid #e0e0e0; border-radius: 4px; background-color: #f9f9f9;">
+      <!-- Resource display view -->
+      <div id="resource-display-1" style="display: flex; justify-content: space-between; align-items: center;">
+        <div style="flex: 1; display: flex; align-items: center; gap: 20px;">
+          <span><strong>Host:</strong> Some host name</span>
+          <span><strong>Resource:</strong> Resource Value</span>
+          <span><strong>Note:</strong> Resource Note</span>
+          <span>
+            <a href="https://example.com/resource" target="_blank" title="Open resource URL">
+              <svg width="16" height="16" fill="currentColor" viewBox="0 0 16 16" style="vertical-align: text-bottom;">
+                <path d="M4.715 6.542 3.343 7.914a3 3 0 1 0 4.243 4.243l1.828-1.829A3 3 0 0 0 8.586 5.5L8 6.086a1.002 1.002 0 0 0-.154.199 2 2 0 0 1 .861 3.337L6.88 11.45a2 2 0 1 1-2.83-2.83l.793-.792a4.018 4.018 0 0 1-.128-1.287z"/>
+                <path d="M6.586 4.672A3 3 0 0 0 7.414 9.5l.775-.776a2 2 0 0 1-.896-3.346L9.12 3.55a2 2 0 1 1 2.83 2.83l-.793.792c.112.42.155.855.128 1.287l1.372-1.372a3 3 0 1 0-4.243-4.243L6.586 4.672z"/>
+              </svg>
+            </a>
+          </span>
+        </div>
+
+        <!-- Edit and Delete buttons -->
+        <div style="display: flex; gap: 5px; margin-left: 15px;">
+          <%= link_to "Edit",
+                      '#',
+                      id: "resource-edit-link-1",
+                      class: "btn btn-default btn-sm show-resource-edit-form",
+                      title: "Edit this resource",
+                      tabindex: increment_tab_index,
+                      data: {target_id: "resource-edit-form-1", display_id: "resource-display-1"},
+                      style: "min-width: 60px;" %>
+
+          <%= link_to "Delete",
+                      '#',
+                      id: "resource-delete-link-1",
+                      class: "btn btn-warning btn-sm unconfirmed-delete-link",
+                      title: "Delete this resource",
+                      tabindex: increment_tab_index,
+                      data: {show_this_id: "confirm-or-cancel-link-container-1"},
+                      style: "min-width: 60px;" %>
+        </div>
+      </div>
+
+      <!-- Resource edit form (hidden by default) -->
+      <div id="resource-edit-form-1" class="resource-edit-form hidden" style="margin-top: 10px;">
+        <div style="display: grid; grid-template-columns: 120px 1fr; gap: 10px; align-items: center;">
+          <label for="resource-host-1">Host:</label>
+          <%= text_field_tag 'resource_host', 'Some host name', id: 'resource-host-1', class: 'form-control', style: 'background-color: white; color: #333;', tabindex: increment_tab_index %>
+
+          <label for="resource-value-1">Resource Value:</label>
+          <%= text_field_tag 'resource_value', 'Resource Value', id: 'resource-value-1', class: 'form-control', style: 'background-color: white; color: #333;', tabindex: increment_tab_index %>
+
+          <label for="resource-note-1">Note:</label>
+          <%= text_field_tag 'resource_note', 'Resource Note', id: 'resource-note-1', class: 'form-control', style: 'background-color: white; color: #333;', tabindex: increment_tab_index %>
+
+          <label for="resource-url-1">URL:</label>
+          <%= text_field_tag 'resource_url', 'https://example.com/resource', id: 'resource-url-1', class: 'form-control', style: 'background-color: white; color: #333;', tabindex: increment_tab_index %>
+        </div>
+
+        <div style="margin-top: 10px; text-align: right;">
+          <%= link_to "Save",
+                      '#',
+                      class: "btn btn-primary btn-sm save-resource-btn",
+                      title: "Save changes to this resource",
+                      tabindex: increment_tab_index,
+                      data: {target_id: "resource-edit-form-1", display_id: "resource-display-1"},
+                      style: "min-width: 80px;" %>
+
+          <%= link_to "Cancel",
+                      '#',
+                      class: "btn btn-default btn-sm cancel-resource-edit-btn",
+                      title: "Cancel editing",
+                      tabindex: increment_tab_index,
+                      data: {target_id: "resource-edit-form-1", display_id: "resource-display-1"},
+                      style: "min-width: 80px;" %>
+        </div>
+      </div>
+
+      <!-- Confirm/Cancel delete container -->
+      <div id="confirm-or-cancel-link-container-1" class="confirm-or-cancel-delete-link hidden" style="margin-top: 10px; text-align: right;">
+        <%= link_to "Confirm delete",
+                    '#',
+                    class: "btn btn-danger btn-sm",
+                    title: "Really delete this resource",
+                    tabindex: increment_tab_index,
+                    remote: true,
+                    method: :delete,
+                    style: "min-width: 100px;" %>
+
+        <%= link_to "Cancel",
+                    '#',
+                    id: "cancel-delete-link-1",
+                    class: "btn btn-default btn-sm cancel-link",
+                    title: "Cancel delete",
+                    tabindex: increment_tab_index,
+                    data: {enable_this_id: "resource-delete-link-1",
+                           hide_this_id: "confirm-or-cancel-link-container-1"},
+                    style: "min-width: 100px;" %>
+      </div>
+    </div>
+
+    <!-- Add more resource items here when dynamic -->
+  </div>
+
+  <!-- Add new resource section -->
+  <div id="add-resource-section" style="margin-top: 20px; padding: 15px; border: 1px solid #d0d0d0; border-radius: 4px; background-color: #ffffff;">
+    <h6 style="margin-top: 0; margin-bottom: 10px;">Add New Resource</h6>
+    <div style="display: flex; align-items: center; gap: 10px;">
+      <%= select_tag 'resource_type',
+                     options_for_select([
+                       ['Select a resource type...', ''],
+                       ['APC', 'apc'],
+                       ['APNI', 'apni'],
+                       ['External Database', 'external_db'],
+                       ['Herbarium', 'herbarium'],
+                       ['Publication', 'publication']
+                     ]),
+                     id: 'resource-type-select',
+                     class: 'form-control',
+                     style: 'width: 250px; background-color: white; color: #333;',
+                     tabindex: increment_tab_index %>
+
+      <%= link_to "Add Resource",
+                  '#',
+                  id: "add-resource-button",
+                  class: "btn btn-primary btn-sm",
+                  title: "Add the selected resource type to this name",
+                  tabindex: increment_tab_index,
+                  style: "min-width: 100px;" %>
+    </div>
+  </div>
 </div>
 
 <div id="search-result-details-info-message-container" class="message-container"></div>
