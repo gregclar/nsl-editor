@@ -1,4 +1,8 @@
 - :date: 15-Dec-2025
+  :jira_id: '2753'
+  :description: |-
+    General: Prevent tags in search terms infecting the results page
+- :date: 15-Dec-2025
   :jira_id: '5547'
   :description: |-
     Name Resource: Initial UI for the resource tab in Name records
