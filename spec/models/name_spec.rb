@@ -59,29 +59,23 @@ RSpec.describe Name, type: :model do
   describe "#no_name_resource_dependents?" do
     let(:name) { create(:name) }
 
-    context "when resource_tab_enabled is true" do
-      before do
-        allow(Rails.configuration).to receive(:resource_tab_enabled).and_return(true)
+    context "when name has name_resources" do
+      let!(:name_resource) { create(:name_resource, name: name) }
+
+      it "returns false" do
+        expect(name.no_name_resource_dependents?).to be false
       end
+    end
 
-      context "when name has name_resources" do
-        let!(:name_resource) { create(:name_resource, name: name) }
-
-        it "returns false" do
-          expect(name.no_name_resource_dependents?).to be false
-        end
-      end
-
-      context "when name has no name_resources" do
-        it "returns true" do
-          expect(name.no_name_resource_dependents?).to be true
-        end
+    context "when name has no name_resources" do
+      it "returns true" do
+        expect(name.no_name_resource_dependents?).to be true
       end
     end
 
     context "when resource_tab_enabled is false" do
       before do
-        allow(Rails.configuration).to receive(:resource_tab_enabled).and_return(false)
+        allow(Rails.configuration).to receive(:try).with(:resource_tab_enabled).and_return(false)
       end
 
       it "returns true regardless of name_resources" do
