@@ -1,3 +1,7 @@
+- :date: 16-Dec-2025
+  :jira_id: '5547'
+  :description: |-
+    Name Resource: Initial backend models for the resource tab in Name records
 - :date: 15-Dec-2025
   :jira_id: '2753'
   :description: |-
