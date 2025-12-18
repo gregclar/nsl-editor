@@ -1,4 +1,4 @@
-<%= form_with url: name_name_resources_path(name), method: :post, remote: true do |f| %>
+<%= form_with url: create_name_resources_path(name), method: :post, remote: true do |f| %>
   <div id="add-resource-form-container" class="resource-edit-form hidden">
     <%= hidden_field_tag 'name_resource[resource_host_id]', '', id: 'resource-host-id-hidden' %>
     <div class="resource-form-grid">
@@ -40,7 +40,8 @@
         id: "save-new-resource-btn",
         class: "btn btn-primary btn-sm resource-btn-md",
         title: "Save new resource",
-        tabindex: increment_tab_index
+        tabindex: increment_tab_index,
+        data: { disable_with: "Saving..." }
       %>
       <%= link_to "Cancel",
         '#',
@@ -50,5 +51,20 @@
         tabindex: increment_tab_index
       %>
     </div>
+
+    <script>
+      document.addEventListener('DOMContentLoaded', function() {
+        const form = document.querySelector('#add-resource-form-container').closest('form');
+        const saveBtn = document.getElementById('save-new-resource-btn');
+
+        if (form && saveBtn) {
+          form.addEventListener('submit', function() {
+            saveBtn.disabled = true;
+            saveBtn.textContent = 'Saving...';
+            saveBtn.classList.add('disabled');
+          });
+        }
+      });
+    </script>
   </div>
 <% end %>

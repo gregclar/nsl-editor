@@ -6,7 +6,7 @@
   <div id="name-resource-list-container">
     <!-- Example resource item - will be replaced with dynamic data -->
     <% @name.name_resources.includes(:resource_host).each do |name_resource| %>
-      <%= render partial: "names/name_resources/list", locals: { name_resource: name_resource } %>
+      <%= render partial: "names/name_resources/list", locals: { name: @name, name_resource: name_resource } %>
     <% end %>
 
     <!-- Add more resource items here when dynamic -->

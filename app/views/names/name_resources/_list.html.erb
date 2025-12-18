@@ -44,12 +44,12 @@
   </div>
 
   <!-- Resource edit form (hidden by default) -->
-  <%= render partial: "names/form/name_resource", locals: { name_resource: name_resource } %>
+  <%= render partial: "names/name_resources/edit_resource_form", locals: { name: name, name_resource: name_resource } %>
 
   <!-- Confirm/Cancel delete container -->
   <div id="confirm-or-cancel-link-container-<%= name_resource.id %>" class="confirm-or-cancel-delete-link hidden">
     <%= link_to "Confirm delete",
-      name_name_resources_path(name_id: name_resource.name_id, id: name_resource.id),
+      destroy_name_resources_path(name_id: name_resource.name_id, id: name_resource.id),
       id: "resource-confirm-delete-link-#{name_resource.id}",
       class: "btn btn-danger btn-sm resource-btn-lg",
       title: "Really delete this resource",
