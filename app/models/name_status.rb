@@ -144,4 +144,12 @@ class NameStatus < ApplicationRecord
         [n.name, n.id]
       end
   end
+
+  def self.loader_options
+    where(" name not in ('nom. cult.', 'nom. cult., nom. alt.') ")
+      .not_deprecated
+      .ordered_by_name.collect do |n|
+        [n.name]
+    end
+  end
 end
