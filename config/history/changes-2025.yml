@@ -1,4 +1,8 @@
 - :date: 18-Dec-2025
+  :jira_id: '5547'
+  :description: |-
+    Name Resource: Delete functionality for the resource tab in Name records
+- :date: 18-Dec-2025
   :jira_id: '5383'
   :description: |-
     Loader: Set name-status options to match scientific name options
