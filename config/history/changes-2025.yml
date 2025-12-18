@@ -1,3 +1,7 @@
+- :date: 18-Dec-2025
+  :jira_id: '5383'
+  :description: |-
+    Loader: Set name-status options to match scientific name options
 - :date: 17-Dec-2025
   :jira_id: '5638'
   :description: |-
