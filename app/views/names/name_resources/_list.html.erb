@@ -49,7 +49,7 @@
   <!-- Confirm/Cancel delete container -->
   <div id="confirm-or-cancel-link-container-<%= name_resource.id %>" class="confirm-or-cancel-delete-link hidden">
     <%= link_to "Confirm delete",
-      destroy_name_resources_path(name_id: name_resource.name_id, id: name_resource.id),
+      name_name_resource_path(name, name_resource),
       id: "resource-confirm-delete-link-#{name_resource.id}",
       class: "btn btn-danger btn-sm resource-btn-lg",
       title: "Really delete this resource",

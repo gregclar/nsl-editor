@@ -1,4 +1,4 @@
-<%= form_with url: update_name_resources_path(name_id: name.id, id: name_resource.id), method: :put, remote: true do |f| %>
+<%= form_with url: name_name_resource_path(name, name_resource), method: :put, remote: true do |f| %>
   <div id="resource-edit-form-<%= name_resource.id%>" class="resource-edit-form hidden">
     <%= hidden_field_tag 'name_resource[resource_host_id]', name_resource.resource_host_id %>
     <div class="resource-form-grid">
@@ -12,7 +12,7 @@
       <%= text_field_tag 'name_resource[note]', name_resource.note, id: "resource-note-#{name_resource.id}", class: 'form-control resource-form-control', tabindex: increment_tab_index %>
 
       <label for="resource-url-<%= name_resource.id%>">URL:</label>
-      <%= text_field_tag 'resource_url', name_resource.resource_host.resolving_url, id: "resource-url-#{name_resource.id}", class: 'form-control resource-form-control', tabindex: increment_tab_index %>
+      <%= text_field_tag 'resource_url', name_resource.resource_host.resolving_url, id: "resource-url-#{name_resource.id}", class: 'form-control resource-form-control', tabindex: increment_tab_index, readonly: true, disabled: true %>
     </div>
 
     <div class="resource-form-actions">
@@ -20,7 +20,8 @@
                      id: "save-resource-btn-#{name_resource.id}",
                      class: "btn btn-primary btn-sm resource-btn-md",
                      title: "Save changes to this resource",
-                     tabindex: increment_tab_index %>
+                     tabindex: increment_tab_index,
+                     data: { disable_with: "Saving..." } %>
 
       <%= link_to "Cancel",
                   '#',
