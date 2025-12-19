@@ -1,3 +1,7 @@
+- :date: 19-Dec-2025
+  :jira_id: '3265'
+  :description: |-
+    Name Query: New search directive <code>first-instance-is-syn:</code>
 - :date: 18-Dec-2025
   :jira_id: '5547'
   :description: |-
