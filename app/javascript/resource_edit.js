@@ -1,6 +1,7 @@
 (function() {
-  var showResourceEditForm, hideResourceEditForm, saveResourceEdit;
+  var showResourceEditForm, hideResourceEditForm;
   var showAddResourceForm, hideAddResourceForm, saveNewResource;
+  var clearMessages;
 
   $(document).on("turbo:load", function() {
 
@@ -31,6 +32,11 @@
 
   });
 
+  clearMessages = function() {
+    $('.message-container').html('');
+    $('.error-container').html('');
+  };
+
   showResourceEditForm = function(event, $element) {
     debug('showResourceEditForm');
     const targetId = $element.data('target-id');
@@ -42,7 +48,7 @@
     // Show the edit form
     $(`#${targetId}`).removeClass('hidden');
 
-    $('.message-container').html('');
+    clearMessages();
     return event.preventDefault();
   };
 
@@ -57,15 +63,13 @@
     // Show the display view
     $(`#${displayId}`).removeClass('hidden');
 
-    $('.message-container').html('');
-    $('.error-container').html('');
+    clearMessages();
     return event.preventDefault();
   };
 
   showAddResourceForm = function(event, $element) {
     debug('showAddResourceForm');
 
-    // Get selected resource type from dropdown
     const selectedResourceId = $('#resource-type-select').val();
     const selectedResourceText = $('#resource-type-select option:selected').text();
 
@@ -75,32 +79,24 @@
       return event.preventDefault();
     }
 
-    // Populate the form fields
     $('#new-resource-host').val(selectedResourceText);
     $('#new-resource-host').data('resource-host-id', selectedResourceId);
 
-    // Set the hidden resource_host_id field for form submission
     $('#resource-host-id-hidden').val(selectedResourceId);
 
-    // Get the resolving URL from the selected option's data attribute
     const resolvingUrl = $('#resource-type-select option:selected').data('resolving-url') || '';
     $('#new-resource-url').val(resolvingUrl);
 
-    // Clear previous values
     $('#new-resource-value').val('');
     $('#new-resource-note').val('');
 
-    // Hide the dropdown and button
     $('.add-resource-form').addClass('hidden');
 
-    // Show the add form
     $('#add-resource-form-container').removeClass('hidden');
 
-    // Focus on the value field
     $('#new-resource-value').focus();
 
-    // Clear messages
-    $('.message-container').html('');
+    clearMessages();
 
     return event.preventDefault();
   };
@@ -108,20 +104,16 @@
   hideAddResourceForm = function(event) {
     debug('hideAddResourceForm');
 
-    // Hide the add form
     $('#add-resource-form-container').addClass('hidden');
 
-    // Show the dropdown and button again
     $('.add-resource-form').removeClass('hidden');
 
-    // Clear form fields
     $('#new-resource-host').val('');
     $('#new-resource-value').val('');
     $('#new-resource-note').val('');
     $('#new-resource-url').val('');
 
-    // Clear messages
-    $('.message-container').html('');
+    clearMessages();
 
     return event.preventDefault();
   };
@@ -134,6 +126,9 @@
       $('#search-result-details-error-message-container').html('Resource value is required');
       return event.preventDefault();
     }
+
+    // Allow form to submit via Rails remote form handling
+    return true;
   };
 
 }).call(this);
