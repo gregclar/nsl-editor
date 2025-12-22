@@ -40,7 +40,8 @@
         id: "save-new-resource-btn",
         class: "btn btn-primary btn-sm resource-btn-md",
         title: "Save new resource",
-        tabindex: increment_tab_index
+        tabindex: increment_tab_index,
+        data: { disable_with: "Saving..." }
       %>
       <%= link_to "Cancel",
         '#',

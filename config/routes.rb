@@ -193,10 +193,10 @@ Rails.application.routes.draw do
   match "names/new/:category/:random_id",
         as: "new_name_with_category_and_random_id", to: "names#new", via: :get
 
-  match "names/:name_id/name_resources/:id", as: "name_name_resources", to: "names/name_resources#destroy", via: :delete
   resources :names, only: %i[create update destroy] do
-    resources :name_resources, only: %i[create update], module: :names
+      resources :name_resources, only: [:create, :update, :destroy], controller: 'names/name_resources'
   end
+
   match "names/:id",
         as: "name_show",
         to: "names#show",

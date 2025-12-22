@@ -14,11 +14,6 @@
       return hideResourceEditForm(event, $(this));
     });
 
-    // Save resource edit
-    $('body').on('click', 'a.save-resource-btn', function(event) {
-      return saveResourceEdit(event, $(this));
-    });
-
     // Show add resource form when clicking Add Resource button
     $('body').on('click', '#add-resource-button', function(event) {
       return showAddResourceForm(event, $(this));
@@ -64,26 +59,6 @@
 
     $('.message-container').html('');
     $('.error-container').html('');
-    return event.preventDefault();
-  };
-
-  saveResourceEdit = function(event, $element) {
-    debug('saveResourceEdit');
-    const targetId = $element.data('target-id');
-    const displayId = $element.data('display-id');
-
-    // TODO: Add AJAX call to save the resource data here
-    // For now, just hide the form and show the display
-
-    // Hide the edit form
-    $(`#${targetId}`).addClass('hidden');
-
-    // Show the display view
-    $(`#${displayId}`).removeClass('hidden');
-
-    // Show success message
-    $('#search-result-details-info-message-container').html('Resource updated successfully');
-
     return event.preventDefault();
   };
 
