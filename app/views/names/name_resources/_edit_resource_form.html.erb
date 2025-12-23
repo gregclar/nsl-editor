@@ -3,7 +3,7 @@
     <%= hidden_field_tag 'name_resource[resource_host_id]', name_resource.resource_host_id %>
     <div class="resource-form-grid">
       <label for="resource-host-<%= name_resource.id%>">Host:</label>
-      <%= text_field_tag 'resource_host', name_resource.resource_host.name, id: "resource-host-#{name_resource.id}", class: 'form-control resource-form-control', tabindex: increment_tab_index %>
+      <%= text_field_tag 'resource_host', name_resource.resource_host.name, id: "resource-host-#{name_resource.id}", class: 'form-control resource-form-control', tabindex: increment_tab_index, readonly: true, disabled: true %>
 
       <label for="resource-value-<%= name_resource.id%>">Resource Value:</label>
       <%= text_field_tag 'name_resource[value]', name_resource.value, id: "resource-value-#{name_resource.id}", class: 'form-control resource-form-control', tabindex: increment_tab_index %>

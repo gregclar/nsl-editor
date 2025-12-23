@@ -1,6 +1,10 @@
 - :date: 23-Dec-2025
   :jira_id: '5547'
   :description: |-
+    Name Resource: JS cleanup and set the host field to read-only when editing name resources
+- :date: 23-Dec-2025
+  :jira_id: '5547'
+  :description: |-
     Name Resource: Fix bug preventing resource tab from displaying for some users
 - :date: 22-Dec-2025
   :jira_id: '5172'
