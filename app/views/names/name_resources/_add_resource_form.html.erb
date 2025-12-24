@@ -2,7 +2,7 @@
   <div id="add-resource-form-container" class="resource-edit-form hidden">
     <%= hidden_field_tag 'name_resource[resource_host_id]', '', id: 'resource-host-id-hidden' %>
     <div class="resource-form-grid">
-      <label for="new-resource-host">Host:</label>
+      <label for="new-resource-host">Resource:</label>
       <%= text_field_tag 'new_resource_host', '',
         id: "new-resource-host",
         class: 'form-control resource-form-control',
@@ -10,7 +10,7 @@
         tabindex: increment_tab_index
       %>
 
-      <label for="name_resource_value">Resource Value:</label>
+      <label for="name_resource_value">Value:</label>
       <%= text_field_tag 'name_resource[value]', '',
         id: "new-resource-value",
         class: 'form-control resource-form-control',
