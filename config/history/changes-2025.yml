@@ -1,4 +1,8 @@
 - :date: 24-Dec-2025
+  :jira_id: '5547'
+  :description: |-
+    Name Resource: Update form labels for host and url
+- :date: 24-Dec-2025
   :jira_id: '2986'
   :description: |-
     Instance display: Show Taxonomy status on LHS for Instances displayed within a Reference query
