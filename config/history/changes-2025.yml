@@ -1,3 +1,7 @@
+- :date: 24-Dec-2025
+  :jira_id: '2986'
+  :description: |-
+    Instance display: Show Taxonomy status on LHS for Instances displayed within a Reference query
 - :date: 23-Dec-2025
   :jira_id: '5547'
   :description: |-
