@@ -1,3 +1,7 @@
+- :date: 06-Jan-2026
+  :jira_id: '5667'
+  :description: |-
+    Reorder delete widget rendering logic for improved clarity in resource deletion flow
 - :date: 05-Jan-2026
   :jira_id: '5667'
   :description: |-
