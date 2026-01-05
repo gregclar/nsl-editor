@@ -1,4 +1,8 @@
 - :date: 05-Jan-2026
+  :jira_id: '5667'
+  :description: |-
+    Name Resource: Show name resources when deleting a name
+- :date: 05-Jan-2026
   :jira_id: '5626'
   :description: |-
     Reference edit: Hide some fields when the type is "Part"
