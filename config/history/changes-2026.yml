@@ -1,3 +1,7 @@
+- :date: 09-Jan-2026
+  :jira_id: '5634'
+  :description: |-
+    Loader Name Search: make "any-batch:" the default if no batch is set as a default or specified in the search
 - :date: 06-Jan-2026
   :jira_id: '5667'
   :description: |-
