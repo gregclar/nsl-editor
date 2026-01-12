@@ -111,7 +111,7 @@ class Search::ParsedRequest
     "bulk processing log" => "BulkProcessingLog",
   }.freeze
 
-  TARGET_MODEL_SUPPORTS_PRINT_DIRECTIVE = %w[Loader::Name]
+  TARGET_MODEL_SUPPORTS_PRINT_DIRECTIVE = %w[Loader::Name Instance]
 
   DEFAULT_QUERY_DIRECTIVES = {
     "author" => "name-or-abbrev:",
@@ -228,13 +228,13 @@ class Search::ParsedRequest
     unused_qs_tokens = parse_offset(unused_qs_tokens)
     unused_qs_tokens = preprocess_target(unused_qs_tokens)
     unused_qs_tokens = parse_target(unused_qs_tokens)
-    check_print_is_allowed
     unused_qs_tokens = parse_common_and_cultivar(unused_qs_tokens)
     unused_qs_tokens = inflate_show_instances_abbrevs(unused_qs_tokens)
     unused_qs_tokens = parse_show_instances(unused_qs_tokens)
     unused_qs_tokens = parse_order_instances(unused_qs_tokens)
     unused_qs_tokens = parse_view(unused_qs_tokens)
     unused_qs_tokens = parse_show_profiles(unused_qs_tokens)
+    check_print_is_allowed
     @where_arguments = unused_qs_tokens.join(" ")
   end
 
@@ -509,6 +509,10 @@ class Search::ParsedRequest
 
     unless TARGET_MODEL_SUPPORTS_PRINT_DIRECTIVE.include?(@target_model)
       raise "Error: #{@target_table.capitalize} doesn't support the print directive"
+    end
+
+    if @target_model == "Instance" && !@show_profiles
+      raise "Error: the print: directive for instances requires the show-profiles: directive"
     end
   end
 
