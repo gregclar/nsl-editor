@@ -60,7 +60,8 @@ class Search::ParsedRequest
               :print,
               :display,
               :show_loader_name_comments,
-              :show_profiles
+              :show_profiles,
+              :note_to_user
 
   DEFAULT_LIST_LIMIT = 100
   SIMPLE_QUERY_TARGETS = {
@@ -184,6 +185,7 @@ class Search::ParsedRequest
 
   def initialize(params)
     @params = params
+    @note_to_user = ''
     @query_string = canonical_query_string
     @query_string = @query_string.gsub(/  */, " ") unless @query_string.blank?
     @query_target = (@params["canonical_query_target"] || "").strip.downcase
@@ -456,6 +458,7 @@ class Search::ParsedRequest
            @params["query_string"].match(/\Aid:/i) ||
            @params["query_string"].match(/\bid-with-syn:/i) 
       @params["query_string"] = @params["query_string"].dup << ' any-batch:'
+      @note_to_user = 'any-batch applied'
     end
   end
 
