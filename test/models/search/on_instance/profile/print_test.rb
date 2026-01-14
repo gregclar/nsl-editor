@@ -51,11 +51,10 @@ class SearchOnInstanceProfilePrintTest < ActiveSupport::TestCase
       current_user: build_edit_user
     )
     search = Search::Base.new(params)
-    unless search.executed_query.results.empty?
-      # Results should contain both Instance and Profile::ProfileItem records
-      has_instance = search.executed_query.results.any? { |r| r.is_a?(Instance) }
-      has_profile_item = search.executed_query.results.any? { |r| r.is_a?(Profile::ProfileItem) }
-      assert has_instance || has_profile_item, "Should have at least Instance or ProfileItem results"
-    end
+    assert_not search.executed_query.results.empty?, "Search should return results to verify behavior"
+    # Results should contain both Instance and Profile::ProfileItem records
+    has_instance = search.executed_query.results.any? { |r| r.is_a?(Instance) }
+    has_profile_item = search.executed_query.results.any? { |r| r.is_a?(Profile::ProfileItem) }
+    assert has_instance || has_profile_item, "Should have at least Instance or ProfileItem results"
   end
 end
