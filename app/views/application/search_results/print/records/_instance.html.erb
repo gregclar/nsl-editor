@@ -1,0 +1,21 @@
+
+<tr class="search-result instance">
+  <td class="width-1-percent"></td>
+  <td class="text name main-content" colspan="5">
+    <span class='instance full-name'>
+      <%= search_result.name.try('full_name') %>
+      <% if search_result.name.try('name_status').present? %>
+        [<%= search_result.name.try('name_status').try('name') %>]
+      <% end %>
+    </span>
+    <br>
+    <span class='instance reference'>
+      <%= search_result.reference.citation if search_result.reference %>
+      <%= ": #{search_result.page}" if search_result.page.present? %>
+      <% if search_result.instance_type %>
+        [<%= search_result.instance_type.name %>]
+      <% end %>
+    </span>
+  </td>
+</tr>
+
