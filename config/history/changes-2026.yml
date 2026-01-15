@@ -1,3 +1,7 @@
+- :date: 15-Jan-2026
+  :jira_id: '5621'
+  :description: |-
+    Reference Search: make the <code>citation:</code> search directive the default
 - :date: 14-Jan-2026
   :jira_id: '177'
   :jira_project: FLOR

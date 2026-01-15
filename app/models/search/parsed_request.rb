@@ -117,7 +117,7 @@ class Search::ParsedRequest
     "author" => "name-or-abbrev:",
     "instance" => "name:",
     "name" => "sort_name:",
-    "reference" => "citation-text:",
+    "reference" => "citation:",
     "loader batch" => "name:",
     "batch stack" => "name:",
     "loader name" => "simple-name:",
