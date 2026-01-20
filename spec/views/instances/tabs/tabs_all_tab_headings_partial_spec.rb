@@ -163,6 +163,65 @@ RSpec.describe("instances/tabs/_all_tab_headings.html.erb", type: :view) do
     end
   end
 
+  context "when 'tab_classification' is offered with multi_product_tabs_enabled" do
+    let(:user_with_roles) { FactoryBot.create(:user) }
+    let(:user_without_roles) { FactoryBot.create(:user) }
+
+    before do
+      tabs_to_offer << "tab_classification"
+      allow(Rails.configuration).to(receive(:multi_product_tabs_enabled).and_return(true))
+    end
+
+    context "when current_product_from_context does not match the instance" do
+      before do
+        view.define_singleton_method(:current_product_from_context) { nil }
+      end
+
+      context "and user has blank roles" do
+        before do
+          allow(user_without_roles).to(receive(:roles).and_return([]))
+          user = user_without_roles
+          view.define_singleton_method(:current_registered_user) { user }
+        end
+
+        it "renders the 'Tree' tab" do
+          render
+          expect(rendered).to(have_selector("a#instance-classification-tab", text: "Tree"))
+        end
+      end
+
+      context "and user has roles" do
+        before do
+          allow(user_with_roles).to(receive(:roles).and_return(["some_role"]))
+          user = user_with_roles
+          view.define_singleton_method(:current_registered_user) { user }
+        end
+
+        it "does not render the 'Tree' tab" do
+          render
+          expect(rendered).not_to(have_selector("a#instance-classification-tab"))
+        end
+      end
+    end
+
+    context "when current_product_from_context matches the instance" do
+      let(:matching_product) { double("Product", has_the_same_reference?: true) }
+
+      before do
+        product = matching_product
+        view.define_singleton_method(:current_product_from_context) { product }
+        allow(user_with_roles).to(receive(:roles).and_return(["some_role"]))
+        user = user_with_roles
+        view.define_singleton_method(:current_registered_user) { user }
+      end
+
+      it "renders the 'Tree' tab regardless of user roles" do
+        render
+        expect(rendered).to(have_selector("a#instance-classification-tab", text: "Tree"))
+      end
+    end
+  end
+
   context "when 'tab_comments' is offered and the user has permission" do
     before do
       tabs_to_offer << "tab_comments"
