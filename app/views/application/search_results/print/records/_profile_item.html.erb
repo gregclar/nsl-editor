@@ -4,7 +4,7 @@
   <td class="text profile-item main-content" colspan="5">
     <div class="profile-item-content">
       <% if search_result.product_item_config.present? %>
-        <strong><%= search_result.product_item_config.display_html %></strong>
+        <h3 class="profile-item-header"><strong><%= search_result.product_item_config.display_html %></strong></h3>
       <% end %>
       <% if search_result.profile_text.present? %>
         <div class="profile-text" style="margin-top: 5px;">

@@ -1,4 +1,9 @@
 - :date: 19-Jan-2026
+  :jira_id: '173'
+  :jira_project: FLOR
+  :description: |-
+    Some css stying updates for the print view of profile items
+- :date: 19-Jan-2026
   :jira_id: '5673'
   :description: |-
     Batch Loader: create instance for misapplication - first check is now whether the parent is using an existing instance
