@@ -1,3 +1,8 @@
+- :date: 21-Jan-2026
+  :jira_id: '177'
+  :jira_project: FLOR
+  :description: |-
+    Additional fix for the issue where Tree tab wasn't properly working for users with treebuild simple AD group
 - :date: 20-Jan-2026
   :jira_id: '177'
   :jira_project: FLOR
