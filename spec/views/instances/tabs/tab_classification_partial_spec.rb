@@ -4,6 +4,8 @@ require "rails_helper"
 
 RSpec.describe "instances/tabs/_tab_classification.html.erb", type: :view do
   let(:user) { FactoryBot.create(:user) }
+  let(:user_with_roles) { FactoryBot.create(:user) }
+  let(:user_without_roles) { FactoryBot.create(:user) }
   let(:instance) { FactoryBot.create(:instance) }
   let(:working_draft) { double("TreeVersion", id: 1) }
 
@@ -14,6 +16,7 @@ RSpec.describe "instances/tabs/_tab_classification.html.erb", type: :view do
   before do
     assign(:instance, instance)
     allow(view).to receive(:increment_tab_index).and_return(0)
+    allow(Rails.configuration).to receive(:multi_product_tabs_enabled).and_return(false)
   end
 
   context "when @working_draft is not present" do
@@ -47,12 +50,12 @@ RSpec.describe "instances/tabs/_tab_classification.html.erb", type: :view do
     context "when user can place names in the draft" do
       before do
         allow(view).to receive(:can?).with(:place_name, working_draft).and_return(true)
+        stub_workspace_tab_partial
       end
 
       context "when multi_product_tabs_enabled is false" do
         before do
-          allow(Rails.configuration).to receive(:try).with("multi_product_tabs_enabled").and_return(false)
-          stub_workspace_tab_partial
+          allow(Rails.configuration).to receive(:multi_product_tabs_enabled).and_return(false)
         end
 
         it "renders the workspace tab_main partial" do
@@ -63,17 +66,18 @@ RSpec.describe "instances/tabs/_tab_classification.html.erb", type: :view do
 
       context "when multi_product_tabs_enabled is true" do
         before do
-          allow(Rails.configuration).to receive(:try).with("multi_product_tabs_enabled").and_return(true)
+          allow(Rails.configuration).to receive(:multi_product_tabs_enabled).and_return(true)
         end
 
         context "when current_product_from_context matches the instance" do
           let(:matching_product) { double("Product", has_the_same_reference?: true) }
 
           before do
-            view.define_singleton_method(:current_product_from_context) { matching_product }
-            view.define_singleton_method(:current_registered_user) { user }
-            allow(user).to receive(:roles).and_return(["some_role"])
-            stub_workspace_tab_partial
+            product = matching_product
+            view.define_singleton_method(:current_product_from_context) { product }
+            allow(user_with_roles).to receive(:roles).and_return(["some_role"])
+            u = user_with_roles
+            view.define_singleton_method(:current_registered_user) { u }
           end
 
           it "renders the workspace tab_main partial" do
@@ -89,9 +93,9 @@ RSpec.describe "instances/tabs/_tab_classification.html.erb", type: :view do
 
           context "and user has blank roles" do
             before do
-              allow(user).to receive(:roles).and_return([])
-              view.define_singleton_method(:current_registered_user) { user }
-              stub_workspace_tab_partial
+              allow(user_without_roles).to receive(:roles).and_return([])
+              u = user_without_roles
+              view.define_singleton_method(:current_registered_user) { u }
             end
 
             it "renders the workspace tab_main partial" do
@@ -102,8 +106,9 @@ RSpec.describe "instances/tabs/_tab_classification.html.erb", type: :view do
 
           context "and user has roles" do
             before do
-              allow(user).to receive(:roles).and_return(["some_role"])
-              view.define_singleton_method(:current_registered_user) { user }
+              allow(user_with_roles).to receive(:roles).and_return(["some_role"])
+              u = user_with_roles
+              view.define_singleton_method(:current_registered_user) { u }
             end
 
             it "renders the permission denied message" do
