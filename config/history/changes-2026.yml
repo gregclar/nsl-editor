@@ -1,3 +1,8 @@
+- :date: 22-Jan-2026
+  :jira_id: '174'
+  :jira_project: FLOR
+  :description: |-
+    Add a print icon link to the Profile section header in the Instance view tab
 - :date: 21-Jan-2026
   :jira_id: '177'
   :jira_project: FLOR
