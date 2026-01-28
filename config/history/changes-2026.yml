@@ -1,3 +1,8 @@
+- :date: 27-Jan-2026
+  :jira_id: '174'
+  :jira_project: FLOR
+  :description: |-
+    Bypass the print dialog when clicking the print icon link in the Profile section header in the Instance view tab
 - :date: 23-Jan-2026
   :jira_id: '143'
   :jira_project: FLOR
