@@ -1,3 +1,8 @@
+- :date: 03-Feb-2026
+  :jira_id: '178'
+  :jira_project: FLOR
+  :description: |-
+    Don't show the Profile tab for instance that are part of a concept within a name
 - :date: 29-Jan-2026
   :jira_id: '161'
   :jira_project: FLOR
