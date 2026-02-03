@@ -123,5 +123,7 @@ from comment where comment.author_id = author.id)" },
                                                                             where duplicate_of_id is not null)
                                                               and duplicate_of_id is not null)",
                                       takes_no_arg: true},
+    "master-id:" => { where_clause: " id = ? or
+                                 duplicate_of_id = ?" },
   }.freeze
 end

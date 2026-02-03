@@ -1,4 +1,8 @@
 - :date: 03-Feb-2026
+  :jira_id: '5511'
+  :description: |-
+    Query duplicates for a record: add search directive <code>master-id:</code> to Author and documented it for Author, Name, and Reference
+- :date: 03-Feb-2026
   :jira_id: '5709'
   :description: |-
     Duplicate query: add search directive <code>is-a-duplicate-and-master:</code> to Author, Name, and Reference
