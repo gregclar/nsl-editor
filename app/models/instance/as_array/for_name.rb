@@ -55,8 +55,8 @@ class Instance::AsArray::ForName < Array
   def sorted_instances(instances)
     all = instances.to_a
     drafts, non_drafts = all.partition(&:draft?)
-    drafts.sort_by { |i| author_name(i) }.reverse +
-      non_drafts.sort { |i1, i2| sort_fields(i1) <=> sort_fields(i2) }
+    non_drafts.sort { |i1, i2| sort_fields(i1) <=> sort_fields(i2) } +
+      drafts.sort_by { |i| author_name(i) }.reverse
   end
 
   def sort_fields(instance)
