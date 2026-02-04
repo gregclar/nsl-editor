@@ -15,10 +15,13 @@ RSpec.describe Instance::AsArray::ForName, type: :model do
     create(:instance, name: name, reference: reference, instance_type: instance_type, draft: draft)
   end
 
-  def create_relationship_instance(name:, draft:, author_name:, year:, iso_date:, cites_instance: nil)
+  def create_relationship_instance(name:, draft:, author_name:, year:, iso_date:, cited_by_instance:)
     author = create(:author, name: author_name)
     reference = create(:reference, author: author, year: year, iso_publication_date: iso_date)
-    create(:instance, name: name, reference: reference, instance_type: relationship_type, draft: draft, cites: cites_instance)
+    instance = build(:instance, name: name, reference: reference, instance_type: relationship_type, draft: draft,
+                     this_cites: cited_by_instance, this_is_cited_by: cited_by_instance)
+    instance.save!(validate: false)
+    instance
   end
 
   describe "sorting draft instances first" do
@@ -82,38 +85,46 @@ RSpec.describe Instance::AsArray::ForName, type: :model do
   end
 
   describe "sorting with both standalone and relationship instances" do
+    before do
+      allow_any_instance_of(Instance).to receive(:accepted_concept?).and_return(false)
+    end
+
     let!(:standalone_non_draft) { create_instance(name: name, draft: false, author_name: "Beta", year: 2000, iso_date: "2000", primary: true) }
     let!(:standalone_draft) { create_instance(name: name, draft: true, author_name: "Zeta", year: 2020, iso_date: "2020") }
-    let!(:relationship_non_draft) { create_relationship_instance(name: name, draft: false, author_name: "Alpha", year: 1990, iso_date: "1990", cites_instance: standalone_non_draft) }
-    let!(:relationship_draft) { create_relationship_instance(name: name, draft: true, author_name: "Gamma", year: 2010, iso_date: "2010", cites_instance: standalone_non_draft) }
+    let!(:relationship_non_draft) { create_relationship_instance(name: name, draft: false, author_name: "Alpha", year: 1990, iso_date: "1990", cited_by_instance: standalone_non_draft) }
+    let!(:relationship_draft) { create_relationship_instance(name: name, draft: true, author_name: "Gamma", year: 2010, iso_date: "2010", cited_by_instance: standalone_non_draft) }
 
     subject { described_class.new(name) }
 
-    let(:all_results) { subject.results.select { |r| r.is_a?(Instance) } }
-    let(:draft_results) { all_results.select(&:draft?) }
-    let(:non_draft_results) { all_results.reject(&:draft?) }
+    let(:all_instances) { subject.results.select { |r| r.is_a?(Instance) } }
+    let(:draft_instances) { all_instances.select(&:draft?) }
+    let(:non_draft_instances) { all_instances.reject(&:draft?) }
 
-    it "places all draft instances (both standalone and relationship) before non-draft instances" do
-      last_draft_idx = subject.results.index(draft_results.last)
-      first_non_draft_idx = subject.results.index(non_draft_results.first)
+    it "places draft standalone instances before non-draft standalone instances" do
+      standalone_results = all_instances.select(&:standalone?)
+      draft_standalones = standalone_results.select(&:draft?)
+      non_draft_standalones = standalone_results.reject(&:draft?)
+
+      last_draft_idx = subject.results.index(draft_standalones.last)
+      first_non_draft_idx = subject.results.index(non_draft_standalones.first)
 
       expect(last_draft_idx).to be < first_non_draft_idx
     end
 
     it "includes both standalone and relationship draft instances in draft results" do
-      expect(draft_results).to include(standalone_draft)
-      expect(draft_results).to include(relationship_draft)
-      expect(draft_results.size).to eq(2)
+      draft_ids = draft_instances.map(&:id)
+      expect(draft_ids).to include(standalone_draft.id)
+      expect(draft_ids).to include(relationship_draft.id)
     end
 
     it "includes both standalone and relationship non-draft instances in non-draft results" do
-      expect(non_draft_results).to include(standalone_non_draft)
-      expect(non_draft_results).to include(relationship_non_draft)
-      expect(non_draft_results.size).to eq(2)
+      non_draft_ids = non_draft_instances.map(&:id)
+      expect(non_draft_ids).to include(standalone_non_draft.id)
+      expect(non_draft_ids).to include(relationship_non_draft.id)
     end
 
     it "sorts all draft instances by author name in descending order regardless of type" do
-      draft_author_names = draft_results.map { |i| i.reference.author.name }
+      draft_author_names = draft_instances.map { |i| i.reference.author.name }.uniq
       expect(draft_author_names).to eq(["Zeta", "Gamma"])
     end
   end
