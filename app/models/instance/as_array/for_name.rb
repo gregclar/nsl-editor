@@ -53,7 +53,7 @@ class Instance::AsArray::ForName < Array
   end
 
   def sorted_instances(instances)
-    all = instances.includes([:name])
+    all = instances.to_a
     drafts, non_drafts = all.partition(&:draft?)
     drafts.sort_by { |i| author_name(i) }.reverse +
       non_drafts.sort { |i1, i2| sort_fields(i1) <=> sort_fields(i2) }
