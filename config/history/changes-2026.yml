@@ -1,3 +1,7 @@
+- :date: 06-Feb-2026
+  :jira_id: ''
+  :description: |-
+    Address n+1 query issue in the user.is? by memoizing the role_names for the user
 - :date: 04-Feb-2026
   :jira_id: '5696'
   :description: |-
