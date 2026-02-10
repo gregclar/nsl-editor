@@ -1,3 +1,7 @@
+- :date: 06-Feb-2026
+  :jira_id: 'NSL-5711'
+  :description: |-
+    Ruby 3.4.8 upgrade
 - :date: 10-Feb-2026
   :jira_id: '179'
   :jira_project: FLOR
