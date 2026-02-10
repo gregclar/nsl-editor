@@ -1,3 +1,8 @@
+- :date: 10-Feb-2026
+  :jira_id: '179'
+  :jira_project: FLOR
+  :description: |-
+    Enable reference update for foa when a reference is not used by any related table
 - :date: 06-Feb-2026
   :jira_id: ''
   :description: |-
