@@ -1,3 +1,8 @@
+- :date: 13-Feb-2026
+  :jira_id: '143'
+  :jira_project: FLOR
+  :description: |-
+    Only show the accepted trees in the menu for users without roles
 - :date: 12-Feb-2026
   :jira_id: '5711'
   :description: |-
