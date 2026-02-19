@@ -1,14 +1,13 @@
 #
 # this is the command I used to test these scripts
 #
-# dropdb ned_test; createdb -O nsl ned_test; bundle exec rake db:schema:dump; bundle exec rake db:prep_structure_sql; RAILS_ENV=test bin/rails db:setup
+# dropdb ned_test; createdb -O nsl ned_test; bundle exec rake db:schema:dump; bundle exec rake db:clean_up_structure_sql; RAILS_ENV=test bin/rails db:setup
 #
 #
 #
 namespace :db do
-  desc "Prepare the structure.sql file - run this after you generate structure.sql"
-  task prep_structure_sql: :environment do
-    puts "Place holder for preparing the structure.sql file after you generate a new one."
+  desc "Clean up the structure.sql file - run this after you generate structure.sql"
+  task clean_up_structure_sql: :environment do
     sh "ed db/structure.sql <lib/scripts/structure/a.ed"
     sh "ed db/structure.sql <lib/scripts/structure/b.ed"
     sh "ed db/structure.sql <lib/scripts/structure/c.ed"
@@ -52,46 +51,3 @@ end
 
 
 
-# ed statements to remove sections of the structure.sql file
-#
-#
-#
-#   create role rdsamin;
-#   create role nsl_readonly;
-#   create role rdfuser;
-#   create role nsl_graph_read;
-#   create role read_only;
-
-
-#   DETAIL:  Could not open extension control file "/opt/homebrew/opt/postgresql@15/share/postgresql@15/extension/oracle_fdw.control": No such file or directory.
-#   HINT:  The extension must first be installed on the system where PostgreSQL is running.
-#   bin/rails aborted!
-#   failed to execute:
-#   psql --set ON_ERROR_STOP=1 --quiet --no-psqlrc --output /dev/null --file /Users/gclarke/anbg/rails/nedruby/db/structure.sql ned_test
-
-
-
-#   nsl_global_seq
-
-
-#   CREATE SEQUENCE public.nsl_global_seq
-    #   START WITH 1
-    #   INCREMENT BY 1
-    #   CACHE 1;
-#
-#
-#   loader.nsl_global_seq
-
-
-
-# for testing:  % dropdb ned_test; createdb -O nsl ned_test; RAILS_ENV=test bin/rails db:setup
-#
-#
-# SET default_tablespace = '';
-
-
-
-# add loader.nsl_global_seq
-# remove min/max from public.nsl_global_seq
-# remove oracle_fdw stuff
-# see more in diff-my-structure-sql-structure-sql
