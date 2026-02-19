@@ -1,0 +1,8 @@
+=
+/CREATE MATERIALIZED VIEW public.taxon_mv AS/
+.,/WITH NO DATA;/d
+=
+/COMMENT ON MATERIALIZED VIEW public.taxon_mv/
+d
+g/COMMENT ON COLUMN public.taxon_mv\./d
+wq
