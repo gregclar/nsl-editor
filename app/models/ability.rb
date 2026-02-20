@@ -60,6 +60,7 @@ class Ability
     is_name_index  = user.product_from_context.nil? || user.product_from_context&.is_name_index?
 
     # NOTES: Broader permissions come first
+    reviewer_auth(user) if user.with_role?('tree-reviewer')
     draft_editor(user) if user.with_role?('draft-editor') && not_name_index
     profile_editor(user) if user.with_role?('profile-editor') && not_name_index
     draft_profile_editor if user.with_role?('draft-profile-editor') && not_name_index
@@ -399,7 +400,7 @@ class Ability
     can "loader/instances-loader-2",   :all
   end
 
-  def reviewer_auth
+  def reviewer_auth(session_user = nil)
     can "loader/name/review/comments",              :all
     can "loader/name/review/votes",                 :all
     can "loader/name/review/vote/in_bulk",          :all
@@ -408,6 +409,7 @@ class Ability
     can "loader/names",                             "tab_details"
     can "loader/names",                             "tab_comment"
     can "loader/names",                             "tab_vote"
+    can "product_contexts/set_context", "create" if session_user
   end
 
   def tree_publisher_auth(session_user)

@@ -264,7 +264,7 @@ class ApplicationController < ActionController::Base
 
     return if @current_user.edit?
 
-    return unless @current_user.reviewer?
+    return unless @current_user.reviewer? || @current_user.with_role?('tree-reviewer')
 
     @view_mode = session[:view_mode] = ViewMode::REVIEW
   end
