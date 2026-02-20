@@ -11,6 +11,8 @@ namespace :db do
     sh "ed db/structure.sql <lib/scripts/structure/a.ed"
     sh "ed db/structure.sql <lib/scripts/structure/b.ed"
     sh "ed db/structure.sql <lib/scripts/structure/c.ed"
+    sh "ed db/structure.sql <lib/scripts/structure/c1.ed"
+    sh "ed db/structure.sql <lib/scripts/structure/c2.ed"
     sh "ed db/structure.sql <lib/scripts/structure/d.ed"
     sh "ed db/structure.sql <lib/scripts/structure/e.ed"
     sh "ed db/structure.sql <lib/scripts/structure/f.ed"
