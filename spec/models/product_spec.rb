@@ -34,6 +34,7 @@ RSpec.describe Product, type: :model do
   describe '.with_context_and_tree' do
     let!(:context_id) { 1 }
     let!(:tree) { create(:tree) }
+    let!(:other_tree) { create(:tree) }
     let!(:product_with_tree) do
       create(:product, name: 'WithTree', context_id: context_id, tree_id: tree.id)
     end
@@ -41,7 +42,7 @@ RSpec.describe Product, type: :model do
       create(:product, name: 'NoTree', context_id: context_id, tree_id: nil)
     end
     let!(:product_other_context) do
-      create(:product, name: 'OtherContext', context_id: 2, tree_id: tree.id)
+      create(:product, name: 'OtherContext', context_id: 2, tree_id: other_tree.id)
     end
 
     it 'returns products with given context_id and non-nil tree_id' do
