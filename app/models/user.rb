@@ -153,7 +153,7 @@ class User < ApplicationRecord
   end
 
   def grantable_product_roles_for_select
-    (Product::Role.all - product_roles).sort_by(&:name)
+    (Product::Role.non_admins - product_roles).sort_by(&:name)
       .map { |pr| [pr.name, pr.id] }
   end
 
