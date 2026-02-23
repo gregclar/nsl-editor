@@ -11,6 +11,7 @@ RSpec.describe Ability, type: :model do
     allow(session_user).to receive(:with_role?).with('profile-reference').and_return(false)
     allow(session_user).to receive(:with_role?).with('tree-builder').and_return(false)
     allow(session_user).to receive(:with_role?).with('tree-publisher').and_return(false)
+    allow(session_user).to receive(:with_role?).with('tree-reviewer').and_return(false)
     allow(session_user).to receive(:with_role?).with('name-index-editor').and_return(false)
     allow(session_user).to receive(:user_id).and_return(1)
     allow(session_user).to receive(:product_from_context).and_return(nil)
@@ -1244,6 +1245,48 @@ RSpec.describe Ability, type: :model do
 
     it "allows accessing loader/names tab_vote" do
       expect(subject.can?("loader/names", "tab_vote")).to eq true
+    end
+  end
+
+  describe "#tree-reviewer role (via with_role?)" do
+    before do
+      allow(session_user).to receive(:with_role?).with('tree-reviewer').and_return(true)
+    end
+
+    it "allows all actions on loader/name/review/comments" do
+      expect(subject.can?("loader/name/review/comments", :all)).to eq true
+    end
+
+    it "allows all actions on loader/name/review/votes" do
+      expect(subject.can?("loader/name/review/votes", :all)).to eq true
+    end
+
+    it "allows all actions on loader/name/review/vote/in_bulk" do
+      expect(subject.can?("loader/name/review/vote/in_bulk", :all)).to eq true
+    end
+
+    it "allows switching on loader/batch/review/mode" do
+      expect(subject.can?("loader/batch/review/mode", "switch_on")).to eq true
+    end
+
+    it "allows showing loader/names" do
+      expect(subject.can?("loader/names", "show")).to eq true
+    end
+
+    it "allows accessing loader/names tab_details" do
+      expect(subject.can?("loader/names", "tab_details")).to eq true
+    end
+
+    it "allows accessing loader/names tab_comment" do
+      expect(subject.can?("loader/names", "tab_comment")).to eq true
+    end
+
+    it "allows accessing loader/names tab_vote" do
+      expect(subject.can?("loader/names", "tab_vote")).to eq true
+    end
+
+    it "allows setting product context" do
+      expect(subject.can?("product_contexts/set_context", "create")).to eq true
     end
   end
 

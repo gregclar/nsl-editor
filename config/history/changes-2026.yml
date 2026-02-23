@@ -1,3 +1,19 @@
+- :date: 20-Feb-2026
+  :jira_id: 'NSL-5719'
+  :description: |-
+    Enable use of product tree reviewer role
+- :date: 20-Feb-2026
+  :jira_id: ''
+  :description: |-
+    Dependabot updates Nokogiri from 1.18.9 to 1.19.1
+- :date: 19-Feb-2026
+  :jira_id: ''
+  :description: |-
+    Dependabot updatesRack from 3.2.3 to 3.2.5
+- :date: 17-Feb-2026
+  :jira_id: '5715'
+  :description: |-
+    Rails 8.0.4 upgrade
 - :date: 13-Feb-2026
   :jira_id: '143'
   :jira_project: FLOR
