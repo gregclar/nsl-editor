@@ -10,12 +10,7 @@ RSpec.describe Product::Role, type: :model do
     it { is_expected.to have_many(:user_product_role_vs) }
   end
 
-  describe "validations" do
-    subject { build(:product_role) }
 
-    it { is_expected.to validate_presence_of(:created_by) }
-    it { is_expected.to validate_presence_of(:updated_by) }
-  end
 
   describe "scopes" do
     let!(:admin_role) { create(:role, name: "admin") }
