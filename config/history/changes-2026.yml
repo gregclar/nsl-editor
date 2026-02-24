@@ -1,4 +1,8 @@
 - :date: 24-Feb-2026
+  :jira_id: '1771'
+  :description: |-
+    Instance query: new directive <code>nov-lacks-replaced-syn:</code>
+- :date: 24-Feb-2026
   :jira_id: '1729'
   :description: |-
     Instance query: change <code>species-or-below-syn-with-genus-or-above:</code> to exclude infragenus and unranked cases

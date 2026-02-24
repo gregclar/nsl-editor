@@ -353,6 +353,19 @@ from instance i
    and not tjv.published
    and lower(lb.name) = lower(?))",
                            order: "instance.id" },
+"nov-lacks-replaced-syn:" => { takes_no_arg: true,
+                               where_clause: "id in (select i.id
+  from instance i
+  join instance_type it
+    on i.instance_type_id = it.id
+ where it.name in ('nom. nov.', 'nom. et stat. nov.')
+   and not exists (select null
+     from instance syn
+          join instance_type syn_type
+          on syn.instance_type_id = syn_type.id
+    where syn.cited_by_id = i.id
+      and syn_type.name = 'replaced synonym'
+  ) )"},
   }.freeze
 
   def self.resolve(field)
