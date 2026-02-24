@@ -1,3 +1,7 @@
+- :date: 24-Feb-2026
+  :jira_id: '1729'
+  :description: |-
+    Instance query: change <code>species-or-below-syn-with-genus-or-above:</code> to exclude infragenus and unranked cases
 - :date: 23-Feb-2026
   :jira_id: '1668'
   :description: |-
