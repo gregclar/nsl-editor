@@ -256,7 +256,7 @@ from comment where comment.instance_id = instance.id)",
     ON cites_i.name_id = name_of_cites_i.id
  INNER JOIN name_rank rank_of_name_of_cites_i
     ON name_of_cites_i.name_rank_id = rank_of_name_of_cites_i.id
-where (rank_of_name_of_cites_i.sort_order >= (select sort_order from name_rank where name = 'Species') and rank_of_name_of_cites_i.name not in ('[infragenus]'))
+where (rank_of_name_of_cites_i.sort_order >= (select sort_order from name_rank where name = 'Species') and rank_of_name_of_cites_i.name not in ('[infragenus]','[unranked]'))
   and rank_of_name_i_cited_by.sort_order <= (select sort_order from name_rank where name = 'Genus') )",
       order: "name.full_name",
       join: :name,
