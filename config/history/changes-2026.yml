@@ -1,7 +1,11 @@
 - :date: 24-Feb-2026
+  :jira_id: '2526'
+  :description: |-
+    Reference input: add context specific help for new journal without author
+- :date: 24-Feb-2026
   :jira_id: '1771'
   :description: |-
-    Instance query: new directive <code>nov-lacks-replaced-syn:</code>
+    Instance query: add directive <code>nov-lacks-replaced-syn:</code>
 - :date: 24-Feb-2026
   :jira_id: '1729'
   :description: |-
@@ -9,7 +13,7 @@
 - :date: 23-Feb-2026
   :jira_id: '1668'
   :description: |-
-    Add Reference query unknown-in-journal
+    Reference query: add directive <code>unknown-in-journal</code>
 - :date: 20-Feb-2026
   :jira_id: '5719'
   :description: |-
