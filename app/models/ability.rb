@@ -512,27 +512,23 @@ class Ability
     # For product admin functionality, we need a User record since that's where roles are stored
     if session_user&.registered_user
       admin_product_ids = session_user
-        .registered_user.product_roles
+        .registered_user
+        .product_roles
         .joins(:role)
         .where(roles: { name: "admin" })
         .pluck(:product_id)
 
-      # Get ALL product role IDs for products they have admin access to (not just admin roles)
       admin_manageable_product_role_ids = Product::Role.where(product_id: admin_product_ids).pluck(:id)
 
-      # NOTES: Override the general user/product_roles permission with restricted access
       cannot "user/product_roles", :all
       can "user/product_roles", "index"
       can "user/product_roles", "show"
       can "user/product_roles", "update"
       can "user/product_roles", "choose_product_for_role"
-
-      # NOTES: Restrict creation and deletion based on product access (uses foreign key to avoid N+1)
       can ["create", "destroy"], User::ProductRole do |user_product_role|
         admin_manageable_product_role_ids.include?(user_product_role.product_role_id)
       end
     else
-      # NOTES: Fallback to existing behavior if session_user doesn't have registered_user
       can "user/product_roles", :all
     end
   end
