@@ -1,4 +1,8 @@
 - :date: 25-Feb-2026
+  :jira_id: '2796'
+  :description: |-
+    Activity queries: Stop with error message if activity search directives have the wrong number of arguments
+- :date: 25-Feb-2026
   :jira_id: '5726'
   :description: |-
     Add support for product-admin role to manage user roles
