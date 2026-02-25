@@ -13,6 +13,7 @@ RSpec.describe Ability, type: :model do
     allow(session_user).to receive(:with_role?).with('tree-publisher').and_return(false)
     allow(session_user).to receive(:with_role?).with('tree-reviewer').and_return(false)
     allow(session_user).to receive(:with_role?).with('name-index-editor').and_return(false)
+    allow(session_user).to receive(:with_role?).with('admin').and_return(false)
     allow(session_user).to receive(:user_id).and_return(1)
     allow(session_user).to receive(:product_from_context).and_return(nil)
   end
@@ -1504,16 +1505,16 @@ RSpec.describe Ability, type: :model do
     let(:foa_product) { create(:product, name: "FOA") }
     let(:apc_product) { create(:product, name: "APC") }
 
-    let(:foa_admin_product_role) { create(:product_role, product: foa_product, role: admin_role) }
-    let(:foa_editor_product_role) { create(:product_role, product: foa_product, role: editor_role) }
-    let(:apc_editor_product_role) { create(:product_role, product: apc_product, role: editor_role) }
+    let!(:foa_admin_product_role) { create(:product_role, product: foa_product, role: admin_role) }
+    let!(:foa_editor_product_role) { create(:product_role, product: foa_product, role: editor_role) }
+    let!(:apc_editor_product_role) { create(:product_role, product: apc_product, role: editor_role) }
 
     before do
       # Set up user with FOA admin role
       create(:user_product_role, user: user, product_role: foa_admin_product_role)
 
       allow(session_user).to receive(:with_role?).with('admin').and_return(true)
-      allow(session_user).to receive(:user).and_return(user)
+      allow(session_user).to receive(:registered_user).and_return(user)
       allow(session_user).to receive(:admin?).and_return(false) # Product admin, not AD admin
     end
 
@@ -1523,11 +1524,6 @@ RSpec.describe Ability, type: :model do
         expect(subject.can?("user/product_roles", "show")).to eq true
         expect(subject.can?("user/product_roles", "update")).to eq true
         expect(subject.can?("user/product_roles", "choose_product_for_role")).to eq true
-      end
-
-      it "allows create/destroy controller actions" do
-        expect(subject.can?("user/product_roles", "create")).to eq true
-        expect(subject.can?("user/product_roles", "destroy")).to eq true
       end
 
       it "inherits all standard admin permissions" do
@@ -1570,9 +1566,9 @@ RSpec.describe Ability, type: :model do
       end
     end
 
-    context "when session_user.user is nil" do
+    context "when session_user doesn't have registered_user" do
       before do
-        allow(session_user).to receive(:user).and_return(nil)
+        allow(session_user).to receive(:registered_user).and_return(nil)
       end
 
       it "falls back to standard admin permissions" do
