@@ -1,5 +1,5 @@
 
-<% if current_registered_user.product_roles.admins.pluck(:product_id).include?(user_product_role.product.id) %>
+<% if !Rails.configuration.try(:multi_product_tabs_enabled) || current_registered_user.product_roles.admins.pluck(:product_id).include?(user_product_role.product.id) %>
   <% delete_link = link_to("Delete...",
     '#',
     id: "delete-link-#{dom_id(user_product_role)}",
