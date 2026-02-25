@@ -112,4 +112,117 @@ RSpec.describe(User, type: :model) do
       expect(user.available_products_from_roles).to(eq([product2, product3, product1]))
     end
   end
+
+  describe "#grantable_product_roles_for_select" do
+    let(:user) { create(:user) }
+    let!(:admin_role) { create(:role, name: "admin") }
+    let!(:editor_role) { create(:role, name: "editor") }
+    let!(:reviewer_role) { create(:role, name: "reviewer") }
+    let!(:product) { create(:product) }
+
+    let!(:admin_product_role) { create(:product_role, product: product, role: admin_role) }
+    let!(:editor_product_role) { create(:product_role, product: product, role: editor_role) }
+    let!(:reviewer_product_role) { create(:product_role, product: product, role: reviewer_role) }
+
+    before do
+      allow(Product::Role).to receive(:non_admins).and_return([editor_product_role, reviewer_product_role])
+    end
+
+    context "when user has no product roles" do
+      it "returns all non-admin product roles formatted for select" do
+        result = user.grantable_product_roles_for_select
+
+        expect(result).to match_array([
+          ["Sample Name editor product role", editor_product_role.id],
+          ["Sample Name reviewer product role", reviewer_product_role.id]
+        ])
+      end
+
+      it "sorts roles by name alphabetically" do
+        zebra_role = create(:role, name: "zebra")
+        alpha_role = create(:role, name: "alpha")
+        zebra_product_role = create(:product_role, product: product, role: zebra_role)
+        alpha_product_role = create(:product_role, product: product, role: alpha_role)
+
+        allow(Product::Role).to receive(:non_admins).and_return([zebra_product_role, alpha_product_role])
+
+        result = user.grantable_product_roles_for_select
+
+        expect(result).to eq([
+          ["Sample Name alpha product role", alpha_product_role.id],
+          ["Sample Name zebra product role", zebra_product_role.id]
+        ])
+      end
+    end
+
+    context "when user already has some product roles" do
+      before do
+        create(:user_product_role, user: user, product_role: editor_product_role)
+      end
+
+      it "excludes roles the user already has" do
+        result = user.grantable_product_roles_for_select
+
+        expect(result).to eq([["Sample Name reviewer product role", reviewer_product_role.id]])
+        expect(result.map(&:first)).not_to include("Sample Name editor product role")
+      end
+    end
+
+    context "when user has all non-admin product roles" do
+      before do
+        create(:user_product_role, user: user, product_role: editor_product_role)
+        create(:user_product_role, user: user, product_role: reviewer_product_role)
+      end
+
+      it "returns empty array" do
+        result = user.grantable_product_roles_for_select
+
+        expect(result).to eq([])
+      end
+    end
+
+    context "with multiple products" do
+      let!(:product2) { create(:product) }
+      let!(:editor_product_role2) { create(:product_role, product: product2, role: editor_role) }
+      let!(:reviewer_product_role2) { create(:product_role, product: product2, role: reviewer_role) }
+
+      before do
+        allow(Product::Role).to receive(:non_admins).and_return([
+          editor_product_role, reviewer_product_role,
+          editor_product_role2, reviewer_product_role2
+        ])
+      end
+
+      it "includes product roles from all products" do
+        result = user.grantable_product_roles_for_select
+
+        expect(result.size).to eq(4)
+        expect(result.map(&:first)).to match_array(["Sample Name editor product role", "Sample Name reviewer product role", "Sample Name editor product role", "Sample Name reviewer product role"])
+      end
+
+      it "excludes user's existing roles only for specific product role combinations" do
+        create(:user_product_role, user: user, product_role: editor_product_role)
+
+        result = user.grantable_product_roles_for_select
+
+        expect(result.size).to eq(3)
+        role_ids = result.map(&:last)
+        expect(role_ids).not_to include(editor_product_role.id)
+        expect(role_ids).to include(editor_product_role2.id)
+      end
+    end
+
+    context "return format validation" do
+      it "returns array of [name, id] pairs" do
+        result = user.grantable_product_roles_for_select
+
+        result.each do |item|
+          expect(item).to be_an(Array)
+          expect(item.size).to eq(2)
+          expect(item.first).to be_a(String)
+          expect(item.last).to be_an(Integer)
+        end
+      end
+    end
+  end
 end
