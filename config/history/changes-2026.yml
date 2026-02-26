@@ -1,4 +1,8 @@
 - :date: 26-Feb-2026
+  :jira_id: '5728'
+  :description: |-
+    Task: Refactor factories for rspec tests
+- :date: 26-Feb-2026
   :jira_id: '4335'
   :description: |-
     Reference Input: add format helper text to DOI field
