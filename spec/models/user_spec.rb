@@ -133,8 +133,8 @@ RSpec.describe(User, type: :model) do
         result = user.grantable_product_roles_for_select
 
         expect(result).to match_array([
-          ["Sample Name editor product role", editor_product_role.id],
-          ["Sample Name reviewer product role", reviewer_product_role.id]
+          ["#{product.name} editor product role", editor_product_role.id],
+          ["#{product.name} reviewer product role", reviewer_product_role.id]
         ])
       end
 
@@ -149,8 +149,8 @@ RSpec.describe(User, type: :model) do
         result = user.grantable_product_roles_for_select
 
         expect(result).to eq([
-          ["Sample Name alpha product role", alpha_product_role.id],
-          ["Sample Name zebra product role", zebra_product_role.id]
+          ["#{product.name} alpha product role", alpha_product_role.id],
+          ["#{product.name} zebra product role", zebra_product_role.id]
         ])
       end
     end
@@ -163,8 +163,8 @@ RSpec.describe(User, type: :model) do
       it "excludes roles the user already has" do
         result = user.grantable_product_roles_for_select
 
-        expect(result).to eq([["Sample Name reviewer product role", reviewer_product_role.id]])
-        expect(result.map(&:first)).not_to include("Sample Name editor product role")
+        expect(result).to eq([["#{product.name} reviewer product role", reviewer_product_role.id]])
+        expect(result.map(&:first)).not_to include("#{product.name} editor product role")
       end
     end
 
@@ -197,7 +197,12 @@ RSpec.describe(User, type: :model) do
         result = user.grantable_product_roles_for_select
 
         expect(result.size).to eq(4)
-        expect(result.map(&:first)).to match_array(["Sample Name editor product role", "Sample Name reviewer product role", "Sample Name editor product role", "Sample Name reviewer product role"])
+        expect(result.map(&:first)).to match_array([
+          "#{product.name} editor product role",
+          "#{product.name} reviewer product role",
+          "#{product2.name} editor product role",
+          "#{product2.name} reviewer product role"
+        ])
       end
 
       it "excludes user's existing roles only for specific product role combinations" do
