@@ -2,7 +2,7 @@
   :jira_id: '1832'
   :description: |-
     Author data entry: prevent entry of duplicate author name field
-- :date: 25-Feb-2026
+- :date: 26-Feb-2026
   :jira_id: '5726'
   :description: |-
     Additional changes for product-admin role to manage user roles mainly for the permissions
