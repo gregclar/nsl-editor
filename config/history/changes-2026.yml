@@ -1,4 +1,8 @@
 - :date: 26-Feb-2026
+  :jira_id: '4335'
+  :description: |-
+    Reference Input: add format helper text to DOI field
+- :date: 26-Feb-2026
   :jira_id: '3357'
   :description: |-
     Author duplicate display: Tweak the label and tool tip for Author duplicate/master display on Details tab
