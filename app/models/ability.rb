@@ -68,6 +68,7 @@ class Ability
     tree_builder_auth(user) if user.with_role?('tree-builder')
     tree_publisher_auth(user) if user.with_role?('tree-publisher')
     name_index_editor(user) if user.with_role?('name-index-editor') && is_name_index
+    product_admin_auth(user) if user.with_role?('admin')
   end
 
   def user
@@ -501,6 +502,35 @@ class Ability
 
     can "trees", "update_synonymy_by_instance"
     can :update_synonymy_by_instance, TreeVersion, tree: {user_product_role_vs: { user_id:session_user.user_id }}
+  end
+
+  def product_admin_auth(session_user)
+    # Product admins have all standard admin permissions
+    admin_auth
+
+    # NOTES: But they can only manage user product roles for products they have admin access to
+    # For product admin functionality, we need a User record since that's where roles are stored
+    if session_user&.registered_user
+      admin_product_ids = session_user
+        .registered_user
+        .product_roles
+        .joins(:role)
+        .where(roles: { name: "admin" })
+        .pluck(:product_id)
+
+      admin_manageable_product_role_ids = Product::Role.where(product_id: admin_product_ids).pluck(:id)
+
+      cannot "user/product_roles", :all
+      can "user/product_roles", "index"
+      can "user/product_roles", "show"
+      can "user/product_roles", "update"
+      can "user/product_roles", "choose_product_for_role"
+      can ["create", "destroy"], User::ProductRole do |user_product_role|
+        admin_manageable_product_role_ids.include?(user_product_role.product_role_id)
+      end
+    else
+      can "user/product_roles", :all
+    end
   end
 
   def selected_product(user)
