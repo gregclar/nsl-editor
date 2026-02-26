@@ -212,6 +212,114 @@ RSpec.describe(User, type: :model) do
       end
     end
 
+    context "when current_user is a product admin" do
+      let(:product_admin_user) { create(:user) }
+      let(:session_user) { create(:session_user) }
+      let(:admin_role) { create(:role, name: "admin") }
+
+      let(:foa_product) { create(:product, name: "FOA") }
+      let(:apc_product) { create(:product, name: "APC") }
+
+      let(:foa_admin_product_role) { create(:product_role, product: foa_product, role: admin_role) }
+      let(:foa_editor_product_role) { create(:product_role, product: foa_product, role: editor_role) }
+      let(:apc_editor_product_role) { create(:product_role, product: apc_product, role: editor_role) }
+
+      before do
+        # Set up product admin user with FOA admin role
+        create(:user_product_role, user: product_admin_user, product_role: foa_admin_product_role)
+
+        allow(session_user).to receive(:with_role?).with('admin').and_return(true)
+        allow(session_user).to receive(:user).and_return(product_admin_user)
+
+        # Enable multi-product tabs feature
+        allow(Rails.configuration).to receive(:try).with(:multi_product_tabs_enabled).and_return(true)
+
+        allow(Product::Role).to receive(:non_admins).and_return([
+          foa_editor_product_role, apc_editor_product_role
+        ])
+      end
+
+      it "restricts available roles to products they have admin access to" do
+        result = user.grantable_product_roles_for_select(session_user)
+
+        expect(result).to eq([["FOA editor product role", foa_editor_product_role.id]])
+        expect(result.map(&:first)).not_to include("APC editor product role")
+      end
+
+      it "excludes roles from products they don't have admin access to" do
+        result = user.grantable_product_roles_for_select(session_user)
+
+        role_names = result.map(&:first)
+        expect(role_names).not_to include("APC editor product role")
+      end
+
+      context "when user already has some roles" do
+        before do
+          create(:user_product_role, user: user, product_role: foa_editor_product_role)
+        end
+
+        it "excludes existing roles from the filtered list" do
+          result = user.grantable_product_roles_for_select(session_user)
+
+          expect(result).to eq([])
+        end
+      end
+
+      context "when multi_product_tabs_enabled is false" do
+        before do
+          allow(Rails.configuration).to receive(:try).with(:multi_product_tabs_enabled).and_return(false)
+        end
+
+        it "behaves like normal admin without restrictions" do
+          result = user.grantable_product_roles_for_select(session_user)
+
+          expect(result.size).to eq(2)
+          expect(result.map(&:first)).to match_array(["FOA editor product role", "APC editor product role"])
+        end
+      end
+
+      context "when current_user has multiple admin products" do
+        let(:apni_product) { create(:product, name: "APNI") }
+        let(:apni_admin_product_role) { create(:product_role, product: apni_product, role: admin_role) }
+        let(:apni_editor_product_role) { create(:product_role, product: apni_product, role: editor_role) }
+
+        before do
+          create(:user_product_role, user: product_admin_user, product_role: apni_admin_product_role)
+
+          allow(Product::Role).to receive(:non_admins).and_return([
+            foa_editor_product_role, apc_editor_product_role, apni_editor_product_role
+          ])
+        end
+
+        it "includes roles from all products they have admin access to" do
+          result = user.grantable_product_roles_for_select(session_user)
+
+          expect(result.size).to eq(2)
+          expect(result.map(&:first)).to match_array(["FOA editor product role", "APNI editor product role"])
+          expect(result.map(&:first)).not_to include("APC editor product role")
+        end
+      end
+    end
+
+    context "when current_user is not a product admin" do
+      let(:regular_user) { create(:user) }
+      let(:session_user) { create(:session_user) }
+
+      before do
+        allow(session_user).to receive(:with_role?).with('admin').and_return(false)
+        allow(session_user).to receive(:user).and_return(regular_user)
+      end
+
+      it "behaves normally without restrictions" do
+        result = user.grantable_product_roles_for_select(session_user)
+
+        expect(result).to match_array([
+          ["Sample Name editor product role", editor_product_role.id],
+          ["Sample Name reviewer product role", reviewer_product_role.id]
+        ])
+      end
+    end
+
     context "return format validation" do
       it "returns array of [name, id] pairs" do
         result = user.grantable_product_roles_for_select
