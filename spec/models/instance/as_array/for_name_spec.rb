@@ -27,7 +27,7 @@ RSpec.describe Instance::AsArray::ForName, type: :model do
   describe "sorting draft instances last" do
     let!(:non_draft_old) { create_instance(name: name, draft: false, author_name: "Alpha", year: 1990, iso_date: "1990", primary: true) }
     let!(:non_draft_new) { create_instance(name: name, draft: false, author_name: "Beta", year: 2000, iso_date: "2000") }
-    let!(:draft_by_alpha) { create_instance(name: name, draft: true, author_name: "Alpha", year: 2020, iso_date: "2020") }
+    let!(:draft_by_gamma) { create_instance(name: name, draft: true, author_name: "Gamma", year: 2020, iso_date: "2020") }
     let!(:draft_by_zeta) { create_instance(name: name, draft: true, author_name: "Zeta", year: 2021, iso_date: "2021") }
 
     subject { described_class.new(name) }
@@ -46,7 +46,7 @@ RSpec.describe Instance::AsArray::ForName, type: :model do
     it "sorts draft instances by author name in descending order" do
       author_names = draft_results.map { |i| i.reference.author.name }
 
-      expect(author_names).to eq(["Zeta", "Alpha"])
+      expect(author_names).to eq(["Zeta", "Gamma"])
     end
 
     it "sorts non-draft instances by year ascending" do
