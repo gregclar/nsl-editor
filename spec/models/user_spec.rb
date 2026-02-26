@@ -319,8 +319,8 @@ RSpec.describe(User, type: :model) do
         result = user.grantable_product_roles_for_select(session_user)
 
         expect(result).to match_array([
-          ["Sample Name editor product role", editor_product_role.id],
-          ["Sample Name reviewer product role", reviewer_product_role.id]
+          ["#{product.name} editor product role", editor_product_role.id],
+          ["#{product.name} reviewer product role", reviewer_product_role.id]
         ])
       end
     end
