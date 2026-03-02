@@ -1512,6 +1512,7 @@ RSpec.describe Ability, type: :model do
     before do
       # Set up user with FOA admin role
       create(:user_product_role, user: user, product_role: foa_admin_product_role)
+      user.reload
 
       allow(session_user).to receive(:with_role?).with('admin').and_return(true)
       allow(session_user).to receive(:registered_user).and_return(user)
@@ -1538,13 +1539,19 @@ RSpec.describe Ability, type: :model do
       let(:forbidden_user_product_role) { create(:user_product_role, product_role: apc_editor_product_role) }
 
       it "allows creating/destroying roles for products they have admin access to" do
-        expect(subject.can?("create", allowed_user_product_role)).to eq true
-        expect(subject.can?("destroy", allowed_user_product_role)).to eq true
+        allowed_user_product_role
+        ability = described_class.new(session_user)
+
+        expect(ability.can?(:create, allowed_user_product_role)).to eq true
+        expect(ability.can?(:destroy, allowed_user_product_role)).to eq true
       end
 
       it "denies creating/destroying roles for products they don't have admin access to" do
-        expect(subject.can?("create", forbidden_user_product_role)).to eq false
-        expect(subject.can?("destroy", forbidden_user_product_role)).to eq false
+        forbidden_user_product_role
+        ability = described_class.new(session_user)
+
+        expect(ability.can?(:create, forbidden_user_product_role)).to eq false
+        expect(ability.can?(:destroy, forbidden_user_product_role)).to eq false
       end
     end
 
@@ -1555,14 +1562,17 @@ RSpec.describe Ability, type: :model do
 
       before do
         create(:user_product_role, user: user, product_role: apni_admin_product_role)
+        user.reload
       end
 
       it "allows access to all products they have admin roles for" do
         foa_user_product_role = create(:user_product_role, product_role: foa_editor_product_role)
         apni_user_product_role = create(:user_product_role, product_role: apni_editor_product_role)
 
-        expect(subject.can?("create", foa_user_product_role)).to eq true
-        expect(subject.can?("create", apni_user_product_role)).to eq true
+        ability = described_class.new(session_user)
+
+        expect(ability.can?(:create, foa_user_product_role)).to eq true
+        expect(ability.can?(:create, apni_user_product_role)).to eq true
       end
     end
 

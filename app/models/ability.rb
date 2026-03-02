@@ -381,6 +381,7 @@ class Ability
     can "menu",               "admin"
     can "users",              :all
     can "user/product_roles", :all
+    can [:create, :destroy], User::ProductRole
   end
 
   def batch_loader_auth
@@ -521,11 +522,16 @@ class Ability
       admin_manageable_product_role_ids = Product::Role.where(product_id: admin_product_ids).pluck(:id)
 
       cannot "user/product_roles", :all
+      cannot [:create, :destroy], User::ProductRole
+
+      can("de_duplicates", :all) if session_user.product_from_context&.is_name_index? && admin_product_ids.include?(session_user.product_from_context&.id)
       can "user/product_roles", "index"
       can "user/product_roles", "show"
+      can "user/product_roles", "create"
+      can "user/product_roles", "destroy"
       can "user/product_roles", "update"
       can "user/product_roles", "choose_product_for_role"
-      can ["create", "destroy"], User::ProductRole do |user_product_role|
+      can [:create, :destroy], User::ProductRole do |user_product_role|
         admin_manageable_product_role_ids.include?(user_product_role.product_role_id)
       end
     else
