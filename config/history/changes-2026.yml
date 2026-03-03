@@ -1,6 +1,4 @@
 - :date: 03-Mar-2026
-  :release: true
-- :date: 03-Mar-2026
   :jira_id: '5726'
   :description: |-
     Admin product role: ability permissions to manage user roles for the product-admin role
@@ -94,6 +92,8 @@
   :jira_id: '5696'
   :description: |-
     Move draft instances to the bottom of the search results
+- :date: 03-Mar-2026
+  :release: true
 - :date: 04-Feb-2026
   :jira_id: '5710'
   :description: |-
