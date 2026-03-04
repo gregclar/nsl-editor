@@ -264,7 +264,7 @@ class ApplicationController < ActionController::Base
 
     return if @current_user.edit?
 
-    return unless @current_user.reviewer? && !Rails.configuration.try(:multi_product_tabs_enabled)
+    return if (!@current_user.reviewer? && Rails.configuration.try(:multi_product_tabs_enabled)) || (current_registered_user.role_names - ["tree-reviewer"]).any?
 
     @view_mode = session[:view_mode] = ViewMode::REVIEW
   end
