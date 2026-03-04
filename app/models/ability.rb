@@ -411,7 +411,10 @@ class Ability
     can "loader/names",                             "tab_details"
     can "loader/names",                             "tab_comment"
     can "loader/names",                             "tab_vote"
-    can "product_contexts/set_context", "create" if session_user
+    if session_user
+      can "product_contexts/set_context", "create"
+      can "loader/batch/review/mode", "switch_off"
+    end
   end
 
   def tree_publisher_auth(session_user)
