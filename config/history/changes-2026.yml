@@ -1,3 +1,7 @@
+- :date: 05-Mar-2026
+  :jira_id: '5719'
+  :description: |-
+    Don't restrict product tree reviewer role to only be able to review if they have other roles
 - :date: 03-Mar-2026
   :jira_id: '5726'
   :description: |-

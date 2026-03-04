@@ -1211,7 +1211,7 @@ RSpec.describe Ability, type: :model do
     end
   end
 
-  describe "#reviewer_auth role" do
+  describe "#reviewer_auth role (AD group)" do
     before do
       allow(session_user).to receive(:reviewer?).and_return(true)
     end
@@ -1247,6 +1247,10 @@ RSpec.describe Ability, type: :model do
     it "allows accessing loader/names tab_vote" do
       expect(subject.can?("loader/names", "tab_vote")).to eq true
     end
+
+    it "does not allow switching off loader/batch/review/mode" do
+      expect(subject.can?("loader/batch/review/mode", "switch_off")).to eq false
+    end
   end
 
   describe "#tree-reviewer role (via with_role?)" do
@@ -1266,10 +1270,6 @@ RSpec.describe Ability, type: :model do
       expect(subject.can?("loader/name/review/vote/in_bulk", :all)).to eq true
     end
 
-    it "allows switching on loader/batch/review/mode" do
-      expect(subject.can?("loader/batch/review/mode", "switch_on")).to eq true
-    end
-
     it "allows showing loader/names" do
       expect(subject.can?("loader/names", "show")).to eq true
     end
@@ -1284,6 +1284,14 @@ RSpec.describe Ability, type: :model do
 
     it "allows accessing loader/names tab_vote" do
       expect(subject.can?("loader/names", "tab_vote")).to eq true
+    end
+
+    it "allows switching on loader/batch/review/mode" do
+      expect(subject.can?("loader/batch/review/mode", "switch_on")).to eq true
+    end
+
+    it "allows switching off loader/batch/review/mode" do
+      expect(subject.can?("loader/batch/review/mode", "switch_off")).to eq true
     end
 
     it "allows setting product context" do
