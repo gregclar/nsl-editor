@@ -394,23 +394,29 @@ RSpec.describe ApplicationController, type: :controller do
         end
       end
 
-      context "when user is a reviewer" do
+      context "when multi_product_tabs_enabled is false (original behavior)" do
         before do
-          allow(session_user).to receive(:edit?).and_return(false)
-          allow(session_user).to receive(:reviewer?).and_return(true)
-          allow(user).to receive(:role_names).and_return([])
+          allow(Rails.configuration).to receive(:multi_product_tabs_enabled).and_return(false)
         end
 
-        it "sets view_mode to REVIEW (regardless of multi_product_tabs_enabled)" do
-          controller.send(:set_view_mode)
-
-          expect(controller.instance_variable_get(:@view_mode)).to eq(ViewMode::REVIEW)
-          expect(session[:view_mode]).to eq(ViewMode::REVIEW)
-        end
-
-        context "but has roles other than tree-reviewer" do
+        context "when user is a reviewer" do
           before do
-            allow(user).to receive(:role_names).and_return(["draft-editor"])
+            allow(session_user).to receive(:edit?).and_return(false)
+            allow(session_user).to receive(:reviewer?).and_return(true)
+          end
+
+          it "sets view_mode to REVIEW" do
+            controller.send(:set_view_mode)
+
+            expect(controller.instance_variable_get(:@view_mode)).to eq(ViewMode::REVIEW)
+            expect(session[:view_mode]).to eq(ViewMode::REVIEW)
+          end
+        end
+
+        context "when user is not a reviewer" do
+          before do
+            allow(session_user).to receive(:edit?).and_return(false)
+            allow(session_user).to receive(:reviewer?).and_return(false)
           end
 
           it "sets view_mode to STANDARD" do
@@ -422,46 +428,16 @@ RSpec.describe ApplicationController, type: :controller do
         end
       end
 
-      context "when user has tree-reviewer role only" do
+      context "when multi_product_tabs_enabled is true (new behavior)" do
         before do
-          allow(session_user).to receive(:edit?).and_return(false)
-          allow(session_user).to receive(:reviewer?).and_return(false)
-          allow(user).to receive(:role_names).and_return(["tree-reviewer"])
+          allow(Rails.configuration).to receive(:multi_product_tabs_enabled).and_return(true)
         end
 
-        it "sets view_mode to REVIEW" do
-          controller.send(:set_view_mode)
-
-          expect(controller.instance_variable_get(:@view_mode)).to eq(ViewMode::REVIEW)
-          expect(session[:view_mode]).to eq(ViewMode::REVIEW)
-        end
-      end
-
-      context "when user has roles other than tree-reviewer" do
-        before do
-          allow(session_user).to receive(:edit?).and_return(false)
-          allow(session_user).to receive(:reviewer?).and_return(false)
-          allow(user).to receive(:role_names).and_return(["tree-reviewer", "draft-editor"])
-        end
-
-        it "sets view_mode to STANDARD" do
-          controller.send(:set_view_mode)
-
-          expect(controller.instance_variable_get(:@view_mode)).to eq(ViewMode::STANDARD)
-          expect(session[:view_mode]).to eq(ViewMode::STANDARD)
-        end
-      end
-
-      context "when user is not a reviewer and has no roles" do
-        before do
-          allow(session_user).to receive(:edit?).and_return(false)
-          allow(session_user).to receive(:reviewer?).and_return(false)
-          allow(user).to receive(:role_names).and_return([])
-        end
-
-        context "and multi_product_tabs_enabled is false" do
+        context "when user is a reviewer with no other roles" do
           before do
-            allow(Rails.configuration).to receive(:multi_product_tabs_enabled).and_return(false)
+            allow(session_user).to receive(:edit?).and_return(false)
+            allow(session_user).to receive(:reviewer?).and_return(true)
+            allow(user).to receive(:role_names).and_return([])
           end
 
           it "sets view_mode to REVIEW" do
@@ -472,9 +448,41 @@ RSpec.describe ApplicationController, type: :controller do
           end
         end
 
-        context "and multi_product_tabs_enabled is true" do
+        context "when user is a reviewer but has roles other than tree-reviewer" do
           before do
-            allow(Rails.configuration).to receive(:multi_product_tabs_enabled).and_return(true)
+            allow(session_user).to receive(:edit?).and_return(false)
+            allow(session_user).to receive(:reviewer?).and_return(true)
+            allow(user).to receive(:role_names).and_return(["draft-editor"])
+          end
+
+          it "sets view_mode to STANDARD" do
+            controller.send(:set_view_mode)
+
+            expect(controller.instance_variable_get(:@view_mode)).to eq(ViewMode::STANDARD)
+            expect(session[:view_mode]).to eq(ViewMode::STANDARD)
+          end
+        end
+
+        context "when user has tree-reviewer role only" do
+          before do
+            allow(session_user).to receive(:edit?).and_return(false)
+            allow(session_user).to receive(:reviewer?).and_return(false)
+            allow(user).to receive(:role_names).and_return(["tree-reviewer"])
+          end
+
+          it "sets view_mode to REVIEW" do
+            controller.send(:set_view_mode)
+
+            expect(controller.instance_variable_get(:@view_mode)).to eq(ViewMode::REVIEW)
+            expect(session[:view_mode]).to eq(ViewMode::REVIEW)
+          end
+        end
+
+        context "when user has roles other than tree-reviewer" do
+          before do
+            allow(session_user).to receive(:edit?).and_return(false)
+            allow(session_user).to receive(:reviewer?).and_return(false)
+            allow(user).to receive(:role_names).and_return(["tree-reviewer", "draft-editor"])
           end
 
           it "sets view_mode to STANDARD" do
