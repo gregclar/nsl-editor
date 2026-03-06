@@ -1,4 +1,8 @@
 - :date: 06-Mar-2026
+  :jira_id: ''
+  :description: |-
+    Update the readme with docker-apps instructions and add the network to the docker-compose.dev.yml
+- :date: 06-Mar-2026
   :jira_id: '5740'
   :description: |-
     Add role description to the user menu for product roles
