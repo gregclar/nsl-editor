@@ -30,7 +30,7 @@ The current Editor git repo does not go back to that original version - it goes 
 The Editor was upgraded to Rails 7 in 2023, then to Rails 8 in 2025.
 
 ### Note on repositories
-The original Rails 4.x app repository is now archived on Github.  One unfortunate side-effect of starting a new repo for the Rails 6 upgrade was that contributions by others ended up in my (Greg Clarke's) name in the version 6.x app.  You also lose the history and context of the changes.  Neither of those results was my intention at a very frustrating time when I started with a clean Rails 6 application and copied in the controller, model, and view files, etc.  
+The original Rails 4.x app repository is now archived on Github.  One unfortunate side-effect of starting a new repo for the Rails 6 upgrade was that contributions by others ended up in my (Greg Clarke's) name in the version 6.x app.  You also lose the history and context of the changes.  Neither of those results was my intention at a very frustrating time when I started with a clean Rails 6 application and copied in the controller, model, and view files, etc.
 
 While most of the app going back to its origins in 2012 is down to me (GC), most of the "tree" ops were coded by others, especially Peter McNeil -- look at the archived v4.x app to find out more.
 
@@ -98,7 +98,7 @@ The problems typically come when using that structure.sql file to setup a new te
 
 We have used two approaches to solve this problem.
 
-   1. Hand edit the structure.sql file to remove views and whatever else that 
+   1. Hand edit the structure.sql file to remove views and whatever else that
     a) we don't use in the Editor
     b) cause an error in setup
 
@@ -171,6 +171,25 @@ docker-compose -f docker-compose.dev.yml run db_dev bash
 # run the containers
 docker-compose -f docker-compose.dev.yml up -d
 ```
+#### Running the editor along with the other services using the docker-apps
+1. Get the `docker-apps` codes in the bitbucket repo
+2. Follow the docker-apps set up instructions
+3. If you're running the db from another docker stack:
+   3.1 Turn off the `nsl_app_dev` container since we are going to use the editor from docker-apps. Leave the `nsl_db_dev` container running
+   ```bash
+      docker-compose -f docker-compose.dev.yml stop nsl_app_dev
+   ```
+   3.2 Grab the latest dump file from test
+   ```bash
+      # Download the latest dump from test
+      # Copy it into the docker container of the db and restore inside the container (e.g container name is nsl_db_dev)
+      # e.g
+      # docker cp /path/to/the/downloaded/my_dump_file.sql nsl_db_dev:/tmp/
+      # docker exec -e PGPASSWORD=password nsl_db_dev pg_restore -U myuser -h nsl_db_dev -d nsl_editor_development /tmp/my_dump_file.sql
+      #
+      docker cp /path/to/the/downloaded/<dumpfile.sql> <docker_container_name_of_the_db>:/tmp/
+      docker exec -e PGPASSWORD=<password> nsl_db_dev pg_restore -U <user> -h <host> -d <db_name> /tmp/<dump_file>
+   ```
 ### 💪🏻 Non-Docker
 Pre-requisite
 - Postgres database installed on your machine
