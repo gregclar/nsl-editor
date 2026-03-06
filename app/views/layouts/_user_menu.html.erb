@@ -40,7 +40,8 @@
               <% end %>
               <li role="presentation">
                 <a title="A product role you have">
-                  <%= "#{editor_icon('user-group')} #{product_role.product.name} #{product_role.role.name}".html_safe %>
+                  <%= "#{editor_icon('user-group')} #{product_role.product.name} #{product_role.role.name}:".html_safe %>
+                  <span class="role-description"><%= product_role.role&.description %></span>
                 </a>
             <% end %>
           <% end %>
