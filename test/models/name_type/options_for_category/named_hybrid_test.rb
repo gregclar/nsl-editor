@@ -16,21 +16,26 @@
 #   See the License for the specific language governing permissions and
 #   limitations under the License.
 #
+
 require "test_helper"
 
 # Name type options for category test.
-class ScientificHybridFormula1ParentTest < ActiveSupport::TestCase
-  test "scientific hybrid formula 1 parent name type options" do
-    current_category =
-      name_categories(:scientific_hybrid_formula_unknown_2nd_parent)
+class NamedHybridTest < ActiveSupport::TestCase
+  setup do
+    @current_category = name_categories(:named_hybrid)
+  end
+
+  test "named hybrid name type options" do
+    part1
+  end
+
+  def part1
     assert_equal 1,
-                 NameType.options_for_category(current_category).size,
-                 "Should be just 1 #{current_category.name} name type."
-    assert NameType
-      .options_for_category(current_category)
-      .collect(&:first)
-      .include?("hybrid formula unknown 2nd parent"),
-           "Name type 'hybrid formula unknown 2nd parent' should be \
-           a #{current_category.name} name type."
+                 NameType.options_for_category(@current_category).size,
+                 "Should be 1 #{@current_category.name} name types."
+    assert NameType.options_for_category(@current_category)
+                   .collect(&:first)
+                   .include?("named hybrid"),
+           "Named hybrid should be a #{@current_category.name} name type."
   end
 end
