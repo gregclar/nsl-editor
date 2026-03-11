@@ -31,8 +31,8 @@
     <%= render partial: 'detail_line', 
                locals: {info: link_to(@author.duplicate_of.name_and_or_abbrev,
                         search_path(query_target: "author", query_string: "id:#{@author.duplicate_of_id}"),
-                        title: 'See master'), 
-                        label: 'master'} %>
+                        title: 'See master record'), 
+                        label: 'duplicate of'} %>
     <%= divider %>
 <% end %>
 
