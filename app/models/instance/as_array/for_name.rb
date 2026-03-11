@@ -74,12 +74,12 @@ class Instance::AsArray::ForName < Array
     iso_date = ref.iso_publication_date || parent_attr(ref, :iso_publication_date)
 
     [
-      draft_sort_order(instance),
-      dated_first(year),
-      year || NO_YEAR,
-      instance.instance_type.primaries_first,
-      iso_date || NO_YEAR,
-      author_name(instance).downcase
+      draft_sort_order(instance),             # "A" (non-draft) or "B" (draft)
+      dated_first(year),                      # 0 (has year) or 1 (no year)
+      year || NO_YEAR,                        # 2026 or ""
+      instance.instance_type.primaries_first, # "A" (primary instance) or "B" (non-primary)
+      iso_date || NO_YEAR,                    # "2026-01-01" or ""
+      author_name(instance).downcase          # "authorname, g." or "x" (if nil)
     ]
   end
 
