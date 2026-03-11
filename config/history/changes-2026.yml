@@ -1,4 +1,8 @@
 - :date: 11-Mar-2026
+  :jira_id: '3924'
+  :description: |-
+    Improve handling of <code>iso_publication_date</code> when being set null during update
+- :date: 11-Mar-2026
   :jira_id: '5729'
   :description: |-
     Sort order for draft and non-draft instances in name search results
