@@ -1,4 +1,8 @@
 - :date: 11-Mar-2026
+  :jira_id: '3257'
+  :description: |-
+    Names: do not offer to create Instances for vernacular names
+- :date: 11-Mar-2026
   :jira_id: '3924'
   :description: |-
     Improve handling of <code>iso_publication_date</code> when being set null during update
