@@ -1,3 +1,7 @@
+- :date: 11-Mar-2026
+  :jira_id: '5729'
+  :description: |-
+    Sort order for draft and non-draft instances in name search results
 - :date: 06-Mar-2026
   :jira_id: ''
   :description: |-
