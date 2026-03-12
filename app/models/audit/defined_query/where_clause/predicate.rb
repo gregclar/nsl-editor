@@ -51,7 +51,7 @@ class Audit::DefinedQuery::WhereClause::Predicate
       elsif WHERE_VALUE_HASH_2_VALUES.key?(canonical_field) && value.blank?
         raise "Stopping because #{canonical_field} needs a value"
       elsif RECORD_TYPE_ASSERTIONS.key?("#{@record_type}-#{canonical_field}") && value.present?
-        raise "Stopping because #{canonical_field} takes no value"
+        raise "Stopping because #{canonical_field} takes no argument"
       elsif RECORD_TYPE_ASSERTIONS.key?("#{@record_type}-#{canonical_field}")
         @sql = @sql.where(RECORD_TYPE_ASSERTIONS["#{@record_type}-#{canonical_field}"])
       elsif WHERE_ASSERTION_HASH.key?(canonical_field)
