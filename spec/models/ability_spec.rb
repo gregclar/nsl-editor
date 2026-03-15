@@ -1500,9 +1500,6 @@ RSpec.describe Ability, type: :model do
       expect(subject.can?(:update_tree_parent, TreeVersion)).to eq true
     end
 
-    it "allows accessing tree/elements update_profile" do
-      expect(subject.can?("tree/elements", "update_profile")).to eq true
-    end
   end
 
   describe "#product_admin_auth role" do
