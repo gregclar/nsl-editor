@@ -81,7 +81,25 @@ RSpec.describe Product, type: :model do
         end
       end
 
-      context 'and instance has a different reference' do
+      context 'and instance reference parent matches product reference' do
+        let(:instance) { create(:instance, reference: other_reference) }
+
+        it 'returns true' do
+          allow(other_reference).to receive(:parent).and_return(reference)
+          expect(product.has_the_same_reference?(instance)).to be true
+        end
+      end
+
+      context 'and instance reference has no parent' do
+        let(:reference_without_parent) { create(:reference, parent: nil) }
+        let(:instance) { create(:instance, reference: reference_without_parent) }
+
+        it 'returns false' do
+          expect(product.has_the_same_reference?(instance)).to be false
+        end
+      end
+
+      context 'and instance has a different reference with no matching parent' do
         let(:instance) { create(:instance, reference: other_reference) }
 
         it 'returns false' do
