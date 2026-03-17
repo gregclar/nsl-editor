@@ -1,3 +1,8 @@
+- :date: 17-Mar-2026
+  :jira_id: '106'
+  :jira_project: FLOR
+  :description: |-
+    Modify the product.has_the_same_reference? method to also check for instance's parent reference
 - :date: 16-Mar-2026
   :jira_id: '160'
   :jira_project: FLOR
