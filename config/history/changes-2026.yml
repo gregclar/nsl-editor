@@ -1,3 +1,8 @@
+- :date: 19-Mar-2026
+  :jira_id: '184'
+  :jira_project: FLOR
+  :description: |-
+    Display the "Ended" pill for profile items that have an end date in the search results and profile item details
 - :date: 17-Mar-2026
   :jira_id: '106'
   :jira_project: FLOR
