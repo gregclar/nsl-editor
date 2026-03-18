@@ -44,5 +44,8 @@
 <br>
 <%= divider %>
 <h5>Profile item: #<%= @profile_item.id %></h5>
-<%= created_by_whom_and_when(@profile_item).html_safe %>
+<%= profile_item_created_audit(@profile_item).html_safe %>
 <br>
+<%= profile_item_updated_audit(@profile_item).html_safe %>
+<br>
+<%= published_by_whom_and_when(@profile_item).html_safe %>
