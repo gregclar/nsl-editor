@@ -1,4 +1,8 @@
 - :date: 19-Mar-2026
+  :jira_id: '5740'
+  :description: |-
+    Sort the user product roles in the roles tab of the user
+- :date: 19-Mar-2026
   :jira_id: '184'
   :jira_project: FLOR
   :description: |-
