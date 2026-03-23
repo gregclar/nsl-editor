@@ -1,3 +1,8 @@
+- :date: 23-Mar-2026
+  :jira_id: '180'
+  :jira_project: FLOR
+  :description: |-
+    Audit display for profile item details tab
 - :date: 20-Mar-2026
   :jira_id: '5761'
   :description: |-
