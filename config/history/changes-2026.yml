@@ -1,4 +1,8 @@
 - :date: 24-Mar-2026
+  :jira_id: '5438'
+  :description: |-
+    Display the batch reviewer list and organisation in the menu if available for the user
+- :date: 24-Mar-2026
   :jira_id: ''
   :description: |-
     Dependabot updates Activesupport from 8.0.4 to 8.0.4.1, Actionview from 8.0.4 to 8.0.4.1, and Activestorage from 8.0.4 to 8.0.4.1
