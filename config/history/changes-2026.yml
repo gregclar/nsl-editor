@@ -1,4 +1,9 @@
 - :date: 25-Mar-2026
+  :jira_id: '184'
+  :jira_project: FLOR
+  :description: |-
+    Display ended date label of profile item in the details tab of the instance view
+- :date: 25-Mar-2026
   :jira_id: '192'
   :jira_project: FLOR
   :description: |-
