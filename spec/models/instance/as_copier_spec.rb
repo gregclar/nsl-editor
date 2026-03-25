@@ -90,14 +90,14 @@ RSpec.describe Instance::AsCopier, type: :model do
         end
 
         context "when copy_profile_items? is true" do
-          let(:profile_item) { FactoryBot.create(:profile_item, instance: instance) }
+          let(:profile_item) { FactoryBot.create(:profile_item, instance: instance, end_date: Time.current) }
           before do
             allow(subject).to receive(:copy_profile_items).and_return(true)
             allow(subject).to receive(:profile_items).and_return([profile_item])
             allow_any_instance_of(Profile::ProfileItem).to receive(:fact?).and_return(true)
           end
 
-          it "copies the profile items" do
+          it "copies the profile items when end_date is present" do
             copied_instance = subject.copy_with_product_reference(params, username)
             copied_profile_item = copied_instance.profile_items.first
             expect(copied_profile_item.source_profile_item_id).to eq profile_item.id
@@ -122,6 +122,19 @@ RSpec.describe Instance::AsCopier, type: :model do
               copied_instance = subject.copy_with_product_reference(params, username)
               copied_profile_item = copied_instance.profile_items.first
               expect(copied_profile_item.source_profile_item_id).to eq nil
+            end
+          end
+
+          context "when profile item has no end_date" do
+            let(:profile_item_without_end_date) { FactoryBot.create(:profile_item, instance: instance, end_date: nil) }
+
+            before do
+              allow(subject).to receive(:profile_items).and_return([profile_item_without_end_date])
+            end
+
+            it "skips copying the profile item" do
+              copied_instance = subject.copy_with_product_reference(params, username)
+              expect(copied_instance.profile_items).to be_empty
             end
           end
         end
