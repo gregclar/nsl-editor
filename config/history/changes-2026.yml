@@ -1,4 +1,9 @@
 - :date: 25-Mar-2026
+  :jira_id: '192'
+  :jira_project: FLOR
+  :description: |-
+    When a profile item is to be copied, only copy current items
+- :date: 25-Mar-2026
   :jira_id: '5761'
   :description: |-
     Editor - Batch Loader: Allow for cases where a loader_name record has no family string yet in the Loader2 tab
