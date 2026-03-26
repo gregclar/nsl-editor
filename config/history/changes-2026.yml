@@ -1,3 +1,8 @@
+- :date: 26-Mar-2026
+  :jira_id: '195'
+  :jira_project: FLOR
+  :description: |-
+    Fixup current profile item not being copied when copying an instance with profile items
 - :date: 25-Mar-2026
   :jira_id: '184'
   :jira_project: FLOR
