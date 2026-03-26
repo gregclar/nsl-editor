@@ -1,4 +1,8 @@
 - :date: 26-Mar-2026
+  :jira_id: '5773'
+  :description: |-
+    Give a clearer, simpler error message when Loader gets confused about instance type
+- :date: 26-Mar-2026
   :jira_id: '194'
   :jira_project: FLOR
   :description: |-
