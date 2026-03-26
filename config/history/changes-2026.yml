@@ -1,4 +1,9 @@
 - :date: 26-Mar-2026
+  :jira_id: '194'
+  :jira_project: FLOR
+  :description: |-
+    Exclude ended profile items in query
+- :date: 26-Mar-2026
   :jira_id: '195'
   :jira_project: FLOR
   :description: |-
