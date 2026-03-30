@@ -1,3 +1,8 @@
+- :date: 30-Mar-2026
+  :jira_id: '196'
+  :jira_project: FLOR
+  :description: |-
+    Extend the display of the taxon concept 'in classification' to instance results
 - :date: 26-Mar-2026
   :jira_id: '5773'
   :description: |-
