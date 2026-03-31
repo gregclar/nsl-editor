@@ -1,3 +1,7 @@
+- :date: 31-Mar-2026
+  :jira_id: 'NSL-5707'
+  :description: |-
+    Rails 8.1 upgrade along with associated gems
 - :date: 30-Mar-2026
   :jira_id: '5766'
   :description: |-
