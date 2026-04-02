@@ -1,3 +1,7 @@
+- :date: 02-Apr-2026
+  :jira_id: '5782'
+  :description: |-
+    History of Changes page: Needs to handle malformed Jira-IDs without crashing
 - :date: 31-Mar-2026
   :jira_id: 'NSL-5707'
   :description: |-
