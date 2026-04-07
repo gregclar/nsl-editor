@@ -25,13 +25,13 @@ module AuditHelper
   end
 
   def quoted_original_content_created_by_whom_and_when(record)
-    %(Quote of content originally created <span class="purple"
+    %(created <span class="purple"
     >#{time_ago_in_words(record.created_at)}&nbsp;ago</span>
     by #{record.created_by} #{formatted_timestamp(record.created_at)})
   end
 
   def quoted_original_content_updated_by_whom_and_when(record)
-    %(Quote of content originally updated <span class="purple"
+    %(updated <span class="purple"
     >#{time_ago_in_words(record.updated_at)}&nbsp;ago</span>
     by #{record.updated_by} #{formatted_timestamp(record.updated_at)})
   end
