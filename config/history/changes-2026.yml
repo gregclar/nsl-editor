@@ -3,6 +3,11 @@
   :description: |-
     Allow reviewers to see details of matched name in loader batches
 - :date: 07-Apr-2026
+  :jira_id: '184'
+  :jira_project: FLOR
+  :description: |-
+    Change the "Ended" pill with "replaced" badge for profile items in search results
+- :date: 07-Apr-2026
   :jira_id: '180'
   :jira_project: FLOR
   :description: |-
