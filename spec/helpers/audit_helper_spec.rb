@@ -44,7 +44,7 @@ RSpec.describe AuditHelper, type: :helper do
 
     it "shows quoted content message for non-facts" do
       item = double("ProfileItem", fact?: false, profile_text: profile_text)
-      expect(normalize(helper.profile_item_created_audit(item))).to match(/\AQuote of content originally created 7 days ago by author .+\z/)
+      expect(normalize(helper.profile_item_created_audit(item))).to match(/\Acreated 7 days ago by author .+\z/)
     end
   end
 
@@ -65,7 +65,7 @@ RSpec.describe AuditHelper, type: :helper do
     it "shows quoted content message for non-facts" do
       text = double("ProfileText", updated_at: 1.day.ago, updated_by: "editor")
       item = double("ProfileItem", fact?: false, profile_text: text)
-      expect(normalize(helper.profile_item_updated_audit(item))).to match(/\AQuote of content originally updated 1 day ago by editor .+\z/)
+      expect(normalize(helper.profile_item_updated_audit(item))).to match(/\Aupdated 1 day ago by editor .+\z/)
     end
   end
 
