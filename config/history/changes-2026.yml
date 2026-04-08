@@ -1,3 +1,7 @@
+- :date: 08-Apr-2026
+  :jira_id: '5622'
+  :description: |-
+    Allow reviewers to see details of matched name in loader batches
 - :date: 07-Apr-2026
   :jira_id: '180'
   :jira_project: FLOR
