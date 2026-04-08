@@ -30,6 +30,13 @@
       <% if search_result.standalone? %>
         <%= render(partial: 'instances/taxo/widgets', locals: { instance: search_result }) %>
       <% end %>
+      <% if @working_draft.present? && search_result.in_workspace?(@working_draft) %>
+        &nbsp;
+        <span class="small">
+        <%= render partial: "instances/workspace/widgets/placement_indicator",
+                   locals: { tree_version_element: @working_draft.name_in_version(search_result.name) } %>
+        </span>
+      <% end %>
     </a>
     <%= %Q(</td><td class="min-width-1-percent max-width-30-percent">[#{search_result.type}]::#{ search_result['display_as'] || search_result.class.to_s};#{search_result.id }cites #{Pathname.new(__FILE__).basename}).html_safe if @debug %>
   </td>
