@@ -1,4 +1,9 @@
 - :date: 08-Apr-2026
+  :jira_id: '196'
+  :jira_project: FLOR
+  :description: |-
+    Include the draft working tree in the instance results
+- :date: 08-Apr-2026
   :jira_id: '3257'
   :description: |-
     Tweak the message on the Instances tab for common and vernacular Names
