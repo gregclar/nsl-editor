@@ -1,3 +1,7 @@
+- :date: 09-Apr-2026
+  :jira_id: '5790'
+  :description: |-
+    Batch Loader: Add "trade name" to the synonym type dropdown
 - :date: 08-Apr-2026
   :jira_id: '196'
   :jira_project: FLOR
@@ -39,7 +43,7 @@
   :description: |-
     History of Changes page: Needs to handle malformed Jira-IDs without crashing
 - :date: 31-Mar-2026
-  :jira_id: 'NSL-5707'
+  :jira_id: '5707'
   :description: |-
     Rails 8.1 upgrade along with associated gems
 - :date: 30-Mar-2026
@@ -78,7 +82,7 @@
 - :date: 25-Mar-2026
   :jira_id: '5761'
   :description: |-
-    Editor - Batch Loader: Allow for cases where a loader_name record has no family string yet in the Loader2 tab
+    Batch Loader: Allow for cases where a loader_name record has no family string yet in the Loader2 tab
 - :date: 24-Mar-2026
   :jira_id: '5438'
   :description: |-
@@ -100,7 +104,7 @@
 - :date: 20-Mar-2026
   :jira_id: '5761'
   :description: |-
-    Editor - Batch Loader: Allow for cases where a loader_name record has no family string yet
+    Batch Loader: Allow for cases where a loader_name record has no family string yet
 - :date: 9-Apr-2026
   :release: true
 - :date: 19-Mar-2026
