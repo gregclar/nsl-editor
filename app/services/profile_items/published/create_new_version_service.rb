@@ -23,6 +23,7 @@ class ProfileItems::Published::CreateNewVersionService < BaseService
       copy_profile_text
       copy_profile_item_annotation
       copy_profile_item_references
+      set_profile_item_to_replaced
       raise ActiveRecord::Rollback if errors.any?
     end
   end
@@ -34,6 +35,13 @@ class ProfileItems::Published::CreateNewVersionService < BaseService
   def published_profile_item
     return unless profile_item.is_draft
     errors.add(:base, "Profile item must be published before creating a new version")
+  end
+
+  def set_profile_item_to_replaced
+    profile_item.end_date = Time.current
+    profile_item.save
+
+    errors.merge!(profile_item.errors) if profile_item.errors.any?
   end
 
   def any_draft_profile_items
@@ -50,6 +58,7 @@ class ProfileItems::Published::CreateNewVersionService < BaseService
     @new_profile_item = profile_item.dup.tap do |pt|
       pt.is_draft = true
       pt.published_date = nil
+      pt.end_date = nil
       pt.created_by = user.user_name
       pt.updated_by = user.user_name
       pt.source_system = nil

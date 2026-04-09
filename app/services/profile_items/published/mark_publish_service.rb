@@ -38,7 +38,7 @@ class ProfileItems::Published::MarkPublishService < BaseService
   def previous_profile_item
     @previous_profile_item ||= Profile::ProfileItem
       .by_product_item_config(profile_item.product_item_config)
-      .where.not(is_draft: true)
+      .where.not(is_draft: true, id: profile_item.id)
       .order(published_date: :desc)
       .first
   end
