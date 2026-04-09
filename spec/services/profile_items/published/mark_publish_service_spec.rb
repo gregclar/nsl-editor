@@ -47,9 +47,27 @@ describe ProfileItems::Published::MarkPublishService do
         expect(profile_item.published_date).to be_within(1.second).of(Time.current)
         expect(profile_item.created_by).to eq("testuser")
         expect(profile_item.updated_by).to eq(user.user_name)
-        expect(previous_published.end_date).to be_within(1.second).of(profile_item.published_date)
+        expect(previous_published.reload.end_date).to be_within(1.second).of(profile_item.published_date)
       end
 
+      it 'does not set end_date on the profile item being published' do
+        subject.execute
+        profile_item.reload
+        expect(profile_item.end_date).to be_nil
+      end
+    end
+
+    context 'when there is no previous published profile item' do
+      let!(:profile_item) { create(:profile_item, :draft, created_by: "testuser", updated_by: "testuser", instance:, product_item_config:) }
+
+      it 'publishes the profile item without errors' do
+        subject.execute
+        expect(subject.errors).to be_empty
+        profile_item.reload
+        expect(profile_item.is_draft).to be_falsey
+        expect(profile_item.published_date).to be_within(1.second).of(Time.current)
+        expect(profile_item.end_date).to be_nil
+      end
     end
   end
 end
