@@ -101,6 +101,8 @@
   :jira_id: '5761'
   :description: |-
     Editor - Batch Loader: Allow for cases where a loader_name record has no family string yet
+- :date: 9-Apr-2026
+  :release: true
 - :date: 19-Mar-2026
   :jira_id: '5740'
   :description: |-
