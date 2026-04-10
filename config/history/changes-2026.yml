@@ -1,4 +1,9 @@
 - :date: 10-Apr-2026
+  :jira_id: '201'
+  :jira_project: FLOR
+  :description: |-
+    Draft badge in profile items
+- :date: 10-Apr-2026
   :jira_id: '742'
   :description: |-
     Code removal: Small code removal related to name rank and name parents - code was not called, so expect no user impact

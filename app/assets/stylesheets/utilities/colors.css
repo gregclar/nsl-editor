@@ -245,11 +245,20 @@ a:hover.blue           { color: blue; }
 */
 
 /* Common badge colors */
-.badge.badge-muted-red {
-  background: #FCEBEB;
-  border: 0.5px solid #F09595;
+.badge {
   border-radius: 4px;
   font-size: 12px;
   font-weight: 500;
+}
+
+.badge.badge-muted-red {
+  background: #FCEBEB;
+  border: 0.5px solid #F09595;
   color: #791F1F;
+}
+
+.badge.badge-muted-orange {
+  background: #fce2b7;
+  border: 0.5px solid #f0cb95;
+  color: #79551f;
 }
