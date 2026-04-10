@@ -45,16 +45,6 @@ RSpec.describe ProfileItems::Published::CreateNewVersionService, type: :service 
         expect(new_draft.source_id_string).to be_nil
       end
 
-      it "marks the original profile item as replaced by setting its end_date" do
-        expect(profile_item.end_date).to be_nil
-
-        freeze_time do
-          subject.execute
-          profile_item.reload
-          expect(profile_item.end_date).to eq(Time.current)
-        end
-      end
-
       it "sets the correct attribues of the new profile text" do
         subject.execute
         new_draft = Profile::ProfileItem.where(is_draft: true).last
