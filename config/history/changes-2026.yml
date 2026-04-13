@@ -2,7 +2,7 @@
   :jira_id: '204'
   :jira_project: FLOR
   :description: |-
-    Fixup the undefined manages_profile for nil error in name instance search results when context is nil
+    Hotfix: Fixup the undefined manages_profile for nil error in name instance search results when context is nil - promoted to production as hotfix
 - :date: 10-Apr-2026
   :jira_id: '200'
   :jira_project: FLOR
@@ -134,6 +134,13 @@
   :jira_id: '5761'
   :description: |-
     Batch Loader: Allow for cases where a loader_name record has no family string yet
+- :date: 13-Apr-2026
+  :release: true
+- :date: 13-Apr-2026
+  :jira_id: '204'
+  :jira_project: FLOR
+  :description: |-
+    Hotfix: Fixup the undefined manages_profile for nil error in name instance search results when context is nil
 - :date: 9-Apr-2026
   :release: true
 - :date: 19-Mar-2026
