@@ -234,6 +234,36 @@ RSpec.describe("instances/tabs/_all_tab_headings.html.erb", type: :view) do
     end
   end
 
+  context "when 'tab_comments' is offered with multi_product_tabs_enabled" do
+    before do
+      tabs_to_offer << "tab_comments"
+      allow(view).to(receive(:can?).with("comments", "create").and_return(true))
+      allow(Rails.configuration).to(receive(:multi_product_tabs_enabled).and_return(true))
+    end
+
+    context "when user can create_adnot on the instance" do
+      before do
+        allow(view).to(receive(:can?).with(:create_adnot, instance).and_return(true))
+      end
+
+      it "renders the 'Adnot' tab" do
+        render
+        expect(rendered).to(have_selector("a#instance-comments-tab", text: "Adnot"))
+      end
+    end
+
+    context "when user cannot create_adnot on the instance" do
+      before do
+        allow(view).to(receive(:can?).with(:create_adnot, instance).and_return(false))
+      end
+
+      it "does not render the 'Adnot' tab" do
+        render
+        expect(rendered).not_to(have_selector("a#instance-comments-tab"))
+      end
+    end
+  end
+
   context "when 'tab_copy_to_new_reference' is offered and the user has permission" do
     before do
       tabs_to_offer << "tab_copy_to_new_reference"
