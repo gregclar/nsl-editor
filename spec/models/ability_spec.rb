@@ -955,12 +955,13 @@ RSpec.describe Ability, type: :model do
     describe ':create_adnot permission' do
       let(:user) { create(:user, id: 1, user_name: session_user.username) }
       let(:tree) { create(:tree) }
+      let(:product_with_tree) { create(:product, tree: tree) }
       let(:instance) { create(:instance, draft: false) }
 
       before do
-        allow(product).to receive(:tree).and_return(tree)
-        product_role = create(:product_role, product: product)
+        product_role = create(:product_role, product: product_with_tree)
         create(:user_product_role, user: user, product_role: product_role)
+        allow(session_user).to receive(:user).and_return(user)
       end
 
       context 'when instance is in a tree that user has access to' do
@@ -995,9 +996,13 @@ RSpec.describe Ability, type: :model do
         end
       end
 
-      context 'when product has no tree' do
+      context 'when user products have no trees' do
+        let(:product_without_tree) { create(:product, tree: nil) }
+
         before do
-          allow(product).to receive(:tree).and_return(nil)
+          user.user_product_roles.destroy_all
+          product_role = create(:product_role, product: product_without_tree)
+          create(:user_product_role, user: user, product_role: product_role)
           allow(instance).to receive(:in_local_trees).and_return([tree])
         end
 

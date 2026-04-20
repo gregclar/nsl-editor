@@ -112,10 +112,10 @@ class Ability
         .joins(profile_item: :product_item_config)
         .where("product_item_configs_profile_item.product_id = ?", user.product_from_context&.id).any?)
     end
-    can "comments", :all
     can :create_adnot, Instance do |instance|
       instance.draft? && user.product_from_context&.has_the_same_reference?(instance)
     end
+    can "comments", :all
     can "authors", :all
     can "instances", [
       "tab_details",
@@ -226,10 +226,10 @@ class Ability
     can :manage_profile, Instance do |instance|
       instance.profile_items.includes([:product]).any? { |item| item.product && user_products.include?(item.product) }
     end
-    can "comments", :all
     can :create_adnot, Instance do |instance|
       instance.in_local_trees.any? { |tree| user_product_trees.include?(tree) }
     end
+    can "comments", :all
     can "references", "typeahead_on_citation"
     can "profile_items", :all
     can "profile_item_annotations", :all
