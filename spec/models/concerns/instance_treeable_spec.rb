@@ -129,9 +129,6 @@ RSpec.describe InstanceTreeable do
 
   describe '#in_any_local_tree_ids?' do
     let(:instance) { create(:instance) }
-    let(:tree) { create(:tree) }
-    let(:tree_version) { create(:tree_version, tree: tree) }
-    let(:tree_element) { create(:tree_element, instance: instance) }
 
     context 'when tree_ids is blank' do
       it 'returns false for empty array' do
@@ -144,12 +141,16 @@ RSpec.describe InstanceTreeable do
     end
 
     context 'when instance is in one of the provided trees' do
+      let(:tree) { create(:tree, is_read_only: false) }
+      let(:tree_version) { create(:tree_version, tree: tree, draft_name: "In Tree Draft") }
+      let(:tree_element) { create(:tree_element, instance: instance) }
+
       before do
         tree.update!(current_tree_version_id: tree_version.id)
         create(:tree_version_element,
           tree_element_id: tree_element.id,
           tree_version_id: tree_version.id,
-          element_link: "test/#{tree_element.id}",
+          element_link: "test/in_tree/#{tree_element.id}",
           taxon_id: tree_element.id)
       end
 
@@ -164,14 +165,17 @@ RSpec.describe InstanceTreeable do
     end
 
     context 'when instance is not in any of the provided trees' do
+      let(:tree) { create(:tree, is_read_only: false) }
       let(:other_tree) { create(:tree) }
+      let(:tree_version) { create(:tree_version, tree: tree, draft_name: "Not In Draft") }
+      let(:tree_element) { create(:tree_element, instance: instance) }
 
       before do
         tree.update!(current_tree_version_id: tree_version.id)
         create(:tree_version_element,
           tree_element_id: tree_element.id,
           tree_version_id: tree_version.id,
-          element_link: "test/#{tree_element.id}",
+          element_link: "test/not_in/#{tree_element.id}",
           taxon_id: tree_element.id)
       end
 
@@ -181,14 +185,18 @@ RSpec.describe InstanceTreeable do
     end
 
     context 'when instance is not in any trees at all' do
+      let(:tree) { create(:tree) }
+
       it 'returns false' do
         expect(instance.in_any_local_tree_ids?([tree.id])).to eq false
       end
     end
 
     context 'when tree version is not current' do
-      let(:old_tree_version) { create(:tree_version, tree: tree) }
-      let(:current_tree_version) { create(:tree_version, tree: tree) }
+      let(:tree) { create(:tree, is_read_only: false) }
+      let(:old_tree_version) { create(:tree_version, tree: tree, draft_name: "Old Draft") }
+      let(:current_tree_version) { create(:tree_version, tree: tree, draft_name: "Current Draft") }
+      let(:tree_element) { create(:tree_element, instance: instance) }
 
       before do
         tree.update!(current_tree_version_id: current_tree_version.id)
