@@ -208,7 +208,7 @@ class Ability
 
   def profile_editor(session_user)
     user_products = session_user.user&.products || []
-    user_product_trees = user_products.map(&:tree).compact
+    user_product_tree_ids = user_products.map(&:tree_id).compact
 
     can :manage, :profile_v2
     can :manage, Profile::ProfileItem do |profile_item|
@@ -227,7 +227,7 @@ class Ability
       instance.profile_items.includes([:product]).any? { |item| item.product && user_products.include?(item.product) }
     end
     can :create_adnot, Instance do |instance|
-      instance.in_local_trees.any? { |tree| user_product_trees.include?(tree) }
+      instance.in_any_local_tree_ids?(user_product_tree_ids)
     end
     can "comments", :all
     can "references", "typeahead_on_citation"

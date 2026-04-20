@@ -966,7 +966,7 @@ RSpec.describe Ability, type: :model do
 
       context 'when instance is in a tree that user has access to' do
         before do
-          allow(instance).to receive(:in_local_trees).and_return([tree])
+          allow(instance).to receive(:in_any_local_tree_ids?).with([tree.id]).and_return(true)
         end
 
         it 'can create_adnot on the instance' do
@@ -975,10 +975,8 @@ RSpec.describe Ability, type: :model do
       end
 
       context 'when instance is in a tree that user does not have access to' do
-        let(:other_tree) { create(:tree) }
-
         before do
-          allow(instance).to receive(:in_local_trees).and_return([other_tree])
+          allow(instance).to receive(:in_any_local_tree_ids?).with([tree.id]).and_return(false)
         end
 
         it 'cannot create_adnot on the instance' do
@@ -988,7 +986,7 @@ RSpec.describe Ability, type: :model do
 
       context 'when instance is not in any local trees' do
         before do
-          allow(instance).to receive(:in_local_trees).and_return([])
+          allow(instance).to receive(:in_any_local_tree_ids?).with([tree.id]).and_return(false)
         end
 
         it 'cannot create_adnot on the instance' do
@@ -1003,7 +1001,7 @@ RSpec.describe Ability, type: :model do
           user.user_product_roles.destroy_all
           product_role = create(:product_role, product: product_without_tree)
           create(:user_product_role, user: user, product_role: product_role)
-          allow(instance).to receive(:in_local_trees).and_return([tree])
+          allow(instance).to receive(:in_any_local_tree_ids?).with([]).and_return(false)
         end
 
         it 'cannot create_adnot on the instance' do
