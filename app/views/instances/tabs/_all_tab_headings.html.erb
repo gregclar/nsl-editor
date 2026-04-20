@@ -176,7 +176,7 @@
   <% end %>
 
   <% if @tabs_to_offer.include?("tab_comments") && tab_available?(tabs_array, "adnot") %>
-    <% if can?("comments", "create") || can?(:create_adnot, @instance) %>
+    <% if can?("comments", "create") || (can?(:create_adnot, @instance) && current_product_from_context&.has_the_same_reference?(@instance))%>
       <%= render(
         partial: "instances/tabs/tab",
         locals: {
