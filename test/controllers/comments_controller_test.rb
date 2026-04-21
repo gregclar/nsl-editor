@@ -68,72 +68,62 @@ class CommentsControllerTest < ActionController::TestCase
   end
 
   test "should create comment when multi_product_tabs_enabled is false" do
-    Rails.configuration.stubs(:multi_product_tabs_enabled).returns(false)
-
-    assert_difference("Comment.count") do
-      post(:create,
-           params: { comment: { text: "Test comment", instance_id: instances(:britten_created_name_to_be_deleted).id } },
-           session: { username: "fred",
-                      user_full_name: "Fred Jones",
-                      groups: ["edit"] },
-           xhr: true)
-    end
-  end
-
-  test "should create comment when multi_product_tabs_enabled is true and user can create_adnot" do
-    Rails.configuration.stubs(:multi_product_tabs_enabled).returns(true)
-    instance = instances(:britten_created_name_to_be_deleted)
-
-    @controller.stubs(:can?).with(:create_adnot, instance).returns(true)
-    @controller.stubs(:can?).with(anything, anything).returns(true)
-
-    assert_difference("Comment.count") do
-      post(:create,
-           params: { comment: { text: "Test comment", instance_id: instance.id } },
-           session: { username: "fred",
-                      user_full_name: "Fred Jones",
-                      groups: ["edit"] },
-           xhr: true)
-    end
-  end
-
-  test "should deny create comment when multi_product_tabs_enabled is true and user cannot create_adnot" do
-    Rails.configuration.stubs(:multi_product_tabs_enabled).returns(true)
-    instance = instances(:britten_created_name_to_be_deleted)
-
-    ability = Object.new
-    ability.stubs(:can?).returns(true)
-    ability.stubs(:can?).with(:create_adnot, instance).returns(false)
-    @controller.stubs(:current_ability).returns(ability)
-
-    assert_no_difference("Comment.count") do
-      post(:create,
-           params: { comment: { text: "Test comment", instance_id: instance.id } },
-           session: { username: "fred",
-                      user_full_name: "Fred Jones",
-                      groups: ["edit"] },
-           xhr: true)
-    end
-    assert_response :forbidden
-  end
-
-  test "should deny destroy comment when multi_product_tabs_enabled is true and user cannot create_adnot" do
-    Rails.configuration.stubs(:multi_product_tabs_enabled).returns(true)
-    comment = comments(:instance_comment)
-
-    ability = Object.new
-    ability.stubs(:can?).returns(true)
-    ability.stubs(:can?).with(:create_adnot, comment.instance).returns(false)
-    @controller.stubs(:current_ability).returns(ability)
-
-    assert_no_difference("Comment.count") do
-      delete(:destroy,
-             params: { id: comment.id },
+    CommentsController.stub_any_instance(:authorize_for_instance!, nil) do
+      assert_difference("Comment.count") do
+        post(:create,
+             params: { comment: { text: "Test comment", instance_id: instances(:triodia_in_brassard).id } },
              session: { username: "fred",
                         user_full_name: "Fred Jones",
                         groups: ["edit"] },
              xhr: true)
+      end
     end
-    assert_response :forbidden
+  end
+
+  test "should create comment when multi_product_tabs_enabled is true and user can create_adnot" do
+    instance = instances(:triodia_in_brassard)
+
+    CommentsController.stub_any_instance(:authorize_for_instance!, nil) do
+      assert_difference("Comment.count") do
+        post(:create,
+             params: { comment: { text: "Test comment", instance_id: instance.id } },
+             session: { username: "fred",
+                        user_full_name: "Fred Jones",
+                        groups: ["edit"] },
+             xhr: true)
+      end
+    end
+  end
+
+  test "should deny create comment when multi_product_tabs_enabled is true and user cannot create_adnot" do
+    instance = instances(:triodia_in_brassard)
+
+    CommentsController.stub_any_instance(:authorize_for_instance!, -> { raise CanCan::AccessDenied.new("Access Denied!", :create_adnot, instance) }) do
+      assert_no_difference("Comment.count") do
+        post(:create,
+             params: { comment: { text: "Test comment", instance_id: instance.id } },
+             session: { username: "fred",
+                        user_full_name: "Fred Jones",
+                        groups: ["edit"] },
+             xhr: true)
+      end
+      assert_response :forbidden
+    end
+  end
+
+  test "should deny destroy comment when multi_product_tabs_enabled is true and user cannot create_adnot" do
+    comment = comments(:instance_comment)
+
+    CommentsController.stub_any_instance(:authorize_for_instance!, -> { raise CanCan::AccessDenied.new("Access Denied!", :create_adnot, comment.instance) }) do
+      assert_no_difference("Comment.count") do
+        delete(:destroy,
+               params: { id: comment.id },
+               session: { username: "fred",
+                          user_full_name: "Fred Jones",
+                          groups: ["edit"] },
+               xhr: true)
+      end
+      assert_response :forbidden
+    end
   end
 end

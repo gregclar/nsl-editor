@@ -111,7 +111,7 @@ class CommentsController < ApplicationController
   def find_instance_for_authorization
     if @comment&.instance
       @comment.instance
-    elsif comment_params[:instance_id].present?
+    elsif params[:comment].present? && comment_params[:instance_id].present?
       Instance.find_by(id: comment_params[:instance_id])
     end
   end
