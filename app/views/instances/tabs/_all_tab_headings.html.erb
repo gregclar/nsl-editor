@@ -177,20 +177,22 @@
 
   <% if @tabs_to_offer.include?("tab_comments") && tab_available?(tabs_array, "adnot") %>
     <% if can?("comments", "create") %>
-      <%= render(
-        partial: "instances/tabs/tab",
-        locals: {
-          first: false,
-          last: true,
-          this_tab: "tab_comments",
-          link_text: product_tab_text(:instance, "adnot", "Adnot"),
-          link_id: "instance-comments-tab",
-          link_title: "Adnot",
-          tab_index: increment_tab_index,
-          prev_tab: "",
-          next_tab: ""
-        })
-      %>
+      <% if !Rails.configuration.try('multi_product_tabs_enabled') || can?(:create_adnot, @instance) %>
+        <%= render(
+          partial: "instances/tabs/tab",
+          locals: {
+            first: false,
+            last: true,
+            this_tab: "tab_comments",
+            link_text: product_tab_text(:instance, "adnot", "Adnot"),
+            link_id: "instance-comments-tab",
+            link_title: "Adnot",
+            tab_index: increment_tab_index,
+            prev_tab: "",
+            next_tab: ""
+          })
+        %>
+      <% end %>
     <% end %>
   <% end %>
 

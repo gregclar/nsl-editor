@@ -299,8 +299,62 @@ RSpec.describe Ability, type: :model do
       expect(subject.can?("instances", "typeahead_for_product_item_config")).to eq true
     end
 
+    it 'can access instances tab_comments' do
+      expect(subject.can?("instances", "tab_comments")).to eq true
+    end
+
     it 'can access menu new' do
       expect(subject.can?("menu", "new")).to eq true
+    end
+
+    it 'can access comments' do
+      expect(subject.can?("comments", :all)).to eq true
+    end
+
+    describe ':create_adnot permission' do
+      let(:instance) { create(:instance, draft: true) }
+
+      context 'when instance is draft and product has the same reference' do
+        before do
+          allow(product).to receive(:has_the_same_reference?).with(instance).and_return(true)
+        end
+
+        it 'can create_adnot on the instance' do
+          expect(subject.can?(:create_adnot, instance)).to eq true
+        end
+      end
+
+      context 'when instance is draft but product does not have the same reference' do
+        before do
+          allow(product).to receive(:has_the_same_reference?).with(instance).and_return(false)
+        end
+
+        it 'cannot create_adnot on the instance' do
+          expect(subject.can?(:create_adnot, instance)).to eq false
+        end
+      end
+
+      context 'when instance is not draft' do
+        let(:instance) { create(:instance, draft: false) }
+
+        before do
+          allow(product).to receive(:has_the_same_reference?).with(instance).and_return(true)
+        end
+
+        it 'cannot create_adnot on the instance' do
+          expect(subject.can?(:create_adnot, instance)).to eq false
+        end
+      end
+
+      context 'when product_from_context is nil' do
+        before do
+          allow(session_user).to receive(:product_from_context).and_return(nil)
+        end
+
+        it 'cannot create_adnot on the instance' do
+          expect(subject.can?(:create_adnot, instance)).to eq false
+        end
+      end
     end
 
   end
@@ -888,6 +942,72 @@ RSpec.describe Ability, type: :model do
 
     it 'can access instances tab_profile_v2' do
       expect(subject.can?("instances", "tab_profile_v2")).to eq true
+    end
+
+    it 'can access instances tab_comments' do
+      expect(subject.can?("instances", "tab_comments")).to eq true
+    end
+
+    it 'can access comments' do
+      expect(subject.can?("comments", :all)).to eq true
+    end
+
+    describe ':create_adnot permission' do
+      let(:user) { create(:user, id: 1, user_name: session_user.username) }
+      let(:tree) { create(:tree) }
+      let(:product_with_tree) { create(:product, tree: tree) }
+      let(:instance) { create(:instance, draft: false) }
+
+      before do
+        product_role = create(:product_role, product: product_with_tree)
+        create(:user_product_role, user: user, product_role: product_role)
+        allow(session_user).to receive(:user).and_return(user)
+      end
+
+      context 'when instance is in a tree that user has access to' do
+        before do
+          allow(instance).to receive(:in_any_local_tree_ids?).with([tree.id]).and_return(true)
+        end
+
+        it 'can create_adnot on the instance' do
+          expect(subject.can?(:create_adnot, instance)).to eq true
+        end
+      end
+
+      context 'when instance is in a tree that user does not have access to' do
+        before do
+          allow(instance).to receive(:in_any_local_tree_ids?).with([tree.id]).and_return(false)
+        end
+
+        it 'cannot create_adnot on the instance' do
+          expect(subject.can?(:create_adnot, instance)).to eq false
+        end
+      end
+
+      context 'when instance is not in any local trees' do
+        before do
+          allow(instance).to receive(:in_any_local_tree_ids?).with([tree.id]).and_return(false)
+        end
+
+        it 'cannot create_adnot on the instance' do
+          expect(subject.can?(:create_adnot, instance)).to eq false
+        end
+      end
+
+      context 'when user products have no trees' do
+        let(:product_without_tree) { create(:product, tree: nil) }
+
+        before do
+          user.user_product_roles.destroy_all
+          product_role = create(:product_role, product: product_without_tree)
+          create(:user_product_role, user: user, product_role: product_role)
+          allow(instance).to receive(:in_any_local_tree_ids?).with([]).and_return(false)
+        end
+
+        it 'cannot create_adnot on the instance' do
+          expect(subject.can?(:create_adnot, instance)).to eq false
+        end
+      end
     end
 
     it "can manage_profile on instance if not draft and has profile items for product" do
