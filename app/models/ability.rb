@@ -68,6 +68,7 @@ class Ability
     tree_builder_auth(user) if user.with_role?('tree-builder')
     tree_publisher_auth(user) if user.with_role?('tree-publisher')
     name_index_editor(user) if user.with_role?('name-index-editor') && is_name_index
+    common_name_editor(user) if user.with_role?('common-name') && not_name_index
     product_admin_auth(user) if user.with_role?('admin')
   end
 
@@ -281,6 +282,32 @@ class Ability
     can "references",         :all
     can "names/typeaheads/for_unpub_cit", :all
     can "loader/batch/review/mode", "switch_off"
+  end
+
+  # For common-name product roles - allows creating and editing common names only
+  def common_name_editor(session_user)
+    # Name creation - restricted to common names only (via form restrictions)
+    can :create, Name
+    can :create_common_name, Name
+
+    # Name update - only for common name types
+    can :update, Name do |name|
+      name.name_type&.name&.downcase == "common"
+    end
+    can :update_common_name, Name do |name|
+      name.name_type&.name&.downcase == "common"
+    end
+
+    # Menu access for "New" dropdown
+    can "menu", "new"
+
+    # Name controller actions
+    can "names", "new_row"
+    can "names", "new"
+    can "names", "create"
+    can "names", "tab_details"
+    can "names", "tab_edit"
+    can "names", "update"
   end
 
   def basic_auth_1
