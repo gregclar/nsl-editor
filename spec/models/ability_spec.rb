@@ -1224,7 +1224,7 @@ RSpec.describe Ability, type: :model do
 
   describe "#common_name_editor role" do
     let(:product) { create(:product, is_name_index: false, manages_profile: true) }
-    let(:common_name_type) { create(:name_type, name: "common") }
+    let(:common_name_type) { create(:name_type, name: "common", name_category: create(:name_category, name: "other")) }
     let(:scientific_name_type) { create(:name_type, name: "scientific", scientific: true) }
     let(:common_name) { create(:name, name_type: common_name_type, full_name: "Common Daisy") }
     let(:scientific_name) { create(:name, name_type: scientific_name_type, full_name: "Bellis perennis") }
