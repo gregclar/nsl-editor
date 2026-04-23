@@ -13,7 +13,7 @@ RSpec.describe Ability, type: :model do
     allow(session_user).to receive(:with_role?).with('tree-publisher').and_return(false)
     allow(session_user).to receive(:with_role?).with('tree-reviewer').and_return(false)
     allow(session_user).to receive(:with_role?).with('name-index-editor').and_return(false)
-    allow(session_user).to receive(:with_role?).with('common-name').and_return(false)
+    allow(session_user).to receive(:with_role_for_context?).with('common-name').and_return(false)
     allow(session_user).to receive(:with_role?).with('admin').and_return(false)
     allow(session_user).to receive(:user_id).and_return(1)
     allow(session_user).to receive(:product_from_context).and_return(nil)
@@ -1230,12 +1230,16 @@ RSpec.describe Ability, type: :model do
     let(:scientific_name) { create(:name, name_type: scientific_name_type, full_name: "Bellis perennis") }
 
     before do
-      allow(session_user).to receive(:with_role?).with('common-name').and_return(true)
+      allow(session_user).to receive(:with_role_for_context?).with('common-name').and_return(true)
       allow(session_user).to receive(:product_from_context).and_return(product)
       allow(product).to receive(:is_name_index?).and_return(false)
     end
 
     context "when managing names" do
+      it "allows access_menu on :names" do
+        expect(subject.can?(:access_menu, :names)).to eq true
+      end
+
       it "allows creating Name" do
         expect(subject.can?(:create, Name)).to eq true
       end
@@ -1269,6 +1273,25 @@ RSpec.describe Ability, type: :model do
       it 'cannot create Name (not_name_index restriction)' do
         # The initialize method checks not_name_index before calling common_name_editor
         expect(subject.can?(:create, Name)).to eq false
+      end
+    end
+
+    context 'when product_from_context is nil' do
+      before do
+        allow(session_user).to receive(:with_role_for_context?).with('common-name').and_return(false)
+        allow(session_user).to receive(:product_from_context).and_return(nil)
+      end
+
+      it 'cannot create Name' do
+        expect(subject.can?(:create, Name)).to eq false
+      end
+
+      it 'cannot create_common_name' do
+        expect(subject.can?(:create_common_name, Name)).to eq false
+      end
+
+      it 'cannot access menu new' do
+        expect(subject.can?("menu", "new")).to eq false
       end
     end
 

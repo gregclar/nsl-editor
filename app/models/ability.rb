@@ -68,7 +68,7 @@ class Ability
     tree_builder_auth(user) if user.with_role?('tree-builder')
     tree_publisher_auth(user) if user.with_role?('tree-publisher')
     name_index_editor(user) if user.with_role?('name-index-editor') && is_name_index
-    common_name_editor(user) if user.with_role?('common-name') && not_name_index
+    common_name_editor(user) if user.with_role_for_context?('common-name') && not_name_index
     product_admin_auth(user) if user.with_role?('admin')
   end
 
@@ -287,6 +287,7 @@ class Ability
   # For common-name product roles - allows creating and editing common names only
   def common_name_editor(session_user)
     # Name creation - restricted to common names only (via form restrictions)
+    can :access_menu, :names
     can :create, Name
     can :create_common_name, Name
 
@@ -342,7 +343,9 @@ class Ability
   end
 
   def edit_auth
-    can :manage,              Author
+    can :access_menu, :all
+    can :manage, Author
+    can :manage, Name
     can :manage, Reference
     can [
       :create,
@@ -416,6 +419,7 @@ class Ability
 
   def admin_auth
     can "admin",              :all
+    can :access_menu, :all
     can "menu",               "admin"
     can "users",              :all
     can "user/product_roles", :all
