@@ -19,7 +19,14 @@
     })
   %>
 
-  <% if can?("names", "update") && tab_available?(tabs_array, "edit") %>
+  <%
+    can_edit_this_name = if can?(:manage, Name)
+                            true
+                          elsif can?(:update_common_name, @name) && !can?(:manage, Name)
+                            @name.name_type&.name&.downcase == "common"
+                          end
+  %>
+  <% if can?("names", "update") && can_edit_this_name %>
     <%= render(
       partial: "names/tabs/tab",
       locals: {
