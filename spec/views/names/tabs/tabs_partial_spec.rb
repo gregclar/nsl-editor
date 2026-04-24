@@ -14,6 +14,9 @@ RSpec.describe("names/tabs/_tabs.html.erb", type: :view) do
     allow(view).to(receive(:can?).with("names", "delete").and_return(false))
     allow(view).to(receive(:can?).with(:create_with_product_reference, Instance).and_return(false))
     allow(view).to(receive(:can?).with(:create, Instance).and_return(true))
+    allow(view).to(receive(:can?).with(:manage, Name).and_return(false))
+    allow(view).to(receive(:can?).with(:update_common_name, name).and_return(false))
+    allow(view).to(receive(:can?).with(:create_common_name, Name).and_return(false))
     allow(view).to(receive(:increment_tab_index).and_return(1))
     
     mock_service = product_tab_service_mock
@@ -57,6 +60,7 @@ RSpec.describe("names/tabs/_tabs.html.erb", type: :view) do
   context "when the user can update names" do
     before do
       allow(view).to(receive(:can?).with("names", "update").and_return(true))
+      allow(view).to(receive(:can?).with(:manage, Name).and_return(true))
     end
 
     it "renders the Edit tab" do
@@ -106,6 +110,7 @@ RSpec.describe("names/tabs/_tabs.html.erb", type: :view) do
   context "when a user can update a name" do
     before do
       allow(view).to(receive(:can?).with("names", "update").and_return(true))
+      allow(view).to(receive(:can?).with(:manage, Name).and_return(true))
     end
 
     it "renders the Edit tab" do
