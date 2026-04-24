@@ -36,8 +36,9 @@ class CommonNameRoleShowEditTabForCommonNameTest < ActionController::TestCase
     end
     assert_response :success
     assert_select "a#name-edit-tab", true, "Should show 'Edit' tab link for common name."
-    assert_select "select#name_name_type_id", true
-    assert_select "select#name_name_type_id option[value='']", true,
-                  "Should include prompt option for common-name role user."
+    assert_select "select#name-type-selector", true,
+                  "Should render name type select via the show_prompt branch."
+    assert_select "select#name-type-selector option", {count: 1},
+                  "Should show only the common name type option, not the full other-category list."
   end
 end
