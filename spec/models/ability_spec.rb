@@ -13,6 +13,7 @@ RSpec.describe Ability, type: :model do
     allow(session_user).to receive(:with_role?).with('tree-publisher').and_return(false)
     allow(session_user).to receive(:with_role?).with('tree-reviewer').and_return(false)
     allow(session_user).to receive(:with_role?).with('name-index-editor').and_return(false)
+    allow(session_user).to receive(:with_role_for_context?).with('common-name').and_return(false)
     allow(session_user).to receive(:with_role?).with('admin').and_return(false)
     allow(session_user).to receive(:user_id).and_return(1)
     allow(session_user).to receive(:product_from_context).and_return(nil)
@@ -1219,6 +1220,110 @@ RSpec.describe Ability, type: :model do
       end
     end
 
+  end
+
+  describe "#common_name_editor role" do
+    let(:product) { create(:product, is_name_index: false, manages_profile: true) }
+    let(:common_name_type) { create(:name_type, name: "common", name_category: create(:name_category, name: "other")) }
+    let(:scientific_name_type) { create(:name_type, name: "scientific", scientific: true) }
+    let(:common_name) { create(:name, name_type: common_name_type, full_name: "Common Daisy") }
+    let(:scientific_name) { create(:name, name_type: scientific_name_type, full_name: "Bellis perennis") }
+
+    before do
+      allow(session_user).to receive(:with_role_for_context?).with('common-name').and_return(true)
+      allow(session_user).to receive(:product_from_context).and_return(product)
+      allow(product).to receive(:is_name_index?).and_return(false)
+    end
+
+    context "when managing names" do
+      it "allows access_menu on :names" do
+        expect(subject.can?(:access_menu, :names)).to eq true
+      end
+
+      it "allows creating Name" do
+        expect(subject.can?(:create, Name)).to eq true
+      end
+
+      it "allows create_common_name action" do
+        expect(subject.can?(:create_common_name, Name)).to eq true
+      end
+
+      it "allows updating common name types" do
+        expect(subject.can?(:update, common_name)).to eq true
+      end
+
+      it "does not allow updating non-common name types" do
+        expect(subject.can?(:update, scientific_name)).to eq false
+      end
+
+      it "allows update_common_name for common names" do
+        expect(subject.can?(:update_common_name, common_name)).to eq true
+      end
+
+      it "does not allow update_common_name for non-common names" do
+        expect(subject.can?(:update_common_name, scientific_name)).to eq false
+      end
+    end
+
+    context 'when product is a name index' do
+      before do
+        allow(product).to receive(:is_name_index?).and_return(true)
+      end
+
+      it 'cannot create Name (not_name_index restriction)' do
+        # The initialize method checks not_name_index before calling common_name_editor
+        expect(subject.can?(:create, Name)).to eq false
+      end
+    end
+
+    context 'when product_from_context is nil' do
+      before do
+        allow(session_user).to receive(:with_role_for_context?).with('common-name').and_return(false)
+        allow(session_user).to receive(:product_from_context).and_return(nil)
+      end
+
+      it 'cannot create Name' do
+        expect(subject.can?(:create, Name)).to eq false
+      end
+
+      it 'cannot create_common_name' do
+        expect(subject.can?(:create_common_name, Name)).to eq false
+      end
+
+      it 'cannot access menu new' do
+        expect(subject.can?("menu", "new")).to eq false
+      end
+    end
+
+    context "when accessing specific actions" do
+      it "allows accessing the 'new' menu" do
+        expect(subject.can?("menu", "new")).to eq true
+      end
+
+      it "allows names new_row action" do
+        expect(subject.can?("names", "new_row")).to eq true
+      end
+
+      it "allows names new action" do
+        expect(subject.can?("names", "new")).to eq true
+      end
+
+      it "allows names create action" do
+        expect(subject.can?("names", "create")).to eq true
+      end
+
+      it "allows names tab_details action" do
+        expect(subject.can?("names", "tab_details")).to eq true
+      end
+
+      it "allows names tab_edit action" do
+        expect(subject.can?("names", "tab_edit")).to eq true
+      end
+
+      it "allows names update action" do
+        expect(subject.can?("names", "update")).to eq true
+      end
+    end
   end
 
   describe "#basic_auth_2" do
