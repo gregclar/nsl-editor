@@ -3,6 +3,10 @@
   :jira_project: FLOR
   :description: |-
     Display the common name form and edit common name tab for users with the common-name product role
+- :date: 28-Apr-2026
+  :jira_id: ''
+  :description: |-
+    Dependabot updates erb from 6.0.2 to 6.0.4
 - :date: 24-Apr-2026
   :jira_id: '206'
   :jira_project: FLOR
