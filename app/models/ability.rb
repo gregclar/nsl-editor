@@ -205,6 +205,13 @@ class Ability
     can "names/typeaheads/for_unpub_cit", "index"
     can "names", "tab_instances_profile_v2"
     can "references", "tab_new_instance"
+
+    # NOTES Change name permissions
+    can :change_name, Instance do |instance|
+      instance.draft? && instance.reference.products.pluck(:name).any?(selected_product(user)&.name.to_s)
+    end
+    can "instances", "change_name"
+    can "instances", "typeahead_for_change_name"
   end
 
   def profile_editor(session_user)
