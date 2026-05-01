@@ -843,12 +843,12 @@ RSpec.describe Ability, type: :model do
       allow(product).to receive(:is_name_index?).and_return(false)
     end
 
-    it "can access instances change_name action" do
-      expect(subject.can?("instances", "change_name")).to eq true
+    it "can access instances/change_name update action" do
+      expect(subject.can?("instances/change_name", "update")).to eq true
     end
 
-    it "can access instances typeahead_for_change_name action" do
-      expect(subject.can?("instances", "typeahead_for_change_name")).to eq true
+    it "can access instances/change_name typeahead action" do
+      expect(subject.can?("instances/change_name", "typeahead")).to eq true
     end
 
     context "with a draft instance belonging to the user product" do

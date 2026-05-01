@@ -210,8 +210,8 @@ class Ability
     can :change_name, Instance do |instance|
       instance.draft? && instance.reference.products.pluck(:name).any?(selected_product(user)&.name.to_s)
     end
-    can "instances", "change_name"
-    can "instances", "typeahead_for_change_name"
+    can "instances/change_name", "update"
+    can "instances/change_name", "typeahead"
   end
 
   def profile_editor(session_user)
