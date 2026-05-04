@@ -1,7 +1,5 @@
-<%= divider %>
-Change the name for this draft instance.
-<br>
-<br>
+<br/>
+<p>Change the name for this draft instance.</p>
 <%= form_for(@instance,
              url: instance_name_path(@instance),
              html: { id: "change-name-form", method: :patch, remote: true }) do |f| %>
@@ -15,13 +13,14 @@ Change the name for this draft instance.
          value="<%= @instance.name.try('full_name') %>"/>
   <%= hidden_field_tag "instance[name_id]", "", id: "instance-change-name-id" %>
   <script>setUpInstanceNameChange(<%= @instance.id %>);</script>
-  <br>
+  <div id="change-name-info-message-container" class="message-container"></div>
+  <div id="change-name-error-message-container" class="message-container error-container"></div>
+  <div id="change-name-refresh-container"></div>
   <%= f.submit "Change Name",
                class: "btn btn-primary pull-right no-right-margin",
                title: "Save changed name.",
+               style: "padding: 0 10px",
                tabindex: increment_tab_index %>
-  <br>
-  <br>
-  <div id="change-name-info-message-container" class="message-container"></div>
-  <div id="change-name-error-message-container" class="message-container error-container"></div>
 <% end %>
+<br/>
+<%= divider %>
