@@ -88,7 +88,8 @@ class Instance < ApplicationRecord
                 :consider_taxo,
                 :concept_warning_bypassed,
                 :multiple_primary_override,
-                :duplicate_instance_override
+                :duplicate_instance_override,
+                :name_change_permitted
 
   SEARCH_LIMIT = 50
   MULTIPLE_PRIMARY_WARNING = "Saving this instance would result in multiple primary instances for the same name."
@@ -523,8 +524,10 @@ class Instance < ApplicationRecord
   end
 
   def name_id_must_not_change
+    return if name_change_permitted
     errors.add(:base, "You cannot use a different name.") if name_id_changed?
   end
+
 
   # A standalone instance with no dependents can change reference.
   def standalone_reference_id_can_change_if_no_dependents

@@ -834,6 +834,68 @@ RSpec.describe Ability, type: :model do
     end
   end
 
+  describe "#draft_editor role - change_name permissions" do
+    let(:product) { create(:product, is_name_index: false) }
+
+    before do
+      allow(session_user).to receive(:with_role?).with("draft-editor").and_return(true)
+      allow(session_user).to receive(:product_from_context).and_return(product)
+      allow(product).to receive(:is_name_index?).and_return(false)
+    end
+
+    it "can access instances/change_name update action" do
+      expect(subject.can?("instances/change_name", "update")).to eq true
+    end
+
+    it "can access instances/change_name typeahead action" do
+      expect(subject.can?("instances/change_name", "typeahead")).to eq true
+    end
+
+    context "with a draft instance belonging to the user product" do
+      let(:instance) { create(:instance, draft: true) }
+
+      before do
+        products_collection = double("products_collection")
+        allow(products_collection).to receive(:pluck).with(:name).and_return([product.name])
+        allow(instance).to receive_message_chain(:reference, :products).and_return(products_collection)
+        allow(session_user).to receive(:product_from_context).and_return(product)
+      end
+
+      it "can :change_name on a draft instance whose reference belongs to the user product" do
+        expect(subject.can?(:change_name, instance)).to eq true
+      end
+    end
+
+    context "with a draft instance belonging to a different product" do
+      let(:instance) { create(:instance, draft: true) }
+      let(:other_product) { create(:product, name: "OTHER") }
+
+      before do
+        products_collection = double("products_collection")
+        allow(products_collection).to receive(:pluck).with(:name).and_return([other_product.name])
+        allow(instance).to receive_message_chain(:reference, :products).and_return(products_collection)
+      end
+
+      it "cannot :change_name on a draft instance whose reference belongs to a different product" do
+        expect(subject.can?(:change_name, instance)).to eq false
+      end
+    end
+
+    context "with a non-draft instance" do
+      let(:instance) { create(:instance, draft: false) }
+
+      before do
+        products_collection = double("products_collection")
+        allow(products_collection).to receive(:pluck).with(:name).and_return([product.name])
+        allow(instance).to receive_message_chain(:reference, :products).and_return(products_collection)
+      end
+
+      it "cannot :change_name on a non-draft instance" do
+        expect(subject.can?(:change_name, instance)).to eq false
+      end
+    end
+  end
+
   describe "#profile_editor role" do
     let(:product) { create(:product, is_name_index: false)}
 
