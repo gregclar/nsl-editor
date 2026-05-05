@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe "instances/tabs/_tab_edit_profile_v2.html.erb", type: :view do
-  let(:language) { Language.find_by!(iso6391code: "en") }
+  let(:language) { Language.find_or_create_by!(iso6391code: "en") { |l| l.iso6393code = "eng"; l.name = "English" } }
   let(:reference) { FactoryBot.create(:reference, language: language) }
   let(:instance_type) { FactoryBot.create(:instance_type, secondary_instance: false)}
   let(:instance) { FactoryBot.create(:instance, reference: reference) }
