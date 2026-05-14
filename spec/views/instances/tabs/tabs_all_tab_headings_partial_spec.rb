@@ -153,8 +153,13 @@ RSpec.describe("instances/tabs/_all_tab_headings.html.erb", type: :view) do
   end
 
   context "when 'tab_classification' is offered" do
+    let(:working_draft) { double("TreeVersion") }
+
     before do
       tabs_to_offer << "tab_classification"
+      assign(:working_draft, working_draft)
+      allow(view).to(receive(:can?).with("instances", "tab_classification").and_return(true))
+      allow(view).to(receive(:can?).with(:place_name, working_draft).and_return(true))
     end
 
     it "renders the 'Tree' tab" do
@@ -166,10 +171,14 @@ RSpec.describe("instances/tabs/_all_tab_headings.html.erb", type: :view) do
   context "when 'tab_classification' is offered with multi_product_tabs_enabled" do
     let(:user_with_roles) { FactoryBot.create(:user) }
     let(:user_without_roles) { FactoryBot.create(:user) }
+    let(:working_draft) { double("TreeVersion") }
 
     before do
       tabs_to_offer << "tab_classification"
+      assign(:working_draft, working_draft)
       allow(Rails.configuration).to(receive(:multi_product_tabs_enabled).and_return(true))
+      allow(view).to(receive(:can?).with("instances", "tab_classification").and_return(true))
+      allow(view).to(receive(:can?).with(:place_name, working_draft).and_return(true))
     end
 
     context "when current_product_from_context does not match the instance" do
