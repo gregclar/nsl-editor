@@ -1,3 +1,8 @@
+- :date: 14-Apr-2026
+  :jira_id: '226'
+  :jira_project: FLOR
+  :description: |-
+    Fixup the display of the Tree tab for user with/without tree permission
 - :date: 05-05-2026
   :jira_id: '5896'
   :description: |-
