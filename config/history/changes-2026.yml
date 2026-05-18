@@ -1,4 +1,9 @@
 - :date: 18-May-2026
+  :jira_id: '223'
+  :jira_project: FLOR
+  :description: |-
+    Fix the issue where pasting a long string in the profile item textarea was not showing all the content until the user saves the profile item
+- :date: 18-May-2026
   :jira_id: '226'
   :jira_project: FLOR
   :description: |-
