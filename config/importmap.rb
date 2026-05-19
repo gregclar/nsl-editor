@@ -16,6 +16,7 @@ pin "instance_note_edit", preload: true
 pin "add_new_row", preload: true
 pin "menu_ops", preload: true
 pin "unconfirmed_action_link_click", preload: true
+pin "confirm_delete_link_click", preload: true
 pin "name_rank_id_changed", preload: true
 pin "loader_bulk_show_stats_ops", preload: true
 pin "name_delete_form_submit", preload: true

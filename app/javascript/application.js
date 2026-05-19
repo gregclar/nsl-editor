@@ -19,6 +19,7 @@ import "instance_note_edit";
 import "add_new_row";
 import "menu_ops";
 import "unconfirmed_action_link_click";
+import "confirm_delete_link_click";
 import "loader_bulk_show_stats_ops";
 import "name_rank_id_changed";
 import "name_delete_form_submit";
