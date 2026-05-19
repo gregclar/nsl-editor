@@ -194,6 +194,9 @@ Rails.application.routes.draw do
   match "names/:id/tab/:tab/as/:new_category",
         as: "name_edit_as_category", to: "names#edit_as_category", via: :get
   match "names/:id/copy", as: "name_copy", to: "names#copy", via: :post
+
+  match "/names/:id/copy/instances", as: "name_copy_instances", to: "names#copy_instances", via: :post
+
   match "names/new/:category/:random_id",
         as: "new_name_with_category_and_random_id", to: "names#new", via: :get
 
