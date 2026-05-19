@@ -78,6 +78,7 @@ class Instance < ApplicationRecord
   include InstanceTreeable
   include InstanceInTaxonomy
   include Instance::ForCopyToLoaderName
+  include Instance::CopyableToNewName
 
   self.table_name = "instance"
   self.primary_key = "id"

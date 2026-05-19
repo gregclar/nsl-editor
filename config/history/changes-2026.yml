@@ -1,4 +1,8 @@
 - :date: 19-May-2026
+  :jira_id: '1319'
+  :description: |-
+    Names and Instances: Allow copy of Instances from one Name to another Name
+- :date: 19-May-2026
   :jira_id: '237'
   :jira_project: FLOR
   :description: |-
