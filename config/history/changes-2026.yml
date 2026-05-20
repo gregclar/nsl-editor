@@ -23,15 +23,15 @@
   :description: |-
     Fixup the display of the Tree tab for user with/without tree permission
 - :date: 05-May-2026
-  :jira_id: '5896'
+  :jira_id: '5796'
   :description: |-
     UI integration for the change name workflow for draft instances
 - :date: 04-May-2026
-  :jira_id: '5896'
+  :jira_id: '5796'
   :description: |-
     Change name controller and js template changes to support the change name workflow for draft instances
 - :date: 04-May-2026
-  :jira_id: '5896'
+  :jira_id: '5796'
   :description: |-
     Ability and service object changes to support the change name workflow for draft instances
 - :date: 01-May-2026
