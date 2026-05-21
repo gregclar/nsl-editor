@@ -7,7 +7,7 @@
    <% if @name.persisted? &&
          @name.name_rank.can_impact_child_name_construction? &&
         (@name.children.present? || @name.second_children.present?) %>
-     <p>
+     <p class="red">
      Changing this may also change the constructed names of <%= pluralize(@name.children.size + @name.second_children.size, 'direct child') %> and possibly more indirect children.
      </p>
      </p>

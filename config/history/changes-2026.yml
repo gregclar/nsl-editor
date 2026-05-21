@@ -1,4 +1,8 @@
 - :date: 21-May-2026
+  :jira_id: '2958'
+  :description: |-
+    Name Edit: Minor extra change to make the information text red
+- :date: 21-May-2026
   :jira_id: '1319'
   :description: |-
     Names and Instances: Minor additional change to NOT offer the copy form when a Name has no standalone instances
