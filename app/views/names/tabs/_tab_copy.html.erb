@@ -14,7 +14,11 @@
 <%= divider %>
 <div>
   <h5>Copy Standalone Instances</h5>
-  <p>Copy up to <%= pluralize(@name.standalone_instances.size, 'standalone instance') %> to another Name record</p>
-  <%= render partial: 'names/form/copy_instances' %>
+  <% if @name.standalone_instances.blank? %>
+     No instances available to copy. 
+  <% else %>
+    <p>Copy up to <%= pluralize(@name.standalone_instances.size, 'standalone instance') %> to another Name record</p>
+    <%= render partial: 'names/form/copy_instances' %>
+  <% end %>
 </div>
 
