@@ -2,7 +2,7 @@
   :jira_id: '221'
   :jira_project: FLOR
   :description: |-
-    Restrict "More" and "Tag" tabs to users with name edit permissions
+    Restrict "More" and sub tabs to users with name edit permissions
 - :date: 21-May-2026
   :jira_id: '2958'
   :description: |-

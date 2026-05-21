@@ -318,6 +318,7 @@ class Ability
     can "names", "update"
     can "names", "tab_tag"
     can "names", "tab_more"
+    can "names", "tab_refresh"
     can "name_tag_names", :all
   end
 
