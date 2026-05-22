@@ -1385,6 +1385,18 @@ RSpec.describe Ability, type: :model do
       it "allows names update action" do
         expect(subject.can?("names", "update")).to eq true
       end
+
+      it "allows names tab_tag action" do
+        expect(subject.can?("names", "tab_tag")).to eq true
+      end
+
+      it "allows names tab_more action" do
+        expect(subject.can?("names", "tab_more")).to eq true
+      end
+
+      it "allows all actions on name_tag_names" do
+        expect(subject.can?("name_tag_names", :all)).to eq true
+      end
     end
   end
 

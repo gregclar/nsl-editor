@@ -129,4 +129,57 @@ RSpec.describe("names/tabs/_tabs.html.erb", type: :view) do
       expect(rendered).to(have_link("Delete name", id: "name-delete-tab"))
     end
   end
+
+  context "More tab visibility" do
+    context "when the user can manage Name" do
+      before do
+        allow(view).to(receive(:can?).with(:manage, Name).and_return(true))
+      end
+
+      it "renders the More tab" do
+        subject
+        expect(rendered).to(have_link("More", id: "name-more-tab"))
+      end
+    end
+
+    context "when the user can update_common_name on a common name" do
+      let(:common_name_type) { instance_double(NameType, name: "common") }
+      let(:name) { instance_double(Name, name_type: common_name_type, duplicate?: false) }
+
+      before do
+        allow(view).to(receive(:can?).with(:manage, Name).and_return(false))
+        allow(view).to(receive(:can?).with(:update_common_name, name).and_return(true))
+        assign(:name, name)
+      end
+
+      it "renders the More tab" do
+        subject
+        expect(rendered).to(have_link("More", id: "name-more-tab"))
+      end
+    end
+
+    context "when the user can update_common_name but the name is not common" do
+      before do
+        allow(view).to(receive(:can?).with(:manage, Name).and_return(false))
+        allow(view).to(receive(:can?).with(:update_common_name, name).and_return(true))
+      end
+
+      it "does not render the More tab" do
+        subject
+        expect(rendered).not_to(have_link("More", id: "name-more-tab"))
+      end
+    end
+
+    context "when the user has no edit permissions" do
+      before do
+        allow(view).to(receive(:can?).with(:manage, Name).and_return(false))
+        allow(view).to(receive(:can?).with(:update_common_name, name).and_return(false))
+      end
+
+      it "does not render the More tab" do
+        subject
+        expect(rendered).not_to(have_link("More", id: "name-more-tab"))
+      end
+    end
+  end
 end

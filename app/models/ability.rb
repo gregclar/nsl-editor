@@ -316,6 +316,10 @@ class Ability
     can "names", "tab_details"
     can "names", "tab_edit"
     can "names", "update"
+    can "names", "tab_tag"
+    can "names", "tab_more"
+    can "names", "tab_refresh"
+    can "name_tag_names", :all
   end
 
   def basic_auth_1
