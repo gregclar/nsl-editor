@@ -36,7 +36,7 @@ Rails.application.routes.draw do
         defaults: { tab: "tab_show_1" }
 
   resources :profile_texts, only: %i[create update]
-  resources :profile_item_annotations, only: %i[create update]
+  resources :profile_item_annotations, only: %i[create update destroy]
   resources :profile_item_references, only: %i[create]
   resources :profile_items, only: %i[destroy index] do
     member do
