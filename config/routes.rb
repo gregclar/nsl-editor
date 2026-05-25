@@ -44,6 +44,9 @@ Rails.application.routes.draw do
     end
   end
 
+  namespace :profile_item_references do
+    resources :annotations, only: %i[destroy]
+  end
   match "profile_item_references/:profile_item_id/:reference_id", as: "save_profile_item_references", to: "profile_item_references#update", via: :put
   match "profile_item_references/:profile_item_id/:reference_id", as: "delete_profile_item_references", to: "profile_item_references#destroy", via: :delete
 
