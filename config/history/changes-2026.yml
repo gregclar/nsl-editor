@@ -1,3 +1,8 @@
+- :date: 26-May-2026
+  :jira_id: '215'
+  :jira_project: FLOR
+  :description: |-
+    Fixup draft-profile-editor permissions to only allow managing profile items that are related to the product
 - :date: 25-May-2026
   :jira_id: '220'
   :jira_project: FLOR
