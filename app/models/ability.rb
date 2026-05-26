@@ -63,7 +63,7 @@ class Ability
     reviewer_auth(user) if user.with_role?('tree-reviewer')
     draft_editor(user) if user.with_role?('draft-editor') && not_name_index
     profile_editor(user) if user.with_role?('profile-editor') && not_name_index
-    draft_profile_editor if user.with_role?('draft-profile-editor') && not_name_index
+    draft_profile_editor(user) if user.with_role?('draft-profile-editor') && not_name_index
     profile_reference_auth(user) if user.with_role?('profile-reference') && not_name_index
     tree_builder_auth(user) if user.with_role?('tree-builder')
     tree_publisher_auth(user) if user.with_role?('tree-publisher')
@@ -84,10 +84,10 @@ class Ability
     @user.id
   end
 
-  def draft_profile_editor
+  def draft_profile_editor(user)
     can :manage, :profile_v2
     can :manage_profile, Instance do |instance|
-      instance.draft?
+      instance.draft? && instance.profile_items.includes([:product]).any? { |item| item.product && item.product == user.product_from_context }
     end
     can [:create, :read], Author
     can :update, Author do |author|
