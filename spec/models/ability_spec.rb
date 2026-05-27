@@ -112,9 +112,21 @@ RSpec.describe Ability, type: :model do
       end
     end
 
-    it 'can manage draft instances' do
+    it 'can manage draft instances with matching product profile items' do
       instance = create(:instance, draft: true)
+      profile_item = double('profile_item', product: product)
+      profile_items_relation = double('profile_items_relation')
+      allow(profile_items_relation).to receive(:includes).with([:product]).and_return([profile_item])
+      allow(instance).to receive(:profile_items).and_return(profile_items_relation)
       expect(subject.can?(:manage_profile, instance)).to eq true
+    end
+
+    it 'cannot manage draft instances without matching product profile items' do
+      instance = create(:instance, draft: true)
+      profile_items_relation = double('profile_items_relation')
+      allow(profile_items_relation).to receive(:includes).with([:product]).and_return([])
+      allow(instance).to receive(:profile_items).and_return(profile_items_relation)
+      expect(subject.can?(:manage_profile, instance)).to eq false
     end
 
     it 'cannot manage non-draft instances' do
