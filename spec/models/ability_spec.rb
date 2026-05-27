@@ -1846,7 +1846,12 @@ RSpec.describe Ability, type: :model do
       it "inherits all standard admin permissions" do
         expect(subject.can?("admin", :all)).to eq true
         expect(subject.can?("menu", "admin")).to eq true
-        expect(subject.can?("users", :all)).to eq true
+      end
+
+      it "allows viewing users but not updating them" do
+        expect(subject.can?("users", "index")).to eq true
+        expect(subject.can?("users", "show")).to eq true
+        expect(subject.can?("users", "update")).to eq false
       end
     end
 

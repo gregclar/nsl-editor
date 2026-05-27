@@ -563,6 +563,7 @@ class Ability
   def product_admin_auth(session_user)
     # Product admins have all standard admin permissions
     admin_auth
+    cannot "users", "update"
 
     # NOTES: But they can only manage user product roles for products they have admin access to
     # For product admin functionality, we need a User record since that's where roles are stored

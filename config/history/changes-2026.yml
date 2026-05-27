@@ -1,4 +1,9 @@
 - :date: 27-May-2026
+  :jira_id: '216'
+  :jira_project: FLOR
+  :description: |-
+    Restrict product admins from updating user details
+- :date: 27-May-2026
   :jira_id: '5635'
   :description: |-
     Batch Loader: Allow manual addition of unsourced misapplications to an accepted or excluded name directly in a batch
