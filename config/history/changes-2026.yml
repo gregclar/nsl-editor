@@ -1,3 +1,8 @@
+- :date: 28-May-2026
+  :jira_id: '218'
+  :jira_project: FLOR
+  :description: |-
+    Fixup the ui for of the versioned update success message
 - :date: 27-May-2026
   :jira_id: '217'
   :jira_project: FLOR
