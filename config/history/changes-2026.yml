@@ -1,4 +1,9 @@
 - :date: 27-May-2026
+  :jira_id: '217'
+  :jira_project: FLOR
+  :description: |-
+    Improve the print preview of profile items by adding draft/current labels and removing ended items
+- :date: 27-May-2026
   :jira_id: '216'
   :jira_project: FLOR
   :description: |-
