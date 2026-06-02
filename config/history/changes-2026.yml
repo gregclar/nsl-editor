@@ -1,3 +1,7 @@
+- :date: 02-June-2026
+  :jira_id: '5811'
+  :description: |-
+    Add an option to create a synonym for draft instance name change
 - :date: 28-May-2026
   :jira_id: '218'
   :jira_project: FLOR

@@ -21,22 +21,34 @@ class Instances::ChangeNameController < ApplicationController
 
   def update
     new_name_id = params[:instance]&.fetch(:name_id, nil)
+
     if new_name_id.blank?
       @message = "Please select a name."
       return render("instances/change_name_error", status: :unprocessable_content)
     end
+
+    if synonym_creation_requested? && (missing = missing_synonym_fields).any?
+      @message = "Please enter #{missing.join(" and ")} to add this name as a synonym."
+      return render("instances/change_name_error", status: :unprocessable_content)
+    end
+
     service = Instances::ChangeNameService.call(
       instance: @instance,
       new_name_id: new_name_id.to_i,
-      username: current_user.username
+      username: current_user.username,
+      create_synonym: synonym_creation_requested?,
+      cites_id: params[:instance][:cites_id],
+      synonym_instance_type_id: params[:instance][:synonym_instance_type_id]
     )
+
     if service.errors.any?
       @message = service.errors.full_messages.join(", ")
       return render("instances/change_name_error", status: :unprocessable_content)
     end
+
     @message = "Name updated"
     render("instances/change_name")
-  rescue StandardError => e
+  rescue => e
     @message = e.to_s
     render("instances/change_name_error", status: :unprocessable_content)
   end
@@ -46,12 +58,23 @@ class Instances::ChangeNameController < ApplicationController
       term: params[:term],
       name_type_id: @instance.name.name_type_id,
       name_rank_id: @instance.name.name_rank_id,
-      exclude_name_id: @instance.name_id,
+      exclude_name_id: @instance.name_id
     )
     render(json: typeahead.suggestions)
   end
 
   private
+
+  def synonym_creation_requested?
+    params[:instance]&.fetch(:create_synonym, nil) == "yes"
+  end
+
+  def missing_synonym_fields
+    fields = []
+    fields << "an instance (the name and optional year)" if params[:instance][:cites_id].blank?
+    fields << "a type" if params[:instance][:synonym_instance_type_id].blank?
+    fields
+  end
 
   def find_instance
     @instance = Instance.find(params[:instance_id])
