@@ -1,5 +1,10 @@
+- :date: 04-June-2026
+  :jira_id: '240'
+  :jira_project: FLOR
+  :description: |-
+    Fixup the profile tab not showing up when instance has no profile items but is part of a concept with profile items
 - :date: 03-June-2026
-  :jira_id: 
+  :jira_id:
   :description: |-
     Regression tests: Added some Claude suggested - no user testing required.
 - :date: 02-June-2026
