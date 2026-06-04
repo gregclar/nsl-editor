@@ -112,25 +112,26 @@ RSpec.describe Ability, type: :model do
       end
     end
 
-    it 'can manage draft instances with matching product profile items' do
+    it 'can manage draft instances when the reference matches the product' do
       instance = create(:instance, draft: true)
-      profile_item = double('profile_item', product: product)
-      profile_items_relation = double('profile_items_relation')
-      allow(profile_items_relation).to receive(:includes).with([:product]).and_return([profile_item])
-      allow(instance).to receive(:profile_items).and_return(profile_items_relation)
+      allow(product).to receive(:has_the_same_reference?).with(instance).and_return(true)
       expect(subject.can?(:manage_profile, instance)).to eq true
     end
 
-    it 'cannot manage draft instances without matching product profile items' do
+    it 'cannot manage draft instances when the reference does not match the product' do
       instance = create(:instance, draft: true)
-      profile_items_relation = double('profile_items_relation')
-      allow(profile_items_relation).to receive(:includes).with([:product]).and_return([])
-      allow(instance).to receive(:profile_items).and_return(profile_items_relation)
+      allow(product).to receive(:has_the_same_reference?).with(instance).and_return(false)
       expect(subject.can?(:manage_profile, instance)).to eq false
     end
 
     it 'cannot manage non-draft instances' do
       instance = create(:instance, draft: false)
+      expect(subject.can?(:manage_profile, instance)).to eq false
+    end
+
+    it 'cannot manage draft instances when there is no product in context' do
+      allow(session_user).to receive(:product_from_context).and_return(nil)
+      instance = create(:instance, draft: true)
       expect(subject.can?(:manage_profile, instance)).to eq false
     end
 
