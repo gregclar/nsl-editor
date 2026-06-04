@@ -87,7 +87,12 @@ class Ability
   def draft_profile_editor(user)
     can :manage, :profile_v2
     can :manage_profile, Instance do |instance|
-      instance.draft? && instance.profile_items.includes([:product]).any? { |item| item.product && item.product == user.product_from_context }
+      next false unless instance.draft?
+
+      context_product = user.product_from_context
+      next false unless context_product
+
+      context_product.has_the_same_reference?(instance)
     end
     can [:create, :read], Author
     can :update, Author do |author|
