@@ -1,0 +1,267 @@
+/* ==========================================================================
+   Bootstrap 3 -> 5 compatibility shim.
+
+   Loaded ONLY when Rails.configuration.use_latest_bootstrap_version is true
+   (see app/views/layouts/application.html.erb). Bridges the shallow set of
+   Bootstrap 3 classes this app still uses onto Bootstrap 5.3.x so the existing
+   views render correctly without a full markup rewrite.
+
+   Load order in <head>: bootstrap.min.css -> THIS FILE -> application.css.
+   The app's own heavy navbar/dropdown styling lives in application.css and
+   loads in both flag states, so this shim only supplies the structural pieces
+   Bootstrap 5 removed or renamed.
+
+   When the BS3 fallback is eventually retired, fold any still-needed rules into
+   the main stylesheets and delete this file.
+   ========================================================================== */
+
+/* --- Typography: preserve the app's compact 14px density (BS3 default) -------
+   BS5 defaults to 16px/1.5 which would reflow every tuned form. */
+body {
+  font-size: 14px;
+}
+
+/* --- .hidden : CRITICAL. BS3 shipped this; BS5 removed it. The layout and
+   tabs.js use .hidden to show/hide the main-body containers and tab panels.
+   Without this, every hidden container renders at once. ----------------------- */
+.hidden {
+  display: none !important;
+}
+
+/* --- Grid: BS5 dropped the xs tier (xs == the default, no-prefix tier).
+   The app uses col-xs-* (mostly col-xs-12). Re-create the widths. ------------- */
+.col-xs-1, .col-xs-2, .col-xs-3, .col-xs-4, .col-xs-5, .col-xs-6,
+.col-xs-7, .col-xs-8, .col-xs-9, .col-xs-10, .col-xs-11, .col-xs-12 {
+  position: relative;
+  width: 100%;
+  padding-right: calc(var(--bs-gutter-x, 1.5rem) * 0.5);
+  padding-left: calc(var(--bs-gutter-x, 1.5rem) * 0.5);
+}
+.col-xs-1  { flex: 0 0 8.333333%;  max-width: 8.333333%;  }
+.col-xs-2  { flex: 0 0 16.666667%; max-width: 16.666667%; }
+.col-xs-3  { flex: 0 0 25%;        max-width: 25%;        }
+.col-xs-4  { flex: 0 0 33.333333%; max-width: 33.333333%; }
+.col-xs-5  { flex: 0 0 41.666667%; max-width: 41.666667%; }
+.col-xs-6  { flex: 0 0 50%;        max-width: 50%;        }
+.col-xs-7  { flex: 0 0 58.333333%; max-width: 58.333333%; }
+.col-xs-8  { flex: 0 0 66.666667%; max-width: 66.666667%; }
+.col-xs-9  { flex: 0 0 75%;        max-width: 75%;        }
+.col-xs-10 { flex: 0 0 83.333333%; max-width: 83.333333%; }
+.col-xs-11 { flex: 0 0 91.666667%; max-width: 91.666667%; }
+.col-xs-12 { flex: 0 0 100%;       max-width: 100%;       }
+
+/* --- Forms: .form-group was removed in BS5 (it only added a bottom margin). -- */
+.form-group {
+  margin-bottom: 15px;
+}
+
+/* Sizing lock so the app's existing `.form-control { height: 26px }` override
+   (in components/new-for-rails-6.css) doesn't clip text under BS5's larger
+   default padding/line-height. Keeps typeahead + select2 inputs aligned. */
+input.form-control,
+select.form-control {
+  padding: 3px 8px;
+  font-size: 14px;
+  line-height: 1.4;
+}
+
+/* --- Buttons: .btn-default was removed in BS5. Re-create the BS3 light look. - */
+.btn-default {
+  color: #333;
+  background-color: #fff;
+  border-color: #ccc;
+}
+.btn-default:hover,
+.btn-default:focus,
+.btn-default:active,
+.btn-default.active {
+  color: #333;
+  background-color: #e6e6e6;
+  border-color: #adadad;
+}
+
+/* --- Float helpers: BS5 renamed pull-left/right to float-start/end. --------- */
+.pull-left  { float: left  !important; }
+.pull-right { float: right !important; }
+
+/* --- Misc removed helpers --------------------------------------------------- */
+.center-block { display: block; margin-right: auto; margin-left: auto; }
+.text-muted   { color: #6c757d !important; }
+
+/* --- .sr-only : renamed to .visually-hidden in BS5. ------------------------- */
+.sr-only {
+  position: absolute !important;
+  width: 1px !important;
+  height: 1px !important;
+  padding: 0 !important;
+  margin: -1px !important;
+  overflow: hidden !important;
+  clip: rect(0, 0, 0, 0) !important;
+  white-space: nowrap !important;
+  border: 0 !important;
+}
+
+/* --- Dropdown caret : BS3 used an explicit <span class="caret">; BS5 renders
+   the caret as ::after on .dropdown-toggle. Reproduce the span triangle and
+   suppress BS5's auto-caret so we don't get two. --------------------------- */
+.caret {
+  display: inline-block;
+  width: 0;
+  height: 0;
+  margin-left: 2px;
+  vertical-align: middle;
+  border-top: 4px dashed;
+  border-top: 4px solid \9;
+  border-right: 4px solid transparent;
+  border-left: 4px solid transparent;
+}
+.dropdown-toggle::after {
+  display: none;
+}
+
+/* --- Dropdown menu items: BS5 only styles .dropdown-item; the app emits
+   ul.dropdown-menu > li > a. Style that BS3 structure. (The app's own
+   dropdown CSS in application.css layers on top of this.) ------------------- */
+.dropdown-menu > li > a {
+  display: block;
+  width: 100%;
+  padding: 4px 16px;
+  clear: both;
+  font-weight: 400;
+  color: #212529;
+  text-align: inherit;
+  white-space: nowrap;
+  background-color: transparent;
+  border: 0;
+  text-decoration: none;
+}
+.dropdown-menu > li > a:hover,
+.dropdown-menu > li > a:focus {
+  color: #1e2125;
+  background-color: #e9ecef;
+}
+/* BS3 .divider inside a dropdown -> BS5 .dropdown-divider */
+.dropdown-menu .divider {
+  height: 0;
+  margin: 8px 0;
+  overflow: hidden;
+  border-top: 1px solid #e9ecef;
+}
+
+/* --- Input group: BS5 removed .input-group-btn (the search-target dropdown
+   uses it). Make it lay out as a flex item again. -------------------------- */
+.input-group-btn {
+  display: flex;
+  position: relative;
+}
+
+/* --- Navbar: BS5 rewrote the navbar. The app's detailed navbar styling lives
+   in application.css; here we only restore structural BS3 pieces BS5 dropped
+   or changed so that layout/colours/positioning hold up. ------------------- */
+
+/* CRITICAL: BS5 makes .navbar AND .navbar > .container-fluid flex rows. The
+   app's #top-navbar wraps a .container-fluid containing several stacked .row
+   blocks (menu row, searchbar row, summary row); BS5's flex collapses them
+   into one squished horizontal row. BS3's .navbar was block-level, so restore
+   that for the app's BS3-era stacked navbar layout. */
+.navbar {
+  display: block;
+  padding: 0;
+}
+.navbar > .container,
+.navbar > .container-fluid {
+  display: block;
+}
+
+/* CRITICAL: the menu markup is `<div class="collapse navbar-collapse">` with no
+   .navbar-expand-* class, so BS5's `.collapse:not(.show){display:none}` would
+   hide the whole menu. BS3 force-showed .navbar-collapse on desktop via a media
+   query; replicate that. (This is a desktop-only app — it shows a "window too
+   small" message on narrow viewports — so always-expanded matches behaviour.) */
+.navbar-collapse {
+  display: block !important;
+}
+
+.navbar-inverse {
+  background-color: #222;
+  border-color: #080808;
+}
+.navbar-inverse .navbar-nav > li > a,
+.navbar-inverse .navbar-brand,
+.navbar-inverse .dropdown-toggle {
+  color: #9d9d9d;
+}
+.navbar-inverse .navbar-nav > li > a:hover,
+.navbar-inverse .navbar-nav > li > a:focus,
+.navbar-inverse .navbar-brand:hover {
+  color: #fff;
+}
+.navbar-fixed-top {
+  position: fixed;
+  top: 0;
+  right: 0;
+  left: 0;
+  z-index: 1030;
+}
+/* BS5 .navbar-nav is a vertical flex column by default; the app's menu is
+   horizontal. */
+.navbar-nav {
+  flex-direction: row;
+  flex-wrap: wrap;
+  padding-left: 0;
+  margin-bottom: 0;
+  list-style: none;
+}
+.navbar-nav > li {
+  list-style: none;
+}
+/* Legacy navbar toggle button + its icon bars (BS3 markup kept via helper for
+   the BS3 path; under BS5 the helper emits .navbar-toggler, but the icon-bar
+   spans remain in the markup). */
+.navbar-toggle {
+  position: relative;
+  float: right;
+  padding: 9px 10px;
+  margin-top: 8px;
+  margin-right: 15px;
+  margin-bottom: 8px;
+  background-color: transparent;
+  background-image: none;
+  border: 1px solid transparent;
+  border-radius: 4px;
+}
+.navbar-toggle .icon-bar,
+.navbar-toggler .icon-bar {
+  display: block;
+  width: 22px;
+  height: 2px;
+  margin: 4px 0;
+  background-color: #888;
+  border-radius: 1px;
+}
+
+/* --- Tabs: tabs.js keeps .active on the <li> (BS3 style); BS5 expects it on
+   the .nav-link anchor. Style the BS3 structure. --------------------------- */
+.nav-tabs > li {
+  margin-bottom: -1px;
+}
+.nav-tabs > li > a {
+  display: block;
+  padding: 8px 16px;
+  color: #606060;
+  text-decoration: none;
+  border: 1px solid transparent;
+  border-top-left-radius: 4px;
+  border-top-right-radius: 4px;
+}
+.nav-tabs > li > a:hover {
+  border-color: #e9ecef #e9ecef #dee2e6;
+}
+.nav-tabs > li.active > a,
+.nav-tabs > li.active > a:hover,
+.nav-tabs > li.active > a:focus {
+  color: #495057;
+  cursor: default;
+  background-color: #fff;
+  border-color: #dee2e6 #dee2e6 #fff;
+}
