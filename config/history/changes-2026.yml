@@ -1,3 +1,7 @@
+- :date: 05-June-2026
+  :jira_id: '5776'
+  :description: |-
+    Wire up the bootstrap helpers in the html menu and layout
 - :date: 04-June-2026
   :jira_id: '5776'
   :description: |-
