@@ -7,7 +7,7 @@ RSpec.describe(BootstrapUpgradeHelper, type: :helper) do
   # `Rails.configuration.try("use_latest_bootstrap_version")`.
   def stub_flag(value)
     allow(Rails.configuration).to receive(:try)
-      .with("use_latest_bootstrap_version")
+      .with(:use_latest_bootstrap_version)
       .and_return(value)
   end
 

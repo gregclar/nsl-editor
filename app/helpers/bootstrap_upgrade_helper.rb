@@ -12,7 +12,7 @@ module BootstrapUpgradeHelper
   # True when the Bootstrap 5 feature flag is on. `try` keeps this nil-safe if
   # the config predates the flag.
   def bootstrap5?
-    Rails.configuration.try("use_latest_bootstrap_version") == true
+    Rails.configuration.try(:use_latest_bootstrap_version) == true
   end
 
   # Emits the correct Bootstrap data attributes for the active major version.
