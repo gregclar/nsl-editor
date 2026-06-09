@@ -1,5 +1,5 @@
 (function() {
-  var dropdownSubmenuClick, hideDetails, hideSearchResultDetailsIfMenusOpen, showSearchResultDetailsIfMenusClosed;
+  var dropdownSubmenuClick, hideDetails;
 
   $(document).on("turbo:load", function() {
   // Do NOT close the menu when submenu is clicked.
@@ -12,27 +12,16 @@
       return hideDetails(event, $(this));
     });
 
+    // NOTE: under BS5 we no longer hide #search-result-details when a navbar
+    // dropdown opens. The panel now stays put and the dropdown overlays it
+    // (matching BS3) — see the #top-navbar z-index lift in bootstrap5-compat.css.
+
   });
 
 
   dropdownSubmenuClick = function(event, $element) {
     event.preventDefault();
     return event.stopPropagation();
-  };
-
-  // BS3 marks an open dropdown with .open; BS5 uses .show. Match both.
-  showSearchResultDetailsIfMenusClosed = function() {
-    debug('showSearchResultDetailsIfMenusClosed');
-    if ($('li.dropdown.open, li.dropdown.show').length === 0) {
-      return $('#search-result-details').show();
-    }
-  };
-
-  hideSearchResultDetailsIfMenusOpen = function() {
-    debug('hideSearchResultDetailsIfMenusOpen');
-    if ($('li.dropdown.open, li.dropdown.show').length > 0) {
-      return $('#search-result-details').hide();
-    }
   };
 
   hideDetails = function(event, $this) {
