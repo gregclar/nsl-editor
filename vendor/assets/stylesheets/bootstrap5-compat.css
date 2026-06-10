@@ -413,7 +413,14 @@ ul.navbar-nav li a.dropdown-toggle {
   border-top-left-radius: 4px;
   border-top-right-radius: 4px;
 }
-.nav-tabs > li > a:hover {
+.nav-tabs > li > a:hover,
+.nav-tabs > li > a:focus {
+  /* Restore BS3's base `.nav > li > a:hover/:focus { background-color:#eee }`.
+     BS5 dropped it (it styles .nav-link, not .nav>li>a, and applies no hover
+     fill), so without this an inactive tab loses its grey hover. The active tab
+     stays white via `.nav-tabs > li.active > a:hover` below (higher specificity,
+     loads after). */
+  background-color: #eee;
   border-color: #e9ecef #e9ecef #dee2e6;
 }
 .nav-tabs > li.active > a,
@@ -452,4 +459,9 @@ input#query-submit {
 
 div#search-field-and-buttons-container div#search-target-btn.input-group-btn {
   width: 12%;
+}
+
+/* Search result tabs */
+#top-navbar ul#search-results-tabset {
+  top: 116px;
 }
