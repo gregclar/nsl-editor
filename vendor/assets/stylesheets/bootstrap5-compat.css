@@ -141,6 +141,29 @@ select.form-control {
   border-color: #ffc107;
 }
 
+/* --- Button focus ring: BS5 replaced BS3's `outline` focus indicator with a
+   .25rem `box-shadow` ring (applied on :focus-visible). The app flattens button
+   focus via `input.btn:focus / a.btn:focus { outline: none }` (controls.css) —
+   but `outline:none` does NOT remove a box-shadow, so under BS5 the ring leaks
+   through (e.g. when keyboard-focusing a button) where BS3 showed none. Suppress
+   the box-shadow so buttons keep the app's flat BS3 look. --------------------- */
+.btn:focus,
+.btn:focus-visible,
+.btn:active:focus,
+.btn.active:focus {
+  box-shadow: none;
+}
+
+/* Extend the app's grey primary-active fill (new-for-rails-6.css only covers
+   `input.btn.btn-primary:active`) to non-input primary buttons. Otherwise a
+   primary <button>/<a> on :active shows BS5's computed blue --bs-btn-active-bg
+   instead of the app's #474747. */
+.btn-primary:active,
+.btn-primary.active {
+  background: #474747;
+  border-color: #474747;
+}
+
 /* --- Float helpers: BS5 renamed pull-left/right to float-start/end. --------- */
 .pull-left  { float: left  !important; }
 .pull-right { float: right !important; }
@@ -464,4 +487,8 @@ div#search-field-and-buttons-container div#search-target-btn.input-group-btn {
 /* Search result tabs */
 #top-navbar ul#search-results-tabset {
   top: 116px;
+}
+
+#search-target-button-text {
+  color: #333;
 }
