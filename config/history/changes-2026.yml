@@ -1,4 +1,8 @@
 - :date: 11-June-2026
+  :jira_id: '2423'
+  :description: |-
+    Synonym display details: add a comma before any status tag or page number
+- :date: 11-June-2026
   :jira_id: '2434'
   :description: |-
     New Instance form from Reference: swap fields instance-type and page for consistent ordering
