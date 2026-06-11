@@ -1,7 +1,7 @@
 #!/bin/bash
 #
-# pre-commit: warn about Bootstrap 3/4 classes that were removed or renamed in
-# Bootstrap 5.
+# pre-commit: block commits that introduce Bootstrap 3/4 classes that were
+# removed or renamed in Bootstrap 5.
 #
 # Why: this app is mid-migration to Bootstrap 5 (see vendor/assets/stylesheets/
 # bootstrap5-compat.css, which shims the legacy classes the existing views still
@@ -12,8 +12,8 @@
 # so editing a legacy file doesn't nag you about classes that were already there
 # — it only flags BS3 classes you're introducing in this commit.
 #
-# It is a WARNING, not a gate: the commit still proceeds. Set BS5_STRICT=1 to
-# make it block instead (exit non-zero), e.g. in CI:  BS5_STRICT=1 git commit ...
+# It is a GATE: if any introduced line uses a flagged BS3/4 class, the commit is
+# blocked (exit non-zero). Fix the classes to proceed.
 #
 # Bypass entirely with the standard:  git commit --no-verify
 #
@@ -119,7 +119,7 @@ if [ "$status" -eq 2 ]; then
 
   {
     echo ""
-    echo "${Y}${B}⚠  Bootstrap 5 compatibility warning${N}"
+    echo "${R}${B}✖  Bootstrap 5 compatibility check failed${N}"
     echo "${Y}   The lines you're adding use Bootstrap 3/4 classes that BS5 removed or renamed:${N}"
     echo ""
     echo "$output"
@@ -127,17 +127,12 @@ if [ "$status" -eq 2 ]; then
     echo "   These currently only work because of the BS3 shim"
     echo "   (vendor/assets/stylesheets/bootstrap5-compat.css). Prefer the BS5 class so we"
     echo "   don't grow the migration backlog."
-    if [ -n "$BS5_STRICT" ]; then
-      echo ""
-      echo "${R}${B}   BS5_STRICT is set — blocking this commit.${N} Fix the classes above, or unset BS5_STRICT."
-      echo "$N"
-      exit 1
-    fi
     echo ""
-    echo "   This is a warning only — your commit will proceed."
-    echo "   Bypass this hook with: ${B}git commit --no-verify${N}"
+    echo "${R}${B}   Blocking this commit.${N} Fix the classes above to proceed, or bypass with:"
+    echo "   ${B}git commit --no-verify${N}"
     echo "$N"
   } >&2
+  exit 1
 fi
 
 exit 0
