@@ -35,6 +35,14 @@ h4, h5, h6 {
   margin-bottom: 10px;
 }
 
+h5 {
+  font-size: 14px;
+}
+
+h6 {
+  font-size: 12px;
+}
+
 /* --- .hidden : CRITICAL. BS3 shipped this; BS5 removed it. The layout and
    tabs.js use .hidden to show/hide the main-body containers and tab panels.
    Without this, every hidden container renders at once. ----------------------- */
@@ -124,6 +132,27 @@ select.form-control {
   color: #fff;
   background-color: #0d6efd;
   border-color: #0d6efd;
+  /* Remap BS5's blue --bs-btn-* palette to the app's greys. BS5 paints the
+     hover/focus-visible/active states from these custom properties (e.g.
+     :focus-visible uses --bs-btn-hover-bg, :active uses --bs-btn-active-bg),
+     so without this the Sign in button — and any primary <button>/<a> — flashes
+     Bootstrap blue (#0b5ed7 / #0a58ca) on focus, press and keyboard activation.
+     Setting the variables fixes every state path at once instead of chasing each
+     pseudo-class. The grey ring colour also neutralises any focus box-shadow that
+     out-specifies the suppressor below. */
+  --bs-btn-bg: #606060;
+  --bs-btn-border-color: #606060;
+  --bs-btn-hover-bg: #474747;
+  --bs-btn-hover-border-color: #474747;
+  --bs-btn-active-bg: #474747;
+  --bs-btn-active-border-color: #474747;
+  --bs-btn-focus-shadow-rgb: 96, 96, 96;
+  /* The disabled state has its own variables: Rails' `data-disable-with` adds
+     `disabled` to the submit button while the form is in flight, and BS5 paints
+     `.btn:disabled` from these — blue (#0d6efd) by default — so a submitting
+     Sign in button flashed blue. Keep it grey (dimmed via --bs-btn-disabled-opacity). */
+  --bs-btn-disabled-bg: #606060;
+  --bs-btn-disabled-border-color: #606060;
 }
 .btn-success {
   color: #fff;
@@ -146,11 +175,21 @@ select.form-control {
    focus via `input.btn:focus / a.btn:focus { outline: none }` (controls.css) —
    but `outline:none` does NOT remove a box-shadow, so under BS5 the ring leaks
    through (e.g. when keyboard-focusing a button) where BS3 showed none. Suppress
-   the box-shadow so buttons keep the app's flat BS3 look. --------------------- */
+   the box-shadow so buttons keep the app's flat BS3 look.
+
+   The active+keyboard-focus combo needs extra weight: BS5 re-applies the ring
+   via `:not(.btn-check) + .btn:active:focus-visible` (specificity 0,4,0), which
+   out-specifies a plain `.btn:active:focus` (0,3,0) — so pressing the Sign in
+   button with the keyboard flashed the blue ring back. The `:focus-visible`
+   variants below match that weight and, loading after bootstrap.min.css, win. */
 .btn:focus,
 .btn:focus-visible,
 .btn:active:focus,
-.btn.active:focus {
+.btn:active:focus-visible,
+.btn.active:focus,
+.btn.active:focus-visible,
+.btn:first-child:active:focus-visible,
+:not(.btn-check) + .btn:active:focus-visible {
   box-shadow: none;
 }
 

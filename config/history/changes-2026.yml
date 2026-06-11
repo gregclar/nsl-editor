@@ -1,4 +1,8 @@
 - :date: 11-June-2026
+  :jira_id: '5776'
+  :description: |-
+    CSS fixes for the headers and buttons for bs5
+- :date: 11-June-2026
   :jira_id: '2423'
   :description: |-
     Synonym display details: add a comma before any status tag or page number
