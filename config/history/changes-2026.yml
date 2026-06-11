@@ -1,3 +1,7 @@
+- :date: 11-June-2026
+  :jira_id: '2423'
+  :description: |-
+    Synonym display details: adjust LHS display for synonyms with trailing nomenclatural status tags
 - :date: 05-June-2026
   :jira_id: '5776'
   :description: |-
