@@ -1,4 +1,8 @@
 - :date: 12-June-2026
+  :jira_id: '5776'
+  :description: |-
+    CSS fixes for the signin and search forms buttons for bs5
+- :date: 12-June-2026
   :jira_id: '3085'
   :description: |-
     Instance search: Fix offset: directive
