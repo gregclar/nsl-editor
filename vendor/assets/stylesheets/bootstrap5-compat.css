@@ -543,7 +543,19 @@ input#query-submit {
 }
 
 div#search-field-and-buttons-container div#search-target-btn.input-group-btn {
-  width: 12%;
+  flex: 0 0 auto;
+  width: auto;
+}
+div#search-field-and-buttons-container #search-target-button {
+  display: inline-flex;
+  align-items: center;
+  max-width: 16em;
+}
+div#search-field-and-buttons-container #search-target-button-text {
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
 /* Search result tabs */
