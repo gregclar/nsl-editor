@@ -1,4 +1,8 @@
 - :date: 12-June-2026
+  :jira_id: '3117'
+  :description: |-
+    Name validation: Don't allow save of autonym type name with an ineligible rank
+- :date: 12-June-2026
   :jira_id: '5776'
   :description: |-
     CSS fixes for the signin and search forms buttons for bs5
