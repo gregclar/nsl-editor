@@ -150,7 +150,8 @@ select.form-control {
   /* The disabled state has its own variables: Rails' `data-disable-with` adds
      `disabled` to the submit button while the form is in flight, and BS5 paints
      `.btn:disabled` from these — blue (#0d6efd) by default — so a submitting
-     Sign in button flashed blue. Keep it grey (dimmed via --bs-btn-disabled-opacity). */
+     Sign in button flashed blue. Keep it the app's solid grey (the global
+     --bs-btn-disabled-opacity:1 below keeps it opaque rather than washed-out). */
   --bs-btn-disabled-bg: #606060;
   --bs-btn-disabled-border-color: #606060;
 }
@@ -201,6 +202,28 @@ select.form-control {
 .btn-primary.active {
   background: #474747;
   border-color: #474747;
+}
+
+/* --- Disabled buttons: BS5 dims `.btn:disabled` with
+   `opacity: var(--bs-btn-disabled-opacity)` (.65). Over the app's coloured
+   chrome (e.g. the purple search navbar) that 65% opacity lets the background
+   bleed through, so a disabled button reads as washed-out / transparent rather
+   than a solid greyed-out control — BS3 kept the fill opaque. Restore opacity
+   to 1 so disabled buttons stay solid. The app's own deliberate dimming
+   (`a.btn-danger[disabled] { opacity: .55 }` in new-for-rails-6.css) uses a
+   more specific attribute selector and loads later, so it still wins where
+   intended. */
+.btn {
+  --bs-btn-disabled-opacity: 1;
+}
+
+/* The search submit (.btn.search-btn) has its own lightgrey fill; when disabled
+   give it a muted, still-opaque grey so it reads as disabled without going
+   see-through. */
+.search-btn:disabled,
+.search-btn.disabled {
+  background: #d6d6d6;
+  color: #888;
 }
 
 /* --- Float helpers: BS5 renamed pull-left/right to float-start/end. --------- */
