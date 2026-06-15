@@ -1,3 +1,7 @@
+- :date: 15-June-2026
+  :jira_id: '5776'
+  :description: |-
+    Fixup the table border in bs5 in the help page
 - :date: 12-June-2026
   :jira_id: '5776'
   :description: |-

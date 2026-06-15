@@ -528,6 +528,14 @@ ul.navbar-nav li a.dropdown-toggle {
   border-bottom: 1px solid #ddd;
 }
 
+table[border] {
+  border-collapse: collapse;
+}
+table[border] th,
+table[border] td {
+  border: 1px solid #999;
+}
+
 /* Search form */
 input#query-submit {
   border-top-left-radius: 0;
