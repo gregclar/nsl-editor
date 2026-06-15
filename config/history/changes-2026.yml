@@ -1,4 +1,8 @@
 - :date: 15-June-2026
+  :jira_id: '3156'
+  :description: |-
+    Instances Tree tab: change checkbox label from "Allow higher ranks" to "Show higher ranks"
+- :date: 15-June-2026
   :jira_id: '5776'
   :description: |-
     Fixup the table border in bs5 in the help page
