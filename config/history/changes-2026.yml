@@ -1,4 +1,8 @@
-- :date: 15-June-2026
+- :date: 16-June-2026
+  :jira_id: '3228'
+  :description: |-
+    Name Delete: Allow larger text field and longer text contents in Extra Information
+- :date: 16-June-2026
   :jira_id: '3215'
   :description: |-
     Synonymy: Do not offer a Name as a synonym of itself
