@@ -1,4 +1,8 @@
 - :date: 15-June-2026
+  :jira_id: '3215'
+  :description: |-
+    Synonymy: Do not offer a Name as a synonym of itself
+- :date: 15-June-2026
   :jira_id: '3156'
   :description: |-
     Instances Tree tab: change checkbox label from "Allow higher ranks" to "Show higher ranks"
