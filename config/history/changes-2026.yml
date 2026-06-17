@@ -1,7 +1,11 @@
 - :date: 17-June-2026
+  :jira_id: '3871'
+  :description: |-
+    Tree Draft Version: Indicate when a draft is the default draft
+- :date: 17-June-2026
   :jira_id: '3748'
   :description: |-
-    Name name_path: stop adding leading slash to common name and other name_paths
+    Name name_path: Stop adding leading slash to common name and other name_paths
 - :date: 17-June-2026
   :jira_id: '5776'
   :description: |-
