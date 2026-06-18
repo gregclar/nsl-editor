@@ -51,6 +51,12 @@ a {
 a:hover {
   text-decoration: underline;
 }
+.btn,
+.btn:hover,
+.btn:focus,
+.btn:active {
+  text-decoration: none;
+}
 
 /* --- .hidden : CRITICAL. BS3 shipped this; BS5 removed it. The layout and
    tabs.js use .hidden to show/hide the main-body containers and tab panels.
@@ -175,9 +181,21 @@ select.form-control {
   border-color: #dc3545;
 }
 .btn-warning {
-  color: #000;
-  background-color: #ffc107;
-  border-color: #ffc107;
+  color: #fff;
+  background-color: #f0ad4e;
+  border-color: #eea236;
+  --bs-btn-color: #fff;
+  --bs-btn-bg: #f0ad4e;
+  --bs-btn-border-color: #eea236;
+  --bs-btn-hover-color: #fff;
+  --bs-btn-hover-bg: #ec971f;
+  --bs-btn-hover-border-color: #d58512;
+  --bs-btn-active-color: #fff;
+  --bs-btn-active-bg: #ec971f;
+  --bs-btn-active-border-color: #d58512;
+  --bs-btn-disabled-color: #fff;
+  --bs-btn-disabled-bg: #f0ad4e;
+  --bs-btn-disabled-border-color: #eea236;
 }
 
 /* --- Button focus ring: BS5 replaced BS3's `outline` focus indicator with a
