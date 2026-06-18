@@ -510,7 +510,7 @@ ul.navbar-nav li a.dropdown-toggle {
 }
 .nav-tabs > li > a {
   display: block;
-  padding: 8px 16px;
+  padding: 12px 16px;
   color: #606060;
   text-decoration: none;
   border: 1px solid transparent;
@@ -601,9 +601,18 @@ div#search-field-and-buttons-container #search-target-button-text {
 
 /* Search result tabs */
 #top-navbar ul#search-results-tabset {
-  top: 116px;
+  top: 108px;
+}
+
+#top-navbar ul#search-results-tabset li a {
+  margin-right: 2px;
 }
 
 #search-target-button-text {
   color: #333;
+}
+
+/*Batch stack search results */
+tr.search-result.batch-stack td {
+  border-bottom: none;
 }
