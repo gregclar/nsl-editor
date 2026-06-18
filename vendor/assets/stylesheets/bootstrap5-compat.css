@@ -43,6 +43,15 @@ h6 {
   font-size: 12px;
 }
 
+/* --- Links: BS3's reboot set anchors to `text-decoration: none` and only
+   underlined them on hover/focus. BS5's reboot underlines EVERY <a> by default. */
+a {
+  text-decoration: none;
+}
+a:hover {
+  text-decoration: underline;
+}
+
 /* --- .hidden : CRITICAL. BS3 shipped this; BS5 removed it. The layout and
    tabs.js use .hidden to show/hide the main-body containers and tab panels.
    Without this, every hidden container renders at once. ----------------------- */
@@ -338,7 +347,8 @@ select.form-control {
   flex: 0 0 auto;
 }
 .input-group > #query-string-field {
-  min-width: 0;         /* allow it to shrink instead of forcing overflow */
+  flex: 1 0 auto;
+  min-width: 16em;
   margin-top: 0;        /* beats input#query-string-field{margin-top:3px} */
   margin-bottom: 0;
 }
@@ -462,6 +472,15 @@ ul.navbar-nav li a.dropdown-toggle {
   display: block;
 }
 
+#top-navbar ul.navbar-nav li a.dropdown-toggle.show,
+#top-navbar ul.navbar-nav li a.dropdown-toggle[aria-expanded="true"],
+#top-navbar ul.navbar-nav li a.dropdown-toggle:hover,
+#top-navbar ul.navbar-nav li a.dropdown-toggle:focus {
+  background: white;
+  color: black;
+  text-decoration: none;
+}
+
 .navbar-toggle {
   position: relative;
   float: right;
@@ -541,7 +560,6 @@ input#query-submit {
   border-top-left-radius: 0;
   border-bottom-left-radius: 0;
   margin-bottom: 3px;
-  margin-left: -4px;
   height: 25px;
   border-bottom: 1px solid lightgray;
   border-top: 1px solid lightgray;
@@ -550,19 +568,34 @@ input#query-submit {
   padding-top: 0;
 }
 
+#search-field-and-buttons-container input#query-submit {
+  margin-left: 0;
+}
+#search-field-and-buttons-container input#query-string-field {
+  margin-top: 0;
+  margin-bottom: 0;
+}
+
+#query-string-field:focus {
+  outline: none;
+  box-shadow: none;
+}
+
 div#search-field-and-buttons-container div#search-target-btn.input-group-btn {
   flex: 0 0 auto;
   width: auto;
 }
+
 div#search-field-and-buttons-container #search-target-button {
   display: inline-flex;
   align-items: center;
-  max-width: 16em;
+  height: 25px;
+  padding: 0 6px;
+  font-size: 14px;
+  line-height: 1;
 }
+
 div#search-field-and-buttons-container #search-target-button-text {
-  min-width: 0;
-  overflow: hidden;
-  text-overflow: ellipsis;
   white-space: nowrap;
 }
 
