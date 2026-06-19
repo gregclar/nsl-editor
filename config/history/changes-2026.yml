@@ -1,4 +1,8 @@
 - :date: 19-June-2026
+  :jira_id: '5776'
+  :description: |-
+    More css fixes in top meanu and search form for bs5
+- :date: 19-June-2026
   :jira_id: '5372'
   :description: |-
     Author: Make name field mandatory in Editor

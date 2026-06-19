@@ -43,6 +43,21 @@ h6 {
   font-size: 12px;
 }
 
+/* --- Links: BS3's reboot set anchors to `text-decoration: none` and only
+   underlined them on hover/focus. BS5's reboot underlines EVERY <a> by default. */
+a {
+  text-decoration: none;
+}
+a:hover {
+  text-decoration: underline;
+}
+.btn,
+.btn:hover,
+.btn:focus,
+.btn:active {
+  text-decoration: none;
+}
+
 /* --- .hidden : CRITICAL. BS3 shipped this; BS5 removed it. The layout and
    tabs.js use .hidden to show/hide the main-body containers and tab panels.
    Without this, every hidden container renders at once. ----------------------- */
@@ -166,9 +181,21 @@ select.form-control {
   border-color: #dc3545;
 }
 .btn-warning {
-  color: #000;
-  background-color: #ffc107;
-  border-color: #ffc107;
+  color: #fff;
+  background-color: #f0ad4e;
+  border-color: #eea236;
+  --bs-btn-color: #fff;
+  --bs-btn-bg: #f0ad4e;
+  --bs-btn-border-color: #eea236;
+  --bs-btn-hover-color: #fff;
+  --bs-btn-hover-bg: #ec971f;
+  --bs-btn-hover-border-color: #d58512;
+  --bs-btn-active-color: #fff;
+  --bs-btn-active-bg: #ec971f;
+  --bs-btn-active-border-color: #d58512;
+  --bs-btn-disabled-color: #fff;
+  --bs-btn-disabled-bg: #f0ad4e;
+  --bs-btn-disabled-border-color: #eea236;
 }
 
 /* --- Button focus ring: BS5 replaced BS3's `outline` focus indicator with a
@@ -338,7 +365,8 @@ select.form-control {
   flex: 0 0 auto;
 }
 .input-group > #query-string-field {
-  min-width: 0;         /* allow it to shrink instead of forcing overflow */
+  flex: 1 0 auto;
+  min-width: 16em;
   margin-top: 0;        /* beats input#query-string-field{margin-top:3px} */
   margin-bottom: 0;
 }
@@ -462,6 +490,15 @@ ul.navbar-nav li a.dropdown-toggle {
   display: block;
 }
 
+#top-navbar ul.navbar-nav li a.dropdown-toggle.show,
+#top-navbar ul.navbar-nav li a.dropdown-toggle[aria-expanded="true"],
+#top-navbar ul.navbar-nav li a.dropdown-toggle:hover,
+#top-navbar ul.navbar-nav li a.dropdown-toggle:focus {
+  background: white;
+  color: black;
+  text-decoration: none;
+}
+
 .navbar-toggle {
   position: relative;
   float: right;
@@ -491,7 +528,7 @@ ul.navbar-nav li a.dropdown-toggle {
 }
 .nav-tabs > li > a {
   display: block;
-  padding: 8px 16px;
+  padding: 12px 16px;
   color: #606060;
   text-decoration: none;
   border: 1px solid transparent;
@@ -541,7 +578,6 @@ input#query-submit {
   border-top-left-radius: 0;
   border-bottom-left-radius: 0;
   margin-bottom: 3px;
-  margin-left: -4px;
   height: 25px;
   border-bottom: 1px solid lightgray;
   border-top: 1px solid lightgray;
@@ -550,27 +586,51 @@ input#query-submit {
   padding-top: 0;
 }
 
+#search-field-and-buttons-container input#query-submit {
+  margin-left: 0;
+}
+#search-field-and-buttons-container input#query-string-field {
+  margin-top: 0;
+  margin-bottom: 0;
+}
+
+#query-string-field:focus {
+  outline: none;
+  box-shadow: none;
+}
+
 div#search-field-and-buttons-container div#search-target-btn.input-group-btn {
   flex: 0 0 auto;
   width: auto;
 }
+
 div#search-field-and-buttons-container #search-target-button {
   display: inline-flex;
   align-items: center;
-  max-width: 16em;
+  height: 25px;
+  padding: 0 6px;
+  font-size: 14px;
+  line-height: 1;
 }
+
 div#search-field-and-buttons-container #search-target-button-text {
-  min-width: 0;
-  overflow: hidden;
-  text-overflow: ellipsis;
   white-space: nowrap;
 }
 
 /* Search result tabs */
 #top-navbar ul#search-results-tabset {
-  top: 116px;
+  top: 108px;
+}
+
+#top-navbar ul#search-results-tabset li a {
+  margin-right: 2px;
 }
 
 #search-target-button-text {
   color: #333;
+}
+
+/*Batch stack search results */
+tr.search-result.batch-stack td {
+  border-bottom: none;
 }
