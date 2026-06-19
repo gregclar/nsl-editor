@@ -1,7 +1,7 @@
-- :date: 17-June-2026
-  :jira_id: '3489'
+- :date: 19-June-2026
+  :jira_id: '5372'
   :description: |-
-    Name Copy: Do not offer to copy Names marked as duplicates
+    Author: Make name field mandatory in Editor
 - :date: 17-June-2026
   :jira_id: '3871'
   :description: |-
