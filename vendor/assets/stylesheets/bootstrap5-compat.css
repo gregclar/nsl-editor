@@ -44,11 +44,16 @@ h6 {
 }
 
 /* --- Links: BS3's reboot set anchors to `text-decoration: none` and only
-   underlined them on hover/focus. BS5's reboot underlines EVERY <a> by default. */
+   underlined them on hover/focus. BS5's reboot underlines EVERY <a> by default.
+   BS3 also used link color #337ab7, darkening to #23527c on hover/focus; BS5
+   changed both the palette and dropped the hover color shift. Restore both. */
 a {
+  color: #337ab7;
   text-decoration: none;
 }
-a:hover {
+a:hover,
+a:focus {
+  color: #23527c;
   text-decoration: underline;
 }
 .btn,
@@ -318,7 +323,7 @@ select.form-control {
   height: 0;
   margin: 8px 0;
   overflow: hidden;
-  border-top: 1px solid #e9ecef;
+  border-top: 4px solid #d4d4d4;
 }
 
 /* --- Input group: CRITICAL. The app's two search bars (search/_search_form +
@@ -428,6 +433,10 @@ select.form-control {
    over the content below. */
 .navbar-nav .dropdown-menu {
   position: absolute;
+  /* Force an opaque background so the purple navbar behind it doesn't bleed
+     through an open (active) dropdown. */
+  background-color: #fff;
+  opacity: 1;
 }
 
 /* NOTE on navbar vs the floating #search-result-details panel: both sit at
