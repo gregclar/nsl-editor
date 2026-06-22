@@ -1,7 +1,11 @@
 - :date: 22-June-2026
   :jira_id: '5776'
   :description: |-
-  CSS for the dropdown divider and link colors for bs5
+    CSS for the dl elements for bs5
+- :date: 22-June-2026
+  :jira_id: '5776'
+  :description: |-
+    CSS for the dropdown divider and link colors for bs5
 - :date: 19-June-2026
   :jira_id: '5776'
   :description: |-
