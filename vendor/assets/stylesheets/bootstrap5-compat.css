@@ -643,3 +643,26 @@ div#search-field-and-buttons-container #search-target-button-text {
 tr.search-result.batch-stack td {
   border-bottom: none;
 }
+
+/* dl-horizontal (e.g. instance Notes, cites/cited id, Local trees):
+   old-application.css frames the .dl-horizontal container with BOTH a border-top
+   and a border-bottom, AND gives every dd a border-bottom. Those container
+   borders stack against neighbouring 1px lines into double lines:
+     - bottom border vs. the last (or empty) dd's border, and
+     - top border vs. a preceding <hr class="divider"> section separator.
+   Drop both container borders and let the per-row dd border-bottoms be the only
+   lines; the <hr> dividers already separate sections. dl.dl-horizontal outranks
+   old-application.css's .dl-horizontal, which loads after this shim. */
+dl.dl-horizontal {
+  border-top: none;
+  border-bottom: none;
+}
+
+/* An empty trailing value (e.g. a blank "cited by id") still renders <dd></dd>,
+   which keeps a 1px border-bottom and 0.7em padding. That short empty row's
+   border bunches against the previous row's border into a double line. Collapse
+   empty dds so they contribute neither a line nor height. */
+.dl-horizontal dd:empty {
+  border-bottom: none;
+  padding-top: 0;
+}
