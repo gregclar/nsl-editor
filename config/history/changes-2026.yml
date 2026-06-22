@@ -86,6 +86,8 @@
   :jira_id: '5776'
   :description: |-
     Initial setup prep setup for bootstrap upgrade - add helper and config flag to toggle between versions
+- :date: 22-June-2026
+  :release: true
 - :date: 04-June-2026
   :jira_id: '240'
   :jira_project: FLOR
