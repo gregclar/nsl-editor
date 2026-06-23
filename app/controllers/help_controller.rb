@@ -20,6 +20,7 @@ class HelpController < ApplicationController
   before_action :hide_details, :empty_search
 
   def index; end
+  def how_to_search; end
   def instance_models; end
   def ref_type_rules; end
   def typeaheads; end
