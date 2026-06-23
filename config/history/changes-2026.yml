@@ -1,4 +1,8 @@
 - :date: 23-June-2026
+  :jira_id: '4054'
+  :description: |-
+    New Name Search:  <code>genus-accepted-in-accepted-tree-no-children:</code>
+- :date: 23-June-2026
   :jira_id: '3504'
   :description: |-
     Search Help: Clean up and add to Search and Query Help text, including on the <code>limit:</code> and <code>offset:</code> directives
