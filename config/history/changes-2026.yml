@@ -1,3 +1,7 @@
+- :date: 24-June-2026
+  :jira_id: '3703'
+  :description: |-
+    Search on Name Status: Allow semi-colons to be used to list name status values in a search
 - :date: 23-June-2026
   :jira_id: '5400'
   :description: |-
