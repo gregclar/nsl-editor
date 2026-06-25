@@ -18,6 +18,7 @@ CREATE SEQUENCE loader.nsl_global_seq
     INCREMENT BY 1
     CACHE 1;
 
+
 CREATE SCHEMA audit;
 
 
@@ -4873,50 +4874,6 @@ CREATE TABLE loader.name_review_vote (
 -- Name: apii_image_profile; Type: FOREIGN TABLE; Schema: public; Owner: -
 --
 
-CREATE FOREIGN TABLE public.apii_image_profile (
-    basis_of_record text,
-    scientific_name character varying(200),
-    family character varying(200),
-    genus character varying(200),
-    species character varying(200),
-    rank_abbrev character varying(10),
-    infraspecies character varying(200),
-    cultivar character varying(200),
-    qualifier character varying(200),
-    catalog_number character varying(50),
-    creator character varying(200),
-    create_date character varying(200),
-    title character varying(500),
-    description character varying(500),
-    caption character varying(2000),
-    priority_rating integer,
-    has_herbarium boolean,
-    has_living boolean,
-    is_flower_image boolean,
-    is_morphology_image boolean,
-    is_illustration boolean,
-    subject_part character varying(500),
-    identifier character varying(200),
-    metadata_date timestamp with time zone,
-    rights character varying(500),
-    rights_owner character varying(500),
-    credit character varying(500),
-    provider_literal character varying(500),
-    access_uri character varying(500),
-    ph_format character varying(200),
-    variant_large character varying(200),
-    variant_medium character varying(200),
-    variant_small character varying(200),
-    update_date timestamp with time zone,
-    photo_no integer,
-    photo_class character varying(10),
-    photo_id integer
-)
-SERVER ibis_pg
-OPTIONS (
-    schema_name 'public',
-    table_name 'apii_image_profile_v'
-);
 
 
 --
@@ -8153,19 +8110,6 @@ CREATE INDEX name_full_name_index ON public.name USING btree (full_name text_pat
 --
 -- Name: name_full_name_trgm_index; Type: INDEX; Schema: public; Owner: -
 --
-
-SET search_path TO nsl, public;
-CREATE EXTENSION IF NOT EXISTS pg_trgm;
-CREATE EXTENSION if not exists unaccent;
-CREATE OR REPLACE FUNCTION public.f_unaccent(text)
- RETURNS text
- LANGUAGE sql
- IMMUTABLE
- SET search_path TO 'public', 'pg_temp'
-AS $function$
-SELECT unaccent('unaccent', $1)
-$function$
-;
 
 CREATE INDEX name_full_name_trgm_index ON public.name USING gin (full_name public.gin_trgm_ops);
 
