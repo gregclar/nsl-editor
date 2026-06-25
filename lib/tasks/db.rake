@@ -5,7 +5,41 @@
 #
 #
 #
+
+# Rails 8 passes --set ON_ERROR_STOP=1 to psql by default, which aborts the
+# structure.sql load on the first error.  Override to remove that flag so psql
+# continues past errors and loads as much of the schema as possible.
+module ActiveRecord
+  module Tasks
+    class PostgreSQLDatabaseTasks
+      def structure_load(filename, extra_flags)
+        # Create required extensions before loading the schema.
+        # Done here (not via a rake hook) so it fires on every code path —
+        # including when Rails auto-maintains the test database on a single
+        # test run, which uses the Ruby API rather than rake tasks.
+        Kernel.system(psql_env, "psql", "--quiet", "--no-psqlrc",
+                      "--output", File::NULL,
+                      "-c", "CREATE EXTENSION IF NOT EXISTS pg_trgm; CREATE EXTENSION IF NOT EXISTS unaccent;",
+                      db_config.database)
+
+        # Identical to Rails 8.1 default but without --set ON_ERROR_STOP=1,
+        # so psql continues past errors instead of aborting on the first one.
+        args = ["--quiet", "--no-psqlrc", "--output", File::NULL]
+        args.concat(Array(extra_flags)) if extra_flags
+        args.concat(["--file", filename])
+        args << db_config.database
+        run_cmd("psql", *args)
+      end
+    end
+  end
+end
 namespace :db do
+  desc "Create required PostgreSQL extensions in the current database"
+  task create_extensions: :environment do
+    ActiveRecord::Base.connection.execute("CREATE EXTENSION IF NOT EXISTS pg_trgm")
+    ActiveRecord::Base.connection.execute("CREATE EXTENSION IF NOT EXISTS unaccent")
+  end
+
   desc "Clean up the structure.sql file - run this after you generate structure.sql"
   task clean_up_structure_sql: :environment do
     sh "ed db/structure.sql <lib/scripts/structure/a.ed"
