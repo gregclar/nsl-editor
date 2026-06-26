@@ -1,4 +1,8 @@
 - :date: 26-June-2026
+  :jira_id: '4521'
+  :description: |-
+    Instance Tree Tab for new and replaced placement: fix behaviour of the Clear distribution button
+- :date: 26-June-2026
   :jira_id: '4361'
   :description: |-
     Instance Details tab for taxonomic instances: display "taxon link" only after tree version publication
