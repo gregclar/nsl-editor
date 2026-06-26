@@ -24,6 +24,7 @@
 #   "is-orth-var-and-sec-ref-first: limit: 2" })
 class Search::ParsedRequest
   attr_reader :show_instances,
+              :show_novelties,
               :canonical_query_string,
               :common_and_cultivar,
               :count,
@@ -40,6 +41,7 @@ class Search::ParsedRequest
               :list,
               :order,
               :order_instances_by_page,
+              :order_novelties_by_page,
               :params,
               :query_string,
               :query_target,
@@ -154,6 +156,7 @@ class Search::ParsedRequest
   }.freeze
 
   ALLOW_SHOW_INSTANCES_TARGETS = %w[names name references reference]
+  ALLOW_SHOW_NOVELTIES_TARGETS = %w[references reference]
 
   TRIM_RESULTS = {
     "loader name" => true,
@@ -182,6 +185,9 @@ class Search::ParsedRequest
   }
 
   SHOW_INSTANCES = "show-instances:"
+  SHOW_INSTANCES_BY_PAGE = "show-instances-by-page:"
+  SHOW_NOVELTIES = "show-novelties:"
+  SHOW_NOVELTIES_BY_PAGE = "show-novelties-by-page:"
 
   def initialize(params)
     @params = params
@@ -231,6 +237,8 @@ class Search::ParsedRequest
     unused_qs_tokens = parse_common_and_cultivar(unused_qs_tokens)
     unused_qs_tokens = inflate_show_instances_abbrevs(unused_qs_tokens)
     unused_qs_tokens = parse_show_instances(unused_qs_tokens)
+    unused_qs_tokens = inflate_show_novelties_abbrevs(unused_qs_tokens)
+    unused_qs_tokens = parse_show_novelties(unused_qs_tokens)
     unused_qs_tokens = parse_order_instances(unused_qs_tokens)
     unused_qs_tokens = parse_view(unused_qs_tokens)
     unused_qs_tokens = parse_show_profiles(unused_qs_tokens)
@@ -542,7 +550,15 @@ class Search::ParsedRequest
   def inflate_show_instances_abbrevs(tokens)
     tokens = inflate_token(tokens, "s-i:", SHOW_INSTANCES)
     tokens = inflate_token(tokens, "si:", SHOW_INSTANCES)
-    inflate_token(tokens, "i:", SHOW_INSTANCES)
+    tokens = inflate_token(tokens, "i:", SHOW_INSTANCES)
+    inflate_token(tokens, "ibp:", SHOW_INSTANCES_BY_PAGE)
+  end
+
+  def inflate_show_novelties_abbrevs(tokens)
+    tokens = inflate_token(tokens, "s-nov:", SHOW_NOVELTIES)
+    tokens = inflate_token(tokens, "snov:", SHOW_NOVELTIES)
+    tokens = inflate_token(tokens, "nov:", SHOW_NOVELTIES)
+    inflate_token(tokens, "novbp:", SHOW_NOVELTIES_BY_PAGE)
   end
 
   def inflate_token(tokens, abbrev_s, full_s)
@@ -569,10 +585,33 @@ class Search::ParsedRequest
     tokens
   end
 
+  def parse_show_novelties(tokens)
+    if tokens.include?("show-novelties:")
+      show_novelties_allowed?
+      @show_novelties = true
+      @order_novelties_by_page = false
+      tokens.delete_if { |x| x.match(/show-novelties:/) }
+    elsif tokens.include?("show-novelties-by-page:")
+      show_novelties_allowed?
+      @show_novelties = true
+      @order_novelties_by_page = true
+      tokens.delete_if { |x| x.match(/show-novelties-by-page:/) }
+    else
+      @show_novelties = false
+    end
+    tokens
+  end
+
   def show_instances_allowed?
     return if ALLOW_SHOW_INSTANCES_TARGETS.include?(@query_target)
 
     raise "The show-instances: directive is not supported for this query"
+  end
+
+  def show_novelties_allowed?
+    return if ALLOW_SHOW_NOVELTIES_TARGETS.include?(@query_target)
+
+    raise "The show-novelties: directive is not supported for this query"
   end
 
   def parse_order_instances(tokens)
