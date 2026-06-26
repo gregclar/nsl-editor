@@ -1,4 +1,9 @@
 - :date: 26-June-2026
+  :jira_id: '242'
+  :jira_project: FLOR
+  :description: |-
+    Fixup the refresh button not redirecting properly after creating a versioned update of a profile item
+- :date: 26-June-2026
   :jira_id: '5802'
   :description: |-
     Search: Fix the "list" link that appears in the summary of a count query
