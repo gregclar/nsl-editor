@@ -53,7 +53,7 @@ from comment where comment.instance_id = instance.id)",
                                  where comment.instance_id = instance.id
                                  and comment.created_by like ?) " },
     "comments-exact:" => { where_clause: " exists (select null from comment where comment.instance_id = instance.id and lower(comment.text) like ?) " },
-    "bhl:" => { where_clause: " lower(bhl_url) like lower(?)" },
+    "bhl:" => { where_clause: " lower(instance.bhl_url) like lower(?)" },
     "page:" => { where_clause: " lower(page) like lower(?)" },
     "page-qualifier:" => { where_clause:
                                  " lower(page_qualifier) like lower(?)" },
