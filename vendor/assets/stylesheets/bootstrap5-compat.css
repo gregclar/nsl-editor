@@ -595,6 +595,10 @@ input#query-submit {
   padding-top: 0;
 }
 
+tbody > tr.results-row-filler  > td{
+  border-bottom: none;
+}
+
 #search-field-and-buttons-container input#query-submit {
   margin-left: 0;
 }
