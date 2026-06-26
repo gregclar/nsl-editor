@@ -70,6 +70,7 @@ class Search::OnModel::Base
     @common_and_cultivar_included = list_query.common_and_cultivar_included
     @do_count_totals = list_query.do_count_totals
     consider_instances(parsed_request)
+    consider_novelties(parsed_request)
     consider_loader_name_extras(parsed_request)
     if @do_count_totals
       @count = @results.size
@@ -83,6 +84,12 @@ class Search::OnModel::Base
     return unless parsed_request.show_instances
 
     show_instances(parsed_request)
+  end
+
+  def consider_novelties(parsed_request)
+    return unless parsed_request.show_novelties
+
+    show_novelties(parsed_request)
   end
 
   def show_instances(parsed_request)
@@ -101,6 +108,24 @@ class Search::OnModel::Base
 
   def instances_sort_key(parsed_request)
     parsed_request.order_instances_by_page ? "page" : "name"
+  end
+
+  def show_novelties(parsed_request)
+    results_with_instances = []
+    @results.each do |ref|
+      results_with_instances << ref
+      instances_query = Instance::AsArray::ForReference::ForNovelties
+                        .new(ref,
+                             novelties_sort_key(parsed_request),
+                             parsed_request.limit,
+                             parsed_request.instance_offset)
+      instances_query.results.each { |i| results_with_instances << i }
+    end
+    @results = results_with_instances
+  end
+
+  def novelties_sort_key(parsed_request)
+    parsed_request.order_novelties_by_page ? "page" : "name"
   end
 
   def consider_loader_name_extras(parsed_request)
