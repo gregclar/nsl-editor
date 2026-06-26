@@ -1,3 +1,7 @@
+- :date: 26-June-2026
+  :jira_id: '5837'
+  :description: |-
+    Display the api_name and api_at info in the audit details for profile item details tab
 - :date: 25-June-2026
   :jira_id: '3918'
   :description: |-
