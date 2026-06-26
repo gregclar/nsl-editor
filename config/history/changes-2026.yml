@@ -1,4 +1,8 @@
 - :date: 26-June-2026
+  :jira_id: '5802'
+  :description: |-
+    Search: Fix the "list" link that appears in the summary of a count query
+- :date: 26-June-2026
   :jira_id: '4318'
   :description: |-
     Instance search: allow <code>bhl:</code> directive to be used with other Instance directives
