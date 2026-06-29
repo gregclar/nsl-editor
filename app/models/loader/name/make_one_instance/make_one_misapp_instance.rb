@@ -19,6 +19,7 @@ class Loader::Name::MakeOneInstance::MakeOneMisappInstance
     return parent_no_preferred_match if @loader_name.parent
                      .preferred_match.blank?
     return parent_no_standalone if @loader_name.parent.preferred_match.try("standalone_instance_id").blank?
+    return no_misapplied_type if @loader_name.synonym_type.blank?
     return no_relationship_instance_type if @match
                                             .relationship_instance_type_id
                                             .blank?
@@ -46,6 +47,13 @@ class Loader::Name::MakeOneInstance::MakeOneMisappInstance
                    "parent has no standalone instance so cannot proceed"
                  ))
     {declines: 1, declines_reasons: {parent_has_no_standalone_instance: 1}}
+  end
+
+  def no_misapplied_type
+    log_to_table(declined_entry(
+                   "record has no misapplied type so cannot proceed"
+                 ))
+    {declines: 1, declines_reasons: {record_has_no_misapplied_type: 1}}
   end
 
   def already_noted
