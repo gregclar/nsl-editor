@@ -88,6 +88,7 @@ class SearchController < ApplicationController
 
   def run_empty_search_to_show_error(params)
     @empty_search = true
+    params[:query_target] = params[:original_query_target]
     @search = Search::Empty.new(params)
   end
 
@@ -116,6 +117,7 @@ class SearchController < ApplicationController
     return unless params[:query_target].present?
     return unless params[:query_target] =~ /Names plus instances/i
 
+    params[:original_query_target] = params[:query_target]
     params[:query_target] = "name"
     return if params[:query_string] =~ /show-instances:/
 
