@@ -910,3 +910,18 @@ INNER JOIN name n
  WHERE instance.reference_id = ? 
    AND instance_type.primary_instance = TRUE 
   )"
+'tag:':
+  :leading_wildcard: true
+  :trailing_wildcard: true
+  :where_clause: " exists (select null
+    from name_tag_name ntn
+    join name_tag nt on nt.id = ntn.tag_id
+   where ntn.name_id = name.id
+     and lower(nt.name) like lower(?)) "
+  :not_exists_clause: " not exists (select null
+    from name_tag_name ntn
+   where ntn.name_id = name.id) "
+'has-tags:':
+  :where_clause: " exists (select null from name_tag_name ntn where ntn.name_id = name.id)"
+'has-no-tags:':
+  :where_clause: " not exists (select null from name_tag_name ntn where ntn.name_id = name.id)"

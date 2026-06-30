@@ -30,3 +30,10 @@
 #  fk_22wdc2pxaskytkgpdgpyok07n  (name_id => name.id)
 #  fk_2uiijd73snf6lh5s6a82yjfin  (tag_id => name_tag.id)
 #
+a_genus_acra:
+  name: a_genus
+  name_tag: acra
+  created_by: tester
+  updated_by: tester
+  created_at: <%= Time.now %>
+  updated_at: <%= Time.now %>
