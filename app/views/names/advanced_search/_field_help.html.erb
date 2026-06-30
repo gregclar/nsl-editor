@@ -261,7 +261,8 @@
 <h5>Associated Reference Search</h5>
 <table class="table table-striped">
   <% [
-      {field_name: 'ref-title:', description: "exact search on refence title associated with the name (supply your own wildcards)"},
+      {field_name: 'ref-title:', description: "exact search on reference title associated with the name (supply your own wildcards)"},
+      {field_name: 'novel-names-for-ref:', description: "for any supplied Reference ID, find all names associated with that reference as novelties - runs from link on Reference Details tab"},
       ].each do |val| %>
   <tr>
     <td class="width-20-percent">

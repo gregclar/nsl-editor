@@ -890,4 +890,23 @@ where t.relationship
                                           from name name_dupes
                                          where duplicate_of_id is not null)
                            and duplicate_of_id is not null)"
-
+'is-a-duplicate-and-master:':
+  :takes_no_arg: true,
+  :allow_common_and_cultivar: true
+  :where_clause: " id in (select id
+                            from name name_dupe_master 
+                           where id in (select duplicate_of_id 
+                                          from name name_dupes
+                                         where duplicate_of_id is not null)
+                           and duplicate_of_id is not null)"
+'novel-names-for-ref:':
+  :where_clause: " id in 
+(select n.id
+FROM instance 
+INNER JOIN name n
+  ON n.id = instance.name_id 
+  INNER JOIN instance_type 
+  ON instance_type.id = instance.instance_type_id 
+ WHERE instance.reference_id = ? 
+   AND instance_type.primary_instance = TRUE 
+  )"
