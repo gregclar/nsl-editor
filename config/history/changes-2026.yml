@@ -1,4 +1,8 @@
 - :date: 30-June-2026
+  :jira_id: '4573'
+  :description: |-
+    Add tag:, has-tags:, and has-no-tags: directives to the Name search
+- :date: 30-June-2026
   :jira_id: '4137'
   :description: |-
     Reference Novel Names: Add Name search <code>novel-names-for-ref:</code> linked from Reference -> Details tab
