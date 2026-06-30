@@ -1,4 +1,8 @@
 - :date: 30-June-2026
+  :jira_id: '5818'
+  :description: |-
+    Name Editing: improve notification when a name author has no abbreviation 
+- :date: 30-June-2026
   :jira_id: '4573'
   :description: |-
     Add tag:, has-tags:, and has-no-tags: directives to the Name search
@@ -38,7 +42,7 @@
 - :date: 26-June-2026
   :jira_id: '3931'
   :description: |-
-    Reference search from Details tab: link to new searcy for list of novelties sorted by page
+    Reference search from Details tab: link to new search for list of novelties sorted by page
 - :date: 26-June-2026
   :jira_id: '5837'
   :description: |-

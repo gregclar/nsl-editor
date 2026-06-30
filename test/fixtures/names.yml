@@ -427,6 +427,24 @@ a_duplicate_species:
   uri: av
   duplicate_of: a_species
 
+# Points to a_duplicate_species, making a_duplicate_species satisfy
+# is-a-duplicate-and-master: (it is both a duplicate of a_species and a
+# master of this record).
+a_duplicate_of_a_duplicate_species:
+  <<: *DEFAULTS
+  simple_name: 'a duplicate of a duplicate species'
+  name_element: 'a duplicate of a duplicate species'
+  full_name: 'a duplicate of a duplicate species'
+  name_rank: species
+  name_status: legitimate
+  name_type: scientific
+  namespace: apni
+  parent: a_family
+  family: a_family
+  name_path: 'Plantae/Magnoliophyta/a_family/a_genus/a duplicate of a duplicate species'
+  uri: av2
+  duplicate_of: a_duplicate_species
+
 a_subspecies: 
   <<: *DEFAULTS
   simple_name: 'a_subspecies'
