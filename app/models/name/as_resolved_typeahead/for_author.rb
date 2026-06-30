@@ -56,16 +56,25 @@ class Name::AsResolvedTypeahead::ForAuthor
   end
 
   def zero_possibles_for_text
-    zero_possibles
+    one_or_zero_possibles
   end
 
-  def zero_possibles
+  def one_or_zero_possibles
     possibles = ::Author.lower_abbrev_like(@text + "%")
     case possibles.size
     when 1
       @value = possibles.first.id
     else
-      raise "please choose #{@field_name} from suggestions"
+      zero_possibles
+    end
+  end
+
+  def zero_possibles
+    no_abbrevs = ::Author.lower_name_like(@text + '%').where(abbrev: nil)
+    if no_abbrevs.size > 0
+     raise "Please choose #{@field_name} from suggestions - that Author has no abbreviation recorded"
+    else
+     raise "Please choose #{@field_name} from suggestions"
     end
   end
 
@@ -82,7 +91,7 @@ class Name::AsResolvedTypeahead::ForAuthor
   end
 
   def zero_possibles_for_id_and_text
-    zero_possibles
+    one_or_zero_possibles
   end
 
   def two_or_more_possibles_for_id_and_text
