@@ -1,4 +1,8 @@
 - :date: 30-June-2026
+  :jira_id: '4984'
+  :description: |-
+    Names plus instances search: Retain the correct query target when reporting an error
+- :date: 30-June-2026
   :jira_id: '5818'
   :description: |-
     Name Editing: improve notification when a name author has no abbreviation 
