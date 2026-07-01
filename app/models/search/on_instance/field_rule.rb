@@ -225,6 +225,16 @@ from comment where comment.instance_id = instance.id)",
                        where instance_type_id = instance_type.id
                        and instance_type.primary_instance) ",
                        takes_no_arg: true},
+    "is-standalone:" => { where_clause: " exists (select null
+                                          from instance_type
+                                          where instance_type_id = instance_type.id
+                                          and instance_type.standalone) ",
+                         },
+    "is-not-standalone:" => { where_clause: " exists (select null
+                                          from instance_type
+                                          where instance_type_id = instance_type.id
+                                          and not instance_type.standalone) ",
+                         },
     "is-tax-nov-for-orth-var-name:" => { where_clause: " exists (select null
                                  from instance_type
                                  where instance_type_id = instance_type.id
